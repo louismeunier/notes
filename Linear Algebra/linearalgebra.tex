@@ -10,15 +10,24 @@
 \usepackage{graphicx}
 \usepackage{titling}
 \usepackage{subfig}
-\usepackage{eufrak}
+\usepackage{titleps}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{delarray}
 % \usepackage{framed}
 \usepackage[colorlinks=true]{hyperref}
 
+
 % settings
 \setlength{\droptitle}{-6em}
+
+\newpagestyle{mypage}{%
+  \headrule
+  \sethead{\MakeUppercase{}}{\textcolor{gray}{\thesubsection: \subsectiontitle}}{}
+  \setfoot{}{\textcolor{gray}{\thepage}}{}
+}
+
+\pagestyle{mypage}
 
 % \title{Linear Algebra}
 % \author{Louis Meunier}
@@ -163,7 +172,7 @@ becomes
 Note that even though there is no $x$ in the third equation, its coefficient must still be represented (as a 0).
 
 \subsubsection{rref}
-When working with augmented matrices, there are a number of possible operations that can be used to reach the "endgoal": \textbf{the row reduced echelon form (rref)}. An rref is achieved when:
+When working with augmented matrices, there are a number of possible operations that can be used to reach the "end goal": \textbf{the row reduced echelon form (rref)}. An rref is achieved when:
 
 \begin{itemize}
     \item The first non-zero term in each row (aka the \textbf{leading 1}) is a 1, and there are zeroes above and below it.
@@ -832,31 +841,108 @@ The final line above indicates a general process that can be used to find a matr
 
 \subsection{Elementary Matrices}
 
-Throughout these notes, the idea of "Gaussian elimination" and row reduction has been constantly discussed, with the concept of modifying the rows and columns of a matrix through a number of operations. \textbf{Elementary matrices} define matrices that, when multiplied to another matrix, execute these same row operations. 
+Throughout these notes, the idea of "Gaussian elimination" and row reduction has been constantly discussed, with the concept of modifying the rows and columns of a matrix through a number of operations. \textbf{Elementary matrices} define matrices that, when multiplied to another matrix, execute these same row operations. These are typically denoted with an $E$.
 
-\subsubsection{Properties of Elementary Matrices}
-
-Elementary matrices have a number of properties that are helpful to know when working with and defining them:
-
-\begin{itemize}
-    \item \textit{Always invertible}
-    
-    This should make intuitive sense; row operations, such as dividing a row by a constant, swapping a row, etc, are also invertible (multiply the row by the same constant, swap the row again, etc). Naturally, the inversion of an elementary matrix is also an elementary matrix.
-
-    % anything else?
-    % \item \textit{Nothing else}
-\end{itemize}
 
 \subsubsection{Types of Elementary Matrices}
 
+Just as there a set number of possible row operations that we can perform on matrices, there are a corresponding number of elementary matrices that we can define to perform the equivalent transformations.
 
+\begin{itemize}
+    \item[\textbf{I}]: Row Interchanges
+    
+    This type of elementary matrix simply swaps rows of a matrix. For example, for a 2 by 3 matrix:
+
+
+    \begin{equation}
+        \begin{bmatrix}
+            0 & 1 \\
+            1 & 0\\
+        \end{bmatrix} \begin{bmatrix}
+            a & b & c\\
+            p & q & r\\
+        \end{bmatrix} = \begin{bmatrix}
+            p & q & r\\
+            a & b & c\\
+        \end{bmatrix}
+    \end{equation}
+
+    The elementary matrix $\begin{bmatrix}
+        0 & 1\\
+        1 & 0\\
+    \end{bmatrix}$ swaps the first and second rows, as shown. It should also be clear that there could be \textit{any number of columns in the matrix on the left}, and the elementary matrix would still perform the same operation.
+
+    Finding the matrix to exchange rows for any dimension of matrix is fairly straightforward, as the matrix will only involve $0$'s and $1$'s in different positions.
+
+    If we were to invert this operation, we can simply use the same elementary matrix again. Thus, in this case, $E = E^{-1}$; this can be verified by manually inverting $E$ as well, by using methods described earlier. 
+
+    \item[\textbf{II}]: Row Multiplication
+
+    To multiply a particular row (or rows) of a matrix by a constant, we can define another fairly simply elementary matrix that involves essentially all $1$'s and $0$'s again, except for the appropriate constant in the appropriate position. For instance, say we want to multiply the second row of the same matrix as above by $3$:
+
+    \begin{equation}
+        \begin{bmatrix}
+            1 & 0 \\
+            0 & 3\\
+        \end{bmatrix} \begin{bmatrix}
+            a & b & c\\
+            p & q & r\\
+        \end{bmatrix} =  \begin{bmatrix}
+            a & b & c\\
+            3p & 3q & 3r\\
+        \end{bmatrix}
+    \end{equation}
+
+    To invert this operation, we have to divide the appropriate row by the same constant, or, more appropriately, multiply it by the inverse of the constant. Thus, $E^{-1} = E$ but with the constant inverted (fractional).
+
+    \item[\textbf{III}]: Adding Multiples of Rows
+    
+    Adding a certain number of a row (or rows) to another row (or rows) of a matrix is, often, the most complicated to describe with an elementary matrix. However, with an example, it should hopefully be rather clear; so, to add twice the second row to the first row of a matrix, consider the following:
+
+    \begin{equation}
+        \begin{bmatrix}
+            1 & 2 \\
+            0 & 1\\
+        \end{bmatrix} \begin{bmatrix}
+            a & b & c\\
+            p & q & r\\
+        \end{bmatrix} =  \begin{bmatrix}
+            a + 2p & b + 2q & c + 2r\\
+            p & q & r\\
+        \end{bmatrix}
+    \end{equation}
+
+    To invert this operation, we have to subtract the constant times the same row from the row involved. In this particular case, $E^{-1} = \begin{bmatrix}
+        1 & -2\\
+        0 & 1\\
+    \end{bmatrix}$.
+\end{itemize}
+
+It should be noted that, in all these operations, the elementary matrix was invertible; and not only that, the inverted elementary matrix was also an elementary matrix in its own regard. If we want to invert such a matrix, we can either do so with typical methods (augmenting it by $I$) or by simply finding the logical inverse of the operation that the elementary matrix performs. 
+
+It should be noted that you will often see problems with the following format, for some matrix $A$:
+
+\begin{equation}
+    E_5E_4E_3E_2E_1A
+\end{equation}
+
+While this may seem scary, since it is a whole lot of matrix-matrix multiplication, once you are able to determine what operation each $E_n$ performs, calculating this should be fairly straightforward. Simply find $A$ after $E_1$'s operations on performed on it, then after $E_2$ is performed on the result of that, etc..
+
+\subsection{Distances}
+
+\section{Unit 3}
+
+\subsection{Curve Fitting}
+
+\subsection{Orthogonality and the Transpose of a Vector}
+
+\subsection{Least Squares, etc.}
 
 \newpage
 \section{Summary of Terms}
 This course relies \textbf{heavily} on vocabulary. Below is a brief conglomeration (ignore the oxymoron) of these terms.
 
-\begin{itemize}
-    \item \textbf{Notation}
+\subsection{Notation}
     \begin{itemize}
         \item $\real$: real numbers
         \item $\integers$: integers
@@ -869,8 +955,13 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
         \item $\Vec{u}$: vector named "$u$"
         \item $\Vec{0}$: "0 vector", vector of any dimension with all $0$'s
         \item $f: A \to B$: "a function $f$ takes inputs of dimension $A$ and returns outputs of dimensions $B$"
+        \item $T \circ S$: "$T$ composed with $S$"
+        \item  \item $\mathfrak{B}, \mathfrak{C}, ...$: a basis of some $\real^n$
+        \item $[\vec{x}]_{\mathfrak{B}}$ a vector $\vec{x}$ represented in base $\mathfrak{B}$
+        \item $E$: some elementary matrix
+       \item $A^{-1}$: the inverse of a matrix $A$
     \end{itemize}
-    \item Vocabulary
+\subsection{Vocabulary}
     \begin{itemize}
         \item \textbf{rref}: 
         \begin{itemize}
@@ -969,8 +1060,39 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
         
         \item \textbf{kernel}: the set of vectors $\Vec{x}$ such that $A\Vec{x} = \Vec{0}$, denoted by ker$(A)$
         
-        \item \textbf{image}: the set of vectors $\Vec{y}$ such that $\Vec{y} = A\Vec{x}$ for some vector $\Vec{x}$, denoted by im$(A)$; also known as the \textit{range}, or \textit{}
+        \item \textbf{image}: the set of vectors $\Vec{y}$ such that $\Vec{y} = A\Vec{x}$ for some vector $\Vec{x}$, denoted by im$(A)$; also known as the \textit{range}.
+        
+        \item \textbf{rank-nullity theorem}: "the \textit{rank} of an rref matrix is equal to the dimension of the \textit{image}, and the \textit{number of free columns} is equal to the dimension of the \textit{kernel}".
+        
+        \item \textbf{identity matrix}: denoted $I_n$ for some integer $n$, a matrix of $n$ rows and $n$ columns of the format $\begin{bmatrix}
+        1 & 0 & ... & 0\\
+        0 & 1 & ... & 0\\
+        0 & 0 & ... & 0 \\
+        | & | & ... & 1 \\
+        \end{bmatrix}$
+
+        \item \textbf{composition}: a number of transformations performed in a particular order. For instance, given the linear transformations $T$ and $S$ and a vector $\vec{x}$, we can denote performing $S$ and then $T$ on $\vec{x}$ by saying:
+        
+        $$T \circ S = T(S(\vec{x}))$$
+
+        Note that "$\circ$" is read as "$T$ composed with $S$".
+
+        Its important to note that it is \textit{not necessarily true} that $S \circ T = T \circ S$.
+
+        \item \textbf{inverses}: just as the inverse of a function, the inverse of a matrix is a matrix that undoes the operations of a matrix. More information can be found above, but to invert a matrix you can simply augment it by the corresponding $I_n$.
+        
+        A matrix, $A$, is only invertible if:
+
+        \begin{itemize}
+            \item $A$ is square (\textit{number of rows = number of} columns)
+            \item rref$(A) = I$
+        \end{itemize}
+
+        This second requirement does in fact incorporate the first, but it is helpful to explicitly state the first as it can make determining if certain matrices are invertible or not very simple.
+
+        \item \textbf{elementary matrix}: a matrix that performs a row operation on a matrix. They are typically denoted $E$, are always invertible, and their inverses are always elementary matrices as well. Also, by extension of always being invertible, they are, of course, always square.
+        
+        
     \end{itemize}
-\end{itemize}
 
 \end{document}
