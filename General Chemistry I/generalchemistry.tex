@@ -1,0 +1,137 @@
+% backup|General Chemistry I
+% Add "% backup|[file name]" above (no quotes) to make file backup
+\documentclass[12pt]{article}
+% packages
+\usepackage[paper=letterpaper,margin=2cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{newtxtext, newtxmath}
+\usepackage{titling}
+\usepackage{setspace}
+\usepackage{subfig}
+\usepackage[x11names]{xcolor}
+\colorlet{shadecolor}{LavenderBlush3}
+\usepackage{framed}
+\usepackage[colorlinks=true]{hyperref}
+
+% settings
+\setlength{\droptitle}{-6em}
+\onehalfspacing
+
+\begin{document}
+
+% commands
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\ddx}{\frac{d}{dx}}
+\newcommand{\ddy}{\frac{d}{dy}}
+\newcommand{\dxdy}{\frac{dx}{dy}}
+\newcommand{\dydx}{\frac{dy}{dx}}
+
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\rational}{\mathbb{Q}}
+\newcommand{\complex}{\mathbb{C}}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        \Huge
+        \textbf{General Chemistry I}
+        
+        \vfill
+        
+        \begin{figure}[!ht]
+            \centering
+            % \includegraphics{misc/TITLEGRAPHIC.png}
+        \end{figure}
+        \vfill
+        
+        \small
+        by Louis Meunier
+        
+        \href{https://notes.louismeunier.net}{\color{violet}{notes.louismeunier.net}}
+        
+    \end{center}
+\end{titlepage}
+
+
+{
+  \hypersetup{linkcolor=violet}
+  \tableofcontents
+}
+
+\newpage
+
+\section{Quantum Theory and Atomic Structure}
+
+\subsection{Electromagnetic Radiation}
+
+\textbf{Light} can be described as a form of \textit{electromagnetic radiation}, meaning that it is a spectrum of wavelengths and corresponding frequencies. Classically, they are described as \textbf{waves}. What does this mean? 
+
+A wave can be described as having the following properties:
+
+\begin{itemize}
+    \item \textbf{Wavelength} ($\lambda$): \textit{distance} traveled in a single cycle
+    \item \textbf{Frequency} ($\nu$): the number of cycles per unit time. Standard units, \textit{Hz} ( = $s^{-1}$)
+    \item \textbf{Amplitude}: half the height of the wave from \textit{peak} to \textit{trough}
+    \item \textbf{Speed}: the \textit{distance} travelled per unit time of time. This can be expressed as $\lambda \nu$.
+    
+    Light (in a vacuum, which typically has to be assumed) has a standard speed, denoted $c \approx 2.998x10^{8} m/s$. Thus, we can write:
+    
+    $$c = \lambda \nu$$
+    
+    Since $c$ is a constant, we can state that if $\lambda$ increases, $\nu$ must decrease (and vice versa).
+    \end{itemize}
+    \subsection{Waves vs Particles}
+    
+    The distinction between the properties of waves and particles is very important in moving forward, as we will soon see. However, it is first and foremost important to be able to distinguish between the two.
+    
+    \begin{center}
+        \begin{tabular}{ |c|c|c| } 
+         \hline
+         \textbf{Property} & \textbf{Waves} & \textbf{Particles} \\ 
+         \hline
+         Movement between media: & refract & slow, curve \\ 
+         \hline
+         Interaction with objects & bend, diffract & binary response: go through, or don't \\ 
+         \hline
+        \end{tabular}
+    \end{center}
+
+    It seems that waves and particles are very distinct, and yet early experiments showed some potential overlap between the two concepts, particularly in regards to light. 
+    
+    Experiments with light by people such as Planck showed that it did not always have respect classically-predicted trends when treated as a wave, particularly when it came to altering its frequency.
+    
+    \begin{figure}[!ht]%
+        \centering
+        \subfloat{{\includegraphics[width=6.5cm]{misc/numofelectronspredicted.png} }}%
+        \qquad
+        \subfloat{{\includegraphics[width=6.5cm]{misc/kepredicted.png} }}%
+        \caption{Predictions of the Properties of Light}
+        \label{fig:experimentallight}%
+    \end{figure}
+    
+    \begin{figure}[!ht]%
+        \centering
+        \subfloat{{\includegraphics[width=6.5cm]{misc/numelectronsexperimental.png} }}%
+        \qquad
+        \subfloat{{\includegraphics[width=6.5cm]{misc/keexperimental.png} }}%
+        \caption{Experimental Properties of Light}
+        \label{fig:experimentallight}%
+    \end{figure}
+\section{Electron Configuration and Chemical Periodicity}
+
+\section{Models of Chemical Bonding}
+
+\section{Shapes of Molecules}
+
+\section{Theories of Covalent Bonding}
+
+\section{Intermolecular Forces}
+
+
+\end{document}

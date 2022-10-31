@@ -1,0 +1,222 @@
+% backup | Intro to CS
+% Add "% backup | [file name]" above (no quotes) to make file backup
+\documentclass[12pt]{article}
+% packages
+\usepackage[paper=letterpaper,margin=2cm]{geometry}
+\usepackage[skip=10pt plus1pt, indent=15pt]{parskip}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{newtxtext, newtxmath}
+\usepackage{titling}
+\usepackage{setspace}
+\usepackage[x11names]{xcolor}
+\colorlet{shadecolor}{LavenderBlush3}
+\usepackage{framed}
+\usepackage[colorlinks=true]{hyperref}
+
+% settings
+\setlength{\droptitle}{-6em}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        \Huge
+        \textbf{Introduction to Computer Science}
+        
+        \vfill
+        
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics{misc/TITLEGRAPHIC.png}
+        \end{figure}
+        \vfill
+        
+        \small
+        by Louis Meunier
+        
+        \href{https://notes.louismeunier.net}{\color{violet}{notes.louismeunier.net}}
+        
+    \end{center}
+\end{titlepage}
+
+
+{
+  \hypersetup{linkcolor=violet}
+  \tableofcontents
+}
+
+\newpage
+
+\textit{Note that basic Java knowledge is assumed for these notes, so the first few chapters of this course are omitted for the sake of being concise.}
+
+\section{UML Diagrams}
+
+\textbf{UML Diagrams}: "Unified Modeling Language", a set of standards for creating diagrams to represented object-oriented systems - see figure \ref{fig:uml} for the basic layout, and figure \ref{fig:uml_example} for a basic example.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=8cm]{misc/uml.png}
+    \caption{UML diagram layout}
+    \label{fig:uml}
+\end{figure}
+
+
+\begin{itemize}
+    \item A "+" before a field indicates public
+    \item A "-" means private
+    \item An underlined field means static
+\end{itemize}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=7cm]{misc/uml_example.png}
+    \caption{Example UML diagram}
+    \label{fig:uml_example}
+\end{figure}
+
+\section{Basic Data Structures}
+\subsection{Singly Linked Lists}
+\textbf{Single Linked List}: an object made up nodes with both links to the next item in the list, as well as a reference to an element. Figure \ref{fig:singlylinked} demonstrates this well.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=12cm]{misc/singlylinkedlist.png}
+    \caption{Singly Linked List}
+    \label{fig:singlylinked}
+\end{figure}
+
+An implementation of a Linked List object should include both a head (first) and tail (last) node, as well as a field representing its size. Each node within the list should also include both an "element" field and a reference to the next node in the list.  
+
+Appropriate methods that should also be added to the list include \textit{addFirst()}, \textit{removeFirst()}, \textit{addLast()}, and \textit{removeLast()}. It should be noted that all these methods are able to be implemented in O(1) time complexity \textit{except} removeLast(), which is possible in O(N) time. Hopefully this should be intuitive, as for this last method, you must iterate over the entire list until the second-to-last node, which must then be updated to set the last "element.next" to "null".
+
+\subsection{Doubly Linked Lists}
+\textbf{Doubly Linked Lists}: have all the same properties as singly linked lists, but also have a reference to the previous element in the list: see figure \ref{fig:doublylinked}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=11cm]{misc/doublylinkedlist.png}
+    \caption{Doubly Linked List}
+    \label{fig:doublylinked}
+\end{figure}
+
+The 4 methods mentioned above for a singly linked list also apply to a doubly linked list, except the method \textit{removeLast()} can be implemented in O(1). This should be intuitive: as you can access the second-to-last node and set its "next" to "null" in constant time by simply accessing "tail.prev".
+
+It should be noted that even though the \textit{time} complexity is better, the \textit{space} complexity is worse; each node in a doubly-linked list actually contains 3 objects, while each node in a singly-linked list contains 2 (plus the object representing the list itself).
+
+\section{Sorting}
+Sorting algorithms are one of the most common algorithms used in programming, and their efficiency is important to understand. While some are clearly better than others in all circumstances, some are better when inputs are of a certain type/etc..
+
+\subsection{$O(n^2)$: Quadratic Sorting}
+All of these algorithms sort elements in $O(n^2)$ time; ie, the time complexity is proportional to the size of the array squared.
+
+\subsubsection{Bubble Sort}
+Iterate through a list, and swap adjacent elements if they are in the wrong order. This is perhaps the "simplest" algorithm.
+
+\textit{Pseudocode implementation:}
+
+\begin{verbatim}
+    sorted = false
+    i = 0
+    while (!sorted) {
+        sorted = true
+        for j from 0 to list.length - i - 2 {
+            if (list[j] > list[j+1]) {
+                swap(list[j], list[j+1])
+                sorted = false
+            }
+        }
+        i++
+    }
+\end{verbatim}
+
+For an array $[5,1,4,2,8]$, the following shows the algorithm during the first iteration:
+
+\begin{itemize}
+    \item $[1,5,4,2,8]$
+    \item $[1,4,5,2,8]$
+    \item $[1,4,2,5,8]$
+    \item $[1,4,2,5,8]$
+    \item etc..
+\end{itemize}
+
+This continues logically, until the array is sorted. It is important to realize that, when determining how many iterations it takes to sort the array, you have to take into account the last iteration after the array is sorted that the algorithm must take to ensure the array is actually sorted.
+
+\subsubsection{Selection Sort}
+\begin{itemize}
+    \item Consider the list in two parts: one that is sorted at the beginning, and one that is unsorted at the end.
+    \item Select the smallest element in the unsorted part of the list
+    \item Swap this element with the element in the initial position of the unsorted part
+    \item Change the sorted/unsorted division in the array
+\end{itemize}
+
+\textit{Pseudocode:}
+
+\begin{verbatim}
+    // repeat until list is all sorted (~N)
+    for delim from 0 to N - 2 {
+        // find the index of the min element in the unsorted section of the array
+        min = delim
+        for i from delim + 1 to N - 1 {
+            if (list[i] < list[min]) {
+                min = i
+            }
+        }
+        // swap the min element with the first element of the unsorted section of the array
+        if (min != delim) {
+            swap(list[min], list[delim])
+        }
+    }
+\end{verbatim}
+
+\newcommand{\blue}[1]{\textcolor{violet}{#1}}
+
+The following steps represent how this algorithm roughly works, where $\blue{|}$ represents the delimiter between sorted (toward the beginning) and unsorted (toward the end):
+
+\begin{itemize}
+    \item $[\blue{|}5,1,7,2]$
+    \item $[1\blue{|}5,7,2]$
+    \item $[1,2\blue{|}7,5]$
+    \item $[1,2,5\blue{|}7]$
+    \item $[1,2,5,7\blue{|}]$
+\end{itemize}
+
+\subsubsection{Insertion Sort}
+\begin{itemize}
+    \item Consider the list in two parts: one that is sorted at the beginning, and one that is unsorted at the end.
+    \item Select the first element of the unsorted part of the list
+    \item Insert this element into the correct position of the sorted part of the list
+    \item Change where the array is delimited between sorted/unsorted
+\end{itemize}
+
+\textit{Pseudocode:}
+
+\begin{verbatim}
+    // repeat until list is sorted (~N)
+    for i from 0 to N - 1 {
+        // find where the next element in the unsorted portion should be inserted into the sorted part of the list and make space for it
+        element = list[i]
+        k = i
+        while (k > 0 && element < list[k-1]) {
+            list[k] = list[k - 1]
+            k--
+        }
+        // insert the element into the sorted part of the list 
+        list[k] = element
+    }
+\end{verbatim}
+
+Example steps:
+
+\begin{itemize}
+    \item $[\blue{|}5,1,7,2]$
+    \item $[5\blue{|}1,7,2]$
+    \item $[1,5\blue{|}7,2]$
+    \item $[1,5,7\blue{|}2]$
+    \item $[1,2,5,7\blue{|}]$
+\end{itemize}
+\end{document}
