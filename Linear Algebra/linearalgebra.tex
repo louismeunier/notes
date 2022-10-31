@@ -750,12 +750,108 @@ For example, to invert $\begin{bmatrix} 3 & 2\\
 
 \subsection{Bases and Coordinates}
 
+\subsubsection{Introduction}
+% this part is really wordy, maybe fix?
 To understand the use of bases in linear algebra, consider the standard basis vectors, $\vec{e_1}, \vec{e_2}, ..., \vec{e_n}$. Any vectors in $R^n$ can thus be rewritten as a combination of these standard vectors ($c_1\vec{e_1} + c_2\vec{e_2} + ... + c_n\vec{e_n}$). However, consider a situation in which, say, "movements" are restricted to only a particular set of vectors (say $\vec{v_1}$ and $\vec{v_2}$) that aren't the standard basis vectors. 
 
-While you can write these vectors, or any combinations of these vectors, as a combination of standard basis vectors, it can be easier to call these vectors as a new set of "basis vectors". We define this as $\mathfrak{B} = {\vec{v_1}, \vec{v_2}}$, ie $\mathfrak{B}$ is the basis.
+While you can write these vectors, or any combinations of these vectors, as a combination of standard basis vectors, it can be easier to call these vectors as a new set of "basis vectors". We define this as $\mathfrak{B} = \{\vec{v_1}, \vec{v_2}\}$, ie $\mathfrak{B}$ is a basis of $\real^2$.
+
+When writing about vectors in basis $\mathfrak{B}$, we use the notation $[y]_{\mathfrak{B}} = \begin{bmatrix}
+    c_1\\
+    c_2\\
+\end{bmatrix}$ to indicate the coordinates of $\Vec{y}$ in the $\mathfrak{B}$ basis. This vector can thus, by extension, be represented as a linear transformation of the vectors in the basis $\mathfrak{B}$.
+
+\subsubsection{Changing Bases}
+
+To change a vector from one base to another, we can find a matrix $S$ such that $S[\vec{x}]_{\mathfrak{B}} = \vec{x}$, where $S$ is typically called the "change of basis matrix", in this case, changing base from $\mathfrak{B}$ to the standard basis.
+
+Finding $S$ is fairly straightforward. We know that $S$ times each vector in $\mathfrak{B}$ must equal the corresponding standard basis vector, so we can write $S\vec{v_1} = \vec{e_1}$, $S\vec{v_2} = \vec{e_2}$, and so on. Therefore, $S$ simply equals the matrix of the vectors in $\mathfrak{B}$, ie $S = \begin{bmatrix}
+    | & | & |\\
+    \vec{v_1} & \vec{v_2} & ...\\
+    | & | & |\\
+\end{bmatrix}$.
+
+To extend this, since we can say that $S[\vec{x}]_{\mathfrak{B}} = \vec{x}$, we can inversely say that $[\vec{x}_{\mathfrak{B}}] = S^{-1}\vec{x}$, so to find the matrix that changes bases in the opposite direction, we simply find the inverse of $S$. From here, this same rationale can be extended transform between any two bases in the same $\real^{n}$.
+
 \subsubsection{Application to Transformations}
+
+As noted earlier, we can define a linear transformation as a matrix $A$ such that $T(\vec{x}) = A\vec{x}$. With the added knowledge of bases, we can often more easily find the matrix of a transformation by carefully picking a basis for the transformation which makes the matrix easier to find.
+
+To demonstrate this, take a transformation $T$ that projects vectors in $\real^{3}$ onto the plane $P$ defined by $3x_1+2x_2-5x_3=0$. To find a matrix $A$ such that $T(\vec{x}) = A\vec{x}$, we can create a basis $\mathfrak{B}$ of $R^{3}$ using vectors that make $A$ easy to compute.
+
+
+For this particular case, we can define $\mathfrak{B} = \{\vec{v_1}, \vec{v_2}, \vec{v_3}\}$, where:
+
+\begin{itemize}
+    \item $\vec{v_1} = \begin{bmatrix}
+        3\\
+        2\\
+        -5
+    \end{bmatrix}$, since $T(\vec{v_1}) = 0$, as it is perpendicular to $P$
+
+    \item $\vec{v_1} = \begin{bmatrix}
+        0\\
+        5\\
+        2
+    \end{bmatrix}$, since $T(\vec{v_2}) = \vec{v_2}$, as it lies along $P$
+
+    \item $\vec{v_1} = \begin{bmatrix}
+        5\\
+        0\\
+        3
+    \end{bmatrix}$, since $T(\vec{v_3}) = \vec{v_3}$, as it also lies along $P$
+\end{itemize}
+
+To put it in more clear notation, we say that $[T(\vec{v_1})]_{\mathfrak{B}} = \vec{0}$, $[T(\vec{v_2})]_{\mathfrak{B}} = \begin{bmatrix}
+0\\
+1\\
+0\\\end{bmatrix}$, and $[T(\vec{v_3})]_{\mathfrak{B}} = \begin{bmatrix}
+    0\\
+    0\\
+    1\end{bmatrix}$; this step should make sense, as each vector denoted is the corresponding combination of vectors in $\mathfrak{B}$. Here, it should be clear that any vectors that that form a base of $\real^{3}$ could realistically have been used here, but these are clearly easier to work with.
+
+    From here, we can define $B$, such that $B[\vec{v_1}]_{\mathfrak{B}} = [T(\vec{v_1})]_{\mathfrak{B}}$, simply enough as $B = \begin{bmatrix}
+        0 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1\\
+    \end{bmatrix}$.
+
+    From the previous section, we showed that $S^{-1}\vec{x} = [\vec{x}]_{\mathfrak{B}}$. Extending that to this linear transformation, we can recap our steps above using a number of matrices, as follows:
+
+    \begin{equation}
+        \begin{split}
+            T(\vec{x}) &= A\vec{x}\\
+            [T(\vec{x})]_{\mathfrak{B}} &= B[\vec{x}]_{\mathfrak{B}}\\
+            [T(\vec{x})]_{\mathfrak{B}} &= B\red{S^{-1}}\vec{x}\\
+            T(\vec{x})&= \red{S}BS^{-1}\vec{x}\\
+            \implies A &= SBS^{-1}\\
+        \end{split}
+    \end{equation}
+
+The final line above indicates a general process that can be used to find a matrix to represent any linear transformation, and while this process may seem initially more difficult that previously discussed methods, it has many advantages as well.
+
 \subsection{Elementary Matrices}
 
+Throughout these notes, the idea of "Gaussian elimination" and row reduction has been constantly discussed, with the concept of modifying the rows and columns of a matrix through a number of operations. \textbf{Elementary matrices} define matrices that, when multiplied to another matrix, execute these same row operations. 
+
+\subsubsection{Properties of Elementary Matrices}
+
+Elementary matrices have a number of properties that are helpful to know when working with and defining them:
+
+\begin{itemize}
+    \item \textit{Always invertible}
+    
+    This should make intuitive sense; row operations, such as dividing a row by a constant, swapping a row, etc, are also invertible (multiply the row by the same constant, swap the row again, etc). Naturally, the inversion of an elementary matrix is also an elementary matrix.
+
+    % anything else?
+    % \item \textit{Nothing else}
+\end{itemize}
+
+\subsubsection{Types of Elementary Matrices}
+
+
+
+\newpage
 \section{Summary of Terms}
 This course relies \textbf{heavily} on vocabulary. Below is a brief conglomeration (ignore the oxymoron) of these terms.
 
