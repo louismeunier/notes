@@ -19,7 +19,7 @@
 % settings
 \newpagestyle{mypage}{%
   \headrule
-  \sethead{}{\textcolor{gray}{(\thesubsection) \sectiontitle: \subsectiontitle}}{}
+  \sethead{}{\textit{\textcolor{gray}{(\thesubsection) \sectiontitle: \subsectiontitle}}}{}
   \setfoot{}{\textcolor{gray}{\thepage}}{}
 }
 
@@ -632,7 +632,7 @@ Def:
         \cosh x &= \frac{e^x+e^{-x}}{2}\\
     \end{split}
 \end{equation}
-Hyperbolic trigonometric functions are the "hyperbolic equivalent" of the basic trig functions. This is an admittedly abstract definition, but there is a more concrete definition in section \ref{sec:taylorcomplex}.
+Hyperbolic trigonometric functions are the "hyperbolic equivalent" of the basic trig functions. This is an admittedly abstract definition, but there is a more concrete definition in section \ref{sec:taylorcomplex}, using Taylor Polynomials and complex numbers.
 
 The derivatives are as follows; for $\sinh x$:
 
@@ -1334,7 +1334,7 @@ In this example, say $y(0) = 3$. We can write:
 A number of real-world scenarios and trends can be represented as a differential equation, and the following section will explore some of the most common models. It will also show a general derivation (not derivative...) of a number of functions outside of their differential form. 
 
 \begin{itemize}
-    \item[\textbf{I:}] $\mathbf{\alpha y = \frac{dy}{dt}, \alpha \in \real}$ 
+    \item[\textbf{I:}] $\alpha y = \frac{dy}{dt}, \alpha \in \real$ 
     
     When solved for a function $y$ of $t$, this differential equation becomes a (hopefully) familiar form;
     
@@ -1420,7 +1420,15 @@ A number of real-world scenarios and trends can be represented as a differential
             \therefore y(t) &= \frac{N}{1+be^{-kt}}, b = \frac{N-P_0}{P_0}\\
         \end{split}
     \end{equation}
+
+    Just as with Model II, the function approaches $N$ as the time goes to infinity, and as such we can call $N$ the "carrying capacity" or "max population", depending on the context of the problem.
 \end{itemize}
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=9.6cm]{misc/logisticmodel.png}
+    \caption{$y(t) = \frac{N}{1+be^{-kt}}, b = \frac{N-P_0}{P_0}$}
+    \label{fig:logisticmodel}
+\end{figure}
 
 \end{document}
