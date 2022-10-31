@@ -10,14 +10,22 @@
 \usepackage{newtxtext, newtxmath}
 \usepackage{titling}
 \usepackage{setspace}
+\usepackage{titleps}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{framed}
 \usepackage[colorlinks=true, linkcolor=violet]{hyperref}
 
 % settings
+\newpagestyle{mypage}{%
+  \headrule
+  \sethead{}{\textcolor{gray}{(\thesubsection) \sectiontitle: \subsectiontitle}}{}
+  \setfoot{}{\textcolor{gray}{\thepage}}{}
+}
+
 \setlength{\droptitle}{-6em}
 \onehalfspacing
+
 
 \begin{document}
 % commands
@@ -44,7 +52,7 @@
         
         \begin{figure}[!ht]
             \centering
-            \includegraphics[width=20cm]{misc/saddle.png}
+            \includegraphics[width=17cm]{misc/saddle.png}
         \end{figure}
         \vfill
         
@@ -62,10 +70,11 @@
 }
 
 \newpage
+\pagestyle{mypage}
 \section{Limits}
-\subsection{Some tricks for solving limits}
+\subsection{Tricks for solving limits}
 \setlength\itemsep{5em}
-\subsubsection{$\frac{x}{x}$}
+\subsubsection{\texorpdfstring{$\frac{x}{x}$}{TEXT}}
 
 In some situations, you can multiply a limit by some factor of $\frac{x}{x}$ to simplify an otherwise "impossible" limit
 
@@ -87,7 +96,7 @@ The terms $\frac{3}{x}$ and $\frac{5}{x}$ both tend to $0$ as $x \to \infty$, so
  \end{split}
 \end{equation}  
 
-\subsubsection{Intuition with $\infty$}
+\subsubsection{Intuition with \texorpdfstring{$\infty$}{TEXT}}
 
 In limits involving fractions where both numerator and denominator are polynomials, you can intuitively calculate the limit using the coefficients/powers.
 
@@ -235,7 +244,7 @@ eg:
 \newpage
 \section{Exponential and Logarithmic Functions}
 \subsection{Exponential Functions}
-\subsubsection{Defining $e$}
+\subsubsection{Defining \texorpdfstring{$e$}{TEXT}}
 
 An exponential function is any $f(x)$ of the form $f(x) = a^x$. To find the derivative, $f'(x)$:
 
@@ -283,7 +292,7 @@ Extending this further for e;
     \end{split}
 \end{equation}
 
-\subsubsection{Generalizing $\frac{d}{dx} a^x$}
+\subsubsection{Generalizing \texorpdfstring{$\frac{d}{dx} a^x$}{TEXT}}
 
 From eqn. 8:
 
@@ -340,7 +349,7 @@ When $a = e$:
     \end{split}
 \end{equation}
 
-\subsection{Obtaining $e$ as a limit}
+\subsection{Obtaining \texorpdfstring{$e$}{TEXT} as a limit}
 
 Let $f(x) = \ln x, \therefore f(1) = \ln 1 = 0$. In addition, $f'(x) = \frac{1}{x}, \therefore f'(1) = 1/1 = 1$. We can use the definition of a limit to say the following:
 
@@ -455,7 +464,7 @@ When $a = 0$, this polynomial becomes called a \textbf{Maclaurin Polynomial}:
 
 $$P_n(x) = \sum_{n=0}^{N} \frac{x^n f^n(0)}{n!}$$
 
-\subsubsection{Relationship between $f(x)$ and $P_N(x)$}
+\subsubsection{Relationship between \texorpdfstring{$f(x)$}{TEXT} and \texorpdfstring{$P_N(x)$}{TEXT}}
 
 While, intuitively, it makes sense that $P_N(x)$ becomes a better approximation of $f(x)$ as $N\to\infty$, this isn't necessarily true.
 
@@ -475,7 +484,7 @@ $$f(x) = \lim_{N\to\infty}[\sum_{n=0}^N \frac{(x-a)^n f^{N}(a)}{n!} + \frac{(x-a
 
 Therefore, $f(x) = P_N(x)$ if, and only if, $\lim_{N\to\infty} R_N(x) = 0$. Logically, this should make sense; if there is no remainder, then the approximation is equal to the original function.
 
-\subsection{"Complex" Applications of Taylor Polynomials}\label{sec:taylorcomplex}
+\subsection{Taylor Polynomials, Applied Example}\label{sec:taylorcomplex}
 
 Using Taylor Polynomials, we can explore a number of interesting properties of functions, and even derive some unique expressions. For instance (assuming $R_N(x) = 0$):
 
@@ -746,7 +755,7 @@ If the \textbf{discriminant}, $\beta^2-4\alpha\gamma$, is $<0$, then the equatio
 
 This final, simplified form, $a \pm ib$, is also known as "complex conjugates", which has one part ($a$) that is real, and one part ($ib$) that is imaginary. Generally, this is written as $z = a + ib$
 
-\subsection{De Moivre's Formula and Extensions}
+\subsection{De Moivre's Formula and Related}
 
 \begin{figure}
     \centering
@@ -949,7 +958,7 @@ In many situations, you will have to ensure that your min/max fits within some e
         \item If it doesn't, this usually means your ACTUAL min/max is one of the endpoints, so be careful for this
     \end{itemize}
 \end{itemize}
-\subsection{Calculating Error and Uncertainty}
+\subsection{Error and Uncertainty}
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=9cm]{misc/differentialserrors.png}
@@ -1043,7 +1052,7 @@ Often times, the relative change is also asked for. This is simple $\frac{dx}{x}
     \label{fig:newtonsmethod}
 \end{figure}
 
-\subsection{Overview/Summary of Derivative-Related Theorems}
+\subsection{Derivative-Related Theorems}
 
 Following are a number of theorems related to derivatives, and limits. While many of them are already described above, some are not.
 
@@ -1106,7 +1115,7 @@ Using calculus (and other properties of functions), we can sketch curves with fa
 
 \newpage
 \section{Integration}
-\subsection{Definition of Antiderivatives and Indefinite Integrals}
+\subsection{Defining Antiderivatives}
 
 For a function $f(x)$, we can say that:
 
@@ -1377,7 +1386,7 @@ A number of real-world scenarios and trends can be represented as a differential
     
     If the value of $y_0-N$ is positive, then this limit is approached from above (ie, the function is \textit{lower bounded} by $N$), and if $y_0-N$ is negative, then the limit is approached from below (\textit{upper bounded} by $N$). See figure \ref{fig:newtonscooling} for a visual representation of the difference, assuming a constant $y_0$.
     
-    \begin{figure}
+    \begin{figure}[!ht]
         \centering
         \includegraphics[width=9.6cm]{misc/newtonscooling.png}
         \caption{$y=N+(y_0-N)e^{-kt}, y_0-N > 0$ vs $y_0-N < 0$}
@@ -1387,12 +1396,31 @@ A number of real-world scenarios and trends can be represented as a differential
     \item[\textbf{III:}] $\dydx = \frac{k}{N}y(N-y)$
     
     This differential equation represents a general form of the \textbf{logistic equation}, commonly used in population modeling in ecology and other fields. Solving this differential equation for $y$ as a function of $x$ goes as follows:
-    
-    % \begin{equation}
-    %     \begin{split}
-    %         \dydx &= \frac{k}{N}y(N-y)\\
-            
-    %     \end{split}
-    % \end{equation}
+    % this is all wrong
+    \begin{equation}
+        \begin{split}
+            \dydx &= \frac{k}{N}y(N-y)\\
+            \frac{dy}{y(N-y)} &= \frac{k dx}{N}\\
+            \int \frac{dy}{y(N-y)} &= \int \frac{k dx}{N}\\
+            \int [\frac{\frac{1}{N}}{y} + \frac{\frac{1}{N}}{N-y}] dy &= \frac{k}{N} x + C\\
+            \frac{1}{N}(\ln|y| - ln|N-y|) &= \frac{k}{N} x + C\\
+            \ln|\frac{y}{N-y}| &= kx + D, D = CN\\
+            \frac{y}{N-y} &= Ke^{kx}, K = \pm e^D\\
+            y &= \frac{NKe^{kx}}{1+Ke^{kx}} =\frac{NKe^{kx}}{1+Ke^{kx}} \frac{\frac{e^{-kt}}{K}}{\frac{e^{-kt}}{K}}\\
+            &= \frac{N}{\frac{e^{-kt}}{K} + 1} = \frac{N}{1+be^{-kt}}, b = \frac{1}{K}\\
+        \end{split}
+    \end{equation}
+
+    If we say $y(0) = P_0$, or the initial population, then we can simplify further and say:
+
+    \begin{equation}
+        \begin{split}
+            y(0) = P_0 &= \frac{N}{1+b}\\
+            \implies b &= \frac{N}{P_0} - 1 = \frac{N-P_0}{P_0}\\
+            \therefore y(t) &= \frac{N}{1+be^{-kt}}, b = \frac{N-P_0}{P_0}\\
+        \end{split}
+    \end{equation}
 \end{itemize}
+
+
 \end{document}
