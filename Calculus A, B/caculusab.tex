@@ -19,7 +19,7 @@
 % settings
 \newpagestyle{mypage}{%
   \headrule
-  \sethead{}{\textit{\textcolor{gray}{(\thesubsection) \sectiontitle: \subsectiontitle}}}{}
+  \sethead{\textcolor{gray}{\thesubsection}}{}{\textcolor{gray}{\sectiontitle: \subsectiontitle}}
   \setfoot{}{\textcolor{gray}{\thepage}}{}
 }
 
@@ -1393,20 +1393,20 @@ A number of real-world scenarios and trends can be represented as a differential
         \label{fig:newtonscooling}
     \end{figure}
     
-    \item[\textbf{III:}] $\dydx = \frac{k}{N}y(N-y)$
+    \item[\textbf{III:}] $\frac{dy}{dt} = \frac{k}{N}y(N-y)$
     
     This differential equation represents a general form of the \textbf{logistic equation}, commonly used in population modeling in ecology and other fields. Solving this differential equation for $y$ as a function of $x$ goes as follows:
     % this is all wrong
     \begin{equation}
         \begin{split}
-            \dydx &= \frac{k}{N}y(N-y)\\
-            \frac{dy}{y(N-y)} &= \frac{k dx}{N}\\
-            \int \frac{dy}{y(N-y)} &= \int \frac{k dx}{N}\\
-            \int [\frac{\frac{1}{N}}{y} + \frac{\frac{1}{N}}{N-y}] dy &= \frac{k}{N} x + C\\
-            \frac{1}{N}(\ln|y| - ln|N-y|) &= \frac{k}{N} x + C\\
-            \ln|\frac{y}{N-y}| &= kx + D, D = CN\\
-            \frac{y}{N-y} &= Ke^{kx}, K = \pm e^D\\
-            y &= \frac{NKe^{kx}}{1+Ke^{kx}} =\frac{NKe^{kx}}{1+Ke^{kx}} \frac{\frac{e^{-kt}}{K}}{\frac{e^{-kt}}{K}}\\
+            \frac{dy}{dt} &= \frac{k}{N}y(N-y)\\
+            \frac{dy}{y(N-y)} &= \frac{k dt}{N}\\
+            \int \frac{dy}{y(N-y)} &= \int \frac{k dt}{N}\\
+            \int [\frac{\frac{1}{N}}{y} + \frac{\frac{1}{N}}{N-y}] dy &= \frac{k}{N} t + C\\
+            \frac{1}{N}(\ln|y| - ln|N-y|) &= \frac{k}{N} t + C\\
+            \ln|\frac{y}{N-y}| &= kt + D, D = CN\\
+            \frac{y}{N-y} &= Ke^{kt}, K = \pm e^D\\
+            y &= \frac{NKe^{kt}}{1+Ke^{tx}} =\frac{NKe^{kt}}{1+Ke^{kt}} \frac{\frac{e^{-kt}}{K}}{\frac{e^{-kt}}{K}}\\
             &= \frac{N}{\frac{e^{-kt}}{K} + 1} = \frac{N}{1+be^{-kt}}, b = \frac{1}{K}\\
         \end{split}
     \end{equation}
@@ -1422,6 +1422,28 @@ A number of real-world scenarios and trends can be represented as a differential
     \end{equation}
 
     Just as with Model II, the function approaches $N$ as the time goes to infinity, and as such we can call $N$ the "carrying capacity" or "max population", depending on the context of the problem.
+
+    Another interesting property of the logistic model comes about from exploring its derivatives. It's first derivative is clear, as it is given in the expression of the logistic model as a differential equation. This first derivative ($\frac{dy}{dt}$) is \textit{always positive}, which should be clear from inspection of $y(t)$; since $y(t)$ involves an exponential, it is always increasing, and as such the derivative is always positive. 
+
+    Looking at the second derivative ($\frac{d^2y}{dt^2}$) reveals some slightly more interesting properties. Recall that the second derivative represents the "instantaneous change" in the first derivative, and in the context of population growth, for example, represents the change in how fast the population is growing. By extension, the inflection point of the logistic model would represent when the change in the population growth rate is at a maximum (or minimum, but the work below will show that it is indeed a maximum).
+
+    We can find this inflection point (IP) by doing the follow:
+
+    \begin{equation}
+        \begin{split}
+            \frac{dy}{dt} &= \frac{k}{N}y(N-y) = ky - \frac{ky^2}{N}\\
+            \frac{d^2y}{dt^2} &= k - \frac{2ky}{N}\\
+            k - \frac{2ky}{N} &= 0\\
+            y &= \frac{N}{2}\\
+            f(t) &= \frac{N}{2} = \frac{N}{1+be^{-kt}}\\
+            1+be^{-kt} &= 2\\
+            e^{-kt} &= \frac{1}{b}\\
+            t &= -\frac{1}{k}\ln(\frac{1}{b}) = \ln((\frac{1}{b})^{-\frac{1}{k}})\\
+            t &= \ln[(\frac{N-P_0}{P_0})^{\frac{1}{k}}]
+        \end{split}
+    \end{equation}
+
+    As such, the point $(\ln[(\frac{N-P_0}{P_0})^{\frac{1}{k}}],\frac{N}{2})$ is an inflection point, and represents the maximum change in population growth (proving this is relatively straightforward, and is omitted here).
 \end{itemize}
 
 \begin{figure}[!ht]
