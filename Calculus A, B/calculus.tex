@@ -1425,7 +1425,7 @@ A number of real-world scenarios and trends can be represented as a differential
 
     Another interesting property of the logistic model comes about from exploring its derivatives. It's first derivative is clear, as it is given in the expression of the logistic model as a differential equation. This first derivative ($\frac{dy}{dt}$) is \textit{always positive}, which should be clear from inspection of $y(t)$; since $y(t)$ involves an exponential, it is always increasing, and as such the derivative is always positive. 
 
-    Looking at the second derivative ($\frac{d^2y}{dt^2}$) reveals some slightly more interesting properties. Recall that the second derivative represents the "instantaneous change" in the first derivative, and in the context of population growth, for example, represents the change in how fast the population is growing. By extension, the inflection point of the logistic model would represent when the change in the population growth rate is at a maximum (or minimum, but the work below will show that it is indeed a maximum).
+    Recall that the second derivative represents the derivative of the first derivative, and in the context of population growth, for example, represents the change in how fast the population is growing. By extension, the inflection point of the logistic model would represent when the change in the population growth rate is at a maximum (or minimum, but the work below will show that it is indeed a maximum).
 
     We can find this inflection point (IP) by doing the follow:
 
@@ -1444,14 +1444,17 @@ A number of real-world scenarios and trends can be represented as a differential
     \end{equation}
 
     As such, the point $(\ln[(\frac{N-P_0}{P_0})^{\frac{1}{k}}],\frac{N}{2})$ is an inflection point, and represents the maximum change in population growth (proving this is relatively straightforward, and is omitted here).
+
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=10cm]{misc/logisticmodel.png}
+        \caption{$y(t) = \frac{N}{1+be^{-kt}}, b = \frac{N-P_0}{P_0}$}
+        \label{fig:logisticmodel}
+    \end{figure}
+
+    \item[\textbf{IV:}] $\frac{dy}{dt} + P(t) y = f(t)$
 \end{itemize}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=10cm]{misc/logisticmodel.png}
-    \caption{$y(t) = \frac{N}{1+be^{-kt}}, b = \frac{N-P_0}{P_0}$}
-    \label{fig:logisticmodel}
-\end{figure}
 
 
 \end{document}

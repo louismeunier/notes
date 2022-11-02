@@ -23,9 +23,10 @@
 
 \newpagestyle{mypage}{%
   \headrule
-  \sethead{\MakeUppercase{}}{\textcolor{gray}{\thesubsection: \subsectiontitle}}{}
+  \sethead{\textcolor{gray}{\thesubsection}}{}{\textcolor{gray}{\sectiontitle: \subsectiontitle}}
   \setfoot{}{\textcolor{gray}{\thepage}}{}
 }
+
 
 \pagestyle{mypage}
 
@@ -929,6 +930,28 @@ It should be noted that you will often see problems with the following format, f
 While this may seem scary, since it is a whole lot of matrix-matrix multiplication, once you are able to determine what operation each $E_n$ performs, calculating this should be fairly straightforward. Simply find $A$ after $E_1$'s operations on performed on it, then after $E_2$ is performed on the result of that, etc..
 
 \subsection{Distances}
+
+% this sounds badly worded
+Finding the distance between arbitrary figures in a particular space is very important in a number of applications. This section will cover the general trend for finding the distance between points, lines, and planes in $\real^{n}$.
+
+\subsubsection{Point to Point}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=8cm]{misc/vectordistance.png}
+    \caption{Vector-vector distance}
+    \label{fig:vectorvectordistances}
+\end{figure}
+
+Given two points, we can consider the point as the tip of a vector in the respective base (see figure \ref{fig:vectorvectordistances}). From here, the distance between the two vectors is clear: it is simply the length of the vector between the two points. If we consider two vectors $\vec{x}$ and $\vec{y}$, then we can write the distance vector $\vec{d}$ as:
+
+$$\vec{x} + \vec{d} = \vec{y} \implies \vec{d} = \vec{y} - \vec{x}$$
+
+From here, we simply find the length of $\vec{d}$, denoted as $\| \vec{d} \| $, using the Pythagorean theorem (and its higher-dimension extensions...):
+
+$$\| \vec{d} \|  = \sqrt{d_1^2 + d_2^2 + ... + d_n^2}$$
+
+\subsubsection{Point to Line}
 
 \section{Unit 3}
 

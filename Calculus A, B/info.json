@@ -10,5 +10,8 @@
         "https://www.mcgill.ca/study/2022-2023/courses/math-151"
     ],
     "date_created": "09/01/2022",
-    "date_completed": ""
+    "date_completed": "",
+    "tags": {
+        "subject": "mathematics"
+    }
 }

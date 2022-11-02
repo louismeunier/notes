@@ -4,5 +4,8 @@
     "university_name": "UC Berkeley Extension",
     "link": "https://extension.berkeley.edu/search/publicCourseSearchDetails.do?method=load&courseId=22828946",
     "date_created": "03/14/2021",
-    "date_completed": "08/07/2021"
+    "date_completed": "08/07/2021",
+    "tags": {
+        "subject": "mathematics"
+    }
 }
