@@ -959,6 +959,7 @@ In many situations, you will have to ensure that your min/max fits within some e
     \end{itemize}
 \end{itemize}
 \subsection{Error and Uncertainty}
+\subsubsection{Uncertainty}
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=9cm]{misc/differentialserrors.png}
@@ -1008,7 +1009,7 @@ As shown, $dy$ is a good approximation for $\Delta y$ when $\delta x$ is relativ
 
 In reality, $\cos(\frac{\pi}{3}+0.05) = -0.044$, demonstrating how accurate (and easy-to-compute) this method is.
 
-\subsubsection{Errors}
+\subsubsection{Error}
 Using very similar reasoning to above, we can use differentials to find the range of error in a calculation. If given the error (change) of one variable in a formula, you can then use implicit differentiation, solve for the error (change) in the desired variable.
 
 Often times, the relative change is also asked for. This is simple $\frac{dx}{x}$.
@@ -1281,7 +1282,7 @@ $$-cot(\theta)-\theta + C = -\frac{\sqrt{9-x^2}}{x}-\sin^{-1}(\frac{x}{3})+C$$
 
 A \textbf{differential equation} is an equation that contains an unknown function and some of its derivatives. We can more specifically describe differential equations by their \textbf{order}, which is the number of the highest derivative in the equation, ie, a first order differential equation is of the form $F(x,y,y')$.
 
-\subsection{Variables Separable}
+\subsection{Variables Separable}\label{sec:separable}
 
 While not all differential equations are solvable (or at least, easily solvable), one (of many) special cases is of the form:
 
@@ -1451,10 +1452,74 @@ A number of real-world scenarios and trends can be represented as a differential
         \caption{$y(t) = \frac{N}{1+be^{-kt}}, b = \frac{N-P_0}{P_0}$}
         \label{fig:logisticmodel}
     \end{figure}
-
-    \item[\textbf{IV:}] $\frac{dy}{dt} + P(t) y = f(t)$
 \end{itemize}
 
+% aka "model 4"
+\subsection{Linear Equations}
+
+A \textbf{first-order linear differential equation} is a differential equation of the general form:
+
+$$\frac{dy}{dx} + P(x)y = Q(x)$$,
+
+where $P$ and $Q$ are continuous over a particular interval.
+
+Notice that this form \textit{does not} fit the form of a separable equation (see \ref{sec:separable}), and thus is not solvable using the same method.
+
+Instead, we have to use a new function, called an \textbf{integrating factor}, called $I(x)$, which will make the equation solvable for $y$.
+
+To understand the motivation behind $I(x)$, recall the Product Rule of differentiation:
+
+$$(xy)' = xy'+y$$
+
+We can define $I(x)$ as a factor such that the left-hand side of the general equation becomes the derivative of $I(x)y$, and simplifies as follows:
+
+\begin{equation}
+    \begin{split}
+    I(x)(\frac{dy}{dx} + P(x)y) = (I(x)y)' &= I(x)Q(x)\\
+    \int (I(x)y)' &= \int I(x)Q(x) dx\\
+    I(x)y &=  \int I(x)Q(x) dx + C\\
+    y(x) &= \frac{1}{I(x)}[\int I(x)Q(x) dx + C]\\
+    \end{split}
+\end{equation}
+
+This provides a general solvable form for the equation, but we still need to find $I(x)$ to make this useful. We can do so by rearranging $I(x)(\frac{dy}{dx} + P(x)y) = (I(x)y)'$ as follows:
+
+\begin{equation}
+    \begin{split}
+    I(x)(\frac{dy}{dx} + P(x)y) = I(x)(y'+P(x)y) &= (I(x)y)'\\
+    I(x)y' + I(x)P(x)y &= I'(x)y+I(x)y'\\
+    I(x)P(x)y &= I'(x)y\\
+    I(x)P(x) &= I'(x)\\
+    \end{split}
+\end{equation}
+
+This is just a separable equation, which can be solved for $I$:
+
+\begin{equation}
+    \begin{split}
+        \int \frac{dI}{I} &= \int P(x) dx\\
+        \ln |I| &= \int P(x) dx \\
+        I  &= \pm e^{\int P(x) dx + C} = Ae^{\int P(x) dx}, A=\pm e^{C}\\
+    \end{split}
+\end{equation}
+
+We can typically set $A=1$ for a general $I$. Using these general steps, we can thus solve a linear first order differential equation by multiplying it by the appropriate integrating factor $I(x) = e^{\int P(x) dx}$. For instance, to solve $x^2y'+xy=1$:
+
+\begin{equation}
+    \begin{split}
+        x^2y'+xy &= 1\\
+        y' + \frac{1}{x}y &= \frac{1}{x^2}\\
+        I(x) &= e^{\int \frac{1}{x} dx} = e^{\ln x} = x\\
+        I(x)(y' + \frac{1}{x}y) &= I(x)\frac{1}{x^2}\\
+        xy'+y &= \frac{1}{x}\\
+        (xy)' &= \frac{1}{x}\\
+        \int (xy)' &= \int \frac{1}{x} dx\\
+        xy &= \ln x + C\\
+        y &= \frac{\ln x + C}{x}\\
+    \end{split}
+\end{equation}
+
+Note that the original equation was not in standard form, but we were able to simply divide each factor by $x^2$ to get it into standard form.
 
 
 \end{document}
