@@ -1,7 +1,8 @@
 % backup|Calculus A, B
 \documentclass[12pt]{article}
 % packages
-\usepackage[paper=letterpaper,margin=2cm]{geometry}
+\usepackage[paper=letterpaper,margin=1.6cm]{geometry}
+\usepackage[skip=5pt plus1pt, indent=15pt]{parskip}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
@@ -1126,7 +1127,7 @@ where $\ddx [F(x)+k] = f(x)$, and $k$ is a constant.
 
 For example: $\int x^2 dx = \frac{x^3}{3} + k$.
 
-You can (and should) think of $\int  dx$ and $\ddx$ as \textit{inverse operators} of one another, hence the term "antiderivative". As such, numerous derivative rules have corresponding rules for integrals, which is discussed later. Also note that this type of integration is called \textit{indefinite} because it defines the integral of a function over an \textit{indefinite range}, ie, for all $x$. \textit{Definite integrals} will be discussed later and have their own very particular applications, and define an integral $\int_m^n$ over a particular range $[m,n]$.
+You can (and should) think of $\int  dx$ and $\ddx$ as \textit{inverse operators} of one another, hence the term "antiderivative". As such, numerous derivative rules have corresponding rules for integrals, which is discussed later. Also note that this type of integration is called \textit{indefinite} because it defines the integral of a function over an \textit{indefinite range}, ie, for all $x$. \textit{Definite integrals} will be discussed later and have their own very particular applications, and define an integral $\int_m^n$ over a range $[m,n]$.
 
 \subsection{Techniques of Integration}
 \subsubsection{Known Formulas of Derivatives}
@@ -1165,7 +1166,7 @@ Note that solving this integral involved using the inverse of the "power rule" o
 
 \subsubsection{By Parts}
 
-Given functions $u$ and $v$, we can write:
+Given two functions $u$ and $v$, we can write:
 
 \begin{equation}
 \begin{split}
@@ -1185,7 +1186,7 @@ For example, to calculate the integral of $x e^{ax}$:
         x &= u, du = dx\\
     e^{ax} dx &= dv, v = \frac{e^{ax}}{a}\\
     &\int x e^{ax} dx = x \frac{e^{ax}}{a} - \int \frac{e^{ax}}{a} dx\\
-    &= \frac{xe^{ax}}{a} - \frac{e^{ax}}{a^2}+c\\
+    &= \frac{xe^{ax}}{a} - \frac{e^{ax}}{a^2}+C\\
     \end{split}
 \end{equation}
 
@@ -1300,7 +1301,7 @@ This is the form of a function of $x$ times a function of $y$, indicating the pa
     \end{split}
 \end{equation}
 
-From here, integrating both sides yields either $y$ as a function of $x$, or $x$ as a function of $y$.
+From here, integrating both sides yields either $y$ as a function of $x$, or $x$ as function of $y$ (which you solve for depends on the context of the question).
 
 For example, take: $\frac{dy}{dx} = x^2 y - y + x^2 -1$. This can be rewritten as a separable equation:
 
@@ -1419,12 +1420,14 @@ A number of real-world scenarios and trends can be represented as a differential
             y(0) = P_0 &= \frac{N}{1+b}\\
             \implies b &= \frac{N}{P_0} - 1 = \frac{N-P_0}{P_0}\\
             \therefore y(t) &= \frac{N}{1+be^{-kt}}, b = \frac{N-P_0}{P_0}\\
+            y(t) &= \frac{NP_0}{P_0 + (N-P_0)e^{-kt}}\\
         \end{split}
     \end{equation}
 
     Just as with Model II, the function approaches $N$ as the time goes to infinity, and as such we can call $N$ the "carrying capacity" or "max population", depending on the context of the problem.
 
-    Another interesting property of the logistic model comes about from exploring its derivatives. It's first derivative is clear, as it is given in the expression of the logistic model as a differential equation. This first derivative ($\frac{dy}{dt}$) is \textit{always positive}, which should be clear from inspection of $y(t)$; since $y(t)$ involves an exponential, it is always increasing, and as such the derivative is always positive. 
+    Another interesting property of the logistic model comes about from exploring its derivatives. It's first derivative is clear, as it is given in the expression of the logistic model as a differential equation. This first derivative ($\frac{dy}{dt}$) is \textit{always positive}, which should be clear from inspection of the original formula for $\frac{dy}{dt}$, as both $N$ and $y$ are always positive, and $N$ must be greater than $y$.
+    % rewrite above, the justification is wrong
 
     Recall that the second derivative represents the derivative of the first derivative, and in the context of population growth, for example, represents the change in how fast the population is growing. By extension, the inflection point of the logistic model would represent when the change in the population growth rate is at a maximum (or minimum, but the work below will show that it is indeed a maximum).
 
@@ -1461,13 +1464,9 @@ A \textbf{first-order linear differential equation} is a differential equation o
 
 $$\frac{dy}{dx} + P(x)y = Q(x)$$,
 
-where $P$ and $Q$ are continuous over a particular interval.
+where $P$ and $Q$ are continuous over a particular interval. Notice that this form \textit{does not} fit the form of a separable equation (see \ref{sec:separable}), and thus is not solvable using the same method.
 
-Notice that this form \textit{does not} fit the form of a separable equation (see \ref{sec:separable}), and thus is not solvable using the same method.
-
-Instead, we have to use a new function, called an \textbf{integrating factor}, called $I(x)$, which will make the equation solvable for $y$.
-
-To understand the motivation behind $I(x)$, recall the Product Rule of differentiation:
+Instead, we have to use a new function, called an \textbf{integrating factor}, called $I(x)$, which will make the equation solvable for $y$. To understand the motivation behind $I(x)$, recall the product rule for calculating derivatives:
 
 $$(xy)' = xy'+y$$
 
