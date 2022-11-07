@@ -108,7 +108,7 @@ $$
 \begin{enumerate}
     \item $\mathbf{m > n}:$ $\infty$
     \item $\mathbf{m < n}:$ $0$ 
-    \item $\mathbf{m = n}:$  $\frac{m}{n}$ \textit{(since both of the powers are the same "strength" ie $\infty$, you can think about this, albeit not 100\% correctly, as if the infinities are cancelling out)}
+    \item $\mathbf{m = n}:$  $\frac{m}{n}$ \textit{(since both of the powers are the same "strength" ie $\infty$, you can think of this as the infinities "cancelling out"). To prove this idea actually works, use the method above.}
 \end{enumerate}
 
 \subsubsection{L'Hôpital's Rule}
@@ -132,7 +132,9 @@ eg:
 
 $$\lim_{x\to0}\frac{\sqrt{ax + b} - 2}{x} = 1$$
 
-In order for this limit to even exist, $\lim_{x\to0} \sqrt{ax + b} - 2$ MUST equal 0. Otherwise, the resulting form will either be undefined (left and right limits will have different values), or infinity.
+In order for this limit to even exist, $\lim_{x\to0} \sqrt{ax + b} - 2$ MUST equal 0, following the quotient rule of limits, which states:
+
+$$\lim_{x\to c} \frac{f(x)}{g(x)} = \frac{\lim_{x\to c} f(x)}{\lim_{x\to c} g(x)}$$
 
 So:
 \begin{equation}
@@ -187,7 +189,7 @@ This makes a lot more sense in practice:
         \lim_{x\to0} x^4 sin(\frac{x}{2}) = ?\\
         -1 \leq sin(\frac{x}{2}) \leq 1\\
         -x^4 \leq x^4 sin(\frac{x}{2}) \leq x^4\\
-        -(0)^4 = (0)^4 = 0 \therefore \lim_{x\to0} x^4 sin(\frac{x}{2}) = 0
+        \lim_{x\to 0} -x^4 = \lim_{x\to 0} x^4 = 0 \therefore \lim_{x\to0} x^4 sin(\frac{x}{2}) = 0
     \end{split}
 \end{equation}
 
@@ -1334,7 +1336,7 @@ In this example, say $y(0) = 3$. We can write:
 \subsection{Mathematical Models}
 
 % wtf does this mean? rewrite...
-A number of real-world scenarios and trends can be represented as a differential equation, and the following section will explore some of the most common models. It will also show a general derivation (not derivative...) of a number of functions outside of their differential form. 
+A number of real-world scenarios can be represented using differential equations, and the following are some of more common/useful forms, as well as their general solutions and applications.
 
 \begin{itemize}
     \item[\textbf{I:}] $\alpha y = \frac{dy}{dt}, \alpha \in \real$ 
@@ -1520,6 +1522,38 @@ We can typically set $A=1$ for a general $I$. Using these general steps, we can 
 \end{equation}
 
 Note that the original equation was not in standard form, but we were able to simply divide each factor by $x^2$ to get it into standard form.
+
+\subsection*{Orthogonal Families of Curves}
+
+Using differential equation, we can determine the general equation of curves orthogonal (ie "perpendicular") to a given curve (or, typically, family of curves). Consider the general family of curves described by;
+
+$$ax^2+by^2=k,$$
+
+where $a,b,k$ are real constants. The derivative of any perpendicular curve must be the negative reciprocal of the derivative of the original curve (by the very definition of perpendicularity), so we can find the derivative of the original curve as follows, using implicit differentiation:
+
+\begin{equation}
+    \begin{split}
+        ax^2+by^2 &= k\\
+        2ax + 2by\dydx &= 0\\
+        \dydx &= \frac{-2ax}{2by} = -\frac{ax}{by}\\
+        \therefore m_{orth.} &= -(\dydx)^{-1} = \frac{by}{ax}\\
+    \end{split}
+\end{equation}
+
+If we define $P$ as the orthogonal curve's $y$-value, we can then find a general equation for the orthogonal curve as a function of $x$ by rewriting it as a (\textit{separable}) differential equation:
+
+\begin{equation}
+    \begin{split}
+        \frac{dP}{dx} &= m_{orth.} = \frac{by}{ax} = \frac{bP}{ax}\\
+        \frac{dP}{bP} &= \frac{dx}{ax}\\
+        \int \frac{dP}{bP} &= \int \frac{dx}{ax}\\
+        \frac{1}{b}\ln |P| &= \frac{1}{a}\ln |x| + C\\
+        \ln |P| \frac{b}{a}&=\ln|x|+C\\
+        P(x) = Ke^{\ln |x^{\frac{b}{a}}|} &= Kx^{\frac{b}{a}}, K = \pm e^{C}\\
+    \end{split}
+\end{equation}
+
+This general method can be used to find the general equation of any curve orthogonal to a given curve (assuming the given curve is differentiable).
 
 \section{Partial Derivatives}
 \end{document}
