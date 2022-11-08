@@ -1579,7 +1579,7 @@ Functions of many variables can often be difficult to visualize (particularly of
 
 \begin{figure}
     \centering
-    \includegraphics[width=7.cm]{misc/levelcurves.png}
+    \includegraphics[width=6.5cm]{misc/levelcurves.png}
     \caption{Level curves of $f(x,y) = x^2 + y^2$}
     \label{fig:levelcurves}
 \end{figure}
@@ -1589,4 +1589,20 @@ While this is helpful, 3D plots aren't always realistic to use to visualize a fu
 Note that, while harder to visualize, functions of more than two variables can be described in a similar manner. For instance, a function of three variables can be described as a surface in 4D, and a function of four variables can be described as a surface in 5D, and so on. By extension, we can also describe the level curves of a function of $n$ variables as a family of functions in $n$ (ie a function of 3 variables can be visualized as a level plot in 3D).
 
 \subsection{Limits}
+
+A limit of a function of multiple variables is described as the value of said function when all of its variables approach a particular coordinate. For the function $f(x,y)$, for example, we can write its limit as it approaches some point $(a,b)$:
+
+$$\lim_{(x,y)\to(a,b)}f(x,y)$$
+
+Determining limits (and in particular, if a limit exists) is not quite as straightforward as for functions of a single variable. For a function $f(x)$ and a point $a$, for instance, if the limit approaching from the right ($a^{+}$) doesn't equal the limit approaching from the left ($a^{-}$), then the limit doesn't exist. For a function of two variables, though, a limit can be approached from an infinite number of directions, assuming the corresponding $(x,y)$ is still in the domain of the function. By extension, we can only say that a limit exists in this case if, no matter which direction we approach the limit from, the limit is the same.
+
+We can use, however, the precise definition of a limit to more accurately define a limit of $f(x,y)$ with domain $D$ as it approaches $(a,b)$:
+
+$$\lim_{(x,y)\to(a,b)} f(x,y) = L$$
+
+if for every $\epsilon > 0$, there exists a $\delta >0$ such that if $(x,y)\in D$ and $0<\sqrt{(x-a)^2+(y-b)^2}<\delta$, then $|f(x,y)-L|<\epsilon$.
+
+By extension of this definition of a limit, we can say a function $f(x,y)$ is continuous at $(a,b)$ if $\lim_{(x,y)\to(a,b)} f(x,y) = f(a,b)$, very similarly to the definition of continuity for a function of a single variable.
+
+\subsection{Partial Derivatives}
 \end{document}
