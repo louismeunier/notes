@@ -1033,7 +1033,67 @@ Beyond these distances, other further combinations can be found by applying simi
 
 \subsection{Curve Fitting}
 
-One application (of many) of linear algebra, and specifically, the ability to find distances between different elements in any particular base is in \textit{curve fitting}. Given a set of coordinates, blah blah blah
+One application (of many) of linear algebra, and specifically, the ability to find distances between different elements in any particular base is in \textit{curve fitting}. The process is a little abstract to describe generally, so first consider the following set of points (and corresponding graph, figure \ref{fig:curvefittingexample}):
+
+$$(x,y) = (-2,0), (1,3), (2,5), (3,5)$$
+
+It seems as if these points generally follow a linear trend, so we can try to find a line that fits the points as well as possible (\textit{note that a similar method to the following can be used for a polynomial trend, an exponential trend, etc, but with a little more work}). A line can be described by the equation $y = mx+b$, so our goal is to find the values of $m$ and $b$ that minimize the distance between the line and the points. We can write, for each individual point:
+
+\begin{equation}
+    \begin{split}
+        y &= mx+b\\
+        0 &= m(-2)+b\\
+        3 &= m(1)+b\\
+        5 &= m(2)+b\\
+        5 &= m(3)+b
+    \end{split}
+\end{equation}
+
+It should (hopefully) be clear that this is a system of equations for the variables $m$ and $b$. We can, as described earlier, consider this as a matrix equation of $A\vec{x} = \vec{y}$, where $A$ is the matrix of coefficients, $\vec{x}$ is the vector of variables, and $\vec{y}$ is the vector of $y$ values. We can write this as:
+
+\begin{equation}
+    \begin{split}
+        \begin{bmatrix}
+            0\\
+            3\\
+            5\\
+            5
+        \end{bmatrix} &= m \begin{bmatrix}
+            -2\\
+            1\\
+            2\\
+            3
+        \end{bmatrix} + b \begin{bmatrix}
+            1\\
+            1\\
+            1\\
+            1
+        \end{bmatrix}\\
+        \begin{bmatrix}
+            0\\
+            3\\
+            5\\
+            5
+        \end{bmatrix} &= \begin{bmatrix}
+            m\\
+            b\\
+        \end{bmatrix} \begin{bmatrix}
+            -2 & 1\\
+            1 & 1\\
+            2 & 1\\
+            3 & 1
+        \end{bmatrix}\\
+        \vec{y} &= \vec{x}A
+    \end{split}
+\end{equation}
+
+\textit{The last line here may seem a little bizarre, but should make more sense using the column-view of a matrix-vector multiplication.} We could solve this system of equations using Gaussian elimination as always, but it should be clear that it will be inconsistent. Intuitively, there is clearly no line that goes through all the points, and as such, there is no $m$ and $b$ that makes this equation true. You can also conclude this by looking at the rows of the $A$ matrix, which, if reduced, will not be consistent.
+
+As such, we have to find the $m$ and $b$ that make this equation "as close to true" as possible. We define a new vector $\vec{z}$, where $\vec{z} = A\vec
+x$. As described in an earlier section, we can find the shortest distance between two vectors by finding the projection of one onto the other, and we can then use this said projection to solve the system of equations. This is a fine method, but is very tedious and time-consuming, particularly for systems of multiple hundreds of data points.
+
+
+% add figure here
 
 \subsection{Orthogonality and the Transpose of a Vector}
 
