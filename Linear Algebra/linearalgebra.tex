@@ -952,10 +952,88 @@ From here, we simply find the length of $\vec{d}$, denoted as $\| \vec{d} \| $, 
 $$\| \vec{d} \|  = \sqrt{d_1^2 + d_2^2 + ... + d_n^2}$$
 
 \subsubsection{Point to Line}
+% rephrase, a little confusing
+Finding the distance between a point and a line (specifically, the shortest distance; this is really the only helpful one that should be found, as any point can be considered an infinite distance from a particular point on a line...) requires a little more intuitive and computation (though it can be simplified later). First, to understand how to find this shortest distance, we have to consider the properties of a particular point on the line in question that creates this shortest distance with our given point. Perhaps this is intuitive, but this point is the point on the line that forms a distance vector that is perpendicular to the line. 
+
+Consider a point $P = (a,b)$, a line $L$, a distance vector $\vec{d}$, in $\real^2$ (any base could work, but this is clearly the easiest to visualize), and the figure \ref{fig:pointtolinedistance}, as it is hard to visualize based off these words alone.
+
+% add figure here
+
+% standardize notation here - d'? d_\perp? etc
+From the figure, it should be clear that if $\vec{d}$ is drawn anywhere else along the line $L$, it will be longer than if drawn perpendicular. You can visualize this as $\vec{d'}$ forming the hypotenuse of a triangle, with another side being $\vec{d_{\perp}}$; the hypotenuse is always the longest side of a triangle, and thus, $\vec{d'}$ would be longer than $\vec{d_{\perp}}$. 
+
+As discussed in earlier sections, the projection of a vector perpendicular onto a particular line (or any space really, but a line in this case) is simply $\vec{0}$. As such, we can determine the vector $\vec{d}$ (and from here, naturally, finding its distance) by writing the linear transformation $T(\vec{x}) = proj_{L}\vec{x}$, finding the matrix $A$ that induces this transformation, and finding $\vec{d}$. 
+
+\begin{equation}
+    \begin{split}
+        \vec{d}\perp L \implies T(\vec{d}) = \vec{0}, T(\vec{x}) = proj_L (\vec{x}) \\
+        T(\vec{x}) = M\vec{x} \therefore M\vec{d} = \vec{0} \\
+    \end{split}
+\end{equation}
+
+% add more here, this isn't very clear - better notation
+Note that a very similar method can be used to find the distance between a point and a line that doesn't pass through the origin, by adding the distance from the line to the origin when computing the transformation. 
+
+% add that you can use the known formula for calculating a projection, dot product over magnitude or w/e
+
+% add section about plane to point; same thing, basically
+\subsubsection{Point to Plane}
+
+Finding the distance between a point and a plane is conceptually similar to above, but much harder to visualize. The general methods are as follows, given a plane $P$, that doesn't go through the origin, and a point $Q$ (ie the tip of a vector $\vec{Q}$):
+\begin{itemize}
+    \item Pick any point $R$ on the plane. Using this, we can define $\vec{Q} = \vec{R} + \vec{x}$, where $\vec{R}$ describes the vector with a point at $R$. Note that the important vector here is $\vec{x} ( = \vec{Q}-\vec{R})$.
+    \item Define the distance vector $\vec{d}$ between $Q$ and $P$, which we know is perpendicular to $P$.
+    \item \textbf{The projection of $\vec{x}$ onto $\vec{d}$ is $\vec{d}$, since they share a point at their tips and both touch the plane.}
+    \item By extension, the projection of $\vec{x}$ onto any vector perpendicular to $P$ is $\vec{d}$, so we can use any such vector (say, $\vec{n}$) for the projection:
+    
+    $$proj_{\vec{n}}\vec{x} = \vec{d}$$
+
+    For a plane of form $ax+by+cz=d$, we can use the shortcut of  $\vec{n} = \begin{bmatrix}
+        a \\
+        b \\
+        c
+    \end{bmatrix}$ begin perpendicular to $P$.
+    \item To find this projection, we can simply use the standard formula ($proj_{\vec{b}}\vec{a}=(\frac{\vec{a}\cdot\vec{b}}{||\vec{b}||^2})\vec{b}$).
+
+\end{itemize}
+
+\subsubsection{Further Applications}
+
+Beyond these distances, other further combinations can be found by applying similar ideas.
+
+\begin{itemize}
+    \item \textbf{Line-Plane: } use any point on the line, and use the same method as above for the distance between a point and a plane.
+    \item \textbf{Plane-Plane: } use any point on the plane, and use the same method as above for the distance between a point and a plane.
+    \item \textbf{Line-Line: } find a distance vector $\vec{d}$ such that $\vec{d}$ is perpendicular to both lines (this will be the shortest vector between the two). You can either do so by using standard algebra and Gaussian elimination to find a vector that is perpendicular to both lines, or by using the \textbf{cross product} of the two lines. 
+    
+    A cross product of two vectors $\vec{a}, \vec{b}$ is denoted as $\vec{a}\times\vec{b}$, where the result is the vector perpendicular to the two. The formula for the cross product of vectors $\vec{a} = \begin{bmatrix}
+        a_1 \\
+        a_2 \\
+        a_3
+    \end{bmatrix}$ and $\vec{b} = \begin{bmatrix}
+        b_1 \\
+        b_2 \\
+        b_3
+    \end{bmatrix}$ in $\real^3$ is:
+
+    \begin{equation}
+        \begin{split}
+            \vec{a}\times\vec{b} = \begin{bmatrix}
+                a_2b_3 - a_3b_2 \\
+                a_3b_1 - a_1b_3 \\
+                a_1b_2 - a_2b_1
+            \end{bmatrix}
+        \end{split}
+    \end{equation}
+\end{itemize}
+
+
 
 \section{Unit 3}
 
 \subsection{Curve Fitting}
+
+One application (of many) of linear algebra, and specifically, the ability to find distances between different elements in any particular base is in \textit{curve fitting}. Given a set of coordinates, blah blah blah
 
 \subsection{Orthogonality and the Transpose of a Vector}
 
@@ -971,7 +1049,7 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
         \item $\integers$: integers
         \item $\naturals$: natural numbers
         \item $\real^n$: the $n$th real dimension
-        \item ${...}$: set
+        \item $\{...\}$: set
         \item $\in$: "is in"
         \item $\exists$: "exists"
         \item $\therefore$: "therefore"
