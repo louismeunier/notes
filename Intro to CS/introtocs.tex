@@ -6,6 +6,7 @@
 \usepackage[skip=10pt plus1pt, indent=15pt]{parskip}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{graphics}
 \usepackage{graphicx}
@@ -108,6 +109,10 @@ The 4 methods mentioned above for a singly linked list also apply to a doubly li
 
 It should be noted that even though the \textit{time} complexity is better, the \textit{space} complexity is worse; each node in a doubly-linked list actually contains 3 objects, while each node in a singly-linked list contains 2 (plus the object representing the list itself).
 
+\subsection{Stacks}
+\subsection{Queues}
+
+
 \section{Sorting}
 Sorting algorithms are one of the most common algorithms used in programming, and their efficiency is important to understand. While some are clearly better than others in all circumstances, some are better when inputs are of a certain type/etc..
 
@@ -166,7 +171,8 @@ This continues logically, until the array is sorted. It is important to realize 
                 min = i
             }
         }
-        // swap the min element with the first element of the unsorted section of the array
+        // swap the min element with the first element 
+        // of the unsorted section of the array
         if (min != delim) {
             swap(list[min], list[delim])
         }
@@ -198,7 +204,8 @@ The following steps represent how this algorithm roughly works, where $\blue{|}$
 \begin{verbatim}
     // repeat until list is sorted (~N)
     for i from 0 to N - 1 {
-        // find where the next element in the unsorted portion should be inserted into the sorted part of the list and make space for it
+        // find where the next element in the unsorted portion 
+        // should be inserted into the sorted part of the list and make space for it
         element = list[i]
         k = i
         while (k > 0 && element < list[k-1]) {
@@ -219,4 +226,61 @@ Example steps:
     \item $[1,5,7\blue{|}2]$
     \item $[1,2,5,7\blue{|}]$
 \end{itemize}
+
+\section{Asymptotic Notation}
+
+This section will cover a variety of notations used to analyze a particular function's efficiency.
+
+\subsection{\texorpdfstring{Big-$O$ Notation}{TEXT}}
+
+Formally, given a function $g(n)$, $O(g(n))$ is defined as:
+
+\begin{equation}
+    O(g(n)) = \{f(n): \exists c, n_0 \in \mathbb{N} \text{ s.t. } 0 \leq f(n) \leq c \cdot g(n) \text{ for all } n \geq n_0\}
+\end{equation}
+
+In other words, $O(g(n))$ is the set of functions that are bounded above by a constant multiple of $g(n)$. \textit{This is where the term asymptotic comes from, as the function is asymptotically bounded by $g(n)$}.
+
+Graphically, see figure \ref{fig:bigO}.
+
+% insert graph
+
+To make more sense of this, take the function $5n+70$. 
+
+\begin{proof}
+    Our goal is to find some $c$ such that $cn$ upper bounds $5n+70$ when $n\geq n_0$; in others words, $5n+70 \leq cn, n \geq n_0$.
+
+    Let's pick some $n_0$ that makes the upper bound easy to compute: $n_0 = 1$. 
+    
+    We can use our $n_0$ to see if $c$ exists:
+
+    \begin{equation}
+        \begin{split}
+            5n + 70 \leq cn, n \geq 1 \\
+            5n + 70 \leq 75n, n \geq 1 \\
+            \therefore c = 75\\
+        \end{split}
+    \end{equation}
+
+    Thus, there exists a $n_0$ and corresponding $c$ such that $5n+70 \leq cn, n \geq n_0$, and therefore $5n+70 \in O(n)$. Clearly, we could have picked any $n_0$ and calculated the corresponding $c$, and this would have held.
+\end{proof}
+
+Note that because $O(n)$ is an upper bound, it therefore represents the worst case scenario for a function. Specifically, it represents a tight upper bound, since if a function is upper bounded by $O(n^2)$, it is also upper bounded by $O(n^3), O(n^4),$ etc.
+
+\subsection{Properties of Asymptotic Functions}
+
+\begin{itemize}
+    \item \textbf{Scaling:} For all constant $a>0$, if $f(n)$ is $O(g(n))$, then $af(n)$ is also $O(g(n))$.
+    \item \textbf{Sum Rule:} If $f_1(n)$ is $O(g(n))$ and $f_2(n)$ is $O(h(n))$, then $f_1(n) + f_2(n)$ is $O(g(n) + h(n))$.
+    \item \textbf{Product Rule:} If $f_1(n)$ is $O(g(n))$ and $f_2(n)$ is $O(h(n))$, then $f_1(n) \cdot f_2(n)$ is $O(g(n) \cdot h(n))$.
+    \item \textbf{Transitivity Rule:} If $f(n)$ is $O(g(n))$ and $g(n)$ is $O(h(n))$, then $f(n)$ is $O(h(n))$.
+\end{itemize}
+
+\subsection{\texorpdfstring{Big-$\Omega$ Notation}{TEXT}}
+
+\subsection{\texorpdfstring{Big-$\Theta$ Notation}{TEXT}}
+
+\section{Induction}
+
+\section{Recursion}
 \end{document}
