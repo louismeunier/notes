@@ -1,7 +1,7 @@
 % backup|Calculus A, B
 \documentclass[12pt]{article}
 % packages
-\usepackage[paper=letterpaper,margin=1.6cm]{geometry}
+\usepackage[paper=letterpaper,margin=1.6cm,bottom=0.8in]{geometry}
 \usepackage[skip=5pt plus1pt, indent=15pt]{parskip}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -15,6 +15,7 @@
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{framed}
+\usepackage{mdframed}
 \usepackage[colorlinks=true, linkcolor=violet]{hyperref}
 
 % settings
@@ -36,6 +37,7 @@
 \newcommand{\ddy}{\frac{d}{dy}}
 \newcommand{\dxdy}{\frac{dx}{dy}}
 \newcommand{\dydx}{\frac{dy}{dx}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\naturals}{\mathbb{N}}
@@ -245,7 +247,7 @@ eg:
     \caption{The intermediate value theorem visualized}
     \label{ivt}
 \end{figure}
-\newpage
+
 \section{Exponential and Logarithmic Functions}
 \subsection{Exponential Functions}
 \subsubsection{Defining \texorpdfstring{$e$}{TEXT}}
@@ -393,7 +395,6 @@ Alternatively, we can write $e$ as a limit going to $\infty$; Let $y = \frac{1}{
     \caption{Eqn. 15 visualized}
 \end{figure}
 
-\newpage
 \section{Linearization}\label{sec:linearization}
 \subsection{Linear Approximation}
 We can approximate a function by using the equation for its tangent at a particular point.
@@ -575,7 +576,6 @@ From here, we can solve for $\cos(ix)$ and $\sin(ix)$:
 
 And thus, we can define the hyperbolic trigonometric functions using the complex plane, Taylor Series, and Euler's Identity. 
 
-\newpage
 \section{Trigonometry}
 \subsection{Trigonometric Identities}
 There are many, many trigonometric identities that are often (some more than others) useful. See \hyperlink{https://www.overleaf.com/project/633314fad7f84c6632a211a0}{here} for a list of quite a few, accompanied by proofs.
@@ -736,7 +736,6 @@ A very similar process follows for $\cosh$ and $\tanh$, so it won't be shown, bu
     \end{split}
 \end{equation}
 
-\newpage
 \section{Complex Numbers}\label{complex}
 \subsection{Complex Quadratic Equations}
 To introduce the concept of complex numbers, take an arbitrary quadratic equation of the form 
@@ -889,7 +888,6 @@ For example, to find $\ln(-1)$:
     \end{split}
 \end{equation}
 
-\newpage
 \section{Applications of Differentiation}
 \subsection{Related Rates}
 
@@ -999,7 +997,7 @@ From here, we can define $\theta$ as the angle between $PQ$ and $PT$. As such:
     \end{split}
 \end{equation}
 
-As shown, $dy$ is a good approximation for $\Delta y$ when $\delta x$ is relatively small. This reasoning can also be applied to the logic behind why a linear approximation $L(x)$ of a function $f(x)$ at $a$ is most accurate when $x \approx a$.
+As shown, $dy$ is a good approximation for $\Delta y$ when $\Delta x$ is relatively small. This reasoning can also be applied to the logic behind why a linear approximation $L(x)$ of a function $f(x)$ at $a$ is most accurate when $x \approx a$.
 
 \textbf{For example:} say you were asked to find $\cos(\frac{\pi}{3}+0.05)$. In this case, we can say $f(x) = \cos(x)$, $a = \frac{\pi}{3}$, and $\Delta x = dx = 0.05$. From here:
 
@@ -1118,7 +1116,6 @@ Using calculus (and other properties of functions), we can sketch curves with fa
     Find $f''(x)$, and find when $f''(x)$ is greater/less than 0 to find when $f(x)$ is concave up/down respectively. The points where $f''(x) = 0$ are also the inflection points of $f(x)$.
 \end{enumerate}
 
-\newpage
 \section{Integration}
 \subsection{Defining Antiderivatives}
 
@@ -1280,7 +1277,6 @@ From here, the integral can be rewritten in terms of $x$ using some trig rules (
 $$-cot(\theta)-\theta + C = -\frac{\sqrt{9-x^2}}{x}-\sin^{-1}(\frac{x}{3})+C$$
 \subsection{Applications of Integrals}
 
-\newpage
 \section{Differential Equations}
 \subsection{Definitions}
 
@@ -1523,7 +1519,7 @@ We can typically set $A=1$ for a general $I$. Using these general steps, we can 
 
 Note that the original equation was not in standard form, but we were able to simply divide each factor by $x^2$ to get it into standard form.
 
-\subsection*{Orthogonal Families of Curves}
+\subsection{Orthogonal Families of Curves}
 
 Using differential equation, we can determine the general equation of curves orthogonal (ie "perpendicular") to a given curve (or, typically, family of curves). Consider the general family of curves described by;
 
@@ -1570,7 +1566,7 @@ Numerous real-world concepts can be described as function of multiple variables.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=8cm]{misc/xsquaredysquared.png}
+    \includegraphics[width=8.5cm]{misc/xsquaredysquared.png}
     \caption{$f(x,y)=x^2+y^2$}
     \label{fig:2dfunction}
 \end{figure}
@@ -1605,4 +1601,139 @@ if for every $\epsilon > 0$, there exists a $\delta >0$ such that if $(x,y)\in D
 By extension of this definition of a limit, we can say a function $f(x,y)$ is continuous at $(a,b)$ if $\lim_{(x,y)\to(a,b)} f(x,y) = f(a,b)$, very similarly to the definition of continuity for a function of a single variable.
 
 \subsection{Partial Derivatives}
+
+Extending the definition of a derivative of a function of 1 variable, we can find the \textbf{partial derivative} of a function of multiple in terms of a particular variable (notated as $\frac{\partial f}{\partial x}$ or $f_x(x,y)$), while treating the other variable(s) as a constant:
+
+\begin{equation}
+    \begin{split}
+        f_x(x,y) = \frac{\partial f}{\partial x} = \lim_{h\to0}[ \frac{f(x+h,y)-f(x,y)}{h}]\\
+        f_y(x,y) = \frac{\partial f}{\partial y} = \lim_{h\to0}[ \frac{f(x,y+h)-f(x,y)}{h}]
+    \end{split}
+\end{equation}
+
+This definition can, naturally, be extended to higher derivatives. Just as there were two partial derivatives for $f(x,y)$ depending on which variable $f$ was being differentiated in respect to, there are similarly two second partial derivatives for each first partial derivative (and a similar pattern follows for functions of a higher number of variables). For $f(x,y)$, it can be said:
+
+\begin{equation}
+    \begin{split}
+      (f_x)_x &= f_{xx} = \frac{\partial}{\partial x}(\frac{\partial f}{\partial x}) = \frac{\partial^2f}{\partial x^2}\\
+      (f_x)_y &= f_{xy} = \frac{\partial}{\partial y}(\frac{\partial f}{\partial x}) = \frac{\partial^2f}{\partial y \partial x}\\
+    (f_y)_x &= f_{yx} = \frac{\partial}{\partial x}(\frac{\partial f}{\partial y}) = \frac{\partial^2f}{\partial x \partial y}\\
+    (f_y)_y &= f_{yy} = \frac{\partial}{\partial y}(\frac{\partial f}{\partial y}) = \frac{\partial^2f}{\partial y^2}
+    \end{split}
+\end{equation}
+
+
+\begin{shaded*}
+    \textbf{Clairaut's Theorem:} 
+    
+    If the point $(a,b)$ is in the domain of $f(x,y)$, and $f_{xy}$ and $f_{yx}$ are continuous, then $f_{xy}(a,b)=f_{yx}(a,b)$.
+\end{shaded*}
+
+\subsubsection{Partial Differential Equations}
+
+Just as a \textit{differential equation} relate a function with its derivative(s), a \textit{partial differential equation} relates a multi-variable function with its partial derivatives. 
+
+One of the most notable of these is the \textbf{Laplace equation},
+
+\begin{equation}
+    \begin{split}
+        \frac{\partial^2u}{\partial x^2} + \frac{\partial^2u}{\partial y^2} = 0
+    \end{split}
+\end{equation}
+
+with applications in various fields. 
+
+\subsection{Tangents, Linear Approximations}
+
+Just as it is possible to find the \textit{tangent line} to a particular function $f(x)$ by finding the slope $m=f'(a)$ at some point $a$, we can find the \textit{tangent plane} to a function $f(x,y)$ at a particular point $(a,b,c)$. In general, such a plane can be defined as:
+
+\begin{equation}
+    \begin{split}
+        z - c &= m_x(x-a) + m_y(y-b)\\
+        z - c &= f_x(a,b)(x-a) + f_y(a,b)(y-b)
+    \end{split}
+\end{equation}
+
+Note the similarities between using this equation and the linear equation $y=mx+b$ when finding the tangent line to a function of a single variable.
+
+We can also use the tangent plane to a function $f(x,y)$ to define a linear approximation (or, more accurately, tangent approximation) $L(x,y)$:
+
+\begin{equation}
+    \begin{split}
+        L(x,y) &= f(a,b) + f_x(a,b)(x-a) + f_y(a,b)(y-b)\\
+    \end{split}
+\end{equation}
+
+The derivation of this equation is very similar to that of a single-variable linearization.
+
+\subsection{The Chain Rule}
+
+The chain rule for derivatives of functions of 1 variable describes the derivative of a composition of two functions; say $y=f(x)$ and $x=g(t)$ (assuming $f$ and $g$ are differentiable), then the derivative of $y$ with respect to $t$ can be described as:
+
+\begin{equation}
+    \begin{split}
+       \frac{dy}{dt} &= \frac{dy}{dx}\frac{dx}{dt}\\
+        (f(g(t)))' &= f'(g(t))g'(t)
+    \end{split}
+\end{equation}
+
+This is extendable to functions of multiple variables, though with some caveats. In general, though, if $u$ is a function of $n$ variables $x_1, x_2, \dots, x_n$, and each $x$ is a (differentiable) function of $m$ variables $t_1, t_2, \dots, t_m$, then $u$ is also a function of $t_1, t_2, \dots, t_m$, and the derivative of $u$ with respect to $t_i$ can be described as:
+
+\begin{equation}
+    \begin{split}
+        \frac{\partial u}{\partial t_i} &= \frac{\partial u}{\partial x_1}\frac{\partial x_1}{\partial t_i} + \frac{\partial u}{\partial x_2}\frac{\partial x_2}{\partial t_i} + \dots + \frac{\partial u}{\partial x_n}\frac{\partial x_n}{\partial t_i}\\
+        &= \sum_{j=1}^m \frac{\partial u}{\partial x_j}\frac{\partial x_j}{\partial t_i}
+    \end{split}
+\end{equation}
+
+This general form can seem quite daunting, but can be simplified down to a couple of main cases:
+
+\subsubsection*{\texorpdfstring{Case 1: $u=z=f(g(t),h(t))$}{TEXT}}
+
+Say $u = z = f(x,y)$, where $x = g(t)$ and $y = h(t)$. We can then write:
+
+\begin{equation}
+    \begin{split}
+        \frac{dz}{dt} = \frac{\partial f}{\partial x} \frac{dx}{dt} + \frac{\partial f}{\partial y}\frac{dy}{dt}
+    \end{split}
+\end{equation}
+
+\subsubsection*{\texorpdfstring{Case 2: $u=z=f(g(s,t),h(s,t))$}{TEXT}}
+
+Say $u = z = f(x,y)$, where $x = g(s,t)$ and $y = h(s,t)$. We can then write:
+
+\begin{equation}
+    \begin{split}
+        \frac{\partial z}{\partial s}&=\frac{\partial z}{\partial x} \frac{\partial x}{\partial s}+\frac{\partial z}{\partial y} \frac{\partial y}{\partial s}\\
+        \frac{\partial z}{\partial t}&=\frac{\partial z}{\partial x} \frac{\partial x}{\partial t}+\frac{\partial z}{\partial y} \frac{\partial y}{\partial t}
+    \end{split}
+\end{equation}
+
+Notice that Case 2 demonstrates the equation for \textit{two} partial derivatives. By extension, the more variables that $u$ is a function of, the more partial derivatives there will be; in this situation, further "cases" simply follow the general aforementioned. 
+
+For example, if $z = e^x \sin y$, $x = st^2$, and $y = s^2t$, then:
+
+\begin{equation}
+    \begin{split}
+        \pd{z}{s} &= \pd{z}{x} \pd{x}{s} + \pd{z}{y} \pd{y}{s}\\
+        &= \pd{}{x}(e^x \sin y) \pd{}{s}(st^2) + \pd{}{y}(e^x \sin y) \pd{}{s}(s^2t)\\
+        &= (e^x \sin y)(t^2) + (e^x \cos y)(2st)\\
+        &= (e^{st^2} \sin(s^2t))(t^2) + (e^{st^2} \cos(s^2t))(2st)\\
+        &= t^2 e^{s t^2} \sin(s^2 t)+2 s t e^{s t^2} \cos(s^2 t)
+    \end{split}
+\end{equation}
+
+The same method can be used to find $\pd{z}{t}$.
+
+% add proof of chain rule for multivariable functions?
+
+% add implicit differentiation here
+\subsubsection{Implicit Differentiation}
+
+If $z = f(x,y)$ is implicitly defined by a function $F(x,y,z)=0$ ($\therefore F(x,y,f(x,y)) = 0$)
+
+
+
+% directional derivatives, gradient, probably go in the same section
+\subsection{Directional Derivatives and the Gradient}
 \end{document}
