@@ -110,7 +110,7 @@ $$
 \begin{enumerate}
     \item $\mathbf{m > n}:$ $\infty$
     \item $\mathbf{m < n}:$ $0$ 
-    \item $\mathbf{m = n}:$  $\frac{m}{n}$ \textit{(since both of the powers are the same "strength" ie $\infty$, you can think of this as the infinities "cancelling out"). To prove this idea actually works, use the method above.}
+    \item $\mathbf{m = n}:$  $\frac{m}{n}$ \textit{(since both of the powers are the same "strength" ie $\infty$, you can think of this as the infinities "canceling out"). To prove this idea actually works, use the method above.}
 \end{enumerate}
 
 \subsubsection{L'Hôpital's Rule}
@@ -122,7 +122,7 @@ $$\frac{f(c)}{g(c)} = \frac{0}{0}, \frac{\infty}{\infty}, 0^0, \infty - \infty, 
 then:
 $$\lim_{x\to c}\frac{f(x)}{g(x)} = \lim_{x\to c}\frac{f'(x)}{g'(x)}$$
 \end{shaded}
-This can also be repeated for multiple derivatives of $f, g$, as long as the resulting form is still indeterminate. Often times, you will need to manipulate the limit in order to express in an indeterminate form such that L'Hôpital's is usable.
+This can also be repeated for multiple derivatives of $f, g$, as long as the resulting form is still indeterminate. Oftentimes, you will need to manipulate the limit to express it in an indeterminate form such that L'Hôpital's is usable.
 
 \textit{While solving limits this way is very powerful (and, often, very easy), one should be careful to not overuse it when it is not applicable.}
 
@@ -157,7 +157,7 @@ When a limit is in the form:
 
 $$\lim_{x\to 0}\frac{\sqrt[n]{(ax+b)} + c}{x}$$
 
-The issue here is that we have an $x$ alone on the bottom, which results in something being divided by 0. To solve this, we can radicalize the fraction; this results in an $x$ "alone", cancelling with that on the bottom, and make the equation solvable.
+The issue here is that we have an $x$ alone on the bottom, which results in something being divided by 0. To solve this, we can radicalize the fraction; this results in an $x$ "alone", canceling with that on the bottom, making the equation solvable.
 
 For the example above:
 \begin{equation}
@@ -210,7 +210,7 @@ A derivative, $f'(x)$, is defined as followed:
 
 $$f'(x) = \lim_{x\to a}\frac{f(x)-f(a)}{x-a}$$
 
-Or, alternatively, given $h = x-a$:
+Alternatively, given $h = x-a$:
 
 $$f'(x) = \lim_{h\to 0} \frac{f(x+h)-f(h)}{h}$$
 
@@ -304,7 +304,7 @@ From eqn. 8:
 
 $$\frac{d}{dx}a^x = a^x \lim_{h\to 0} \frac{a^h-1}{h} = f'(0) a^x$$
 
-We can rewrite using rules of logs:
+We can rewrite using the rules of logs:
 
 $$\frac{d}{dx}a^x = \frac{d}{dx}\textcolor{red}{ e^{\ln a^x} } = \frac{d}{dx} e^{x\ln a}$$
 
@@ -381,7 +381,7 @@ Note that the penultimate step of this work relies on the following (very helpfu
 \end{shaded}
 
 
-Alternatively, we can write $e$ as a limit going to $\infty$; Let $y = \frac{1}{h}$, and substituting into eqn. 15:
+Alternatively, we can write $e$ as a limit going to $\infty$; Let $y = \frac{1}{h}$, and, substituting into eqn. 15:
 
 \begin{equation}
     \begin{split}
@@ -412,7 +412,7 @@ Solving for $L(x)$:
     \end{split}
 \end{equation}
 
-This function is a fairly good approximation of $f(x)$ near $x=a$, at least for most continuous functions. It's also very important to note that, by definition $f(a) = L(a)$, AND $f'(a) = L'(a)$. This will be expanded later.
+This function is a fairly good approximation of $f(x)$ near $x=a$, at least for most continuous functions. It's also very important to note that, by definition $f(a) = L(a)$, AND $f'(a) = L'(a)$. This will be expanded upon later.
 
 For example; take $f(x) = sin(x)$, @ $a=0$:
 
@@ -431,7 +431,7 @@ For example; take $f(x) = sin(x)$, @ $a=0$:
     \caption{Linearization of $sin(x)$ at $x=0$}
 \end{figure}
 
-Clearly, in the vicinity of $a$, this is a pretty good approximation, but quickly becomes inaccurate.
+Clearly, in the vicinity of $a$, this is a pretty good approximation, but it quickly becomes inaccurate as we move away.
 
 \subsection{Quadratic Approximation}
 From the section earlier, we defined $L(x)$, a linear approximation of $f(x)$, where $f(a) = L(a)$ AND $f'(a) = L'(a)$. Now, what if we wanted to continue this trend, and define a new function, $P_2(x)$, where $f(a) = P_2(a)$, $f'(a) = P_2'(a)$, and $f''(a) = P_2''(a)$? Rather than a "linear" approximation, this would, logically, become a "quadratic" approximation. We can say:
@@ -448,7 +448,7 @@ From the section earlier, we defined $L(x)$, a linear approximation of $f(x)$, w
 
 \textit{Note that $L''(a) = 0$; since $L(x)$ is a line, its first derivative is a constant, and its second is 0.}
 
-The purpose of this work was to find some $k$ that we can multiple by a quadratic factor $(x-a)^2$ to maintain the previously stated desired properties of $P_2$. As such, we can rewrite:
+The purpose of this work was to find some $k$ that we can multiply by a quadratic factor $(x-a)^2$ to maintain the previously stated desired properties of $P_2$. As such, we can rewrite:
 
 $$P_2(x) = f(a) + (x-a)f'(a) + \red{\frac{(x-a)^2}{2}f''(a)}$$
 
@@ -481,9 +481,7 @@ where $P_N(x)$ is an approximation (via Taylor Polynomial) of $f(x)$, and $R_N(x
 
 $$R_N(x) = \frac{(x-a)^{N+1}}{(N+1)!}f^{(N+1)}(c), c \in \real \textit{ and between } x, a$$.
 
-% \textit{There are \hyperlink{https://en.wikipedia.org/wiki/Taylor's_theorem#Explicit_formulas_for_the_remainder}{other} ways to write this remainder, but this is known as the \textbf{Lagrange form}}.
-
-We can then rewrite Taylor's Theorem, as $N$ trends to $\infty$:
+We can then rewrite Taylor's Theorem, as $N$ goes to $\infty$:
 
 $$f(x) = \lim_{N\to\infty}[\sum_{n=0}^N \frac{(x-a)^n f^{N}(a)}{n!} + \frac{(x-a)^{N+1}}{(N+1)!} f^{(N+1)}(c)]$$
 
@@ -788,7 +786,7 @@ We can use \textbf{Euler's formula} to simplify this;
     \end{split}
 \end{equation}
 
-From this definition, we can define several other properties to aid in solving of equations involving complex numbers.
+From this definition, we can define several other properties to aid in solving equations involving complex numbers.
 
 \begin{itemize}
     \item \textbf{Products:} $z_1z_2 = r_1 e^{i\theta_1} r_2 e^{i\theta_2} = r_1 r_2 e^{i(\theta_1+\theta_2)}$
@@ -868,7 +866,7 @@ Logically, the roots of a complex number involve some real part ($a$) and some i
 
 \subsubsection{Logarithms}
 
-We can use some of the identities above to also find a logs involving complex numbers:
+We can use some of the identities above to also find a log involving complex numbers:
 
 \begin{equation}
     \begin{split}
@@ -895,7 +893,7 @@ For example, to find $\ln(-1)$:
 
 \begin{enumerate}
     \item Draw a picture to represent the scenario
-    \item Write a formula involving the variable who's change is given, in relation to the variable who's change you're solving for
+    \item Write a formula involving the variable whose change is given, in relation to the variable whose change you're solving for
     \begin{enumerate}
         \item Many times, said formula will have to be simplified/rewritten in terms of a single variable. This often involves similar triangles in geometric questions.
     \end{enumerate}
@@ -946,7 +944,7 @@ This theorem is essentially an application of Rolle's Theorem, but for any $a,b$
 This, and Rolle's, are useful in questions involving proving the number of roots in an equation, as well as proving other theorems.
 
 \subsection{Optimization}
-Optimization questions are (\textit{at least to me}) very similar to related rates questions. In both, you have to find some sort of formula representing a situation, then differentiating. However, for optimization questions, the intention is to solve for a min/max value, by finding when the derivative ("rate of change") is 0. Logically this should make a lot of sense: when something is not changing ($\dxdy = 0$), then it has to be either increasing until that point then being to decrease, or vice versa. From here, checking the second derivative will reveal whether it was a min or max. 
+Optimization questions are (\textit{at least to me}) very similar to related rates questions. In both, you have to find some sort of formula representing a situation, then differentiating. However, for optimization questions, the intention is to solve for a min/max value, by finding when the derivative ("rate of change") is 0. Logically this should make a lot of sense: when something is not changing ($\dxdy = 0$), then it has to be either increasing until that point and then begin to decrease, or vice versa. From here, checking the second derivative will reveal whether it was a min or max. 
 
 In many situations, you will have to ensure that your min/max fits within some endpoints, which depend on the situation at hand; eg, if you have a geometric question, then your value logically can't be negative. 
 
@@ -1012,9 +1010,9 @@ As shown, $dy$ is a good approximation for $\Delta y$ when $\Delta x$ is relativ
 In reality, $\cos(\frac{\pi}{3}+0.05) = -0.044$, demonstrating how accurate (and easy-to-compute) this method is.
 
 \subsubsection{Error}
-Using very similar reasoning to above, we can use differentials to find the range of error in a calculation. If given the error (change) of one variable in a formula, you can then use implicit differentiation, solve for the error (change) in the desired variable.
+Using very similar reasoning to above, we can use differentials to find the range of error in a calculation. If given the error (change) of one variable in a formula, you can then use implicit differentiation, and solve for the error (change) in the desired variable.
 
-Often times, the relative change is also asked for. This is simple $\frac{dx}{x}$.
+Oftentimes, "relative change" is also asked for. This is simple $\frac{dx}{x}$.
 
 \textbf{For example:} given a circle with radius $r=24$, with a max error in measurement of $0.2$. To find the max error in the circle's area:
 
@@ -1059,7 +1057,7 @@ Often times, the relative change is also asked for. This is simple $\frac{dx}{x}
 
 Following are a number of theorems related to derivatives, and limits. While many of them are already described above, some are not.
 
-These theorems have various applications in determining limits, derivatives, and can aid in graphing functions.
+These theorems have various applications in determining limits and derivatives and can aid in graphing functions.
 
 \begin{enumerate}
     \item \textbf{Intermediate Value Theorem}
@@ -1127,7 +1125,7 @@ where $\ddx [F(x)+k] = f(x)$, and $k$ is a constant.
 
 For example: $\int x^2 dx = \frac{x^3}{3} + k$.
 
-You can (and should) think of $\int  dx$ and $\ddx$ as \textit{inverse operators} of one another, hence the term "antiderivative". As such, numerous derivative rules have corresponding rules for integrals, which is discussed later. Also note that this type of integration is called \textit{indefinite} because it defines the integral of a function over an \textit{indefinite range}, ie, for all $x$. \textit{Definite integrals} will be discussed later and have their own very particular applications, and define an integral $\int_m^n$ over a range $[m,n]$.
+You can (and should) think of $\int  dx$ and $\ddx$ as \textit{inverse operators} of one another, hence the term "antiderivative". As such, numerous derivative rules have corresponding rules for integrals, which are discussed later. Also note that this type of integration is called \textit{indefinite} because it defines the integral of a function over an \textit{indefinite range}, ie, for all $x$. \textit{Definite integrals} will be discussed later and have their own very particular applications, and define an integral $\int_m^n$ over a range $[m,n]$.
 
 \subsection{Techniques of Integration}
 \subsubsection{Known Formulas of Derivatives}
@@ -1280,7 +1278,7 @@ $$-cot(\theta)-\theta + C = -\frac{\sqrt{9-x^2}}{x}-\sin^{-1}(\frac{x}{3})+C$$
 \section{Differential Equations}
 \subsection{Definitions}
 
-A \textbf{differential equation} is an equation that contains an unknown function and some of its derivatives. We can more specifically describe differential equations by their \textbf{order}, which is the number of the highest derivative in the equation, ie, a first order differential equation is of the form $F(x,y,y')$.
+A \textbf{differential equation} is an equation that contains an unknown function and some of its derivatives. We can more specifically describe differential equations by their \textbf{order}, which is the number of the highest derivative in the equation, ie, a first-order differential equation is of the form $F(x,y,y')$.
 
 \subsection{Variables Separable}\label{sec:separable}
 
@@ -1300,7 +1298,7 @@ This is the form of a function of $x$ times a function of $y$, indicating the pa
     \end{split}
 \end{equation}
 
-From here, integrating both sides yields either $y$ as a function of $x$, or $x$ as function of $y$ (which you solve for depends on the context of the question).
+From here, integrating both sides yields either $y$ as a function of $x$, or $x$ as a function of $y$ (which one you solve for depends on the context of the question).
 
 For example, take: $\frac{dy}{dx} = x^2 y - y + x^2 -1$. This can be rewritten as a separable equation:
 
@@ -1332,7 +1330,7 @@ In this example, say $y(0) = 3$. We can write:
 \subsection{Mathematical Models}
 
 % wtf does this mean? rewrite...
-A number of real-world scenarios can be represented using differential equations, and the following are some of more common/useful forms, as well as their general solutions and applications.
+Several real-world scenarios can be represented using differential equations, and the following are some of the more common/useful forms, as well as their general solutions and applications.
 
 \begin{itemize}
     \item[\textbf{I:}] $\alpha y = \frac{dy}{dt}, \alpha \in \real$ 
@@ -1366,7 +1364,7 @@ A number of real-world scenarios can be represented using differential equations
     
     \item[\textbf{II:}] $\frac{dy}{dt} = k(N-y)$ 
     
-    This general form of equation is used in a number of scenarios, such as Newton's Law of cooling/heating and modeling deprecation. Solving this differential for $y$ as a function of $t$ goes as follows:
+    This general form of the equation is used in a number of scenarios, such as Newton's Law of cooling/heating and modeling deprecation. Solving this differential for $y$ as a function of $t$ goes as follows:
     
     \begin{equation}
         \begin{split}
@@ -1423,9 +1421,9 @@ A number of real-world scenarios can be represented using differential equations
         \end{split}
     \end{equation}
 
-    Just as with Model II, the function approaches $N$ as the time goes to infinity, and as such we can call $N$ the "carrying capacity" or "max population", depending on the context of the problem.
+    Just as with Model II, the function approaches $N$ as the time goes to infinity, and as such, we can call $N$ the "carrying capacity" or "max population", depending on the context of the problem.
 
-    Another interesting property of the logistic model comes about from exploring its derivatives. It's first derivative is clear, as it is given in the expression of the logistic model as a differential equation. This first derivative ($\frac{dy}{dt}$) is \textit{always positive}, which should be clear from inspection of the original formula for $\frac{dy}{dt}$, as both $N$ and $y$ are always positive, and $N$ must be greater than $y$.
+    Another interesting property of the logistic model comes about from exploring its derivatives. Its first derivative is clear, as it is given in the expression of the logistic model as a differential equation. This first derivative ($\frac{dy}{dt}$) is \textit{always positive}, which should be clear from inspection of the original formula for $\frac{dy}{dt}$, as both $N$ and $y$ are always positive, and $N$ must be greater than $y$.
     % rewrite above, the justification is wrong
 
     Recall that the second derivative represents the derivative of the first derivative, and in the context of population growth, for example, represents the change in how fast the population is growing. By extension, the inflection point of the logistic model would represent when the change in the population growth rate is at a maximum (or minimum, but the work below will show that it is indeed a maximum).
@@ -1446,7 +1444,7 @@ A number of real-world scenarios can be represented using differential equations
         \end{split}
     \end{equation}
 
-    As such, the point $(\ln[(\frac{N-P_0}{P_0})^{\frac{1}{k}}],\frac{N}{2})$ is an inflection point, and represents the maximum change in population growth (proving this is relatively straightforward, and is omitted here).
+    As such, the point $(\ln[(\frac{N-P_0}{P_0})^{\frac{1}{k}}],\frac{N}{2})$ is an inflection point and represents the maximum change in population growth (proving this is relatively straightforward and is omitted here).
 
     \begin{figure}[!ht]
         \centering
@@ -1501,7 +1499,7 @@ This is just a separable equation, which can be solved for $I$:
     \end{split}
 \end{equation}
 
-We can typically set $A=1$ for a general $I$. Using these general steps, we can thus solve a linear first order differential equation by multiplying it by the appropriate integrating factor $I(x) = e^{\int P(x) dx}$. For instance, to solve $x^2y'+xy=1$:
+We can typically set $A=1$ for a general $I$. Using these general steps, we can thus solve a linear first-order differential equation by multiplying it by the appropriate integrating factor $I(x) = e^{\int P(x) dx}$. For instance, to solve $x^2y'+xy=1$:
 
 \begin{equation}
     \begin{split}
@@ -1521,7 +1519,7 @@ Note that the original equation was not in standard form, but we were able to si
 
 \subsection{Orthogonal Families of Curves}
 
-Using differential equation, we can determine the general equation of curves orthogonal (ie "perpendicular") to a given curve (or, typically, family of curves). Consider the general family of curves described by;
+Using differential equations, we can determine the general equation of curves orthogonal (ie "perpendicular") to a given curve (or, typically, a family of curves). Consider the general family of curves described by;
 
 $$ax^2+by^2=k,$$
 
@@ -1582,11 +1580,11 @@ Functions of many variables can often be difficult to visualize (particularly of
 
 While this is helpful, 3D plots aren't always realistic to use to visualize a function. Instead, we can draw \textbf{level curves}, by plotting a number of curves of a constant $z$-value in the standard $x-y$ plane. See figure \ref{fig:levelcurves} for a level curve graph of $f(x,y) = x^2 + y^2$. Note that, visually, this plot is essentially the same as looking at the surface of the function in 3D from above the $z$-axis.
 
-Note that, while harder to visualize, functions of more than two variables can be described in a similar manner. For instance, a function of three variables can be described as a surface in 4D, and a function of four variables can be described as a surface in 5D, and so on. By extension, we can also describe the level curves of a function of $n$ variables as a family of functions in $n$ (ie a function of 3 variables can be visualized as a level plot in 3D).
+Note that, while harder to visualize, functions of more than two variables can be described similarly. For instance, a function of three variables can be described as a surface in 4D, and a function of four variables can be described as a surface in 5D, and so on. By extension, we can also describe the level curves of a function of $n$ variables as a family of functions in $n$ (ie a function of 3 variables can be visualized as a level plot in 3D).
 
 \subsection{Limits}
 
-A limit of a function of multiple variables is described as the value of said function when all of its variables approach a particular coordinate. For the function $f(x,y)$, for example, we can write its limit as it approaches some point $(a,b)$:
+A limit of a function of multiple variables is described as the value of the said function when all of its variables approach a particular coordinate. For the function $f(x,y)$, for example, we can write its limit as it approaches some point $(a,b)$:
 
 $$\lim_{(x,y)\to(a,b)}f(x,y)$$
 
@@ -1631,7 +1629,7 @@ This definition can, naturally, be extended to higher derivatives. Just as there
 
 \subsubsection{Partial Differential Equations}
 
-Just as a \textit{differential equation} relate a function with its derivative(s), a \textit{partial differential equation} relates a multi-variable function with its partial derivatives. 
+Just as a \textit{differential equation} relates a function with its derivative(s), a \textit{partial differential equation} relates a multi-variable function with its partial derivatives. 
 
 One of the most notable of these is the \textbf{Laplace equation},
 
@@ -1730,8 +1728,40 @@ The same method can be used to find $\pd{z}{t}$.
 % add implicit differentiation here
 \subsubsection{Implicit Differentiation}
 
-If $z = f(x,y)$ is implicitly defined by a function $F(x,y,z)=0$ ($\therefore F(x,y,f(x,y)) = 0$)
-
+If $z = f(x,y)$ is implicitly defined by a function $F(x,y,z)=0$ ($\therefore F(x,y,f(x,y)) = 0$), 
 % directional derivatives, gradient, probably go in the same section
 \subsection{Directional Derivatives and the Gradient}
+
+The rate of change (derivative) of a function $f(x,y)$ of 2 variables can theoretically be defined in any arbitrary direction, say, in the direction of a unit vector $\vec{u} = \left\langle a,b\right\rangle$. By this logic, then $f_x(x,y)$ is the derivative in the direction of $\vec{i} = \left\langle 1, 0 \right\rangle$, and $f_y(x,y)$ is the derivative in the direction of $\vec{j} = \left\langle 0, 1 \right\rangle$. The derivative in the direction of any arbitrary unit vector $\vec{u}$ is called a \textit{directional derivative}, and is denoted as $D_{\vec{u}}f(x,y)$. Using the limit definition of a derivative, we can write:
+
+\begin{equation}
+    \begin{split}
+        D_{\vec{u}}f(x_0,y_0) &= \lim_{h\to\infty}[\frac{f(x_0+ah,y_0+bh)-f(x_0,y_0)}{h}]
+    \end{split}
+\end{equation}
+
+\textit{Note that the top line states $f(x_0+ah,y_0+bh)$ because the function is increasing by $a$ in the $x$ direction and $a$ in the $y$ direction.}
+
+To simplify this, let $g(h) = f(x_0+ah,y_0+bh)$, then we can say, using eqn. 83:
+
+\begin{equation}
+    \begin{split}
+        g'(0) &= \lim_{h\to\infty}[\frac{g(h)-g(0)}{h}] = \lim_{h\to\infty}[\frac{f(x_0+ah,y_0+bh)-f(x_0,y_0)}{h}] = D_{\vec{u}}f(x_0,y_0)\\
+    \end{split}
+\end{equation}
+
+Since $g(h) = f(x_0+ah,y_0+bh)$, we can define $x = x_0+ah$ and $y = y_0+bh$, ie, $x$ and $y$ are both functions of $h$, and using the chain rule, write:
+
+\begin{equation}
+    \begin{split}
+        g(h) &= f(x_0+ah,y_0+bh) = f(x(h),y(h))\\
+        g'(h) &= \pd{f}{x}\frac{dx}{dh} + \pd{f}{y}\frac{dy}{dh}\\
+        &= \pd{f}{x}(a) + \pd{f}{y}(b)
+        ()
+    \end{split}
+\end{equation}
+
+% arc length
+
+
 \end{document}
