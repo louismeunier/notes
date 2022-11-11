@@ -1740,7 +1740,7 @@ The rate of change (derivative) of a function $f(x,y)$ of 2 variables can theore
     \end{split}
 \end{equation}
 
-\textit{Note that the top line states $f(x_0+ah,y_0+bh)$ because the function is increasing by $a$ in the $x$ direction and $a$ in the $y$ direction.}
+\textit{Note that the top line states $f(x_0+ah,y_0+bh)$ because the function is increasing by $a$ in the $x$ direction and $b$ in the $y$ direction.}
 
 To simplify this, let $g(h) = f(x_0+ah,y_0+bh)$, then we can say, using eqn. 83:
 
@@ -1756,11 +1756,22 @@ Since $g(h) = f(x_0+ah,y_0+bh)$, we can define $x = x_0+ah$ and $y = y_0+bh$, ie
     \begin{split}
         g(h) &= f(x_0+ah,y_0+bh) = f(x(h),y(h))\\
         g'(h) &= \pd{f}{x}\frac{dx}{dh} + \pd{f}{y}\frac{dy}{dh}\\
-        &= \pd{f}{x}(a) + \pd{f}{y}(b)
-        ()
+        \frac{dx}{dh} &= \frac{d}{dh} (x_0+ah) = a\\
+        \frac{dy}{dh} &= \frac{d}{dh} (y_0+bh) = b\\
+        \therefore g'(h) &= \pd{f}{x}(a) + \pd{f}{y}(b)\\
+        &= f_x(x,y)a + f_y(x,y)b\\
+        g'(\red{0}) &= f_x(x_0,y_0)a + f_y(x_0,y_0)b\\
+        &= D_{\vec{u}}f(x_0,y_0)
     \end{split}
 \end{equation}
 
+Note that this last line involves combining the result of the calculating $g'(h)$ with the original definition of $g'(0)$ from eqn. 84. In summary, if $\vec{u} = \left\langle a, b \right\rangle$, then the derivative of $f(x,y)$ in the direction of $\vec{u}$ is:
+
+\begin{equation}
+    \begin{split}
+        D_{\vec{u}}f(x,y) &= f_x(x,y)a + f_y(x,y)b
+    \end{split}
+\end{equation}
 % arc length
 
 
