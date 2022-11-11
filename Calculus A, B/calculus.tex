@@ -1723,6 +1723,19 @@ For example, if $z = e^x \sin y$, $x = st^2$, and $y = s^2t$, then:
 
 The same method can be used to find $\pd{z}{t}$.
 
+\subsubsection{Tree Graphs}
+
+Using the chain rule for implicit functions of many variables can easily become very confusing. It can help to create a tree graph to visualize the relationships between the functions at hand. For example, for the example above, where $z = f(x(s,t),y(s,t))$, we create a tree graph as in figure \ref{fig:partialderivativetreegraph}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=8.0cm]{misc/partialderivativetreegraph.png}
+    \caption{Tree graph for the partial derivative of $z = f(x(s,t),y(s,t))$.}
+    \label{fig:partialderivativetreegraph}
+\end{figure}
+
+To find, for instance, $\pd{z}{s}$, you follow the path from $z$ to each $s$ in the tree graph, and multiply the partial derivatives of each function along the way (note the highlighted branches). In this case, $\pd{z}{s} = \pd{z}{x} \pd{x}{s} + \pd{z}{y} \pd{y}{s}$.
+
 % add proof of chain rule for multivariable functions?
 
 % add implicit differentiation here
@@ -1765,13 +1778,36 @@ Since $g(h) = f(x_0+ah,y_0+bh)$, we can define $x = x_0+ah$ and $y = y_0+bh$, ie
     \end{split}
 \end{equation}
 
-Note that this last line involves combining the result of the calculating $g'(h)$ with the original definition of $g'(0)$ from eqn. 84. In summary, if $\vec{u} = \left\langle a, b \right\rangle$, then the derivative of $f(x,y)$ in the direction of $\vec{u}$ is:
+Note that this last line involves combining the result of calculating $g'(h)$ with the original definition of $g'(0)$ from eqn. 84. In summary, if $\vec{u} = \left\langle a, b \right\rangle$, then the derivative of $f(x,y)$ in the direction of $\vec{u}$ is:
 
 \begin{equation}
     \begin{split}
         D_{\vec{u}}f(x,y) &= f_x(x,y)a + f_y(x,y)b
     \end{split}
 \end{equation}
+
+Note that this can be rewritten as a \textit{dot product}:
+
+\begin{equation}
+    \begin{split}
+        D_{\vec{u}}f(x,y) &= f_x(x,y)a + f_y(x,y)b\\
+        &= \left\langle f_x(x,y), f_y(x,y) \right\rangle \cdot \left\langle a, b \right\rangle\\
+        &= \left\langle f_x(x,y), f_y(x,y) \right\rangle \cdot \vec{u}
+    \end{split}
+\end{equation}
+
+The first vector in this equation is the \textbf{gradient} (denoted $\nabla$) of $f(x,y)$; specifically:
+
+\begin{equation}
+    \begin{split}
+        \nabla f(x,y) &= \left\langle f_x(x,y), f_y(x,y) \right\rangle\\
+        (&= \pd{f}{x}\hat{i} +\pd{f}{y}\hat{j} )
+    \end{split}
+\end{equation}
+
+Using this notation, we can simplify the form of the directional derivative to $D_{\vec{u}}f(x,y) = \nabla f(x,y) \cdot \vec{u}$.
+
+In higher dimensions, the same general concepts apply; for instance: $D_{\vec{u}}f(x,y,z) = \nabla f(x,y,z) \cdot \vec{u}$, where $\vec{u}$ is a vector in $\real^3$.
 % arc length
 
 
