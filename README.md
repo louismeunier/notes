@@ -8,8 +8,8 @@ free to use however you'd like
 
 ## direct pdfs links:
 
-- [Linear Algebra](https://louismeunier.github.io/notes/Linear%20Algebra/linearalgebra.pdf)
-- [Calculus 2](https://louismeunier.github.io/notes/Calculus%202/calculus2.pdf)
-- [Calculus A, B](https://louismeunier.github.io/notes/Calculus%20A%2C%20B/calculusab.pdf)
-- [General Chemistry](https://louismeunier.github.io/notes/General%20Chemistry%20I/generalchemistry.pdf)
-- [Intro to CS](https://louismeunier.github.io/notes/Intro%20to%20CS/introtocs.pdf)
+- [Linear Algebra](http://notes.louismeunier.net/Linear%20Algebra/linearalgebra.pdf)
+- [Calculus 2](http://notes.louismeunier.net/Calculus%202/calculus2.pdf)
+- [Calculus A, B](http://notes.louismeunier.net/Calculus%20A%2C%20B/calculus.pdf)
+- [General Chemistry](http://notes.louismeunier.net/General%20Chemistry%20I/generalchemistry.pdf)
+- [Intro to CS](http://notes.louismeunier.net/Intro%20to%20CS/introtocs.pdf)
