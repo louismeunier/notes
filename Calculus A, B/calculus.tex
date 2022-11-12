@@ -1741,7 +1741,27 @@ To find, for instance, $\pd{z}{s}$, you follow the path from $z$ to each $s$ in 
 % add implicit differentiation here
 \subsubsection{Implicit Differentiation}
 
-If $z = f(x,y)$ is implicitly defined by a function $F(x,y,z)=0$ ($\therefore F(x,y,f(x,y)) = 0$), 
+Given a function in the form $F(x,y) = 0$ where $y$ is a function $f$ of $x$ (ie $F = (x,f(x))$), we can differentiate both sides in terms of $x$, using the chain rule (see figure \ref{fig:pdtreeimplicit}):
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=3.0cm]{misc/pdtreeimplicity.png}
+    \caption{Tree graph for $F(x,f(x))$.}
+    \label{fig:pdtreeimplicit}
+\end{figure}
+
+\begin{equation}
+    \begin{split}
+        F(x,y) &= 0\\       
+        \pd{F}{x} \frac{dx}{dx} +\pd{F}{y}\dydx &= 0\\
+        \pd{F}{x} + \pd{F}{y}\frac{dy}{dx} &= 0\\
+        \dydx = -\frac{\pd{F}{x}}{\pd{F}{y}} &= -\frac{F_x}{F_y}
+    \end{split}
+\end{equation}
+
+\textit{Note that $\frac{dx}{dx} = 1$, as we can think of $x$ as a function of $x$ (ie $x = x$).}
+
+
 % directional derivatives, gradient, probably go in the same section
 \subsection{Directional Derivatives and the Gradient}
 
@@ -1763,7 +1783,7 @@ To simplify this, let $g(h) = f(x_0+ah,y_0+bh)$, then we can say, using eqn. 83:
     \end{split}
 \end{equation}
 
-Since $g(h) = f(x_0+ah,y_0+bh)$, we can define $x = x_0+ah$ and $y = y_0+bh$, ie, $x$ and $y$ are both functions of $h$, and using the chain rule, write:
+Since $g(h) = f(x_0+ah,y_0+bh)$, we can define $x = x_0+ah$ and $y = y_0+bh$ (ie, $x$ and $y$ are both functions of $h$), and using the chain rule, write:
 
 \begin{equation}
     \begin{split}
@@ -1807,7 +1827,7 @@ The first vector in this equation is the \textbf{gradient} (denoted $\nabla$) of
 
 Using this notation, we can simplify the form of the directional derivative to $D_{\vec{u}}f(x,y) = \nabla f(x,y) \cdot \vec{u}$.
 
-In higher dimensions, the same general concepts apply; for instance: $D_{\vec{u}}f(x,y,z) = \nabla f(x,y,z) \cdot \vec{u}$, where $\vec{u}$ is a vector in $\real^3$.
+In higher dimensions, the same general concepts apply; for instance, $D_{\vec{u}}f(x,y,z) = \nabla f(x,y,z) \cdot \vec{u}$, where $\vec{u}$ is a vector in $\real^3$.
 % arc length
 
 
