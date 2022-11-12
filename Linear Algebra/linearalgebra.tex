@@ -531,7 +531,7 @@ For a matrix $A$, we can define the following (useful) subsets:
     \item \textbf{image:} written im$(A)$, the set of vectors $\Vec{y}$ where $\Vec{y} = A\Vec{x}$. This is more commonly known as the "range" for functions.
 \end{itemize}
 
-You can solve for ker$(A)$ by simply augmenting $A$ by $\Vec{0}$.
+You can solve for ker$(A)$ by simply augmenting $A$ by $\Vec{0}$. The image of $A$ is simply the span of the columns of $A$ (which is fairly simple to prove, so it won't be shown here).
 
 \subsubsection{Rank-Nullity Theorem}
 
@@ -1092,15 +1092,146 @@ It should (hopefully) be clear that this is a system of equations for the variab
 As such, we have to find the $m$ and $b$ that make this equation "as close to true" as possible. We define a new vector $\vec{z}$, where $\vec{z} = A\vec
 x$. As described in an earlier section, we can find the shortest distance between two vectors by finding the projection of one onto the other, and we can then use this said projection to solve the system of equations. This is a fine method, but is very tedious and time-consuming, particularly for systems of multiple hundreds of data points.
 
+For a non-linear trend (say, $y=ax^2+bx+c$), we can use the same method as above, but with a slightly different $A$ matrix, naturally.
 
 % add figure here
 
 \subsection{Orthogonality and the Transpose of a Vector}
 
-\subsection{Least Squares, etc.}
+Given a subspace $V$ of $\real^n$, we can define the \textit{orthogonal complement} of $V$ as the set of all vectors $\vec{u}$ such that $\vec{u}\cdot\vec{v} = 0$ for all $\vec{v}\in V$. This is denoted $V^\bot$. Finding this is fairly simple; for instance, take $V = \{\vec{v_1}, \vec{v_2}\}= \{\begin{bmatrix}-2\\
+    2\\
+    3\\
+    0
+\end{bmatrix}, \begin{bmatrix}-1\\
+    1\\
+    1\\
+    1
+\end{bmatrix}
+\}$. To find $V^\bot$, we simply find the set of all vectors perpendicular to $\vec{v_1}$ \textbf{AND} $\vec{v_2}$. Let's define $\begin{bmatrix}
+    x_1\\
+    x_2\\
+    x_3\\
+    x_4\end{bmatrix} = \vec{x} \in V\bot$, so $\vec{v_1}\cdot\vec{x} = \vec{v_2}\cdot\vec{x} = 0$. Solving from here is fairly straightforward:
+
+\begin{equation}
+    \begin{split}
+        -2x_1 + 2x_2 + 3x_3 +0x_4&= 0\\
+        -x_1 + x_2 + x_3 +x_4 &= 0\\
+    \end{split}
+\end{equation}
+
+\textbf{Notice:} this is the equivalent of multiplying the matrix $\begin{bmatrix}
+    -2 & 2 & 3 & 0\\
+    -1 & 1 & 1 & 1
+\end{bmatrix}$ by $\vec{x}$. Since we are trying to find $\vec{x}$ when this product is $0$, we can see this instead as finding the kernel of this new matrix (ie ker($\begin{bmatrix}
+    -2 & 2 & 3 & 0\\
+    -1 & 1 & 1 & 1\end{bmatrix}$)).
+
+Now, let us define $A$ as the matrix with columns equal to the vectors in $V$ (ie $A = \begin{bmatrix}\vec{v_1} \vec{v_2}\end{bmatrix}$). As previously discussed, the \textit{image} of a matrix is the span of its columns, so we can say that $im(A) = span(\vec{v_1}, \vec{v_2}) = V$.
+
+To find how this work so far is useful, we need to introduce a new concept, namely the \textbf{transpose} of a matrix. Denoted, in our example, $A^T$, the transpose of a matrix is the matrix with rows equal to the columns of the original matrix:
+
+\begin{equation}
+    \begin{split}
+        A^T &= \begin{bmatrix}
+            -2&2&3&0\\
+            -1&1&1&1
+        \end{bmatrix}
+    \end{split}
+\end{equation}
+    
+\textbf{Please note that this is not the same as simply "flipping" the matrix on its side.} In actuality, you can think about this as the first element of the first row of $A$ becoming the first element of the first column of $A^T$, and so on.
+
+Also notice that this matrix is equal to the matrix we found earlier when trying to find the perpendicular vectors to $\vec{v_1}$ and $\vec{v_2}$. So, continuing from our earlier logic, we can thus define the vectors perpendicular to $V$:
+
+\begin{equation}
+    \begin{split}
+        \vec{x} &\in V^\bot\\
+        \therefore \vec{x} &\in ker(\begin{bmatrix}
+            -2 & 2 & 3 & 0\\
+            -1 & 1 & 1 & 1\\
+        \end{bmatrix}) = ker(A^T)\\
+    \end{split}
+\end{equation}
+
+Putting all of this together, we can develop the following relationship between a matrix's transpose and orthogonal component:
+
+\begin{equation}
+    \begin{split}
+        V^\bot &= ker(A^T)\\
+        V &= im(A) \implies V^\bot = (im(A))^\bot\\
+        &\therefore (im(A))^\bot = ker(A^T)\\
+    \end{split}
+\end{equation}
+
+Working through the whole proof of this can be a little tedious, but it is very useful to understand. We can also slightly rewrite this conclusion to another useful form:
+
+\begin{equation}
+    \begin{split}
+        (im(A))^\bot &= ker(A^T)\\
+        ((im(A))^\bot)^{\red{\bot}} &= (ker(A^T))^{\red{\bot}}\\
+        im(A) &= (ker(A^T))^\bot\\
+        im(A^{\red{T}}) &= (ker(A^{T^{\red{T}}}))^{\bot}\\
+        im(A^T) &= ker(A)^\bot
+    \end{split}
+\end{equation}
+
+\subsection{Normal Equations}
+
+While we showed a general form to use least squares to calculate the best fit line for an equation earlier, it would have resulted in having to find a projection, which, in higher dimensions, would prove unnecessarily tedious. Here, we build upon previous concepts to show a more efficient way.
+
+Consider a set of data that, following the steps in section 3.1, we have defined as $A\vec{x} = \vec{b}$. Assuming this system is inconsistent (which would thus merit using least squares..), our goal is to find a vector $\vec{y}$ that is as close to $\vec{b}$ as possible. We know we can do this using projections, and thus write:
+
+\begin{equation}
+    \begin{split}
+        A\vec{x} = \vec{y} = proj_{im(A)}(\vec{b})
+    \end{split}
+\end{equation}
+
+We can more thoroughly define $\vec{b}$ as well. $\vec{b}$ can be thought of as being the sum of $\vec{y}$ in one direction, and some other vector perpendicular to $\vec{y}$. We've established that $\vec{y} \in im(A)$, so this perpendicular vector is in $A^\bot$. Even more specifically, we can write:
+
+\begin{equation}
+    \begin{split}
+       \vec{b} &= proj_{im(A)}(\vec{b}) + proj_{im(A)^\bot}(\vec{b})\\
+       proj_{im(A)}(\vec{b}) &= \vec{b} - proj_{im(A)^\bot}(\vec{b})\\
+    \end{split}
+\end{equation}
+
+Substituting into equation 25, and doing some (admittedly unintuitive) algebra:
+
+\begin{equation}
+    \begin{split}
+        A\vec{x} &= \vec{b} - proj_{im(A)^\bot}(\vec{b})\\
+        \red{A^T}(A\vec{x}) &= \red{A^T}(\vec{b} - proj_{im(A)^\bot}(\vec{b}))\\
+        A^T A \vec{x} &= A^{T} \vec{b} - A^{T} proj_{im(A)^\bot}(\vec{b})\\
+    \end{split}
+\end{equation}
+
+Recall that $(im(A))^\bot = ker(A^T)$, so we can write:
+
+\begin{equation}
+    \begin{split}
+        A^T A \vec{x} &= A^{T} \vec{b} - A^{T} proj_{im(A)^\bot}(\vec{b})\\
+        A^T A \vec{x} &= A^{T} \vec{b} - A^{T} proj_{\red{ker(A^T)}}(\vec{b})
+    \end{split}
+\end{equation}
+
+However, in this final line, $\vec{b}$ is being projected onto the kernel of $A^T$, resulting in a vector in the kernel of $A^T$, which, when then multiplied by $A^T$ itself, simply results in $\vec{0}$. Thus, we can write our final form:
+
+\begin{equation}
+    \begin{split}
+        A^T A \vec{x} &= A^{T} \vec{b}\\
+    \end{split}
+\end{equation}
+
+In all, the goal is to find $\vec{b}$, which now only requires a couple of matrix operations, rather than a whole mess of projections. This equation is known as the \textbf{normal equation}.
 
 \newpage
 \section{Summary of Terms}
+% TO ADD:
+% orthogonal complement
+% transpose
+
 This course relies \textbf{heavily} on vocabulary. Below is a brief conglomeration (ignore the oxymoron) of these terms.
 
 \subsection{Notation}
@@ -1121,6 +1252,8 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
         \item $[\vec{x}]_{\mathfrak{B}}$ a vector $\vec{x}$ represented in base $\mathfrak{B}$
         \item $E$: some elementary matrix
        \item $A^{-1}$: the inverse of a matrix $A$
+       \item $A^\bot$: the orthogonal complement of a matrix $A$
+       \item $A^T$: the transpose of a matrix $A$
     \end{itemize}
 \subsection{Vocabulary}
     \begin{itemize}
@@ -1253,7 +1386,22 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
 
         \item \textbf{elementary matrix}: a matrix that performs a row operation on a matrix. They are typically denoted $E$, are always invertible, and their inverses are always elementary matrices as well. Also, by extension of always being invertible, they are, of course, always square.
         
+        \item \textbf{orthogonal component}: denoted $A^\bot$ for some matrix $A$, this is the set of all vectors perpendicular to $A$.
         
+        \item \textbf{transpose matrix}: denoted $A^T$, this is the matrix that is the result of switching the rows and columns of a matrix. For example, the transpose of $\begin{bmatrix}
+            a & b & c\\
+            d & e & f\\
+        \end{bmatrix}$ is $\begin{bmatrix}
+            a & d\\
+            b & e\\
+            c & f\\
+        \end{bmatrix}$.
+
+        \item \textbf{normal equation}: the equation used to find the least squares solution to a system of linear equations. It is given by:
+        
+        \begin{equation}
+            A^TA\Vec{x} = A^T\Vec{b}
+        \end{equation}
     \end{itemize}
 
 \end{document}
