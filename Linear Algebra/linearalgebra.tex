@@ -1231,8 +1231,27 @@ However, in this final line, $\vec{b}$ is being projected onto the kernel of $A^
     \end{split}
 \end{equation}
 
-In all, the goal is to find $\vec{b}$, which now only requires a couple of matrix operations, rather than a whole mess of projections. This equation is known as the \textbf{normal equation}.
+In all, the goal is to find $\vec{x}$, which now only requires a couple of matrix operations, rather than a whole mess of projections. This equation is known as the \textbf{normal equation}.
 
+\subsection{The Determinant}
+
+The \textbf{determinant} of a matrix is a scalar value that can be used to describe many properties of a matrix, denoted either as $det(A)$ or $|A|$. In particular, it can be used to describe whether a matrix is invertible without needing to actually invert it; by extension, a determinant only exists for a square matrix. The formula for the determinant of a $2x2$ matrix can be derived through trying to invert it (by augmenting it with the identity matrix):
+
+\begin{equation}
+    \begin{split}
+        \begin{array}[t][{@{}cc|cc@{}}]
+            a & b & 1 & 0 \\
+            c & d & 0 & 1 \\
+        \end{array}\\
+        ...\\
+        \begin{array}[t][{@{}cc|cc@{}}]
+            1 & \frac{b}{a} & \frac{1}{a} & 0 \\
+            0 & \red{d-\frac{bc}{a}} & -\frac{1}{a} & 1 \\
+        \end{array}\\
+    \end{split}
+\end{equation}
+
+Without even finishing the elimination, it should be clear that the term $d-\frac{bc}{a}$ (in red) cannot equal 0 in order for the matrix to be invertible. We can rewrite this term as $ad-bc$; this is the determinant of a $2x2$ matrix. 
 \newpage
 \section{Summary of Terms}
 % TO ADD:
