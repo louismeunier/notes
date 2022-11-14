@@ -1775,7 +1775,7 @@ The rate of change (derivative) of a function $f(x,y)$ of 2 variables can theore
 
 \textit{Note that the top line states $f(x_0+ah,y_0+bh)$ because the function is increasing by $a$ in the $x$ direction and $b$ in the $y$ direction.}
 
-To simplify this, let $g(h) = f(x_0+ah,y_0+bh)$, then we can say, using eqn. 83:
+To simplify this, let $g(h) = f(x_0+ah,y_0+bh)$, then we can say, using eqn. 84:
 
 \begin{equation}
     \begin{split}
@@ -1798,7 +1798,7 @@ Since $g(h) = f(x_0+ah,y_0+bh)$, we can define $x = x_0+ah$ and $y = y_0+bh$ (ie
     \end{split}
 \end{equation}
 
-Note that this last line involves combining the result of calculating $g'(h)$ with the original definition of $g'(0)$ from eqn. 84. In summary, if $\vec{u} = \left\langle a, b \right\rangle$, then the derivative of $f(x,y)$ in the direction of $\vec{u}$ is:
+Note that this last line involves combining the result of calculating $g'(h)$ with the original definition of $g'(0)$ from eqn. 85. In summary, if $\vec{u} = \left\langle a, b \right\rangle$, then the derivative of $f(x,y)$ in the direction of $\vec{u}$ is:
 
 \begin{equation}
     \begin{split}
@@ -1825,9 +1825,29 @@ The first vector in this equation is the \textbf{gradient} (denoted $\nabla$) of
     \end{split}
 \end{equation}
 
-Using this notation, we can simplify the form of the directional derivative to $D_{\vec{u}}f(x,y) = \nabla f(x,y) \cdot \vec{u}$.
+Using this notation, we can simplify the form of the directional derivative to 
+
+\begin{equation}
+    \begin{split}
+        D_{\vec{u}}f(x,y) = \nabla f(x,y) \cdot \vec{u}
+    \end{split}
+\end{equation}
 
 In higher dimensions, the same general concepts apply; for instance, $D_{\vec{u}}f(x,y,z) = \nabla f(x,y,z) \cdot \vec{u}$, where $\vec{u}$ is a vector in $\real^3$.
+
+\subsubsection{Maximizing the Gradient}
+
+Given a function, $f(x,y)$, a common question is to find what direction it changes the fastest, ie, what direction should $\vec{u}$ be pointing to maximize $D_{\vec{u}}f(x,y)$? This is fairly simple to calculate using eqn. 90's definition of the gradient:
+
+\begin{equation}
+    \begin{split}
+        D_{\vec{u}} f(x,y) &= \nabla f(x,y) \cdot \vec{u}\\
+        &= |\nabla f(x,y)| |\vec{u}| \cos(\theta)\\
+        &= |\nabla f(x,y)| \cos(\theta)\\
+    \end{split}
+\end{equation}
+
+Since $cos$ is at a max when $theta = 0$, we can thus maximize $D_{\vec{u}} f(x,y)$ by setting $\vec{u}$ in the same direction as $\nabla f(x,y)$.
 % arc length
 
 
