@@ -14,8 +14,9 @@
 \usepackage{titleps}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
+\usepackage{annotate-equations}
 \usepackage{framed}
-\usepackage{mdframed}
+
 \usepackage[colorlinks=true, linkcolor=violet]{hyperref}
 
 % settings
@@ -44,7 +45,6 @@
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\rational}{\mathbb{Q}}
 \newcommand{\complex}{\mathbb{C}}
-
 
 \begin{titlepage}
     \begin{center}
@@ -1723,10 +1723,6 @@ For example, if $z = e^x \sin y$, $x = st^2$, and $y = s^2t$, then:
 
 The same method can be used to find $\pd{z}{t}$.
 
-\subsubsection{Tree Graphs}
-
-Using the chain rule for implicit functions of many variables can easily become very confusing. It can help to create a tree graph to visualize the relationships between the functions at hand. For example, for the example above, where $z = f(x(s,t),y(s,t))$, we create a tree graph as in figure \ref{fig:partialderivativetreegraph}.
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=8.0cm]{misc/partialderivativetreegraph.png}
@@ -1734,14 +1730,6 @@ Using the chain rule for implicit functions of many variables can easily become 
     \label{fig:partialderivativetreegraph}
 \end{figure}
 
-To find, for instance, $\pd{z}{s}$, you follow the path from $z$ to each $s$ in the tree graph, and multiply the partial derivatives of each function along the way (note the highlighted branches). In this case, $\pd{z}{s} = \pd{z}{x} \pd{x}{s} + \pd{z}{y} \pd{y}{s}$.
-
-% add proof of chain rule for multivariable functions?
-
-% add implicit differentiation here
-\subsubsection{Implicit Differentiation}
-
-Given a function in the form $F(x,y) = 0$ where $y$ is a function $f$ of $x$ (ie $F = (x,f(x))$), we can differentiate both sides in terms of $x$, using the chain rule (see figure \ref{fig:pdtreeimplicit}):
 
 \begin{figure}[!ht]
     \centering
@@ -1749,6 +1737,21 @@ Given a function in the form $F(x,y) = 0$ where $y$ is a function $f$ of $x$ (ie
     \caption{Tree graph for $F(x,f(x))$.}
     \label{fig:pdtreeimplicit}
 \end{figure}
+
+\subsubsection{Tree Graphs}
+
+Using the chain rule for implicit functions of many variables can easily become very confusing. It can help to create a tree graph to visualize the relationships between the functions at hand. For example, for the example above, where $z = f(x(s,t),y(s,t))$, we create a tree graph as in figure \ref{fig:partialderivativetreegraph}.
+
+
+To find, for instance, $\pd{z}{s}$, you follow the path from $z$ to each $s$ in the tree graph, and multiply the partial derivatives of each function along the way (note the highlighted branches). In this case, $\pd{z}{s} = \pd{z}{x} \pd{x}{s} + \pd{z}{y} \pd{y}{s}$.
+
+% add proof of chain rule for multivariable functions?
+
+% add implicit differentiation here
+\subsection{Implicit Differentiation}
+
+Given a function in the form $F(x,y) = 0$ where $y$ is a function $f$ of $x$ (ie $F = (x,f(x))$), we can differentiate both sides in terms of $x$, using the chain rule (see figure \ref{fig:pdtreeimplicit}):
+
 
 \begin{equation}
     \begin{split}
@@ -1759,13 +1762,33 @@ Given a function in the form $F(x,y) = 0$ where $y$ is a function $f$ of $x$ (ie
     \end{split}
 \end{equation}
 
-\textit{Note that $\frac{dx}{dx} = 1$, as we can think of $x$ as a function of $x$ (ie $x = x$).}
+\textit{Note that $\frac{dx}{dx} = 1$, as we can think of $x$ as a function of $x$ (ie $x = x$).} The proof for functions of more variables is fairly similar; for a function of the form $F(x,y,z)=0$ where $z = f(x,y)$, we can find $\pd{z}{x}$:
 
+\begin{equation}
+    \begin{split}
+        F(x,y,z) &= 0\\
+        \pd{F}{x}\pd{x}{x} + \pd{F}{y}\pd{y}{x} + \pd{F}{z}\pd{z}{x} &= 0\\
+        \pd{x}{x} = 1, \pd{y}{x} &= 0\\
+        \pd{F}{x} + \pd{F}{z}\pd{z}{x} &= 0\\
+        \therefore \pd{z}{x} &= -\frac{\pd{F}{x}}{\pd{F}{z}}\\
+    \end{split}
+\end{equation}
 
+Note that the third line of this proof is valid as $\pd{x}{x} = 1$ as shown above, and $\pd{y}{x} = 0$ because $y$ is not a function of $x$. Finding $\pd{z}{y}$ is incredibly similar (and equals $-\frac{\pd{F}{y}}{\pd{F}{z}}$).
+
+Consider a "simpler" function, $x^2+y^3=0$; differentiating in terms of $x$ gives:
+
+\begin{equation}
+    \begin{split}
+        F(x,y) = x^2 + y^3 &= 0\\
+        \frac{dy}{dx} &= -\frac{\pd{F}{x}}{\pd{F}{y}}\\
+        &= -\frac{2x}{3y^2}\\
+    \end{split}
+\end{equation}
 % directional derivatives, gradient, probably go in the same section
 \subsection{Directional Derivatives and the Gradient}
 
-The rate of change (derivative) of a function $f(x,y)$ of 2 variables can theoretically be defined in any arbitrary direction, say, in the direction of a unit vector $\vec{u} = \left\langle a,b\right\rangle$. By this logic, then $f_x(x,y)$ is the derivative in the direction of $\vec{i} = \left\langle 1, 0 \right\rangle$, and $f_y(x,y)$ is the derivative in the direction of $\vec{j} = \left\langle 0, 1 \right\rangle$. The derivative in the direction of any arbitrary unit vector $\vec{u}$ is called a \textit{directional derivative}, and is denoted as $D_{\vec{u}}f(x,y)$. Using the limit definition of a derivative, we can write:
+The rate of change (derivative) of a function $f(x,y)$ of 2 variables can theoretically be defined in any arbitrary direction, say, in the direction of a unit vector $\vec{u} = \left\langle a,b\right\rangle$. By this logic, then $f_x(x,y)$ is the derivative in the direction of $\hat{i} = \left\langle 1, 0 \right\rangle$, and $f_y(x,y)$ is the derivative in the direction of $\hat{j} = \left\langle 0, 1 \right\rangle$. The derivative in the direction of any arbitrary unit vector $\vec{u}$ is called a \textit{directional derivative}, and is denoted as $D_{\vec{u}}f(x,y)$. Using the limit definition of a derivative, we can write:
 
 \begin{equation}
     \begin{split}
@@ -1847,8 +1870,7 @@ Given a function, $f(x,y)$, a common question is to find what direction it chang
     \end{split}
 \end{equation}
 
-Since $cos$ is at a max when $theta = 0$, we can thus maximize $D_{\vec{u}} f(x,y)$ by setting $\vec{u}$ in the same direction as $\nabla f(x,y)$.
+Since $\cos$ is at a max when $\theta = 0$, we can thus maximize $D_{\vec{u}} f(x,y)$ by setting $\vec{u}$ in the same direction as $\nabla f(x,y)$.
 % arc length
-
 
 \end{document}
