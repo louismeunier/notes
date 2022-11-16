@@ -263,7 +263,7 @@ An exponential function is any $f(x)$ of the form $f(x) = a^x$. To find the deri
 
 We can rewrite this for the derivative of $f$ at $x = 0$:
 
-\begin{equation}
+\begin{equation}\label{eqn:expderiv}
     \begin{split}
     f'(0) &= \textcolor{red}{a^0}\lim_{h\to 0}[\frac{a^h-1}{h}]\\
     &=\lim_{h\to 0}[\frac{a^h-1}{h}]
@@ -282,25 +282,25 @@ We can use this to find for what value of $a$ that $f'(0) = f(0)$. $f(0) = a^0 =
 
 By the Intermediate Value Theorem, we know that $2 < a < 3$, which can be defined by $e$.
 
-\begin{equation}
+\begin{equation}\label{eqn:edef}
     \begin{split}
         1 = e^0 = \lim_{h\to 0}[\frac{\textcolor{red}{e}^h-1}{h}]
     \end{split}
 \end{equation}
 Extending this further for e;
 
-\begin{equation}
+\begin{equation}\label{exp:fullexpderiv}
     \begin{split}
         \frac{d}{dx} e^x &= \lim_{h\to 0}[\frac{e^{x+h}-e^x}{h}]\\
         &= e^x \textcolor{red}{\lim_{h\to 0}[\frac{e^h-1}{h}]}\\
-        \textit{Substituting from eqn. 10}\\
+        \textit{Substituting from eqn. \ref{eqn:edef}}\\
         &= \mathbf{e^x}
     \end{split}
 \end{equation}
 
 \subsubsection{Generalizing \texorpdfstring{$\frac{d}{dx} a^x$}{TEXT}}
 
-From eqn. 8:
+From eqn. \ref{eqn:expderiv}:
 
 $$\frac{d}{dx}a^x = a^x \lim_{h\to 0} \frac{a^h-1}{h} = f'(0) a^x$$
 
@@ -310,11 +310,11 @@ $$\frac{d}{dx}a^x = \frac{d}{dx}\textcolor{red}{ e^{\ln a^x} } = \frac{d}{dx} e^
 
 We can let $u = x \ln a$, and thus $a^x = e^u$. We can then use implicit differentiation as follows:
 
-\begin{equation}
+\begin{equation}\label{exp:derivativeexpa}
     \begin{split}
         \frac{d}{dx} a^x &= \frac{d}{dx} e^u\\
         &=\frac{du}{dx} \frac{d}{du} [e^u]\\
-        \textit{From eqn. 11}\\
+        \textit{From eqn. \ref{exp:fullexpderiv}}\\
         &=e^u \frac{du}{dx}\\
         &= e^u \frac{d \textcolor{red}{(x \ln a)}}{dx}
         \textit{Differentiating in terms of x}\\
@@ -334,7 +334,7 @@ Let $f(x) = y = \log_a{x}$, so $x = a^y$. To find the derivative of $f(x)$:
     \begin{split}
         \frac{d}{dx} x &= \frac{d}{dx} a^y\\
         1 &= [\frac{d}{dy} a^y] \frac{dy}{dx}\\
-        \textit{Using eqn. 12}:\\
+        \textit{Using eqn. \ref{exp:derivativeexpa}}:\\
         1 &= a^y \ln a \frac{dy}{dx}\\
         \frac{1}{a^y \ln a} &= \frac{dy}{dx}\\
         \textit{Subbing in for $y$}:\\
@@ -359,7 +359,7 @@ When $a = e$:
 
 Let $f(x) = \ln x, \therefore f(1) = \ln 1 = 0$. In addition, $f'(x) = \frac{1}{x}, \therefore f'(1) = 1/1 = 1$. We can use the definition of a limit to say the following:
 
-\begin{equation}
+\begin{equation}\label{eqn:elimit}
     \begin{split}
         1 &= \lim_{h \to 0}[\frac{f(1+h) - f(1)}{h}]\\
         &= \lim_{h\to 0}\frac{1}{h}[f(1+h)-f(1)]\\
@@ -381,7 +381,7 @@ Note that the penultimate step of this work relies on the following (very helpfu
 \end{shaded}
 
 
-Alternatively, we can write $e$ as a limit going to $\infty$; Let $y = \frac{1}{h}$, and, substituting into eqn. 15:
+Alternatively, we can write $e$ as a limit going to $\infty$; Let $y = \frac{1}{h}$, and, substituting into eqn. \ref{eqn:elimit}:
 
 \begin{equation}
     \begin{split}
@@ -392,7 +392,7 @@ Alternatively, we can write $e$ as a limit going to $\infty$; Let $y = \frac{1}{
 \begin{figure}
     \centering
     \includegraphics[width=10.0cm]{misc/easalimit.png}
-    \caption{Eqn. 15 visualized}
+    \caption{Eqn. \ref{eqn:elimit} visualized}
 \end{figure}
 
 \section{Linearization}\label{sec:linearization}
@@ -491,7 +491,7 @@ Therefore, $f(x) = P_N(x)$ if, and only if, $\lim_{N\to\infty} R_N(x) = 0$. Logi
 
 Using Taylor Polynomials, we can explore a number of interesting properties of functions, and even derive some unique expressions. For instance (assuming $R_N(x) = 0$):
 
-\begin{equation}
+\begin{equation}\label{eqn:taylorexp}
     \begin{split}
     e^x &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + ...\\
     e^{\red{i}x} &= 1 + \red{i}x + \frac{(\red{i}x)^2}{2!} + \frac{(\red{i}x)^3}{3!} + ...\\
@@ -523,7 +523,7 @@ and, very similarly, for $\cos x$:
     \end{split}
 \end{equation}
 
-Thus, we can rewrite equation 22 by substituting in $\sin$ and $\cos$, for the odd and even factors respectively:
+Thus, we can rewrite equation \ref{eqn:taylorexp} by substituting in $\sin$ and $\cos$, for the odd and even factors respectively:
 
 \begin{equation}
     \begin{split}
@@ -575,8 +575,8 @@ From here, we can solve for $\cos(ix)$ and $\sin(ix)$:
 And thus, we can define the hyperbolic trigonometric functions using the complex plane, Taylor Series, and Euler's Identity. 
 
 \section{Trigonometry}
-\subsection{Trigonometric Identities}
-There are many, many trigonometric identities that are often (some more than others) useful. See \hyperlink{https://www.overleaf.com/project/633314fad7f84c6632a211a0}{here} for a list of quite a few, accompanied by proofs.
+% \subsection{Trigonometric Identities}
+% There are many, many trigonometric identities that are often (some more than others) useful. See \hyperlink{https://www.overleaf.com/project/633314fad7f84c6632a211a0}{here} for a list of quite a few, accompanied by proofs.
 \subsection{Inverse Trig Functions}
 As with all functions, we can define the inverse of the basic trig functions, as the functions that undo their respective trig functions. The following shows each of the three basic trig functions, their inverses, and how to derive their respective derivatives.
 
@@ -794,7 +794,7 @@ From this definition, we can define several other properties to aid in solving e
     \item \textbf{Powers:} $z^n = r^n e^{i n \theta}, n \in \integers$
 \end{itemize}
 
-Example; \textbf{calculate $(-1-i)^{20}$}. See figure \ref{fig:demoivreseg} for a visual representation.
+Example: calculate $(-1-i)^{20}$. See figure \ref{fig:demoivreseg} for a visual representation.
 
 \begin{figure}[!ht]
     \centering
@@ -1853,7 +1853,7 @@ Consider a "simpler" function, $x^2+y^3=0$; differentiating in terms of $x$ give
 
 The rate of change (derivative) of a function $f(x,y)$ of 2 variables can theoretically be defined in any arbitrary direction, say, in the direction of a unit vector $\vec{u} = \left\langle a,b\right\rangle$. By this logic, then $f_x(x,y)$ is the derivative in the direction of $\hat{i} = \left\langle 1, 0 \right\rangle$, and $f_y(x,y)$ is the derivative in the direction of $\hat{j} = \left\langle 0, 1 \right\rangle$. The derivative in the direction of any arbitrary unit vector $\vec{u}$ is called a \textit{directional derivative}, and is denoted as $D_{\vec{u}}f(x,y)$. Using the limit definition of a derivative, we can write:
 
-\begin{equation}
+\begin{equation}\label{eqn:directionalderivativelimit}
     \begin{split}
         D_{\vec{u}}f(x_0,y_0) &= \lim_{h\to\infty}[\frac{f(x_0+ah,y_0+bh)-f(x_0,y_0)}{h}]
     \end{split}
@@ -1861,7 +1861,7 @@ The rate of change (derivative) of a function $f(x,y)$ of 2 variables can theore
 
 \textit{Note that the top line states $f(x_0+ah,y_0+bh)$ because the function is increasing by $a$ in the $x$ direction and $b$ in the $y$ direction.}
 
-To simplify this, let $g(h) = f(x_0+ah,y_0+bh)$, then we can say, using eqn. 84:
+To simplify this, let $g(h) = f(x_0+ah,y_0+bh)$, then we can say, using eqn. \ref{eqn:directionalderivativelimit}:
 
 \begin{equation}
     \begin{split}
@@ -1871,7 +1871,7 @@ To simplify this, let $g(h) = f(x_0+ah,y_0+bh)$, then we can say, using eqn. 84:
 
 Since $g(h) = f(x_0+ah,y_0+bh)$, we can define $x = x_0+ah$ and $y = y_0+bh$ (ie, $x$ and $y$ are both functions of $h$), and using the chain rule, write:
 
-\begin{equation}
+\begin{equation}\label{eqn:directionalderivativesimplification}
     \begin{split}
         g(h) &= f(x_0+ah,y_0+bh) = f(x(h),y(h))\\
         g'(h) &= \pd{f}{x}\frac{dx}{dh} + \pd{f}{y}\frac{dy}{dh}\\
@@ -1884,7 +1884,7 @@ Since $g(h) = f(x_0+ah,y_0+bh)$, we can define $x = x_0+ah$ and $y = y_0+bh$ (ie
     \end{split}
 \end{equation}
 
-Note that this last line involves combining the result of calculating $g'(h)$ with the original definition of $g'(0)$ from eqn. 85. In summary, if $\vec{u} = \left\langle a, b \right\rangle$, then the derivative of $f(x,y)$ in the direction of $\vec{u}$ is:
+Note that this last line involves combining the result of calculating $g'(h)$ with the original definition of $g'(0)$ from eqn. \ref{eqn:directionalderivativesimplification}. In summary, if $\vec{u} = \left\langle a, b \right\rangle$, then the derivative of $f(x,y)$ in the direction of $\vec{u}$ is:
 
 \begin{equation}
     \begin{split}
@@ -1913,7 +1913,7 @@ The first vector in this equation is the \textbf{gradient} (denoted $\nabla$) of
 
 Using this notation, we can simplify the form of the directional derivative to 
 
-\begin{equation}
+\begin{equation}\label{eqn:directionalderivativedefinitiondotproduct}
     \begin{split}
         D_{\vec{u}}f(x,y) = \nabla f(x,y) \cdot \vec{u}
     \end{split}
@@ -1923,7 +1923,7 @@ In higher dimensions, the same general concepts apply; for instance, $D_{\vec{u}
 
 \subsubsection{Maximizing the Gradient}
 
-Given a function, $f(x,y)$, a common question is to find what direction it changes the fastest, ie, what direction should $\vec{u}$ be pointing to maximize $D_{\vec{u}}f(x,y)$? This is fairly simple to calculate using eqn. 97's definition of the gradient:
+Given a function, $f(x,y)$, a common question is to find what direction it changes the fastest, ie, what direction should $\vec{u}$ be pointing to maximize $D_{\vec{u}}f(x,y)$? This is fairly simple to calculate using eqn. \ref{eqn:directionalderivativedefinitiondotproduct}'s definition of the gradient:
 
 \begin{equation}
     \begin{split}
@@ -1934,7 +1934,67 @@ Given a function, $f(x,y)$, a common question is to find what direction it chang
 \end{equation}
 
 Since $\cos$ is at a max when $\theta = 0$, we can thus maximize $D_{\vec{u}} f(x,y)$ by setting $\vec{u}$ in the same direction as $\nabla f(x,y)$.
-% !arc length
-% !jacobian
-% !replace eqn with actual references
+
+\subsection{Using a Jacobian Matrix}
+
+The Jacobian matrix is a matrix of partial derivatives of a function of multiple variables. It has many more applications beyond the scope of this course, but is still interesting/useful enough to include here. To understand the derivation of the Jacobian matrix, first consider the derivation of Cramer's rule.
+
+\subsubsection{Cramer's Rule}
+
+\textbf{Cramer's Rule} is a general method for solving systems of linear equations, specifically, when there are as many unknowns as there are equations. Its easiest to understand by deriving it first from a simple system of 2 equations (and thus, 2 unknowns):
+
+\begin{equation}
+    \begin{split}
+        ax + by &= \alpha\\
+        cx + dy &= \beta
+    \end{split}
+\end{equation}
+
+We can cancel out the $y$ terms:
+
+\begin{equation}
+    \begin{split}
+        \red{d}(ax + by &= \alpha)\\
+        \red{b}(cx + dy &= \beta)\\
+        (adx + bdy &= d\alpha)\\
+        -(cbx + bdy &= b\beta)\\
+        \hline
+        adx - cbx &= d\alpha - b\beta\\
+        x(ad - cb) &= d\alpha - b\beta\\
+        x &= \frac{d\alpha - b\beta}{ad - cb}
+    \end{split}
+\end{equation}
+
+If we consider $A$ as the matrix of coefficients of the system and $B$ as the matrix with the first column of $A$ replaced with the column vector $\left\langle \alpha, \beta \right\rangle$ (ie the solutions), then we can write the above as:
+
+\begin{equation}
+    \begin{split}
+        A = \begin{bmatrix}
+            a & b\\
+            c & d
+        \end{bmatrix}
+        \quad&
+        B = \begin{bmatrix}
+            \alpha & b\\
+            \beta & d
+        \end{bmatrix}
+        \quad\\
+        x &= \frac{d\alpha - b\beta}{ad - cb} = \frac{det(B)}{det(A)}
+    \end{split}
+\end{equation}
+
+Cramer's Rule in general states that for an equation $Ax = b$, $x_i = \frac{det(B_i)}{det(A)}$, where $B_i$ is the matrix with the $i^{th}$ column of $A$ replaced with $b$ and $x_i$ is the $i^{th}$ variable in the equation(s). See \hyperref{http://notes.louismeunier.net/Linear%20Algebra/linearalgebra.pdf}{}{}{here} for more Linear Algebra.
+
+\subsection{Using Cramer's Rule to Derive the Jacobian Matrix}
+
+
+
+
+
+
+% ! NOTES/TODO
+\iffalse
+   Add arc length, but should probably go into the application of integration stuff (which really hasn't been covered yet lol)
+   Add jacobian matrix + cramer's rule
+\fi
 \end{document}
