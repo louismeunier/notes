@@ -1627,7 +1627,33 @@ This definition can, naturally, be extended to higher derivatives. Just as there
     If the point $(a,b)$ is in the domain of $f(x,y)$, and $f_{xy}$ and $f_{yx}$ are continuous, then $f_{xy}(a,b)=f_{yx}(a,b)$.
 \end{shaded*}
 
-\subsubsection{Partial Differential Equations}
+\subsection{Differentials, Errors, Approximations}
+
+In functions of a single variable, it can be said:
+
+\[
+    dy = f'(x) dx    
+\]
+
+Similarly, in a function of multiple variables (say $z = f(x,y)$), we can say:
+
+\begin{equation}
+    \begin{split}
+    dz &= f_x(x,y) dx + f_y(x,y) dy\\
+    &= \pd{z}{x} dx + \pd{z}{y} dy
+    \end{split}
+\end{equation}
+
+Similarly to how the approximate error $\Delta f$ in a function $f(x)$ can be estimated from the value of $\Delta x$ by calculating $\Delta f \approx df =  f'(x) dx$, we can similarly estimate the error in a function of multiple variables by calculating:
+
+\begin{equation}
+    \begin{split}
+     dz &= \pd{z}{x} dx + \pd{z}{y} dy\\
+    \Delta z &= \pd{z}{x} \Delta x + \pd{z}{y} \Delta y   
+    \end{split}
+\end{equation}
+
+\subsection{Partial Differential Equations}
 
 Just as a \textit{differential equation} relates a function with its derivative(s), a \textit{partial differential equation} relates a multi-variable function with its partial derivatives. 
 
@@ -1662,7 +1688,44 @@ We can also use the tangent plane to a function $f(x,y)$ to define a linear appr
     \end{split}
 \end{equation}
 
-The derivation of this equation is very similar to that of a single-variable linearization.
+The derivation of this equation is very similar to that of a single-variable linearization. It should be clear that this is simple the equation for the tangent plane at a particular point $(a,b)$, simply rewritten as a function of $x$ and $y$.
+
+\subsubsection{Normal Equation to a Plane}
+
+Using the general form of a tangent plane ($z = ax + by + c$), we can find the normal equation to the the plane at which it is tangent to the original function fairly easily. Rewriting this equation, we can say:
+
+\begin{equation}
+    \begin{split}
+        z &= ax + by + c\\
+        z &- ax - by = c\\
+    \end{split}
+\end{equation}
+
+One property of the function in this form is that a vector that is perpendicular to it can be written using the coefficients of each variable, ie $\vec{n} = \langle -a, -b,1 \rangle$ (this can fairly easily be proven). From here, we can find a set of functions in terms of (for instance) $t$ that parametrically describe the general normal equation. The slope in each direction $x, y,z$ must be the same as the respective quantity in our normal vector $\vec{n}$, so we can say:
+
+\begin{equation}
+    \begin{split}
+        x &= -at\\
+        y &= -bt\\
+        z &= t
+    \end{split}
+\end{equation}
+
+This form assumes that the original tangent plane in question is at the origin, but can be easily modified to account for a different point, say at $(x,y,z) = (m,n,p)$:
+
+\begin{equation}
+    \begin{split}
+        x &=m-at\\
+        y &= n-bt\\
+        z &= p+t
+    \end{split}
+\end{equation}
+
+
+% ! in tangent plane section should add part about how you can find the normal line parametrically using the tangent plane
+
+% ! should probably add a section here about differentials
+% ! from there can add error
 
 \subsection{The Chain Rule}
 
@@ -1860,7 +1923,7 @@ In higher dimensions, the same general concepts apply; for instance, $D_{\vec{u}
 
 \subsubsection{Maximizing the Gradient}
 
-Given a function, $f(x,y)$, a common question is to find what direction it changes the fastest, ie, what direction should $\vec{u}$ be pointing to maximize $D_{\vec{u}}f(x,y)$? This is fairly simple to calculate using eqn. 90's definition of the gradient:
+Given a function, $f(x,y)$, a common question is to find what direction it changes the fastest, ie, what direction should $\vec{u}$ be pointing to maximize $D_{\vec{u}}f(x,y)$? This is fairly simple to calculate using eqn. 97's definition of the gradient:
 
 \begin{equation}
     \begin{split}
@@ -1871,6 +1934,7 @@ Given a function, $f(x,y)$, a common question is to find what direction it chang
 \end{equation}
 
 Since $\cos$ is at a max when $\theta = 0$, we can thus maximize $D_{\vec{u}} f(x,y)$ by setting $\vec{u}$ in the same direction as $\nabla f(x,y)$.
-% arc length
-
+% !arc length
+% !jacobian
+% !replace eqn with actual references
 \end{document}
