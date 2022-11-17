@@ -1,5 +1,3 @@
-% backup|Linear Algebra
-% Add "% backup | [file name]" above (no quotes) to make file backup
 \documentclass[12pt]{article}
 % packages
 \usepackage[paper=letterpaper,margin=2cm]{geometry}
@@ -955,7 +953,7 @@ $$\| \vec{d} \|  = \sqrt{d_1^2 + d_2^2 + ... + d_n^2}$$
 % rephrase, a little confusing
 Finding the distance between a point and a line (specifically, the shortest distance; this is really the only helpful one that should be found, as any point can be considered an infinite distance from a particular point on a line...) requires a little more intuitive and computation (though it can be simplified later). First, to understand how to find this shortest distance, we have to consider the properties of a particular point on the line in question that creates this shortest distance with our given point. Perhaps this is intuitive, but this point is the point on the line that forms a distance vector that is perpendicular to the line. 
 
-Consider a point $P = (a,b)$, a line $L$, a distance vector $\vec{d}$, in $\real^2$ (any base could work, but this is clearly the easiest to visualize), and the figure \ref{fig:pointtolinedistance}, as it is hard to visualize based off these words alone.
+% Consider a point $P = (a,b)$, a line $L$, a distance vector $\vec{d}$, in $\real^2$ (any base could work, but this is clearly the easiest to visualize), and the figure \ref{fig:pointtolinedistance}, as it is hard to visualize based off these words alone.
 
 % add figure here
 
@@ -1253,14 +1251,128 @@ The \textbf{determinant} of a matrix is a scalar value that can be used to descr
 
 Without even finishing the elimination, it should be clear that the term $d-\frac{bc}{a}$ (in red) cannot equal 0 in order for the matrix to be invertible. We can rewrite this term as $ad-bc$; this is the determinant of a $2x2$ matrix. 
 
-\subsubsection{Determinant of Larger Matrices}
+\subsubsection{Determinants of Larger Matrices}
 
-The determinant of matrices larger than 2x2 could be derived similarly, but the work is tedious. Instead, you can break down the matrix into smaller matrices, and use the determinant of the smaller matrices to find the determinant of the larger matrix. For example, consider the following $3x3$ matrix:
-% add section on determinants of larger matrices
-% area, volume, cross product, etc.
-% adjugate
+The determinant of matrices larger than 2x2 could be derived similarly, but the work is tedious. Instead, you can break down the matrix into smaller matrices, and use the determinant of the smaller matrices to find the determinant of the larger matrix. For example, consider the following $3x3$ matrix, $A = \begin{bmatrix}
+    a & b & c\\
+    d & e & f\\
+    g & h & i
+\end{bmatrix}$. 
 
+To solve for the determinant of $A$, we can pick any particular row or column, and break the matrix into smaller matrices based on it. For example, we can pick the first row, and break the matrix into $2x2$ matrices:
 
+\begin{equation}
+    \begin{split}
+        det(A) = a*det(\begin{bmatrix}
+            e & f\\
+            h & i
+            \end{bmatrix}) - b*det(\begin{bmatrix}
+            d & f\\
+            g & i
+            \end{bmatrix}) + c*det(\begin{bmatrix}
+            d & e\\
+            g & h
+            \end{bmatrix})
+    \end{split}
+\end{equation}
+
+Note that each "submatrix" used in this case is the matrix of $A$ without the respective row or column that the coefficient of our row in question is in. Also note that we multiplied the second term by $-1$. In general, we have to multiply by the corresponding sign in a "sign matrix", in which the top left corner is positive, and the sign alternates from there.
+
+We can finish solving this using our determinant formula of 2x2 matrices:
+
+\[
+    det(A) = a(ei - fh) - b(di-fg) + c(dh-eg)
+\]
+
+Theoretically, you could use this formula as a general formula for any 3x3 matrix, but, in practice, it is far easier to simply use the algorithm described above for the particular case.
+
+For determinants of higher order matrices, the same general formula applies, but the resulting "submatrices" have to then be broken down more.
+
+\subsubsection{Properties of Determinants}
+
+It is helpful to remember a few properties of determinants of different matrices to make certain problems easier. For matrices $A$ and $B$:
+
+\begin{itemize}
+    \item $det(A) = det(A^T)$
+    \item $det(A) = -det(A)$, if a row of $A$ is exchanged
+    \item $det(kA) = k^n det(A)$, where $n$ is the order of $A$
+    \item $det(AB) = det(A)det(B)$
+    \item $det(A) + det(B) \neq det(A+B)$
+\end{itemize}
+
+\subsection{Applications to Area and Volume}
+
+\subsubsection{Area}
+
+Take a parallelogram who's sides are defined by the length of vectors $\vec{v} = \begin{bmatrix}
+    a\\
+    b
+\end{bmatrix}$ and $\vec{u} = \begin{bmatrix}
+    c\\
+    d
+\end{bmatrix}$. You can also think of this as the base being defined as $\vec{v}$, then being translated upwards by $\vec{u}$; see figure \ref{fig:parallelogram}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5cm]{misc/parallelogram.png}
+    \caption{A parallelogram defined by vectors $\vec{v}$ and $\vec{u}$}
+    \label{fig:parallelogram}
+\end{figure}
+
+We can see this image as the area of a rectangle removed by the area of 2 triangles on either side of the parallelogram:
+
+\begin{equation}
+    \begin{split}
+    A &= (a+b)(c+d) - 2 (\frac{1}{2}(c(a+b))) + 2(\frac{1}{2}(b(c+d)))\\
+    A &= (a+b)(c+d) - ca - cb - bc - bd\\
+    A &= ac + ad + bc + bd - ca - bc - bc - bd\\
+    &= ad - bc = |\begin{bmatrix}
+        a & b\\
+        c & d
+        \end{bmatrix}|
+    \end{split}
+\end{equation}
+
+Note that this is simply the determinant of the matrix defined by the vectors $\vec{v}$ and $\vec{u}$ (though you may have to take the absolute value, depending on the context).
+
+\subsubsection{Volume}
+
+Consider a parallelepiped, whose sides are defined by the vectors $\vec{v} = \begin{bmatrix}
+    a\\
+    b\\
+    c
+\end{bmatrix}$, $\vec{u} = \begin{bmatrix}
+    d\\
+    e\\
+    f
+\end{bmatrix}$, and $\vec{w} = \begin{bmatrix}
+    g\\
+    h\\
+    i
+\end{bmatrix}$.
+
+The volume of such a figure can be found with:
+
+\[
+    A = \vec{u} \cdot (\vec{v}\times \vec{w})
+    \]
+
+To derive this expression, first consider the base, defined by the vectors $\vec{v}$ and $\vec{w}$. The area of this base is the height times the matrix, which, with a little trigonometry, can be shown to equal $||\vec{v}||||\vec{w}||\sin \theta$, with $\theta$ representing the angle between the two vectors. This, as a matter of fact, is simply another way to define cross product of $\vec{v}$ and $\vec{w}$, namely $\vec{v}\times\vec{w} = A_{base}$.
+
+Now, to find the volume we next need the height. We can find this by picturing a right triangle with a hypotenuse defined by $\vec{u}$, and the height in question actually being a scalar multiple of the cross product of $\vec{v}$ and $\vec{w}$. With a little more trigonometry, it is clear that this value is simply equal to $||\vec{u}||\cos \alpha$, with $\alpha$ representing the angle between $\vec{u}$ and $\vec{v}$. 
+
+Multiplying the height by the area of the base, we get the volume of the parallelepiped:
+
+\begin{align*}
+A = ||\vec{u}||\cos\alpha * (\vec{v} \times \vec{w})\\
+= \vec{u}\cdot(\vec{v} \times \vec{w})\\
+\end{align*}
+
+\subsection{Adjugates}
+
+\subsubsection{Cramer's Rule}
+
+\subsection{Dynamical Systems}
 
 \newpage
 \section{Summary of Terms}
