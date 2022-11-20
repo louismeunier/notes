@@ -1370,10 +1370,69 @@ A = ||\vec{u}||\cos\alpha * (\vec{v} \times \vec{w})\\
 
 \subsection{Adjugates}
 
-Recall the method described earlier to compute the determinant of a matrix. This 
-\subsubsection{Cramer's Rule}
+To define adjugates of a matrix, the idea of a \textit{cofactor} must first be defined. The cofactor of a matrix is the matrix of the determinants of a matrix's submatrices, with the signs of the submatrices alternating. For example, take $A = \begin{bmatrix}
+    a & b\\
+    c & d
+\end{bmatrix}$. The cofactors of $A$ can be found as follows (\textit{note the similarity between the work here and the method used to find the determinant of a large matrix}):
+
+\begin{align*}
+    c_{1,1} = det(\begin{bmatrix}
+        d
+    \end{bmatrix}) = d\\
+    c_{1,2} = det(\begin{bmatrix}
+        c
+    \end{bmatrix}) = -c\\
+    c_{2,1} = det(\begin{bmatrix}
+        b
+    \end{bmatrix}) = -b\\
+    c_{2,2} = det(\begin{bmatrix}
+        a
+    \end{bmatrix}) = a\\
+    \begin{bmatrix}
+        c_{1,1} & c_{1,2}\\
+        c_{2,1} & c_{2,2}
+    \end{bmatrix} = \begin{bmatrix}
+        d & -c\\
+        -b & a
+    \end{bmatrix}
+\end{align*}
+
+Notice the similarity between this and the formula for computing the inverse of $A$:
+
+\begin{equation}
+    \begin{split}
+    A^{-1} &= \frac{1}{det(A)}\begin{bmatrix}
+       d & -b\\
+        -c & a
+    \end{bmatrix}\\
+    \end{split}
+\end{equation}
+
+The matrix of cofactors we derived is simply the transpose of the matrix in this equation, which is called the \textbf{adjugate} of $A$, denoted adj$(A)$. We can thus say the following:
+
+\begin{equation}
+    \begin{split}
+    A^{-1} &= \frac{1}{det(A)}adj(A)\\
+    \end{split}
+\end{equation}
+
+This can be used to fairly easily find the inverse of a matrix, as long as the determinant is not 0.
+
+Also note that we can rewrite this expression as:
+
+\begin{equation}
+    \begin{split}
+        \red{A*det(A)}A^{-1} &= \red{A*det(A)}\frac{1}{det(A)} adj(A)\\
+        det(A) &= A * adj(A)\\
+    \end{split}
+\end{equation}
+
+\subsection{Cramer's Rule}
+
+Explained \hyperref{http://notes.louismeunier.net/Calculus%20A,%20B/calculus.pdf#page=56}{}{}{here.}
 
 \subsection{Dynamical Systems}
+
 
 \newpage
 \section{Summary of Terms}
