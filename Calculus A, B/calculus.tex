@@ -1985,11 +1985,33 @@ If we consider $A$ as the matrix of coefficients of the system and $B$ as the ma
 
 Cramer's Rule in general states that for an equation $Ax = b$, $x_i = \frac{det(B_i)}{det(A)}$, where $B_i$ is the matrix with the $i^{th}$ column of $A$ replaced with $b$ and $x_i$ is the $i^{th}$ variable in the equation(s). See \hyperref{http://notes.louismeunier.net/Linear%20Algebra/linearalgebra.pdf}{}{}{here} for more Linear Algebra.
 
-\subsection{Using Cramer's Rule to Derive the Jacobian Matrix}
+\subsubsection{Using Cramer's Rule to Derive the Jacobian Matrix}
 
+Given two functions $F(x,y,u,v)=0$ and $G(x,y,u,v)=0$, where $u$ and $v$ are both functions of $x$ and $y$, we can find $\pd{u}{x}$ (or $\pd{u}{y}$, $\pd{v}{x}$, and $\pd{v}{y}$, by the same method) by setting up a system of equations. For both $F$ and $G$, we can take the derivative of both sides with respect to $x$:
 
+\begin{equation}
+    \begin{split}
+       \pd{F}{x} + \pd{F}{u}\pd{u}{x} + \pd{F}{v}\pd{v}{x} &= 0\\
+       \pd{F}{u}\pd{u}{x} + \pd{F}{v}\pd{v}{x} &= -\pd{F}{x}\\
+        \pd{G}{x} + \pd{G}{u}\pd{u}{x} + \pd{G}{v}\pd{v}{x} &= 0\\
+        \pd{G}{u}\pd{u}{x} + \pd{G}{v}\pd{v}{x} &= -\pd{G}{x}\\
+    \end{split}
+\end{equation}
 
+In this way, we can consider this as a system of two equations and two variables ($\pd{u}{x}$ and $\pd{v}{x}$), which we can solve using Cramer's Rule, for example, for $\pd{u}{x}$:
 
+\begin{equation}
+    \begin{split}
+        \pd{u}{x} &= \frac{|\begin{bmatrix}
+            -\pd{F}{x} & \pd{F}{v}\\
+            -\pd{G}{x} & \pd{G}{v}
+        \end{bmatrix}|}{|\begin{bmatrix}
+            \pd{F}{u} & \pd{F}{v}\\
+            \pd{G}{u} & \pd{G}{v}
+        \end{bmatrix}|}\\
+        &= \frac{\frac{-\partial(F,G)}{\partial(x,v)}}{\frac{\partial(F,G)}{\partial(u,v)}}\\
+    \end{split}
+\end{equation}
 
 
 % ! NOTES/TODO
