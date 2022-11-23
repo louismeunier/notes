@@ -1431,8 +1431,217 @@ Also note that we can rewrite this expression as:
 
 Explained \hyperref{http://notes.louismeunier.net/Calculus%20A,%20B/calculus.pdf#page=56}{}{}{here.}
 
-\subsection{Dynamical Systems}
+In summary: we can find the solution of the $i$th variable (ie, $x_i$) in a system of $n$ equations of $n$ variables of the form $a x_1 + b x_2 + ... + z x_n = c$ with the formula:
 
+\begin{equation}
+    \begin{split}
+        x_i &= \frac{det(A_i)}{det(A)}\\
+    \end{split}
+\end{equation}
+
+Where $A$ is the matrix of coefficients, and $A_i$ is the matrix of coefficients with the $i$th column replaced by the vector of solutions of the respective equations.
+
+\subsection{Linear Discrete Dynamical Systems}
+
+Breaking down the definition of a linear discrete dynamical system:
+
+\begin{itemize}
+    \item \textit{linear:} output of the system is a linear combination of the inputs (recall linear transformations) 
+    \item \textit{discrete:} the system is defined only for a finite number of inputs (ie, integers, $\integers$)
+    \item \textit{dynamical:} the vectors in the system change with time
+\end{itemize}
+
+These types of systems are often used to describe changes in several populations which depend on one another (whether inversely or directly).
+
+For example, consider a system of two populations, $x$ and $y$, where $x$ is a predator of $y$. Say we can model the change in each population as follows:
+
+\begin{equation}
+    \begin{cases}
+      x(t+1) = 0.5x(t) + 0.2y(t)\\
+      y(t+1) = -0.3x(t) + 1.5y(t)\\
+    \end{cases} 
+\end{equation}
+
+We can interpret this system as follows:
+
+\begin{itemize}
+    \item The population of $x$ in a particular year ($t+1$) depends on its population in the previous year ($t$) and the population of $y$ in the previous year ($t$); in particular, the population of $x$ decreases by 50\% and increases by 20\% for each $y$ in the previous year.
+    \item The population of $y$ in a particular year ($t+1$) depends on its population in the previous year ($t$) and the population of $x$ in the previous year ($t$); in particular, the population of $y$ decreases by 30\% and increases by 150\% for each $y$ in the previous year.
+\end{itemize}
+
+This changes in population could be due to predation (clearly, as $x$ is a predator of $y$), reproduction/survival rates, or any other factor.
+
+This system can be represented as a matrix times a vector; specifically, a matrix of the coefficients of the system, and a vector of the populations in the previous year. If we define $\vec{P}(t)$ as the population vector in year $t+1$, we can write the system as:
+
+\begin{equation}
+    \begin{split}
+        \vec{P}(t+1) = \begin{bmatrix}
+            x(t+1)\\
+            y(t+1)
+        \end{bmatrix} = \begin{bmatrix}
+            0.5 & 0.2\\
+            -0.3 & 1.5
+        \end{bmatrix}\begin{bmatrix}
+            x(t)\\
+            y(t)
+        \end{bmatrix} = A\vec{P}(t)\\
+    \end{split}
+\end{equation}
+
+\textit{This matrix is often called a \textbf{Leslie matrix}, when used in population dynamics.}
+
+This form of equation, while helpful when $P(t)$ is known for a particular $t$, but does not make it clear how $P$ changes over time. However, seeing as how this equation is recursively defined, we can say the following: 
+
+\begin{equation}\label{eqn:poft}
+    \begin{split}
+        \vec{P}(t) &= A\vec{P}(t-1)\\
+        &= A(A\vec{P}(t-2))\\
+        &= A^2\vec{P}(t-2)\\
+        &= A^3\vec{P}(t-3)\\
+        &= \dots\\
+        &= A^t\vec{P}(0)\\
+    \end{split}
+\end{equation}
+
+This has somewhat generalized our equation, but we still need the initial population in order to find the population at any given time. The following section will show how we can modify this equation accordingly...
+
+\subsection{Eigenvalues, Eigenvectors, etc.}
+\subsubsection{Application to Linear Discrete Dynamical Systems}
+An \textbf{eigenvector} of a matrix $A$ is a vector $\vec{v} \neq \vec{0}$ such that $A\vec{v} = \lambda\vec{v}$, where $\lambda$ is a scalar. In other words, the eigenvector is a vector that is simply scaled by some scalar $\lambda$ when multiplied by the matrix $A$. This scalar is the corresponding \textbf{eigenvalue} of the eigenvector.
+
+Reconsider the previous section, where we said that $\vec{P}(t) = A^t \vec{P}(0)$. Lets say we are given two linearly independent eigenvectors of $A$ \textit{(which, as we'll say later, is the max number of eigenvectors $A$ can have since it is 2x2)}, $\vec{v_1}$ and $\vec{v_2}$, and their corresponding eigenvalues $\lambda_1$ and $\lambda_2$. WE know that:
+\begin{align*}
+        A\vec{v_1} &= \lambda_1\vec{v_1}\\
+        A\vec{v_2} &= \lambda_2\vec{v_2}\
+\end{align*}
+We can multiply each of these by $A$ again ($t$ times...):
+\begin{align*}
+    \red{A}A\vec{v_1} &= \red{A}\lambda_1\vec{v_1}\\
+    A^2 \vec{v_1} &= \lambda_1A\vec{v_1}\\
+    &= \lambda_1^2\vec{v_1}\\
+    &\cdots\\
+    A^t \vec{v_1} &= \lambda_1^t\vec{v_1}; \text{similarly: } A^t \vec{v_2} = \lambda_2^t\vec{v_2}
+\end{align*}
+Let's say we are given $\vec{P}(t_0) = \begin{bmatrix}
+    a\\
+    b\end{bmatrix}$ for some time; we can consider this as the initial population, $\vec{P}(0)$, and write:
+\begin{align*}
+    \vec{P}(t) = A^t\vec{P}(0) &= A^t\begin{bmatrix}
+        a\\
+        b\end{bmatrix}\\
+\end{align*}
+Since $\vec{v_1}, \vec{v_2}$ are two linearly independent vectors (which is generally true of eigenvectors, but will be explained more later...) in $\real^2$, we can therefore say:
+\begin{align*}
+    \begin{bmatrix}
+        a\\
+        b\end{bmatrix} &= c_1\vec{v_1} + c_2\vec{v_2}; c_1, c_2 \in \real
+\end{align*}
+Substituting this into the previous equation for $\vec{P}(0)$, we get:
+\begin{align*}
+    \vec{P}(t) = A^t(c_1\vec{v_1} + c_2\vec{v_2})
+\end{align*}
+We can distribute the $A^t$:
+\begin{align*}
+    \vec{P}(t) &= c_1A^t\vec{v_1} + c_2A^t\vec{v_2}
+\end{align*}
+However, since $\vec{v_1}, \vec{v_2}$ are eigenvectors of $A$, we established that $A^t\vec{v_1} = \lambda_1^t\vec{v_1}$ and $A^t\vec{v_2} = \lambda_2^t\vec{v_2}$, so we can substitute these into the previous equation:
+\begin{align*}
+    \vec{P}(t) &= c_1\lambda_1^t\vec{v_1} + c_2\lambda_2^t\vec{v_2}
+\end{align*}
+This is a far more usable form of the equation, since, if we can find the eigenvalues and eigenvectors of $A$, we can find the population at any given time, given the population at some time and the corresponding matrix $A$. This form of equation is called the \textbf{closed-form} for $\vec{P}(t)$.
+
+\subsubsection{Computing Eigenvalues, Eigenvectors}
+
+Recall how we defined an eigenvector $\vec{v}$ of a matrix $A$:
+\begin{align*}
+    A\vec{v} = \lambda \vec{v}
+\end{align*}
+Moving all the terms to the same side, we get:
+\begin{align*}
+    \lambda \vec{v} - A\vec{v}&= \vec{0}\\
+    \vec{v}(\lambda - A) &= \vec{0}
+\end{align*}
+This, however, is not currently possible to solve: $A$ is a matrix and $\lambda$ is a constant, so we cannot subtract one from the other. However, we can multiply both sides of the equation by $I$, which will leave $A$ the same (and $0$, of course):
+\begin{align*}
+    \red{I}*\vec{v}(\lambda - A) &= \vec{0}*\red{I}\\
+    \vec{v}(\lambda I - A) &= \vec{0}
+\end{align*}
+Notice that $\lambda I - A$ is a matrix itself now. Since $\vec{v}$ multiplied by this new matrix is equal to $\vec{0}$, then $\vec{v}$ must be in the kernel of $\lambda I - A$. As such, in order for $\vec{v}$ to even have a kernel, then $\lambda I - A$ must be singular (not invertible), and by extension, its determinant must equal $0$. Therefore, we can write:
+\begin{align*}
+    \det(\lambda I - A) &= 0
+\end{align*}
+% whats the notation for Charactersitc again...
+Solving this formula typically results in a polynomial in terms of $\lambda$ equal to 0; this is called the \textbf{characteristic polynomial} (denoted $c_A(\lambda)$) of $A$. The roots of this polynomial are the eigenvalues of $A$. Plugging these values into the original equation for $\vec{v}$, we can find each corresponding eigenvector of $A$.
+
+Taking the example from the previous section, we can find the eigenvalues and eigenvectors of $A = \begin{bmatrix}
+    0.5 & 0.2\\
+    -0.3 & 1.5\\
+\end{bmatrix}$ as follows (\textit{using our formula for the determinant of a 2x2 matrix}):
+\begin{align*}
+    0 = det(\lambda I - A) &= det(\lambda I - \begin{bmatrix}
+        0.5 & 0.2\\
+        -0.3 & 1.5\\
+    \end{bmatrix})\\
+    &= det(\begin{bmatrix}
+    \lambda-0.5 & -0.2\\
+    0.3 & \lambda-1.5\\
+    \end{bmatrix})\\
+    &= (\lambda - 0.5)(\lambda - 1.5) - 0.3(-0.2)\\
+    &= \lambda^2-2\lambda+0.81\\
+    &\dots\\
+    & \lambda = 0.564, 1.436
+\end{align*}
+
+We could then plug these values into the original formula to find the corresponding eigenvectors.
+
+\subsubsection{Algebraic Multiplicity}
+
+Recall the characteristic polynomial of matrix $A$, $c_A(\lambda) = |\lambda I - A|$. Sometimes, this polynomial will have multiple of the same roots, ie, multiple of the same eigenvalue; this will arise if the polynomial is, say, in the form $(\lambda_1-a)^n$ where $n\geq 2$. When this occurs, we can say that this particular eigenvalue has \textbf{algebraic multiplicity} $n$.
+
+\subsubsection{Eigenspaces and Bases}
+
+An \textbf{eigenspace} is the set of vectors that are eigenvectors of a matrix $A$ with a particular eigenvalue $\lambda$, denoted $E_{\lambda}$. 
+
+For instance, take the matrix $A = \begin{bmatrix}
+    1 & 1\\
+    0 & 1\\
+\end{bmatrix}$. Solving for the eigenvalues:
+
+\begin{align*}
+    0 &= |\lambda I - A|\\
+    &= |\begin{bmatrix}
+        \lambda-1 & -1\\
+        0 & \lambda-1\\
+    \end{bmatrix}|\\
+    &= (\lambda-1)^2 = 0\\
+    &\lambda = 1\\
+\end{align*}
+
+\textit{Note that the eigenvalue of this matrix has algebraic multiplicity $2$.} Finding the corresponding eigenvector(s?):
+
+\begin{align*}
+    ker(\lambda I - A) &= ker(\begin{bmatrix}
+        \lambda - 1 & -1\\
+        0 & \lambda-1\\
+    \end{bmatrix})\\
+    &= ker(\begin{bmatrix}
+        0 & -1\\
+        0 & 0\\
+    \end{bmatrix})\\
+    &= \{\begin{bmatrix}
+        x\\
+        y
+    \end{bmatrix} = \begin{bmatrix}
+        t\\
+        0
+    \end{bmatrix}, t \in \real \}
+\end{align*}
+
+As such, we can say that the eigenspace of $A$ with eigenvalue $\lambda = 1$ is this same set, ie, $E_1=span(\begin{bmatrix}
+    1\\
+    0\end{bmatrix})$.
+
+Note that, in this situation, there exists only one eigenvector, and as such, it is impossible to span $R^2$ (which this matrix is in) with only eigenvectors. If this were possible, however, then we would have found a \textbf{eigenbasis} for $R^2$, as the eigenvectors would span the entire space. This is what happened in the earlier example: the eigenvectors spanned the entire space, and as such, we found an eigenbasis, and were able to solve the discrete dynamical system by rewriting the equation in terms of the eigenvectors. It is not possible to use the same method if an eigenbasis does not exist.
 
 \newpage
 \section{Summary of Terms}
@@ -1607,6 +1816,26 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
         \begin{equation}
             A^TA\Vec{x} = A^T\Vec{b}
         \end{equation}
+
+        \item \textbf{determinant}: a scalar value that can be used to describe many properties of a matrix $A$, denoted either as $det(A)$ or $|A|$.
+
+        \item \textbf{eigenvectors/eigenvalues}: a vector $\vec{v}$ is an \textit{eigenvector} of a matrix $A$ if:
+        
+        \begin{equation}
+            A\vec{v} = \lambda \vec{v}
+        \end{equation}
+
+        where $\lambda$ is a scalar, and $\vec{v}\neq\vec{0}$. This $\lambda$ is an \textit{eigenvalue} for this particular eigenvector.
+
+        \item \textbf{characteristic polynomial}: the polynomial that arises from $|\lambda I - A| = 0$ (when solving for the eigenvalues of $A$), denoted $c_A(\lambda)$.
+        
+        \item \textbf{algebraic multiplicity}: the number of times a particular eigenvalue appears in the characteristic polynomial of a matrix.
+        
+        \item \textbf{eigenspace}: the set of all vectors that are eigenvectors for a particular eigenvalue of a matrix.
+        
+        \item \textbf{eigenbasis}: for a matrix $A$ in $\real^n$, the set of eigenvectors of $A$ that are linearly independent, ie, are a basis of $R^n$.
+        
+        \item \textbf{geometric multiplicity}: the dimension of the eigenspace of a particular eigenvalue of a matrix.
     \end{itemize}
 
 \end{document}
