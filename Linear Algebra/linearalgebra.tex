@@ -1570,7 +1570,7 @@ Notice that $\lambda I - A$ is a matrix itself now. Since $\vec{v}$ multiplied b
 \begin{align*}
     \det(\lambda I - A) &= 0
 \end{align*}
-% whats the notation for Charactersitc again...
+
 Solving this formula typically results in a polynomial in terms of $\lambda$ equal to 0; this is called the \textbf{characteristic polynomial} (denoted $c_A(\lambda)$) of $A$. The roots of this polynomial are the eigenvalues of $A$. Plugging these values into the original equation for $\vec{v}$, we can find each corresponding eigenvector of $A$.
 
 Taking the example from the previous section, we can find the eigenvalues and eigenvectors of $A = \begin{bmatrix}
@@ -1642,6 +1642,55 @@ As such, we can say that the eigenspace of $A$ with eigenvalue $\lambda = 1$ is 
     0\end{bmatrix})$.
 
 Note that, in this situation, there exists only one eigenvector, and as such, it is impossible to span $R^2$ (which this matrix is in) with only eigenvectors. If this were possible, however, then we would have found a \textbf{eigenbasis} for $R^2$, as the eigenvectors would span the entire space. This is what happened in the earlier example: the eigenvectors spanned the entire space, and as such, we found an eigenbasis, and were able to solve the discrete dynamical system by rewriting the equation in terms of the eigenvectors. It is not possible to use the same method if an eigenbasis does not exist.
+
+Another relevant term to know is the \textbf{geometric multiplicity} of a particular eigenvalue, which corresponds to the dimension of its eigenspace (ie, $dim(ker(\lambda I - A))$). In this example, the geometric multiplicity of $\lambda = 1$ is $1$, as the eigenspace is a line. Also note the following inequality (which is too difficult to prove in this course):
+
+\begin{equation}
+    1 \leq \text{geom. multiplicity of } \lambda_i \leq \text{alg. multiplicity of } \lambda_i
+\end{equation}
+
+% add more about multiplicity and stuff
+
+\subsection{Diagonalization}
+
+A diagonalized matrix $A$ (such that $T(\vec{x}) = A\vec{x}$) is one that can be written as $[T(\vec{x})]_{\mathfrak{B}} = B[\vec{x}]_{\mathfrak{B}}$ where $B$ has the form $\begin{bmatrix}
+    \lambda_1 & 0 & \dots & 0\\
+    0 & \lambda_2 & \dots & 0\\
+    \vdots & \vdots & \ddots & \vdots\\
+    0 & 0 & \dots & \lambda_n
+\end{bmatrix}$, where $\lambda_1, \lambda_2, \dots, \lambda_n$ are the eigenvalues of $A$. By extension, a matrix is diagonalizable if it has a eigenbasis. 
+
+For instance, take some matrix $A$, with eigenvalues $\lambda_1 = 3$, $\lambda_2 = 2$, and $\lambda_3 = -2$, and corresponding eigenvectors $\vec{v_1} = \begin{bmatrix}
+    -3\\
+    1\\
+    0\end{bmatrix}$, $\vec{v_2}=\begin{bmatrix}
+    1\\
+    0\\
+    5\end{bmatrix}$, and $\vec{v_3}=\begin{bmatrix}
+    0\\
+    2\\
+    7\end{bmatrix}$, respectively. We can take $\mathfrak{B} = \{\vec{v_1}, \vec{v_2}, \vec{v_3}\}$, a basis of $R^3$ spanned by the eigenvectors. We can then solve for the $B$ matrix of this situation:
+
+\begin{align*}
+    T(\vec{x}) &= A\vec{x}\\
+    T(\vec{v_1}) = A * \vec{v_1} &= \lambda_1\vec{v_1} = 3 \vec{v_1}\\
+    T(\vec{v_2}) = A * \vec{v_2} &= \lambda_2\vec{v_2} = 2 \vec{v_2}\\
+    T(\vec{v_3}) = A * \vec{v_3} &= \lambda_3\vec{v_3} = -2 \vec{v_3}\\
+    \therefore B &= \begin{bmatrix}
+        [T(\vec{v_1})]_{\mathfrak{B}}, [T(\vec{v_2})]_{\mathfrak{B}}, [T(\vec{v_2})]_{\mathfrak{B}}
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        3 & 0 & 0\\
+        0 & 2 & 0\\
+        0 & 0 & -2
+    \end{bmatrix}
+\end{align*}
+
+Note that this matrix $B$ has the eigenvalues of $A$ on its diagonal, and thus, is diagonalizable.
+
+
+
+
 
 \newpage
 \section{Summary of Terms}
