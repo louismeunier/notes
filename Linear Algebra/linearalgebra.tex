@@ -25,13 +25,6 @@
   \setfoot{}{\textcolor{gray}{\thepage}}{}
 }
 
-
-\pagestyle{mypage}
-
-% \title{Linear Algebra}
-% \author{Louis Meunier}
-% \date{\textit{October 1, 2022 - ?}}
-
 \begin{document}
 % commands
 \newcommand{\red}[1]{\textcolor{red}{#1}}
@@ -86,8 +79,8 @@
   \hypersetup{linkcolor=violet}
   \tableofcontents
 }
-
 \newpage
+\pagestyle{mypage}
 \section{Unit I}
 \subsection{Solving Linear Systems}
 \subsubsection{Algebraically vs Geometrically}
@@ -1505,7 +1498,7 @@ This form of equation, while helpful when $P(t)$ is known for a particular $t$, 
 
 This has somewhat generalized our equation, but we still need the initial population in order to find the population at any given time. The following section will show how we can modify this equation accordingly...
 
-\subsection{Eigenvalues, Eigenvectors, etc.}
+\subsection{Eigen-things}
 \subsubsection{Application to Linear Discrete Dynamical Systems}
 An \textbf{eigenvector} of a matrix $A$ is a vector $\vec{v} \neq \vec{0}$ such that $A\vec{v} = \lambda\vec{v}$, where $\lambda$ is a scalar. In other words, the eigenvector is a vector that is simply scaled by some scalar $\lambda$ when multiplied by the matrix $A$. This scalar is the corresponding \textbf{eigenvalue} of the eigenvector.
 
@@ -1687,11 +1680,107 @@ For instance, take some matrix $A$, with eigenvalues $\lambda_1 = 3$, $\lambda_2
 \end{align*}
 
 Note that this matrix $B$ has the eigenvalues of $A$ on its diagonal, and thus, is diagonalizable.
-% add stuff about application to SDS^-1 thingy
 
+To phrase this in a more general sense, a matrix $A$ is diagonalizable if you can write $A = SBS^{-1}$, where $S$ is an invertible matrix and $B$ is a diagonal matrix. In this form, we can rewrite $A^n$ in a closed form as follows:
 
+\begin{align*}
+    A^n &= (SBS^{-1})^n\\
+    &= SBS^{-1}SBS^{-1} \dots SBS^{-1}\\
+    &= SB^{n}S^{-1}\\
+\end{align*}
 
+This form is far easier to compute than computing $n$ products of $A$, since $B^n$, being a diagonal matrix, is simply:
 
+\begin{align*}
+    B^n &= \begin{bmatrix}
+        \lambda_1 & 0 & \dots & 0\\
+        0 & \lambda_2 & \dots & 0\\
+        \vdots & \vdots & \ddots & 0 \\
+        0 & 0 & 0 & \lambda_n
+    \end{bmatrix}^n\\
+    &= \begin{bmatrix}
+        \lambda_1^n & 0 & \dots & 0\\
+        0 & \lambda_2^n & \dots & 0\\
+        \vdots & \vdots & \ddots & 0 \\
+        0 & 0 & 0 & \lambda_n^n
+    \end{bmatrix}
+\end{align*}
+
+In the context of a linear discrete dynamical system, where $\vec{x}(t) = A^t\vec{x}(0)$, we can derive the general closed form expression in a different way. We want $\vec{x}(0) = c_1\vec{v_1} + \dots + c_n\vec{v_n}$, where $\vec{v_1}, \vec{v_2}, \dots, \vec{v_n}$ are the eigenvectors of $A$. As such, we can say $\vec{x}(0) = S\begin{bmatrix}
+    c_1\\
+    c_2\\
+    c_n
+\end{bmatrix}_{\mathfrak{B}}$, where $\mathfrak{B} = \{\vec{v_1}, \vec{v_2}, \dots, \vec{v_n}\}$. We can then say:
+
+\begin{align*}
+    \vec{x}(t) &= A^t\vec{x}(0)\\
+    &= (SBS^{-1})^t\vec{x}(0)\\
+    &= \begin{bmatrix}
+        \vec{v_1} & \dots & \vec{v_n}
+    \end{bmatrix}\begin{bmatrix}
+        \lambda_1^t & & \\
+        & \ddots & \\
+        & & \lambda_n^t
+    \end{bmatrix}S^{-1} \vec{x}(0)\\
+    &= \begin{bmatrix}
+        \vec{v_1} & \dots & \vec{v_n}
+    \end{bmatrix}\begin{bmatrix}
+        \lambda_1^t & & \\
+        & \ddots & \\
+        & & \lambda_n^t
+    \end{bmatrix}S^{-1}S\begin{bmatrix}
+        c_1\\
+        \vdots\\
+        c_n
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        \vec{v_1} & \dots & \vec{v_n}
+    \end{bmatrix}\begin{bmatrix}
+       c_1 \lambda_1^t & & \\
+        & \ddots & \\
+        & & c_n\lambda_n^t
+    \end{bmatrix}\\
+    &= c_1 \lambda_1^t\vec{v_1} + \dots + c_n\lambda_n^t\vec{v_n}\\
+\end{align*}
+
+This is the same form as derived before for $\vec{x}(t)$.
+
+\subsection{Extensions of Eigenvalues, etc}
+
+Take a general 2x2 matrix $A = \begin{bmatrix}
+    a & b\\
+    c & d
+\end{bmatrix}$. Solving for the eigenvalues of $A$:
+
+\begin{align*}
+    0 = |\lambda I - A| &= |\begin{bmatrix}
+        \lambda - a & -b\\
+        -c & \lambda - d
+    \end{bmatrix}|\\
+    &= \lambda^2 - (\red{a+d})\lambda + (\red{ad - bc})\\
+\end{align*}
+
+Note that the constant value of the characteristic polynomial of $A$ is simply the determinant of $A$, $\red{ad - bc}$.
+
+The term in from of $\lambda$, $\red{a+d}$, is the sum of the main diagonal of $A$ which is known as the \textbf{trace} of $A$ (denoted $tr(A)$). 
+
+Now, say that the eigenvalues of $A$ are $\alpha$ and $\beta$; thus, the $C_A(\lambda)$ can also be written:
+
+\begin{align*}
+    (\lambda - \alpha)(\lambda - \beta) &= 0\\
+    \lambda^2 - (\red{\alpha + \beta})\lambda + \red{\alpha\beta} &= 0
+\end{align*}
+    
+Thus, we can write that $a+d = \alpha + \beta$ and $ad - bc = \alpha\beta$, and thus, the trace of a matrix is the sum of its eigenvalues, and its determinant is the product of its eigenvalues. 
+
+This pattern also applies to higher order matrices (but won't be proven here...). In summary, for a matrix $A$ of dimension $n$:
+
+\begin{align*}
+    tr(A) &= \sum_i^n \lambda_i \\
+    det(A) &= \prod_i^n \lambda_i
+\end{align*}
+
+Note that eigenvalues of multiplicity $\geq 2$, the eigenvalues must included that many times in the sum/product.
 \newpage
 \section{Summary of Terms}
 
@@ -1717,6 +1806,11 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
        \item $A^{-1}$: the inverse of a matrix $A$
        \item $A^\bot$: the orthogonal complement of a matrix $A$
        \item $A^T$: the transpose of a matrix $A$
+       \item $\begin{bmatrix}
+           a & \\
+            & \ddots
+         \end{bmatrix}$: a diagonal matrix with the $0$'s omitted
+       \item $tr(A)$: the trace of a matrix $A$
     \end{itemize}
 \subsection{Vocabulary}
     \begin{itemize}
@@ -1876,7 +1970,7 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
 
         where $\lambda$ is a scalar, and $\vec{v}\neq\vec{0}$. This $\lambda$ is an \textit{eigenvalue} for this particular eigenvector.
 
-        \item \textbf{characteristic polynomial}: the polynomial that arises from $|\lambda I - A| = 0$ (when solving for the eigenvalues of $A$), denoted $c_A(\lambda)$.
+        \item \textbf{characteristic polynomial}: the polynomial that arises from $|\lambda I - A| = 0$ (when solving for the eigenvalues of $A$), denoted $C_A(\lambda)$.
         
         \item \textbf{algebraic multiplicity}: the number of times a particular eigenvalue appears in the characteristic polynomial of a matrix.
         
@@ -1885,6 +1979,20 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
         \item \textbf{eigenbasis}: for a matrix $A$ in $\real^n$, the set of eigenvectors of $A$ that are linearly independent, ie, are a basis of $R^n$.
         
         \item \textbf{geometric multiplicity}: the dimension of the eigenspace of a particular eigenvalue of a matrix.
+        
+        \item \textbf{diagonal matrix}: a matrix that has all of its entries outside of the main diagonal equal to zero, ie, $\begin{bmatrix}
+            a & 0 & 0\\
+            0 & b & 0\\
+            0 & 0 & c\\
+        \end{bmatrix}$. Sometimes the $0$'s are omitted, for the sake of brevity, such as $\begin{bmatrix}
+            a & & \\
+            & b & \\
+            & & c\\
+        \end{bmatrix}$.
+
+        \item \textbf{diagonalizable}: a characteristic of a matrix $A$ that can be written as $A = SDS^{-1}$, where $D$ is a \textit{diagonal matrix} and $S$ is invertible.
+        
+        \item \textbf{trace}: the sum of the diagonal entries of a matrix, denoted $tr(A)$.
     \end{itemize}
 
 \end{document}
