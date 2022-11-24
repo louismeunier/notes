@@ -1639,7 +1639,7 @@ For instance, take the matrix $A = \begin{bmatrix}
 
 As such, we can say that the eigenspace of $A$ with eigenvalue $\lambda = 1$ is this same set, ie, $E_1=span(\begin{bmatrix}
     1\\
-    0\end{bmatrix})$.
+    0\end{bmatrix})$. In other words, the eigenspace for a matrix $A$'s particular eigenvalue $\lambda$ has an eigenspace $E_\lambda = ker(\lambda I - A)$.
 
 Note that, in this situation, there exists only one eigenvector, and as such, it is impossible to span $R^2$ (which this matrix is in) with only eigenvectors. If this were possible, however, then we would have found a \textbf{eigenbasis} for $R^2$, as the eigenvectors would span the entire space. This is what happened in the earlier example: the eigenvectors spanned the entire space, and as such, we found an eigenbasis, and were able to solve the discrete dynamical system by rewriting the equation in terms of the eigenvectors. It is not possible to use the same method if an eigenbasis does not exist.
 
@@ -1687,7 +1687,7 @@ For instance, take some matrix $A$, with eigenvalues $\lambda_1 = 3$, $\lambda_2
 \end{align*}
 
 Note that this matrix $B$ has the eigenvalues of $A$ on its diagonal, and thus, is diagonalizable.
-
+% add stuff about application to SDS^-1 thingy
 
 
 
