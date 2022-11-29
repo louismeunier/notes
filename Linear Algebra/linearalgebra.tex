@@ -1498,7 +1498,7 @@ This form of equation, while helpful when $P(t)$ is known for a particular $t$, 
 
 This has somewhat generalized our equation, but we still need the initial population in order to find the population at any given time. The following section will show how we can modify this equation accordingly...
 
-\subsection{Eigen-things}
+\subsection{Eigenstuff}
 \subsubsection{Application to Linear Discrete Dynamical Systems}
 An \textbf{eigenvector} of a matrix $A$ is a vector $\vec{v} \neq \vec{0}$ such that $A\vec{v} = \lambda\vec{v}$, where $\lambda$ is a scalar. In other words, the eigenvector is a vector that is simply scaled by some scalar $\lambda$ when multiplied by the matrix $A$. This scalar is the corresponding \textbf{eigenvalue} of the eigenvector.
 
@@ -1651,7 +1651,7 @@ A diagonalized matrix $A$ (such that $T(\vec{x}) = A\vec{x}$) is one that can be
     0 & \lambda_2 & \dots & 0\\
     \vdots & \vdots & \ddots & \vdots\\
     0 & 0 & \dots & \lambda_n
-\end{bmatrix}$, where $\lambda_1, \lambda_2, \dots, \lambda_n$ are the eigenvalues of $A$. By extension, a matrix is diagonalizable if it has a eigenbasis. 
+\end{bmatrix}$, where $\lambda_1, \lambda_2, \dots, \lambda_n$ are the eigenvalues of $A$. By extension, \textbf{a matrix is diagonalizable if and only if it has a eigenbasis.} Since a matrix can only have an eigenbasis if each of its eigenvectors has an algebraic multiplicity of 1, we can say that a matrix is diagonalizable if and only if each of its eigenvalues has algebraic multiplicity of 1 (note that there are many other ways to state this same property...).
 
 For instance, take some matrix $A$, with eigenvalues $\lambda_1 = 3$, $\lambda_2 = 2$, and $\lambda_3 = -2$, and corresponding eigenvectors $\vec{v_1} = \begin{bmatrix}
     -3\\
@@ -1706,6 +1706,8 @@ This form is far easier to compute than computing $n$ products of $A$, since $B^
     \end{bmatrix}
 \end{align*}
 
+\textit{Note that, since we've written $A^n = SB^nS^{-1}$, we can say that $A^n$ is diagonalizable if $A$ is diagonalizable. It also has the same eigenvectors as $A$, since $S$ does not change, and it has the same eigenvalues as $A$ but raised to the power of $n$.}
+
 In the context of a linear discrete dynamical system, where $\vec{x}(t) = A^t\vec{x}(0)$, we can derive the general closed form expression in a different way. We want $\vec{x}(0) = c_1\vec{v_1} + \dots + c_n\vec{v_n}$, where $\vec{v_1}, \vec{v_2}, \dots, \vec{v_n}$ are the eigenvectors of $A$. As such, we can say $\vec{x}(0) = S\begin{bmatrix}
     c_1\\
     c_2\\
@@ -1745,6 +1747,50 @@ In the context of a linear discrete dynamical system, where $\vec{x}(t) = A^t\ve
 
 This is the same form as derived before for $\vec{x}(t)$.
 
+\subsubsection{Properties of Diagonalizable Matrices}
+
+\begin{itemize}
+    \item If $A$ is diagonalizable, so is $A^n$ for any $n \in \mathbb{N}$. $A^n$ also has the same eigenvectors as $A$ and the same eigenvalues as $A$ but raised to the power of $n$.
+    \item If $A$ is diagonalizable and invertible, then $A^{-1}$ is also diagonalizable. Proof:
+    
+    \begin{align*}
+        A &= SDS^{-1}\\
+        A^{\red{-1}} &= (SDS^{-1})^{\red{-1}}\\
+        &= S^{-1}D^{-1}S\\
+    \end{align*}
+
+    Thus, we can write $A^{-1}$ in the form required for it to be diagonalizable. We can also see that $A^{-1}$ has the same eigenvalues as $A$ but raised to the power of $-1$.
+    \item If $A$ and $B$ are diagonalizable matrices of the same dimension, \textbf{their sum is not necessarily} diagonalizable. Counterexample:
+
+    \begin{align*}
+        A = \begin{bmatrix}
+            1 & 1\\
+            0 & 2
+        \end{bmatrix}, &\quad B = \begin{bmatrix}
+            -1 & 0\\
+            0 & -2
+        \end{bmatrix}\\
+        A + B &= \begin{bmatrix}
+            0 & 1\\
+            0 & 0
+        \end{bmatrix} (\neq SBS^{-1})\\
+    \end{align*}
+    \item If $A$ and $B$ are diagonalizable matrices of the same dimension, \textbf{their product is not necessarily} diagonalizable. Counterexample:
+    
+    \begin{align*}
+        \begin{bmatrix}
+            1 & 0\\
+            0 & -1
+        \end{bmatrix}\begin{bmatrix}
+            1 & 1\\
+            0 & -1
+        \end{bmatrix} &= \begin{bmatrix}
+            1 & 1\\
+            0 & 1
+        \end{bmatrix} (\neq SBS^{-1})\\
+    \end{align*}
+\end{itemize}
+
 \subsection{Extensions of Eigenvalues, etc}
 
 Take a general 2x2 matrix $A = \begin{bmatrix}
@@ -1781,6 +1827,29 @@ This pattern also applies to higher order matrices (but won't be proven here...)
 \end{align*}
 
 Note that eigenvalues of multiplicity $\geq 2$, the eigenvalues must included that many times in the sum/product.
+
+\subsection{More on Dynamical Systems}
+
+\subsubsection{Stability}
+
+\textbf{Definition: } a dynamical system $\vec{x}(t+1) = A\vec{x}(t)$ is considered \textit{stable} if $A$ is a diagonalizable matrix and all solutions $\vec{x}(t)$ approach $\vec{0}$ as $t \to \infty$, regardless of the initial $\vec{x}{0}$. 
+
+Take a system defined as $\vec{x}(t) = c_1 (\frac{1}{2})^t \begin{bmatrix}
+    3\\
+    -1
+\end{bmatrix} + c_2 (\frac{1}{4})^t \begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}$, where $\vec{x}(0) = c_1\begin{bmatrix}
+    3\\
+    -1
+\end{bmatrix} + c_2\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}$. Intuitively, it should be clear that as $t \to \infty$, $\vec{x}(t)$ approaches $\vec{0}$, since for both $(\frac{1}{2})^t$ and $(\frac{1}{4})^t$, as $t$ increases, vectors they are being multiplied to approach $\vec{0}$. We can thus say that a linear dynamical system is stable if the eigenvalues of $A$ are all less than $1$ in magnitude (ie $|\lambda_i| < 1$). Since the eigenvalues do not depend on the initial condition of the system, we can say that the system is stable.
+
+Consider also the \textbf{phase portrait} of this system. A phase portrait is a graph of the system's solutions over time, which essentially treats $\vec{x}(t)$ as a parametric plot of the $x$ and $y$ coordinates of the vector. The phase portrait of the system is shown below:
+
 \newpage
 \section{Summary of Terms}
 
