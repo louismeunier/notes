@@ -6,17 +6,20 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
+% \usepackage{bookmark}
 \usepackage{graphics}
 \usepackage{graphicx}
 \usepackage{newtxtext, newtxmath}
 \usepackage{titling}
 \usepackage{setspace}
 \usepackage{titleps}
+\usepackage{amsthm}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{annotate-equations}
 \usepackage{framed}
-\usepackage{todonotes}
+\let\openbox\relax
+% \usepackage{todonotes}
 
 \usepackage[colorlinks=true, linkcolor=violet]{hyperref}
 
@@ -2014,10 +2017,107 @@ In this way, we can consider this as a system of two equations and two variables
     \end{split}
 \end{equation}
 
+\subsection{Optimization}
+
+\subsubsection{Extrema of Functions of Multiple Variables}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+
+For a function $f(x)$ of a single variable, an extrema of the function exists when $f'(x) = 0$. By extension, we say that an extrema exists at some point (call it $P_0$) on a function $f(x,y)$ of two variables when both $[\frac{\partial f}{\partial x}]_{P_0} = 0$ and $[\frac{\partial f}{\partial y}]_{P_0} = 0$. By extension, $P_0$ is an extrema if $\vec{\nabla} f(P_0) = \vec{0}$. There exist several proofs for this fact, but consider the following 2:
+
+\begin{proof}
+    Assume that $P_0$ is a minimum point of $z=f(x,y)$. The tangent plane to this point must thus be horizontal. Now take a new function $F(x,y,z) = z-f(x,y) = 0$. Finding the gradient of $F$:
+
+    \begin{align*}
+        \vec{\nabla}F = -\frac{\partial F}{\partial x}\hat{i} - \frac{\partial F}{\partial y}\hat{j} + \hat{k}
+    \end{align*}
+
+    % this needs better explanation
+    This gradient is normal to $P_0$. Since $P_0$ is a minimum, the normal vector to $f(x,y)$ at $P_0$ is $-\hat{k}$. Thus, $\vec{\nabla}F = \vec{\nabla}f(P_0)$, and we can write:
+
+    \begin{align*}
+        \vec{\nabla}F = -\frac{\partial f}{\partial x}\hat{i} - \frac{\partial f}{\partial y}\hat{j} + \hat{k} &= -\hat{k}\\
+        \frac{\partial f}{\partial x}\hat{i} + \frac{\partial f}{\partial y}\hat{j} &= \vec{0}\\
+    \end{align*}
+
+    Thus, $\frac{\partial f}{\partial x} = 0$ and $\frac{\partial f}{\partial y} = 0$, and so $\nabla \vec{f} (P_0) = \vec{0}$ 
+\end{proof}
+
+\textit{A similar proof can be made for a maximum point...}
+% ! Add an image
+\begin{proof}
+    Take a function $f(x,y)$ that has a maximum at $P_0$. Now, assume that $\vec{\nabla}f(P_0) \neq \vec{0}$. If this were the case, then, by definition, the gradient of the function is pointing to a direction where the function is increasing. This contradicts the fact that $P_0$ is a maximum point, and thus, $\vec{\nabla}f(P_0)$ must equal $\vec{0}$.
+\end{proof}
+
+
+\subsubsection{Second Derivative Test}
+
+Just as for functions of a single variable, it is not sufficient to say that a point is an extrema of a function of two variables simply because the gradient is zero. Instead, we must use the \textbf{second derivative test}. The motivation/derivation of this test comes from Taylor polynomial expansion of a general function of two variables, but won't be covered just yet.
+
+Consider a function $f(x,y)$, and a point $P_0$ at which $\nabla f(P_0) = \vec{0}$. We can define a new matrix containing the second derivatives of $f$ at $P_0$:
+
+\begin{align*}
+    \begin{bmatrix}
+        \pd{^2f}{x^2} & \pd{^2f}{xy}\\
+        \pd{^2f}{yx} & \pd{^2f}{y^2}
+    \end{bmatrix} = \begin{bmatrix}
+        f_{xx} & f_{xy}\\
+        f_{yx} & f_{yy}
+    \end{bmatrix}
+\end{align*}
+
+\textit{Note that $\pd{^2f}{yx} = \pd{^2f}{xy}$, assuming continuity at $P_0$, by Clairaut's Theorem.} This, somewhat similarly to the Jacobian matrix defined earlier, is called the Hessian matrix of $f$.
+
+The determinant of this matrix, from the definition of the determinant of a 2 by 2 matrix, is $f_{xx}f_{yy} - f_{xy}f_{yx} = f_{xx}f_{yy} - f_{xy}^2$. The value of this determinant can then be used to determine what exactly the point $P_0$ is:
+
+\begin{itemize}
+    \item $f_{xx}f_{yy} - f_{xy}^2>0$
+    \begin{itemize}
+        \item $f_{xx} > 0$ and $f_{yy} > 0$: $P_0$ is a local minimum
+        \item $f_{xx} < 0$ and $f_{yy} < 0$: $P_0$ is a local maximum
+    \end{itemize}
+    \item $f_{xx}f_{yy} - f_{xy}^2<0$: $P_0$ is a \textbf{saddle point}. This is a point where the function decreases in one direction, and increases in the other (think of the central point of a hyperbolic paraboloid). 
+    \item $f_{xx}f_{yy} - f_{xy}^2=0$: the test is inconclusive. If this situation arises, you'd have to do significantly more work (ie by further expanding the Taylor polynomial of $f$) to determine what exactly the point is.
+\end{itemize}
+
+Also note that the second derivative test can be extended to functions of more than two variables, but rather than using the determinant of the Hessian matrix, we would have to find the eigenvalues of the Hessian matrix (if all the eigenvalues at a particular point are positive then the point is a local minimum, if all the eigenvalues are negative then the point is a local maximum, etc.)...
+\subsubsection{Least Squares}
+
+% ! Add an image
+Consider a set of $N$ points $(x_1, y_1), \dots, (x_N, y_N)$. We can fit a line to these points (of the form $y = mx+b$) by finding the points with "the least error" of the original points, ie $(x_1, mx_1+b), \dots, (x_N, mx_N+b)$. We define this "error" as the sum of the squares of the differences between the original points and the points on the line, hence the name "least squares". We can thus define a function $S(m,b)$ describing the square of the distance between the given points, and optimize it to find the best fit line:
+
+\begin{equation}\label{eq:least_squares}
+    S(m, b) = \sum_{k=1}^N (mx_k + b - y_k)^2 
+\end{equation}
+
+We can find the extrema of this function by finding when the partial derivatives of this function are equal to zero, as described in the previous section:
+
+\begin{align*}
+    \frac{\partial S}{\partial m} &= \frac{\partial }{\partial m} \sum_{k=1}^N (mx_k + b - y_k)^2\\
+    &= \sum_{k=1}^N \frac{\partial }{\partial m} (mx_k + b - y_k)^2\\
+    &= \sum_{k=1}^N 2(mx_k + b - y_k)x_k = 0\\
+\end{align*}
+
+\textit{Note that this relies on the fact that the derivative of a sum is equal to the sum of the derivatives.} Rearranging terms:
+
+\begin{align*}
+    m[\sum_{k=1}^N x_k^2] + b[\sum_{k=1}^N x_k] &= \sum_{k=1}^N x_k y_k
+\end{align*}
+
+Similarly for $\frac{\partial S}{\partial b}$:
+
+\begin{align*}
+    \frac{\partial S}{\partial b} &= \sum_{k=1}^N \pd{}{b}(mx_k + b - y_k)^2\\
+    &= \sum_{k=1}^N 2(mx_k + b - y_k)\\
+    &=\sum_{k=1}^N (mx_k + b - y_k)=0\\
+    &m[\sum_{k=1}^N x_k] + Nb = \sum_{k=1}^N y_k
+\end{align*}
+
+While its not obvious in this form, this is now simply a system of two equations in two unknowns ($m$ and $b$), which, when given a set of $N$ points, can be solved with any number of methods (ie Cramer's).
+
 
 % ! NOTES/TODO
 \iffalse
    Add arc length, but should probably go into the application of integration stuff (which really hasn't been covered yet lol)
-   Add jacobian matrix + cramer's rule
 \fi
 \end{document}
