@@ -2066,7 +2066,7 @@ Consider a function $f(x,y)$, and a point $P_0$ at which $\nabla f(P_0) = \vec{0
     \end{bmatrix}
 \end{align*}
 
-\textit{Note that $\pd{^2f}{yx} = \pd{^2f}{xy}$, assuming continuity at $P_0$, by Clairaut's Theorem.} This, somewhat similarly to the Jacobian matrix defined earlier, is called the Hessian matrix of $f$.
+\textit{Note that $\pd{^2f}{yx} = \pd{^2f}{xy}$, assuming continuity at $P_0$, by Clairaut's Theorem.} This, somewhat similarly to the Jacobian matrix defined earlier, is called the \textbf{Hessian matrix} of $f$.
 
 The determinant of this matrix, from the definition of the determinant of a 2 by 2 matrix, is $f_{xx}f_{yy} - f_{xy}f_{yx} = f_{xx}f_{yy} - f_{xy}^2$. The value of this determinant can then be used to determine what exactly the point $P_0$ is:
 
@@ -2080,7 +2080,42 @@ The determinant of this matrix, from the definition of the determinant of a 2 by
     \item $f_{xx}f_{yy} - f_{xy}^2=0$: the test is inconclusive. If this situation arises, you'd have to do significantly more work (ie by further expanding the Taylor polynomial of $f$) to determine what exactly the point is.
 \end{itemize}
 
-Also note that the second derivative test can be extended to functions of more than two variables, but rather than using the determinant of the Hessian matrix, we would have to find the eigenvalues of the Hessian matrix (if all the eigenvalues at a particular point are positive then the point is a local minimum, if all the eigenvalues are negative then the point is a local maximum, etc.)...
+% Also note that the second derivative test can be extended to functions of more than two variables, but rather than using the determinant of the Hessian matrix, we would have to find the eigenvalues of the Hessian matrix (if all the eigenvalues at a particular point are positive then the point is a local minimum, if all the eigenvalues are negative then the point is a local maximum, etc.)...
+
+\textbf{Example}: consider a rectangular open box with dimensions $x$, $y$, and $z$, with a volume of $32$ and a minimal surface area. We can define $S$ as the surface area of the box:
+
+\begin{equation*}
+    S = xy + 2xz + 2yz
+\end{equation*}
+
+The volume is given by $xyz = 32 \implies z = \frac{32}{xy}$, so we can rewrite $S$ as a function of $x$ and $y$:
+
+\begin{equation*}
+    S(x,y) = xy + \frac{64}{y} + \frac{64}{x}
+\end{equation*}
+
+Optimizing $S$:
+
+\begin{align*}
+    \nabla S &= \langle y - \frac{64}{x^2}, x - \frac{64}{y^2}\rangle\\
+    \nabla S &= \langle 0, 0\rangle\\
+    \implies x &= \frac{64}{y^2} \text{ and } y = \frac{64}{x^2}
+\end{align*}
+
+Solving this set of equations, we get $x = y = 4$. To verify that this is indeed a minimum, we can use the second derivative test:
+
+\begin{align*}
+    H_S &= \begin{bmatrix}
+        \frac{128}{x^3} & 1\\
+        1 & \frac{128}{y^3}
+    \end{bmatrix}\\
+    &\frac{128}{x^3} \cdot \frac{128}{y^3} - 1^2\\
+    &= \frac{16384}{4096}-1 > 0\\
+    S_{xx}(4,4) &= \frac{128}{4^3} > 0\\
+    S_{yy}(4,4) &= \frac{128}{4^3} > 0\\
+\end{align*}
+
+Thus, the point $(4,4)$ is a local minimum of $S$. We can find the length of side $z = \frac{32}{4*4} = 2$, and so the minimum surface area is $S = 4*4 + 2*4*2 + 2*4*2 = 48$.
 \subsubsection{Least Squares}
 
 % ! Add an image
