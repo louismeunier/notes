@@ -10,6 +10,7 @@
 \usepackage{subfig}
 \usepackage{titleps}
 \usepackage{amsthm}
+\usepackage{titlesec}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{delarray}
@@ -20,25 +21,26 @@
 % settings
 \setlength{\droptitle}{-6em}
 
-\newpagestyle{mypage}{%
-  \headrule
+\newpagestyle{headerandfooter}{%
+  \headrule{}%
   \sethead{\textcolor{gray}{\thesubsection}}{}{\textcolor{gray}{\sectiontitle: \subsectiontitle}}
+  \setfoot{}{\textcolor{gray}{\thepage}}{}
+}
+
+\newpagestyle{justthefooter}{%
   \setfoot{}{\textcolor{gray}{\thepage}}{}
 }
 
 \begin{document}
 % commands
 \newcommand{\red}[1]{\textcolor{red}{#1}}
-\newcommand{\ddx}{\frac{d}{dx}}
-\newcommand{\ddy}{\frac{d}{dy}}
-\newcommand{\dxdy}{\frac{dx}{dy}}
-\newcommand{\dydx}{\frac{dy}{dx}}
-
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\naturals}{\mathbb{N}}
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\rational}{\mathbb{Q}}
 \newcommand{\complex}{\mathbb{C}}
+
+\titleformat{\section}{\newpage\centering\normalfont\Large\bfseries}{}{0pt}{}
 
 \newcommand{\twodmatrix}[2]{\begin{bmatrix}
 #1\\
@@ -75,14 +77,15 @@
     \end{center}
 \end{titlepage}
 
-
+\pagestyle{justthefooter}
 {
   \hypersetup{linkcolor=violet}
   \tableofcontents
 }
+
 \newpage
-\pagestyle{mypage}
-\section{Unit 1}
+\pagestyle{headerandfooter}
+\section[Unit 1]{Unit 1: The Basics of Linear Algebra}
 \subsection{Solving Linear Systems}
 \subsubsection{Algebraically vs Geometrically}
 Consider a set of linear equations, $a_1 x+b_1 y = c_1$ and $a_1 x+b_2 y = c_2$. Solving this should be fairly straightforward:
@@ -512,7 +515,7 @@ In these transformations, finding the effect on the standard basis vectors is ty
 
 If a plane $P$ passes through the origin in $\real^n$, any vector $\Vec{x} \in \real^n$ can be written as $\Vec{x}^{\parallel} + \Vec{x}^{\perp}$, where $\Vec{x}^{\parallel}$ is a vector \textit{in the plane} $P$ and $\Vec{x}^{\perp}$ is a vector \textit{perpendicular} to $P$. This can be defined as a linear transformation $\text{proj}_P:\real^n \to \real^n = \text{proj}_P(\Vec{x}) = \Vec{x}^{\parallel}$
 
-\section{Unit 2}
+\section[Unit 2]{Unit 2: Transformations \& Matrix Properties}
 \subsection{Images and Kernels}
 
 For a matrix $A$, we can define the following (useful) subsets:
@@ -1021,7 +1024,7 @@ Beyond these distances, other further combinations can be found by applying simi
 
 
 
-\section{Unit 3}
+\section[Unit 3]{Unit 3: Applications of Matrices \& More}
 
 \subsection{Curve Fitting}
 
