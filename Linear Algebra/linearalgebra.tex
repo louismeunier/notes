@@ -9,6 +9,7 @@
 \usepackage{titling}
 \usepackage{subfig}
 \usepackage{titleps}
+\usepackage{amsthm}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{delarray}
@@ -1409,7 +1410,29 @@ The matrix of cofactors we derived is simply the transpose of the matrix in this
     \end{split}
 \end{equation}
 
-This can be used to fairly easily find the inverse of a matrix, as long as the determinant is not 0.
+Note that this formula is, clearly, undefined if $det(A) = 0$; this should make sense, since, by definition of the determinant, the determinant of a matrix is 0 if and only if the matrix is singular.
+
+We can also prove this formula for the general case of an $n \times n$ matrix (for those interested...).
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\begin{proof}
+    Consider the inverse matrix $A^{-1}$, with columns $\vec{x_1}, \vec{x_2}, \dots, \vec{x_n}$, ie \[A^{-1} = 
+    \begin{bmatrix} 
+        | & | & &|\\
+        \vec{x_1} & \vec{x_2} & \dots & \vec{x_n}\\
+        | & | & &|
+    \end{bmatrix}\] We can describe the $j$th row of $A^{-1}$ by $\vec{x_j} = A^{-1}\vec{e_j}$, which we can rewrite $A\vec{x_j}= A(A^{-1}\vec{e_j}) = I_n \vec{e_j} = \vec{e_j}$. Using Cramer's Rule (explained below), we can find the $i$th entry of $\vec{x_j}$: \[x_{i,j} = \frac{det(A_i)}{det(A)}\] where $A_i$ is the matrix $A$ with the $i$th column replaced by $\vec{e_j}$. Finding the determinant of $A_i$ by expanding upon the $i$th row, we see that $det(A_i)$ is simply the $i$th entry of the cofactor matrix of $A$, ie $det(A_i) = c_{i,j}$. Thus, \[x_{i,j} = \frac{c_{i,j}}{det(A)}\] We can now write the $j$th column of $A^{-1}$ as \[\vec{x_j} = \frac{1}{det(A)}\begin{bmatrix}
+        c_{1,j}\\
+        c_{2,j}\\
+        \vdots\\
+        c_{n,j}
+    \end{bmatrix}\] which is simply the $j$th column of the adjugate matrix of $A$, adj$(A)$. Thus, we can say that \[A^{-1} = \begin{bmatrix} 
+        | & | & & |\\
+        \vec{x_1} & \vec{x_2} & \dots & \vec{x_n}\\
+        | & | & & |
+    \end{bmatrix} = \frac{1}{det(A)}adj(A)\]
+\end{proof}
 
 Also note that we can rewrite this expression as:
 
@@ -2037,6 +2060,8 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
         \end{equation}
 
         \item \textbf{determinant}: a scalar value that can be used to describe many properties of a matrix $A$, denoted either as $det(A)$ or $|A|$.
+        
+        \item \textbf{singular matrix}: a matrix that is not invertible (i.e. $det(A) = 0$).
 
         \item \textbf{eigenvectors/eigenvalues}: a vector $\vec{v}$ is an \textit{eigenvector} of a matrix $A$ if:
         
