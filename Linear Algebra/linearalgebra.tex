@@ -222,7 +222,7 @@ Given any rref matrix, you should be able to tell how many solutions a system ha
     \end{array}\
     $
     
-    This system has \textbf{no solutions}: in the final row is stating that $0*x+0*y+0*z \neq 0$, which is impossible. Thus, no solution to the system exists that would fulfil this requirement.
+    This system has \textbf{no solutions}: the final row is stating that $0*x+0*y+0*z \neq 0$, which is impossible. Thus, no solution to the system exists that would fulfil this requirement.
     \item 
     $
     \begin{array}[t][{@{}ccc|c@{}}]
@@ -232,7 +232,7 @@ Given any rref matrix, you should be able to tell how many solutions a system ha
     \end{array}\
     $
     
-    This system has \textbf{infinite solutions}: in now row is there any restriction on the value of $z$. Thus, while $x = c_1$ and $y = c_2$, $z$ can be any real number. When this happens, $z$ is called a \textbf{"free variable"}. 
+    This system has \textbf{infinite solutions}: in no row is there any restriction on the value of $z$. Thus, while $x = c_1$ and $y = c_2$, $z$ can be any real number. When this happens, $z$ is called a \textbf{"free variable"}. 
      
     In rref matrices of the following form, you can also have variables that are reliant on the value of free variables. 
      
@@ -251,7 +251,7 @@ There are many other forms, of varying complexity, that rrefs can have as well. 
 
 \subsubsection{Representing Solutions}
 
-As above, you can write the solutions to a system as $x = ..., y = ..., z = ...$. However, a more "standard" way, which will also make certain manipulations easier later, is:
+As above, you can write the solutions to a system as $x = ..., y = ..., z = ...$. However, a more "standard" way, which will also make certain manipulations easier later, is in vector form:
 
 \[
     \begin{bmatrix}
@@ -393,9 +393,9 @@ Given a matrix $A$ and a vector $\Vec{x}$:
 
 \[
 A\Vec{x} = \begin{bmatrix}
-&| &| & &|\\
-&\Vec{c_1} &\Vec{c_2} &... &\Vec{c_n}\\
-&| &| & &|\\
+| &| & &|\\
+\Vec{c_1} &\Vec{c_2} &... &\Vec{c_n}\\
+| &| & &|\\
 \end{bmatrix}\begin{bmatrix}
 x_1\\
 x_2\\
@@ -411,10 +411,10 @@ Given a matrix $A$ and a vector $\Vec{x}$:
 
 \[
 A\Vec{x} = \begin{bmatrix}
-&- & \Vec{r_1} &-\\
-&- & \Vec{r_2} &-\\
-& & ... &\\
-&- & \Vec{r_m} &-\\
+- & \Vec{r_1} &-\\
+- & \Vec{r_2} &-\\
+ & ... &\\
+- & \Vec{r_m} &-\\
 \end{bmatrix}\Vec{x}=\begin{bmatrix}
 \Vec{r_1} \cdot \Vec{x}\\
 \Vec{r_2} \cdot \Vec{x}\\
@@ -646,7 +646,7 @@ Similarly to processes described earlier for performing algebraic operations bet
         -1\\
         9\\
         1\\
-        \end{bmatrix}, ...
+        \end{bmatrix}, ..., \vec{b_n}A
         \end{split}
     \end{equation}
     
@@ -739,15 +739,15 @@ For example, to invert $\begin{bmatrix} 3 & 2\\
 
 \begin{equation}
     \begin{split}
-        \begin{array}[t][{@{}cc|cc@{}}]
+        &\begin{array}[t][{@{}cc|cc@{}}]
              3 & 2 & 1 & 0\\
              7 & 5 & 0 & 1\\
-            \end{array}&\\
-    &=\begin{array}[t][{@{}cc|cc@{}}]
+            \end{array}\\
+            &\rightarrow\begin{array}[t][{@{}cc|cc@{}}]
              1 & 0 & \vec{c_1} & \vec{c_2}\\
              0 & 1 & | & |\\
         \end{array}\\
-    &=\begin{array}[t][{@{}c|c@{}}]
+        &\rightarrow\begin{array}[t][{@{}c|c@{}}]
              I & A^{-1}\\
         \end{array}\\
     \end{split}
@@ -1035,9 +1035,11 @@ Beyond these distances, other further combinations can be found by applying simi
     \label{fig:curvefitting}
 \end{figure}
 
+\textit{If you want to see the calculus approach to curve fitting, see }\hyperref{http://notes.louismeunier.net/Calculus%20A,%20B/calculus.pdf#page=60}{}{}{here.}
+
 One application (of many) of linear algebra, and specifically, the ability to find distances between different elements in any particular base is in \textit{curve fitting}. The process is a little abstract to describe generally, so first consider the following set of points (and corresponding graph, figure \ref{fig:curvefitting}):
 
-$$(x,y) = (-2,0), (1,3), (2,5), (3,5)$$
+$$(x,y) = \{(-2,0), (1,3), (2,5), (3,5)\}$$
 
 It seems as if these points generally follow a linear trend, so we can try to find a line that fits the points as well as possible (\textit{note that a similar method to the following can be used for a polynomial trend, an exponential trend, etc, but with a little more work}). A line can be described by the equation $y = mx+b$, so our goal is to find the values of $m$ and $b$ that minimize the distance between the line and the points. We can write, for each individual point:
 
@@ -1180,9 +1182,9 @@ Working through the whole proof of this can be a little tedious, but it is very 
 
 \subsection{Normal Equations}
 
-While we showed a general form to use least squares to calculate the best fit line for an equation earlier, it would have resulted in having to find a projection, which, in higher dimensions, would prove unnecessarily tedious. Here, we build upon previous concepts to show a more efficient way.
+While we showed a general form to use least squares to calculate the best fit line for an equation earlier, it would have resulted in having to find a projection, which, in higher dimensions, would prove unnecessarily tedious. Here, we build upon previous concepts to show a more efficient method.
 
-Consider a set of data that, following the steps in section 3.1, we have defined as $A\vec{x} = \vec{b}$. Assuming this system is inconsistent (which would thus merit using least squares..), our goal is to find a vector $\vec{y}$ that is as close to $\vec{b}$ as possible. We know we can do this using projections, and thus write:
+Consider a set of data that, following the steps in section 3.1, we have defined as $A\vec{x} = \vec{b}$. Assuming this system is inconsistent (which would thus merit using least squares), our goal is to find a vector $\vec{y}$ that is as close to $\vec{b}$ as possible. We know we can do this using projections, and thus write:
 
 \begin{equation}
     \begin{split}
@@ -1230,7 +1232,7 @@ In all, the goal is to find $\vec{x}$, which now only requires a couple of matri
 
 \subsection{The Determinant}
 
-The \textbf{determinant} of a matrix is a scalar value that can be used to describe many properties of a matrix, denoted either as $det(A)$ or $|A|$. In particular, it can be used to describe whether a matrix is invertible without needing to actually invert it; by extension, a determinant only exists for a square matrix. The formula for the determinant of a $2x2$ matrix can be derived through trying to invert it (by augmenting it with the identity matrix):
+The \textbf{determinant} of a matrix is a scalar value that can be used to describe many properties of a matrix, denoted either as $det(A)$ or $|A|$. In particular, it can be used to describe whether a matrix is invertible without needing to actually invert it; by extension, a determinant only exists for a square matrix. The formula for the determinant of a $2 \times 2$ matrix can be derived through trying to invert it (by augmenting it with the identity matrix):
 
 \begin{equation}
     \begin{split}
@@ -1246,17 +1248,17 @@ The \textbf{determinant} of a matrix is a scalar value that can be used to descr
     \end{split}
 \end{equation}
 
-Without even finishing the elimination, it should be clear that the term $d-\frac{bc}{a}$ (in red) cannot equal 0 in order for the matrix to be invertible. We can rewrite this term as $ad-bc$; this is the determinant of a $2x2$ matrix. 
+Without even finishing the elimination, it should be clear that the term $d-\frac{bc}{a}$ (in red) cannot equal 0 in order for the matrix to be invertible. We can rewrite this term as $ad-bc$; this is the determinant of a $2 \times 2$ matrix. 
 
 \subsubsection{Determinants of Larger Matrices}
 
-The determinant of matrices larger than 2x2 could be derived similarly, but the work is tedious. Instead, you can break down the matrix into smaller matrices, and use the determinant of the smaller matrices to find the determinant of the larger matrix. For example, consider the following $3x3$ matrix, $A = \begin{bmatrix}
+The determinant of matrices larger than $2 \times 2$ could be derived similarly, but the work is tedious. Instead, you can break down the matrix into smaller matrices, and use the determinant of the smaller matrices to find the determinant of the larger matrix. For example, consider the following $3 \times 3$ matrix, $A = \begin{bmatrix}
     a & b & c\\
     d & e & f\\
     g & h & i
 \end{bmatrix}$. 
 
-To solve for the determinant of $A$, we can pick any particular row or column, and break the matrix into smaller matrices based on it. For example, we can pick the first row, and break the matrix into $2x2$ matrices:
+To solve for the determinant of $A$, we can pick any particular row or column, and break the matrix into smaller matrices based on it. For example, we can pick the first row, and break the matrix into $2 \times 2$ matrices:
 
 \begin{equation}
     \begin{split}
@@ -1275,13 +1277,13 @@ To solve for the determinant of $A$, we can pick any particular row or column, a
 
 Note that each "submatrix" used in this case is the matrix of $A$ without the respective row or column that the coefficient of our row in question is in. Also note that we multiplied the second term by $-1$. In general, we have to multiply by the corresponding sign in a "sign matrix", in which the top left corner is positive, and the sign alternates from there.
 
-We can finish solving this using our determinant formula of 2x2 matrices:
+We can finish solving this using our determinant formula of $2 \times 2$ matrices:
 
 \[
     det(A) = a(ei - fh) - b(di-fg) + c(dh-eg)
 \]
 
-Theoretically, you could use this formula as a general formula for any 3x3 matrix, but, in practice, it is far easier to simply use the algorithm described above for the particular case.
+Theoretically, you could use this formula as a general formula for any $3 \times 3$ matrix, but, in practice, it is far easier to simply use the algorithm described above for the particular case.
 
 For determinants of higher order matrices, the same general formula applies, but the resulting "submatrices" have to then be broken down more.
 
@@ -1528,7 +1530,7 @@ This has somewhat generalized our equation, but we still need the initial popula
 \subsubsection{Application to Linear Discrete Dynamical Systems}
 An \textbf{eigenvector} of a matrix $A$ is a vector $\vec{v} \neq \vec{0}$ such that $A\vec{v} = \lambda\vec{v}$, where $\lambda$ is a scalar. In other words, the eigenvector is a vector that is simply scaled by some scalar $\lambda$ when multiplied by the matrix $A$. This scalar is the corresponding \textbf{eigenvalue} of the eigenvector.
 
-Reconsider the previous section, where we said that $\vec{P}(t) = A^t \vec{P}(0)$. Lets say we are given two linearly independent eigenvectors of $A$ \textit{(which, as we'll say later, is the max number of eigenvectors $A$ can have since it is 2x2)}, $\vec{v_1}$ and $\vec{v_2}$, and their corresponding eigenvalues $\lambda_1$ and $\lambda_2$. WE know that:
+Reconsider the previous section, where we said that $\vec{P}(t) = A^t \vec{P}(0)$. Lets say we are given two linearly independent eigenvectors of $A$ \textit{(which, as we'll say later, is the max number of eigenvectors $A$ can have since it is $2 \times 2$)}, $\vec{v_1}$ and $\vec{v_2}$, and their corresponding eigenvalues $\lambda_1$ and $\lambda_2$. WE know that:
 \begin{align*}
         A\vec{v_1} &= \lambda_1\vec{v_1}\\
         A\vec{v_2} &= \lambda_2\vec{v_2}\
@@ -1595,7 +1597,7 @@ Solving this formula typically results in a polynomial in terms of $\lambda$ equ
 Taking the example from the previous section, we can find the eigenvalues and eigenvectors of $A = \begin{bmatrix}
     0.5 & 0.2\\
     -0.3 & 1.5\\
-\end{bmatrix}$ as follows (\textit{using our formula for the determinant of a 2x2 matrix}):
+\end{bmatrix}$ as follows (\textit{using our formula for the determinant of a $2 \times 2$ matrix}):
 \begin{align*}
     0 = det(\lambda I - A) &= det(\lambda I - \begin{bmatrix}
         0.5 & 0.2\\
@@ -1819,7 +1821,7 @@ This is the same form as derived before for $\vec{x}(t)$.
 
 \subsection{Extensions of Eigenvalues, etc}
 
-Take a general 2x2 matrix $A = \begin{bmatrix}
+Take a general $2 \times 2$ matrix $A = \begin{bmatrix}
     a & b\\
     c & d
 \end{bmatrix}$. Solving for the eigenvalues of $A$:
