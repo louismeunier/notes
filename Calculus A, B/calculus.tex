@@ -683,11 +683,11 @@ $$\ddx \tanh x = \ddx [\frac{\sinh x}{\cosh x}] = \frac{\sinh x \sinh x - \cosh 
         y = \sinh^{-1}(x) \Rightarrow x &= \sinh (y)\\
         \ddx x &= \ddx \sinh(y) \\
         1 &= \dydx \cosh(y)\\
-        \dydx &= \frac{1}{\cosh(y)} = \frac{1}{\sqrt{1 + \sinh^2(x)}} = \frac{1}{\sqrt{1+x^2}}\\
+        \dydx &= \frac{1}{\cosh(y)} = \frac{1}{\sqrt{1 + \sinh^2(y)}} = \frac{1}{\sqrt{1+x^2}}\\
         y = \cosh^{-1}(x) \Rightarrow x &= \cosh(y)\\
         \ddx x &= \ddx \cosh(y)\\
         1 &= \dydx \sinh y\\
-        \dydx &= \frac{1}{\sinh y} = \frac{1}{\sqrt{cosh^2(y)-1}} = \frac{1}{\sqrt{x^2-1}}\\
+        \dydx &= \frac{1}{\sinh y} = \frac{1}{\sqrt{\cosh^2(y)-1}} = \frac{1}{\sqrt{x^2-1}}\\
         y = \tanh^{-1}(x) \Rightarrow x &= \tanh(y)\\
         \ddx x &= \ddx \tanh(y)\\
         1 &= \ddy \tanh(y) \dydx\\
@@ -943,7 +943,30 @@ The proof for this theorem is fairly straightforward (and intuitive), and also m
     then there exists a $c$ in $(a,b)$ such that $\frac{f(b)-f(a)}{b-a} = f'(c)$. See figure \ref{fig:mvt}.
 \end{shaded}
 
-This theorem is essentially an application of Rolle's Theorem, but for any $a,b$ that are not necessarily equal. The "official" proof for this theorem is fairly straightforward as well, but again, is fairly intuitive graphically.
+This theorem is essentially an application of Rolle's Theorem, but for any $a,b$ that are not necessarily equal. To prove it, using Rolle's Theorem:
+
+\begin{proof}
+    Take a function $f(x)$ that is continuous on the closed interval $[a,b]$, and differentiable on the open interval $(a,b)$. We can define $g(x)$ as the secant line between the two points $(a,f(a))$ and $(b,f(b))$ as $g(x) = (\frac{f(b)-f(a)}{b-a})(x-a)+f(a)$. We can then define a function $h(x)$ as the difference between the secant line and the original function, $h(x) = g(x) - f(x)$.
+
+    We can then compute $h(a)$ and $h(b)$ respectively:
+    \begin{align*}
+        h(a) &= g(a) - f(a)\\
+        &= (\frac{f(b)-f(a)}{b-a})(a-a)+f(a) - f(a)\\
+        &= 0\\
+        h(b) &= g(b) - f(b)\\
+        &= (\frac{f(b)-f(a)}{b-a})(b-a)+f(a) - f(b)\\
+        &= (\frac{f(b)-f(a)}{b-a})(b-a)\\
+        &= 0
+    \end{align*}
+
+    Since $h(a) = h(b) = 0$, and $h(x)$ is simply the difference between a linear function and an arbitrary continuous function on $[a,b]$ and is thus continuous, we can say that, by Rolle's Theorem, there exists a $c \in (a,b)$ such that $h'(c) = 0$. We can thus say that:
+
+    \begin{align*}
+        0 = h'(c) &= g'(c) - f'(c)\\
+        &= \frac{f(b)-f(a)}{b-a} - f'(c)\\
+        f'(c) &= \frac{f(b)-f(a)}{b-a}
+    \end{align*}
+\end{proof}
 
 This, and Rolle's, are useful in questions involving proving the number of roots in an equation, as well as proving other theorems.
 
