@@ -1295,6 +1295,7 @@ It is helpful to remember a few properties of determinants of different matrices
     \item $det(A) = det(A^T)$
     \item $det(A) = -det(A)$, if a row of $A$ is exchanged
     \item $det(kA) = k^n det(A)$, where $n$ is the order of $A$
+    \item $det(A) = det(A)$, if a multiple row of $A$ is added to another row
     \item $det(AB) = det(A)det(B)$
     \item $det(A) + det(B) \neq det(A+B)$
 \end{itemize}
@@ -1980,7 +1981,7 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
             | &| & &|\\
             \Vec{c_1} &\Vec{c_2} &... &\Vec{c_n}\\
             | &| & &|\\
-            \end{bmatrix}\Vec{x} = \begin{bmatrix}
+            \end{bmatrix}\Vec{x} = A\begin{bmatrix}
             x_1\\
             x_2\\
             ...\\
@@ -2104,4 +2105,9 @@ This course relies \textbf{heavily} on vocabulary. Below is a brief conglomerati
         \item \textbf{trace}: the sum of the diagonal entries of a matrix, denoted $tr(A)$.
     \end{itemize}
 
+
+\iffalse
+% ! would be nice to actually add a phase diagram
+% ! diagram for base transformation could be helpful
+\fi
 \end{document}
