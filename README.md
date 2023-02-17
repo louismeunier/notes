@@ -11,5 +11,4 @@ free to use however you'd like
 - [Linear Algebra](http://notes.louismeunier.net/Linear%20Algebra/linearalgebra.pdf)
 - [Calculus 2](http://notes.louismeunier.net/Calculus%202/calculus2.pdf)
 - [Calculus A, B](http://notes.louismeunier.net/Calculus%20A%2C%20B/calculus.pdf)
-- [General Chemistry](http://notes.louismeunier.net/General%20Chemistry%20I/generalchemistry.pdf)
 - [Intro to CS](http://notes.louismeunier.net/Intro%20to%20CS/introtocs.pdf)
