@@ -1,29 +1,27 @@
-% backup|Calculus A, B
 \documentclass[12pt]{article}
 % packages
 \usepackage[paper=letterpaper,margin=1.6cm,bottom=0.8in]{geometry}
+% \usepackage{libertine}
 \usepackage[skip=5pt plus1pt, indent=15pt]{parskip}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{amsfonts}
+% \usepackage{amsfonts}
 % \usepackage{bookmark}
 \usepackage{graphics}
 \usepackage{graphicx}
-\usepackage{newtxtext, newtxmath}
+% \usepackage{newtxtext, newtxmath}
 \usepackage{titling}
 \usepackage{setspace}
 \usepackage{titleps}
 \usepackage{amsthm}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
-\usepackage{annotate-equations}
+% \usepackage{annotate-equations}
 \usepackage{framed}
-\usepackage[autostyle]{csquotes}
-\MakeOuterQuote{"}
-\let\openbox\relax
-% \usepackage{todonotes}
-
+\usepackage[]{csquotes}
 \usepackage[colorlinks=true, linkcolor=violet]{hyperref}
+
+\MakeOuterQuote{"}
 
 % settings
 \newpagestyle{mypage}{%
@@ -86,7 +84,7 @@
 \setlength\itemsep{5em}
 \subsubsection{\texorpdfstring{$\frac{x}{x}$}{TEXT}}
 
-In some situations, you can multiply a limit by some factor of $\frac{x}{x}$ to simplify an otherwise "impossible" limit
+In some situations, you can multiply a limit by some factor of $\frac{x}{x}$ to simplify an otherwise difficult to evaluate limit
 
 eg:
 \begin{equation}
@@ -1301,8 +1299,47 @@ Using this strategy makes a lot more sense when used in an example; say $\int \f
 
 From here, the integral can be rewritten in terms of $x$ using some trig rules (drawing a diagram of a triangle can help here):
 
-$$-cot(\theta)-\theta + C = -\frac{\sqrt{9-x^2}}{x}-\sin^{-1}(\frac{x}{3})+C$$
+$$-\cot(\theta)-\theta + C = -\frac{\sqrt{9-x^2}}{x}-\sin^{-1}(\frac{x}{3})+C$$
+\subsection{The Fundamental Theorem of Calculus}
+
+Consider a function $f(x)$ that is continuous and non-negative over $a \leq x \leq b$. We can divided $(a,b)$ into subintervals of width $\Delta x = \frac{b-a}{N}$, and consider rectangles of area $f(x^{*}_i) \Delta x$, where $x^{*}_i$ is the midpoint of the $i$th subinterval. The area  of all of these integrals can be written \[\sum_{i = 1}^N f(x^{*}_i) \Delta x.\] Taking the limit of this sum ($\lim_{N \to \infty}$) represents subdividing $(a,b)$ into infinitely many subintervals (and more accurately approximating the area under the curve). If this limit converges, we say \[\lim_{N \to \infty} \sum_{i = 1}^N f(x^{*}_i) \Delta x = \int_a^b f(x) dx.\] Specifically, $f(x)$ must be \textit{piecewise} continuous over $(a,b)$; it can have (finite) jump discontinuities (over a finite interval), but does not have to be continuous nor differentiable. 
+
+Consider the integral \[\int_a^x f(t) dt = g(x).\] We can say that, for some small $h$, $g(x + h) - g(x) \approx f(x^*) h$, where $x^*$ is the midpoint of $(x, x+h)$. Thus, $f(x^*) \approx \frac{g(x+h) - g(x)}{h}$. Approaching $h$ to 0, we have \[\lim_{h \to 0} f(x^*) = \lim_{h \to 0} \left[\frac{g(x+h) - g(x)}{h}\right] = g'(x).\] Thus, \[\frac{d}{dx} \int_a^x f(t) dt = f(x).\]
 \subsection{Applications of Integrals}
+\subsubsection{Area Under a Curve}
+
+In short, the area under $f(x)$ from $a$ to $b$ is \[\int_a^b f(x) dx,\] assuming $f(x)$ is piecewise continuous over $(a,b)$.
+
+\subsubsection{Area Between Curves}
+
+The area between two curves $f(x)$ and $g(x)$ from $a$ to $b$ is \[\int_a^b f(x) dx - \int_a^b g(x) dx = \int_a^b f(x) - g(x) dx,\] assuming $f(x) \geq g(x)$ over $(a,b)$ (among the other conditions from FTC). If, on the other hand, $f$ is less than $g$ at some point in $(a,b)$, we must do the opposite subtraction in this range. Say that $f > g$ on $(a,c)$, and $f < g$ on $(c,b)$, we can then write the are between the two curves as \[\int_a^c f(x) - g(x) dx + \int_c^b g(x) - f(x) dx.\] This can be rewritten any number of ways using properties of integrals (eg, $\int_a^b f(x) dx = \int_b^a f(x) dx$). It can also be generalized to any number of "switches" in the inequality.
+
+\subsubsection{Curve Length}
+
+% TODO add a picture here
+Take a curve $f(x)$ on the interval $(a,b)$, and two points $P_i = (x_i, f(x_i))$ and $P_{i-1} = (x_{i-1}, f(x_{i-1}))$ in this interval. The length of the section of curve between these two points is (very) approximately equal to the length of the secant line between them, with this approximation improving the closer the points are. It follows that we can take the sum of "all possible" values of these these points $P_i$ between $a$ and $b$ to approximate the length of $f$ on $(a,b)$; thus, we can say \[L \approx \lim_{N \to \infty} \sum_{i=1}^N |P_{i-1}P_{i}|.\] The secant length between $P_i$ and $P_{i-1}$ can be rather simply rewritten using the standard distance formula; \begin{align*}
+    |P_i P_{i-1}| &= \sqrt{(x_i- x_{i-1})^2 + (f(x_i) - f(x_{i-1}))^2}\\
+    &= \sqrt{1 + (\frac{f(x_i) - f(x_{x-1})}{x_i - x_{i-1}})^2} (x_i - x_{i-1})\\
+    &= \sqrt{1 + f'(x^*)^2} (x_i - x_{i-1}) = \sqrt{1 + f'(x^*)^2}\, \Delta x
+\end{align*}
+
+Where $\Delta x = x_i - x_{i-1}$; notice that $f'(x^*)$ is simply the slope of the secant line, and $x^*$ is the value of $x$ in the interval $(x_i, x_{i-1})$ with the same slope of the secant (which must exist by Mean Value Theorem). Substituting this into the original limit; \begin{align*}L &= \lim_{N \to \infty} \sum_{i =1}^N \sqrt{1 + (f'(x^*))^2} \,\Delta x\\
+    &= \int_{a}^{b} \sqrt{1 + (f'(x))^2} \,dx
+\end{align*}
+
+To try to understand this more intuitively and in terms of differentials, consider the length of the curve at a particular, infinitesimally small range to be $ds$, ie, the "instantaneous change in length". At this small scale, it can be considered to be the hypotenuse of a right triangle made up of sides $dx$ and $dy$, the changes in $x$ and $y$ respectively. Thus, we can say $ds^2 = dx^2 + dy^2 \implies ds = \sqrt{dx^2 + dy^2} = \sqrt{1 + \frac{(dy)^2}{(dx)^2}}\,dx$. Summating this over an entire interval yields the same integral as above.
+
+\subsubsection{Volume of Revolution}
+% TODO add a graph
+Consider a function $f(x)$, which is rotated about the $x$-axis to form a solid. We can subdivide this solid into disks of area $A = \pi r^2 = \pi f(x_i)^2$. The width of each particular disk is a small interval $\Delta x = x_i - x_{i - 1}$, and we can thus estimate the volume of the entire solid (between two points $a$, $b$) as \[V \approx \lim_{N \to \infty} \sum_{i = 1}^{N} \pi (f(x_i))^2 \Delta x = \int_a^b \pi (f(x))^2 \,dx\]
+
+\subsubsection{Surface Area of Revolution}
+% TODO add a graph
+Consider a function $f(x)$ rotated about the $x$-axis to form a solid. Subdividing this solid into disks, the surface area of each disk is $2 \pi r h = 2\pi f(x_i) \Delta s$, where $\Delta s$ is the change in the length of the curve between $x_i$ and $x_{i-1}$. Using the definitions of curve length from earlier, we can write \begin{align*}
+    SA &= \lim_{N \to \infty} \sum_{i =1}^N 2 \pi f(x_i) \Delta s \\
+    &= \int_a^b 2 \pi f(x_i) \,ds \\
+    &= 2 \pi \int_a^b f(x_i) \sqrt{1 + (\frac{dy}{dx})^2} \,dx\\
+\end{align*}
 
 \section{Differential Equations}
 \subsection{Definitions}
@@ -1585,7 +1622,7 @@ This general method can be used to find the general equation of any curve orthog
     \label{fig:orthogonalcurves}
 \end{figure}
 
-\section{Multivariable Calculus}
+\section{Partial Derivatives and Applications}
 
 \subsection{Introductions/Visualizations}
 
@@ -2177,9 +2214,22 @@ Similarly for $\frac{\partial S}{\partial b}$:
 
 While its not obvious in this form, this is now simply a system of two equations in two unknowns ($m$ and $b$), which, when given a set of $N$ points, can be solved with any number of methods (ie Cramer's).
 
+\subsection{Extrema with Constraints}
 
-% ! NOTES/TODO
-\iffalse
-   Add arc length, but should probably go into the application of integration stuff (which really hasn't been covered yet lol)
-\fi
+Say we have a function $f(x,y)$ subject to some constraint $g(x,y) = 0$ that we wish to optimize. Suppose we can represent $g$ parametrically as the curve $C: x = x(t), y = y(t)$. If $P[x(t), y(t)]$ is an extrema of $f$, we can write $f(x(t), y(t)) = F(t)$ (for some function $F$). We can then write (via the chain rule): \[\frac{dF}{dt} = 0 = \frac{df}{dx} \frac{dx}{dt} + \frac{df}{dy}\frac{dy}{dt}\] This is simply a dot product, \[\nabla \vec{f} \cdot \langle \frac{dx}{dt}, \frac{dy}{dt} \rangle, \] where the second vector is the tangent vector to the curve $C$ at $P$, which we can call $\vec{T}$. As this dot product is zero, $\nabla \vec{f}$ must be perpendicular to $\vec{T}$. Now, taking the gradient of $g$ (again via the chain rule), we have \[\frac{\partial g}{\partial x} \frac{dx}{dt} + \frac{\partial g}{\partial y} \frac{dy}{dt} = 0,\] and can further say that \[\nabla \vec{g} \cdot \vec{T}= \nabla \vec{g} \cdot \vec{T} = 0 .\] Here too, (assuming $\nabla \vec{g}(P) \neq 0$), $\nabla \vec{g} \perp \vec{T}$. Since both $\vec{f}$ and $\vec{g}$ are perpendicular to $\vec{T}$, we can thus say \[\nabla \vec{f}(P) = \pm \lambda \nabla \vec{g}(P),\] where $\lambda$ is an arbitrary constant called, in the context of these problems, the \textbf{Langrangian multiplier.} In problems involving extrema with constraints, we can also define the \textbf{Lagranian}; \[L(x,y, \lambda) = f + \lambda g,\] and require that \[\nabla \vec{L} = \nabla \vec{f}  + \lambda \nabla \vec{g} = 0.\] This gives us a system of three equations for three unknowns; namely \begin{align*}
+    L_x &= f_x + \lambda g_x = 0\\
+    L_y &= f_y + \lambda g_y = 0\\
+    L_{\lambda} &= g(x,y) = 0
+\end{align*}
+
+This can be extended to a function, $f(x,y,z)$, subject to two constraint $g(x,y,z) = 0$ and $h(x,y,z) = 0$; we write \[L(x,y,\lambda, \mu) = f + \lambda g + \mu h,\] where we require \[\nabla \vec{L} = \nabla f + \lambda \nabla g + \mu \nabla h = 0.\] Extending this out yields a system of four equations of four unknowns.
+
+In general, the actual value(s) of the Lagrangian multiplier(s) are irrelevant; simply use the equations that they are a part of to solve for the coordinates of the extrema.
+
+\section{Multiple Integration}
+% TODO: get up to date with notes
+% need to add:
+% - Gamma function (optional?)
+% - double integrals + application
+% - changing coordinate system
 \end{document}
