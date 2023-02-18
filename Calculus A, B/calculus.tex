@@ -1,39 +1,32 @@
 \documentclass[12pt]{article}
 % packages
-\usepackage[paper=letterpaper,margin=1.6cm,bottom=0.8in]{geometry}
-% \usepackage{libertine}
+\usepackage[paper=letterpaper,margin=0.2in]{geometry}
+\usepackage{libertine}
 \usepackage[skip=5pt plus1pt, indent=15pt]{parskip}
 \usepackage{amsmath}
 \usepackage{amssymb}
-% \usepackage{amsfonts}
-% \usepackage{bookmark}
 \usepackage{graphics}
 \usepackage{graphicx}
-% \usepackage{newtxtext, newtxmath}
 \usepackage{titling}
 \usepackage{setspace}
 \usepackage{titleps}
 \usepackage{amsthm}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
-% \usepackage{annotate-equations}
-\usepackage{framed}
+\usepackage{tabularx}
 \usepackage[]{csquotes}
-\usepackage[colorlinks=true, linkcolor=violet]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
 
 \MakeOuterQuote{"}
+\newtheorem{theorem}{Theorem}
 
-% settings
 \newpagestyle{mypage}{%
-% make head rule gray
-    \headrule
-  \sethead{\textcolor{gray}{\thesubsection}}{}{\textcolor{gray}{\sectiontitle: \subsectiontitle}}
-  \setfoot{}{\textcolor{gray}{\thepage}}{}
+    \setfoot{\textcolor{gray}{§\thesubsection}}{\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{p. \thepage}}
 }
 
 \setlength{\droptitle}{-6em}
 \onehalfspacing
-
 
 \begin{document}
 % commands
@@ -50,32 +43,25 @@
 \newcommand{\rational}{\mathbb{Q}}
 \newcommand{\complex}{\mathbb{C}}
 
-\begin{titlepage}
-    \begin{center}
-        \vspace*{1cm}
-        \Huge
-        \textbf{Calculus I, II, III}
-        
-        \vfill
-        
-        \begin{figure}[!ht]
-            \centering
-            \includegraphics[width=17cm]{misc/saddle.png}
-        \end{figure}
-        \vfill
-        
-        \small
-        by Louis Meunier
-        
-        \href{https://notes.louismeunier.net}{\color{violet}{notes.louismeunier.net}}
-        
-    \end{center}
-\end{titlepage}
-
+\setstretch{2.25}
+\noindent
+\begin{center}
+    \begin{tabularx}{\textwidth} { 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedleft\arraybackslash}X}
+    \LARGE \textbf{Calculus I, II, III} & \LARGE F22-W23\\
+    \LARGE Louis Meunier & \LARGE \href{https://notes.louismeunier.net}{\color{darkgray}{\underline{notes.louismeunier.net}}}\\
+    \end{tabularx}\\
+    \rule[2ex]{0.9\textwidth}{1pt}
+\end{center}
+\setstretch{1.25}
 {
-  \hypersetup{linkcolor=violet}
+  \hypersetup{linkcolor=darkgray}
   \tableofcontents
 }
+
+\newgeometry{margin=0.5in, top=0.3in, bottom=0.6in}
+\parskip=0.8em
 
 \newpage
 \pagestyle{mypage}
@@ -119,13 +105,13 @@ $$
 
 \subsubsection{L'Hôpital's Rule}
 
-\begin{shaded}
+\begin{theorem}[L'Hôpital's Rule]
 In short, if:
 $$\frac{f(c)}{g(c)} = \frac{0}{0}, \frac{\infty}{\infty}, 0^0, \infty - \infty, ... (\textbf{indeterminate form})$$ 
 
 then:
 $$\lim_{x\to c}\frac{f(x)}{g(x)} = \lim_{x\to c}\frac{f'(x)}{g'(x)}$$
-\end{shaded}
+\end{theorem}
 This can also be repeated for multiple derivatives of $f, g$, as long as the resulting form is still indeterminate. Oftentimes, you will need to manipulate the limit to express it in an indeterminate form such that L'Hôpital's is usable.
 
 \textit{While solving limits this way is very powerful (and, often, very easy), one should be careful to not overuse it when it is not applicable.}
@@ -176,7 +162,7 @@ For the example above:
 \end{equation}
 \subsubsection{Squeeze Theorem}
 
-\begin{shaded*}
+\begin{theorem}[Squeeze Theorem]
 If: 
     \begin{itemize}
         \item $f(x) \leq g(x) \leq h(x)$ 
@@ -184,9 +170,8 @@ If:
         \item $\lim_{x \to c} f(x) = \lim_{x \to c} h(x)$
 
     \end{itemize}
-then $\lim_{x\to c} f(x) = \lim_{x \to c} g(x) = \lim_{x \to c} h(x)$
-    
-\end{shaded*}
+then \[\lim_{x\to c} f(x) = \lim_{x \to c} g(x) = \lim_{x \to c} h(x)\]
+\end{theorem}
 
 This makes a lot more sense in practice:
 
@@ -233,7 +218,7 @@ eg:
 \end{equation}
 
 \subsection{Intermediate Value Theorem}
-\begin{shaded}
+\begin{theorem}[Intermediate Value Theorem]
     If
     \begin{itemize}
         \item $f$ is continuous on $[a,b]$
@@ -244,7 +229,7 @@ eg:
     there exists some $c$ in $(a,b)$ such that $N = f(c)$.
     
     See Figure \ref{ivt}.
-\end{shaded}
+\end{theorem}
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=10.0cm]{misc/imvt.png}
@@ -377,12 +362,12 @@ Let $f(x) = \ln x, \therefore f(1) = \ln 1 = 0$. In addition, $f'(x) = \frac{1}{
 
 Note that the penultimate step of this work relies on the following (very helpful) theorem:
 
-\begin{shaded}
+\begin{theorem}
     If $f$ is continuous at $\lim_{x\to a} g(x)$, then,
     $$\lim_{x\to a} f(g(x)) = f(\lim_{x\to a} g(x))$$
 
     \textit{A proof can be found for this on page A39 of the Stewart's book.}
-\end{shaded}
+\end{theorem}
 
 
 Alternatively, we can write $e$ as a limit going to $\infty$; Let $y = \frac{1}{h}$, and, substituting into eqn. \ref{eqn:elimit}:
@@ -473,17 +458,17 @@ When $a = 0$, this polynomial becomes called a \textbf{Maclaurin Polynomial}:
 
 $$P_n(x) = \sum_{n=0}^{N} \frac{x^n f^n(0)}{n!}$$
 
-\subsubsection{Relationship between \texorpdfstring{$f(x)$}{TEXT} and \texorpdfstring{$P_N(x)$}{TEXT}}
+\subsubsection{Relationship between \texorpdfstring{$f(x)$}{a function} and \texorpdfstring{$P_N(x)$}{its approximation}}
 
 While, intuitively, it makes sense that $P_N(x)$ becomes a better approximation of $f(x)$ as $N\to\infty$, this isn't necessarily true.
 
-\textbf{Taylor's Theorem} states the following:
-
+\begin{theorem}[Taylor's Theorem]
 $$f(x) = P_N(x) + R_N(x);$$
 
 where $P_N(x)$ is an approximation (via Taylor Polynomial) of $f(x)$, and $R_N(x)$ is the error in said approximation, defined as:
 
 $$R_N(x) = \frac{(x-a)^{N+1}}{(N+1)!}f^{(N+1)}(c), c \in \real \textit{ and between } x, a$$.
+\end{theorem}
 
 We can then rewrite Taylor's Theorem, as $N$ goes to $\infty$:
 
@@ -771,12 +756,6 @@ This final, simplified form, $a \pm ib$, is also known as "complex conjugates", 
 
 Take the equation from the previous section, $z = a + ib$. Figure \ref{fig:imaginary} shows this formula in the complex plane, with $r$ representing the distance between $z$ and the origin $(0,0)$.
 
-\begin{center}
-\begin{shaded*}
-    \textit{Note that the complex plane is also often referred to as the \textbf{Argand plane}.}
-\end{shaded*}
-\end{center}
-
 Using this visualization, we can rewrite the formula in the polar form
 
 $$z = r \cos \theta + i r \sin \theta$$.
@@ -915,7 +894,8 @@ The best way to approach these questions is to simply practice. The patterns bet
     \caption{Rolle's Theorem visualized}
     \label{fig:rolles}
 \end{figure}
-\begin{shaded}
+
+\begin{theorem}
 If a function $f$
 \begin{itemize}
     \item is \textit{continuous} on $[a,b]$
@@ -923,7 +903,7 @@ If a function $f$
     \item $f(a) = f(b)$
 \end{itemize}
 then there is a number $c$ in $(a,b)$ such that $f'(c) = 0$.
-\end{shaded}
+\end{theorem}
 
 The proof for this theorem is fairly straightforward (and intuitive), and also makes a lot of sense graphically (see figure \ref{fig:rolles}).
 
@@ -934,14 +914,14 @@ The proof for this theorem is fairly straightforward (and intuitive), and also m
     \caption{The Mean Value Theorem visualized}
     \label{fig:mvt}
 \end{figure}
-\begin{shaded}
+\begin{theorem}
     If a function $f$ is
     \begin{itemize}
         \item \textit{continuous} on $[a,b]$
         \item \textit{differentiable} on $(a,b)$
     \end{itemize}
     then there exists a $c$ in $(a,b)$ such that $\frac{f(b)-f(a)}{b-a} = f'(c)$. See figure \ref{fig:mvt}.
-\end{shaded}
+\end{theorem}
 
 This theorem is essentially an application of Rolle's Theorem, but for any $a,b$ that are not necessarily equal. To prove it, using Rolle's Theorem:
 
@@ -1316,7 +1296,12 @@ The area between two curves $f(x)$ and $g(x)$ from $a$ to $b$ is \[\int_a^b f(x)
 
 \subsubsection{Curve Length}
 
-% TODO add a picture here
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{misc/curvelength.png}
+    \label{fig:curve_length}
+    \caption{Visualization of finding the curve length.}
+\end{figure}
 Take a curve $f(x)$ on the interval $(a,b)$, and two points $P_i = (x_i, f(x_i))$ and $P_{i-1} = (x_{i-1}, f(x_{i-1}))$ in this interval. The length of the section of curve between these two points is (very) approximately equal to the length of the secant line between them, with this approximation improving the closer the points are. It follows that we can take the sum of "all possible" values of these these points $P_i$ between $a$ and $b$ to approximate the length of $f$ on $(a,b)$; thus, we can say \[L \approx \lim_{N \to \infty} \sum_{i=1}^N |P_{i-1}P_{i}|.\] The secant length between $P_i$ and $P_{i-1}$ can be rather simply rewritten using the standard distance formula; \begin{align*}
     |P_i P_{i-1}| &= \sqrt{(x_i- x_{i-1})^2 + (f(x_i) - f(x_{i-1}))^2}\\
     &= \sqrt{1 + (\frac{f(x_i) - f(x_{x-1})}{x_i - x_{i-1}})^2} (x_i - x_{i-1})\\
@@ -1687,11 +1672,9 @@ This definition can, naturally, be extended to higher derivatives. Just as there
 \end{equation}
 
 
-\begin{shaded*}
-    \textbf{Clairaut's Theorem:} 
-    
+\begin{theorem}[Clairaut's Theorem]
     If the point $(a,b)$ is in the domain of $f(x,y)$, and $f_{xy}$ and $f_{yx}$ are continuous, then $f_{xy}(a,b)=f_{yx}(a,b)$.
-\end{shaded*}
+\end{theorem}
 
 \subsection{Differentials, Errors, Approximations}
 
@@ -2227,6 +2210,31 @@ This can be extended to a function, $f(x,y,z)$, subject to two constraint $g(x,y
 In general, the actual value(s) of the Lagrangian multiplier(s) are irrelevant; simply use the equations that they are a part of to solve for the coordinates of the extrema.
 
 \section{Multiple Integration}
+\subsection{Double Integrals}
+Consider an arbitrary rectangle $D$ in the $x,y$-plane, and let $f(x,y)$ be a function in $D$. Subdividing $D$ into small rectangles, we can say that the total value of $f$ in the smaller rectangle is approximately, taking $P(x^*_{ij}, y^*_{ij})$ to be a point within this rectangle, $f(P) \Delta x_i \Delta y_j$. Summating all of these rectangles yields \begin{align*}
+    \lim_{m, n \to \infty, \infty}& \sum_{i = 1}^n \sum_{j=1}^m f(P) \Delta x_i \Delta y_j \\
+    &= \int_c^d \int_a^b f(x,y) \, dx \, dy
+\end{align*}
+
+Where $(a,b)$ is the interval of $x$-values and $(c,d)$ is the interval of $y$-values. This is the simplest case of a double integral, where the region is rectangular and can thus be broken down into a grid of rectangles. A common subcase here is when $f(x,y) = g(x) * h(y)$; in this case, we can write \begin{align*}
+   \iint_D f(x,y) \, dA &= \int_c^d \int_a^b f(x,y) \, dx \, dy\\
+   &= \int_c^d h(y) \int_a^b g(x) \, dx \, dy\\
+   &= \int_c^d h(y) \, dy \int_a^b g(x) \, dx\\
+\end{align*}
+
+Another helpful case in evaluating double integrals is the following theorem.
+
+\begin{theorem}[Fubini's Theorem]
+    If an integral has a finite value, then the order of integration may be interchanged. That is, \[\int_a^b \int_c^d f(x,y) \,dx\,dy = \int_c^d \int_a^b f(x,y) \,dy \,dx.\]
+\end{theorem}
+
+More complex regions are typically broken down into two types; \textbf{Type I}, where the region's $y$ values are bounded by functions of $x$, and \textbf{Type II}, where the region's $x$ values are bounded by functions of $y$. In short, these can be written as follows:
+\begin{enumerate}
+    \item \textbf{Type I}: region $D$ bounded by $a \leq x \leq b$ and $g_1(x) \leq y \leq g_2(x)$. \[\iint_D f(x,y) dA = \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y) \,dy \,dx\]
+    \item \textbf{Type I}: region $D$ bounded by $h_1(y) \leq x \leq h_2(y)$ and $c \leq y \leq d$. \[\iint_D f(x,y) dA = \int_c^d \int_{h_1(y)}^{h_2(y)} f(x,y) \, dx \, dy\]
+\end{enumerate}
+
+\subsection{Coordinate Transformations}
 % TODO: get up to date with notes
 % need to add:
 % - Gamma function (optional?)
