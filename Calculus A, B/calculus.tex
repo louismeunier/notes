@@ -24,7 +24,7 @@
 
 \newpagestyle{mypage}{%
     \footrule
-    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
+    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
 }
 
 
@@ -2238,10 +2238,55 @@ More complex regions are typically broken down into two types; \textbf{Type I}, 
     \item \textbf{Type I}: region $D$ bounded by $h_1(y) \leq x \leq h_2(y)$ and $c \leq y \leq d$. \[\iint_D f(x,y) dA = \int_c^d \int_{h_1(y)}^{h_2(y)} f(x,y) \, dx \, dy\]
 \end{enumerate}
 
+\subsection{Applications of Double Integrals}
+
+Other than the obvious (finding the area of an arbitrary region in the $x,y$-plane), there are a number of other applications;
+
+\begin{itemize}
+    \item \textbf{Volume of a Projected Region:} A surface defined by $z = f(x,y)$ can be projected to the region $D$ on the $x,y$-plane. Considering the surface as the "top" of a pseudo-cylinder, and $D$ as the base, the volume of the resulting solid is \[V = \iint_D f(x,y) \,dA\]
+    \item \textbf{Volume of a Region Rotated:} Very similarly to finding the volume of a function of a single variable being rotated about an axis, the volume of an arbitrary region can also be found when rotated; about the $x$-axis: \[V = \iint_D 2\pi y \, dA;\] and the $y$-axis: \[V = \iint_D 2\pi x\, dA. \]
+    \item \textbf{Average Value of a Function over a Region:} Given a function $f(x,y)$ over a region $D$ of area $A$, the average value of the function within this region is, simply, \[f_{\text{average}} = \frac{\iint_D f(x,y) \, dA}{A}.\]
+\end{itemize}
+
 \subsection{Coordinate Transformations}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{./misc/transformationofvariables.png}
+    \caption{Coordinate transformation}
+    \label{fig:coordinate_transformations}
+\end{figure}
+
+Consider a vector function $\vec{R} = \vec{R}(\vec{u}, \vec{v})$, as well as figure \ref{fig:coordinate_transformations}. The gradient of this function, $\vec{\nabla R}$, is given by \[\vec{\nabla R} = \pd{R}{u} \hat{u} + \pd{R}{v} \hat{v},\] in the base $\{\hat{u}, \hat{v}\}$. The region formed by the $\hat{u}$ and $\hat{v}$ vectors to "add up" to $\vec{\nabla R}$ can be extended (as shown). Consider that the vectors $\hat{u}$ and $\hat{v}$ are changing at rates $\text{d}u$ and $\text{d}v$, respectively; thus, the area ($A$) of this parallelogram would also be changing accordingly (using the general formula for the area of a parallelogram defined via vectors); \begin{align*}
+    dA &= ||\pd{R}{u}\text{d}u  \times \pd{R}{v}\text{d}v||\\
+    &=  ||\pd{R}{u} \times \pd{R}{v}||\text{d}u \text{d}v\\
+    &= \text{det}\begin{bmatrix}
+        \hat{i} & \hat{j} & \hat{k}\\
+        \pd{x}{u} & \pd{y}{u} & 0\\
+        \pd{x}{v} & \pd{y}{v} & 0\\
+    \end{bmatrix}= \hat{k}(\pd{x}{u} \pd{y}{v} - \pd{x}{v} \pd{y}{u})\,\text{d}u \text{d}v\\
+    &= |\frac{\partial(x,y)}{\partial(u,v)}|\,\text{d}u \text{d}v
+\end{align*}
+
+Thus, $\text{d}A$ is simply (or not so simply?) the determinant of the Jacobian matrix of the relevant variables of transformation. In practice, this means \[\iint_D f(x,y) dA = \iint_{D'} f(x(u,v), y(u,v))\, |\frac{\partial(x,y)}{\partial(u,v)}|\,\text{d}u \text{d}v,\] where $D'$ is a region in the $u,v$-plane.
+
+One of the most common coordinate transformations is the polar coordinate system, where $x(r,\theta) = r \cos (\theta)$ and $y(r, \theta) = r \sin(\theta)$. We can also more "formally" say that $\vec{R}(r, \theta) = r \cos \theta \hat{i} + r \sin \theta \hat{j}$. Working out the Jacobian, we get \begin{align*}
+    \text{d}A = |\frac{\partial(x,y)}{\partial(r,\theta)}| &= \text{det}\begin{bmatrix}
+       \cos \theta & \sin \theta\\
+        -r \sin \theta & r \cos \theta\\
+    \end{bmatrix} \text{d}r \text{d}\theta\\
+    &=  (r\cos^2 \theta - - r \sin^2 \theta) \text{d}r \text{d}\theta \\
+    &= r\,\text{d}r \text{d}\theta
+\end{align*}
+
+% TODO add thm
+% TODO: explanation + major coordinate systems (polar, spherical, cylindrical), although the last two are for triple....
+
+
+
+
 % TODO: get up to date with notes
 % need to add:
 % - Gamma function (optional?)
-% - double integrals + application
 % - changing coordinate system
 \end{document}
