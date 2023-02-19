@@ -7,23 +7,26 @@
 \usepackage{amssymb}
 \usepackage{graphics}
 \usepackage{graphicx}
+\usepackage{titleps}
 \usepackage{titling}
 \usepackage{setspace}
-\usepackage{titleps}
+% \usepackage{fancyhdr}
 \usepackage{amsthm}
+\usepackage{color}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{tabularx}
 \usepackage[]{csquotes}
-\usepackage{fancyhdr}
 \usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
 
 \MakeOuterQuote{"}
 \newtheorem{theorem}{Theorem}
 
 \newpagestyle{mypage}{%
-    \setfoot{\textcolor{gray}{§\thesubsection}}{\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{p. \thepage}}
+    \footrule
+    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
 }
+
 
 \setlength{\droptitle}{-6em}
 \onehalfspacing
@@ -65,10 +68,11 @@
 
 \newpage
 \pagestyle{mypage}
+\renewcommand{\makefootrule}{\color{gray}\rule[.8\baselineskip]{\linewidth}{0.8pt}}
 \section{Limits}
 \subsection{Tricks for solving limits}
 \setlength\itemsep{5em}
-\subsubsection{\texorpdfstring{$\frac{x}{x}$}{TEXT}}
+\subsubsection{\texorpdfstring{$\frac{x}{x}$}{x/x}}
 
 In some situations, you can multiply a limit by some factor of $\frac{x}{x}$ to simplify an otherwise difficult to evaluate limit
 
