@@ -21,7 +21,7 @@
 
 \MakeOuterQuote{"}
 \newtheorem{theorem}{Theorem}
-
+\DeclareMathOperator{\sech}{sech}
 \newpagestyle{mypage}{%
     \footrule
     \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
@@ -34,10 +34,10 @@
 \begin{document}
 % commands
 \newcommand{\red}[1]{\textcolor{red}{#1}}
-\newcommand{\ddx}{\frac{d}{dx}}
-\newcommand{\ddy}{\frac{d}{dy}}
-\newcommand{\dxdy}{\frac{dx}{dy}}
-\newcommand{\dydx}{\frac{dy}{dx}}
+\newcommand{\ddx}{\frac{\text{d}}{\text{d}x}}
+\newcommand{\ddy}{\frac{\text{d}}{\text{d}y}}
+\newcommand{\dxdy}{\frac{\text{d}x}{\text{d}y}}
+\newcommand{\dydx}{\frac{\text{d}y}{\text{d}x}}
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 
 \newcommand{\real}{\mathbb{R}}
@@ -137,7 +137,7 @@ So:
 \begin{split}
     \lim_{x\to0} \sqrt{ax + b} - 2 = 0\\
     \sqrt{a*0 + b} - 2 = 0\\
-    \sqrt(b) = 2\\
+    \sqrt{b} = 2\\
     b = 4
 \end{split}
 \end{equation}
@@ -181,10 +181,10 @@ This makes a lot more sense in practice:
 
 \begin{equation}
     \begin{split}
-        \lim_{x\to0} x^4 sin(\frac{x}{2}) = ?\\
-        -1 \leq sin(\frac{x}{2}) \leq 1\\
-        -x^4 \leq x^4 sin(\frac{x}{2}) \leq x^4\\
-        \lim_{x\to 0} -x^4 = \lim_{x\to 0} x^4 = 0 \therefore \lim_{x\to0} x^4 sin(\frac{x}{2}) = 0
+        \lim_{x\to0} x^4 \sin(\frac{x}{2}) = ?\\
+        -1 \leq \sin(\frac{x}{2}) \leq 1\\
+        -x^4 \leq x^4 \sin(\frac{x}{2}) \leq x^4\\
+        \lim_{x\to 0} -x^4 = \lim_{x\to 0} x^4 = 0 \therefore \lim_{x\to0} x^4 \sin(\frac{x}{2}) = 0
     \end{split}
 \end{equation}
 
@@ -213,11 +213,11 @@ eg:
 
 \begin{equation}
     \begin{split}
-    \lim_{x\to \pi}\frac{e^{sin(x)} - 1}{x - \pi} &= \lim_{x\to \pi}\frac{e^{sin(x)} - \textcolor{red}{e^{sin(\pi)}}}{x - \pi}\\
-    \textit{Let f(x) = $e^{sin(x)}$}\\
+    \lim_{x\to \pi}\frac{e^{\sin(x)} - 1}{x - \pi} &= \lim_{x\to \pi}\frac{e^{\sin(x)} - \textcolor{red}{e^{\sin(\pi)}}}{x - \pi}\\
+    \textit{Let f(x) = $e^{\sin(x)}$}\\
     &=\lim_{x\to \pi}\frac{f(x)-f(\pi)}{x - \pi}\\
     \textit{This is simply the definition of $f'(x)$ at $a=\pi$}\\
-    &=f'(\pi) = cos(\pi)e^{sin(\pi)} = -1
+    &=f'(\pi) = \cos(\pi)e^{\sin(\pi)} = -1
     \end{split}
 \end{equation}
 
@@ -284,7 +284,7 @@ Extending this further for e;
 
 \begin{equation}\label{exp:fullexpderiv}
     \begin{split}
-        \frac{d}{dx} e^x &= \lim_{h\to 0}[\frac{e^{x+h}-e^x}{h}]\\
+        \frac{\text{d}}{\text{d}x} e^x &= \lim_{h\to 0}[\frac{e^{x+h}-e^x}{h}]\\
         &= e^x \textcolor{red}{\lim_{h\to 0}[\frac{e^h-1}{h}]}\\
         \textit{Substituting from eqn. \ref{eqn:edef}}\\
         &= \mathbf{e^x}
@@ -295,21 +295,21 @@ Extending this further for e;
 
 From eqn. \ref{eqn:expderiv}:
 
-$$\frac{d}{dx}a^x = a^x \lim_{h\to 0} \frac{a^h-1}{h} = f'(0) a^x$$
+$$\frac{\text{d}}{\text{d}x}a^x = a^x \lim_{h\to 0} \frac{a^h-1}{h} = f'(0) a^x$$
 
 We can rewrite using the rules of logs:
 
-$$\frac{d}{dx}a^x = \frac{d}{dx}\textcolor{red}{ e^{\ln a^x} } = \frac{d}{dx} e^{x\ln a}$$
+$$\frac{\text{d}}{\text{d}x}a^x = \frac{\text{d}}{\text{d}x}\textcolor{red}{ e^{\ln a^x} } = \frac{\text{d}}{\text{d}x} e^{x\ln a}$$
 
 We can let $u = x \ln a$, and thus $a^x = e^u$. We can then use implicit differentiation as follows:
 
 \begin{equation}\label{exp:derivativeexpa}
     \begin{split}
-        \frac{d}{dx} a^x &= \frac{d}{dx} e^u\\
-        &=\frac{du}{dx} \frac{d}{du} [e^u]\\
+        \frac{\text{d}}{\text{d}x} a^x &= \frac{\text{d}}{\text{d}x} e^u\\
+        &=\frac{\text{d}u}{\text{d}x} \frac{\text{d}}{\text{d}u} [e^u]\\
         \textit{From eqn. \ref{exp:fullexpderiv}}\\
-        &=e^u \frac{du}{dx}\\
-        &= e^u \frac{d \textcolor{red}{(x \ln a)}}{dx}
+        &=e^u \frac{\text{d}u}{\text{d}x}\\
+        &= e^u \frac{\text{d} \textcolor{red}{(x \ln a)}}{\text{d}x}
         \textit{Differentiating in terms of x}\\
         &= e^u \ln a\\
         &= e^{\ln a^x} \ln a\\
@@ -317,7 +317,7 @@ We can let $u = x \ln a$, and thus $a^x = e^u$. We can then use implicit differe
     \end{split}
 \end{equation}
 
-Thus, $\frac{d}{dx} a^x = a^x \ln a$.
+Thus, $\frac{\text{d}}{\text{d}x} a^x = a^x \ln a$.
 
 \subsection{Logarithmic Functions}
 
@@ -325,24 +325,24 @@ Let $f(x) = y = \log_a{x}$, so $x = a^y$. To find the derivative of $f(x)$:
 
 \begin{equation}
     \begin{split}
-        \frac{d}{dx} x &= \frac{d}{dx} a^y\\
-        1 &= [\frac{d}{dy} a^y] \frac{dy}{dx}\\
+        \frac{\text{d}}{\text{d}x} x &= \frac{\text{d}}{\text{d}x} a^y\\
+        1 &= [\frac{\text{d}}{\text{d}y} a^y] \frac{\text{d}y}{\text{d}x}\\
         \textit{Using eqn. \ref{exp:derivativeexpa}}:\\
-        1 &= a^y \ln a \frac{dy}{dx}\\
-        \frac{1}{a^y \ln a} &= \frac{dy}{dx}\\
+        1 &= a^y \ln a \frac{\text{d}y}{\text{d}x}\\
+        \frac{1}{a^y \ln a} &= \frac{\text{d}y}{\text{d}x}\\
         \textit{Subbing in for $y$}:\\
-        \frac{1}{a^{\textcolor{red}{log_a{x}}} \ln a} &= \frac{d}{dx} \textcolor{red}{log_a{x}}\\
-        \frac{1}{x \ln a} &= \frac{d}{dx} \log_a{x}
+        \frac{1}{a^{\textcolor{red}{log_a{x}}} \ln a} &= \frac{\text{d}}{\text{d}x} \textcolor{red}{log_a{x}}\\
+        \frac{1}{x \ln a} &= \frac{\text{d}}{\text{d}x} \log_a{x}
     \end{split}
 \end{equation}
 
-Therefore, $f'(x) = \frac{d}{dx} log_a{x} = \frac{1}{x \ln a}$.
+Therefore, $f'(x) = \frac{\text{d}}{\text{d}x} log_a{x} = \frac{1}{x \ln a}$.
 
 When $a = e$:
 
 \begin{equation}
     \begin{split}
-        \frac{d}{dx} log_e{x} &= \frac{d}{dx} \ln x\\
+        \frac{\text{d}}{\text{d}x} log_e{x} &= \frac{\text{d}}{\text{d}x} \ln x\\
         &= \frac{1}{x \ln e} \\
         &= \frac{1}{x}
     \end{split}
@@ -407,12 +407,12 @@ Solving for $L(x)$:
 
 This function is a fairly good approximation of $f(x)$ near $x=a$, at least for most continuous functions. It's also very important to note that, by definition $f(a) = L(a)$, AND $f'(a) = L'(a)$. This will be expanded upon later.
 
-For example; take $f(x) = sin(x)$, @ $a=0$:
+For example; take $f(x) = \sin(x)$, @ $a=0$:
 
 \begin{equation}
     \begin{split}
         f(x) \approx L(x) &= f(\textcolor{red}{0}) + (x-\textcolor{red}{0})f'(0)\\
-        &= f(0) + x*cos(0)\\
+        &= f(0) + x\cos(0)\\
         &= 0 + x*1\\
         &= x = L(x)
     \end{split}
@@ -421,7 +421,7 @@ For example; take $f(x) = sin(x)$, @ $a=0$:
 \begin{figure}
     \centering
     \includegraphics[width=9cm]{misc/linearizationofsinx.png}
-    \caption{Linearization of $sin(x)$ at $x=0$}
+    \caption{Linearization of $\sin(x)$ at $x=0$}
 \end{figure}
 
 Clearly, in the vicinity of $a$, this is a pretty good approximation, but it quickly becomes inaccurate as we move away.
@@ -492,7 +492,7 @@ Using Taylor Polynomials, we can explore a number of interesting properties of f
     \end{split}
 \end{equation}
 
-This may look like it just made things more complicated. However, take a look at the Taylor Polynomial representations of $sin(x)$:
+This may look like it just made things more complicated. However, take a look at the Taylor Polynomial representations of $\sin(x)$:
 
 \begin{equation}
     \begin{split}
@@ -578,10 +578,10 @@ As with all functions, we can define the inverse of the basic trig functions, as
     \begin{equation}
     \begin{split}
         x &= \sin y \\
-        \frac{d}{dx}x &= \frac{d}{dx} \sin y\\
-        1 &= \frac{d}{dy}[\sin y]\frac{dy}{dx}\\
-        1 &= \cos y \frac{dy}{dx}\\
-        \frac{dy}{dx} &= \frac{1}{\cos y}\\
+        \frac{\text{d}}{\text{d}x}x &= \frac{\text{d}}{\text{d}x} \sin y\\
+        1 &= \frac{\text{d}}{\text{d}y}[\sin y]\frac{\text{d}y}{\text{d}x}\\
+        1 &= \cos y \frac{\text{d}y}{\text{d}x}\\
+        \frac{\text{d}y}{\text{d}x} &= \frac{1}{\cos y}\\
         &= \frac{1}{\sqrt{1-\sin^2(y)}} = \frac{1}{\sqrt{1-x^2}}\\
     \end{split}        
 \end{equation}
@@ -590,10 +590,10 @@ As with all functions, we can define the inverse of the basic trig functions, as
     \begin{equation}
         \begin{split}
             x &= \cos y\\
-            \frac{d}{dx} x &= \frac{d}{dx} \cos y\\
-            1 &= \frac{d}{dy}[\cos y] \frac{dy}{dx}\\
-            1 &= -\sin y \frac{dy}{dx}\\
-            \frac{dy}{dx} &= -\frac{1}{\sin y}\\
+            \frac{\text{d}}{\text{d}x} x &= \frac{\text{d}}{\text{d}x} \cos y\\
+            1 &= \frac{\text{d}}{\text{d}y}[\cos y] \frac{\text{d}y}{\text{d}x}\\
+            1 &= -\sin y \frac{\text{d}y}{\text{d}x}\\
+            \frac{\text{d}y}{\text{d}x} &= -\frac{1}{\sin y}\\
             &= -\frac{1}{\sqrt{1-\cos^2(y)}} = -\frac{1}{\sqrt{1-x^2}}
         \end{split}
     \end{equation}
@@ -656,7 +656,7 @@ $$\tanh x = \frac{\sinh x}{\cosh x} = \frac{\frac{e^x-e^{-x}}{2}}{\frac{e^x+e^{-
 and its derivative:
 
 
-$$\ddx \tanh x = \ddx [\frac{\sinh x}{\cosh x}] = \frac{\sinh x \sinh x - \cosh x \cosh x}{\cosh^2} = \frac{\sinh^2 x - \cosh^2 x}{\cosh^2 x} = \frac{1}{\cosh^2 x} = sech^2 x.$$
+$$\ddx \tanh x = \ddx [\frac{\sinh x}{\cosh x}] = \frac{\sinh x \sinh x - \cosh x \cosh x}{\cosh^2} = \frac{\sinh^2 x - \cosh^2 x}{\cosh^2 x} = \frac{1}{\cosh^2 x} = \sech^2 x.$$
 
 \subsubsection{Inverse Hyperbolic Functions and their Derivatives}
 
@@ -680,8 +680,8 @@ $$\ddx \tanh x = \ddx [\frac{\sinh x}{\cosh x}] = \frac{\sinh x \sinh x - \cosh 
         y = \tanh^{-1}(x) \Rightarrow x &= \tanh(y)\\
         \ddx x &= \ddx \tanh(y)\\
         1 &= \ddy \tanh(y) \dydx\\
-        1 &= sech^2(y) \dydx\\
-        \dydx &= \frac{1}{sech^2(y)} = \frac{1}{1-\tanh^2(y)} = \frac{1}{1-x^2}
+        1 &= \sech^2(y) \dydx\\
+        \dydx &= \frac{1}{\sech^2(y)} = \frac{1}{1-\tanh^2(y)} = \frac{1}{1-x^2}
     \end{split}
 \end{equation}
 
@@ -818,7 +818,7 @@ We can use some of the identities above to find a formula to find the real AND c
 \begin{equation}
     \begin{split}
         z &= r e^{i \theta} = re^{i(\theta +2k\pi)}, k \in \integers \ge 0\\
-        z^{\frac{1}{n}} &= z^{\frac{1}{n}}e^{\frac{i (\theta + 2k\pi}{n}}, k = 0,1,..(n-1)\\
+        z^{\frac{1}{n}} &= z^{\frac{1}{n}}e^{\frac{i (\theta + 2k\pi)}{n}}, k = 0,1,\dots,(n-1)\\
     \end{split}
 \end{equation}
 
@@ -1030,10 +1030,10 @@ Oftentimes, "relative change" is also asked for. This is simple $\frac{dx}{x}$.
 \begin{equation}
     \begin{split}
         A &= \pi r^2 = f(r)\\
-        \Delta A &\approx dA = f'(r) dr\\
+        \Delta A &\approx \text{d}A = f'(r) dr\\
         &= 2\pi r dr\\
         &= 2\pi(24)(0.2) = 9.6 \pi \approx 30.16\\
-        &\textit{rel. error:} \frac{\Delta A}{A} \approx \frac{dA}{A} = \frac{1}{60}
+        &\textit{rel. error:} \frac{\Delta A}{A} \approx \frac{\text{d}A}{A} = \frac{1}{60}
     \end{split}
 \end{equation}
 \subsection{Newton's Method}
@@ -1130,18 +1130,18 @@ Using calculus (and other properties of functions), we can sketch curves with fa
 
 For a function $f(x)$, we can say that:
 
-$$\int f(x) dx = F(x) + k$$,
+$$\int f(x) \,\text{d}x = F(x) + k$$,
 
 where $\ddx [F(x)+k] = f(x)$, and $k$ is a constant.
 
-For example: $\int x^2 dx = \frac{x^3}{3} + k$.
+For example: $\int x^2 \,\text{d}x = \frac{x^3}{3} + k$.
 
-You can (and should) think of $\int  dx$ and $\ddx$ as \textit{inverse operators} of one another, hence the term "antiderivative". As such, numerous derivative rules have corresponding rules for integrals, which are discussed later. Also note that this type of integration is called \textit{indefinite} because it defines the integral of a function over an \textit{indefinite range}, ie, for all $x$. \textit{Definite integrals} will be discussed later and have their own very particular applications, and define an integral $\int_m^n$ over a range $[m,n]$.
+You can (and should) think of $\int \, \text{d}x$ and $\ddx$ as \textit{inverse operators} of one another, hence the term "antiderivative". As such, numerous derivative rules have corresponding rules for integrals, which are discussed later. Also note that this type of integration is called \textit{indefinite} because it defines the integral of a function over an \textit{indefinite range}, ie, for all $x$. \textit{Definite integrals} will be discussed later and have their own very particular applications, and define an integral $\int_m^n$ over a range $[m,n]$.
 
 \subsection{Techniques of Integration}
 \subsubsection{Known Formulas of Derivatives}
 
-eg) $\int \frac{1}{1+x^2} dx = \arctan x + c$
+eg) $\int \frac{1}{1+x^2} \,\text{d}x = \arctan x + c$
 
 "Simply" recognize that the integral to solve for is the derivative of a common function. Most other techniques of integration involve simplifying/modifying a given integral into this type of easy-to-solve form.
 
@@ -1149,15 +1149,15 @@ eg) $\int \frac{1}{1+x^2} dx = \arctan x + c$
 
 For many integrals, we can substitute part of a complex expression for a single variable (typically $u$; this technique is often shorthanded "$u$-sub"), and, following some manipulation, find an integral much more easily. The best way to understand this method is through an example:
 
-$$\int \sqrt{x^3+2}x^2 dx$$
+$$\int \sqrt{x^3+2}x^2 \,\text{d}x$$
 
 We can let $u = x^3+2$, and differentiating $u$ in terms of $x$, we get
 
 \begin{equation}
 \begin{split}
-    \frac{du}{dx} &= 3x^2\\
-    du &= 3x^2 dx\\
-    x^2 dx = \frac{du}{3}\\
+    \frac{\text{d}u}{\text{d}x} &= 3x^2\\
+    du &= 3x^2 \text{d}x\\
+    x^2 \text{d}x = \frac{\text{d}u}{3}\\
     \end{split}
 \end{equation}
 
@@ -1165,7 +1165,7 @@ From here, we can substitute our expressions back into the original integral, an
 
 \begin{equation}
     \begin{split}
-    \int \sqrt{x^3+2}x^2 dx &= \int u^\frac{1}{2} \frac{du}{3}\\
+    \int x^2\sqrt{x^3+2} \,\text{d}x &= \int u^\frac{1}{2} \frac{\text{d}u}{3}\\
     &= \frac{1}{3} \frac{u^{\frac{3}{2}}}{\frac{3}{2}} + k\\
     &= \frac{2(x^3+2)^{\frac{3}{2}}}{9} + k\\
     \end{split}
@@ -1179,11 +1179,11 @@ Given two functions $u$ and $v$, we can write:
 
 \begin{equation}
 \begin{split}
-    \frac{d}{dx}[uv] &= \frac{du}{dx} v + u \frac{dv}{dx}\\
-    \int (\frac{d}{dx}[uv] &= \frac{du}{dx} v + u \frac{dv}{dx})dx\\
-    \int \frac{d}{dx} [uv] dx &= \int [v \frac{du}{dx}] dx + \int [u \frac{dv}{dx}] dx\\
-    uv &= \int v du + \int u dv\\
-    \int u dv &= uv - \int v du\\
+    \frac{\text{d}}{\text{d}x}(uv) &= \frac{\text{d}u}{\text{d}x} v + u \frac{\text{d}v}{\text{d}x}\\
+    \int (\frac{\text{d}}{\text{d}x}(uv) &= \frac{\text{d}u}{\text{d}x} v + u \frac{\text{d}v}{\text{d}x})\text{d}x\\
+    \int \frac{\text{d}}{\text{d}x} (uv) \,\text{d}x &= \int \left[v \frac{\text{d}u}{\text{d}x}\right] \,\text{d}x + \int \left[u \frac{\text{d}v}{\text{d}x}\right] \,\text{d}x\\
+    uv &= \int v \text{d}u + \int u \,\text{d}v\\
+    \int u \text{d}v &= uv - \int v \,\text{d}u\\
 \end{split}
 \end{equation}
 
@@ -1191,10 +1191,10 @@ For example, to calculate the integral of $x e^{ax}$:
 
 \begin{equation}
     \begin{split}
-        \int x e^{ax} dx&\\
-        x &= u, du = dx\\
-    e^{ax} dx &= dv, v = \frac{e^{ax}}{a}\\
-    &\int x e^{ax} dx = x \frac{e^{ax}}{a} - \int \frac{e^{ax}}{a} dx\\
+        \int x e^{ax} \,\text{d}x&\\
+        x &= u, \text{d}u = \text{d}x\\
+    e^{ax} \text{d}x &= \text{d}v, v = \frac{e^{ax}}{a}\\
+    &\int x e^{ax} \,\text{d}x = x \frac{e^{ax}}{a} - \int \frac{e^{ax}}{a}\, \text{d}x\\
     &= \frac{xe^{ax}}{a} - \frac{e^{ax}}{a^2}+C\\
     \end{split}
 \end{equation}
@@ -1205,8 +1205,8 @@ Another integral that is commonly computed using integration by parts is as foll
 
 \begin{equation}
     \begin{split}
-        \int \ln x dx&\\
-        &= x \ln x - \int x \frac{dx}{x}\\
+        \int \ln x \,\text{d}x&\\
+        &= x \ln x - \int x \frac{\text{d}x}{x}\\
         &= x \ln x - x + C
     \end{split}
 \end{equation}
@@ -1218,14 +1218,14 @@ Finding the integral of a combination of trigonometric functions is largely a qu
 While a lot of this becomes intuitive over time, some general guidelines are as follows:
 
 \begin{itemize}
-    \item $\int \sin^m(x)\cos^n(x) dx$
+    \item $\int \sin^m(x)\cos^n(x) \,\text{d}x$
     
     If \textbf{$n$ is odd ($n=2k+1$)}, rewrite all $\cos$, except one, with $\cos^2(x)=1-\sin^2(x)$.
         
         \begin{equation}
             \begin{split}
-                \int \sin^{m}(x) \cos^{2k+1}(x) dx &= \int \sin^m(x)(\cos^2x)^k\cos(x) dx\\
-                &= \int \sin^m(x)(1-\sin^2(x))^k\cos(x) dx
+                \int \sin^{m}(x) \cos^{2k+1}(x) \,\text{d}x &= \int \sin^m(x)(\cos^2x)^k\cos(x) \,\text{d}x\\
+                &= \int \sin^m(x)(1-\sin^2(x))^k\cos(x) \,\text{d}x
             \end{split}
         \end{equation}
         
@@ -1235,8 +1235,8 @@ While a lot of this becomes intuitive over time, some general guidelines are as 
         
         \begin{equation}
             \begin{split}
-                \int \sin^{2k+1}(x) \cos^{n}(x) dx &= \int (\sin^2(x))^k \cos^n(x) \sin(x) dx\\
-                &= \int (1-\cos^2x)^k\cos^n(x)\sin^n(x) dx
+                \int \sin^{2k+1}(x) \cos^{n}(x) \,\text{d}x &= \int (\sin^2(x))^k \cos^n(x) \sin(x) \,\text{d}x\\
+                &= \int (1-\cos^2x)^k\cos^n(x)\sin^n(x)\, \text{d}x
             \end{split}
         \end{equation}
         
@@ -1244,7 +1244,7 @@ While a lot of this becomes intuitive over time, some general guidelines are as 
 
         \textbf{If both $m$ and $n$ are even}, you can use the half-angle theorems.
         
-    \item $\int \tan^m(x)\sec^n(x) dx$
+    \item $\int \tan^m(x)\sec^n(x) \,\text{d}x$
     
     Very similar to the strategy for $\sin$ and $\cos$: if $n$ is even, substitute $\sec^2(x) = 1+\tan^2(x)$ for all $\sec$ except one, and the opposite for $\tan^2(x)$ if $m$ is even.
 \end{itemize}
@@ -1256,7 +1256,7 @@ Using a strategy similar to "u-substitution", we can carefully replace variables
 In general, we can say:
 
 $$
-\int f(x) dx = \int f(g(t)) g'(t) dt
+\int f(x) \,\text{d}x = \int f(g(t)) g'(t) \,\text{d}t
 $$
 
 There are three main forms to look out for in integrals that can be used to effectively substitute trigonometric functions. Notice that, in each case, a form similar to a common trigonometric identity is present.
@@ -1269,15 +1269,15 @@ There are three main forms to look out for in integrals that can be used to effe
     \item $\sqrt{x^2-a^2} \Rightarrow x = a \sec \theta$
 \end{itemize}
 
-Using this strategy makes a lot more sense when used in an example; say $\int \frac{\sqrt{9-x^2}}{x^2} dx$. This is of the first form listed above, so we can substitute $x=3\sin \theta$, meaning $dx = 3\cos\theta d\theta$. Assume $-\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2}$
+Using this strategy makes a lot more sense when used in an example; say $\int \frac{\sqrt{9-x^2}}{x^2} \,\text{d}x$. This is of the first form listed above, so we can substitute $x=3\sin \theta$, meaning $dx = 3\cos\theta d\theta$. Assume $-\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2}$
 
 \begin{equation}
     \begin{split}
-        \int \frac{\sqrt{9-x^2}}{x^2}dx &= \int \frac{\sqrt{9-9\sin^2(\theta)}}{9\sin^2(\theta)}3\cos(\theta)d\theta\\
-        &= \int \frac{\sqrt{9\cos^2(\theta)}}{9\sin^2(\theta)}3\cos(\theta)d\theta\\
-        &= \int \frac{3\cos(\theta)}{9\sin^2(\theta)}3\cos(\theta)d\theta\\
-        &= \int \frac{\cos^2)(\theta)}{\sin^2(\theta)}d\theta = \int \cot^2(\theta) d\theta\\
-        &= \int (\csc^2(\theta)-1)d\theta = -\cot(\theta) -\theta + C
+        \int \frac{\sqrt{9-x^2}}{x^2}\,\text{d}x &= \int \frac{\sqrt{9-9\sin^2(\theta)}}{9\sin^2(\theta)}3\cos(\theta)\,\text{d}\theta\\
+        &= \int \frac{\sqrt{9\cos^2(\theta)}}{9\sin^2(\theta)}3\cos(\theta)\,\text{d}\theta\\
+        &= \int \frac{3\cos(\theta)}{9\sin^2(\theta)}3\cos(\theta)\,\text{d}\theta\\
+        &= \int \frac{\cos^2)(\theta)}{\sin^2(\theta)}\,\text{d}\theta = \int \cot^2(\theta)\,\text{d}\theta\\
+        &= \int (\csc^2(\theta)-1)\,\text{d}\theta = -\cot(\theta) -\theta + C
     \end{split}
 \end{equation}
 
@@ -1286,17 +1286,17 @@ From here, the integral can be rewritten in terms of $x$ using some trig rules (
 $$-\cot(\theta)-\theta + C = -\frac{\sqrt{9-x^2}}{x}-\sin^{-1}(\frac{x}{3})+C$$
 \subsection{The Fundamental Theorem of Calculus}
 
-Consider a function $f(x)$ that is continuous and non-negative over $a \leq x \leq b$. We can divided $(a,b)$ into subintervals of width $\Delta x = \frac{b-a}{N}$, and consider rectangles of area $f(x^{*}_i) \Delta x$, where $x^{*}_i$ is the midpoint of the $i$th subinterval. The area  of all of these integrals can be written \[\sum_{i = 1}^N f(x^{*}_i) \Delta x.\] Taking the limit of this sum ($\lim_{N \to \infty}$) represents subdividing $(a,b)$ into infinitely many subintervals (and more accurately approximating the area under the curve). If this limit converges, we say \[\lim_{N \to \infty} \sum_{i = 1}^N f(x^{*}_i) \Delta x = \int_a^b f(x) dx.\] Specifically, $f(x)$ must be \textit{piecewise} continuous over $(a,b)$; it can have (finite) jump discontinuities (over a finite interval), but does not have to be continuous nor differentiable. 
+Consider a function $f(x)$ that is continuous and non-negative over $a \leq x \leq b$. We can divided $(a,b)$ into subintervals of width $\Delta x = \frac{b-a}{N}$, and consider rectangles of area $f(x^{*}_i) \Delta x$, where $x^{*}_i$ is the midpoint of the $i$th subinterval. The area  of all of these integrals can be written \[\sum_{i = 1}^N f(x^{*}_i) \Delta x.\] Taking the limit of this sum ($\lim_{N \to \infty}$) represents subdividing $(a,b)$ into infinitely many subintervals (and more accurately approximating the area under the curve). If this limit converges, we say \[\lim_{N \to \infty} \sum_{i = 1}^N f(x^{*}_i) \Delta x = \int_a^b f(x)\, \text{d}x.\] Specifically, $f(x)$ must be \textit{piecewise} continuous over $(a,b)$; it can have (finite) jump discontinuities (over a finite interval), but does not have to be continuous nor differentiable. 
 
-Consider the integral \[\int_a^x f(t) dt = g(x).\] We can say that, for some small $h$, $g(x + h) - g(x) \approx f(x^*) h$, where $x^*$ is the midpoint of $(x, x+h)$. Thus, $f(x^*) \approx \frac{g(x+h) - g(x)}{h}$. Approaching $h$ to 0, we have \[\lim_{h \to 0} f(x^*) = \lim_{h \to 0} \left[\frac{g(x+h) - g(x)}{h}\right] = g'(x).\] Thus, \[\frac{d}{dx} \int_a^x f(t) dt = f(x).\]
+Consider the integral \[\int_a^x f(t) \,\text{d}t = g(x).\] We can say that, for some small $h$, $g(x + h) - g(x) \approx f(x^*) h$, where $x^*$ is the midpoint of $(x, x+h)$. Thus, $f(x^*) \approx \frac{g(x+h) - g(x)}{h}$. Approaching $h$ to 0, we have \[\lim_{h \to 0} f(x^*) = \lim_{h \to 0} \left[\frac{g(x+h) - g(x)}{h}\right] = g'(x).\] Thus, \[\frac{\text{d}}{\text{d}x} \int_a^x f(t) \,\text{d}t = f(x).\]
 \subsection{Applications of Integrals}
 \subsubsection{Area Under a Curve}
 
-In short, the area under $f(x)$ from $a$ to $b$ is \[\int_a^b f(x) dx,\] assuming $f(x)$ is piecewise continuous over $(a,b)$.
+In short, the area under $f(x)$ from $a$ to $b$ is \[\int_a^b f(x) \,\text{d}x,\] assuming $f(x)$ is piecewise continuous over $(a,b)$.
 
 \subsubsection{Area Between Curves}
 
-The area between two curves $f(x)$ and $g(x)$ from $a$ to $b$ is \[\int_a^b f(x) dx - \int_a^b g(x) dx = \int_a^b f(x) - g(x) dx,\] assuming $f(x) \geq g(x)$ over $(a,b)$ (among the other conditions from FTC). If, on the other hand, $f$ is less than $g$ at some point in $(a,b)$, we must do the opposite subtraction in this range. Say that $f > g$ on $(a,c)$, and $f < g$ on $(c,b)$, we can then write the are between the two curves as \[\int_a^c f(x) - g(x) dx + \int_c^b g(x) - f(x) dx.\] This can be rewritten any number of ways using properties of integrals (eg, $\int_a^b f(x) dx = \int_b^a f(x) dx$). It can also be generalized to any number of "switches" in the inequality.
+The area between two curves $f(x)$ and $g(x)$ from $a$ to $b$ is \[\int_a^b f(x) \,\text{d}x - \int_a^b g(x) \,\text{d}x = \int_a^b f(x) - g(x)\,\text{d}x,\] assuming $f(x) \geq g(x)$ over $(a,b)$ (among the other conditions from FTC). If, on the other hand, $f$ is less than $g$ at some point in $(a,b)$, we must do the opposite subtraction in this range. Say that $f > g$ on $(a,c)$, and $f < g$ on $(c,b)$, we can then write the are between the two curves as \[\int_a^c f(x) - g(x) \,\text{d}x + \int_c^b g(x) - f(x) \,\text{d}x.\] This can be rewritten any number of ways using properties of integrals (eg, $\int_a^b f(x)\,\text{d}x = \int_b^a f(x) \,\text{d}x$). It can also be generalized to any number of "switches" in the inequality.
 
 \subsubsection{Curve Length}
 
@@ -1313,22 +1313,26 @@ Take a curve $f(x)$ on the interval $(a,b)$, and two points $P_i = (x_i, f(x_i))
 \end{align*}
 
 Where $\Delta x = x_i - x_{i-1}$; notice that $f'(x^*)$ is simply the slope of the secant line, and $x^*$ is the value of $x$ in the interval $(x_i, x_{i-1})$ with the same slope of the secant (which must exist by Mean Value Theorem). Substituting this into the original limit; \begin{align*}L &= \lim_{N \to \infty} \sum_{i =1}^N \sqrt{1 + (f'(x^*))^2} \,\Delta x\\
-    &= \int_{a}^{b} \sqrt{1 + (f'(x))^2} \,dx
+    &= \int_{a}^{b} \sqrt{1 + (f'(x))^2} \,\text{d}x
 \end{align*}
 
-To try to understand this more intuitively and in terms of differentials, consider the length of the curve at a particular, infinitesimally small range to be $ds$, ie, the "instantaneous change in length". At this small scale, it can be considered to be the hypotenuse of a right triangle made up of sides $dx$ and $dy$, the changes in $x$ and $y$ respectively. Thus, we can say $ds^2 = dx^2 + dy^2 \implies ds = \sqrt{dx^2 + dy^2} = \sqrt{1 + \frac{(dy)^2}{(dx)^2}}\,dx$. Summating this over an entire interval yields the same integral as above.
+To try to understand this more intuitively and in terms of differentials, consider the length of the curve at a particular, infinitesimally small range to be $\text{d}s$, ie, the "instantaneous change in length". At this small scale, it can be considered to be the hypotenuse of a right triangle made up of sides $\text{d}x$ and $\text{d}y$, the changes in $x$ and $y$ respectively. Thus, we can say $\text{d}s^2 = \text{d}x^2 + \text{d}y^2 \implies \text{d}s = \sqrt{\text{d}x^2 + \text{d}y^2} = \sqrt{1 + \frac{(\text{d}y)^2}{(\text{d}x)^2}}\,\text{d}x$. Summating this over an entire interval yields the same integral as above.
 
 \subsubsection{Volume of Revolution}
 % TODO add a graph
-Consider a function $f(x)$, which is rotated about the $x$-axis to form a solid. We can subdivide this solid into disks of area $A = \pi r^2 = \pi f(x_i)^2$. The width of each particular disk is a small interval $\Delta x = x_i - x_{i - 1}$, and we can thus estimate the volume of the entire solid (between two points $a$, $b$) as \[V \approx \lim_{N \to \infty} \sum_{i = 1}^{N} \pi (f(x_i))^2 \Delta x = \int_a^b \pi (f(x))^2 \,dx\]
+Consider a function $f(x)$, which is rotated about the $x$-axis to form a solid. We can subdivide this solid into disks of area $A = \pi r^2 = \pi f(x_i)^2$. The width of each particular disk is a small interval $\Delta x = x_i - x_{i - 1}$, and we can thus estimate the volume of the entire solid (between two points $a$, $b$) as \[V \approx \lim_{N \to \infty} \sum_{i = 1}^{N} \pi (f(x_i))^2 \Delta x = \int_a^b \pi (f(x))^2 \,\text{d}x\]
 
 \subsubsection{Surface Area of Revolution}
 % TODO add a graph
 Consider a function $f(x)$ rotated about the $x$-axis to form a solid. Subdividing this solid into disks, the surface area of each disk is $2 \pi r h = 2\pi f(x_i) \Delta s$, where $\Delta s$ is the change in the length of the curve between $x_i$ and $x_{i-1}$. Using the definitions of curve length from earlier, we can write \begin{align*}
     SA &= \lim_{N \to \infty} \sum_{i =1}^N 2 \pi f(x_i) \Delta s \\
-    &= \int_a^b 2 \pi f(x_i) \,ds \\
-    &= 2 \pi \int_a^b f(x_i) \sqrt{1 + (\frac{dy}{dx})^2} \,dx\\
+    &= \int_a^b 2 \pi f(x_i) \,\text{d}s \\
+    &= 2 \pi \int_a^b f(x_i) \sqrt{1 + (\frac{\text{d}y}{\text{d}x})^2} \,\text{d}x\\
 \end{align*}
+
+\subsubsection{Gamma Function}
+
+The \textbf{Gamma Function} is defined \[\Gamma(n) = \int_0^\infty e^{-x} x^{n-1} \,\text{d}x,\] and is a generalization of the factorial operator, i.e., $\Gamma(n + 1) = n\Gamma(n)$. The Gamma function appears in many contexts (such as statistics), but one "helpful" (situationally) use case is the fact \[\int_0^{\pi/2} \sin^{2m-1}\theta\cos^{2n-1}\theta \,\text{d}\theta = \frac{\Gamma(n)\Gamma(m)}{2\Gamma(n+m)}; m,n > 0,\] which is fairly straightforward to prove by writing the gamma function in polar coordinates.
 
 \section{Differential Equations}
 \subsection{Definitions}
@@ -1348,21 +1352,21 @@ This is the form of a function of $x$ times a function of $y$, indicating the pa
 \begin{equation}
     \begin{split}
         \dydx &= f(x)g(y)\\
-        dy &= [\frac{dy}{dx}]dx = f(x)g(y)dx\\
-        \int \frac{dy}{g(y)} &= \int \frac{dx}{f(x)}
+        dy &= [\dydx] \text{d}x = f(x)g(y)\text{d}x\\
+        \int \frac{\text{d}y}{g(y)} &= \int \frac{\text{d}x}{f(x)}
     \end{split}
 \end{equation}
 
 From here, integrating both sides yields either $y$ as a function of $x$, or $x$ as a function of $y$ (which one you solve for depends on the context of the question).
 
-For example, take: $\frac{dy}{dx} = x^2 y - y + x^2 -1$. This can be rewritten as a separable equation:
+For example, take: $\frac{\text{d}y}{\text{d}x} = x^2 y - y + x^2 -1$. This can be rewritten as a separable equation:
 
 \begin{equation}
     \begin{split}
-        \frac{dy}{dx} &= x^2y-y+x^2-1\\
+        \frac{\text{d}y}{\text{d}x} &= x^2y-y+x^2-1\\
         &= y(x^2-1)+1(x^2-1)\\
         &= (y+1)(x^2-1)\\
-        \int \frac{dy}{y+1} &= \int (x^2-1)dx\\
+        \int \frac{\text{d}y}{y+1} &= \int (x^2-1)\,\text{d}x\\
         \ln(|y+1|) &= \frac{x^3}{3} - x + k\\
         y + 1 &= \pm e^{(\frac{x^3}{3}-x+k)} = \pm e^{(\frac{x^3}{3}-x)}e^k\\
         y &= Ce^{(\frac{x^3}{3}-x)}-1, C = \pm e^k
@@ -1388,14 +1392,14 @@ In this example, say $y(0) = 3$. We can write:
 Several real-world scenarios can be represented using differential equations, and the following are some of the more common/useful forms, as well as their general solutions and applications.
 
 \begin{itemize}
-    \item[\textbf{I:}] $\alpha y = \frac{dy}{dt}, \alpha \in \real$ 
+    \item[\textbf{I:}] $\alpha y = \frac{\text{d}y}{\text{d}t}, \alpha \in \real$ 
     
     When solved for a function $y$ of $t$, this differential equation becomes a (hopefully) familiar form;
     
     \begin{equation}
         \begin{split}
-            \frac{dy}{dt} &= \alpha y\\
-            \int \frac{dy}{y} &= \int \alpha dt\\
+            \frac{\text{d}y}{\text{d}t} &= \alpha y\\
+            \int \frac{\text{d}y}{y} &= \int \alpha \text{d}t\\
             \ln|y|&=\alpha t + C\\
             y &= \pm e^{(\alpha t + C)} = \pm e^C e^{\alpha t} = k e^{\alpha t}, k = \pm e^C\\
         \end{split}
@@ -1417,22 +1421,22 @@ Several real-world scenarios can be represented using differential equations, an
         \label{fig:exponentialgrowthndecay}%
     \end{figure}
     
-    \item[\textbf{II:}] $\frac{dy}{dt} = k(N-y)$ 
+    \item[\textbf{II:}] $\frac{\text{d}y}{\text{d}t} = k(N-y)$ 
     
     This general form of the equation is used in a number of scenarios, such as Newton's Law of cooling/heating and modeling deprecation. Solving this differential for $y$ as a function of $t$ goes as follows:
     
     \begin{equation}
         \begin{split}
-            \frac{dy}{dt} &= k(N-y)\\
-            \frac{dy}{N-y} &= k dt  \\
-            \int \frac{dy}{N-y} &= \int k dt\\
+            \frac{\text{d}y}{\text{d}t} &= k(N-y)\\
+            \frac{\text{d}y}{N-y} &= k \text{d}t  \\
+            \int \frac{\text{d}y}{N-y} &= \int k \text{d}t\\
             - \ln|N-y| &= kt + C\\
             N-y &= \pm e^{-C}e^{-kt} = Ke^{-kt}\\
             y &= N-Ke^{-kt}\\
         \end{split}
     \end{equation}
     
-    If we state that $y(0) = y_0$, we can rewrite this equation as $y = N+(y_0-N)e^{-kt}$. This is the same form that Newton's Law of Cooling takes: $T(t) = T_{env} + (T(0) - T_{env})e^{-rt}$.
+    If we state that $y(0) = y_0$, we can rewrite this equation as $y = N+(y_0-N)e^{-kt}$. This is the same form that Newton's Law of Cooling takes: $T(t) = T_{\text{env}} + (T(0) - T_{\text{env}})e^{-rt}$.
     
     It's important to note that $y(t)$ approaches $N$ as time approaches infinity, ie:
     
@@ -1447,16 +1451,16 @@ Several real-world scenarios can be represented using differential equations, an
         \label{fig:newtonscooling}
     \end{figure}
     
-    \item[\textbf{III:}] $\frac{dy}{dt} = \frac{k}{N}y(N-y)$
+    \item[\textbf{III:}] $\frac{\text{d}y}{\text{d}t} = \frac{k}{N}y(N-y)$
     
     This differential equation represents a general form of the \textbf{logistic equation}, commonly used in population modeling in ecology and other fields. Solving this differential equation for $y$ as a function of $x$ goes as follows:
     % this is all wrong
     \begin{equation}
         \begin{split}
-            \frac{dy}{dt} &= \frac{k}{N}y(N-y)\\
-            \frac{dy}{y(N-y)} &= \frac{k dt}{N}\\
-            \int \frac{dy}{y(N-y)} &= \int \frac{k dt}{N}\\
-            \int [\frac{\frac{1}{N}}{y} + \frac{\frac{1}{N}}{N-y}] dy &= \frac{k}{N} t + C\\
+            \frac{\text{d}y}{\text{d}t} &= \frac{k}{N}y(N-y)\\
+            \frac{\text{d}y}{y(N-y)} &= \frac{k \text{d}t}{N}\\
+            \int \frac{\text{d}y}{y(N-y)} &= \int \frac{k \text{d}t}{N}\\
+            \int [\frac{\frac{1}{N}}{y} + \frac{\frac{1}{N}}{N-y}] \,\text{d}y &= \frac{k}{N} t + C\\
             \frac{1}{N}(\ln|y| - ln|N-y|) &= \frac{k}{N} t + C\\
             \ln|\frac{y}{N-y}| &= kt + D, D = CN\\
             \frac{y}{N-y} &= Ke^{kt}, K = \pm e^D\\
@@ -1487,15 +1491,15 @@ Several real-world scenarios can be represented using differential equations, an
 
     \begin{equation}
         \begin{split}
-            \frac{dy}{dt} &= \frac{k}{N}y(N-y) = ky - \frac{ky^2}{N}\\
-            \frac{d^2y}{dt^2} &= k - \frac{2ky}{N}\\
+            \frac{\text{d}y}{\text{d}t} &= \frac{k}{N}y(N-y) = ky - \frac{ky^2}{N}\\
+            \frac{\text{d}^2y}{\text{d}t^2} &= k - \frac{2ky}{N}\\
             k - \frac{2ky}{N} &= 0\\
             y &= \frac{N}{2}\\
             f(t) &= \frac{N}{2} = \frac{N}{1+be^{-kt}}\\
             1+be^{-kt} &= 2\\
             e^{-kt} &= \frac{1}{b}\\
             t &= -\frac{1}{k}\ln(\frac{1}{b}) = \ln((\frac{1}{b})^{-\frac{1}{k}})\\
-            t &= \ln[(\frac{N-P_0}{P_0})^{\frac{1}{k}}]
+            t &= \ln\left[(\frac{N-P_0}{P_0})^{\frac{1}{k}}\right]
         \end{split}
     \end{equation}
 
@@ -1514,7 +1518,7 @@ Several real-world scenarios can be represented using differential equations, an
 
 A \textbf{first-order linear differential equation} is a differential equation of the general form:
 
-$$\frac{dy}{dx} + P(x)y = Q(x)$$,
+$$\frac{\text{d}y}{\text{d}x} + P(x)y = Q(x)$$,
 
 where $P$ and $Q$ are continuous over a particular interval. Notice that this form \textit{does not} fit the form of a separable equation (see \ref{sec:separable}), and thus is not solvable using the same method.
 
@@ -1526,18 +1530,18 @@ We can define $I(x)$ as a factor such that the left-hand side of the general equ
 
 \begin{equation}
     \begin{split}
-    I(x)(\frac{dy}{dx} + P(x)y) = (I(x)y)' &= I(x)Q(x)\\
-    \int (I(x)y)' &= \int I(x)Q(x) dx\\
-    I(x)y &=  \int I(x)Q(x) dx + C\\
-    y(x) &= \frac{1}{I(x)}[\int I(x)Q(x) dx + C]\\
+    I(x)(\frac{\text{d}y}{\text{d}x} + P(x)y) = (I(x)y)' &= I(x)Q(x)\\
+    \int (I(x)y)' &= \int I(x)Q(x)\,\text{d}x\\
+    I(x)y &=  \int I(x)Q(x) \,\text{d}x + C\\
+    y(x) &= \frac{1}{I(x)}[\int I(x)Q(x) \,\text{d}x + C]\\
     \end{split}
 \end{equation}
 
-This provides a general solvable form for the equation, but we still need to find $I(x)$ to make this useful. We can do so by rearranging $I(x)(\frac{dy}{dx} + P(x)y) = (I(x)y)'$ as follows:
+This provides a general solvable form for the equation, but we still need to find $I(x)$ to make this useful. We can do so by rearranging $I(x)(\frac{\text{d}y}{\text{d}x} + P(x)y) = (I(x)y)'$ as follows:
 
 \begin{equation}
     \begin{split}
-    I(x)(\frac{dy}{dx} + P(x)y) = I(x)(y'+P(x)y) &= (I(x)y)'\\
+    I(x)(\frac{\text{d}y}{\text{d}x} + P(x)y) = I(x)(y'+P(x)y) &= (I(x)y)'\\
     I(x)y' + I(x)P(x)y &= I'(x)y+I(x)y'\\
     I(x)P(x)y &= I'(x)y\\
     I(x)P(x) &= I'(x)\\
@@ -1548,23 +1552,23 @@ This is just a separable equation, which can be solved for $I$:
 
 \begin{equation}
     \begin{split}
-        \int \frac{dI}{I} &= \int P(x) dx\\
-        \ln |I| &= \int P(x) dx \\
-        I  &= \pm e^{\int P(x) dx + C} = Ae^{\int P(x) dx}, A=\pm e^{C}\\
+        \int \frac{\text{d}I}{I} &= \int P(x) \,\text{d}x\\
+        \ln |I| &= \int P(x) \,\text{d}x \\
+        I  &= \pm e^{\int P(x)\,\text{d}x + C} = Ae^{\int P(x)\, \text{d}x}, A=\pm e^{C}\\
     \end{split}
 \end{equation}
 
-We can typically set $A=1$ for a general $I$. Using these general steps, we can thus solve a linear first-order differential equation by multiplying it by the appropriate integrating factor $I(x) = e^{\int P(x) dx}$. For instance, to solve $x^2y'+xy=1$:
+We can typically set $A=1$ for a general $I$. Using these general steps, we can thus solve a linear first-order differential equation by multiplying it by the appropriate integrating factor $I(x) = e^{\int P(x) \,\text{d}x}$. For instance, to solve $x^2y'+xy=1$:
 
 \begin{equation}
     \begin{split}
         x^2y'+xy &= 1\\
         y' + \frac{1}{x}y &= \frac{1}{x^2}\\
-        I(x) &= e^{\int \frac{1}{x} dx} = e^{\ln x} = x\\
+        I(x) &= e^{\int \frac{1}{x} \,\text{d}x} = e^{\ln x} = x\\
         I(x)(y' + \frac{1}{x}y) &= I(x)\frac{1}{x^2}\\
         xy'+y &= \frac{1}{x}\\
         (xy)' &= \frac{1}{x}\\
-        \int (xy)' &= \int \frac{1}{x} dx\\
+        \int (xy)' &= \int \frac{1}{x} \,\text{d}x\\
         xy &= \ln x + C\\
         y &= \frac{\ln x + C}{x}\\
     \end{split}
@@ -1593,9 +1597,9 @@ If we define $P$ as the orthogonal curve's $y$-value, we can then find a general
 
 \begin{equation}
     \begin{split}
-        \frac{dP}{dx} &= m_{orth.} = \frac{by}{ax} = \frac{bP}{ax}\\
-        \frac{dP}{bP} &= \frac{dx}{ax}\\
-        \int \frac{dP}{bP} &= \int \frac{dx}{ax}\\
+        \frac{\text{d}P}{\text{d}x} &= m_{orth.} = \frac{by}{ax} = \frac{bP}{ax}\\
+        \frac{\text{d}P}{bP} &= \frac{\text{d}x}{ax}\\
+        \int \frac{\text{d}P}{bP} &= \int \frac{\text{d}x}{ax}\\
         \frac{1}{b}\ln |P| &= \frac{1}{a}\ln |x| + C\\
         \ln |P| &= \frac{b}{a}\ln|x|+C\\
         P(x) = Ke^{\ln |x^{\frac{b}{a}}|} &= Kx^{\frac{b}{a}}, K = \pm e^{C}\\
@@ -1685,15 +1689,15 @@ This definition can, naturally, be extended to higher derivatives. Just as there
 In functions of a single variable, it can be said:
 
 \[
-    dy = f'(x) dx    
+    \text{d}y = f'(x) \text{d}x    
 \]
 
 Similarly, in a function of multiple variables (say $z = f(x,y)$), we can say:
 
 \begin{equation}
     \begin{split}
-    dz &= f_x(x,y) dx + f_y(x,y) dy\\
-    &= \pd{z}{x} dx + \pd{z}{y} dy
+    \text{d}z &= f_x(x,y) \text{d}x + f_y(x,y) \text{d}y\\
+    &= \pd{z}{x} \text{d}x + \pd{z}{y} \text{d}y
     \end{split}
 \end{equation}
 
@@ -1701,7 +1705,7 @@ Similarly to how the approximate error $\Delta f$ in a function $f(x)$ can be es
 
 \begin{equation}
     \begin{split}
-     dz &= \pd{z}{x} dx + \pd{z}{y} dy\\
+     \text{d}z &= \pd{z}{x} \text{d}x + \pd{z}{y} \text{d}y\\
     \Delta z &= \pd{z}{x} \Delta x + \pd{z}{y} \Delta y   
     \end{split}
 \end{equation}
@@ -1786,7 +1790,7 @@ The chain rule for derivatives of functions of 1 variable describes the derivati
 
 \begin{equation}
     \begin{split}
-       \frac{dy}{dt} &= \frac{dy}{dx}\frac{dx}{dt}\\
+       \frac{\text{d}y}{\text{d}t} &= \frac{\text{d}y}{\text{d}x}\frac{\text{d}x}{\text{d}t}\\
         (f(g(t)))' &= f'(g(t))g'(t)
     \end{split}
 \end{equation}
@@ -1808,7 +1812,7 @@ Say $u = z = f(x,y)$, where $x = g(t)$ and $y = h(t)$. We can then write:
 
 \begin{equation}
     \begin{split}
-        \frac{dz}{dt} = \frac{\partial f}{\partial x} \frac{dx}{dt} + \frac{\partial f}{\partial y}\frac{dy}{dt}
+        \frac{\text{d}z}{\text{d}t} = \frac{\partial f}{\partial x} \frac{\text{d}x}{\text{d}t} + \frac{\partial f}{\partial y}\frac{\text{d}y}{\text{d}t}
     \end{split}
 \end{equation}
 
@@ -1878,7 +1882,7 @@ Given a function in the form $F(x,y) = 0$ where $y$ is a function $f$ of $x$ (ie
     \end{split}
 \end{equation}
 
-\textit{Note that $\frac{dx}{dx} = 1$, as we can think of $x$ as a function of $x$ (ie $x = x$).} The proof for functions of more variables is fairly similar; for a function of the form $F(x,y,z)=0$ where $z = f(x,y)$, we can find $\pd{z}{x}$:
+\textit{Note that $\frac{\text{d}x}{\text{d}x} = 1$, as we can think of $x$ as a function of $x$ (ie $x = x$).} The proof for functions of more variables is fairly similar; for a function of the form $F(x,y,z)=0$ where $z = f(x,y)$, we can find $\pd{z}{x}$:
 
 \begin{equation}
     \begin{split}
@@ -1897,7 +1901,7 @@ Consider a "simpler" function, $x^2+y^3=0$; differentiating in terms of $x$ give
 \begin{equation}
     \begin{split}
         F(x,y) = x^2 + y^3 &= 0\\
-        \frac{dy}{dx} &= -\frac{\pd{F}{x}}{\pd{F}{y}}\\
+        \frac{\text{d}y}{\text{d}x} &= -\frac{\pd{F}{x}}{\pd{F}{y}}\\
         &= -\frac{2x}{3y^2}\\
     \end{split}
 \end{equation}
@@ -2203,7 +2207,7 @@ While its not obvious in this form, this is now simply a system of two equations
 
 \subsection{Extrema with Constraints}
 
-Say we have a function $f(x,y)$ subject to some constraint $g(x,y) = 0$ that we wish to optimize. Suppose we can represent $g$ parametrically as the curve $C: x = x(t), y = y(t)$. If $P[x(t), y(t)]$ is an extrema of $f$, we can write $f(x(t), y(t)) = F(t)$ (for some function $F$). We can then write (via the chain rule): \[\frac{dF}{dt} = 0 = \frac{df}{dx} \frac{dx}{dt} + \frac{df}{dy}\frac{dy}{dt}\] This is simply a dot product, \[\nabla \vec{f} \cdot \langle \frac{dx}{dt}, \frac{dy}{dt} \rangle, \] where the second vector is the tangent vector to the curve $C$ at $P$, which we can call $\vec{T}$. As this dot product is zero, $\nabla \vec{f}$ must be perpendicular to $\vec{T}$. Now, taking the gradient of $g$ (again via the chain rule), we have \[\frac{\partial g}{\partial x} \frac{dx}{dt} + \frac{\partial g}{\partial y} \frac{dy}{dt} = 0,\] and can further say that \[\nabla \vec{g} \cdot \vec{T}= \nabla \vec{g} \cdot \vec{T} = 0 .\] Here too, (assuming $\nabla \vec{g}(P) \neq 0$), $\nabla \vec{g} \perp \vec{T}$. Since both $\vec{f}$ and $\vec{g}$ are perpendicular to $\vec{T}$, we can thus say \[\nabla \vec{f}(P) = \pm \lambda \nabla \vec{g}(P),\] where $\lambda$ is an arbitrary constant called, in the context of these problems, the \textbf{Langrangian multiplier.} In problems involving extrema with constraints, we can also define the \textbf{Lagranian}; \[L(x,y, \lambda) = f + \lambda g,\] and require that \[\nabla \vec{L} = \nabla \vec{f}  + \lambda \nabla \vec{g} = 0.\] This gives us a system of three equations for three unknowns; namely \begin{align*}
+Say we have a function $f(x,y)$ subject to some constraint $g(x,y) = 0$ that we wish to optimize. Suppose we can represent $g$ parametrically as the curve $C: x = x(t), y = y(t)$. If $P[x(t), y(t)]$ is an extrema of $f$, we can write $f(x(t), y(t)) = F(t)$ (for some function $F$). We can then write (via the chain rule): \[\frac{\text{d}F}{\text{d}t} = 0 = \frac{\text{d}f}{\text{d}x} \frac{\text{d}x}{\text{d}t} + \frac{\text{d}f}{\text{d}y}\frac{\text{d}y}{\text{d}t}\] This is simply a dot product, \[\nabla \vec{f} \cdot \langle \frac{\text{d}x}{\text{d}t}, \frac{\text{d}y}{\text{d}t} \rangle, \] where the second vector is the tangent vector to the curve $C$ at $P$, which we can call $\vec{T}$. As this dot product is zero, $\nabla \vec{f}$ must be perpendicular to $\vec{T}$. Now, taking the gradient of $g$ (again via the chain rule), we have \[\frac{\partial g}{\partial x} \frac{\text{d}x}{\text{d}t} + \frac{\partial g}{\partial y} \frac{\text{d}y}{\text{d}t} = 0,\] and can further say that \[\nabla \vec{g} \cdot \vec{T}= \nabla \vec{g} \cdot \vec{T} = 0 .\] Here too, (assuming $\nabla \vec{g}(P) \neq 0$), $\nabla \vec{g} \perp \vec{T}$. Since both $\vec{f}$ and $\vec{g}$ are perpendicular to $\vec{T}$, we can thus say \[\nabla \vec{f}(P) = \pm \lambda \nabla \vec{g}(P),\] where $\lambda$ is an arbitrary constant called, in the context of these problems, the \textbf{Langrangian multiplier.} In problems involving extrema with constraints, we can also define the \textbf{Lagranian}; \[L(x,y, \lambda) = f + \lambda g,\] and require that \[\nabla \vec{L} = \nabla \vec{f}  + \lambda \nabla \vec{g} = 0.\] This gives us a system of three equations for three unknowns; namely \begin{align*}
     L_x &= f_x + \lambda g_x = 0\\
     L_y &= f_y + \lambda g_y = 0\\
     L_{\lambda} &= g(x,y) = 0
@@ -2217,25 +2221,25 @@ In general, the actual value(s) of the Lagrangian multiplier(s) are irrelevant; 
 \subsection{Double Integrals}
 Consider an arbitrary rectangle $D$ in the $x,y$-plane, and let $f(x,y)$ be a function in $D$. Subdividing $D$ into small rectangles, we can say that the total value of $f$ in the smaller rectangle is approximately, taking $P(x^*_{ij}, y^*_{ij})$ to be a point within this rectangle, $f(P) \Delta x_i \Delta y_j$. Summating all of these rectangles yields \begin{align*}
     \lim_{m, n \to \infty, \infty}& \sum_{i = 1}^n \sum_{j=1}^m f(P) \Delta x_i \Delta y_j \\
-    &= \int_c^d \int_a^b f(x,y) \, dx \, dy
+    &= \int_c^d \int_a^b f(x,y) \, \text{d}x \, \text{d}y
 \end{align*}
 
 Where $(a,b)$ is the interval of $x$-values and $(c,d)$ is the interval of $y$-values. This is the simplest case of a double integral, where the region is rectangular and can thus be broken down into a grid of rectangles. A common subcase here is when $f(x,y) = g(x) * h(y)$; in this case, we can write \begin{align*}
-   \iint_D f(x,y) \, dA &= \int_c^d \int_a^b f(x,y) \, dx \, dy\\
-   &= \int_c^d h(y) \int_a^b g(x) \, dx \, dy\\
-   &= \int_c^d h(y) \, dy \int_a^b g(x) \, dx\\
+   \iint_D f(x,y) \, \text{d}A &= \int_c^d \int_a^b f(x,y) \, \text{d}x \, \text{d}y\\
+   &= \int_c^d h(y) \int_a^b g(x) \, \text{d}x \, \text{d}y\\
+   &= \int_c^d h(y) \, \text{d}y \int_a^b g(x) \, \text{d}x\\
 \end{align*}
 
 Another helpful case in evaluating double integrals is the following theorem.
 
 \begin{theorem}[Fubini's Theorem]
-    If an integral has a finite value, then the order of integration may be interchanged. That is, \[\int_a^b \int_c^d f(x,y) \,dx\,dy = \int_c^d \int_a^b f(x,y) \,dy \,dx.\]
+    If an integral has a finite value, then the order of integration may be interchanged. That is, \[\int_a^b \int_c^d f(x,y) \,\text{d}x\,\text{d}y = \int_c^d \int_a^b f(x,y) \,\text{d}y \,\text{d}x.\]
 \end{theorem}
 
 More complex regions are typically broken down into two types; \textbf{Type I}, where the region's $y$ values are bounded by functions of $x$, and \textbf{Type II}, where the region's $x$ values are bounded by functions of $y$. In short, these can be written as follows:
 \begin{enumerate}
-    \item \textbf{Type I}: region $D$ bounded by $a \leq x \leq b$ and $g_1(x) \leq y \leq g_2(x)$. \[\iint_D f(x,y) dA = \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y) \,dy \,dx\]
-    \item \textbf{Type I}: region $D$ bounded by $h_1(y) \leq x \leq h_2(y)$ and $c \leq y \leq d$. \[\iint_D f(x,y) dA = \int_c^d \int_{h_1(y)}^{h_2(y)} f(x,y) \, dx \, dy\]
+    \item \textbf{Type I}: region $D$ bounded by $a \leq x \leq b$ and $g_1(x) \leq y \leq g_2(x)$. \[\iint_D f(x,y) \,\text{d}A = \int_a^b \int_{g_1(x)}^{g_2(x)} f(x,y) \,\text{d}y \,\text{d}x\]
+    \item \textbf{Type I}: region $D$ bounded by $h_1(y) \leq x \leq h_2(y)$ and $c \leq y \leq d$. \[\iint_D f(x,y) \,\text{d}A = \int_c^d \int_{h_1(y)}^{h_2(y)} f(x,y) \, \text{d}x \, \text{d}y\]
 \end{enumerate}
 
 \subsection{Applications of Double Integrals}
@@ -2243,9 +2247,9 @@ More complex regions are typically broken down into two types; \textbf{Type I}, 
 Other than the obvious (finding the area of an arbitrary region in the $x,y$-plane), there are a number of other applications;
 
 \begin{itemize}
-    \item \textbf{Volume of a Projected Region:} A surface defined by $z = f(x,y)$ can be projected to the region $D$ on the $x,y$-plane. Considering the surface as the "top" of a pseudo-cylinder, and $D$ as the base, the volume of the resulting solid is \[V = \iint_D f(x,y) \,dA\]
-    \item \textbf{Volume of a Region Rotated:} Very similarly to finding the volume of a function of a single variable being rotated about an axis, the volume of an arbitrary region can also be found when rotated; about the $x$-axis: \[V = \iint_D 2\pi y \, dA;\] and the $y$-axis: \[V = \iint_D 2\pi x\, dA. \]
-    \item \textbf{Average Value of a Function over a Region:} Given a function $f(x,y)$ over a region $D$ of area $A$, the average value of the function within this region is, simply, \[f_{\text{average}} = \frac{\iint_D f(x,y) \, dA}{A}.\]
+    \item \textbf{Volume of a Projected Region:} A surface defined by $z = f(x,y)$ can be projected to the region $D$ on the $x,y$-plane. Considering the surface as the "top" of a pseudo-cylinder, and $D$ as the base, the volume of the resulting solid is \[V = \iint_D f(x,y) \,\text{d}A\]
+    \item \textbf{Volume of a Region Rotated:} Very similarly to finding the volume of a function of a single variable being rotated about an axis, the volume of an arbitrary region can also be found when rotated; about the $x$-axis: \[V = \iint_D 2\pi y \, \text{d}A;\] and the $y$-axis: \[V = \iint_D 2\pi x\, \text{d}A. \]
+    \item \textbf{Average Value of a Function over a Region:} Given a function $f(x,y)$ over a region $D$ of area $A$, the average value of the function within this region is, simply, \[f_{\text{average}} = \frac{\iint_D f(x,y) \, \text{d}A}{A}.\]
 \end{itemize}
 
 \subsection{Coordinate Transformations}
@@ -2275,18 +2279,17 @@ One of the most common coordinate transformations is the polar coordinate system
        \cos \theta & \sin \theta\\
         -r \sin \theta & r \cos \theta\\
     \end{bmatrix} \text{d}r \text{d}\theta\\
-    &=  (r\cos^2 \theta - - r \sin^2 \theta) \text{d}r \text{d}\theta \\
+    &=  (r\cos^2 \theta + r \sin^2 \theta) \text{d}r \text{d}\theta \\
     &= r\,\text{d}r \text{d}\theta
 \end{align*}
 
-% TODO add thm
-% TODO: explanation + major coordinate systems (polar, spherical, cylindrical), although the last two are for triple....
-
-
+An often-helpful theorem when working with coordinate transformations is as follows;
+\begin{theorem}
+    Two functions $u(x,y)$ and $v(x,y)$ are functionally related as \[\Phi(u, v) = 0 \iff \pd{(u,v)}{(x,y)} = 0.\]
+\end{theorem}
 
 
 % TODO: get up to date with notes
 % need to add:
-% - Gamma function (optional?)
-% - changing coordinate system
+% - fix formatting (dx, dy etc)
 \end{document}
