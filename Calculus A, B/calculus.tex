@@ -1332,7 +1332,7 @@ Consider a function $f(x)$ rotated about the $x$-axis to form a solid. Subdividi
 
 \subsubsection{Gamma Function}
 
-The \textbf{Gamma Function} is defined \[\Gamma(n) = \int_0^\infty e^{-x} x^{n-1} \,\text{d}x,\] and is a generalization of the factorial operator, i.e., $\Gamma(n + 1) = n\Gamma(n)$. The Gamma function appears in many contexts (such as statistics), but one "helpful" (situationally) use case is the fact \[\int_0^{\pi/2} \sin^{2m-1}\theta\cos^{2n-1}\theta \,\text{d}\theta = \frac{\Gamma(n)\Gamma(m)}{2\Gamma(n+m)}; m,n > 0,\] which is fairly straightforward to prove by writing the gamma function in polar coordinates.
+The \textbf{Gamma Function} is defined \[\Gamma(n) = \int_0^\infty e^{-x} x^{n-1} \,\text{d}x,\] and is a generalization of the factorial operator, i.e., $\Gamma(n + 1) = n\Gamma(n)$. The Gamma function appears in many contexts (such as statistics), but one "helpful" (situationally) use case is the fact \[\int_0^{\pi/2} \sin^{2m-1}\theta\cos^{2n-1}\theta \,\text{d}\theta = \frac{\Gamma(n)\Gamma(m)}{2\Gamma(n+m)}; m,n > 0,\] which is fairly straightforward to prove by writing the Gamma function in polar coordinates.
 
 \section{Differential Equations}
 \subsection{Definitions}
@@ -2288,8 +2288,20 @@ An often-helpful theorem when working with coordinate transformations is as foll
     Two functions $u(x,y)$ and $v(x,y)$ are functionally related as \[\Phi(u, v) = 0 \iff \pd{(u,v)}{(x,y)} = 0.\]
 \end{theorem}
 
+\subsubsection{Gaussian Integral}
 
-% TODO: get up to date with notes
-% need to add:
-% - fix formatting (dx, dy etc)
+Consider the integral $I = \int_0^{\infty} e^{-x^2} \,\text{d}x$. We can also state that $I = \int_{0}^{\infty} e^{-y^2} \,\text{d}y$, and write: \begin{align*}
+    I^2 &= \int_{0}^{\infty} e^{-x^2} \, \text{d}x \int_{0}^{\infty} e^{-y^2} \,\text{d}y\\
+    &= \int_{0}^{\infty}\int_{0}^{\infty} e^{-x^2} e^{-y^2} \, \text{d}y\text{d}x\\
+    &= \int_{0}^{\infty}\int_{0}^{\infty} e^{-(x^2+y^2)}\, \text{d}y\text{d}x\\
+\end{align*}
+We can then rewrite this in polar coordinates ($x = r\cos \theta$, $y = r\sin\theta$);
+\begin{align*}
+    &= \int_{0}^{\infty}\int_{0}^{\frac{\pi}{2}} e^{-(r^2\cos^2 \theta+r^2\sin^2\theta)} r\, \text{d}\theta\text{d}r\\
+    &= \frac{\pi}{2} \int_{0}^{\infty}r e^{-r^2} \,\text{d}r\\
+    &= -\frac{\pi}{4}\left[e^{-r^2}\right]_0^{\infty} = \frac{\pi}{4}
+\end{align*}
+
+Thus, $I^2 = \frac{\pi}{4} \implies I = \frac{\sqrt{\pi}}{4}.$
+
 \end{document}
