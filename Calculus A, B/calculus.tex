@@ -39,7 +39,7 @@
 \newcommand{\dxdy}{\frac{\text{d}x}{\text{d}y}}
 \newcommand{\dydx}{\frac{\text{d}y}{\text{d}x}}
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
-
+\newcommand{\fod}[1]{\, \text{d}#1}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\naturals}{\mathbb{N}}
 \newcommand{\integers}{\mathbb{Z}}
@@ -2306,7 +2306,7 @@ Thus, $I^2 = \frac{\pi}{4} \implies I = \frac{\sqrt{\pi}}{4}.$
 
 \subsubsection{Generalizing Triginometric Integrals}\label{sec:generalizing_trig_integrals}
 
-Take the Gamma function, $\Gamma(n) = \int_{0}^{\infty} e^{-x} x^{n-1}\,\text{d}x$. Substituting $x = w^2, \text{d}x = 2w\, \text{d}w$ gives us \[\Gamma(n) = 2\int_0^\infty e^{-w^2} w^{2n-1} \, \text{d}w =2\int_0^\infty e^{-x^2} x^{2n-1} \, \text{d}x = \] Multiplying this result by $\Gamma(m)$ (with the same substitution, but in terms of $y$ rather than $x$) gives: \begin{align*}
+Take the Gamma function, $\Gamma(n) = \int_{0}^{\infty} e^{-x} x^{n-1}\,\text{d}x$. Substituting $x = w^2, \text{d}x = 2w\, \text{d}w$ gives us \[\Gamma(n) = 2\int_0^\infty e^{-w^2} w^{2n-1} \, \text{d}w =2\int_0^\infty e^{-x^2} x^{2n-1} \, \text{d}x \] Multiplying this result by $\Gamma(m)$ (with the same substitution, but in terms of $y$ rather than $x$) gives: \begin{align*}
     \Gamma(n)\Gamma(m) &= 4 \int_{0}^{\infty} e^{-x^2} x^{2n-1} \, \text{d}x\int_0^\infty e^{-y^2} y^{2m-1} \, \text{d}y\\
     &= 4 \int_{0}^{\infty}\int_{0}^{\infty} e^{-(x^2+y^2)} x^{2n-1} y^{2m-1} \, \text{d}y\,\text{d}x\\
 \end{align*}
@@ -2317,4 +2317,8 @@ Rewriting this in terms of polar coordinates:
     &= \mathbf{\Gamma(n + m)} \int_0^{\frac{\pi}{2}} \cos^{2n-1}\theta \sin^{2m-1} \theta \,\text{d}\theta\\
     &\implies \int_0^{\frac{\pi}{2}} \cos^{2n-1}\theta \sin^{2m-1} \theta \,\text{d}\theta = \frac{\Gamma(n)\Gamma(m)}{2 \Gamma(n+m)}
 \end{align*}
+
+\subsection{Triple Integrals}
+
+Consider a function $f(x,y,z)$, continuous in a domain $D$. The sum of the function over the domain can be written as \[\lim_{p,n,m \to \infty} \sum_{k=1}^p \sum_{j=1}^n \sum_{i=1}^m f(x_{ijk}^*, y_{ijk}^*, z_{ijk}^*) \Delta V_{ijk} = \iiint_D f(x,y,z) \,\text{d}V\]
 \end{document}
