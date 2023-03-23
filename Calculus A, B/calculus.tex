@@ -2250,6 +2250,7 @@ Other than the obvious (finding the area of an arbitrary region in the $x,y$-pla
     \item \textbf{Volume of a Projected Region:} A surface defined by $z = f(x,y)$ can be projected to the region $D$ on the $x,y$-plane. Considering the surface as the "top" of a pseudo-cylinder, and $D$ as the base, the volume of the resulting solid is \[V = \iint_D f(x,y) \,\text{d}A\]
     \item \textbf{Volume of a Region Rotated:} Very similarly to finding the volume of a function of a single variable being rotated about an axis, the volume of an arbitrary region can also be found when rotated; about the $x$-axis: \[V = \iint_D 2\pi y \, \text{d}A;\] and the $y$-axis: \[V = \iint_D 2\pi x\, \text{d}A. \]
     \item \textbf{Average Value of a Function over a Region:} Given a function $f(x,y)$ over a region $D$ of area $A$, the average value of the function within this region is, simply, \[f_{\text{average}} = \frac{\iint_D f(x,y) \, \text{d}A}{A}.\]
+    \item \textbf{Center of Mass:} The center of mass of a region $R$ with density function $\rho(x,y) is given: $\[(x_{\text{cent}}, y_{\text{cent}}) = \left(\frac{\iint_R x\rho(x,y) \text{d}A}{\iint_R \rho(x,y) \text{d}A}, \frac{\iint_R y\rho(x,y) \text{d}A}{\iint_R \rho(x,y) \text{d}A}\right)\] Notice that when $\rho$ is constant, it simply cancels out, and the center of mass is simply the average of the $x$ and $y$ values of the region.
 \end{itemize}
 
 \subsection{Coordinate Transformations}
@@ -2317,8 +2318,41 @@ Rewriting this in terms of polar coordinates:
     &= \mathbf{\Gamma(n + m)} \int_0^{\frac{\pi}{2}} \cos^{2n-1}\theta \sin^{2m-1} \theta \,\text{d}\theta\\
     &\implies \int_0^{\frac{\pi}{2}} \cos^{2n-1}\theta \sin^{2m-1} \theta \,\text{d}\theta = \frac{\Gamma(n)\Gamma(m)}{2 \Gamma(n+m)}
 \end{align*}
+\subsubsection{Laplace Transform}
 
+The Laplace Transform, denoted $\mathcal{L}$, is the integral $\mathcal{L}(f(s)) = \int_0^\infty f(t) e^{-st} \,\text{d}t$. A particularly useful transform is \[\mathcal{L}(t^n) = \int_0^\infty e^{-st}t^n\,\text{d}t,\] where $s>0$. Taking $st = x \implies \text{d}t = \frac{\text{d}x}{s}$, we have \begin{align*}
+    \mathcal{L}(t^n) &= \int_0^\infty e^{-x} \frac{x^n}{s^n} \frac{\text{d}x}{s}\\
+    &= \frac{1}{s^{n+1}} \int_0^\infty e^{-x} x^n \,\text{d}x\\
+    &= \frac{\Gamma(n+1)}{s^{n+1}}
+\end{align*}
+
+Thus, $\mathcal{L}(t^n) = \frac{n!}{s^{n+1}}$ where $n$ is a positive integer.
 \subsection{Triple Integrals}
 
 Consider a function $f(x,y,z)$, continuous in a domain $D$. The sum of the function over the domain can be written as \[\lim_{p,n,m \to \infty} \sum_{k=1}^p \sum_{j=1}^n \sum_{i=1}^m f(x_{ijk}^*, y_{ijk}^*, z_{ijk}^*) \Delta V_{ijk} = \iiint_D f(x,y,z) \,\text{d}V\]
+
+
+\subsection{Applications of Triple Integrals}
+\begin{itemize}
+    \item \textbf{Function Evaluated over Region Between Two Surfaces}: consider the region D, enclosed by the two surfaces described by $z = \psi_B(x,y)$ and $z = \psi_T(x,y)$, where $\psi_T > \psi_B$. The value of $f(x,y,z)$ over this region can thus be written as \[\iiint_D f(x,y,z) \,\text{d}V = \iint_{R_{xy}} \left[\int_{\psi_B}^{\psi_T} f(x,y,z) \, \text{d}z\right]\text{d}A,\] where $R_{xy}$ is the projection of $D$ on the $xy$-plane. When $f(x,y,z) = 1$, this is equivalent to the volume of the region $D$: \[V = \iiint_D \text{d}V = \iint_{R_{xy}}\left[\int_{\psi_B}^{\psi_T} \,\text{d}z\right] \text{d}A = \iint_{R_{xy}}\left[\psi_T(x,y) - \psi_B(x,y)\right]\text{d}A\]
+    \item \textbf{Same Applications as in Double Integrals}: just this time, with 3D surfaces instead of 2D curves/areas.
+\end{itemize}
+
+\subsubsection{Coordinate Transformations}
+
+Similarly to in double integrals, we have \[\text{d}V = \left|\frac{\partial(x,y,z)}{\partial(u,v,w)}\right| \text{d}u\, \text{d}v\, \text{d}w.\] Some notable coordinate systems include: \begin{itemize}
+    \item \textbf{Spherical}: \[\begin{cases}
+        x = \rho\sin\theta\cos\phi\\
+        y = \rho\sin\theta\sin\phi\\
+        z = \rho\cos\theta
+    \end{cases},\] where the natural bounds are $0 \leq r \leq \infty$, $0 \leq \phi \leq \pi$, and $0 \leq \theta \leq 2\pi$. The Jacobian is $\frac{\partial(x,y,z)}{\partial(\rho, \phi, \theta)} = \rho^2\sin \phi$.
+
+    Also note that $x^2 + y^2 + z^2 = \rho^2$, a helpful fact for some integrals.
+
+    \item \textbf{Cylindrical}: \[\begin{cases}
+        x = r\cos\theta\\
+        y = r\sin\theta\\
+        z = z
+    \end{cases},\] where the natural bounds are $0 \leq r \leq \infty$, $0 \leq \theta \leq 2\pi$, and $-\infty \leq z \leq \infty$. The Jacobian is $\frac{\partial(x,y,z)}{\partial(r, \theta, z)} = r$.
+\end{itemize}
 \end{document}
