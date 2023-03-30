@@ -2342,9 +2342,9 @@ Consider a function $f(x,y,z)$, continuous in a domain $D$. The sum of the funct
 
 Similarly to in double integrals, we have \[\text{d}V = \left|\frac{\partial(x,y,z)}{\partial(u,v,w)}\right| \text{d}u\, \text{d}v\, \text{d}w.\] Some notable coordinate systems include: \begin{itemize}
     \item \textbf{Spherical}: \[\begin{cases}
-        x = \rho\sin\theta\cos\phi\\
-        y = \rho\sin\theta\sin\phi\\
-        z = \rho\cos\theta
+        x = \rho\sin\phi\cos\theta\\
+        y = \rho\sin\phi\sin\theta\\
+        z = \rho\cos\phi
     \end{cases},\] where the natural bounds are $0 \leq r \leq \infty$, $0 \leq \phi \leq \pi$, and $0 \leq \theta \leq 2\pi$. The Jacobian is $\frac{\partial(x,y,z)}{\partial(\rho, \phi, \theta)} = \rho^2\sin \phi$.
 
     Also note that $x^2 + y^2 + z^2 = \rho^2$, a helpful fact for some integrals.
