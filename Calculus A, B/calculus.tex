@@ -2298,12 +2298,12 @@ Consider the integral $I = \int_0^{\infty} e^{-x^2} \,\text{d}x$. We can also st
 \end{align*}
 We can then rewrite this in polar coordinates ($x = r\cos \theta$, $y = r\sin\theta$);
 \begin{align*}
-    &= \int_{0}^{\infty}\int_{0}^{\frac{\pi}{2}} e^{-(r^2\cos^2 \theta+r^2\sin^2\theta)} r\, \text{d}\theta\text{d}r\\
-    &= \frac{\pi}{2} \int_{0}^{\infty}r e^{-r^2} \,\text{d}r\\
-    &= -\frac{\pi}{4}\left[e^{-r^2}\right]_0^{\infty} = \frac{\pi}{4}
+    &= \int_{0}^{\infty}\int_{0}^{\pi} e^{-(r^2\cos^2 \theta+r^2\sin^2\theta)} r\, \text{d}\theta\text{d}r\\
+    &= \pi \int_{0}^{\infty}r e^{-r^2} \,\text{d}r\\
+    &= -\frac{\pi}{2}\left[e^{-r^2}\right]_0^{\infty} = \frac{\pi}{2}
 \end{align*}
 
-Thus, $I^2 = \frac{\pi}{4} \implies I = \frac{\sqrt{\pi}}{4}.$
+Thus, $I^2 = \frac{\pi}{2} \implies I = \frac{\sqrt{\pi}}{2}.$
 
 \subsubsection{Generalizing Triginometric Integrals}\label{sec:generalizing_trig_integrals}
 
