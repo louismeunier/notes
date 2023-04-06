@@ -17,11 +17,12 @@
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{tabularx}
 \usepackage[]{csquotes}
+\usepackage{physics}
 \usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
 
 \MakeOuterQuote{"}
-\newtheorem{theorem}{Theorem}
-\DeclareMathOperator{\sech}{sech}
+\newtheorem*{theorem}{Theorem}
+% \DeclareMathOperator{\sech}{sech}
 \newpagestyle{mypage}{%
     \footrule
     \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
@@ -40,7 +41,7 @@
 \newcommand{\dydx}{\frac{\text{d}y}{\text{d}x}}
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\fod}[1]{\, \text{d}#1}
-\newcommand{\real}{\mathbb{R}}
+\renewcommand{\real}{\mathbb{R}}
 \newcommand{\naturals}{\mathbb{N}}
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\rational}{\mathbb{Q}}
@@ -899,7 +900,7 @@ The best way to approach these questions is to simply practice. The patterns bet
     \label{fig:rolles}
 \end{figure}
 
-\begin{theorem}
+\begin{theorem}[Rolle's Theorem]
 If a function $f$
 \begin{itemize}
     \item is \textit{continuous} on $[a,b]$
@@ -918,7 +919,7 @@ The proof for this theorem is fairly straightforward (and intuitive), and also m
     \caption{The Mean Value Theorem visualized}
     \label{fig:mvt}
 \end{figure}
-\begin{theorem}
+\begin{theorem}[Mean Value Theorem]
     If a function $f$ is
     \begin{itemize}
         \item \textit{continuous} on $[a,b]$
@@ -2105,7 +2106,7 @@ For a function $f(x)$ of a single variable, an extrema of the function exists wh
 For functions of 3 variables (and higher), similar reasoning to the second proof above can be used to show that $\vec{\nabla}f(P_0) = \vec{0}$ if $P_0$ is a maximum or minimum point; there is no real geometric proof for this, however.
 
 
-\subsubsection{Second Derivative Test}
+\subsubsection{Second Derivative Test} \label{sec:second-derivative-test}
 
 Just as for functions of a single variable, it is not sufficient to say that a point is an extrema of a function of two variables simply because the gradient is zero. Instead, we must use the \textbf{second derivative test}. The motivation/derivation of this test comes from Taylor polynomial expansion of a general function of two variables, but won't be covered just yet.
 
@@ -2217,6 +2218,13 @@ This can be extended to a function, $f(x,y,z)$, subject to two constraint $g(x,y
 
 In general, the actual value(s) of the Lagrangian multiplier(s) are irrelevant; simply use the equations that they are a part of to solve for the coordinates of the extrema.
 
+\subsubsection{Sufficiency for Extrema}
+Similar to section \ref{sec:second-derivative-test}; the second derivative test for a Lagrangian of two variables $x$, $y$ and constraint $\lambda$, ie \[L = f(x,y) \pm \lambda g(x,y)\] is given \[H = L_{xx} g_y^2 - 2 L_{xy}g_x g_y + L_{yy}g_x^2;\] \begin{itemize}
+    \item $H > 0 \implies (x,y) \text{ a min}$
+    \item $H < 0 \implies (x,y) \text{ a max}$
+\end{itemize}
+
+\newpage
 \section{Multiple Integration}
 \subsection{Double Integrals}
 Consider an arbitrary rectangle $D$ in the $x,y$-plane, and let $f(x,y)$ be a function in $D$. Subdividing $D$ into small rectangles, we can say that the total value of $f$ in the smaller rectangle is approximately, taking $P(x^*_{ij}, y^*_{ij})$ to be a point within this rectangle, $f(P) \Delta x_i \Delta y_j$. Summating all of these rectangles yields \begin{align*}
@@ -2289,6 +2297,7 @@ An often-helpful theorem when working with coordinate transformations is as foll
     Two functions $u(x,y)$ and $v(x,y)$ are functionally related as \[\Phi(u, v) = 0 \iff \pd{(u,v)}{(x,y)} = 0.\]
 \end{theorem}
 
+Note too that $\frac{\partial(x,y)}{\partial(u,v)} = \frac{\partial(u,v)}{\partial(x,y)}$; practically, this means that (depending on what is easiest to do), we can either rewrite $u$ and $v$ in terms of $x$ and $y$ then find the Jacobian, or we can find the Jacobian and then rewrite $u$ and $v$ in terms of $x$ and $y$.
 \subsubsection{Gaussian Integral}
 
 Consider the integral $I = \int_0^{\infty} e^{-x^2} \,\text{d}x$. We can also state that $I = \int_{0}^{\infty} e^{-y^2} \,\text{d}y$, and write: \begin{align*}
@@ -2297,13 +2306,14 @@ Consider the integral $I = \int_0^{\infty} e^{-x^2} \,\text{d}x$. We can also st
     &= \int_{0}^{\infty}\int_{0}^{\infty} e^{-(x^2+y^2)}\, \text{d}y\text{d}x\\
 \end{align*}
 We can then rewrite this in polar coordinates ($x = r\cos \theta$, $y = r\sin\theta$);
+% ! fix, think I messed it up
 \begin{align*}
-    &= \int_{0}^{\infty}\int_{0}^{\pi} e^{-(r^2\cos^2 \theta+r^2\sin^2\theta)} r\, \text{d}\theta\text{d}r\\
-    &= \pi \int_{0}^{\infty}r e^{-r^2} \,\text{d}r\\
-    &= -\frac{\pi}{2}\left[e^{-r^2}\right]_0^{\infty} = \frac{\pi}{2}
+    &= \frac{1}{2}\int_{0}^{\infty}\int_{0}^{\pi} e^{-(r^2\cos^2 \theta+r^2\sin^2\theta)} r\, \text{d}\theta\text{d}r\\
+    &= \frac{\pi}{2} \int_{0}^{\infty}r e^{-r^2} \,\text{d}r\\
+    &= -\frac{\pi}{4}\left[e^{-r^2}\right]_0^{\infty} = \frac{\pi}{4}
 \end{align*}
 
-Thus, $I^2 = \frac{\pi}{2} \implies I = \frac{\sqrt{\pi}}{2}.$
+Thus, $I^2 = \frac{\pi}{4} \implies I = \frac{\sqrt{\pi}}{2}.$ You can alternatively solve the integral $\int_{-\infty}^{\infty} e^{-x^2}\,\text{d}x$ by the same method, which would result in more straightforward change-of-bounds when converting to polar coordinates.
 
 \subsubsection{Generalizing Triginometric Integrals}\label{sec:generalizing_trig_integrals}
 
@@ -2355,4 +2365,70 @@ Similarly to in double integrals, we have \[\text{d}V = \left|\frac{\partial(x,y
         z = z
     \end{cases},\] where the natural bounds are $0 \leq r \leq \infty$, $0 \leq \theta \leq 2\pi$, and $-\infty \leq z \leq \infty$. The Jacobian is $\frac{\partial(x,y,z)}{\partial(r, \theta, z)} = r$.
 \end{itemize}
+
+\subsection{Surface Integration}
+\subsubsection{Motivations}
+Consider the following descriptions of surfaces as vector functions in 3D:
+\begin{itemize}
+    \item \textbf{Cartesians}, $z = f(x,y)$
+    We have: \[\vec{R}(x,y) = x \vu{i} + y \vu{j} + f(x,y)\vu{k}\]
+    \item \textbf{Cylindricals}, height $H$ radius $a$
+    \begin{itemize}
+        \item Bottom:
+        \[\vec{R}_B(\theta, r) = r \cos \theta \vu{i} + r \sin\theta \vu{j} + 0 \vu{k}\]
+        \item Top:
+        \[\vec{R}_T(\theta, r) = r \cos \theta \vu{i} + r \sin\theta \vu{j} + H \vu{k}\]
+        \textit{i.e. a circle}
+        \item Lateral: 
+        \[\vec{R}_L(\theta, z) = a \cos \theta \vu{i} + a \sin \theta \vu{j} + z \vu{k}\]
+    \end{itemize}
+    \item \textbf{Flat Cone}, radius $a$ angle $\alpha$ with $x-y$ plane
+    \[\vec{R}_c(\rho, \theta) = \rho \sin \alpha \cos \theta \vu{i} + \rho \sin \alpha \sin \theta \vu{j} + \rho \cos \alpha \vu{k}\]
+    \item \textbf{Spherical}, radius $a$
+    \[\vec{R}(\phi, \theta) = a \sin \phi \cos \theta \vu{i} + a \sin \phi \sin \theta \vu{j} + a \cos \phi \vu{k}\]
+\end{itemize}
+
+Notice, all of surfaces can be described as a vectorial function of two variables, ie, \[\vec{R} = \vec{R}(u,v).\] As was shown in the derivation of Jacobians, it follows that the cross product of the change in surface $\text{d}\vec{R}$ represents the change in area along the surface (viz the area of a parallelogram) Specifically, we have \[\text{d}S = \left|\left| \pd{\vec{R}}{u}\text{d}u \times \pd{\vec{R}}{v}\text{d}v \right|\right|,\] the infinitesimal surface area change. It follows that the total surface area of a surface described by $\vec{R}(u,v)$ over a domain $D_{uv}$ would be \[S = \iint_{D_{uv}} \left|\left| \pd{\vec{R}}{u} \times \pd{\vec{R}}{v}\right|\right| \, \text{d}u\text{d}v.\]
+
+\subsubsection{"Special" Cases}
+
+We can "specify" the surface integral formula \[S = \iint_{D_{uv}} \left|\left| \pd{\vec{R}}{u} \times \pd{\vec{R}}{v}\right|\right| \, \text{d}u\text{d}v\] for a number of "special" cases.
+
+\begin{itemize}
+    \item \textbf{Cartesians}, $z = f(x,y) \implies \vec{R}(x,y) = x \vu{i} + y\vu{j} + f(x,y) \vu{k}$. We thus have $u = x, \, v = y$, and we can compute: \begin{align*}
+        \pd{\vec{R}}{u} = \pd{\vec{R}}{x} &= \vu{i} + 0\vu{j} + f_x\vu{k}\\
+        \pd{\vec{R}}{v} =\pd{\vec{R}}{y}&= 0\vu{i} + \vu{j} + f_y\vu{k}
+    \end{align*}
+    Taking the cross product of these two: 
+    \begin{align*} \pd{\vec{R}}{x} \times \pd{\vec{R}}{y}&= \det\begin{bmatrix}
+        \vu{i} & \vu{j} & \vu{k}\\
+        1 & 0 & f_x\\
+        0 & 1 & f_y
+    \end{bmatrix}\\
+    &= - f_x \vu{u} - f_y \vu{j} + \vu{k}\\
+    ||...|| &= \sqrt{(f_x)^2 + (f_y)^2 + 1}
+\end{align*}
+Thus, the surface area for a surface described with Cartesians is \[S = \iint_{D_{xy}} \sqrt{(f_x)^2 + (f_y)^2 + 1} \, \text{d}x\text{d}y.\]
+
+\item \textbf{Sphericals}, $\vec{R}(\theta, \phi) = a \sin \phi \cos \theta \vu{i} + a \sin \phi \sin \theta \vu{j} + a \cos \phi \vu{k}$.
+% !!!!!! fix this this is all wrong!
+We thus have the derivatives \begin{align*}
+    \pd{\vec{R}}{\theta} &= - a \sin\phi \sin\theta \vu{i} + a \sin\phi \cos\theta \vu{j} + 0 \vu{k}\\
+    \pd{\vec{R}}{\phi} &= a \cos\phi \cos\theta \vu{i} + a \cos\phi \sin\theta \vu{j} - a \cos \phi\vu{k}.
+\end{align*}
+And their cross products: \begin{align*}
+    \pd{\vec{R}}{\theta} \times \pd{\vec{R}}{\phi} &= \det \begin{bmatrix}
+        \vu{i} & \vu{j} & \vu{k}\\
+        - a \sin\phi \sin\theta & a \sin\phi \cos\theta & 0\\
+        a \cos\phi \cos\theta & a \cos\phi \sin\theta & - a \cos \phi
+    \end{bmatrix}\\ 
+    &= \cdots\\
+    ||...|| &= a^2 \sin \phi
+\end{align*}
+This gives us a surface area of \[S = \iint_{D_{\theta\phi}} a^2 \sin \phi \, \text{d}\theta\text{d}\phi.\]
+\end{itemize}
+\section{Differential Geometry}
+% bnt, kamma, tau,etc?
+% arc length parameterization
+% arc length + area of curves
 \end{document}
