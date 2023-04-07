@@ -2367,6 +2367,10 @@ Similarly to in double integrals, we have \[\text{d}V = \left|\frac{\partial(x,y
 \end{itemize}
 
 \subsection{Surface Integration}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{misc/surface.png}
+\end{figure}
 \subsubsection{Motivations}
 Consider the following descriptions of surfaces as vector functions in 3D:
 \begin{itemize}
@@ -2426,7 +2430,13 @@ And their cross products: \begin{align*}
     ||...|| &= a^2 \sin \phi
 \end{align*}
 This gives us a surface area of \[S = \iint_{D_{\theta\phi}} a^2 \sin \phi \, \text{d}\theta\text{d}\phi.\]
+
+\textit{NB: the similarity with the Jacobian.}
 \end{itemize}
+
+\subsubsection{Applications}
+
+Many general applications from multiple integration can be applied to surface integrals; instead of evaluating over a volume, we evaluate over a surface now. For instance, the mass of a "sheet" of variable density $\rho(x,y,z)$ over a domain $S$ can be evaluated as \[\iint_{S} \rho(x,y,z) \, \text{d}S.\] It follows that the center of mass of a particular surface would be \[\bar{x} = \frac{1}{m} \iint_{S}x \rho(x,y,z) \, \text{d}S, \quad \text{etc}\cdots.\] More broadly, the sum of a function over a particular surface is rather straightforward: \[\iint_{S} f(x,y) \text{d}S\]
 \section{Differential Geometry}
 % bnt, kamma, tau,etc?
 % arc length parameterization
