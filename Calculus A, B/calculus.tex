@@ -40,6 +40,8 @@
 \newcommand{\dxdy}{\frac{\text{d}x}{\text{d}y}}
 \newcommand{\dydx}{\frac{\text{d}y}{\text{d}x}}
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\deriv}[2]{\frac{\text{d}#1}{\text{d}#2}}
+\newcommand{\sderiv}[2]{\frac{\text{d}^2#1}{\text{d}#2^2}}
 \newcommand{\fod}[1]{\, \text{d}#1}
 \renewcommand{\real}{\mathbb{R}}
 \newcommand{\naturals}{\mathbb{N}}
@@ -2366,6 +2368,7 @@ Similarly to in double integrals, we have \[\text{d}V = \left|\frac{\partial(x,y
     \end{cases},\] where the natural bounds are $0 \leq r \leq \infty$, $0 \leq \theta \leq 2\pi$, and $-\infty \leq z \leq \infty$. The Jacobian is $\frac{\partial(x,y,z)}{\partial(r, \theta, z)} = r$.
 \end{itemize}
 
+\section{Vector Calculus}
 \subsection{Surface Integration}
 \begin{figure}[!ht]
     \centering
@@ -2437,8 +2440,145 @@ This gives us a surface area of \[S = \iint_{D_{\theta\phi}} a^2 \sin \phi \, \t
 \subsubsection{Applications}
 
 Many general applications from multiple integration can be applied to surface integrals; instead of evaluating over a volume, we evaluate over a surface now. For instance, the mass of a "sheet" of variable density $\rho(x,y,z)$ over a domain $S$ can be evaluated as \[\iint_{S} \rho(x,y,z) \, \text{d}S.\] It follows that the center of mass of a particular surface would be \[\bar{x} = \frac{1}{m} \iint_{S}x \rho(x,y,z) \, \text{d}S, \quad \text{etc}\cdots.\] More broadly, the sum of a function over a particular surface is rather straightforward: \[\iint_{S} f(x,y) \text{d}S\]
-\section{Differential Geometry}
-% bnt, kamma, tau,etc?
-% arc length parameterization
-% arc length + area of curves
+\subsection{Differential Geometry}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.25\textwidth]{./misc/curvey.png}
+\end{figure}
+\subsubsection{Motivations: Motion on Curves}
+
+We can describe the motion of an object in space by parameterizing it with respect to some variable $t$ (often representing time): \[\vec{R} = x(t) \vu{i} + y(t) \vu{j} + z(t) \vu{k}.\] It follows naturally that \begin{align*}
+    \frac{\text{d}\vec{R}}{\text{d}t} &= \dot{x}(t) \vu{i} + \dot{y}(t) \vu{j} + \dot{z}(t) \vu{k} = \vec{v}(t)\\
+    \frac{\text{d}^2\vec{R}}{\text{d}t^2} &= \ddot{x}(t) \vu{i} + \ddot{y}(t) \vu{j} + \ddot{z}(t) \vu{k} = \vec{a}(t).
+\end{align*}
+
+Consider some small change in $\vec{R}$ of $\Delta \vec{R}$; the norm of this vector is approximately equal to the change in arc length, $\Delta s$. It follows: \begin{align*}
+    ||\Delta \vec{R}|| \approx \Delta s &\implies ||\frac{\Delta \vec{R}}{\Delta s}|| \approx 1\\
+    &\implies \frac{\text{d}\vec{R}}{\text{d}s} = \lim_{\Delta s \to 0} \frac{\Delta \vec{R}}{\Delta s} = \hat{T}
+\end{align*}
+
+where $\hat{T}$ is the \textbf{unit tangent vector}, ie the "vector of change" of the curve with respect to the curve length. We can thus write: \begin{align*}
+    \vec{v} = \frac{\text{d} \vec{R}}{\text{d}t} &= \frac{\text{d}\vec{R}}{\text{d}s}\frac{\text{d}s}{\text{d}t}\\
+    &= \frac{\text{d}s}{\text{d}t} \hat{T}\\
+    \implies \vec{a} = \frac{\text{d}\vec{v}}{\text{d}t} &= \frac{\text{d}^2 s}{\text{d}t^2} \hat{T} + \frac{\text{d}s}{\text{d}t} \mathbf{\frac{\textbf{d}\hat{T}}{\textbf{d}t}}
+\end{align*}
+
+Unfortunately, we don't know how $\hat{T}$ changes wrt time, $t$, directly; we can still compute, however, by the following: \begin{align*}
+    \deriv{\hat{T}}{t} &= \deriv{\hat{T}}{s} \deriv{s}{t}\\
+    \textit{Solving for } \deriv{\hat{T}}{s}: \quad \hat{T} \cdot \hat{T} &= 1\\
+    \implies \deriv{}{s}[ \hat{T} \cdot \hat{T}] = 0 &= \deriv{\hat{T}}{s}\cdot \hat{T} + \deriv{\hat{T}}{s}\hat{T}\\
+    \implies 2[\deriv{\hat{T}}{s}\cdot \hat{T}] &= 0\\
+\end{align*}
+
+The dot product of these two vectors can be zero under the following cases:
+\begin{enumerate}
+    \item $\hat{T} = \vec{0}$: under the assumption that we are working with smooth ($\iff$ differentiable) curves, this is not possible
+    \item $\deriv{\hat{T}}{s} = \vec{0}$: this is only possible if the curve is a straight line, which we will assume for now is not the case. % pls verify
+    \item $\hat{T} \perp \deriv{\hat{T}}{s}$: this is the "standard case" we will consider; it should also make intuitive sense; the motion that a tangent vector to a curve is changing is perpendicular to the curve itself (Consider the most "extreme" case, of a motion about a circle).
+\end{enumerate}
+
+We introduce a new notation here: \[\deriv{\hat{T}}{s} = \kappa \hat{N},\] where $\kappa = ||\deriv{\hat{T}}{s}||$, the \textbf{curvature} of $R$, and $\hat{N}$ is the \textbf{unit principal normal}. This "derives" rather clearly: if $\deriv{\hat{T}}{s}$ is normal to $\hat{T}$, then it is a scalar multiple of a unit vector perpendicular to $\hat{T}$ (ie $\hat{N}$), where the scalar is the magnitude of $\hat{T}$.
+
+Returning to the earlier definition of $\vec{a}$, we can write;
+\begin{align*}
+    \deriv{\hat{T}}{t} = \deriv{s}{t}\deriv{\hat{T}}{t} &= \deriv{s}{t}\deriv{s}{t}\deriv{\hat{T}}{s}\\
+    &= \left(\deriv{s}{t}\right)^2 \deriv{\hat{T}}{s}\\
+    &= \left(\deriv{s}{t}\right)^2 \kappa \hat{N}\\
+    \implies \vec{a} &= \sderiv{s}{t}\, \hat{T} + \kappa \left(\deriv{s}{t}\right)^2 \hat{N}\\
+    &\equiv a_T \hat{T} + a_N \hat{N}
+\end{align*}
+
+where, in the final line, $a_T$ and $a_N$ represent the tangential and normal components of acceleration respectively.
+
+\subsubsection{The \texorpdfstring{$\hat{T}, \hat{N}, \hat{B}$}{T, N, B} frame}
+
+Previously, we defined the unit tangent and normal vectors. In order to "complete" our span of $\real^3$, we must define a third vector perpendicular to both of these vectors, viz., \[\hat{B} = \hat{T} \times \hat{N}.\] $\hat{B}$ is called the \textbf{binormal unit vector}. Together, these three vectors form a frame that can be used to describe the motion of along a curve (specifically, a smooth curve...) in space. It differs from the "standard" $\{\vu{i}, \vu{j},\vu{k}\}$ frame as it is not fixed in space; the vectors "follow" the motion of the curve. In addition to this curve, we also briefly define the \textit{radius of curvature}, \[\rho = \frac{1}{\kappa}.\]
+
+How these vectors further interact (or, more accurately, their derivatives interact) is described in the next section.
+
+\subsubsection{The Frenet-Serret Equations}
+
+The Frenet-Serret Equations describe the relationship between the derivatives of the $\hat{T}$, $\hat{N}$, and $\hat{B}$ vectors. Previously, we defined \[\deriv{\hat{T}}{s} = \kappa \hat{N}. \qquad (1)\] Our goal is to similarly define each of the derivatives of the vectors in the frame $\{\hat{T}, \hat{N}, \hat{B}\}$.
+
+Consider $\hat{B} = \hat{T} \times \hat{N}$. Taking the derivative wrt arc length: \begin{align*}\deriv{\hat{B}}{s} &= \deriv{\hat{T}}{s} \times \hat{N} + \hat{T} \times \deriv{\hat{N}}{s}\\
+    &= \kappa \hat{N} \times \hat{N} + \hat{T} \times \deriv{\hat{N}}{s}\\
+    &= 0 + \hat{T} \times \deriv{\hat{N}}{s}\\
+    \hat{T} \parallel \deriv{\hat{N}}{s} &\implies \deriv{\hat{B}}{s} \perp \hat{T}
+\end{align*}
+
+We now know that $\deriv{\hat{B}}{s}$ is perpendicular to $\hat{T}$; however, this is rather ambiguous, as this could really be in any of four directions (albeit some we can intuitively rule out). To clear this up, we can use a similar "trick" as before, and consider the derivative of the dot product of $\hat{B}$: \begin{align*}
+    \hat{B} \cdot \hat{B} = 1 \implies \deriv{}{s}[\hat{B} \cdot \hat{B}] &= 0\\
+    2 \deriv{\hat{B}}{s}\cdot \hat{B} &= 0\\
+\end{align*}
+
+Under the same assumptions of smoothness, etc, as discussed previously, we can thus conclude that $\deriv{\hat{B}}{s} \perp \hat{B}$. Thus, as $\deriv{\hat{B}}{s} \perp \hat{B}$ \textit{and} $\perp \hat{T}$, the only direction left for $\deriv{\hat{B}}{s}$ to point is along $\hat{N}$. We thus write: \[\deriv{\hat{B}}{s} = -\tau \hat{N},\qquad (2)\] where $\tau$ is the \textbf{torsion} of the curve, and is negative by convention.
+
+Finally, we seek to find $\deriv{\hat{N}}{s}$. We know $\hat{N} = \hat{B} \times \hat{T}$, thus \begin{align*}
+    \deriv{\hat{N}}{s} &= \deriv{\hat{B}}{s}\times\hat{T} + \hat{B}\times \deriv{\hat{T}}{s}\\
+    &= (2) \times \hat{T} + \hat{B} \times (1)\\
+    &= -\tau \hat{N} \times \hat{T} + \hat{B} \times \kappa \hat{N}\\
+    &= \tau \hat{B} - \kappa \hat{N}, \qquad (3)\\
+\end{align*}
+where each step is justified by the earlier definitions as well as the fundamental workings of the cross product of two vectors.
+
+From (1), (2), and (3), we typically write the following (for ease of computation/memory): \[\begin{bmatrix}
+    \deriv{\hat{T}}{s} \\
+    \deriv{\hat{N}}{s} \\
+    \deriv{\hat{B}}{s}
+\end{bmatrix} = \begin{bmatrix}
+   0 & \kappa & 0 \\
+    -\kappa & 0 & \tau \\
+    0 & -\tau & 0
+\end{bmatrix} \begin{bmatrix}
+    \hat{T} \\
+    \hat{N} \\
+    \hat{B}
+\end{bmatrix}.\]
+
+Using these definitions, any curve $R$ described in terms of $\vu{i}, \vu{j}, \vu{k}$ can be rewritten in terms of the $\hat{T}, \hat{N}, \hat{B}$ frame.
+
+\subsubsection{Notes: Helpful Results}
+
+We often wish to describe the curvature, $\kappa$, of a curve without necessarily finding all of the derivatives of the vectors in the $\hat{T}, \hat{N}, \hat{B}$ frame. Consider the following: 
+\begin{align*}
+    \deriv{\vec{R}}{t} \times \sderiv{\vec{R}}{t} &= \vec{v} \times \vec{a}\\
+    &=  \left[\deriv{s}{t} \hat{T} \right] \times \left[\sderiv{s}{t} \hat{T} + \kappa \left(\deriv{s}{t}\right)^2 \hat{N}\right]\\
+    &= \deriv{s}{t} \hat{T}\times \sderiv{s}{t} \hat{T} + \kappa \left(\deriv{s}{t}\right)^3 \hat{N} \times \hat{T}\\
+    &= 0 + \kappa \left(\deriv{s}{t}\right)^3 \hat{B}\\
+    &= \kappa \left|\left|\deriv{\vec{R}}{s}\right|\right|^3 \hat{B}\\
+    &\overset{\text{norm}}{\implies} \kappa = \frac{||\vec{v}\times\vec{a}||}{||\vec{v}||^3}
+\end{align*}
+
+Rewriting this more generally, we have \[\kappa = \frac{||\deriv{\vec{R}}{t} \times \sderiv{\vec{R}}{t}||}{||\deriv{R}{t}||^3}\]
+
+From here, we can consider a number of special cases:
+
+\begin{itemize}
+    \item \textbf{Planar Curves}; ie, no movement in $\vu{k}$. We thus have $\vec{R}(t) = x(t) \vu{i} + y(t) \vu{j}$ (and natural higher-order derivatives). It follows naturally that: \[\kappa = \frac{|\dot{x}\ddot{y}-\dot{y}\ddot{x}|}{(\dot{x}^2+\dot{y}^2)^{3/2}}\]
+    Consider a circle, for instance, of $x = h + a \cos t$, $y = k + a \sin t$. The curvature would be give \begin{align*}
+        \kappa &= \frac{|(-a \sin t)(-a \sin t) - (a\cos t)(-a\cos t)|}{(a^2 \sin^2 t + a^2 \cos^2 t)^{3/2}}\\
+        &= \cdots = \frac{1}{a}
+    \end{align*}
+    It follows that $\rho = a$, ie the radius of curvature of a circle is its radius.
+    \item \textbf{Function of $x$}; say we have $y = f(x)$. We can parametrize this curve as $x = t$, $y = f(t)$, and compute the curvature: \begin{align*}
+        \kappa &= \frac{|f'(t) - 0|}{(1 + f'(t)^2)^{3/2}}\\
+        &= \frac{\sderiv{y}{x}}{(1+\left(\deriv{y}{x}\right)^2)^{3/2}}\\
+    \end{align*}
+    i.e., the curvature in "Cartesian form".
+\end{itemize}
+
+% TODO: fix drawing, add more
+A final small note; to determine the direction of $\hat{N}$ along a planar curve, one must consider the curvature; $\hat{N}$ always points towards "inside" of curve, ie, along increasing angle of $\hat{T}$ with the horizontal.
+
+
+\subsubsection{Polar Coordinates}
+% TODO: add drawing
+
+We can describe the unit vectors of a polar coordinate system as follows: \begin{align*}
+    \hat{\mu}_r &= \cos \theta \vu{i} + \sin \theta \vu{j}\\
+    \hat{\mu}_\theta &= \cos (\theta + \frac{\pi}{2}) \vu{i} + \sin (\theta + \frac{\pi}{2}) \vu{j} = - \sin \theta \vu{i} + \cos \theta \vu{j}\\
+\end{align*}
+
+We thus take $\vec{R} = r \hat{\mu}_r$, and can further write\dots
+% TODO complete polars
 \end{document}
