@@ -2579,6 +2579,32 @@ We can describe the unit vectors of a polar coordinate system as follows: \begin
     \hat{\mu}_\theta &= \cos (\theta + \frac{\pi}{2}) \vu{i} + \sin (\theta + \frac{\pi}{2}) \vu{j} = - \sin \theta \vu{i} + \cos \theta \vu{j}\\
 \end{align*}
 
-We thus take $\vec{R} = r \hat{\mu}_r$, and can further write\dots
-% TODO complete polars
+We thus take \begin{align*}
+    \vec{R} &= r \hat{\mu}_r\\
+    \deriv{\vec{R}}{t} &= \deriv{r}{t} \hat{\mu}_r + r\deriv{\hat{\mu}_r}{t}\\
+    \deriv{\hat{\mu}_r}{t} &= \deriv{\hat{\mu}_r}{\theta}\deriv{\theta}{t}\\
+    &= (-\sin \theta \vu{i} + \cos \theta \vu{j}) \deriv{\theta}{t} = \hat{\mu}_\theta \deriv{\theta}{t}\\
+    \implies \vec{v} &= \deriv{\vec{R}}{t} = \deriv{r}{t} \hat{\mu}_r + r \hat{\mu}_\theta \deriv{\theta}{t}\\
+    &\equiv v_r \hat{\mu}_r + r \dot{\theta} \hat{\mu}_\theta = v_r \hat{\mu}_r + v_\theta \hat{\mu}_\theta, \text{ where } v_r = \deriv{r}{t}, v_\theta = r \deriv{\theta}{t}\\
+\end{align*}
+
+For acceleration, we have: \begin{align*}
+    \vec{a} &= \deriv{\vec{v}}{t} = \ddot{r} \hat{\mu}_r + \deriv{\hat{\mu}_r}{t} \dot{r} + \dot{r}\dot{\theta} \hat{\mu}_\theta + r \ddot{\theta} \hat{\mu}_\theta + r \dot{\theta} \deriv{\hat{\mu}_\theta}{t}\\
+    \deriv{\hat{\mu}_r}{t} &= \dot{\theta} \hat{\mu}_\theta, \deriv{\hat{\mu}_\theta}{t} = - \dot{\theta}\hat{\mu}_r\\
+    \implies \vec{a} &= \left[\ddot{r}-r\dot{\theta}^2\right]\hat{\mu}_r + \left[2 \dot{r}\dot{\theta} - r \ddot{\theta}\right]\hat{\mu}_\theta\\
+    &\equiv a_r \hat{\mu}_r + a_\theta \hat{\mu}_\theta, \text{ where } a_r = \ddot{r} - r \dot{\theta}^2, a_\theta = 2 \dot{r} \dot{\theta} - r \ddot{\theta}
+\end{align*}
+
+\subsubsection{Arc Length and Area of Curves with Polars}
+
+From the previous section, we had $\vec{v}=\deriv{r}{t}\hat{\mu}_r +  r \deriv{\theta}{t} \hat{\mu}_\theta$. We can thus write:
+\begin{align*}
+    ||\vec{v}|| &= \sqrt{\left(\deriv{r}{t}\right)^2 + r^2 \left(\deriv{\theta}{t}\right)^2} = \deriv{s}{t}\\
+    \text{d}s &= \text{d}t \sqrt{\left(\deriv{r}{t}\right)^2 + r^2 \left(\deriv{\theta}{t}\right)^2}\\
+    &= \sqrt{\left(\deriv{r}{\theta}\right) + r^2} \,\text{d}\theta
+\end{align*}
+
+The length of the curve between two points (well, angles, specifically) $\alpha$ and $\beta$ would thus be the sum of the changes of arc length between the points, namely \[L = s = \int ds = \int_\alpha^\beta \sqrt{r^2 + \left(\deriv{r}{\theta}\right)}\, \text{d}\theta \equiv \text{ length of curve } r = f(\theta)\]
+
+As shown in previous sections, the area between two curves can be described as a double integral over the region described by the relevant area. In polars, we can write \[A = \int_\alpha^\beta\int_{g(\theta)}^{f(\theta)} r \, \text{d}r\text{d}\theta = \int_{\alpha}^{\beta} \frac{\left[f(\theta)\right]^2 - \left[g(\theta)\right]^2}{2} \, \text{d}\theta\]
 \end{document}
