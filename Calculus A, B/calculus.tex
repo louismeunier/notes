@@ -2490,6 +2490,7 @@ Returning to the earlier definition of $\vec{a}$, we can write;
 
 where, in the final line, $a_T$ and $a_N$ represent the tangential and normal components of acceleration respectively.
 
+NB: the norm of $\vec{a}$ can be written as $||\vec{a}||^2 = a_T^2+a_N^2$, as per the definition of the norm of a vector. This is often a helpful result to find either of the components of $\vec{a}$ when given the other, as often $a_T$ is fairly easy to compute as it only relies on $\deriv{s}{t}$ while $a_N$ relies on knowing $\kappa$.
 \subsubsection{The \texorpdfstring{$\hat{T}, \hat{N}, \hat{B}$}{T, N, B} frame}
 
 Previously, we defined the unit tangent and normal vectors. In order to "complete" our span of $\real^3$, we must define a third vector perpendicular to both of these vectors, viz., \[\hat{B} = \hat{T} \times \hat{N}.\] $\hat{B}$ is called the \textbf{binormal unit vector}. Together, these three vectors form a frame that can be used to describe the motion of along a curve (specifically, a smooth curve...) in space. It differs from the "standard" $\{\vu{i}, \vu{j},\vu{k}\}$ frame as it is not fixed in space; the vectors "follow" the motion of the curve. In addition to this curve, we also briefly define the \textit{radius of curvature}, \[\rho = \frac{1}{\kappa}.\]
@@ -2568,8 +2569,38 @@ From here, we can consider a number of special cases:
 \end{itemize}
 
 % TODO: fix drawing, add more
-A final small note; to determine the direction of $\hat{N}$ along a planar curve, one must consider the curvature; $\hat{N}$ always points towards "inside" of curve, ie, along increasing angle of $\hat{T}$ with the horizontal.
+NB: to determine the direction of $\hat{N}$ along a planar curve, one must consider the curvature; $\hat{N}$ always points towards "inside" of curve, ie, along increasing angle of $\hat{T}$ with the horizontal.
 
+Given the definitions of the $\hat{T}$, $\hat{N}$, and $\hat{B}$ vectors, we can take the span of the combination of any two of these vectors to form a particular plane to a curve. Namely:
+% NORMAL: span of B, N (orthogonal to T)
+% RECTIFYING: span of T, B (orthogonal to N)
+% OSCULATING: span of T, N (orthogonal to B)
+\begin{itemize}
+    \item $\text{span}(\hat{B}, \hat{N}), \, \perp \hat{T}$: \textbf{Normal Plane}
+    \item $\text{span}(\hat{T}, \hat{B}), \, \perp \hat{N}$: \textbf{Rectifying Plane}
+    \item $\text{span}(\hat{T}, \hat{N}), \, \perp \hat{B}$: \textbf{Osculating Plane}
+\end{itemize}
+
+These can be most easily obtained by finding the appropriate orthogonal vector, then finding the plane in question.
+
+\subsubsection{Osculating Circle}
+
+An \textbf{osculating circle} is one that touches a curve at a point, such that it has the same curvature and tangent vector at that point.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.4\textwidth]{misc/osculating.png}
+    \caption{An osculating circle}
+    \label{fig:osculating_circle}
+\end{figure}
+
+Generally, to find the osculating circle of a curve:
+\begin{enumerate}
+    \item Parametrize the curve as $x = x(t)$, $y = y(t)$.
+    \item Find the curvature at the point of interest, $\kappa$; from here, the radius of the circle is simply $\rho = \frac{1}{\kappa}$.
+    \item Find the normal vector ($\hat{N}$) at the point of interest.
+    \item The vector function of the osculating circle is then given by $\vec{R} = \vec{OP} + \rho \hat{N}$, where $\vec{OP}$ is the vector from the origin to the point of interest.
+\end{enumerate}
 
 \subsubsection{Polar Coordinates}
 % TODO: add drawing
@@ -2607,4 +2638,8 @@ From the previous section, we had $\vec{v}=\deriv{r}{t}\hat{\mu}_r +  r \deriv{\
 The length of the curve between two points (well, angles, specifically) $\alpha$ and $\beta$ would thus be the sum of the changes of arc length between the points, namely \[L = s = \int ds = \int_\alpha^\beta \sqrt{r^2 + \left(\deriv{r}{\theta}\right)}\, \text{d}\theta \equiv \text{ length of curve } r = f(\theta)\]
 
 As shown in previous sections, the area between two curves can be described as a double integral over the region described by the relevant area. In polars, we can write \[A = \int_\alpha^\beta\int_{g(\theta)}^{f(\theta)} r \, \text{d}r\text{d}\theta = \int_{\alpha}^{\beta} \frac{\left[f(\theta)\right]^2 - \left[g(\theta)\right]^2}{2} \, \text{d}\theta\]
+
+% TODO: normal plane, rectifying plane, osculating plane
+
+% TODO: radial components of v/a are just dot products with e_r, e_tjheta???
 \end{document}
