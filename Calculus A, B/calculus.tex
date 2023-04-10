@@ -2562,7 +2562,7 @@ From here, we can consider a number of special cases:
     \end{align*}
     It follows that $\rho = a$, ie the radius of curvature of a circle is its radius.
     \item \textbf{Function of $x$}; say we have $y = f(x)$. We can parametrize this curve as $x = t$, $y = f(t)$, and compute the curvature: \begin{align*}
-        \kappa &= \frac{|f'(t) - 0|}{(1 + f'(t)^2)^{3/2}}\\
+        \kappa &= \frac{|f''(t) - 0|}{(1 + f'(t)^2)^{3/2}}\\
         &= \frac{\sderiv{y}{x}}{(1+\left(\deriv{y}{x}\right)^2)^{3/2}}\\
     \end{align*}
     i.e., the curvature in "Cartesian form".
@@ -2626,6 +2626,11 @@ For acceleration, we have: \begin{align*}
     &\equiv a_r \hat{\mu}_r + a_\theta \hat{\mu}_\theta, \text{ where } a_r = \ddot{r} - r \dot{\theta}^2, a_\theta = 2 \dot{r} \dot{\theta} - r \ddot{\theta}
 \end{align*}
 
+NB: to find the radial/circumferential components of velocity/acceleration, we can simply take the dot product of the vector with the appropriate unit vector. For instance: \begin{align*}
+    v_r &= \vec{v} \cdot \hat{\mu}_r; \quad v_\theta = \vec{v} \cdot \hat{\mu}_\theta\\
+    a_r &= \vec{a} \cdot \hat{\mu}_r; \quad a_\theta = \vec{a} \cdot \hat{\mu}_\theta
+\end{align*}
+
 \subsubsection{Arc Length and Area of Curves with Polars}
 
 From the previous section, we had $\vec{v}=\deriv{r}{t}\hat{\mu}_r +  r \deriv{\theta}{t} \hat{\mu}_\theta$. We can thus write:
@@ -2639,7 +2644,4 @@ The length of the curve between two points (well, angles, specifically) $\alpha$
 
 As shown in previous sections, the area between two curves can be described as a double integral over the region described by the relevant area. In polars, we can write \[A = \int_\alpha^\beta\int_{g(\theta)}^{f(\theta)} r \, \text{d}r\text{d}\theta = \int_{\alpha}^{\beta} \frac{\left[f(\theta)\right]^2 - \left[g(\theta)\right]^2}{2} \, \text{d}\theta\]
 
-% TODO: normal plane, rectifying plane, osculating plane
-
-% TODO: radial components of v/a are just dot products with e_r, e_tjheta???
 \end{document}
