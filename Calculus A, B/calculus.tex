@@ -2463,6 +2463,8 @@ where $\hat{T}$ is the \textbf{unit tangent vector}, ie the "vector of change" o
     \implies \vec{a} = \frac{\text{d}\vec{v}}{\text{d}t} &= \frac{\text{d}^2 s}{\text{d}t^2} \hat{T} + \frac{\text{d}s}{\text{d}t} \mathbf{\frac{\textbf{d}\hat{T}}{\textbf{d}t}}
 \end{align*}
 
+\textbf{NB:} $\deriv{s}{t}$ is simply the norm of $\deriv{\vec{R}}{t}$, ie the speed of the object; it points, naturally, in the direction of $\hat{T}$.
+
 Unfortunately, we don't know how $\hat{T}$ changes wrt time, $t$, directly; we can still compute, however, by the following: \begin{align*}
     \deriv{\hat{T}}{t} &= \deriv{\hat{T}}{s} \deriv{s}{t}\\
     \textit{Solving for } \deriv{\hat{T}}{s}: \quad \hat{T} \cdot \hat{T} &= 1\\
@@ -2490,7 +2492,7 @@ Returning to the earlier definition of $\vec{a}$, we can write;
 
 where, in the final line, $a_T$ and $a_N$ represent the tangential and normal components of acceleration respectively.
 
-NB: the norm of $\vec{a}$ can be written as $||\vec{a}||^2 = a_T^2+a_N^2$, as per the definition of the norm of a vector. This is often a helpful result to find either of the components of $\vec{a}$ when given the other, as often $a_T$ is fairly easy to compute as it only relies on $\deriv{s}{t}$ while $a_N$ relies on knowing $\kappa$.
+\textbf{NB:} the norm of $\vec{a}$ can be written as $||\vec{a}||^2 = a_T^2+a_N^2$, as per the definition of the norm of a vector. This is often a helpful result to find either of the components of $\vec{a}$ when given the other, as often $a_T$ is fairly easy to compute as it only relies on $\deriv{s}{t}$ while $a_N$ relies on knowing $\kappa$.
 \subsubsection{The \texorpdfstring{$\hat{T}, \hat{N}, \hat{B}$}{T, N, B} frame}
 
 Previously, we defined the unit tangent and normal vectors. In order to "complete" our span of $\real^3$, we must define a third vector perpendicular to both of these vectors, viz., \[\hat{B} = \hat{T} \times \hat{N}.\] $\hat{B}$ is called the \textbf{binormal unit vector}. Together, these three vectors form a frame that can be used to describe the motion of along a curve (specifically, a smooth curve...) in space. It differs from the "standard" $\{\vu{i}, \vu{j},\vu{k}\}$ frame as it is not fixed in space; the vectors "follow" the motion of the curve. In addition to this curve, we also briefly define the \textit{radius of curvature}, \[\rho = \frac{1}{\kappa}.\]
@@ -2540,6 +2542,14 @@ Using these definitions, any curve $R$ described in terms of $\vu{i}, \vu{j}, \v
 
 \subsubsection{Notes: Helpful Results}
 
+\begin{itemize}
+
+\item \textbf{Arc Length:}
+
+Recall that $\deriv{s}{t}$, the derivative of arc length with respect to time, can be fairly easily found by finding the norm of the velocity vector. Thus, to find the arc length of a curve; \[s(t) = \int_0^t \deriv{s}{\tau} \, \text{d}\tau,\] assuming the curve "starts" at $t = 0$. By extension, the upper/lower limits can be changed to find the arc lengths between any particular points in time.
+
+\item \textbf{Obtaining Curvature:}
+
 We often wish to describe the curvature, $\kappa$, of a curve without necessarily finding all of the derivatives of the vectors in the $\hat{T}, \hat{N}, \hat{B}$ frame. Consider the following: 
 \begin{align*}
     \deriv{\vec{R}}{t} \times \sderiv{\vec{R}}{t} &= \vec{v} \times \vec{a}\\
@@ -2568,13 +2578,21 @@ From here, we can consider a number of special cases:
     i.e., the curvature in "Cartesian form".
 \end{itemize}
 
-% TODO: fix drawing, add more
-NB: to determine the direction of $\hat{N}$ along a planar curve, one must consider the curvature; $\hat{N}$ always points towards "inside" of curve, ie, along increasing angle of $\hat{T}$ with the horizontal.
+\item \textbf{Direction of }$\hat{N}$\textbf{:}
+
+\begin{figure*}[!ht]
+    \centering
+    \includegraphics[width=0.4\textwidth]{./misc/directionofn.png}
+    \caption{The direction of $\hat{N}$ is always along the "inside" of a curve.}
+    \label{fig:normal_direction}
+\end{figure*}
+
+To determine the direction of $\hat{N}$ along a planar curve, one must consider the curvature; $\hat{N}$ always points towards the "inside" of curve, ie, along increasing angle of $\hat{T}$ with the horizontal. See Figure \ref{fig:normal_direction}.
+
+\item \textbf{"Planes":}
 
 Given the definitions of the $\hat{T}$, $\hat{N}$, and $\hat{B}$ vectors, we can take the span of the combination of any two of these vectors to form a particular plane to a curve. Namely:
-% NORMAL: span of B, N (orthogonal to T)
-% RECTIFYING: span of T, B (orthogonal to N)
-% OSCULATING: span of T, N (orthogonal to B)
+
 \begin{itemize}
     \item $\text{span}(\hat{B}, \hat{N}), \, \perp \hat{T}$: \textbf{Normal Plane}
     \item $\text{span}(\hat{T}, \hat{B}), \, \perp \hat{N}$: \textbf{Rectifying Plane}
@@ -2582,6 +2600,11 @@ Given the definitions of the $\hat{T}$, $\hat{N}$, and $\hat{B}$ vectors, we can
 \end{itemize}
 
 These can be most easily obtained by finding the appropriate orthogonal vector, then finding the plane in question.
+
+\item \textbf{Area of a Parametrically Defined Curve:}
+
+Say we have a function defined parametrically as $x = x(t)$, $y = y(t)$. The area under a function $F(x)$ is given: \[A = \int_a^b F(x) \, \text{d}x.\] We can substitute $x(t)$ for $x$, meaning $\text{d}x = \deriv{x}{t} \text{d}t$. We thus have $F(x(t))$, meaning $F$ can simply be written as a function of $t$, which we will take as our $y(t)$. All together, this gives us: \[A = \int_a^b y(t) x'(t) \, \text{d}t\] A similar result can be used to obtain a formula for the volume of a revolved parametrically defined surface.
+\end{itemize}
 
 \subsubsection{Osculating Circle}
 
