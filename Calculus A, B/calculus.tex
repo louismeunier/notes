@@ -49,6 +49,9 @@
 \newcommand{\rational}{\mathbb{Q}}
 \newcommand{\complex}{\mathbb{C}}
 
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
 \setstretch{2.25}
 \noindent
 \begin{center}
@@ -72,6 +75,8 @@
 \newpage
 \pagestyle{mypage}
 \renewcommand{\makefootrule}{\color{gray}\rule[.8\baselineskip]{\linewidth}{0.8pt}}
+
+\part{Single-Variable Calculus}
 \section{Limits}
 \subsection{Tricks for solving limits}
 \setlength\itemsep{5em}
@@ -1618,6 +1623,7 @@ This general method can be used to find the general equation of any curve orthog
     \label{fig:orthogonalcurves}
 \end{figure}
 
+\part{Multivariable Calculus}
 \section{Partial Derivatives and Applications}
 
 \subsection{Introductions/Visualizations}
@@ -2174,6 +2180,21 @@ Solving this set of equations, we get $x = y = 4$. To verify that this is indeed
 \end{align*}
 
 Thus, the point $(4,4)$ is a local minimum of $S$. We can find the length of side $z = \frac{32}{4*4} = 2$, and so the minimum surface area is $S = 4*4 + 2*4*2 + 2*4*2 = 48$.
+
+Testing the types of extrema of a function of more than two variables is slightly trickier, but still uses the aforementioned Hessian matrix (an in fact, the formula above is just a special case of the following "method"). Take a Hessian matrix of a function of $n$ variables: \[\begin{bmatrix}
+    \pd{^2f}{x_1^2} & \pd{^2f}{x_1x_2} & \dots & \pd{^2f}{x_1x_n}\\
+    \pd{^2f}{x_2x_1} & \pd{^2f}{x_2^2} & \dots & \pd{^2f}{x_2x_n}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    \pd{^2f}{x_nx_1} & \pd{^2f}{x_nx_2} & \dots & \pd{^2f}{x_n^2}
+\end{bmatrix}\]
+The $i$th \textbf{principal minor} (denoted $\Delta_i$) of this matrix is the determinant of the matrix formed by the upper left $i$ by $i$ submatrix of this matrix. For instance, we have: \[\Delta_1 = \pd{^2f}{x_1^2}; \quad \Delta_2 = \left|\begin{bmatrix}
+    \pd{^2f}{x_1^2} & \pd{^2f}{x_1x_2}\\
+    \pd{^2f}{x_2x_1} & \pd{^2f}{x_2^2}
+\end{bmatrix}\right|; \quad \Delta_3 = \left|\begin{bmatrix}
+    \pd{^2f}{x_1^2} & \pd{^2f}{x_1x_2} & \pd{^2f}{x_1x_3}\\
+    \pd{^2f}{x_2x_1} & \pd{^2f}{x_2^2} & \pd{^2f}{x_2x_3}\\
+    \pd{^2f}{x_3x_1} & \pd{^2f}{x_3x_2} & \pd{^2f}{x_3^2}
+\end{bmatrix}\right|; \quad \dots\] A particular point is a local \textit{maximum} if $\Delta_1 < 0, \Delta_2 > 0, \Delta_3 < 0, \dots$ (alternating positive/negative) \textit{(ie, the matrix is negative definite)}, and a local \textit{minimum} if $\Delta_1 >0, \Delta_2>0, \dots$ (all positive) \textit{(ie, the matrix is positive definite)}.
 \subsubsection{Least Squares}
 
 % ! Add an image
@@ -2368,6 +2389,7 @@ Similarly to in double integrals, we have \[\text{d}V = \left|\frac{\partial(x,y
     \end{cases},\] where the natural bounds are $0 \leq r \leq \infty$, $0 \leq \theta \leq 2\pi$, and $-\infty \leq z \leq \infty$. The Jacobian is $\frac{\partial(x,y,z)}{\partial(r, \theta, z)} = r$.
 \end{itemize}
 
+\part{Vector Calculus (Brief)}
 \section{Vector Calculus}
 \subsection{Surface Integration}
 \begin{figure}[!ht]
@@ -2626,7 +2648,6 @@ Generally, to find the osculating circle of a curve:
 \end{enumerate}
 
 \subsubsection{Polar Coordinates}
-% TODO: add drawing
 
 We can describe the unit vectors of a polar coordinate system as follows: \begin{align*}
     \hat{\mu}_r &= \cos \theta \vu{i} + \sin \theta \vu{j}\\
