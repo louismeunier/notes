@@ -2294,7 +2294,7 @@ Other than the obvious (finding the area of an arbitrary region in the $x,y$-pla
 \end{figure}
 
 Consider a vector function $\vec{R} = \vec{R}(\vec{u}, \vec{v})$, as well as figure \ref{fig:coordinate_transformations}. The gradient of this function, $\vec{\nabla R}$, is given by \[\vec{\nabla R} = \pd{R}{u} \hat{u} + \pd{R}{v} \hat{v},\] in the base $\{\hat{u}, \hat{v}\}$. The region formed by the $\hat{u}$ and $\hat{v}$ vectors to "add up" to $\vec{\nabla R}$ can be extended (as shown). Consider that the vectors $\hat{u}$ and $\hat{v}$ are changing at rates $\text{d}u$ and $\text{d}v$, respectively; thus, the area ($A$) of this parallelogram would also be changing accordingly (using the general formula for the area of a parallelogram defined via vectors); \begin{align*}
-    dA &= ||\pd{R}{u}\text{d}u  \times \pd{R}{v}\text{d}v||\\
+    \text{A} &= ||\pd{R}{u}\text{d}u  \times \pd{R}{v}\text{d}v||\\
     &=  ||\pd{R}{u} \times \pd{R}{v}||\text{d}u \text{d}v\\
     &= \text{det}\begin{bmatrix}
         \hat{i} & \hat{j} & \hat{k}\\
@@ -2304,7 +2304,7 @@ Consider a vector function $\vec{R} = \vec{R}(\vec{u}, \vec{v})$, as well as fig
     &= |\frac{\partial(x,y)}{\partial(u,v)}|\,\text{d}u \text{d}v
 \end{align*}
 
-Thus, $\text{d}A$ is simply (or not so simply?) the determinant of the Jacobian matrix of the relevant variables of transformation. In practice, this means \[\iint_D f(x,y) dA = \iint_{D'} f(x(u,v), y(u,v))\, |\frac{\partial(x,y)}{\partial(u,v)}|\,\text{d}u \text{d}v,\] where $D'$ is a region in the $u,v$-plane.
+Thus, $\text{d}A$ is simply (or not so simply?) the determinant of the Jacobian matrix of the relevant variables of transformation. In practice, this means \[\iint_D f(x,y) \text{d}A = \iint_{D'} f(x(u,v), y(u,v))\, |\frac{\partial(x,y)}{\partial(u,v)}|\,\text{d}u \text{d}v,\] where $D'$ is a region in the $u,v$-plane.
 
 One of the most common coordinate transformations is the polar coordinate system, where $x(r,\theta) = r \cos (\theta)$ and $y(r, \theta) = r \sin(\theta)$. We can also more "formally" say that $\vec{R}(r, \theta) = r \cos \theta \hat{i} + r \sin \theta \hat{j}$. Working out the Jacobian, we get \begin{align*}
     \text{d}A = |\frac{\partial(x,y)}{\partial(r,\theta)}| &= \text{det}\begin{bmatrix}
@@ -2320,7 +2320,7 @@ An often-helpful theorem when working with coordinate transformations is as foll
     Two functions $u(x,y)$ and $v(x,y)$ are functionally related as \[\Phi(u, v) = 0 \iff \pd{(u,v)}{(x,y)} = 0.\]
 \end{theorem}
 
-Note too that $\frac{\partial(x,y)}{\partial(u,v)} = \frac{\partial(u,v)}{\partial(x,y)}$; practically, this means that (depending on what is easiest to do), we can either rewrite $u$ and $v$ in terms of $x$ and $y$ then find the Jacobian, or we can find the Jacobian and then rewrite $u$ and $v$ in terms of $x$ and $y$.
+Note too that $\frac{\partial(x,y)}{\partial(u,v)} = 1/\frac{\partial(u,v)}{\partial(x,y)}$; practically, this means that (depending on what is easiest to do), we can either rewrite $u$ and $v$ in terms of $x$ and $y$ then find the Jacobian, or we can find the Jacobian and then rewrite $u$ and $v$ in terms of $x$ and $y$.
 \subsubsection{Gaussian Integral}
 
 Consider the integral $I = \int_0^{\infty} e^{-x^2} \,\text{d}x$. We can also state that $I = \int_{0}^{\infty} e^{-y^2} \,\text{d}y$, and write: \begin{align*}
