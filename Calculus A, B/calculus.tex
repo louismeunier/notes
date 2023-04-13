@@ -2331,7 +2331,7 @@ Consider the integral $I = \int_0^{\infty} e^{-x^2} \,\text{d}x$. We can also st
 We can then rewrite this in polar coordinates ($x = r\cos \theta$, $y = r\sin\theta$);
 % ! fix, think I messed it up
 \begin{align*}
-    &= \frac{1}{2}\int_{0}^{\infty}\int_{0}^{\pi} e^{-(r^2\cos^2 \theta+r^2\sin^2\theta)} r\, \text{d}\theta\text{d}r\\
+    &= \int_{0}^{\infty}\int_{0}^{\frac{\pi}{2}} e^{-(r^2\cos^2 \theta+r^2\sin^2\theta)} r\, \text{d}\theta\text{d}r\\
     &= \frac{\pi}{2} \int_{0}^{\infty}r e^{-r^2} \,\text{d}r\\
     &= -\frac{\pi}{4}\left[e^{-r^2}\right]_0^{\infty} = \frac{\pi}{4}
 \end{align*}
