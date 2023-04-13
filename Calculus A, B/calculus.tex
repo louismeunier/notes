@@ -2045,11 +2045,11 @@ If we consider $A$ as the matrix of coefficients of the system and $B$ as the ma
             \beta & d
         \end{bmatrix}
         \quad\\
-        x &= \frac{d\alpha - b\beta}{ad - cb} = \frac{det(B)}{det(A)}
+        x &= \frac{d\alpha - b\beta}{ad - cb} = \frac{\det(B)}{\det(A)}
     \end{split}
 \end{equation}
 
-Cramer's Rule in general states that for an equation $Ax = b$, $x_i = \frac{det(B_i)}{det(A)}$, where $B_i$ is the matrix with the $i^{th}$ column of $A$ replaced with $b$ and $x_i$ is the $i^{th}$ variable in the equation(s). See \hyperref{http://notes.louismeunier.net/Linear%20Algebra/linearalgebra.pdf}{}{}{here} for more Linear Algebra.
+Cramer's Rule in general states that for an equation $Ax = b$, $x_i = \frac{\det(B_i)}{\det(A)}$, where $B_i$ is the matrix with the $i^{th}$ column of $A$ replaced with $b$ and $x_i$ is the $i^{th}$ variable in the equation(s). See \hyperref{http://notes.louismeunier.net/Linear%20Algebra/linearalgebra.pdf}{}{}{here} for more Linear Algebra.
 
 \subsubsection{Using Cramer's Rule to Derive the Jacobian Matrix}
 
@@ -2528,7 +2528,7 @@ The Frenet-Serret Equations describe the relationship between the derivatives of
 Consider $\hat{B} = \hat{T} \times \hat{N}$. Taking the derivative wrt arc length: \begin{align*}\deriv{\hat{B}}{s} &= \deriv{\hat{T}}{s} \times \hat{N} + \hat{T} \times \deriv{\hat{N}}{s}\\
     &= \kappa \hat{N} \times \hat{N} + \hat{T} \times \deriv{\hat{N}}{s}\\
     &= 0 + \hat{T} \times \deriv{\hat{N}}{s}\\
-    \hat{T} \parallel \deriv{\hat{N}}{s} &\implies \deriv{\hat{B}}{s} \perp \hat{T}
+    &\implies \deriv{\hat{B}}{s} \perp \hat{T}
 \end{align*}
 
 We now know that $\deriv{\hat{B}}{s}$ is perpendicular to $\hat{T}$; however, this is rather ambiguous, as this could really be in any of four directions (albeit some we can intuitively rule out). To clear this up, we can use a similar "trick" as before, and consider the derivative of the dot product of $\hat{B}$: \begin{align*}
@@ -2542,7 +2542,7 @@ Finally, we seek to find $\deriv{\hat{N}}{s}$. We know $\hat{N} = \hat{B} \times
     \deriv{\hat{N}}{s} &= \deriv{\hat{B}}{s}\times\hat{T} + \hat{B}\times \deriv{\hat{T}}{s}\\
     &= (2) \times \hat{T} + \hat{B} \times (1)\\
     &= -\tau \hat{N} \times \hat{T} + \hat{B} \times \kappa \hat{N}\\
-    &= \tau \hat{B} - \kappa \hat{N}, \qquad (3)\\
+    &= \tau \hat{B} - \kappa \hat{T}, \qquad (3)\\
 \end{align*}
 where each step is justified by the earlier definitions as well as the fundamental workings of the cross product of two vectors.
 
