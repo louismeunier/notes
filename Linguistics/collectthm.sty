@@ -1,0 +1,178 @@
+% from https://tex.stackexchange.com/questions/224408/how-to-defer-content-to-a-later-part-of-the-document/224429#224429
+% usage:
+% \newtheoremx{definition}{Definition}
+% % create thm as normal
+% % to print all theorems:
+% \printtheorems
+% % note that this may require compiling twice to work properly
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{xparse}
+
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\newtheoremx}{smomo}
+ {
+  \IfBooleanTF{#1}
+   {
+    \printthm_nonumber:nn { #2 } { #4 }
+   }
+   {
+    \printthm_number:nnnn { #2 } { #3 } { #4 } { #5 }
+   }
+ }
+
+\cs_new_protected:Nn \printthm_nonumber:nn
+ {
+  \newtheorem*{#1@inner}{#2}
+  \NewDocumentEnvironment{#1}{ o +b }
+   {
+    % start the inner environment (without or with optional argument)
+    \IfNoValueTF { ##1 }
+     { \begin{#1@inner} }
+     { \begin{#1@inner}[##1] }
+    % typeset the statement
+    ##2
+    % end the inner environment
+    \end{#1@inner}
+    % store the statement in a sequence variable, actually as
+    % four arguments as shown
+    \seq_gput_right:Nx \g_riccardo_theorems_seq
+     {
+      *
+      { #1 } % name
+      { } % number
+      \tl_if_novalue:nF { ##1 } { [\exp_not:n { ##1 }] } % attribution
+      { \exp_not:n { ##2 } } % body
+     }
+   }
+   {}
+ }
+
+\cs_new_protected:Nn \printthm_number:nnnn
+ {
+  % * Let's duplicate the working of \newtheorem; \newtheoremx should
+  %   be used for theorems that need to be listed
+  % * \newtheoremx{theorem}{Theorem} will actually do
+  %   \newtheorem{theorem@inner}{Theorem} (honoring the usual optional arguments)
+  % * We also need a property list to store along with the theorem
+  %   the one which it is subordinate to
+  \tl_if_novalue:nTF { #2 }
+   {
+    \tl_if_novalue:nTF { #4 }
+     {
+      % ! right here
+      % \newtheorem{#1@inner}{#3}
+      \declaretheorem[thmbox=M, name=#3]{#1@inner}
+     }
+     {
+      % \newtheorem{#1@inner}{#3}[#4]
+      % probably need to change something here?
+      \declaretheorem[thmbox=M,name=#3]{#1@inner}
+     }
+    % #1 is not subordinate, store the name itself
+    \prop_gput:Nnn \g_riccardo_theorems_prop { #1 } { #1 }
+    \seq_gput_right:Nn \g_riccardo_theorems_counters_seq { #1 }
+   }
+   {
+    % idk what 2 is
+    \newtheorem{#1@inner}[#2@inner]{#3}
+    % \declaretheorem[thmbox=M, name=#3]{#1@inner}
+    % #1 is subordinate to #2
+    \prop_gput:Nnn \g_riccardo_theorems_prop { #1 } { #2 }
+   }
+  % define a "grabbing" environment #1 with the usual features 
+  \NewDocumentEnvironment{#1}{ o +b }
+   {
+    % start the inner environment (without or with optional argument)
+    \IfNoValueTF{##1}
+     { \begin{#1@inner} }
+     { \begin{#1@inner}[##1] }
+    % save the statement number
+    \tl_gset:Nx \g__riccardo_theorems_number_tl { \use:c {@currentlabel} }
+    % typeset the statement
+    ##2
+    % end the inner environment
+    \end{#1@inner}
+   % store the statement in a sequence variable, actually as
+   % four arguments as shown
+   \seq_gput_right:Nx \g_riccardo_theorems_seq
+     {
+      { #1 } % name
+      { \g__riccardo_theorems_number_tl } % number
+      \IfValueT{##1}{ [\exp_not:n { ##1 }] } % attribution
+      { \exp_not:n { ##2 } } } % body
+    }
+    {}
+ }
+
+% allocate the needed variables
+\prop_new:N \g_riccardo_theorems_prop
+\seq_new:N \g_riccardo_theorems_seq
+\tl_new:N \g__riccardo_theorems_number_tl
+\iow_new:N \g_riccardo_theorems_stream
+\seq_new:N \g_riccardo_theorems_counters_seq
+
+% print the stored theorems
+\NewDocumentCommand{\printtheorems}{}
+ {
+  % we need a group where nullifying the action of \label
+  \group_begin:
+  \cs_set_eq:NN \label \use_none:n
+  % map the sequence, passing each item to the function that prints a theorem
+  \file_if_exist_input:n { \c_sys_jobname_str.thl }
+  % end the group
+  \group_end:
+  \seq_map_inline:Nn \g_riccardo_theorems_counters_seq
+   {
+    \setcounter{##1@inner}{0}
+   }
+ }
+
+\cs_new_protected:Nn \riccardo_theorems_save:
+ {
+  \seq_map_function:NN \g_riccardo_theorems_seq \__riccardo_theorems_save:n
+ }
+\cs_new_protected:Nn \__riccardo_theorems_save:n
+ {
+  \iow_now:Nn \g_riccardo_theorems_stream
+   {
+    \savedtheorem #1
+   }
+ }
+\AtEndDocument
+ {
+  \iow_open:Nn \g_riccardo_theorems_stream { \c_sys_jobname_str.thl }
+  \riccardo_theorems_save:
+  \iow_close:N \g_riccardo_theorems_stream
+ }
+
+\NewDocumentCommand{\savedtheorem}{smmom}
+ {
+  % redefine \the<statement>@inner to yield the stored number
+  % we use the property list to use the correct counter
+  % (for instance, in case of "lemma", <statement> will be "theorem"
+  \IfBooleanTF{#1}
+   {
+    \IfNoValueTF{#4}
+     {\begin{#2@inner}#5\end{#2@inner}}
+     {\begin{#2@inner}[#4]#5\end{#2@inner}}
+   }
+   {
+    \cs_set:cpn { the \prop_item:Nn \g_riccardo_theorems_prop {#2} @inner } { #3 }
+    \IfNoValueTF{#4}
+     {
+      % no attribution
+      \begin{#2@inner} #5 \end{#2@inner}
+     }
+     {
+      % attribution
+      \begin{#2@inner}[#4] #5 \end{#2@inner}
+     }
+   }
+ }
+
+\ExplSyntaxOff

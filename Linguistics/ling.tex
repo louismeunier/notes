@@ -1,0 +1,1262 @@
+\documentclass[12pt]{article}
+% packages
+\usepackage[margin=0.4in, bottom=0.6in]{geometry}
+\usepackage[skip=5pt plus1pt, indent=15pt]{parskip}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{newtxtext, newtxmath}
+\usepackage{titling}
+\usepackage{setspace}
+\usepackage{titleps}
+% \usepackage{libertine}
+\usepackage[x11names]{xcolor}
+\usepackage{tipa}
+\let\openbox\relax
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{cancel}
+\usepackage[]{csquotes}
+% \usepackage{collectthm}
+\usepackage{thmtools}
+\usepackage{forest}
+\usepackage[createShortEnv]{proof-at-the-end}
+
+\renewcommand*{\proofname}{}
+
+\declaretheorem[thmbox=S,name=Definition]{definition}
+\newEndThm[no proof here, restate]{definitionEnd}{definition}
+% \newcommand{\defautorefname}{definition}
+
+
+% \newtheoremx{definition}{Definition}
+% \newtheoremx*{theorem*}{Theorem}
+
+\usepackage[colorlinks=true, linkcolor=violet]{hyperref}
+\usepackage{qtree}
+
+% settings
+\setlength{\droptitle}{-6em}
+\onehalfspacing
+\renewcommand{\contentsname}{\large{Contents}}
+\MakeOuterQuote{"}
+
+\thispagestyle{empty}
+\begin{document}
+\setstretch{2.25}
+\noindent
+\begin{center}
+    \begin{tabularx}{\textwidth} { 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedleft\arraybackslash}X}
+    \LARGE \textbf{LING201} & \LARGE \textbf{Winter 
+    '23}\\
+    \LARGE Louis Meunier \\
+    \end{tabularx}\\
+    \rule[2ex]{0.9\textwidth}{1pt}
+\end{center}
+\setstretch{1.25}
+\parskip=0.75em
+
+{
+  \hypersetup{linkcolor=violet}
+  \tableofcontents
+}
+
+\newpage
+\section{Introductions/Overview}
+
+\subsection{Descriptivism vs Prescriptivism}
+
+\textbf{Linguists} aim to study how language(s) are \textit{actually} used, rather than how they \textit{should} be used. The difference between these two "forms" of study are as follows:
+
+\begin{itemize}
+  \item \textbf{Descriptivism}: describing how language is actually used
+  \item \textbf{Prescriptivism}: describing how language \textit{should} be used (think of grammar rules, standardizing spelling, etc)
+\end{itemize}
+
+In studying language this way, linguists do not need to fluently speak the language they are studying, and instead can rely purely on the patterns and regularity (ie, implicit grammar) of said language to make their observations.
+
+\subsection{Subfields}
+
+\begin{itemize}
+  \item \textbf{Phonetics}: the study of speech sounds
+  \item \textbf{Phonology}: the study of sound systems
+  \item \textbf{Morphology}: the study of internal word structure
+  \item \textbf{Historical}: the study of how languages change over time
+  \item \textbf{Typology}: the study of how languages vary/differ
+  \item \textbf{Syntax}: the study of word order and sentence structure
+  \item \textbf{Semantics}: the study of linguistic meaning
+  \item \textbf{Pragmatics}: the study of language use
+\end{itemize}
+
+\section{Phonetics}
+
+\begin{definitionEnd}[Phonetics]
+  The study of speech sounds
+\end{definitionEnd}
+\subsection{Preliminaries}
+
+Before studying phonetics, its important to understand the \textbf{speech chain}, or the process by which speech is (at a subconscious level) produced, and perceived.
+
+% ! TODO: add a picture of the speech chain
+
+From here, we can subdivide speech sounds into three processes:
+
+\begin{itemize}
+  \item \textbf{articulatory process:} air stream movements, phonation, and articulation
+  \item \textbf{acoustic process:} vibration of air
+  \item \textbf{perceptual process:} auditory processes and mental categorization
+\end{itemize}
+
+Speech can be considered to be a \textit{continuous} stream of sound, but in order to effectively study it, linguistcs subdivide it into discrete speech "units", or "segments". These segments are the smallest units of speech that can be distinguished by the human ear. The standard "collection" of all these segments is called the \textbf{International Phonetic Alphabet} (IPA), which charts all possible (or, rahter, considered possible) distinguishable sounds that humans can produce. The following sections will essentially be a brief overview of the IPA, how it is organized, and the information it contains. 
+
+Before getting into the IPA, it is important to understand the general \textbf{articulatory phonetics} by which humans produce speech. These can be broken down as follows:
+
+\begin{enumerate}
+  \item \textbf{airstream mechanism:} sound is either produced \textit{egressively} (exhaling), or \textit{ingressively} (inhaling; much rarer)
+  \item \textbf{phonation:} this step is all about the \textit{larynx}, a complex structure containing the \textit{vocal folds} and the \textit{glottis} (the gap through which air can pass). As air passes through the larynx, the vocal folds vibrate, creating a buzzing sound that eventually becomes speech.
+  
+  At this stage, the \textit{glottal state}, or the configuration of the glottis, is the primary modifier of the air, and as a result, the sound:
+
+  \begin{itemize}
+    \item \textbf{voiceless:}\begin{itemize}
+      \item vocal folds \textit{apart}, glottis \text{wide}
+      \item no vibration of vocal folds
+      \item denoted with a \textipa{\r*c}
+    \end{itemize}
+    \item \textbf{modal:}\begin{itemize}
+      \item vocal folds \textit{somewhat close}, such that as air comes through, the glottis opens and closes \textit{quickly}
+      \item the vibration of the folds changes the frequency of the resulting speech
+    \end{itemize}
+    \item \textbf{creaky:}\begin{itemize}
+      \item vocal folds \textit{compressed} and \text{slack}, vibrating slowly and irregularly
+      \item this results in a lower pitch
+      \item \textit{in English, this voice does not distinguish speech, but does have social implications}
+      \item denoted with \textipa{\~*c}
+    \end{itemize}
+    \item \textbf{breathy:}\begin{itemize}
+      \item aka "murmur"
+      \item vocal folds \textit{together}, but further than in modal
+      \item \textit{in English, this voice does not distinguish speech, but does have social implications}
+      \item denoted with \textipa{\"*c}
+    \end{itemize}
+  \end{itemize}
+  \item \textbf{filtering sound:} the upper vocal tract \textit{filters} sound from the vocal folds by modifying the shape of different \textit{articulators}. This is where the difference between vowels and consonants becomes clear. In general: \begin{itemize}
+    \item \textbf{consonants} have a \textbf{completely/partially closed} v.t., \textbf{no/turbulent} airflow, and \textbf{less energy}
+    \item \textbf{vowels} have an \textbf{open} v.t., \textbf{laminar} airflow, and \textbf{more energy}
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Describing Consonants}
+
+\begin{definitionEnd}[Consonant]
+  A speech sound created via a closure (partial/complete) of the vocal tract.
+\end{definitionEnd}
+
+\subsubsection{Articulators}
+Consonants are made and differentiated based off of the movement of the \textbf{upper v.t.} (containing the oral and nasal cavities). The relevant parts, called \textbf{articulators}, are as follows:
+
+\begin{itemize}
+  \item \textbf{active:} in movement \begin{itemize}
+    \item tongue
+    \item bottom lip
+  \end{itemize}
+  \item \textbf{passive:} destination of active articulators \begin{itemize}
+  \item top lip
+  \item teeth
+  \item alveolar ridge
+  \item palate
+  \item velum
+  \item uvula
+  \item back of pharyngeal wall
+  \end{itemize}
+\end{itemize}
+\subsubsection{Parameters}
+% ! TODO: add relevent chart and description of how ipa chart organizes these
+\begin{itemize}
+  \item \textbf{voicing:}\begin{itemize}
+    \item \textit{voiced:} vocal folds together $\to$ vibration
+    \item \textit{voiceless:} vocal folds apart $\to$ no vibration
+  \end{itemize}
+  \item \textbf{place of articulation:} where the sound "comes" from, generally described by where the tongue is/is moving to.
+  (\textit{bilabial, labiodental, interdental alveolar, alveopalatal, palatal, velar, uvular, pharyngeal, glottal})
+  \item \textbf{manner of articulation:} "how closed is closed"; subdivided based on how much constriction is present: \begin{itemize}
+    \item \textbf{stop} or \textit{plosive}: a complete constriction. Stages: approach $\to$ hold $\to$ release
+    
+    In English, stops are often \textit{aspriated}, meaning that the stop is followed by a burst of air. This is denoted with a superscript "h", ie [p] becomes [p\textsuperscript{h}].
+
+    \item \textbf{fricatives:} narrow constriction and high air volume. 
+    
+    % ! TODO: add symbol for affricate
+    Within this, there are also \textbf{affricates}: a stop + fricative combination, denoted with a bar: [t \textipa{S}] becomes [\textipa{\t{t\textipa{S}}}].
+
+    \item \textbf{nasals:} produced by directing air through the nasal cavity, by lowering the velum.
+    \item \textbf{approximants, laterals:} "blur" between consants and vowles, created by drastically changing the the oral cavity resonator
+    
+    includes \textbf{glides:} "semi-vowels", such as [j], [w]; very similar to vowels, but with slightly more constriction
+  \end{itemize}
+\end{itemize}
+
+\subsection{Describing Vowels}
+\begin{definitionEnd}[Vowel]
+  A speech sound created via an open vocal tract.
+\end{definitionEnd}
+Articulatorily:
+\begin{itemize}
+  \item resonant
+  \item very open v.t.
+  \item (mostly) all voiced
+  \item articulated with the tongue body
+\end{itemize}
+
+Acoustically:
+\begin{itemize}
+  \item louder than consonants
+  \item resonant frequencies
+\end{itemize}
+
+\subsubsection{Source Filter Theory}
+
+While consonants differ \textit{articulatorily}, vowels differ \textit{accoustically}; ie, by different resonant frequencies. These frequences are determined by the shape of the v.t., the \textbf{filter}, which modify the air from the \textbf{source}, the glottal state. 
+
+\subsubsection{Differentiating Vowels}
+
+The primary ways that vowels are described on the IPA are as follows: \begin{itemize}
+  \item \textbf{height:} how high the tongue is in the mouth. The height of a vowel also determines the "closeness" of the vowel: a "high" vowel is "close", while a "low" vowel is "open".
+  \item \textbf{backness:} how far back the tongue is in the mouth
+  \item \textbf{roundedness:} how rounded the lips are
+\end{itemize}
+
+In some languages, vowels are further differentiated by whether they are \textbf{oral or nasal} (such as in French; nasal vowels are denoted with a tilde, ie [e] becomes [$\tilde{e}$]), and their \textbf{length} (longer vowels are denoted with a colon, ie [a] becomes [a:]).
+
+\subsubsection{Monophthongs vs Diphthongs}
+
+\begin{definitionEnd}[Monophthong]
+  A single vowel sound, with the position of articulators remaining constant.
+\end{definitionEnd}
+
+\begin{definitionEnd}[Diphthong]
+  A sound made of a sequence of vowel-glide/glide-vowel, with a noticable change in the articulators. Note that despite being denoted with two symbols, diphthongs are still a single sound segment. These include sounds like the Canadian English front mid-high vowel, [ej].
+\end{definitionEnd}
+% ! TODO: add chart to show how ipa is laid out
+
+\subsection{Suprasegmentals}
+\begin{definitionEnd}[Suprasegmental]
+  Suprasegmentals are sounds that are not segments, but are still phonetically relevant. They can distinguish meanings in certain languages as well.
+\end{definitionEnd}
+
+\begin{itemize}
+  \item \textbf{stress:} making a particular syllable(s) more prominent in a word, ie, stressed. In English, this can affect meaning, lexically; consider "insult" (verb) vs "insult" (noun), where there is a clear difference in stress.
+  
+  % Stress is denoted with a [\textipa{"}] for primary stress, and [\textipa{"}] for secondary stress.
+
+  \item \textbf{tone:} differing pitch to distinguish meaning. At the simplest level, this involves making a low, mid, or high pitch, but can be more complex (such as in Mandarin, which has combinations of these simpler tones).
+  
+  There also exists \textbf{intonation}; when a pitch is associated with a particular stress syllable, this is called \textbf{pitch accent}; when a pitch is associated with the edge of an utterance, this is called \textbf{boundary tone}.
+
+  \item \textbf{rhotacization:} an "r" coloring of a vowel, denoted  [\textipa{e\textrhoticity}] (such as in the last sound of "after")
+  % ! TODO: figure out how to encode symbol...
+\end{itemize}
+
+\section{Phonology}
+\begin{definitionEnd}[Phonology]
+  The study of the mentally represented categories of speech sounds; an \textbf{abstract representation} of sounds. 
+\end{definitionEnd}
+\subsection{Distribution}
+\begin{definitionEnd}[Contrastive Distribution]
+  Two sounds are contrastive if replacing one with the other changes the meaning of the word. For instance, [t\textsuperscript{h}] and [d] are (in English) both found at the beginning of words, and which we "pick" affects the meaning.
+\end{definitionEnd}
+
+\begin{definitionEnd}[Complementary Distribution]
+  Two sounds are complementary if they are not found in the same phonological environment. In other words, the environment that a particular sound is used in determines which sound is used. For instance, in English, [t] is only found "within" words, so the sound at the beginning of words is [t\textsuperscript{h}]; these two sounds are in complementary distribution.
+\end{definitionEnd}
+
+When we say that words are either contrastive or complementary, we can equivalently say that they are either \textbf{phonemes} or \textbf{allophones}. Specifically, a \textbf{phoneme} is a sound that is needed to distinguish words, and are transcribed with /\dots/. Phonemes can be considered as described how a sound is "thought of". 
+An \textbf{allophone} is a sound that is contextually predictable, transcribed with [\dots]. Allophones are considered as how a sound is "actually produced".
+More specifically, we can describe two ways of transcription; \textbf{phonemic}:\begin{itemize}
+  \item transcribe only info containing meaning
+  \item ex, /paj/
+\end{itemize}
+and \textbf{phonetic}: \begin{itemize}
+  \item transcribe all info (more specific)
+  \item can be broad (ex [paj]) or more narrow (ex [p\textsuperscript{h}aj:])
+  \item in narrow transcription, we use \textbf{diacritics} to denote the exact pronunciation of a sound
+\end{itemize}
+
+\subsection{Evidence for Phonemes}
+\begin{definitionEnd}[Minimal Pair]
+  A pair of words that differ by only one phoneme, and are contrastive.
+\end{definitionEnd}
+
+\subsection{Phonological Rules}
+
+We can state a rule to derive the expected variant of an allophone in a particular phrase/word. These require:
+\begin{enumerate}
+  \item \textbf{Underlying Representation (UR)}: the "memorized" or lexically stored form of the word, \textit{phonemically} transcribed, ie /l/ is the UR of [l], [\textltilde], and [\textipa{\r*l}].
+  \item \textbf{Surface Form (SF)}: the phonetic representation of a sound
+  \item \textbf{Context}: the context in which a sound is pronounced a particular way.
+\end{enumerate}
+
+How do we get from the phonemic representation to the surface form ("actual" pronunciation)? We have to write a rule, specifying how a phoneme is pronounced in a given context.
+
+For instance; if /l/ is at the end of a syllable, it becomes [\textltilde], and it becomes [\textipa{\r*l}] after a voiceless consonant; we don't necessarily have to write a rule for every possible context, and the default assumed context is simply [l]
+
+Formally, linguists use the following notation:
+\[\text{/A/} \rightarrow \text{[B]} / \text{X\_Y}\]
+
+Where A is the input (UR), B is the output (SF), and X\_Y is the context, or "conditioning rule". For instance, with the English /l/ from above, we could say:
+\[\text{/l/}\rightarrow\text{[\textltilde] / \text{"voiceless consonant"}}\]
+
+
+Note that, when we write phonological rules like this, it is important to include a \textbf{useful name}, \textbf{description}, and then the \textbf{formal rule}. For instance:
+\begin{itemize}
+  \item \textbf{Name:} North American Flapping
+  \item \textbf{Description:} /t,d/ become flaps when between stressed and unstressed vowels
+  \item \textbf{Rule:}\[\text{/\textipa{t},\textipa{d}/}\rightarrow \text{[\textipa{R}]}/\text{'stressed vowel' \_ 'unstressed vowel'}\]
+\end{itemize}
+\begin{itemize}
+  \item \textbf{Name:} Canadian Raising
+  \item \textbf{Description:} /aj/ and /aw/ are raised (become [\textipa{2}j] and [\textipa{2}w]) when after voiceless consonants
+  \item \textbf{Rule:}\[\text{/aj/,/aw/}\rightarrow\text{[\textipa{2}j], [\textipa{2}w]} / \text{\_ "voiceless consonants"}\]
+\end{itemize}
+
+\subsection{Syllables}
+\begin{definitionEnd}[Syllable]
+  Phonological unit that groups consonants and vowels into larger structures, forming the basis for \textbf{metrical structure} (ie, rhythm). They typically consist of a vowel preceded and/or followed by a number of consonants, and can be denoted by \texttt{CVC}, \texttt{CCVC}, etc.
+\end{definitionEnd}
+
+Many phonological processes are sensitive to syllable structure; for instance, stops are aspirated (in english) when they start syllables which are word-initial or stressed.
+
+Some languages have more inclusive/exclusive possible syllable structures than others, which can affect learning the language or how loanwords are modified. For instance:
+\begin{itemize}
+  \item Hawaiian has a strict (C)V pattern
+  \item Korean has a (C)V(C) pattern
+  \item French has a (C)(C)V(C)(C) pattern
+\end{itemize}
+\subsubsection{Internal Structure of Syllables}
+
+Syllables are \textbf{not just} flat sequences  of segments.
+\begin{itemize}
+  \item \textbf{Onset}: all pre-nuclear consonants; they are optional in many languages. In English, they can get rather complex.
+  \item \textbf{Rhyme}, or \textbf{rime}: important for stress-assignment, and create the rhythm of a word.
+  \begin{itemize}
+    \item \textbf{Nucleus}: the "core" of the syllable, and is usually a vowel; in English, /n,l, \textturnr (\*r)/ can also be used, and are denoted with a diacritic .
+     % TODO figure out why diacritics and other unicode characters don't work
+    \item \textbf{Coda}: all post-nuclear consonants; they are optional in many languages. In English, they can get rather complex.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Syllabification}
+
+\begin{definitionEnd}[Syllabification]
+  The process of dividing a word into syllables.
+\end{definitionEnd}
+
+\begin{center} 
+\begin{tikzpicture}
+  \node {$\sigma$ (syllable)}
+    child {node {Onset}}
+    child {
+      node {Rhyme}
+      child {node {Nucleus}}
+      child {node {Coda}}  
+    };
+  \end{tikzpicture}
+\end{center}
+
+\begin{enumerate}
+  \item \textbf{Nucleus formation}: find the nuclei in the syllable. For the most part, is is simply the vowel in the syllable.
+  \item \textbf{Onset formation}: simply the consonants before the nucleus
+  \item \textbf{Coda formation}: (if it exists), simply the consonants after the nucleus
+  \item \textbf{Rhyme formation}: group the nucleus and coda together
+\end{enumerate}
+
+In some multi-syllabic word, it may be difficult to distinguish an onset vs coda. In these cases, we use the following principles:
+\begin{itemize}
+  \item \textbf{Maximum Onset Principle}: assign as many consonants to onset as possible
+  \item \textbf{Sonority Contour Principle}: \textit{sonority} (constriction degree in oral tract) rises before the nucleus and declines after the nucleus. The typical hierarchy is as follows: \[\text{vowels} > \text{glides} > \text{liquids} > \text{nasals} > \text{obstruents}\]
+  \item \textbf{Binarity Principle}: for most languages, codas and onsets contain at \textbf{most} 2 segments.
+\end{itemize}
+\subsection{Natural Classes}
+
+When we look across languages, we find patterns in which sounds occur together in stating rules; for instance, we expect to find rules applying to /p,t,k/, but not to /p,g,n,i/. This observation is formalized as \textbf{natural classes}.
+\begin{definitionEnd}[Natural Class]
+  Group of sounds with similar phonological properties, \textbf{within} a language; groups will differ across languages.
+\end{definitionEnd}
+
+Phonological process often involve natural classes, allowing us to make more general rules about a larger group of sounds rather than individual sounds.
+
+\subsection{Derivation Tables}
+
+\textbf{Derivation tables} allow use to show the effect of rules in representative contexts. They contain particular words/sounds, a set of rules, and their output based off the effect of the rules. For instance:
+% table with 3 columns
+
+\begin{center}
+\begin{tabular}{c|c c}
+  \textbf{UR} & \textbf{'mice' }\text{(/majs/)} & \textbf{'time' } \text{(/tajm/)} \\
+  \hline
+  \text{Canadian Raising} & \text{[m\textipa{2}js]} & \text{-} \\
+  \hline
+  \textbf{Output} & \text{[m\textipa{2}js]} & \text{/tajm/} \\
+\end{tabular}
+\end{center}
+
+We can use derivation tables with more rules, by simply adding more rows to the table. 
+
+\begin{center}
+\begin{tabular}{c|c c}
+  \textbf{UR} & \textbf{'writer' } \text{(/'\textipa{\*r}aj.t\textipa{\textrhookschwa}/)} & \textbf{'rider' } \text{(/'\textipa{\*r}aj.d\textipa{\textrhookschwa}/)} \\
+  \hline
+  \text{Canadian Raising} & \text{['\textipa{\*r}\textipa{2}j.t\textipa{\textrhookschwa}]} & \text{-} \\
+  \hline
+  \text{Flapping} & \text{['\textipa{\*r}\textipa{2}j.\textipa{R}\textipa{\textrhookschwa}]} & \text{[\textipa{\*r}aj.\textipa{R}\textipa{\textrhookschwa}]} \\
+  \hline
+  \textbf{Output} & \text{['\textipa{\*r}\textipa{2}j.\textipa{R}\textipa{\textrhookschwa}]} & \text{[\textipa{\*r}aj.\textipa{R}\textipa{\textrhookschwa}]} \\
+\end{tabular}
+\end{center}
+
+\textbf{Note that order of the rules does matter!} For instance, consider the table above, with the rules switched:
+\begin{center}
+  \begin{tabular}{c|c c}
+  \textbf{UR} & \textbf{'writer',} \text{/'\textipa{\*r}aj.t\textipa{\textrhookschwa}/} & \textbf{'rider',} \text{/'\textipa{\*r}aj.d\textipa{\textrhookschwa}/} \\
+  \hline
+  \text{Flapping} & \text{[\textipa{\*r}aj.\textipa{R}\textipa{\textrhookschwa}]} & \text{[\textipa{\*r}aj.\textipa{R}\textipa{\textrhookschwa}]} \\
+  \hline
+  \text{Canadian Raising} & \text{-} & \text{-} \\
+  \hline
+  \textbf{Output} & \text{[\textipa{\*r}aj.\textipa{R}\textipa{\textrhookschwa}]} & \text{[\textipa{\*r}aj.\textipa{R}\textipa{\textrhookschwa}]} \\
+\end{tabular}
+\end{center}
+
+
+% TODO: add [] around sounds
+% TODO: fix stress ipa transcription
+In this case, it is predicted (\textit{incorrectly}) that 'rider' and 'writer' are homophones, which is not the case (in Canadian English). The order of the rules depends on the context in which the rules are used
+
+\subsection{Free Variation}
+\begin{definitionEnd}[Free Variation]
+  Variation that is not predicable from context; allophones of the same phoneme can occur in the same segmental environment.
+\end{definitionEnd}
+
+\section{Morphology}
+\begin{definitionEnd}[Lexicon]
+  The "mental dictionary" of a language, with each lexical item associated with three pieces of information: \textbf{phonological} (form), \textbf{semantic} (meaning), and \textbf{morpho-syntactic} (how it combines with other lexical items).
+\end{definitionEnd}
+
+Words and morphemes have both forms (sounds) and meanings (the concepts these forms express); yet, the relationship between the form and the meaning is \textbf{completely arbitrary}. This is clear from the fact that a word maintains meaning but changes form in different languages.
+
+Its important to distinguish the following:\begin{itemize}
+  \item \textbf{Words}: the smallest free-standing units of language
+  \item \textbf{Morphemes}: the smallest unit that carries meaning/function
+\end{itemize}
+
+Further specifying the definition of a word becomes difficult across languages; while in some languages such as English we can intuitively say that words are "separated by spaces", this is not the case in other languages. Instead, it is more workable to use with the \textbf{morphemes} that make up words.
+
+\subsection{The Mental Lexicon}
+Meaning can be stored in different ways, in idiosyncratic, arbitrary form-meaning pairs; \begin{itemize}
+  \item \textbf{compositional meaning}: can determine meaning from parts
+  \item \textbf{non-compositional}: cannot determine meaning directly from parts; includes idioms
+\end{itemize}
+
+Morphology, like phonology, is rule-governed; arbitrary sound-meaning pairs + rules = creativity.
+
+\subsection{Allomorphs}
+\begin{definitionEnd}[Allopmorphs]
+  Variant pronunciations of a morpheme based on the phonological context; % TODO add example
+\end{definitionEnd}
+
+Allomorphy is not the same as allophony; allomorphy is morpheme-specific, while allophony happens anywhere given a particular lexical environment. \textbf{AlloMORPHy is to MORPHemes as alloPHONES are to PHONEmes.}
+
+\subsection{Lexicons to Surface Realizations}
+
+We can follow a set of rules to find the "actual" pronunciation of a particular word(s).
+
+\begin{itemize}
+  \item \textbf{Lexical Entries}
+  \item \textbf{Morphological Rules}
+  \item \textbf{Allomorphy Rules}
+  \item \textbf{Allophonic Rules}
+  \item \textbf{Free Variation}
+\end{itemize}
+
+% TODO add example with english pluralization
+
+\subsection{Morphemes}
+
+\textit{Bound vs free:} a \textbf{free} morpheme can stand as an independent word, while a \textbf{bound} morpheme cannot (-s, -ing, -ed, etc.).
+
+We distinguish between languages by their frequency of free morphemes; those with mostly free morphemes are \textbf{analytic}, while those with mostly bound morphemes are \textbf{synthetic}.
+
+\textit{Root vs affix:} a \textit{root} morpheme is the major component of meaning in a word (the "read" in "reading", for instance), while the morphemes surrounding the root morpheme are \textit{affixes}. In English, roots are typically also free; "bound roots" are rare, such as in "deflate".
+
+We can further break down affixes as \textit{suffixes} (after the root) and \textit{prefixes} (before the root); some languages also have \textit{infixes}, which are inserted within another morpheme ("abso-fucking-lutely").
+
+\subsection{What's in the Lexicon; Word Building}
+
+Do we store only words? Or words, and productive affixes? Or something else entirely? Regardless of which theory we take to be fact, we still need to be able to explain the internal structure of words. Word meanings are typically \textbf{compositional} (transparent from their parts), though not all logical combinations of morphemes are possible. 
+
+We formalize the "theory" of word building with the ideas of \textbf{compounds} and \textbf{affixation}.
+
+\subsubsection{Headedness}
+The \textbf{head} morpheme of a word is the one that determines the lexical category of the entire compound; in English, the right-most root is the head. For example, consider "green-house"; "house" is a noun, and thus "green-house" is a noun. More particularly; \begin{itemize}
+  \item X + noun = noun
+  \item X + verb = verb
+  \item X + adj = adj
+  \item etc.
+\end{itemize}
+We call English a "right headed language".
+
+We can represent headedness with tree diagrams or with a bracketed notation. For instance, for the word "black-board":
+
+\[[[\text{black}]_{\text{Adj}}[\text{board}]_{\text{N}}]_{\text{N}}\]
+
+\begin{center} 
+  \begin{tikzpicture}
+    \node {N}
+      child {
+        node {Adj}
+        child {node {black}}  
+      }
+      child {
+        node {N}
+        child {node {board}}  
+      };
+    \end{tikzpicture}
+  \end{center}
+
+\subsubsection{Distinguishing Compound Words and Phrases}
+
+Sometimes, a compound word has similar content to a syntactic phrase. We can distinguish these situations:
+
+\begin{enumerate}
+  \item \textbf{Stress Pattern:} the stress pattern of a compound word is different from that of a phrase; for instance, "blackboard" has a stress on the first syllable, while "black board" has a stress on the second syllable.
+  \item \textbf{Integrity:} % TODO fix this
+  \item \textbf{Semantic drift:} the meaning of a compound may drift over time to be less transparent; a "blackboard" is not necessarily a board that is black.
+\end{enumerate}
+
+There may also exist some ambiguity in more complex compounds which consist of more than 2 components; consider, for instance, "student film society"; is this a society \textit{for} student film, or a film society \textit{for} students? These differences can be represented as the difference between \([[[\text{student}]_{\text{Adj}}[\text{film}]_{\text{N}}]_{\text{N}}[\text{society}]_{\text{N}}]_{\text{N}}\) and \([[\text{student}]_{\text{Adj}}[[\text{film}]_{\text{N}}[\text{society}]_{\text{N}}]_{\text{N}}]_{\text{N}}\)
+
+\begin{center} 
+  \begin{tikzpicture}
+    \node {N}
+      child {
+        node {N}
+        child {
+          node {student}
+        }  
+        child {
+          node {film}
+        }
+      }
+      child {
+        node {society}
+      };
+    \end{tikzpicture}
+  \end{center}
+
+\begin{center} 
+  \begin{tikzpicture}
+    \node {N}
+      child {
+          node {student}
+        } 
+      child {
+        node {N}
+        child {
+          node {film}
+        }
+        child {
+          node {society}
+        }
+      };
+    \end{tikzpicture}
+  \end{center}
+% TODO add tree
+
+
+\subsubsection{Affixation}
+
+We can distinguish between \textbf{inflectional} and \textbf{derivational} affixes, which represent, respectively, changes in the lexical category of a word, and changes in the meaning of a word.
+
+\subsection{Discontinuous Morphology}
+
+English morphology is quite linear: suffixes appear the right, prefixes to the left. However, many languages (ie Arabic) have roots consisting solely made up of consonants, and deriving other free-forms requires inserting \textbf{vowels} between these consonants in order to create new words; the root and the affix are \textit{interleaved}.
+
+\subsection{Inflection vs Derivation}
+
+\textbf{Derivational} morphology modifies a lexical item's form and derives \textbf{new meaning}, possible changing its \textbf{lexical} class.
+
+\textbf{Inflectional} morphology modifies a lexical item's form in order to indicate the \textbf{grammatical subclass} to which it belongs.
+
+\subsection{Inflectional Morphology}
+
+There are two (main) kinds of inflection;
+\begin{itemize}
+  \item \textbf{Verbal Inflection}: encodes tense and aspect (temporal information), or agreement with argument
+  \item \textbf{Nominal Inflection}:  encodes \textit{case}, \textit{number}, \textit{grammatical gender/noun class}
+\end{itemize}
+
+\subsection{Nominal Inflection}
+
+\subsubsection{Case}
+Provides information about the \textbf{role} that a noun plays in a sentence. (ie nominative, accusative, dative, genitive, locative, ablative, etc.)
+
+In English, the only case that is "productively" marked on \textit{nouns} is \textit{genitive} (possessive); ie "the man\textbf{'}s house".
+
+However, in English, \textit{pronouns} are marked for case; for instance the \textbf{nominative case}, "I, he, she, they, it", compared to the \textbf{accusative case}, "Me, him, her, them, it".
+
+Generally, languages use a mix of word order and case marking to indicate the roles of nouns.
+
+\subsubsection{Noun Class (Grammatical Gender)}
+
+Typically called \textit{gender} in Indo-European languages (French, eg); it is generally arbitrary.
+
+More broadly, grammatical gender is a way of classifying nouns in the lexicon into groups; how many classes exist vary by language (German: three (masc, fem, neuter); French: two (masc, fem); English: one). Some have many more, such as the Bantu languages.
+
+\subsubsection{Number}
+
+More common system is \textbf{singular-plural} (simply one vs more than one). In some languages, both the noun and corresponding pronoun are marked, but in others just the noun is. Another common system is \textbf{singular-dual-plural}, distinguishing between one, two, and more than two (Gaelic, eg).
+
+\subsection{Verbal Inflection}
+
+Many (Indo-European) languages are \textit{temporally marked}, in two main ways; 
+
+\begin{enumerate}
+  \item \textbf{Tense} indicates the point in time when an event took place (\textit{temporally "when"}).
+  \item \textbf{Aspect} expresses the duration, the telicity, and time of completion (\textit{temporally "how"}); eg perfective, imperfective
+\end{enumerate}
+
+Often, tense and aspect along with another category, \textit{mood}, are often expressed together in language (\textit{TAM}).
+
+\subsection{Simultaneous Inflectional and Derivational Morphology}
+
+What happens if both processes are happening "together"? Inflectional affixes \textit{always} follow derivational affixes.
+
+Inflectional affixes are typically more productive, adn attach to (typically) all instances of the category. Derivational affixes, however, often attach to only a \textit{restricted} set of bases.
+
+\textbf{Caution:} some morphology is \textit{homophonous}; two morphemes sound the same, but have distinct meanings/uses.
+
+\section{Historical Linguistics}
+
+\subsection{Root Internal Changes}
+
+Changes inside the root can mark grammatical change. In English, we have \textbf{ablaut}, where the vowel changes in the root, but the consonants remain the same.
+
+There is also the idea \textbf{suppletion} is a complete change in the morpheme of a word when it changes tense, for example, often due to historical changes; eg, "is" vs "was". 
+
+\textbf{Reduplication} copies some part of the root, and adding it to the root. 
+
+\textbf{All languages change}, over generations. The changes my be subtle over a single generation, but are quite drastic over time. All aspects of language change; 
+\begin{itemize}
+  \item \textbf{phonetics, phonology}; Old English (OE) had contrastive length, additional consonants phonemes
+  \item \textbf{morphology}: OE had was more synthetic/inflectional
+  \item \textbf{syntactic}: OE had Sbj-Obj-Verb or VOS, while modern English is SVO
+  \item \textbf{lexical/semantic}: words (dis)appear and change meaning
+\end{itemize}
+
+Changes is language are usually regular, and systematic. for instance, a sound change affects all words with that particular sound.
+
+\subsection{Sound Change and Variation}
+
+Sound change has its root in \textbf{synchronic variation}, and is notated $[A] \sim [B]/[C]$.
+% TODO change
+
+\begin{itemize}
+  \item \textbf{Phonetically-conditioned} sound change ($\text{A} \rightarrow\text{B} / \text{C} \_\text{D}$)
+  \item \textbf{Phonological change}: add, eliminated, or rearranged the phonemes
+\end{itemize}
+
+\subsubsection{Phonological Changes}
+\begin{itemize}
+  \item \textbf{Assimilation}: sounds become more articulatorily similar along some \textit{dimension}, ie voicing assimilation, place assimilation, nasalization, or palatalization (sounds become "more palatal" before front vowels/glides). Palatalization is transcribed either $[C] > [C^j]$ or [k] $>$ [\textipa{\t{tj}}]
+  \item \textbf{Dissimilation}: similar sounds become less similar; less common than assimilation. This comes about due to difficulty of articulation or perception of similar sounds. For instance "surprise" somewhat loses the "r" sound, and becomes "suh-prise". This commonly occurs after liquids. 
+  \item \textbf{Epenthesis}: consonant sequences which are "hard to pronounce" or not permitted by the language's syllable structure get broken up. For instance, "schola" in Latin became "escuela" in spanish, inserting an "e" at the start. Many loanwords are transformed in this way. \textit{Consonant} epenthesis can serve as an "articulatory bridge" between adjacent consonants; articulation is not instant, and we need time to move our articulators from one configuration to another.
+  \item \textbf{Metathesis}: change in relative linear position of segment.
+  \item \textbf{Lenition} (weakening):  \textit{vowel reduction} often occurs in prosodically weak (unstressed) positions, leading to complete deletion of the segment. In the case of \textit{consonants}, "strength" is typically based on the general scale \[\text{voiceless stops} > \text{voiceless fricatives, voiced stops} > \text{voiced fricatives} > \text{nasals} > \text{liquids} > \text{glides}\] Extreme case: \textit{deletion}.
+  \item \textbf{Mergers:} Occur when two or more phonemes collapse into a single phoneme. Eg, \texttt{th}-front, where \texttt{th} become indistinguishable from \texttt{f}. Other mergers include \begin{itemize}
+    \item PIN-PEN % TODO add ipa)
+    \item COT-CAUGHT 
+    \item MARY-MARRY-MERRY
+  \end{itemize}
+  \item \textbf{Splitting:} Splits occur when one phoneme with allophonic variation turns into two district phonemes. For instance, English n and velar n were originally allophones before [\texttt{g}]; when this [\texttt{g}] was lost, the two phonemes split (i.e., in the word "sing").
+  % TODO add ipa
+  \item \textbf{Tonogenesis:} A special case of splitting, where the environment triggers phonetic pitch differences are lost but the pitch differences remain.
+  \item \textbf{Shifts:} In vowel systems, a typical kind of change is the \textit{chain shift} where a change in one phoneme leads to further changes. For instance, the \textit{Great English Vowel Shift} involving long vowels in $\sim$1400-1700. Once a shift starts, all others must "make way"; languages like to use a whole quadrangle subsection of the vowel chart. However, it is less clear how these shifts begin.
+\end{itemize}
+
+
+\subsection{Modeling Language Change}
+
+Language change is often modeled with either a tree model, or a wave model . The tree model \begin{itemize}
+  \item captures the historical change from one stage of a langue to another
+\end{itemize}
+The wave model \begin{itemize}
+  \item captures the synchronic variation in a language
+  \item the gradual nature of individual changes
+\end{itemize}
+
+Regardless of what model we use, any kind of reconstruction supposed that changes can be undone; this assumes that sound change is systematic and regular. A strict view of this idea is called the \textbf{Neogrammarian hypothesis}, which states \begin{enumerate}
+  \item all sound change \textbf{simultaneously} affects all words where the conditions environment is met;
+  \item sound change is \textbf{exceptionless}.
+\end{enumerate}
+
+\subsection{Reconstruction Example}
+
+\begin{itemize}
+  \item Starting from \textbf{cognates}: which segments in each language are shared, or are most common? (An innovation in a single language is more likely than multiple innovations in multiple languages)
+  \item When there are many differences, one must consider the most plausible manner that the sound change occurred; making a sound easier to pronounce (lenition) is more likely.
+  \item What is more likely; many languages undergoing epenthesis, or one language undergoing vowel reduction? At a weak position, vowel reduction is very plausible.
+  \item \textbf{Inner subgroupings} can also form when reconstructing languages, where a language had to "split" multiple times before reaching its "new" form.
+\end{itemize}
+
+\subsection{Typology and Variation}
+
+The big view: language families consist of \textit{"genetically related"} languages.
+
+\subsubsection{Some major language families}
+
+\begin{itemize}
+  \item \textbf{Indo-European}, including Germanic, Celtic, Italic, Hellenic, Albanian, Armenian, Baltic, Slavic, and Indo-Iranian.
+  \item \textbf{Family of Indigenous Canadian Languages}
+\end{itemize}
+
+There are many languages in the world, which can be roughly broken down to \textbf{stable}, \textbf{endangered}, and \textbf{institutional} languages ($\sim$40, $\sim$ 45, $\sim$ 7).
+
+\subsection{Typology}
+
+Classification of languages based on shared features, such as phonology, morphology, etc; it asks the question, how do languages vary?
+
+\subsubsection{Phonological Typology}
+
+Some sounds/patterns are much more common than others, and we can make \textit{typological generalizations} about them using \textit{implicational universals}, of the form "if language has X then Y but not v.v.". 
+
+\subsubsection{Stating Universals}
+
+\begin{itemize}
+  \item \textbf{Absolute}: all human languages do X; very rare, eg all languages have more than one vowel.
+  \item \textbf{Tendencies}: most languages do X, or X is more common than Y; eg most languages have 3+ vowels.
+\end{itemize}
+
+We can categorize these categories with the idea of \textbf{markedness}; marked/ "less basic" vs unmarked/ "more basic". We can note this as $a > b$, where $a$ is more marked than $b$.
+
+\section{Syntax}
+\subsection{Constituency Tests: Noun Phrases}
+
+\textbf{Constituents} are interpretation-based subunits within sentences. Although they may seem intuitive, certain tests for them are often necessary.
+
+\subsubsection{Substitution Test}
+
+One characteristic of NP (noun phrase) units is that they can, in context, be replaced with a personal pronoun while maintaining meaning. For instance,
+\begin{itemize}
+  \item \textbf{The children} are annoying (\textit{Target sentence})
+  \item \textbf{They} are annoying (\textit{Experimental sentence})
+\end{itemize}
+
+The phrase \textbf{the children} here would be a noun phrase in this context. In general, if the phrase at hand can be substituted while maintaining meaning and grammatical structure, it is a noun phrase. As a counter example, \textit{children} in the sentence \textit{"the children are annoying"} is not a noun phrase, as replacing it with \textit{"they"} forms the ungrammatical sentence \textit{"*the they are annoying"}; here, \textit{"the children"} would be a proper noun phrase.
+
+Some symbols: "*" indicates a ungrammatical sentence and "\#" indicates a contextually ambiguous sentence.
+
+We can denote noun phrases:\[\text{She gets } [_{\text{NP}}[_{\text{Det}} \text{her}][_{\text{N}} \text{wine}]][_{\text{PP}} \text{from Spain}]\]
+
+\subsubsection{Movement Test}
+
+A test by changing the order of word(s) in a sentence to see if the sentence maintains meaning (and grammar). For instance, "The cat plays that funky music" can be rearranged "that funky music is played by the cat", indicating that "that funky music" is a NP.
+
+\subsubsection{Coordination Test}
+
+If you can combine a string of words with a conjunction, then each original string is a NP ([X and X], [X or X], etc). For instance, \textit{"The cat plays in the yard"} can be written \textit{"The cat and the dog play in the yard"}, thus \textit{"the cat"} is a noun phrase ($[_{\text{NP}}\text{NP and NP}]$). 
+
+Consider the target sentence \textit{"This big dog will leave"} and the experimental sentence \textit{"This big dog and small cat will leave"}; \textit{"big dog"} and \textit{"small cat"} are both nouns that coordinate to form a noun, meaning there must be a syntactic unit bigger than N and smaller than NP, which is often denoted N' (read as "N-bar"). 
+
+\subsubsection{One-Substitution Test}
+
+Used to identify the "middle" level; for instance \textit{"This big cat and that big cat"}, where the second \textit{"big cat"} can be replaced with \textit{"one"}. "One" can only replace the N' level, \textit{not} the lowest (in a syntax tree).
+
+\Tree [.NP Det [.N' 
+    {} [.N' {} [.N ] {} ] {} ] 
+  {} ]
+
+In summary: a "phrase" can be represented by a N-bar if it can be substituted out in a sentence while maintaining sense.
+
+\subsection{Constituency Tests: Verb Phrases}
+
+\subsubsection{Movement Test}
+
+Example: "They say they will finish the test". 
+
+We can write "they say that they will finish the test AND", which must then be completed by "finish the test they will". Thus, "finish the test" is a VP.
+
+\begin{center}
+  They say that they will $[_{VP} \text{ finish the test}]$
+\end{center}
+
+\subsubsection{Ellipsis/Deletion Test}
+
+In this test, we remove part of a sentence (or replace by ellipsis). For instance, "the parents have arrived at the school". Appending another phrase, "the children have arrived at the school too", we can delete "arrived at the school" and this sentence will still make sense ("the parents have arrived at the school and the children have \cancel{arrived at the school} too"). Thus, "arrived at the school" is a VP.
+
+\subsubsection{Do So-Substitution}
+
+In this test, we replace a potential VP with "\textit{do so}". For instance, "They will read the book tomorrow"; replied with "Yes; they will \textit{do so} tomorrow", and thus "read the book" is a V'.
+
+We can further test V' by replacing "read the book tomorrow", ie "yes; they will \textit{do so}". Thus, "read the book tomorrow" is a V'.
+
+\Tree [.\textbf{VP} [.$\mathbf{\bar{V}}$ [.$\mathbf{\bar{V}}$ [.\textbf{V} read ] [\qroof{the book}.\textbf{NP} ]] [.\textbf{PP} tomorrow ] ] ]
+
+Note that we cannot just replace "read"; this would result in the nonsensical phrase "Yes; they will \textit{do so} the book tomorrow", and thus "read" alone is not a V'.
+
+\subsection{Generalization: The X-Bar Schema}
+
+\Tree [.\textbf{XP} SPECIFIER [.\textbf{X'} (opt.) [.\textbf{X'} [.\textbf{X} Head ] COMPLEMENT ] (opt.) ] ]
+
+\subsubsection{Typical Constituent Structures}
+
+Several constituent phrases (\textit{in English}) have a fairly standardized structure, regardless of the context they appear in:
+
+\begin{center}
+\begin{tabular}{c c}
+  \begin{forest}
+    [CP 
+      [(spec), edge=dashed]
+      [C'
+        [C ]
+        [TP]
+      ]
+    ]
+  \end{forest} & 
+  \begin{forest}
+    [TP
+      [NP [\textit{subject}]]
+      [T'
+        [T [\textit{tense}]]
+        [VP [\textit{predicate}]]
+      ]
+    ]
+  \end{forest}\\
+  \begin{forest}
+    [NP
+      [Det [\textit{determiner}]]
+      [N' [\textit{noun}]]
+    ]
+  \end{forest} &
+  \begin{forest}
+    [PP
+      [P
+        [P [\textit{preposition}]]
+        [NP [\textit{noun phrase}]]
+      ]
+    ]
+  \end{forest}
+\end{tabular}
+\end{center}
+
+
+\subsection{Head of a Sentence}
+
+Given the sentence "the children have left", we have the following tree:
+
+\Tree[.? [\qroof{ the children}.NP ] [.? [."Aux" have ] \qroof{left}.VP ] ]
+
+In the place of the "?"'s, we use the new category "T", the "Tense" group, for elements in auxiliary positions;
+
+\Tree[.TP [\qroof{ the children}.NP ] [.T' [.T have ] \qroof{left}.VP ] ]
+
+\subsubsection{Auxiliary Positions}
+% TODO
+\subsubsection{Empty T}
+The Tense (T) position of a sentence/phrase need not be occupied; for instance, consider the sentence "the children left", which has the following tree:
+
+\Tree [.TP [\qroof{ the children}.NP ] [.T' [.T +pst ] \qroof{left}.VP ]]
+
+In this case, we fill the T with +pst, for "past tense".
+
+% \subsubsection{Do-support}
+% In English, "do" (or its variants) can substitute into the T position of a phrase, such as in the case of asking a question. For instance, consider:
+
+% \Tree[ .TP \qroof{John}.NP [.T' [.T +pst ] \qroof{left}.VP ] ]
+
+% This is perfectly grammatical, but consider trying to transform this into a question
+
+
+\subsection{Complements \& Modifiers}
+\begin{definitionEnd}[Specifier]
+  A phrase that combines with X' into XP. See tree \ref{fig:xbar}.
+\end{definitionEnd}
+\begin{definitionEnd}[Complement]
+  A phrase that combines with X into X'. See tree \ref{fig:xbar}.
+\end{definitionEnd}
+\begin{definitionEnd}[Modifier]
+  A phrase that combines with X' into X'. See tree \ref{fig:xbar}.
+\end{definitionEnd}
+
+With X-bar:
+
+\Tree [.\textbf{XP} SPECIFIER [.\textbf{X'} MODIFIER [.\textbf{X'} [.\textbf{X} Head ] COMPLEMENT ] MODIFIER ] ]
+\label{fig:xbar}
+
+A \textit{modifier} of XP is a phrase that combines with X' into X'
+
+\subsubsection{In Noun Phrases}
+
+For instance, take the two sentences \begin{itemize}
+  \item $[_{NP} [_{Det} \text{the}][_{N} \text{student}] [_{pp} \textbf{from France}]]$
+  \item $[_{NP} [_{Det} \text{the}][_{N} \text{student}] [_{pp} \textbf{of physics}]]$
+\end{itemize}
+
+With one-substitution test, we can say "the student from \dots AND this \textit{one} from France", and 
+"the student of \dots AND this \textit{one} of physics". The second of these substitutions is questionable grammatically, but the first is not; thus, "student" is a N' and "from France" is a PP, and a \textit{modifier} of this N'. On the other hand, assuming the second substituted sentence is ungrammatical, "student" is just a N, and "of physics" is a PP, and a \textit{complement} of this N instead.
+
+\subsubsection{In Verb Phrases}
+
+Take the following phrases, and corresponding do-so substitutions:
+
+\begin{enumerate}
+  \item "he will work \textit{at} school" $\rightarrow$ "\dots, he will \cancel{work} \textbf{do so} at school"
+  \item "he will walk \textit{to} school" $\rightarrow$ "\dots, he will \cancel{work} \textbf{do so} to school"
+\end{enumerate}
+
+This second sentence is ungrammatical; while "work" is a V' in the first sentence, it is not in the second. Thus, similarly to with NP's, "at school" is a \textit{modifier} of "work" in the first sentence, and a \textit{complement} of "work" in the second sentence.
+
+In general, 
+
+\begin{itemize}
+  \item \textbf{modifiers} are sisters of $\bar{\text{X}}$'s
+  \item \textbf{complements} are sisters of X (NOT $\bar{\text{X}}$) 
+\end{itemize}
+
+\subsection{Complementizer Phrase}
+
+In order to describe more "complex" questions (specifically, questions, and "question-like" phrases), we introduce another constituent to the X-bar schema of CP, for complementizer phrase. In English, CP takes the following general form:
+
+\begin{center}
+\begin{forest}
+  [CP
+    [X, edge=dashed]
+    [C'
+      [C]
+      [TP]
+    ]
+  ]
+\end{forest}
+\end{center}
+
+Technically, \textit{any} sentence can be seen as a complementizer phrase at its base (with the TP being the "main" part of the sentence), though it is usually omitted for simplicity. Note too the dashed line to the specifier position of CP. In English, this position is only occupied in the case of a \textit{wh}-phrase, such as "who", "what", "where". Often, it is simply there to be blank, such to allow for the movement of the subject of the sentence to the front of the sentence.
+
+The C position is occupied by the complementizer; in English, there are few, such as "that", "whether", etc. C can also be empty.
+
+When working with CP's and their accompanying phrases, things can often get complicated; in general, however, it is helpful to break phrases down into their constituents, and picture a larger CP by rearranging it such as to answer the question it is posing. For instance, consider the question \textit{For which child is it likely that they will buy a bike?}. This question can be broken down into "subphrases": 
+
+\begin{enumerate}
+  \item "it is likely that they will buy a bike for which child"
+  \item "it is likely that for which child they will buy a bike"
+  \item "is it likely that they will buy a bike"
+\end{enumerate}
+
+This helps (questionably) break down how the structure of the sentence comes together, particularly what movement is going on.
+
+\begin{center}
+  \begin{forest}
+    [CP
+      [PP, name=pp_3 
+        [P'
+          [P [for]]
+          [NP
+           [Det [which]]
+           [N' [child]]
+          ]
+        ]
+      ]
+      [C'
+        [C [is, name=is_to]]
+        [TP 
+          [NP [N' [N [it]]]]
+          [T' 
+            [T [\textit{t}, name=is_from]]
+            [VP [V'
+              [V [\textit{t}, name=is_from_1]]
+              [AP [A' [
+                A [likely]
+                [CP
+                  [PP [\textit{t}, name=pp_2]]
+                  [C'
+                    [C [that]]
+                    [TP 
+                      [NP [N' [N [they]]]]
+                      [T' 
+                        [T [will]]
+                        [VP 
+                          [V' 
+                            [V [buy]]
+                            [NP 
+                              [Det [a]]
+                              [N' [N [bike]]]
+                            ]
+                          ]
+                          [PP [\textit{t}, name=pp_1]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]]]
+            ]]
+          ]
+        ]
+      ]
+    ]
+    \draw[->, solid, black] (is_from_1) to[out=south,in=south] (is_from);
+    \draw[->, solid, black] (is_from) to[out=south,in=south] (is_to);
+    \draw[->, solid, black] (pp_1) to[out=south,in=south] (pp_2);
+    \draw[->, solid, black] (pp_2) to[out=south,in=south] (pp_3);
+  \end{forest}
+\end{center}
+\subsection{Language Variation}
+
+Not all languages have the same "rules" concerning complements, modifiers, etc; they often have their own distinct X-bar schemas. analyzing data (and drawing trees, of course) allows us to determine the X-bar schema of a particular language. To do so, recall the definitions of complements, modifiers, and specifiers, and look out for patterns in how they appear; recall that many types of constituents and constituent phrases can have modifiers, etc..
+
+In English, we have the following:
+
+\begin{tabular}{| c | c | c | c |}
+  \hline
+  \textbf{phrase} & \textbf{head} & \textbf{complement} & \textbf{specifier}\\
+  \hline
+  VP & V & $\varnothing$, NP, PP, AP, CP, VP & $\varnothing$, adv\\
+  \hline
+  AP & A & $\varnothing$, PP, CP & $\varnothing$, adv\\
+  \hline
+  PP & P & $\varnothing$, PP, NP, CP & $\varnothing$, adv\\
+  \hline
+  NP & N & $\varnothing$, PP, CP & $\varnothing$, det\\
+  \hline
+  TP & T & VP & NP (subject)\\
+  \hline
+  CP & C & TP & $\varnothing$, wh-phrase\\
+  \hline
+\end{tabular}
+\subsubsection{Word Order}
+
+Not all languages follow the same word order as English. For instance, Madagasy is a VOS language ("read the book the child"). Nevertheless, the X-bar schema can still be used to analyze the structure; simply with some modification of order of where modifiers and complements appear.
+
+\subsubsection{Transformations: T-to-C Movement}
+
+\textbf{Subject-Aux Inversion}; movement of parts of a sentence in certain situations. ("Will Yoko sing?" $\rightarrow$ "Yoko will sing")
+
+\textbf{Complementizer} (CP): a "new" projection that allows for the movement described above
+
+\Tree [.CP [.C' [.C did ] [.TP [\qroof{Yoko}.NP ] [.T' [.T \textit{t} ] \qroof{sing}.VP ] ] ] ]
+
+Similarly, we have the idea of \textbf{do-support}; "did yoko sing?" $\rightarrow$ "yoko \textit{did} sing". This is the same support that is needed in answering a yes-no question, where the [+pst] takes the place of the "did" in the question; "yoko [+pst] sang".
+
+\subsubsection{Examples: French}
+
+Both French and English are SVO (ie "Satoshi helps Pikachu" vs "Satoshi aide Pikachu"). However, in some scenarios, things change; 
+\begin{itemize}
+  \item \textit{adverb placement}: "she always works at home", *("elle tojours travaille à...")
+  \item \textit{yes-no questions}: *("works she at home?"), "travaille-t-elle à la maison?"
+  \item \textit{negation}: ...
+\end{itemize}
+
+French: If the head can move, it'll move
+If TENSE position already occupied, can't move!
+
+% TODO figure out more complex movement and stuff
+
+\section{Semantics and Pragmatics}
+
+\begin{definitionEnd}[Semantics]
+  Studies the aspects of meaning that are independent of "context", i.e., the language users and the situations in which the language is actually used.
+\end{definitionEnd}
+
+\begin{definitionEnd}[Pragmatics]
+  Studies the aspects of meaning that depend on or interact with context.
+\end{definitionEnd}
+
+\subsection{Truth Conditions}
+
+What kind of "thing" is the meaning of a sentence? We call this the \textbf{truth condition} of a sentence. Specifically, to know the meaning of a sentence is to know under what conditions it would be true or false; this is part of your \textit{unconscious semantic knowledge.}
+
+This is a separate concept than the sentence's \textbf{truth value}: literally, if the sentence is true (T) or false (F). Knowing one of these does not imply knowing the other; however, knowing the truth value without knowing the truth conditions is less common.
+
+\begin{definitionEnd}[Semantic Entailment]
+  A sentence \textbf{semantically entails} another if its truth condition implies the truth condition of the other, ie "A, therefore, B". Phrase A is the \textbf{premise}, and phrase B is the \textbf{conclusion}.
+\end{definitionEnd}
+
+\begin{definitionEnd}[Pragmatic Entailment]
+  When A, in conjunction with certain background knowledge, semantically entails B, we say that A \textbf{pragmatically entails} B.
+\end{definitionEnd}
+
+We can also say that: \begin{itemize}
+  \item A \textbf{semantically contradicts} B if A's truth condition implies the negation of B's truth condition
+  \item A is \textbf{semantically equivalent} to B if A and B have the same truth value in all "possible worlds"
+\end{itemize}
+
+\subsection{Meaning Composition}
+\begin{definitionEnd}[Principle of Compositionality]
+  The meaning of a sentence is determined by the meanings of the words it contains and the way they are syntactically combined.
+\end{definitionEnd}
+
+\textbf{Connectives:}\begin{itemize}
+  \item \textit{Negation}: $\neg$ (not)
+  \item \textit{Conjunction}: $\wedge$ (and)
+  \item \textit{Disjunction}: $\vee$ (or)
+  \item \textit{Conditional}: $\rightarrow$ (if, then)
+\end{itemize}
+
+\textbf{Truth tables} allow us to show the meanings of connectives.
+
+\begin{center}
+\begin{tabular}{c c c}
+  Negation: & \hfill & Conjunction \\
+  \begin{tabular}{| c | c |}
+    \hline
+    $A$ & $\neg A$ \\
+    \hline
+    T & F \\
+    F & T \\
+    \hline
+  \end{tabular}
+ & \hfill&  \begin{tabular}{| c | c | c |}
+    \hline
+    $A$ & $B$ & $A \wedge B$ \\
+    \hline
+    T & T & T \\
+    T & F & F \\
+    F & T & F \\
+    F & F & F \\
+    \hline
+  \end{tabular}\\
+
+  Disjunction: & \hfill &Conditional:\\
+  \begin{tabular}{| c | c | c |}
+    \hline
+    $A$ & $B$ & $A \vee B$ \\
+    \hline
+    T & T & T \\
+    T & F & T \\
+    F & T & T \\
+    F & F & F \\
+    \hline
+  \end{tabular}
+ & \hfill & \begin{tabular}{| c | c | c |}
+    \hline
+    $A$ & $B$ & $A \rightarrow B$ \\
+    \hline
+    T & T & T \\
+    T & F & F \\
+    F & T & T \\
+    F & F & T \\
+    \hline
+  \end{tabular}
+\end{tabular}
+\end{center}
+
+We can create truth trees for statements as follows:
+
+\Tree [.\textbf{T} not($\neg$) [\qroof{(false statement)}.\textbf{F} ] ]
+
+Where the root of the truth represents the \textit{total} truth value of the statement.
+
+\subsubsection{Logic vs English}
+
+Negation ($\neg$) and conjunction ($\wedge$) behave very closely to how "not" and "and" work in English. Conditionals, on the other hand, don't always quite align with the intuitive English logic.
+
+For instance, consider the phrase "I won or she won". In English, this phrase would hold true if either I OR she won; but not both. This is is unlike the "rules" in logic. To describe this case, we introduce the \textbf{exclusive or} ($\oplus$) operator, which is the same as "or" except that it is false if both statements are true. Precisely:
+
+\begin{center}
+  \begin{tabular}{c | c | c}
+    $A$ & $B$ & $A \oplus B$ \\
+    \hline
+    T & T & F \\
+    T & F & T \\
+    F & T & T \\
+    F & F & F
+  \end{tabular}
+\end{center}
+
+\subsection{Presupposition}
+
+% \begin{figure}[h!]
+%   \centering
+%   \includegraphics[width=0.75\textwidth]{hilarious.png}
+%   \caption{Presupposition: the question asked on the left presupposes that there is a job to be laid off from in the first place}
+% \end{figure}
+
+Some presupposition triggers include "again", "the", "know", "quit", for instance: 
+\begin{itemize}
+  \item "He went to jail \textit{again}", ie, he's been there before
+  \item "We met in \textit{the} bar in Leacock", ie, there is a bar (and only one) in Leacock
+  \item "He \textit{knows} the answer", ie, the answer exists
+  \item "I \textit{quit} smoking", ie, I was smoking before
+\end{itemize}
+
+Note: for a sentence to be either true or false, the presupposition must be true as well; think of a "tricky" legal question, "would you cheat on the test again?".
+
+For A to presuppose B:
+\begin{center}
+  \begin{tabular}{| c | c | c |}
+    \hline
+    A & & B\\
+    \hline
+    T & $\Rightarrow$ & T\\
+    F & $\Rightarrow$ & T\\
+    T or F & $\Leftarrow$ & T\\
+    \# & $\Leftarrow$ & F\\
+    \hline
+  \end{tabular}
+\end{center}
+
+In other words, for A to presuppose B, both A and the negation of A must imply that B is true; if B is false, there is no presupposition present. Conversely, if A implies B but the negation of A does not imply B, then A instead entails B.
+
+
+\subsubsection{Presupposition Projection}
+\begin{definitionEnd}[Presupposition Projection]
+  The idea that a presupposition can be projected from a sentence to a larger unit, such as a clause or a sentence.
+\end{definitionEnd}
+
+\subsection{Implicature}
+
+\begin{definitionEnd}[Implicature]
+A speaker's meaning that is not part of the sentence's literal meaning, but is implied by the sentence's literal meaning. Total sentence meaning = what is said + what is implied.
+\end{definitionEnd}
+
+
+Implications can be \textbf{cancelled}; ie, the implied "extra" meaning can be explicitly stated as being false. In contrast, presuppositions cannot. For instance, "I took my cat to the vet" implies (implicates?) that my cat is sick; I can clarify, and state that "she isn't sick, she just needs vaccines", \textit{cancelling} the implication. However, I cannot cancel the presupposition (that I have a cat) by saying "I don't have a cat"; it is simply nonsensical. TL;DR: presuppositions \textit{have} to be true, implicatures are \textit{probably} true.
+
+\textbf{In short:} to differentiate if the relationship between statements \textit{A}, \textit{B} is an entailment, presupposition, or implicature:
+
+\begin{itemize}
+  \item \textit{B} is cancellable, ie, \textit{B} being false ${\nRightarrow}$ \textit{A} being false; \textbf{implicature}.
+  \item \textit{B} being false $\Rightarrow$ \textit{A} is \# (deviant, ungrammatical); \textbf{presupposition}.
+  \item \textit{A}: true $\Rightarrow$ \textit{B}: true \textit{and} \textit{A}: false $\Rightarrow$ \textit{B}: true; \textbf{presupposition}
+  \item \textit{B}: false $\Rightarrow$ \textit{A}: false (\textit{not} \#); \textbf{entailment}
+\end{itemize}
+
+\subsection{Gricean Maxims}
+
+\begin{definitionEnd}[Gricean Maxims]
+  "Rules" of conversation that are not explicitly stated, but are assumed to be followed by speakers and listeners. They are formed under the \emph{Principle of Cooperation}: people cooperate to effectively converse.
+\end{definitionEnd}
+
+\begin{itemize}
+  \item \textbf{Quantity}: Provide as much information as is required to convey the intended meaning.
+  \item \textbf{Quality}: Be truthful.
+  \item \textbf{Relation}: Be relevant.
+  \item \textbf{Manner}: Be orderly, avoid obscurity and ambiguity.
+\end{itemize}
+
+By assuming that these maxims are being followed, intended/implied sentence meaning can be derived. They can be used to describe implicatures, particularly scalar ones:
+
+\subsubsection{Scalar Implicatures}
+
+A phrase expressing a scalar quality implies that the described quality is the highest-statable quality. For instance, "The essay is passable" implies that the essay is not "good".
+
+Generally, if phrases A and B are on the same scale and B semantically entails B (but \textit{not} vice versa), then B is implicated to be false, or at least not confidently true.
+
+
+\newpage
+\section{Glossary}
+\printProofs
+
+\end{document}
