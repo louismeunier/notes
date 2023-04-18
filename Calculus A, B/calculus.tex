@@ -2666,8 +2666,8 @@ We thus take \begin{align*}
 For acceleration, we have: \begin{align*}
     \vec{a} &= \deriv{\vec{v}}{t} = \ddot{r} \hat{\mu}_r + \deriv{\hat{\mu}_r}{t} \dot{r} + \dot{r}\dot{\theta} \hat{\mu}_\theta + r \ddot{\theta} \hat{\mu}_\theta + r \dot{\theta} \deriv{\hat{\mu}_\theta}{t}\\
     \deriv{\hat{\mu}_r}{t} &= \dot{\theta} \hat{\mu}_\theta, \deriv{\hat{\mu}_\theta}{t} = - \dot{\theta}\hat{\mu}_r\\
-    \implies \vec{a} &= \left[\ddot{r}-r\dot{\theta}^2\right]\hat{\mu}_r + \left[2 \dot{r}\dot{\theta} - r \ddot{\theta}\right]\hat{\mu}_\theta\\
-    &\equiv a_r \hat{\mu}_r + a_\theta \hat{\mu}_\theta, \text{ where } a_r = \ddot{r} - r \dot{\theta}^2, a_\theta = 2 \dot{r} \dot{\theta} - r \ddot{\theta}
+    \implies \vec{a} &= \left[\ddot{r}-r\dot{\theta}^2\right]\hat{\mu}_r + \left[2 \dot{r}\dot{\theta} + r \ddot{\theta}\right]\hat{\mu}_\theta\\
+    &\equiv a_r \hat{\mu}_r + a_\theta \hat{\mu}_\theta, \text{ where } a_r = \ddot{r} - r \dot{\theta}^2, a_\theta = 2 \dot{r} \dot{\theta} + r \ddot{\theta}
 \end{align*}
 
 NB: to find the radial/circumferential components of velocity/acceleration, we can simply take the dot product of the vector with the appropriate unit vector. For instance: \begin{align*}
