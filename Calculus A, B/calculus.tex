@@ -18,6 +18,7 @@
 \usepackage{tabularx}
 \usepackage[]{csquotes}
 \usepackage{physics}
+\usepackage{tikz}
 \usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
 
 \MakeOuterQuote{"}
@@ -2687,5 +2688,13 @@ From the previous section, we had $\vec{v}=\deriv{r}{t}\hat{\mu}_r +  r \deriv{\
 The length of the curve between two points (well, angles, specifically) $\alpha$ and $\beta$ would thus be the sum of the changes of arc length between the points, namely \[L = s = \int ds = \int_\alpha^\beta \sqrt{r^2 + \left(\deriv{r}{\theta}\right)}\, \text{d}\theta \equiv \text{ length of curve } r = f(\theta)\]
 
 As shown in previous sections, the area between two curves can be described as a double integral over the region described by the relevant area. In polars, we can write \[A = \int_\alpha^\beta\int_{g(\theta)}^{f(\theta)} r \, \text{d}r\text{d}\theta = \int_{\alpha}^{\beta} \frac{\left[f(\theta)\right]^2 - \left[g(\theta)\right]^2}{2} \, \text{d}\theta\]
-% !!! fix area shit
+
+
+\newpage
+\pagestyle{empty}
+% "the end" page
+
+\begin{tikzpicture}[remember picture,overlay]
+    \node[black,font=\Huge\bfseries] at (current page.center) {End};
+\end{tikzpicture}
 \end{document}
