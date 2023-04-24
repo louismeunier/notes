@@ -1,0 +1,69 @@
+# ignore everything by default
+*
+!README.md
+!index.html
+!.gitignore
+# DO NOT EDIT THIS MANUALLY PLEASEEEEEEEEE
+*/*
+
+!*Linear*Algebra/
+!*Linear*Algebra/*.pdf
+!*Linear*Algebra/*.tex
+!*Linear*Algebra/misc
+!*Linear*Algebra/misc/*
+!*Linear*Algebra/info.json
+!*Linear*Algebra/README.md
+
+
+# Intro to CS
+!*Intro*to*CS/
+!*Intro*to*CS/*.pdf
+!*Intro*to*CS/*.tex
+!*Intro*to*CS/misc
+!*Intro*to*CS/misc/*
+!*Intro*to*CS/info.json
+!*Intro*to*CS/README.md
+
+# General Chemistry I
+!*General*Chemistry*I/
+!*General*Chemistry*I/*.pdf
+!*General*Chemistry*I/*.tex
+!*General*Chemistry*I/misc
+!*General*Chemistry*I/misc/*
+!*General*Chemistry*I/info.json
+!*General*Chemistry*I/README.md
+
+# Calculus A, B
+!*Calculus*A,*B/
+!*Calculus*A,*B/*.pdf
+!*Calculus*A,*B/*.tex
+!*Calculus*A,*B/misc
+!*Calculus*A,*B/misc/*
+!*Calculus*A,*B/info.json
+!*Calculus*A,*B/README.md
+
+# Calculus 2
+!*Calculus*2/
+!*Calculus*2/*.pdf
+!*Calculus*2/*.tex
+!*Calculus*2/misc
+!*Calculus*2/misc/*
+!*Calculus*2/info.json
+!*Calculus*2/README.md
+
+# Linguistics
+!*Linguistics/
+!*Linguistics/*.pdf
+!*Linguistics/*.tex
+!*Linguistics/misc
+!*Linguistics/misc/*
+!*Linguistics/info.json
+!*Linguistics/README.md
+!*Linguistics/*.sty
+
+# Principles of Statistics
+!*Principles*of*Statistics/
+!*Principles*of*Statistics/math204.pdf
+!*Principles*of*Statistics/math204.tex
+!*Principles*of*Statistics/img
+!*Principles*of*Statistics/img/*
