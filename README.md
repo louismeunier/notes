@@ -12,3 +12,5 @@ free to use however you'd like
 - [Calculus 2](http://notes.louismeunier.net/Calculus%202/calculus2.pdf)
 - [Calculus A, B](http://notes.louismeunier.net/Calculus%20A%2C%20B/calculus.pdf)
 - [Intro to CS](http://notes.louismeunier.net/Intro%20to%20CS/introtocs.pdf)
+- [Intro to Linguistics](http://notes.louismeunier.net/Linguistics/ling.pdf)
+- [Principles of Statistics](http://notes.louismeunier.net/Principles%20of%20Statistics/math204.pdf)
