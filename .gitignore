@@ -68,3 +68,17 @@
 !*Principles*of*Statistics/img
 !*Principles*of*Statistics/img/*
 !*Principles*of*Statistics/README.md
+
+# Analysis
+!*Analysis/
+!*Analysis/*.pdf
+!*Analysis/*.tex
+!*Analysis/misc
+!*Analysis/misc/*
+
+# Algebra
+!*Algebra/
+!*Algebra/*.pdf
+!*Algebra/*.tex
+!*Algebra/misc
+!*Algebra/misc/*

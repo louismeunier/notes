@@ -1,0 +1,138 @@
+\documentclass[12pt]{article}
+\usepackage{amsthm}
+\usepackage{libertine}
+\usepackage[margin=0.15in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{siunitx}
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
+\usepackage{cleveref}
+\usepackage[]{csquotes}
+\usepackage[createShortEnv]{proof-at-the-end}
+
+% makes theorems, definitions, etc. "restatable" as shown
+% can add more with same format as you wish
+\renewcommand*{\proofname}{}
+
+\declaretheorem[thmbox=S,name=Definition,numberwithin=section]{definition}
+\declaretheorem[thmbox=S,name=Axiom,numberwithin=section]{axiom}
+\declaretheorem[thmbox=S,name=Lemma,numberwithin=section]{lemma}
+\declaretheorem[thmbox=S,name=Theorem,numberwithin=section]{theorem}
+\declaretheorem[name=Example,numberwithin=section]{example}
+\declaretheorem[name=Exercise,numberwithin=section]{exercise}
+
+\newEndThm[no proof here, restate, text proof={Examples}, one big link={\emph{See more}}]{definitionEnd}{definition}
+\newEndThm[no proof here, restate, one big link = {\emph{Proof}}]{lemmaEnd}{lemma}
+\newEndThm[no proof here, restate, one big link = {\emph{(Solution)}}]{exerciseEnd}{exercise}
+\newEndThm[no proof here, restate]{axiomEnd}{axiom}
+
+% \newEndThm[proof here, restate]{theoremEnd}{theorem}
+
+% makes "quoted" text actually look correct
+\MakeOuterQuote{"}
+
+% page footer
+\newpagestyle{mypage}{%
+    \footrule
+    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
+}
+
+% title page settings
+\newcommand{\pageauthor}{Louis Meunier}
+\newcommand{\pagetitle}{Algebra I, II}
+\newcommand{\pagesubtitle}{MATH235}
+
+% black square for qed symbol
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\titleformat{\section}
+{\centering\normalfont\Large\bfseries}
+{\thesection}{1em}{}
+
+\begin{document}
+\setstretch{2.25}
+\noindent
+\begin{center}
+    \begin{tabularx}{\textwidth} { 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedleft\arraybackslash}X}
+    \LARGE \pageauthor \\
+    \LARGE \textbf{\pagetitle} & \LARGE \textbf{\pagesubtitle}\\
+    \end{tabularx}\\
+    \rule[2ex]{0.8\textwidth}{1pt}
+\end{center}
+
+\setstretch{1.5}
+\tableofcontents
+
+% "enables" footer with section+subsection, etc. just comment it out if you don't want it
+\pagestyle{mypage}
+
+% makes sections a very dark gray + centered
+\titleformat{\section}
+{\color{darkgray}\centering\normalfont\Large\bfseries}
+{\color{darkgray}\thesection}{1em}{}
+
+% need to change margins and such here for rest of document
+% kind of messy but what can you do
+\newpage
+% modify these as you wish
+\newgeometry{margin=0.5in, top=0.4in, bottom=0.75in}
+\parskip=0.5em
+
+\section{Fundamentals}
+\subsection{Sets}
+\subsubsection{Definition}
+A \textbf{set} can be considered as a collection of elements; more intuitively, you can consider something a set if you can determine wheteher a given object belongs to it. Typically sets are defined as $A = \{1, 2, \dots\}$, by a property $A = \{x \,|\, x\%2 = 0\}$, or with an appropriate verbal description.
+
+\subsubsection{Set Operations}
+There are a number of ways to "combine" sets:
+\begin{itemize}
+  \item \textbf{Union}: $A \cup B = \{x \,|\, x \in A \text{ or } x \in B\}$
+  \item \textbf{Intersection}: $A \cap B = \{x \,|\, x \in A \text{ and } x \in B\}$
+  \item \textbf{Difference}: $A \setminus B = \{x \,|\, x \in A \text{ and } x \notin B\}$
+\end{itemize}
+
+\begin{lemma}
+  $A = (A\setminus B)\cup(A\cap B)$
+\end{lemma}
+\begin{proof}[Proof]
+  To prove set equivalencies, we must prove that both RHS $\subseteq$ LHS and LHS $\subseteq$ RHS; meaning, the LHS and RHS are subsets of each other, and are thus equal.
+  
+  First, to prove LHS $\subseteq$ RHS, let $a \in A$. If $a \notin B$, then $a \in A\setminus B$, and $a \in$ RHS. Else, if $a \in B$, then $a \in A \cap B$ and $a \in$ RHS. Thus, LHS $\subseteq$ RHS.
+
+  Next, to prove RHS $\subseteq$ LHS, let $a \in $ RHS. If $a \in A \setminus B$, then $a \in A=$ LHS. Else, $a \in A \cap B$, and thus $a \in A=$ LHS. Thus, RHS $\subseteq$ LHS.
+  Since LHS $\subseteq$ RHS and RHS $\subseteq$ LHS, LHS = RHS.
+  \qed
+\end{proof}
+
+\subsubsection{Indexed Sets}
+
+Let $I$ be a set. If for every $i \in I$, we have a set $B_i$, we say that we have a \textit{collection} of sets $B_i$ indexed by $I$. We write $\{B_i : i \in I\}$.
+
+\begin{example}
+  Let $I = \{1, 2, 3\}$, and $B_i = \{1,2,3,4\}\setminus \{i\}$ ($B_i$ is the set of all numbers from 1 to 4, excluding $i$), for $i \in I$. We thus have $B_1 = \{2, 3, 4\}$ (etc.).
+
+  This concept of indexing allows us to introduce repeated unions/intersections. For instance, we can write \[\bigcup_{i \in I} B_i = B_1 \cup B_2 \cup B_3 = \{1,2,3,4\}.\]
+  Similarly, \[\bigcap_{i \in I} B_i = \{4\}.\footnotemark\]
+\end{example}
+\footnotetext{You can somewhat consider these "large" unions/intersections as analogous to summations $\Sigma$ and products $\Pi$.}
+
+\begin{example}
+  Let $I = \mathbb{R}$, and $B_i = [i, \infty] = \{r \in \mathbb{R} : r \geq i\}$. Then, $\bigcup_{i \in \mathbb{R}} B_i = \mathbb{R}$ and $\bigcap_{i \in \mathbb{R}} B_i = \emptyset$.
+\end{example}
+\newpage
+\section{Appendix}
+% \printProofs
+
+\end{document}
