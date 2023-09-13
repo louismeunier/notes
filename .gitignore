@@ -75,6 +75,7 @@
 !*Analysis/*.tex
 !*Analysis/misc
 !*Analysis/misc/*
+!*Analysis/README.md
 
 # Algebra
 !*Algebra/
@@ -82,3 +83,4 @@
 !*Algebra/*.tex
 !*Algebra/misc
 !*Algebra/misc/*
+!*Algebra/README.md
