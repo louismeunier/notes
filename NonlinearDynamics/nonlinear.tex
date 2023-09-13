@@ -1,0 +1,416 @@
+\documentclass[12pt]{article}
+\usepackage{amsthm}
+\usepackage{libertine}
+\usepackage[margin=0.15in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{siunitx}
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage[bottom]{footmisc}
+\usepackage{xcolor-solarized}
+\usepackage{svg}
+\usepackage{physics}
+\usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
+% \usepackage{cleveref}
+\usepackage[]{csquotes}
+\usepackage{hyperref}
+
+\usepackage[createShortEnv]{proof-at-the-end}
+
+% makes theorems, definitions, etc. "restatable" as shown
+% can add more with same format as you wish
+\renewcommand*{\proofname}{}
+
+
+\declaretheorem[
+  thmbox=S,
+  name=Definition,
+  refname={Definition, definition}, numberwithin=section
+]{definition}
+
+\declaretheorem[
+  thmbox=S,
+  name=Axiom,
+  refname={Axiom, axiom},
+  numberwithin=section
+]{axiom}
+
+\declaretheorem[
+  thmbox=S,
+  name=Lemma,
+  refname={Lemma, lemma},
+  numberwithin=section
+]{lemma}
+
+\declaretheorem[
+  thmbox=S,
+  name=Corollary,
+  refname={Corollary, corollary},
+  numberwithin=section
+]{corollary}
+
+\declaretheorem[
+  name=Exercise, 
+  refname={Exercise, exercise},
+  numberwithin=section,
+  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{exercise}
+
+\declaretheorem[
+  thmbox=S,
+  name=Theorem,
+  refname={Theorem, theorem},
+  numberwithin=section
+]{theorem}
+
+
+\declaretheorem[
+  thmbox=S,
+  name=Remark,
+  refname={Remark, remark},
+  numberwithin=section
+]{remark}
+
+
+\declaretheorem[
+  % thmbox=M,
+  name=Example,
+  refname={Example, example},
+  numberwithin=section,
+  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{example}
+
+\newEndThm[no proof here, restate, text proof={Examples}, one big link={\emph{See more}}]{definitionEnd}{definition}
+\newEndThm[no proof here, restate, one big link = {\emph{Proof}}]{lemmaEnd}{lemma}
+\newEndThm[no proof here, restate, one big link = {\emph{(Solution)}}]{exerciseEnd}{exercise}
+\newEndThm[no proof here, restate]{axiomEnd}{axiom}
+
+% \newEndThm[proof here, restate]{theoremEnd}{theorem}
+
+% makes "quoted" text actually look correct
+\MakeOuterQuote{"}
+
+% page footer
+\newpagestyle{mypage}{%
+    \footrule
+    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
+}
+
+% title page settings
+\newcommand{\pageauthor}{Louis Meunier}
+\newcommand{\pagetitle}{Nonlinear Dynamics and Chaos}
+\newcommand{\pagesubtitle}{MATH376}
+
+% black square for qed symbol
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\titleformat{\section}
+{\centering\normalfont\Large\bfseries}
+{\thesection}{1em}{}
+
+\begin{document}
+\setstretch{2.25}
+\noindent
+\begin{center}
+    \begin{tabularx}{\textwidth} { 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedleft\arraybackslash}X}
+    \LARGE \pageauthor \\
+    \LARGE \textbf{\pagetitle} & \LARGE \textbf{\pagesubtitle}\\
+    \end{tabularx}\\
+    \rule[2ex]{0.8\textwidth}{1pt}
+\end{center}
+
+\setstretch{1.5}
+\tableofcontents
+
+% "enables" footer with section+subsection, etc. just comment it out if you don't want it
+\pagestyle{mypage}
+
+% makes sections a very dark gray + centered
+\titleformat{\section}
+{\color{darkgray}\centering\normalfont\Large\bfseries}
+{\color{darkgray}\thesection}{1em}{}
+
+% need to change margins and such here for rest of document
+% kind of messy but what can you do
+\newpage
+% modify these as you wish
+\newgeometry{margin=0.5in, top=0.4in, bottom=0.75in}
+\parskip=0.5em
+
+\section{Introduction, Motivations, Overview}
+
+\begin{definition}[Dynamical Systems]
+  Systems which evolve over time. We can categorize them as
+  \begin{itemize}
+    \item \textbf{continuous,} which define ODEs, eg. $\dot{u}(t) = f(u)$, where $u(t)$ is define over some interval $t$;
+    \item \textbf{discrete,} which are defined by a \emph{map}, $S : \mathbb{R}^n \longrightarrow \mathbb{R}^n, u \longmapsto S_u$, where $u_1 = S_{u_0}$, $u_2 = S_{u_1}$, etc., where $n \in \mathbb{Z}$.
+  \end{itemize}
+\end{definition}
+
+\subsection{Examples of continuous dynamical systems}
+\subsubsection{Exponential growth/decay}
+
+Consider $\dot{u} = \lambda u$, where $u \in \mathbb{R}$, $\dot{u} = \dv{u}{t}$ ($u = f(t)$), and $\lambda$ is a constant parameter. This is a linear, separable ODE;
+
+\begin{align*}
+  \dv{u}{t} &= \lambda u\\
+  \int \frac{\dd{u}}{u} &= \int \lambda \dd{t}\\
+  \implies u(t) &= u_0 e^{\lambda t}, \text{ where } u(0) = u_0
+\end{align*}
+
+Assuming $\lambda \neq 0$ (otherwise $u(t) = u_0$), we can analyze the behavior of $u$ as $t \longrightarrow \infty$ and $t \longrightarrow -\infty$.
+
+\begin{itemize}
+  \item Clearly, if $u_0 = 0$, then $u(t) = 0 \forall t$. This is called a \textbf{steady state}.
+  \item Else, (under the assumption $u_0 > 0$), we can consider the cases $\lambda > 0$ and $\lambda < 0$.
+  \begin{itemize}
+    \item $\lambda >0 \implies \lim_{t \to \infty} u(t) = \infty$
+    \item $\lambda < 0 \implies \lim_{t \to -\infty} u(t) = 0$
+  \end{itemize}
+\end{itemize}
+
+Using this fairly simple analysis, we can draw \textbf{phase diagrams} describing how the system changes based on initial conditions, for instance, given $\lambda > 0$:
+\begin{figure}[h!]
+  \centering
+  \includegraphics*[width=0.5\textwidth]{figures/example1-1-1.png}
+  \caption{Exponential growth/decay, $\lambda> 0$}
+\end{figure}
+
+Note that the phase diagram is \emph{independent} of the value of $\lambda$; naturally, a larger $\lambda$ will result in a "faster" (so to speak) growth/decay, but the "asymptotic" behavior is identical. We can say that the \textbf{dynamics} of the system are independent of the constant $\lambda$.
+
+In this case, at $u_0 = 0$, all other $u_0$ greater than or less than $0$ diverge away from $u_0$; this would be called a \textit{unstable equilibrium}. If $\lambda < 0$, we would see all $u_0$ converging to $0$, which would be an \textit{asymptotically stable equilibrium}.
+
+\subsubsection{Logistic ODE}
+
+Consider the \textit{logistic} ode $\dot{x} = \lambda x (1-x), x(t) \in \mathbb{R}$. Normally, we would solve this ode (using separation of variables, resulting in a messy fraction decomposition, and lots of algebraic manipulation \footnote{Note that this is also a \emph{Bernoulli ODE}, ie one of the form $y' +p(x)y = q(x)y^n$; you can solve it by dividing by $y^n$ and making the substitution $u = y^{1-n}$ to get a far nicer (though obviously equivalent) linear equation which you can solve using an integrating factor.}) This will give the final explicit solution \[x(t) = \frac{1}{(\frac{1}{x_0}-1)e^{-\lambda t} + 1},\] where $x(0) = x_0$. We can then analyze $x(t)$ similar to the previous example. Due to the complexity (the "embedded" exponential, etc), however, this is quite difficult.
+
+\textit{Alternatively}, we can consider the original ode \[\dot{x} = f(x) = \lambda x (1-x),\] without the exact solutions. Assuming $\lambda > 0$ (similar "methodology" for $\lambda < 0$), we can analyze the behavior:
+
+\begin{itemize}
+  \item Steady states will occur when $\dot{x} = 0 \implies  \lambda x (1-x) = 0  \implies x = 0 \text{ or } x = 1$.
+  \item Next, we can consider the behavior of $x$ in the intervals $(-\infty, 0)$, $(0, 1)$, and $(1, \infty)$.
+  \begin{itemize}
+    \item $(-\infty, 0)$: as $x \to - \infty$, $\dot{x} \to -\infty$ ($(+) \times (-) \times (+) \sim (-) $)
+    \item $(0, 1)$: as $x \to 1$, $\dot{x}$ increases.
+    \item $(1, \infty)$: as $x \to \infty$, $\dot{x} \to -\infty$ ($(+) \times (+) \times (-) \sim (-) $)
+  \end{itemize}
+\end{itemize}
+
+This means that $x_0 = 0$ and $x_0 = 1$ are unstable and stable, respectively. We can then draw the phase diagram:
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics*[width=0.5\textwidth]{figures/example1-1-2.png}
+\end{figure}
+
+We can compare the logistic ODE to the seemingly unrelated\footnote{Also a Bernoulli} $\dot{x} = x-x^3$. Factoring, we write $\dot{x} = x(1-x)(1+x)$, indicating steady states at $x = -1, 0, 1$. This results in a very similar phase diagram:
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics*[width=0.5\textwidth]{figures/example1-1-2a.png}
+\end{figure}
+
+As is clear from the diagram, the two equations have very similar dynamics; however, at no initial condition does the second ODE tend to positive/negative infinity.
+
+\subsection{Analyzing the Lorenz Equations}
+
+The Lorenz equation is defined by \[\begin{cases}
+  \dot{x} = \sigma(y-x)\\
+  \dot{y} = rx-y - xz\\
+  \dot{z} = xy - bz
+\end{cases},\] where solutions $u(t) = \begin{pmatrix}
+  x(t)\\
+  y(t)\\
+  z(t)
+\end{pmatrix} \in \mathbb{R}^3$. A trivial steady state exists at $(x,y,z) = (0,0,0), \forall r > 0$, and two more exist\footnote{These are fairly easy to find by considering different possible cases that would cause each of $\dot{x}, \dot{y}, \dot{z} = 0.$} $(x,y,z) = (\pm \sqrt{b(r-1)}, \pm \sqrt{b(r-1)}, r-1), \forall r > 1$. Notice that when $r = 1$, the two non-trivial steady states collapse into the trivial steady state. This is what we call a \textbf{bifurcation}, or in this case specifically, a \textbf{pitchfork bifurcation}. This can make sense if we plot \footnote{This is an odd way to look at the system (as the parameter $r$ is suddenly becoming the independent variable), but it is helpful to analyze how exactly the steady states behave due to the parameters.} $(x,y,z)$ of the steady points as a function of $r$:
+\begin{figure}[h!]
+  \centering
+  \includegraphics*[width=0.4\textwidth]{figures/example1-2-1a.png}
+\end{figure}
+
+Further analyzing the dynamics of the system is a little trickier - we can't exactly use the same approaches as before in the $\mathbb{R}^2$ space. The system is clearly not linear because of the $xz$ and $xy$ terms. However, if we assume that $x, y,z$ are small and remain small, then we can approximate the system as linear by dropping these terms \footnote{$xy$ and $xz$ would be "very small" if $x, y,z$ are small, as they are funtionally quadratic terms. Intuitively, $\alpha \times \beta \ll 1$ given $\alpha, \beta < 1$.}. Thus, we can approximate the system as $\dot{x} = \sigma(y-x), \dot{y} = rx-y, \dot{z} = -bz$, or, equivalently, \[\begin{pmatrix}
+  \dot{x}\\
+  \dot{y}\\
+  \dot{z}
+\end{pmatrix} = \begin{pmatrix}
+- \sigma &\sigma &0\\
+r & -1 & 0\\
+0 & 0 & -b
+\end{pmatrix}\cdot \begin{pmatrix}
+  x\\
+  y\\
+  z
+\end{pmatrix}.\] Now, if $x(0) = y(0) = 0$, then $\dot{x}=\dot{y} = 0 \implies x(t) = y(t) = 0 \forall t$, and thus the solution evolves solely on the $z$-axis; ie $\dot{z} = -b z \implies z = z(0)e^{-bt}$, which $\to 0$ as $t \to\infty$, supporting our assumption that $x,y,z$ remain small. 
+
+On the other hand, let's assume\footnote{In this context, $\ll$ means "much less".} $|x(t), y(t),z(t)|\ll 1$; again, this results in $x,y,z$ remaining small, and thus "allows" us to study the dynamics approximately near $(x,y,z) = (0,0,0)$. Solving the matrix formulation of the system, we get \[u(t) = \begin{pmatrix}
+  x(t)\\
+  y(t)\\
+  z(t)\end{pmatrix} = c_1 e^{\lambda_1 t} \underline{\mathbf{v_1}} + c_2 e^{\lambda_2 t} \underline{\mathbf{v_2}} + c_3 e^{\lambda_3 t} \underline{\mathbf{v_3}},
+\] where $\lambda_i$ are eigenvalues and $\underline{\mathbf{v_i}}$ are corresponding eigenvectors.
+
+Clearly\footnote{Note the $-b$ in the bottom right of the matrix, surround by 0's; the only component of the "position" vector that will multiply to that $-b$ is $z$, thus, any vector with only a $z$ component will remain unchanged, $\begin{pmatrix}0\\0\\1\end{pmatrix}$ being the "unit" of these.}, $\underline{\mathbf{v_3}} = \begin{pmatrix}
+  0\\
+  0\\
+  1
+\end{pmatrix}$ with a corresponding $\lambda_3 = -b$. Thus, $\underline{\mathbf{v_1}}$ and $\underline{\mathbf{v_2}}$ must lie in the $xy$-plane, and similarly, are eigenvectors of the top left, $\begin{pmatrix}
+  -\sigma & \sigma\\
+  r & -1\end{pmatrix}$ (with 0 $z$-component, of course). Solving for these by standard methods, we write
+  
+\begin{align*}
+  0 &= \det\left(\begin{pmatrix} 
+    - \sigma & \sigma \\
+    r & -1
+  \end{pmatrix} - \lambda I\right)\\
+  &= \left|\begin{matrix}
+    -\sigma - \lambda & \sigma\\
+    r & -1 - \lambda
+  \end{matrix}\right| = (\sigma+\lambda)(1+\lambda) - r\sigma\\
+  &= \lambda^2 + (1+\sigma)\lambda- (r-1)\\
+  \implies \lambda_{1,2} &= \frac{-(1+\sigma) \pm \sqrt{(1+\sigma)^2 + 4(r-1)\sigma}}{2}
+\end{align*}
+
+Notice that if $r \in (0,1)$, then\footnote{As the (r-1) term is thus negative.} $(1+\sigma)^2 + 4(r-1)\sigma < (1+\sigma)^2$. Assuming \footnote{Allowing us to operate in $\mathbb{R}^n$, as this is the part under the radical.} the lhs of this inequality is greater than $0$, we can further say that $\left|\sqrt{(1+\sigma)^2 + 4(r-1)\sigma }\right|< \left|1+ \sigma\right|$. Thus, both $\lambda_1$ and $\lambda_2$ are $<0$, as taking either the positive or negative sign in the quadratic necessarily yields a negative\footnote{Based on the reasoning "above", we are essentially saying (in "pseudomath") $-\alpha + (\alpha - \epsilon) < 0$, as does $-
+\alpha - (\alpha - \epsilon)$, taking $\alpha$ to represent the "terms" of the quadratic and $\epsilon$ the undetermined-but-clearly-there difference.}. We could work out a full solution, but this is unncessary; clearly, as all $\lambda_i < 0$ when $r < 1$, $(x,y,z) \to 0$ as $t \to \infty$, which supports our original assumption in simpifying the system that $(x,y,z)$ remain "small".\footnote{NB: just because the assumption "held" sts does not mean that it is \textit{always true}; it simply validates the approximation we made in the particular scenario where $r < 1$.} Thus, in all, $\underline{\mathbf{u}}(t) = \begin{pmatrix}
+  x(t)\\
+  y(t)\\
+  z(t)
+\end{pmatrix} = \sum_{j=1}^{3}\left[c_j e^{\lambda_j t}\,\underline{\mathbf{v_j}}\right] \to 0$ as $t \to \infty$, $\implies \left(\left|x(t)\right|,\left|y(t)\right|,\left|z(t)\right|\right)$ "small" $\forall t > 0$.\footnote{Note that we did not need to find the eigenvectors, or even the values (albeit, the matrix was in a quite nice form to allow this).}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics*[width=0.5\textwidth]{figures/rlessthan1.png}
+\end{figure}
+
+Again, this is all under $r > 1$; when $r>1$, $4(r-1)\sigma > 0 \implies \sqrt{(1+\sigma)^2 + 4(r-1)\sigma} >0 \implies -(1+\sigma) + \sqrt{(1+\sigma)^2 + 4(r-1)\sigma} > 0$, ie the root of the characteristic polynomial when we take the positive is now greater than one. In practical terms, this indicates a positive eigenvalue (we will take this to be $\lambda_1$ and $\underline{v}_1$), and thus one of our terms will grow as $t \to \infty$; however, the other two eigenvalues remain $<1$ and will continue to shrink with time.
+% TODO: fix below
+% \begin{figure}[!h]
+%   \centering
+%   \includegraphics*[width=0.5\textwidth]{figures/rgreaterthan1.png}
+% \end{figure}
+
+Remember that, this whole time, we are working with a linearized version of the original Lorenz equations, and thus these diagrams are not fully reflective of reality. As shown, for instance, the Lorenz equations have two other steady states (unless bifurcation\dots), which influence trajectories in the original system. However, this linearization is still useful in analyzing the dynamics of the system near the steady state $(0,0,0)$.
+
+The other two steady states influence the dynamics of the system such that, at certain initial conditions, the trajectories will tend to spiral towards one of the two steady states, as well as (in chaotic systems) jump "randomly" from one steady state to the other, hence the "attractor" name.
+
+\subsection{Motivations of Maps}
+
+While aforementioned dynamical systems were defined via ordinary differential equations, we can also define them via \textbf{maps}, which are discrete dynamical systems. These can be defined:
+\begin{enumerate}
+  \item Taking the maxima of a function in a system plotted against the previous maxima (for instance, in the Lorenz map, taking the maxima of $z(t)$ as $z_n$ and plotting $z_n$ against $z_{n+1}$ for natural $n$).
+  \item "Redefining" ODE's as maps. For instance, the \textbf{logistic map} defined \[x_{n+1} = f(x_n) = \lambda x_n(1-x_n)\]
+\end{enumerate}
+% TODO : tent, maps, etc
+
+\newpage
+
+\section{Chapter 2}
+
+\subsection{Flows on the Line}
+
+Consider $\dot{x} = f(x)$ or $\dot{x} = f(x, \mu)$ where $\mu$ some parameter. Solutions will be $x(t) \in \mathbb{R}$, and will either have $f: \mathbb{R} \to \mathbb{R} (f(x))$ or $f: \mathbb{R}^2 \to \mathbb{R} (f(x,\mu))$.
+
+We may consider initial conditions $x(t=0) = x_0 \in \mathbb{R}$; different $x_0$ lead to different solutions. Typically, we do not plot $x(t)$ against $t$, rather, we show the dynamics in $\mathbb{R}$ on a phase plot.
+
+We could, in principle solve ODEs exactly; eg $\dot{x} =f(x), t \geq 0, x(0) = x_0$. We have \begin{align*}
+  \dv{x}{t} &= f(x)\\
+  \int \frac{dx}{f(x)} &= \int dt\\
+  \int_{x(0)}^{x(t)} \frac{dx}{f(x)} &= \int_0^t dt\\
+  \int_{x(0)}^{x(t)} \frac{dx}{f(x)} &= t
+\end{align*}
+From here, we would have to solve the integral on the left and solve for $x(t)$.
+
+However, we will approach this by determining the dynamics graphically. We do the following:
+
+\begin{enumerate}
+  \item Graph $f(x)$
+  \item Draw steady states when $\dot{x} = f(x) = 0$
+  \item For $f(x) \neq 0$ we have either $\dot{x} = f(x) > 0, x(t)$ increasing, or $\dot{x} = f(x) < 0, x(t)$ decreasing
+\end{enumerate}
+
+\begin{remark}
+  If $f(x) = 0$ and $f'(x) < 0$, then $x$ is a \textbf{stable steady state}. If $f(x) = 0$ and $f'(x) > 0$, then $x$ is an \textbf{unstable steady state}.
+
+  If $f(x) = f'(x) = 0$, we have a steady state which is "half-stable", eg $\dot{x} = f(x) = x^2$.
+\end{remark}
+
+\begin{example}
+  $\dot{x} = f(x, \mu) = x^2 + \mu$. If $\mu = 0$, we have a "half-stable" point. 
+
+  If $\mu > 0$, we have $f(x,\mu) \geq \mu > 0 \forall x$, and we have no steady state.
+
+  If $\mu < 0$, we have two stable steady states (on stable, one unstable).
+
+  There is a \textbf{bifurcation} at $x=0$ when $\mu = 0$; the number of steady states changes.
+\end{example}
+
+In short; $\text{sign}(f'(x))$ determines the stability of the steady state, given $f'(x) \neq 0$, in which case we need to study further.
+
+In particular, cases where $f(x)=f'(x)=0$ are "delicate", and small parameter changes can cause large changes in the dynamics.
+
+\subsection{Linear Stability Analysis}
+
+$\dot{x} = f(x)$, let $x^{*} \in \mathbb{R}$ be a s.s., ie $f(x^*) = 0$; what does the dynamics look like near $x^*$?
+
+First, change variables such that the s.s. is at the origin; let $v(t) = x(t) -x^*$, then 
+\begin{align*}
+  \dot{v} &= \dv{t}(x(t)-x^*)=\dv{x}{t}-0\\
+  &= f(x(t)) = f(x^* + v(t)) = g(v(t))
+\end{align*}
+
+Note that this "new" system has a steady state at $v=0$; $g(0) = f(x^*) = 0$. Here, we can Taylor expand $\dot{v}$:
+\begin{align*}
+  \dot{v} &= \sum_{j=0}^\infty \frac{v^j f^{j}(x^*)}{j!}\\
+  &= f(x^*) + v f'(x^*) + \frac{v^2}{2} f''(x^*) + \dots\\
+  f(x^*) = 0 \implies \dot{v} &= f'(x^*)v+\frac{1}{2}f''(x^*)v^2 + O(v^3)
+\end{align*}
+
+For $x(t) \approx x^*$, we have $|v(t)| = |x(t) - x^*| \ll 1$, then $1 \gg |v(t)| \gg |v(t)|^2 \gg |v(t)|^3 \gg \dots > 0$. Provided $f'(x^*)\neq 0$ for $|v|$ sufficiently small the $f'(x^*) v$ term will dominate others and we can write \[\dot{v} \approx f(x^*)v.\]
+Let $\lambda = f(x^*)$ (just a constant), then we say 
+\begin{align*}
+  \dot{v} &= \lambda v\\
+  \implies \dv{v}{t} &= \lambda v\\
+  \implies \int_{v_0}^{v(t)}\frac{dv}{v} &= \int_0^t \lambda dt\\
+  \implies [\ln |v|]_{v_0}^{v(t)} &= \lambda t\\
+  \implies \ln \frac{v(t)}{v_0} &= \lambda t
+\end{align*}
+
+We can drop the absolute value bars as $v(t)$ and $v_0$ must have the same sign.
+% TODO: clarify
+\begin{align*}
+  v(t) &= v_0 e^{\lambda t}\\
+\end{align*}
+
+Thus, if $\lambda < 0$, $v(t) \to 0$ as $t \to \infty$, then $v(t) = x - x^* \implies x(t) \to x^*$ as $t \to \infty$. Else, if $\lambda > 0$, then $|v_0 e^{\lambda t}|$ grows with $t$ and $|v(t)| \to \infty$ as $t \to \infty$. Importantly, $|v(t)|$ becomes large before it becomes unbounded, meaning that our initial assumption doesn't work as the $O(v^2)$ term becomes significant. However, we can still make conclusions about the (in)stability local to $x^*$, and we can't draw conclusions for dynanmics $t \to \infty$.
+
+\begin{example}
+  $\dot{x} = f(x) = x-x^3 = x(1-x^2) = x(1-x)(1+x)$. We have steady states at $x = -1,0,1$.
+
+  $f(x) = x - x^3 \implies f'(x) = 1 - 3x^2$, so $f(0) = 1 \implies 0$ unstable, $f'(\pm 1) = 1 -3 = -2 \implies \pm 1$ stable.
+
+  Alternatively, graph $f(x)$ and the steady states are visually obvious.
+\end{example}
+
+This is called \textbf{linear stability analysis}, as are reducing the nonlinear differential equation $\dot{x} = f(x)$ to a linear ODE $\dot{v} = \lambda v$ (we'll see in higher dimensions that we replace $\lambda$ with some Jacobian).
+
+\subsection{Existence \& Uniqueness}
+
+We are studying the \textit{qualitative} behavior of solutions, which only makes sense if these solutions exist. Usually we require that the IVP $\dot{x} = f(x), x(0) = x_0$ to have a unique solution $x(t) \forall t \geq 0$, for every $x_0 \in \mathbb{R}$. If they were not unique, they have multiple solutions starting at some point or worse, at points $x_0$ where multiple solutions are possible orbits will cross each other. The very aspect that this doesn't happen is what makes phase plots useful.
+
+This is also why only autonomous ODEs are considereed; in nonautonomous ODES $\dot{x} = f(t,x)$, the value of $\dot{x}(t)$ at a particular value of $x$ will depend of $t$.
+
+
+% \section{Appendix}
+% \printProofs
+
+\end{document}

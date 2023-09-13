@@ -1,0 +1,314 @@
+\documentclass[12pt]{article}
+\usepackage{amsthm}
+\usepackage{libertine}
+\usepackage[margin=0.15in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{siunitx}
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage[bottom]{footmisc}
+\usepackage{xcolor-solarized}
+\usepackage{svg}
+\usepackage{physics}
+\usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
+\usepackage{tikz}
+\usepackage{quiver}
+\usetikzlibrary{cd}
+% \usepackage{cleveref}
+\usepackage[]{csquotes}
+\usepackage{hyperref}
+
+\usepackage[createShortEnv]{proof-at-the-end}
+
+% makes theorems, definitions, etc. "restatable" as shown
+% can add more with same format as you wish
+\renewcommand*{\proofname}{}
+
+
+\declaretheorem[
+  thmbox=S,
+  name=Definition,
+  refname={Definition, definition}, numberwithin=section
+]{definition}
+
+\declaretheorem[
+  thmbox=S,
+  name=Axiom,
+  refname={Axiom, axiom},
+  numberwithin=section
+]{axiom}
+
+\declaretheorem[
+  thmbox=S,
+  name=Lemma,
+  refname={Lemma, lemma},
+  numberwithin=section
+]{lemma}
+
+\declaretheorem[
+  thmbox=S,
+  name=Corollary,
+  refname={Corollary, corollary},
+  numberwithin=section
+]{corollary}
+
+\declaretheorem[
+  name=Exercise, 
+  refname={Exercise, exercise},
+  numberwithin=section,
+  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{exercise}
+
+\declaretheorem[
+  thmbox=S,
+  name=Theorem,
+  refname={Theorem, theorem},
+  numberwithin=section
+]{theorem}
+
+\declaretheorem[
+  % thmbox=M,
+  name=Example,
+  refname={Example, example},
+  numberwithin=section,
+  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{example}
+
+\newEndThm[no proof here, restate, text proof={Examples}, one big link={\emph{See more}}]{definitionEnd}{definition}
+\newEndThm[no proof here, restate, one big link = {\emph{Proof}}]{lemmaEnd}{lemma}
+\newEndThm[no proof here, restate, one big link = {\emph{(Solution)}}]{exerciseEnd}{exercise}
+\newEndThm[no proof here, restate]{axiomEnd}{axiom}
+
+% \newEndThm[proof here, restate]{theoremEnd}{theorem}
+
+% makes "quoted" text actually look correct
+\MakeOuterQuote{"}
+
+% page footer
+\newpagestyle{mypage}{%
+    \footrule
+    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
+}
+
+% title page settings
+\newcommand{\pageauthor}{Louis Meunier}
+\newcommand{\pagetitle}{Classical Mechanics}
+\newcommand{\pagesubtitle}{PHYS251}
+
+% black square for qed symbol
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+% annoying urls
+\urlstyle{same}
+\urldef\calc\url{https://notes.louismeunier.net/Calculus%20A%2C%20B/calculus.pdf#page=85 }
+
+\titleformat{\section}
+{\centering\normalfont\Large\bfseries}
+{\thesection}{1em}{}
+
+\begin{document}
+\setstretch{2.25}
+\noindent
+\begin{center}
+    \begin{tabularx}{\textwidth} { 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedleft\arraybackslash}X}
+    \LARGE \pageauthor \\
+    \LARGE \textbf{\pagetitle} & \LARGE \textbf{\pagesubtitle}\\
+    \end{tabularx}\\
+    \rule[2ex]{0.8\textwidth}{1pt}
+\end{center}
+
+\setstretch{1.5}
+\tableofcontents
+
+% "enables" footer with section+subsection, etc. just comment it out if you don't want it
+\pagestyle{mypage}
+
+% makes sections a very dark gray + centered
+\titleformat{\section}
+{\color{darkgray}\centering\normalfont\Large\bfseries}
+{\color{darkgray}\thesection}{1em}{}
+
+% need to change margins and such here for rest of document
+% kind of messy but what can you do
+\newpage
+% modify these as you wish
+\newgeometry{margin=0.5in, top=0.4in, bottom=0.75in}
+\parskip=0.5em
+
+\section{Introduction \& Notations}
+\subsection{Vectors}
+This course deals mainly with \textit{scalars} (magnitude) and \textit{vectors} (magnitude and direction). We define algebra on vectors, briefly:
+\begin{itemize}
+  \item $\vb{A} + \vb{B} = \vb{B} + \vb{A}$ \textit{(commutativity of addition)}
+  \item $\vb{A} + (\vb{B} + \vb{C}) = (\vb{A} + \vb{B}) + \vb{C}$ \textit{(associativity of addition)}
+  \item $c(d\vb{A}) = (cd)\vb{A}$ \textit{(associativity of scalar multiplication)}
+  \item $(c+d)\vb{A} = c \vb{A} + d\vb{A}$ \textit{(Distributivity of scalar multiplication)}
+  \item $c(\vb{A} + \vb{B}) = c\vb{A} + c\vb{B}$ \textit{(Distributivity of scalar multiplication)}
+\end{itemize}
+and the operators:
+\begin{itemize}
+  \item $\vb{A} \times \vb{B} = \vb{C}$ s.t. $|\vb{C}| = |\vb{A}||\vb{B}|\sin \theta$, where $\theta$ is the angle between $\vb{A}$ and $\vb{B}$, and $\vb{C}$ is perpendicular to both $\vb{A}$ and $\vb{B}$. This is equivalent to computing $\det \begin{bmatrix} \vb{i} & \vb{j} & \vb{k} \\ A_x & A_y & A_z \\ B_x & B_y & B_z \end{bmatrix}$.  This \textit{cross product} is \textbf{anti-commutative}, meaning $\vb{A} \times \vb{B} = -\vb{B} \times \vb{A}$. Additionally, note that $\vb{A} \times \vb{A} = 0$.
+  \item $\vb{A}\cdot \vb{B} = C = |\vb{A}||\vb{B}|\cos \theta$, where $C$ is a scalar. Note that $C = 0$ when $\theta = \pi/2$, ie $\vb{A}$ and $\vb{B}$ are perpendicular.
+\end{itemize}
+
+\subsection{Law of Cosines}
+
+Consider a (planar) triangle constructed of sides $\vb{C} = \vb{A} + \vb{B}.$ We can write \begin{align*}
+  \vb{C}^2 &= \vb{C}_x^2 + \vb{C}_y^2\\
+  &= (|\vb{A}| - |\vb{B}|\cos \theta)^2 + (|\vb{B}|\sin \theta)^2\\
+  &= |\vb{A}|^2 + |\vb{B}|^2 - 2|\vb{A}||\vb{B}|\cos \theta
+\end{align*}
+
+
+\subsection{Perspectives on the Cross Product}
+
+\begin{align*}
+  \vec{A} \cross \vec{B} &= (A_x \vb{i} + A_y \vb{j} + A_z \vb{k}) \cross (B_x \vb{i} + B_y \vb{j} + B_z \vb{k})\\
+  &= A_x B_y (\vb{i} \cross \vb{j}) + \cdots \\
+  &= (A_y B_z - A_z B_y) \vb{i} + \cdots \\
+  &\equiv (\vb{A}\times\vb{B})_k = \sum_{i=1}^{3}\sum{j=1}^3\mathcal{E}_{ijk} A_i B_j
+\end{align*}
+Where $\mathcal{E}_{ijk} = \begin{cases}
+  1; & $ijk$ \text{ even permutation of }123\\
+  -1; & $ijk$ \text{ odd permutation of }123\\
+  0; & \text{otherwise}
+\end{cases}$ 
+
+\subsection{Describing a Particle in Space in Polar Coordinates}
+
+Consider a particle moving through space with a constant angular velocity $\dv{\theta}{t} = \omega$. We can describe this movement in terms of planar coordinates as $\vb{r}(t) = r_0 \cos (\omega t) \vb{i} + r_0 \sin(\omega t) \vb{j}$. Differentiating with respect to time, we obtain $\vb{v}(t) = -r_0 \omega (\sin(\omega t)\vb{i} - \cos (\omega t) \vb{j})$. Notice that $\vb{r} \cdot \vb{v} = 0 \forall t$; this should be familiar, as the velocity vector is always perpendicular to the position vector in purely circular motion. Differentiating again, we obtain $\vb{a}(t) = -r_0 \omega^2 (\cos(\omega t)\vb{i} + \sin (\omega t) \vb{j}) = -\omega^2 \vb{r}(t)$. In other words, the acceleration is always opposing the position vector (given the negative sign), and is proportional to the square of the angular velocity.
+
+Assume now, instead, that the particle moves arbitrarily, described by a function $\vb{r}(t)$. In polar coordinates, this position vector is always travelling along the vector $\vectorunit{r}$, with magnitude $r$, and we can write $\vb{r}(t) = r \cdot \vectorunit{r}$. Differentiating:
+\begin{align*}
+  \vb{v}(t) = \dv{\vb{r}}{t} &= \dv{t}\left(r\cdot\vectorunit{r}\right)\\
+  &= \dv{r}{t}\vectorunit{r} + r\dv{\vectorunit{r}}{t}\\
+  &= \dot{r}\vectorunit{r} + r \dv{t}\left(\cos \theta \vb{i} + \sin \theta \vb{j}\right)\\
+  &= \dot{r}\vectorunit{r} + r \left(-\sin \theta \vb{i} + \cos \theta \vb{j}\right)\dot{\theta}\\
+  &= \dot{r}\vectorunit{r} + r \dot{\theta} \vectorunit{\theta}
+\end{align*}
+
+Recalling that $\begin{cases}
+  \vectorunit{r} = \cos \theta \vb{i} + \sin \theta \vb{j}\\
+  \vectorunit{\theta} = -\sin \theta \vb{i} + \cos \theta \vb{j}
+\end{cases}$.
+Differentiating again:
+\begin{align*}
+  \vb{a}(t) = \dv{\vb{v}}{t} &= \dv{t}\left(\dot{r}\vectorunit{r} + r \dot{\theta} \vectorunit{\theta}\right)\\
+  &= \ddot{r}\vectorunit{r} + \dot{r}\dot{\theta}\vectorunit{\theta} + \dot{r}\dot{\theta}\vectorunit{\theta} + r \ddot{\theta}\vectorunit{\theta} + r \dot{\theta}(-\vectorunit{r})\\
+  &= \left(\underbrace{\ddot{r}}_{\text{radial}} - \underbrace{r \dot{\theta}^2}_{\text{centripetal}}\right)\vectorunit{r} + \left(\underbrace{2\dot{r}\dot{\theta}}_{\text{coriolis}} + \underbrace{r \ddot{\theta}}_{\text{tangential}}\right)\vectorunit{\theta}
+\end{align*}
+
+we obtain a decomposition of the acceleration vector into radial ($\vectorunit{r}$) and tangential ($\vectorunit{\theta}$) components, labelled accordingly. Note that the centripetal acceleration, labelled, is the same as the acceleration in circular motion mentioned previously.\footnote{None of the other "components" of acceleration are present in the constant angular velocity case because (1) $\ddot{r}=0$, ie no radial acceleration, so the radial and coriolis components are zero, and (2) $\dot{\theta} = \omega \implies \ddot{\theta} = 0$, so the tangential acceleration is zero, leaving only the centripetal acceleration.}\footnotemark
+
+\footnotetext{See \calc for a different perspective on this topic.}
+
+% TODO: update prev
+% statics, etc
+
+\subsection{Newton's Laws of Motion}
+\begin{enumerate}
+  \item[N1:] \textit{"in absence of external force, a body at rest remains at rest, and a body in motion remains in motion, with the same speed \& same direction"}
+  
+This law defines \textit{intertial frames}, ie ones in which the law holds.
+
+  \item[N2:] $\vec{F} = m \vec{a}$
+  \item[N3:] \textit{"if a body \textbf{b} applies a force on body \textbf{a}, then \textbf{a} applies a force on \textbf{b} such that $\vec{F}_a = -\vec{F}_b$ (equal and opposite)"}\footnote{$\implies$ conservation of momentum \dots}
+\end{enumerate}
+
+\begin{example}
+  Consider two blocks \textbf{A}, \textbf{B} where \textbf{A} lies atop \textbf{B} which all lie upon "the earth".
+
+  \textbf{A} experiences the force $W_A$ due to gravity and the force $F_1$ back from \textbf{B}.
+
+  \textbf{B} experiences the normal force $N$ from the table, the force of gravity $W_B$, and finally the force $F_2$ due to \textbf{A}.
+
+  We can write (from N2) \[\vec{F}_1 + \vec{W}_A = m_A \vec{a}_A\] and similarly
+  \[\vec{N} + \vec{W}_B + \vec{F}_2 = m_B \vec{a}_B\]
+  Static situation $\implies \vec{a}_A = \vec{a}_B = 0$.
+  We can further simplify writing $F_1 = m_A g$ (N2), and finally \[N = W_A + W_B = (m_A + m_B)g.\]
+\end{example}
+
+\begin{example}
+  Consider a mass $m_1$ laying on a table, connected via a string to a mass $m_2$ hanging off the table, where the string is of small mass and is under a tension $T$. (Looking at a functionally massless stirng, we can consider there to be a constant tension as we can say $T - T' = \delta m a \implies T - T' = 0 \implies T = T'$, where $T, T'$ is the tension on a particular segment of the string in opposing directions).
+
+  On $m_1$, we have the normal force $N$, tension $T$, and weight $m_1 \cdot g$.
+
+  On $m_2$, we have the weight $m_2 \cdot g$, the tension $T$ (equal throughout string as explained above).
+
+  Together, we can write (N2; taking $x$ to represent a motion "left" and $z$ to represent a motion "down") 
+  \[- T = m_1 \ddot{x}\] 
+  and 
+  \[m_2g-T = m_2 \ddot{z}.\]
+
+  Noting that the string must "retain" its length we can write \[l(t) = x(t) + z(t),\] where $x$ and $z$ represent the length of the string in the $x/z$ axes. However, as $l$ must stay constant, we can differentiate twice wrt time to obtain \[0 = \ddot{x} + \ddot{z}.\]
+  All together, then we have
+  \[
+    \ddot{x} = \frac{-m_2 g}{m_1 + m_2}.
+  \]
+  Integrating twice, we have \[
+    x(t) = \frac{-m_2 g}{m_1 + m_2} \cdot \frac{t^2}{2}.
+  \]
+\end{example}
+
+\begin{example}
+  Consider a mass $m_1$ connected to a string which lies along a pulley $P_1$, which then attaches to the center of pulley $P_2$, which has a string whicch, on one end, is attached to a mass $m_2$, and is grounded in the other.
+
+  On $m_1$, we have tension $T$ and the weight $m_1 \cdot g$.
+  
+  On $m_2$, we have the weight $m_2 \cdot g$ and the tension $T'$ (no reason for $T = T'$; strings aren't connected).
+
+  Consider $P_1$ - it is nailed to the wall at its center, and experiences some $F$ ("up") from the nail, as well as the tension $T_1$ down (\textit{twice}). 
+
+  On $P_2$, we have the tension $T_1$ ("up") and the tension $T_2$ ("down", "twice").
+
+  We can write \begin{align*}
+    T_1 - W_1 &= m_1 a_1\\
+    T_2 - W_2 &= m_2 a_2\\
+    T_1 - 2T_2 &= m_{P_2} \cancel{a_{P_2}}\implies T_1 = 2 T_2
+  \end{align*}
+  As last time, we can use the fact that the strings cannot stretch. Consider $m_1$ to be at height $y_1$, $P_1$ to be at height $y_{P_1}$, $P_2$ to be at height $y_{P_2}$, and $m_2$ to be at height $y_{2}$.
+
+  We can then take the length $l_1$ of the string about $P_1$ as
+  \[
+  l_1 = (y_{P_1} - y_1) + (y_{P_2}-y_2) + \pi R_{P_1} 
+  \]
+  Differentiating twice wrt time, we have
+  \[
+  0 = a_1 + a_{P_2} \implies a_1 = - a_{P_2}.
+  \]
+  Analyzing $P_2$ similarly, we will obtain
+  \[
+    a_2 = 2 a_{P_2}.
+  \]
+
+  All together, we have 
+  \[
+  a_1 = \left(\frac{2m_2 - m_1}{4m_2 + m_1}\right) g.
+  \]
+\end{example}
+
+Consider a collection of particles. The force on any particular particle, say 1, we can denote \[\vec{F}_{1} = \vec{F}_{12} + \vec{F}_{13} + \dots + \vec{F}_{1n} + \vec{F}^{\text{ext}}_1.\] Notice that any force $\vec{F}_{nm} = - \vec{F}_{mn}$, by N3. Thus, if we add all the forces on all the particles in the bag, we will always have a "pairing" of forces such that each $\vec{F}_{mn}$ is "canceled" by another, leaving behind only the external forces, ie \[\vec{F}^{\text{ext}} = \sum_{i} \vec{F}^{\text{ext}}_{i}.\] Say there are no external forces; then, we have 
+\begin{align*}
+  \sum_i m_i \vec{a}_i &= 0\\
+  \dv{t} \sum_i m_i \vec{v}_i &= 0.\\
+\end{align*}
+And thus, we have conservation of momentum.
+
+\subsection{Projectile Motion}
+Say we have a particle with an initial velocity $v_0$ launched at an angle $\theta$. This particle experiences just one force, $mg$, and by N2 we have \[\cancel{m} \ddot{y} = -\cancel{m}g.\] Integrating, we have \[y(t) = y(t=0) + \underbrace{v_0 \sin \theta}_{\text{vertical component of $v_0$}} t - \frac{g t^2}{2}.\]
+
+In the $x$, we have $m \ddot{x} = 0$, $x(t) = v_0 \cos \theta t$. From here, we can rewrite $x(t)$ as $t$ as a function of $x$ and substitute into $y$ for a function $y = f(x)$. This gives \[
+y = \frac{v_0 \sin \theta x}{v_0 \cos \theta} - \frac{g}{2} \frac{x^2}{v_0^2 \cos^2 \theta} (= ax - bx^2)  
+\]
+\end{document}

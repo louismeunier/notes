@@ -84,3 +84,23 @@
 !*Algebra/misc
 !*Algebra/misc/*
 !*Algebra/README.md
+
+# ClassMech
+!*ClassMech/
+!*ClassMech/*.pdf
+!*ClassMech/*.tex
+!*ClassMech/misc
+!*ClassMech/misc/*
+!*ClassMech/README.md
+
+# NonlinearDynamics
+!*NonlinearDynamics/
+!*NonlinearDynamics/*.pdf
+!*NonlinearDynamics/*.tex
+!*NonlinearDynamics/misc
+!*NonlinearDynamics/misc/*
+!*NonlinearDynamics/figures
+!*NonlinearDynamics/figures/*
+!*NonlinearDynamics/scripts
+!*NonlinearDynamics/scripts/*
+!*NonlinearDynamics/README.md
