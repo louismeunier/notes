@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[12pt,oneside]{article}
 \usepackage{amsthm}
 \usepackage{libertine}
 \usepackage[margin=0.15in]{geometry}
@@ -15,25 +15,96 @@
 \usepackage{titlesec}
 \usepackage{thmtools}
 \usepackage{thm-restate}
+\usepackage{xcolor-solarized}
+\usepackage[side, ragged]{footmisc}
+\usepackage{marginnote}
+\usepackage{xsim}
 \usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
+\usepackage[raggedrightboxes]{ragged2e}
 \usepackage{cleveref}
 \usepackage[]{csquotes}
+\usepackage{shortcuts}
 \usepackage[createShortEnv]{proof-at-the-end}
 
 % makes theorems, definitions, etc. "restatable" as shown
 % can add more with same format as you wish
 \renewcommand*{\proofname}{}
+\renewcommand*{\qedsymbol}{\(\blacksquare\)}
+% homework answers
+% TODO: uncomment to show answers
+\xsimsetup{
+  load-style=layouts,
+  % solution/print=true,
+  exercise/template=minimal,
+  solution/template=runin,
+}
 
-\declaretheorem[thmbox=S,name=Definition,numberwithin=section]{definition}
-\declaretheorem[thmbox=S,name=Axiom,numberwithin=section]{axiom}
-\declaretheorem[thmbox=S,name=Lemma,numberwithin=section]{lemma}
-\declaretheorem[thmbox=S,name=Theorem,numberwithin=section]{theorem}
-\declaretheorem[name=Example,numberwithin=section]{example}
-\declaretheorem[name=Exercise,numberwithin=section]{exercise}
+\declaretheorem[
+  % thmbox=S,
+  name=Definition,
+  refname={Definition, definition}, numberwithin=section,
+  shaded={rulecolor=solarized-blue, rulewidth=2pt}
+]{definition}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Axiom,
+  refname={Axiom, axiom},
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=2pt}
+]{axiom}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Lemma,
+  refname={Lemma, lemma},
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{lemma}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Corollary,
+  refname={Corollary, corollary},
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{corollary}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Remark,
+  refname={Remark, remark},
+  numberwithin=section
+]{remark}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Theorem,
+  refname={Theorem, theorem},
+  numberwithin=section,
+  shaded={rulecolor=solarized-red, rulewidth=2pt}
+]{theorem}
+
+\declaretheorem[
+  % thmbox=M,
+  name=Example,
+  refname={Example, example},
+  numberwithin=section,
+  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{example}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Proposition,
+  refname={Proposition, proposition},
+  numberwithin=section,
+  shaded={rulecolor=solarized-magenta, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{proposition}
+
 
 \newEndThm[no proof here, restate, text proof={Examples}, one big link={\emph{See more}}]{definitionEnd}{definition}
 \newEndThm[no proof here, restate, one big link = {\emph{Proof}}]{lemmaEnd}{lemma}
-\newEndThm[no proof here, restate, one big link = {\emph{(Solution)}}]{exerciseEnd}{exercise}
+% \newEndThm[no proof here, restate, one big link = {\emph{(Solution)}}]{exerciseEnd}{exercise}
 \newEndThm[no proof here, restate]{axiomEnd}{axiom}
 
 % \newEndThm[proof here, restate]{theoremEnd}{theorem}
@@ -87,20 +158,22 @@
 % kind of messy but what can you do
 \newpage
 % modify these as you wish
-\newgeometry{margin=0.5in, top=0.4in, bottom=0.75in}
-\parskip=0.5em
+\newgeometry{margin=0.25in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in, includemp}
+\parskip=0.6em
 
 \section{Fundamentals}
 \subsection{Sets}
 \subsubsection{Definition}
-A \textbf{set} can be considered as a collection of elements; more intuitively, you can consider something a set if you can determine wheteher a given object belongs to it. Typically sets are defined as $A = \{1, 2, \dots\}$, by a property $A = \{x \,|\, x\%2 = 0\}$, or with an appropriate verbal description.
+A \textbf{set} can be considered as a collection of elements; more intuitively, you can consider something a set if you can determine whether a given object belongs to it. Typically sets are defined as $A = \{1, 2, \dots\}$, by a property $A = \{x \,|\, x\%2 = 0\}$, or with an appropriate verbal description.
 
-\subsubsection{Set Operations}
+\subsubsection{Set operations}
 There are a number of ways to "combine" sets:
+
 \begin{itemize}
-  \item \textbf{Union}: $A \cup B = \{x \,|\, x \in A \text{ or } x \in B\}$
-  \item \textbf{Intersection}: $A \cap B = \{x \,|\, x \in A \text{ and } x \in B\}$
-  \item \textbf{Difference}: $A \setminus B = \{x \,|\, x \in A \text{ and } x \notin B\}$
+  \item \textbf{Union}: $A \cup B = \{x \,|\, x \in A \text{ or } x \in B\}$ 
+  % \tikz \fill (0,0) circle (0.25) (0.25,0) circle (0.25);
+  \item \textbf{Intersection}: $A \cap B = \{x \,|\, x \in A \text{ and } x \in B\}$ 
+  \item \textbf{Difference}: $A \setminus B = \{x \,|\, x \in A \text{ and } x \notin B\}$ 
 \end{itemize}
 
 \begin{lemma}
@@ -113,10 +186,9 @@ There are a number of ways to "combine" sets:
 
   Next, to prove RHS $\subseteq$ LHS, let $a \in $ RHS. If $a \in A \setminus B$, then $a \in A=$ LHS. Else, $a \in A \cap B$, and thus $a \in A=$ LHS. Thus, RHS $\subseteq$ LHS.
   Since LHS $\subseteq$ RHS and RHS $\subseteq$ LHS, LHS = RHS.
-  \qed
 \end{proof}
 
-\subsubsection{Indexed Sets}
+\subsubsection{Indexed sets}
 
 Let $I$ be a set. If for every $i \in I$, we have a set $B_i$, we say that we have a \textit{collection} of sets $B_i$ indexed by $I$. We write $\{B_i : i \in I\}$.
 
@@ -131,8 +203,517 @@ Let $I$ be a set. If for every $i \in I$, we have a set $B_i$, we say that we ha
 \begin{example}
   Let $I = \mathbb{R}$, and $B_i = [i, \infty] = \{r \in \mathbb{R} : r \geq i\}$. Then, $\bigcup_{i \in \mathbb{R}} B_i = \mathbb{R}$ and $\bigcap_{i \in \mathbb{R}} B_i = \emptyset$.
 \end{example}
-\newpage
-\section{Appendix}
-% \printProofs
 
+\subsubsection{Cartesian product}
+
+Let $A_1, A_2, \dots, A_n$ be sets. We define the \textbf{Cartesian product} \[A_1 \times A_2 \times \cdots \times A_n = \{(x_1, x_2, \dots, x_n) : x_i \in A_i, \text{ for } 1 \leq i \leq n\}.\] For instance, \[A \times B = \{(a, b) : a \in A, b \in B\}.\]
+
+\begin{example}
+  Let $A = B = \mathbb{R}$. $A \times B = \{(x,y) : x \in \mathbb{R}, y \in \mathbb{R} \} = \mathbb{R}^2$ is the set of all points in the Cartesian plane.
+\end{example}
+
+We can also define Cartesian products over an index set. Let $I$ be an index set, with $A_i$ for all $i \in I$. Then, we can write \[\prod_{i \in I}A_i = \{(a_i)_{i \in I} : a_i \in A_i\}\]
+
+\begin{example}
+  \begin{align*}
+    I &= \mathbb{N}, A_0 = \{0, 1, 2, \dots\}, A_1 = \{1, 2, 3, \dots\}, ... , A_i = \{i, i+1, i+2, \dots \}\\
+  Y &:= \prod_{i \in I}A_i = \{(a_0, a_1, a_2, \dots):a_i \in \mathbb{N}, a_i \geq i\}
+  \end{align*}
+  We can say that a particular vector $(b_0, b_1, \dots) \in Y$ if for each $b_i$, $b_i \geq i$ (and $b_i \in \mathbb{N}$, of course). In other words, a particular item of the vector must be greater than or equal to its index. Thus, we can say \[(0, 1, 2, 3, \dots) \in Y\] while \[(2,2,2, 2, \dots) \notin Y\] since $a_3 = 2 \implies i = 3$, and $2 \ngeq 3$.
+\end{example}
+
+\subsection{Methods of Proof}
+\subsubsection{Proving equality via two inequalities}
+In short, say $x, y \in \mathbb{R}$. $x = y \iff x \leq y \text{ and } y \leq x$. Similarly, in the context of sets, we can say that, for two sets $X, Y$, $X = Y \iff X \subseteq Y \text{ and } Y \subseteq X$.
+
+\subsubsection{Contradiction (bwoc)}
+
+Given a statement $P$, we can prove $P$ true by assuming $P$ false ($\equiv \neg P$), then arriving to a contradiction (this contradiction is often a violated axiom or basic rule of the system at hand.)
+\begin{example}
+Show that there are no solutions to $x^2 - y^2 = 1$ in the positive integers.
+\begin{proof}[Proof (bwoc)] Assume there are, so $x, y \in \mathbb{Z}_+$.\footnotemark We can then write \[1 = x^2 - y^2 = (x-y)(x+y).\] $x-y$ and $x+y$ must be integers, and so we have two cases, $\begin{cases}
+  x-y = 1\\
+  x+y = 1
+\end{cases}$ and $\begin{cases}
+  x-y = -1\\
+  x+y = -1
+\end{cases}$. In either case, $y$ must be zero, contradicting our initial assumption and thus proving the statement.
+\end{proof}
+\end{example}
+
+\footnotetext{$\mathbb{Z}_+$ is used to denote positive integers; similarly, $\mathbb{Z}_-$ denotes negative integers.}
+
+\subsubsection{Proving the contrapositive}
+Logically, $A \implies B \iff \neg B \implies \neg A$\footnote{"I am hungry therefore I will eat" $\iff$ "I will \textit{not} eat therefore I am \textit{not} hungry." Notice too that $B$ need not imply $A$ ("I will eat therefore I am hungry"). If $A \implies B \iff B \implies A$, $A \equiv B$}.
+
+\begin{example}
+  Let $X,Y$ be sets. Prove $X = X\setminus Y \implies X \cap Y = \emptyset$.
+  \begin{proof}[Proof]
+    Prove contrapositive: $X \cap Y \neq \emptyset \implies X \neq X \setminus Y$. $X \cap Y \neq \emptyset \implies \exists t \in X \cap Y \implies t \in X \text{ and } t \in Y$, thus $t \notin X\setminus Y$, but $t \in X$, so $X \neq X \setminus Y$.
+  \end{proof}
+\end{example}
+
+\subsubsection{Induction}
+
+\begin{axiom}[Well-Ordering Principle]
+  Every $S \subseteq \mathbb{N}$, where $S \neq \emptyset$, has a minimal element, ie $\exists a \in S \text{ s.t. } \forall b \in S, a \leq b$.
+\end{axiom}
+
+% \newpage % not sure why everything's breaking
+\begin{theorem}[Principle of Induction]
+  Let $n_0 \in \mathbb{N}$. Say that for every $n \in \mathbb{Z}, n \geq n_0$, we are given a statement $P_n$. Assume
+  \begin{enumerate}[label=(\alph*)]
+    \item $P_{n_0}$ is true
+    \item if $P_n$ is true, then $P_{n+1}$ is true
+  \end{enumerate}
+  then $P_n$ is true for all $n \geq n_0$.
+\end{theorem}
+
+\begin{proof}[Proof (bwoc)]
+ Assume not.\footnote{note that (a) and (b) of the Principle of Induction are still taken to be true; it is simply the conclusion that is assumed to be false. } Then, we define $S = \{n \in \mathbb{N} : n \geq n_0, P_n \text{ false}\}$. By the Well-Ordering Principle, there exists a minimal element $a \in S$. By definition, $a \geq n_0$, and as $P_{n_0}$ is taken to be true, then $a > n_0$ since $n_0 \notin S$. Thus, $a-1 \notin S$, as $a$ is the minimal element of $S$, and therefore $P_{a-1}$ is true. However, by (b), this implies $P_{a}$ is also true, and thus $a \notin P$, contradicting our initial assumption.
+\end{proof}
+
+\subsubsection{Pigeonhole principle}
+\begin{axiom}
+  If there are more pigeons than pigeonholes, then at least one pigeonhole must contain more than one pigeon.\footnotemark
+\end{axiom}
+\footnotetext{Alternatively, you can consider fractional pigeons (though a little gruesome); given $n + 1$ pigeons and $n$ holes, each hole will contain, on average, $1 + \frac{1}{n}$ pigeons.}
+
+\begin{example}
+  Consider $n_1, \dots, n_6 \in \mathbb{N}$. There exist at least two of these $n$'s s.t. $n_i - n_j$ is evenly divisible by 5.
+  \begin{proof}[Proof]
+    Let us rewrite each $n_i$ as $n_i = 5k_i + r_i$, where $k_i, r_i \in \mathbb{N}$, $k_i$ is the quotient, and $r_i$ is the residual. $r_i \in \{0, 1, 2, 3, 4\}$ (the only possible remainders when a number is divided by 5), and so there are 5 possible values of $r_i$, but 6 different $n_i$. Thus, two $n_i$ must have the same $r_i$, and we can write: 
+    \begin{align*}
+      n_i = 5k_i + r; &n_j = 5k_j + r\\
+      n_i - n_j &= (5k_i + r) - (5k_j + r)\\
+      &= 5(k_i-k_j)
+    \end{align*}
+    $(k_i - k_j) \in \mathbb{Z}$, and so $n_i - n_j$ is evenly divisible by 5. 
+  \end{proof}
+\end{example}
+
+\subsection{Functions}
+
+\begin{definition}[Function]
+  Given 2 sets $A, B$, a \emph{function} $f: A \to B$ is a rule such that $\forall a \in A, \exists! f(a) \in B$, where $\exists!$ denotes "there exists a unique".
+  
+\end{definition}
+
+\begin{definition}[Graph]
+  Given a function $f: A \to B$, a \emph{graph} $\Gamma_f = \{(a,f(a)) : a \in A\} \subseteq A \times B$. We can say that, $\forall a \in A$, $\exists! b \in B$ such that $(a,b) \in \Gamma_f$.
+\end{definition}
+
+\begin{example}
+  Consider the Cartesian plane, denoted $\mathbb{R}^2$. It is simply a graph $\Gamma_f$ where $f: \mathbb{R} \to \mathbb{R}$ is the identity function, $f(x) = x$.
+\end{example}
+
+\begin{definition}[Injective]
+  A function is an \emph{injection} iff $\forall a_1, a_2 \in A, f(a_1) = f(a_2) \implies a_1 = a_2$.
+\end{definition}
+
+\begin{definition}[Surjective]
+  A function is a \emph{surjection} iff $\forall b \in B, \exists a \in A$ such that $f(a) = b$. In other words, every element of $B$ is mapped to by at least one element of $A$; you can pick any element in the range and it will have a preimage.
+\end{definition}
+
+\begin{definition}[Bijective]
+  Both.
+\end{definition}
+
+\begin{definition}[Fibre]
+The fibre of some $y \in Y$ is $f^{-1}({y}) = f^{-1}(y)$
+\end{definition}
+
+\begin{definition}[Cardinality]
+  The \emph{cardinality} of a set $A$, denoted $|A|$, is the number of elements in $A$, if $A$ is finite, or a more abstract notion of size if $A$ is infinite.
+\end{definition}
+
+We say that two sets $A, B$ have the same cardinality ($|A|=|B|$) if $\exists$ a bijection $f: A \to B$.\footnote{Consider this in the finite case: a bijection indicates that all elements in the domain map uniquely to a single element in the range, and the range is completely "covered" sts by the function.}This necessitates the question, however: if two sets are not equal in cardinality, how do we compare their sizes?
+
+We write 
+\[|A| \leq |B| \impliedby \exists f : A \to B \text{ where } f \text{ is } \textit{injective}\]
+
+and 
+
+\[|A| \geq |B| \impliedby \exists f: A \to B \text{ where } f \text{ is } \textit{surjective.}\footnotemark\] Note that $|B| \leq |A|$ if either $A = \varnothing$ or, as above, $\exists f: B \to A$ surjective.
+\footnotetext{Consider this intuitively; if your domain is smaller than your range, then you will "run out" of things to map from the domain to the range before you "run out" of things in the range, hence, you have a injection. Similarly, if your domain is larger than your range, then you will have "leftover" elements in the domain (that will map to "already mapped to" elements in the range), hence, you have a surjection.}
+
+\begin{definition}[Composition]
+  Given two functions $f: A \to B$, $g: B \to C$, the \emph{composition} is the function $g \circ f : A \to C$
+\end{definition}
+  
+\begin{proposition}
+  If $|A| = |B|$ and $|B| = |C|$ then $|A|=|C|$
+\end{proposition}
+
+\begin{proof}[Proof]
+  $\exists f: A \to B$ bijective, and $\exists g: B \to C$ bijective. We desire to show that $\exists h : A \to C$ that is bijective. We can write $h = g \circ f$, where $h(a) = g(f(a))$. 
+
+  To show that $h$ bijective:
+  \begin{itemize}
+    \item \textbf{injective:} Suppose $h(a_1) = h(a_2)$, then $g(f(a_1)) = g(f(a_2))$, and since $g$ is injective, $f(a_1) = f(a_2)$. Since $f$ is injective, $a_1 = a_2$, and thus $h$ is injective.
+    \item \textbf{surjective:} Let $c \in C$. Since $g$ is surjective, $\exists b \in B$ such that $g(b) = c$. Since $f$ is surjective, $\exists a \in A$ such that $f(a) = b$. Thus, $h(a) = g(f(a)) = g(b) = c$, and thus $h$ is surjective.
+  \end{itemize}
+  Thus, $h$ is bijective, and $|A|=|C|$.
+\end{proof}
+
+\begin{lemma}
+  If $g \circ f$ injective, $f$ injective. If $g \circ f$ surjective, $g$ surjective.
+\end{lemma}
+
+\begin{definition}[Image]
+  The \emph{image} of a function $f: A \to B$ is the set $\text{Im}(f) = \{f(a) : a \in A\}$, ie the set of all elements in $B$ that are mapped to by $f$. Note that $\text{Im}(f) \subseteq B$, and $\text{Im}(f) = B$ if $f$ is surjective.
+\end{definition}
+
+\begin{proposition}
+  $|A|\leq |B|$if $ |B| \geq |A|$  
+\end{proposition}
+  
+\begin{proof}[Proof]
+  If $A = \varnothing$, $|B|\geq |A|$ clearly.
+
+  If $A \neq \varnothing$, we are given $\exists f: A \to B$ injective. Let us choose some $a_0 \in A$. We define $g: B \to A$ as \[g(b) = \begin{cases}
+    a_0 & b \notin \text{Im}(f)\\
+    a & b =f(a)\in \text{Im}(f)\footnotemark
+  \end{cases}\] Note that $g(f(a)) = g(b) = a$, so $g$ is surjective. Thus, $|B| \geq |A|$.
+  \footnotetext{Note that $a$ is unique in $A$, as $f$ is injective.}
+\end{proof}
+
+\begin{proposition}
+  $|B|\geq |A|$ if $|A|\leq |B|$
+\end{proposition}
+
+% \newpage
+\begin{theorem}[Cantor-Bernstein Theorem]
+  $|A| \leq |B| \text{ and } |B| \leq |A| \implies |A| = |B|$.
+  \footnotemark
+
+  Equivalently, if $\exists f: A \to B$ injective and $\exists g: B \to A$ injective, then $\exists h: A \to B$ bijective.
+\end{theorem}
+\footnotetext[9]{It is often very difficult to define an arbitrary bijective function between two sets in order to prove their cardinality is equal. The Cantor-Bernstein Theorem allows us to prove that two sets have the same cardinality by proving that there exists an injection from $A$ to $B$ and an injection from $B$ to $A$, which is typically far easier.}
+
+\begin{proposition}
+  If $|A_1|=|A_2|$ and $|B_1|=|B_2|$ then $|A_1 \times B_1| = |A_2 \times B_2|$.
+\end{proposition}
+\begin{proof}[Proof]
+  The first two statements define bijections $f: A_1 \to A_2$ and $g: B_1 \to B_2$, and we desire to have $f \times g:  A_1 \times B_1 \to A_2 \times B_2$. We define $f\times g(a_1, b_1) := (f(a_1), g(b_1))$. We must show that $f \times g$ is bijective.
+  % TODO exercise
+\end{proof}
+
+\begin{example}
+  Consider $A$ as the set of all points in the unit circle centered at $(0,0)$ in $\mathbb{R}^2$, and $B$ as the set of all points in the square of side length 2 centered at $(0,0)$ in $\mathbb{R}^2$ (ie, the circle is inscribed in the square). We wish to prove that $|A|=|B|$.
+  \begin{proof}[Proof]
+    Let $f: A \to B$, $f(x) = x$. $f$ is injective, and thus $|A|\leq|B|$. 
+    Let $g: A \to B$, $g(x) = \begin{cases}
+      0; \sqrt{2}x \notin B\\
+      \sqrt{2}x; \sqrt{2}x \in B
+    \end{cases}$. In simpler terms, consider this as multiplying points of $A$ by $\sqrt{2}$; any point in this new "expanded" circle that lies within $B$ maps to itself, and any that lies outside maps to 0. This is thus a surjection, and thus $|B| \leq |A|$. By the Cantor-Bernstein Theorem, $|A|=|B|$.
+  \end{proof}
+\end{example}
+
+\begin{proposition}
+  $A = \{0, 1, 4, 9, \dots\}$. $|A| = |\mathbb{N}|$.
+\end{proposition}
+
+\begin{proof}[Proof]
+  Define $f: \mathbb{N} \to A$, $f(n) = n^2$. This is clearly injective \footnote{Notice that $f$ is only injective if we restrict the domain to $\mathbb{N}$; if we were to consider $\mathbb{Z}$, for instance, $f(-1) = f(1) = 1$.}, and thus $|A| \leq |\mathbb{N}|$.
+\end{proof}
+
+\begin{proposition}
+  $B = \{p \in \mathbb{N} : p \text{ prime}\}$ is infinite ($|B|=|\mathbb{N}|$).
+\end{proposition}
+\begin{proof}[Proof (Euclid)]
+  Let $f: \mathbb{N} \to B$, $f(n) = \text{the } n\text{th prime}$. This is clearly bijective, and is an example of \text{enumerating} a set. 
+\end{proof}
+
+\begin{definition}[Countable/enumerable]
+  A set $A$ is \emph{countable} if $|A| = |\mathbb{N}|$, or $A$ is finite. 
+  
+  If $A$ is finite of size $n$, $\exists$ a bijection $f: \{0,1,2,\dots,n-1\} \to A$. 
+  
+  If $A$ is infinite, $\exists$ a bijection $f: \mathbb{N} \to A$.
+\end{definition}
+
+\begin{proposition}
+  $|\mathbb{N}|=|\mathbb{Z}|$
+\end{proposition}
+
+\begin{proof}[Proof]
+  We aim to find a bijection $f: \mathbb{Z} \to \mathbb{N}$, ie one that maps integers to natural numbers. Consider the function \[f(x) = \begin{cases}
+    2x & x \geq 0\\
+    -2x-1 & x < 0
+  \end{cases}.\]
+  % TODO: add graph
+  This function is an injection because if $f(x_1)=f(x_2)$, then $x_1 = x_2$ (positive case: $2x_1 = 2x_2 \implies x_1 = x_2$, negative case: $-2x_1-1 = -2x_2-1 \implies x_1 = x_2$, and $2x_1 \neq -2x_2 - 1$ for any integer). It is also a surjection (there is no natural number that cannot be mapped to by an integer). Thus, the function is a bijection and $|\mathbb{N}|=|\mathbb{Z}|$. \footnote{Note what would happen if $f$ was defined as $-2x$ for $x<0$; then, $f$ would not be surjective (eg, $f(-1) = 2 = f(1)$.)}
+\end{proof}
+
+\begin{proposition}
+  $|\mathbb{N}|=|\mathbb{N}\times\mathbb{N}|$
+\end{proposition}
+
+\begin{remark}
+  It is possible to construct a bijective $f: \mathbb{N} \times \mathbb{N} \to \mathbb{N}$; see assignment 1. % TODO: update reference
+\end{remark}
+\begin{proof}[Proof]
+  Let $f: \mathbb{N} \to \mathbb{N} \times \mathbb{N}, f(n) = (n,0)$, clearly an injection ($\implies |\mathbb{N}| \leq |\mathbb{N} \times \mathbb{N}|$)\footnote{Note that this function is \textit{not} surjective!}. The function $g(m,n) = 2^n 3^m$ is also injective, and thus $|\mathbb{N}| = |\mathbb{N}\times\mathbb{N}|$.
+\end{proof}
+
+\begin{corollary}\label{cor:yummycor}
+  $|\mathbb{Z}|=|\mathbb{Z}\times\mathbb{Z}|$
+\end{corollary}
+\begin{proof}[Proof]
+  Consider $h: \mathbb{N} \to \mathbb{N}\times\mathbb{N}$, a bijection\footnote{Which must exist by the proof of the previous proposition.}, and $f: \mathbb{N} \to \mathbb{Z}$. Let $g=(f,f): \mathbb{N}\times\mathbb{N}\to\mathbb{Z}\times\mathbb{Z}$. The composition $g \circ h \circ f^{-1}: \mathbb{Z} \to \mathbb{N} \to \mathbb{N}\times \mathbb{N} \to \mathbb{Z} \times \mathbb{Z}$ is also a bijection, and thus $|\mathbb{Z}|=|\mathbb{Z}\times\mathbb{Z}|$.
+\end{proof}
+
+\begin{example}
+  Show that $|\mathbb{N}|=|\mathbb{Q}|$.
+  \begin{proof}[Proof]
+    First, we find an injection $\mathbb{Q} \to \mathbb{N}$. Let $f: \mathbb{Q} \to \mathbb{Z} \times \mathbb{Z}, f(n) = (p,q)$ where $\frac{p}{q} = n$ (by definition of $\mathbb{Q}$). Using the same function definitions as in \cref{cor:yummycor}, the composition $h^{-1}\circ g^{-1}\circ f: \mathbb{Q} \to \mathbb{Z}\times \mathbb{Z} \to \mathbb{N}\times\mathbb{N} \to \mathbb{N}$. This is a composition of injections, and is thus an injection itself, and thus $|\mathbb{Q}|\leq|\mathbb{N}|$. The identity function $1:\mathbb{N} \to \mathbb{Q}, 1(n) = n$ is clearly an injection as well as all naturals are rationals, and thus $|\mathbb{N}|\leq|\mathbb{Q}|$. By the Cantor-Bernstein Theorem, $|\mathbb{N}|=|\mathbb{Q}|$.
+  \end{proof}
+\end{example}
+
+\begin{definition}
+  We say $|A| < |B|$ if $|A| \leq |B|$ but $|A| \neq |B|$, ie $\exists f : A \to B$ is injective, but no such bijective.
+\end{definition}
+
+\begin{remark}
+  We denote an injective function as $\mathbb{N} \hookrightarrow \mathbb{Z}$, and a surjective function as $\mathbb{Z} \twoheadrightarrow \mathbb{N}$. We say that a particular element $n$ maps to some other element $n'$ by $n \mapsto n'$
+\end{remark}
+\begin{theorem}[Cantor]
+  $|\mathbb{N}|<|\mathbb{R}|$
+\end{theorem}
+\begin{proof}[Proof (Cantor's Diagonal Argument)]
+  We clearly have an injection $\mathbb{N} \hookrightarrow \mathbb{R}, n \mapsto n$, thus $|\mathbb{N}|\leq|\mathbb{R}|$. 
+  
+  Now, suppose $|\mathbb{N}|=|\mathbb{R}|$. Then, we can enumerate the real numbers as $a_0, a_1, \dots$ with signs $\epsilon_i$. We denote the decimal expansion of each number as\footnotemark \begin{align*}
+    a_0 &= \epsilon_0 0.a_{00}a_{01}a_{02}\dots\\
+    a_1 &= \epsilon_1 0.a_{10}a_{11}a_{12}\dots\\
+    a_2 &= \epsilon_2 0.a_{20}a_{21}a_{22}\dots\\
+    &\vdots
+  \end{align*} Consider the number $0.e_0e_1e_2\dots$, where $e_i = \begin{cases}
+    3 & a_{ii} \neq 3\\
+    4 & a_{ii} = 3
+  \end{cases}.$ This number is different than any given $a_i$ at the $i+1$-th decimal place, and is thus not in the enumeration, contradicting our initial assumption.
+\end{proof}
+\footnotetext{We make the clarification that, despite the fact that $1.000\dots = 0.999\dots$, we will take the "infinite zeroes" interpretation, and thus every real number has a unique decimal expansion. This is an important, if subtle, distinction.}
+
+\begin{remark}[Continuum Hypothesis]
+  Cantor claimed that there's no set $|A|$ such that $|\mathbb{N}| < |A| < |\mathbb{R}|$. It has been proven today that this is "undecidable".
+\end{remark}
+
+\begin{definition}[Algebra on Cardinalities]
+If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined:
+\begin{align*}
+  \alpha + \beta &= |A \sqcup B| \text{ (disjoint union)}\\ 
+  \alpha \cdot \beta &= |A \times B|\\
+  \alpha^\beta &= |B^A| \text{ (set of all functions from $A$ to $B$)}  
+\end{align*}
+\end{definition}
+
+\subsection{Relations}
+
+\begin{definition}[Relation]
+  A \emph{relation} on a set $A$ is a subset $S \subseteq A \times A (= \{(x,y) : x, y \in A\})$.
+
+  We say that $x$ is \emph{related} to $y$ if $(x,y) \in S$, where we denote $x \sim y$. 
+
+  Conversely, if we are given $x \sim y$, we can define an $S = \{(x,y): x \sim y\}$.
+\end{definition}
+
+\begin{example}
+  Following are examples of relations on $A$.
+  \begin{enumerate}[label=\arabic*)]
+    \item Let $S = A \times A$; any $x \sim$ any $y$ because $(x,y) \in S$ for all $(x,y)$.
+    \item Let $S = \varnothing$; no $x \sim$ any $y$ (even to itself).
+    \item $S = \text{diag.} = \{(a,a) : a \in A\}$; $x \sim x \forall x$, but $x \nsim y$ if $y \neq x$.
+    \item $A = [0,1] (\in \mathbb{R})$. Say $x \sim y$ if $x \leq y$. Thus, $S = \{(x,y) : x \leq y\}$ (the diagonal, and everything above).
+    \item $A = \mathbb{Z}$, $x \sim y$ if $5 | (x-y)$, ie $x$ and $y$ have residue mod 5.\footnotemark
+  \end{enumerate}
+\end{example}
+\footnotetext{Where $a|b$ denotes that $b$ divides $a$.}
+
+\begin{definition}[Reflexive]
+  A relation is \emph{reflexive} if for any $x \in A$, $x \sim x$. 
+  
+  This includes examples 1), 2) (iff $A$ is empty), 3), 4), and 5) above.
+\end{definition}
+
+\begin{definition}[Symmetric]
+  A relation is \emph{symmetric} if $x \sim y \implies y \sim x$.
+
+  This includes 1), 2), 3), and 5) above.
+\end{definition}
+
+\begin{definition}[Transitive]
+  A relation is \emph{transitive} if $x \sim y$ and $y \sim z$ implies $x \sim z$.
+
+  This includes 1), 2), 3), 4), and 5) above.
+\end{definition}
+
+\subsection{Number Systems}
+\begin{definition}[Complex Numbers]
+  $\mathbb{C} = \{a + bi : a, b \in \mathbb{R}\}$. Equivalently, we can consider complex numbers as the points $(a,b) \in \mathbb{R}^2$.\footnotemark
+
+  Given some $z = a + bi$, we can write $\re{z} = a, \im{z} =b$.
+\end{definition}
+\footnotetext{We can define the function $f: \mathbb{C} \to \mathbb{R}^2, f(a+bi) = (a,b)$, a bijection.}
+
+\begin{definition}[Complex Conjugate]
+  Given $z = a + bi$, the \emph{complex conjugate} of $z$ is $\overline{z} = a - bi$.
+\end{definition}
+
+\begin{lemma}
+  The following hold for complex conjugates:\footnotemark
+
+  \begin{enumerate}[label=(\alph*)]
+    \item $\overline{\overline{z}} = z$.
+    \item $\overline{z_1 + z_2} = \overline{z_1} + \overline{z_2}, \overline{z_1 \cdot z_2} = \overline{z_1} \cdot \overline{z_2}$.
+    \item $\re{z} = \frac{z+\overline{z}}{2}, \im{z}i = \frac{z-\overline{z}}{2}$.
+    \item Given $|z| = \sqrt{a^2+b^2}$, 
+    \begin{enumerate}[label=(\roman*)]
+      \item $|z|^2 = z \cdot \overline{z}$
+      \item $|z_1 + z_2|\leq |z_1| + |z_2|$
+      \item $|z_1\cdot z_2| = |z_1| \cdot |z_2|$
+    \end{enumerate}
+  \end{enumerate}
+\end{lemma}
+
+\footnotetext{(a), (b), and (c) are simply algebraic rearrangements of two complex numbers. (d.i) and (d.iii) follow from similar arguments, and finally (ii) is the triangle inequality restated in terms of complex numbers.}
+
+\section{Appendix}
+% \cantorbern*
+% \begin{proof}
+% % TODO
+% \end{proof}
+
+\subsection{Homeworks}
+
+\subsubsection{Quiz 1}
+% cheating
+\hspace{1cm}\begin{exercise}
+If the moon is made of blue cheese then 1 = 2.
+\end{exercise}
+
+\begin{solution}
+  "If" conditionals are true for all cases except when the hypothesis is true and the conclusion is false. In this case, we have $F \to F$, which is \textbf{true}.
+\end{solution}
+
+\begin{exercise}
+  If the moon is not made of blue cheese then 1=2.
+\end{exercise}
+
+\begin{solution}
+  $T \to F$, \textbf{false}.
+\end{solution}
+
+\begin{exercise}
+  If $A,B,C$ are sets, then \[A\setminus(B\setminus C) = (A \setminus B)\setminus C.\]
+\end{exercise}
+
+\begin{solution}
+  This is essentially asking whether set difference is associative, which it is generally not and thus this is \textbf{false}.
+
+  We can also prove it directly. Take $x \in \text{ LHS}$. Thus, $x \in A$ but not $x \notin (B \setminus C)$. In order for $x \notin (B \setminus C)$, we must either have (1) $x \notin C$ but $x \in B$, or (2) $x \in B, x \in C$.
+
+  Consider case (1); $x \in A, B, \notin C$. Thus, $x \notin (A\setminus B)$, and so $x \notin \text{ RHS}$. This alone (I believe?) is proof that the two are not equal, but regardless, let us consider case (2); $x \in A, B, C$. Thus, $x \notin (A \setminus B)$, and so $x \notin \text{ RHS}$. Thus, we have proven that LHS $\nsubseteq$ RHS, and so LHS $\neq$ RHS.
+\end{solution}
+
+\begin{exercise}
+  If $A,B$ are sets, then \[(A\setminus B) \cap (A \cap B) = A\setminus A.\]
+\end{exercise}
+
+\begin{solution}
+  Note that $A\setminus A = \varnothing$, ie there exist no elements both in and not in $A$. Thus, we can formulate this question as trying to find whether there exists elements in the LHS. 
+  
+  Let's assume $x \in \text{ LHS}$. As LHS is the intersect of two sets, $x$ must be both "sides" of the intersect, ie $x \in (A\setminus B)$ and $x \in (A \cap B)$. By the left of this intersect, $x \in A$ and $x \notin B$, but by the right of this intersect, $x\in A$ AND $x \in B$. Thus, $x \in B$, while simultaneously, $x\notin B$, (same as finding $B \setminus B$, which naturally is the same as $A \setminus A$) which cannot exist and thus the LHS is also $\varnothing$, and the statement is \textbf{true}.
+\end{solution}
+
+\begin{exercise}
+  Let $I$ be an index set and $A_i$, $B_j$ be sets for $i \in I$. Then \[(\bigcup_{i \in I}A_i) \cap (\bigcup_{i \in I}B_i) = \bigcup_{i \in I}(A_i \cap B_i).\]
+\end{exercise}
+
+\begin{solution}
+  Intuitively, consider the abstract "size" of both sets. The LHS is the shared elements between all $A_i$ and $B_i$; however, the RHS is the union of all $A_i, B_i$ for specific $i$'s. Thus, the sets are not equal, as consider some $x \in A_i, x \in B_{i+1}$. In the LHS, this element would be included, but would not in the RHS. Thus, the statement is \textbf{false}.
+\end{solution}
+
+\begin{exercise}
+  Consider the following proof by induction of the statement
+  \[\text{for every integer } n \geq 0, 2^n > 2n.\]
+  
+  (1) It is true for $n=0$. (2) Suppose $2^n > 2n$. Then, multiplying both sides by 2, we have $2*2^n > 2*2n \implies 2^{(n+1)} > 4n$. (3) $4n \geq 2(n+1)$, and thus $2^(n+1) > 2(n+1)$. QED.
+
+  This statement is false; which step is incorrect?
+\end{exercise}
+
+\begin{solution}
+  \textbf{(3)} is the false step; the assertion that $4n \geq 2(n+1)$ is only true for $n \geq 1$, which is not the same base case as the one given. 
+  
+  A correct proof could either be given with a base case $n \geq 3$, or with $P_n$ changed to $2^n \geq 2n$; in which case, the base case would hold for any $n \geq 0$. It is straightforward to prove this new $P_n$ in the $n \geq 1$ case, but slightly more difficult to prove it for $n = 0$, and we need to consider different cases in step (3).\footnote{Notice that, although $2^n \geq 2n \forall n \geq 0$ where $n\in \mathbb{N}$, $2^x \cancel{>} 2x \forall x \geq 0$ when $x \in \mathbb{R}$. This can be clear from graphing the two as functions of $x$, as $2^x = 2x$ at $x\in\{1,2\}$, and $2x > 2^x$ for $x \in (1,2)$}
+\end{solution}
+
+\begin{exercise}
+The proof by induction above is correct for which statements?
+% TODO: add choices?
+\end{exercise}
+
+\begin{solution}
+  Discussed briefly above; for $n \geq 1$ and $n \geq 2$, the statement is false as $2^n = 2n$ at these points, and the statement is clearly true for $n \geq 3$ and naturally $n \geq 4$ (since, well, $4 \geq 3$).
+\end{solution}
+
+\begin{exercise}
+  Let $A = \{1,2,3,4\}, B = \{1,2,3\}$. How many functions $f: A \to B$ are there?
+\end{exercise}
+
+\begin{solution}
+  Be careful with definitions: a function must have a value $f(a) \in B$ for \textit{all} $a \in A$, thus, every value in $A$ must be "used" in a given function. However, there is no requirement for injectivity/surjectivity (yet), so we may have multiple values in $A$ map to the same value in $B$, BUT, no value in $A$ may map to multiple values in $B$ (as this would violate the definition of a function).
+
+  Thus, terminology aside, each of the 4 elements must map to one of 3 elements, and so we have $3^4 = \mathbf{81}$ possible functions. Generally, the number of possible functions between two sets ($f: A \to B $) is $|B|^{|A|}.$
+\end{solution}
+
+\begin{exercise}
+  Using the same sets as above, how many surjective functions $f: A \to B$ are there?
+\end{exercise}
+
+\begin{solution}
+  We have two conditions to keep in mind for a function to be surjective: (1) \textbf{every} element in $a$ are mapped to a \textbf{single} element in $b$, and (2) every element in $B$ is mapped to by \textbf{at least one} element in $A$. Note that (2) means that multiple elements in $A$ can map to the same element in $B$; however, no element in $A$ can map to multiple elements in $B$ (as this would violate (1)).
+
+  Clearly, given $|A| = 4, |B|=3$, then elements in $B$ can be mapped to by either 1 or 2 functions (specifically, one element will be mapped to by two elements and the other 2 by just one). Thus, we can consider the different partitions of $A$ such that are possible for each element in $B$ to be mapped. Let us consider $A = \{a,b,c,d\}$ and $B =\{\alpha, \beta, \gamma\}$, for convenience. We have the following partitions:
+  \[
+  \begin{matrix}
+    \alpha & \beta & \gamma\\
+    \{a, b\} & \{c\} & \{d\}\\
+    \{a, c\} & \{b\} & \{d\}\\
+    \{a, d\} & \{b\} & \{c\}\\
+    \{b, c\} & \{a\} & \{d\}\\
+    \{b, d\} & \{a\} & \{c\}\\
+    \{c, d\} & \{a\} & \{b\}\\
+  \end{matrix}  
+  \]
+  We have $6$ partitions, but $\alpha, \beta,$ and $\gamma$ can be rearranged as well, given us $6 \times 3! = \mathbf{36}$ different surjective functions.
+\end{solution}
+
+\begin{exercise}
+  Using the same sets as above, how many injective functions $f: A \to B$ are there?
+\end{exercise}
+
+\begin{solution}
+  Recall that an injective function must "uniquely" assign elements of $b$ to elements of $a$, ie, $f(a_1)=f(a_2) \implies a_1=a_2$. We thus have a pigeonhole problem, as there are more elements "to-be-mapped" (in $A$) than can be mapped to (in $B$). Thus, there are \textbf{$0$} injective functions.
+
+  You can also reason this by the fact that if an injective function $f: A\to B$ exists, then $|A| \leq |B|$, and as $|A| > |B|$, no such function can exist.
+\end{solution}
+
+\begin{exercise}
+  Given $(-r, r) = \{x \in \mathbb{R} : -r < x < r\}$ and $[-r,r] = \{x \in \mathbb{R} : -r \leq x \leq r\}$, what is $\bigcup_{r > 1} (-r, r)$?
+\end{exercise}
+
+\begin{solution}
+  In "non-math" words, this is asking what is the set of shared elements in all $(-r, r)$ for $r > 1$. Clearly, every "iteration" of the intersection will add more elements, none of which will be in the previous sets (ie, $(-2, 2)$ and $(-(2 + \epsilon), 2 + \epsilon)$; the only elements \textit{not} shared will be $-(2 + \epsilon)$ and $2+\epsilon$), and thus the intersection must be $\mathbf{[-1,1]}$. Note that the intersection does indeed include $\{-1,1\}$ (it is inclusive) since the union is over $r > 1$, thus the set $(-1,1)$ is never included in the union and thus $\{-1,1\}$ is always present in every $(-r,r)$.
+\end{solution}
+
+\begin{exercise}
+  For a positive real $r$, let $A_r = (-2r, 2r)\setminus \{-r,r,0\}$. What is $(\bigcup_{r>0}A_r)\setminus (\bigcap_{r > 0}A_r)$?
+\end{exercise}
+
+\begin{solution}
+  To begin with, it should be clear that $A_r$ will never contain $0$, and as a result neither will $\bigcup A_r$, and thus $0$ will not in the final set. The only option without $0$ is the correct answer $\mathbf{\mathbb{R}\setminus \{0\}}$, which you can also verify directly.
+\end{solution}
 \end{document}

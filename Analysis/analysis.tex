@@ -15,28 +15,79 @@
 \usepackage{titlesec}
 \usepackage{thmtools}
 \usepackage{thm-restate}
+\usepackage[side]{footmisc}
 \usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
 \usepackage{cleveref}
 \usepackage[]{csquotes}
-\usepackage[createShortEnv]{proof-at-the-end}
+\usepackage{xcolor-solarized}
+% \usepackage[createShortEnv]{proof-at-the-end}
 
-% makes theorems, definitions, etc. "restatable" as shown
-% can add more with same format as you wish
 \renewcommand*{\proofname}{}
 
-\declaretheorem[thmbox=S,name=Definition,numberwithin=section]{definition}
-\declaretheorem[thmbox=S,name=Axiom,numberwithin=section]{axiom}
-\declaretheorem[thmbox=S,name=Lemma,numberwithin=section]{lemma}
-\declaretheorem[thmbox=S,name=Theorem,numberwithin=section]{theorem}
-\declaretheorem[name=Example,numberwithin=section]{example}
-\declaretheorem[name=Exercise,numberwithin=section]{exercise}
 
-\newEndThm[no proof here, restate, text proof={Examples}, one big link={\emph{See more}}]{definitionEnd}{definition}
-\newEndThm[no proof here, restate, one big link = {\emph{Proof}}]{lemmaEnd}{lemma}
-\newEndThm[no proof here, restate, one big link = {\emph{(Solution)}}]{exerciseEnd}{exercise}
-\newEndThm[no proof here, restate]{axiomEnd}{axiom}
+\declaretheorem[
+  % thmbox=S,
+  name=Definition,
+  refname={Definition, definition}, numberwithin=section,
+  shaded={rulecolor=solarized-blue, rulewidth=2pt}
+]{definition}
 
-% \newEndThm[proof here, restate]{theoremEnd}{theorem}
+\declaretheorem[
+  % thmbox=S,
+  name=Axiom,
+  refname={Axiom, axiom},
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=2pt}
+]{axiom}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Lemma,
+  refname={Lemma, lemma},
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{lemma}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Corollary,
+  refname={Corollary, corollary},
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{corollary}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Remark,
+  refname={Remark, remark},
+  numberwithin=section
+]{remark}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Theorem,
+  refname={Theorem, theorem},
+  numberwithin=section,
+  shaded={rulecolor=solarized-red, rulewidth=1pt}
+]{theorem}
+
+\declaretheorem[
+  % thmbox=M,
+  name=Example,
+  refname={Example, example},
+  numberwithin=section,
+  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{example}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Proposition,
+  refname={Proposition, proposition},
+  numberwithin=section,
+  shaded={rulecolor=solarized-magenta, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{proposition}
+
+
 
 % makes "quoted" text actually look correct
 \MakeOuterQuote{"}
@@ -58,7 +109,7 @@
 \titleformat{\section}
 {\centering\normalfont\Large\bfseries}
 {\thesection}{1em}{}
-
+\pgfplotsset{compat=1.18}
 \begin{document}
 \setstretch{2.25}
 \noindent
@@ -83,12 +134,15 @@
 {\color{darkgray}\centering\normalfont\Large\bfseries}
 {\color{darkgray}\thesection}{1em}{}
 
+% \color{solarized-red}{Theorems},\color{solarized-orange}{ Axioms, Lemmas, Corollaries},\color{solarized-blue}{ Definitions}, \color{solarized-cyan}{ Examples}, \color{solarized-magenta}{ Propositions},\color{darkgray}{ Remarks}
+
 % need to change margins and such here for rest of document
 % kind of messy but what can you do
 \newpage
 % modify these as you wish
-\newgeometry{margin=0.5in, top=0.4in, bottom=0.75in}
-\parskip=0.5em
+\newgeometry{margin=0.25in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in, includemp}
+\parskip=0.6em
+
 
 \section{Logic, Sets, and Functions}
 \subsection{Mathematical Induction \& The Naturals}
@@ -107,14 +161,14 @@ The \textbf{natural numbers}, $\mathbb{N} = \{1, 2, 3, \dots \}$, are specified 
 
 The \textbf{Axiom of Induction} (AI), can be stated in a number of ways. 
 
-\begin{axiomEnd}[AI.i]
+\begin{axiom}[AI.i]
   Let $S \subseteq \mathbb{N}$ with the properties:
   \begin{enumerate}[label=(\alph*)]
     \item $1 \in S$ 
     \item if $n \in S$, then $n+1 \in S$\footnotemark
   \end{enumerate}
   then $S = \mathbb{N}$.
-\end{axiomEnd}
+\end{axiom}
 \footnotetext{\textit{(a)} is called the \textbf{inductive base}; \textit{(b)} the \textbf{inductive step}. All AI restatements are equivalent in having both of these, and only differentiate on their specific values.}
 
 \begin{example}\label{example:ai.i}
@@ -132,74 +186,70 @@ The \textbf{Axiom of Induction} (AI), can be stated in a number of ways.
       \end{align}
     \end{itemize}
     Line (4) is equivalent to statement (1) (substituting $n$ for $n+1$), and thus if $n \in S$, then $n+1 \in S$ and \textit{(b)} holds. Thus, by AI.i, $S = \mathbb{N}$ and $1 + 2 + \cdots + n = \frac{n(n+1)}{2}$ holds $\forall n \in \mathbb{N}$.
-    \qed
   \end{proof}
 \end{example}
 
-\begin{exerciseEnd}
+\begin{example}
   Prove (by induction), that for every $n \in \mathbb{N}$, $1^3 + 2^3 + \cdots + n^3 = \left[\frac{n(n+1)}{2}\right]^2$.
-\end{exerciseEnd}
-\begin{proofEnd}
-  Follows a similar structure to the previous example. Let $S$ be the subse4t of $\mathbb{N}$ for which the statement holds. $1 \in S$ by inspection (\textit{(a)} holds), and we prove \textit{(b)} by assuming $n \in S$ and showing $n+1 \in S$ (algebraically). Thus, by AI.i, $S = \mathbb{N}$ and the statement holds $\forall n \in \mathbb{N}$.
-  \qed
-\end{proofEnd}
-
-
-Example \ref{example:ai.i} can also be proven directly (Gauss' method).
-
-\begin{proof}[Proof]
+  \begin{proof}[Proof]
+    Follows a similar structure to the previous example. Let $S$ be the subset of $\mathbb{N}$ for which the statement holds. $1 \in S$ by inspection (\textit{(a)} holds), and we prove \textit{(b)} by assuming $n \in S$ and showing $n+1 \in S$ (algebraically). Thus, by AI.i, $S = \mathbb{N}$ and the statement holds $\forall n \in \mathbb{N}$.
+  \end{proof}
+  This can also be proven directly (Gauss' method).
+\begin{proof}[Proof (Gauss' method)]
   Let $A(n) = 1 + 2 + 3 + \cdots + n$. We can write $2 \cdot A(n) = 1 + 2 + 3 + \cdots + n + 1 + 2 + 3 + \cdots + n$. Rearranging terms ($1$ with $n$, $2$ with $n - 1$, etc.), we can say $2\cdot A(n) = (n+1)+(n+1)+\cdots$, where $(n+1)$ is repeated $n$ times; thus, $2\cdot A(n) = n(n+1)$, and $A(n) = \frac{n(n+1)}{2}$.
-  \qed
 \end{proof}
+\end{example}
 
-\begin{axiomEnd}[AI.ii]
+
+
+\begin{axiom}[AI.ii]
   Let $S \subseteq \mathbb{N}$ s.t.
   \begin{enumerate}[label=(\alph*)]
     \item $m \in S$
     \item $n \in S \implies n+1 \in S$
   \end{enumerate}
   then $\{m, m+1, m+2, \dots\} \subseteq S$.
-\end{axiomEnd}
+\end{axiom}
 
-\begin{exerciseEnd}
+\begin{example}
   Using AI.ii, prove that for $n \geq 2$, $n^2 > n+1$
-\end{exerciseEnd}
-\begin{proofEnd}
-  Again, very similar to the previous induction examples. Take $S$ to be the subset of $\mathbb{N}$ for which the statement holds. \textit{(a)} of AI.ii holds by inspection (where $m = 2$), and \textit{(b)} holds by assuming $n \in S$ and showing that $n+1 \in S$. Thus, $S = \{2, 3, 4, \dots \}$, and the statement holds $\forall n \geq 2$.
-\end{proofEnd}
+  \begin{proof}[Proof]
+    Again, very similar to the previous induction examples. Take $S$ to be the subset of $\mathbb{N}$ for which the statement holds. \textit{(a)} of AI.ii holds by inspection (where $m = 2$), and \textit{(b)} holds by assuming $n \in S$ and showing that $n+1 \in S$. Thus, $S = \{2, 3, 4, \dots \}$, and the statement holds $\forall n \geq 2$.
+  \end{proof}
+\end{example}
 
-\begin{axiomEnd}[Principle of Complete Induction, AI.iii]
+\begin{axiom}[Principle of Complete Induction, AI.iii]
   Let $S \subseteq \mathbb{N}$ s.t.
   \begin{enumerate}[label=(\alph*)]
     \item $1 \in S$
     \item if $1, 2, \dots, n -1 \in S$, then $n \in S$
   \end{enumerate}
   then $S = \mathbb{N}$.
-\end{axiomEnd}
+\end{axiom}
 
 Finally, combing AI.ii and AI.iii;
-\begin{axiomEnd}[AI.iv]
+\begin{axiom}[AI.iv]
   Let $S \subseteq \mathbb{N}$ s.t.:
   \begin{enumerate}[label=(\alph*)]
     \item $m \in S$
     \item if $m, m + 1, \dots, m + n \in S$, then $m + n + 1 \in S$
   \end{enumerate}
   then $\{m, m+1, m+2, \dots\} \subseteq S$.
-\end{axiomEnd}
+\end{axiom}
 
 % idk why it won't restate it
-\begin{theoremEnd}[end, restate]{theorem}[Fundamental Theorem of Arithmetic]
+\begin{theorem}[Fundamental Theorem of Arithmetic]\label{thm:fta}
   Every natural number $n$ can be written as a product of one or more primes. \footnotemark
-\end{theoremEnd}
+\end{theorem}
 \footnotetext{1 is not a prime number}
-\begin{proof}[Proof]
+\begin{proof}[Proof of \cref{thm:fta}]
   Let $S$ be the set of all natural numbers that can be written as a product of one or more primes. We will use AI.iv to show $S = \{2, 3, \dots \}$.
   \begin{itemize}
     \item \textit{(a)} holds; 2 is prime and thus $2 \in S$
     \item suppose that $2, 3, \dots, 2 + n \in S$. Consider $2 + (n+1)$:
     \begin{itemize}
       \item if $2 + (n+1)$ is \textit{prime}, then $2 + (n+1) \in S$, as all primes are products of $1$ and themselves and are thus in $S$ by definition.
-      \item if $2 + (n+1)$ is \textit{not prime}, then it can be written as $2 + (n+1) = a \cdot b$ where $a,b \in \mathbb{N}$, and $ 1 < a < 2 + (n+1)$ and $1 < b < 2 + (n+1)$. By the definition of $S$, $a,b \in S$, and can thus be written as the product of primes. Let $a = p_1 \cdot \cdots \cdot p_l$ and $b = q_1 \cdot \cdots \cdot q_j$, where the $p$'s and $q$'s are prime and $l, j \geq 1$. Then, $a\cdot b$ is a product of primes, and thus so is $2 + (n+1)$. Thus, $2 + (n+1) \in S$, and by AI.iv, $S = \{2, 3, 4, \dots\}$ \qed
+      \item if $2 + (n+1)$ is \textit{not prime}, then it can be written as $2 + (n+1) = a \cdot b$ where $a,b \in \mathbb{N}$, and $ 1 < a < 2 + (n+1)$ and $1 < b < 2 + (n+1)$. By the definition of $S$, $a,b \in S$, and can thus be written as the product of primes. Let $a = p_1 \cdot \cdots \cdot p_l$ and $b = q_1 \cdot \cdots \cdot q_j$, where the $p$'s and $q$'s are prime and $l, j \geq 1$. Then, $a\cdot b$ is a product of primes, and thus so is $2 + (n+1)$. Thus, $2 + (n+1) \in S$, and by AI.iv, $S = \{2, 3, 4, \dots\}$
     \end{itemize}
   \end{itemize}
 \end{proof}
@@ -208,7 +258,7 @@ Finally, combing AI.ii and AI.iii;
 
 Consider the set of naturals $\mathbb{N} = \{1, 2, 3, \dots\}$. Adding $0$ to $\mathbb{N}$ defines $\mathbb{N}_0 = \{0, 1, 2, \dots\}$. We define the \textbf{integers} as the set $\mathbb{Z} = \{\dots, -3, -2, -1, 0, 1, 2, 3, \dots\}$, or the set of all positive and negative whole numbers.
 
-Within $\mathbb{Z}$, we can define multiplication, addition and subtraction, with the neturals of 1 and 0, respectively. However, we cannnot define division, as we are not guaranteed a quotient in $\mathbb{Z}$. This necessitates the \textbf{rationals}, $\mathbb{Q}$. We define \[\mathbb{Q} = \{\frac{p}{q}, p \in \mathbb{Z}, q \in \mathbb{Z}, q \neq 0\}.\]
+Within $\mathbb{Z}$, we can define multiplication, addition and subtraction, with the neturals of 1 and 0, respectively. However, we cannot define division, as we are not guaranteed a quotient in $\mathbb{Z}$. This necessitates the \textbf{rationals}, $\mathbb{Q}$. We define \[\mathbb{Q} = \{\frac{p}{q}, p \in \mathbb{Z}, q \in \mathbb{Z}, q \neq 0\}.\]
 On $\mathbb{Q}$, we have the familiar operations of multiplication, addition, subtraction and properties of associativity, distributivity, etc. We can also define division, as $\frac{\frac{p}{q}}{\frac{p'}{q'}}= \frac{pq'}{qp'}$.
 
 We can also define a relation $<$ between fractions, such that 
@@ -219,32 +269,397 @@ We can also define a relation $<$ between fractions, such that
 
 $\mathbb{Q}$, together with its operations and relations above, is called an \textbf{ordered field}.
 
+\subsubsection{The Insufficiency of the Rationals}
 
+We can consider historical reasoning for the extension of $\mathbb{Q}$ to $\mathbb{R}$. Consider a right triangle of legs $a$, $b$ and hypotenuse $c$. By the Pythagorean Theorem, $a^2 + b^2 = c^2$. Consider further the case there $a = b = 1$, and thus $c^2 = 2$. Does $c$ exist in $\mathbb{Q}$?
+\begin{proposition}\label{prop:irr2}
+  $c^2 = 2$, $c \notin \mathbb{Q}$.
+\end{proposition} 
+\begin{proof}[Proof of \cref{prop:irr2}]
+  Suppose $c \in \mathbb{Q}$. We can thus write $c = \frac{p}{q}$, where\footnotemark  $p, q \in \mathbb{N}$, and $p, q$ share no common divisors, ie they are in "simplest form". Notably, $p$ and $q$ cannot \emph{both} be even (under our initial assumption), as they would then share a divisor of $2$. We write \begin{align*}
+    c &= \frac{p}{q}\\
+    c^2 = 2 & = \frac{p^2}{q^2}\\
+    2q^2 &= p^2
+  \end{align*}
+  $p \in \mathbb{N} \implies p^2 \in \mathbb{N}$, and thus $p^2$, and therefore\footnotemark $p$, must be divisible by 2 ($\implies p \text{ even}$). Therefore, we can write $p = 2p_1, p_1 \in \mathbb{N}$, and thus $2q^2 = (2p_1^2)^2 \implies q^2 = 2p_1^2$. By the same reasoning, $q$ must now be even as well, contradicting our initial assumption that $p$ and $q$ share no common divisors. Thus, $c \notin \mathbb{Q}$.
+\end{proof}
 
+\footnotetext[5]{Note that in the definition of $\mathbb{Q}$, $p, q$ are defined to be in $\mathbb{Z}$; however, as we are using a geometric argument, we can assume $c>0 \implies \text{Sign}(p) = \text{Sign}(q)$, and we can just take $p, q \in \mathbb{N}$ for convenience and wlog.}
 
+\footnotetext[6]{$\sqrt{\text{even}} = \text{even}$}
 
+\subsection{Sets \& Set Operations}
+% ! just look at algebra notes
+\begin{itemize}
+  \item $A \cup B = \{x : x \in A \text{ or } x \in B\}$
+  \item $A \cap B = \{x : x \in A \text{ and } x \in B\}$
+  \item $\bigcup_{i=1}^{\infty} A_n = \bigcup_{n \in \mathbb{N}} A_n = \{x : x \in A_n \text{ for some } n \in \mathbb{N}\}$
+  \item $\bigcap_{i=1}^{\infty} A_n = \bigcap_{n \in \mathbb{N}} A_n = \{x : x \in A_n \forall n \in \mathbb{N}\}$
+  \item $A^C = \{x : x\in X \text{ and } x \notin A\}$\footnote{$X$ is often omitted if it is clear from context.}
+\end{itemize}
 
+\begin{theorem}[De Morgan's Theorem(s)]\label{thm:demorgan}
+  Let $A, B$ be sets. Then,
+  \[(a)\hspace{1cm}(A \cap B)^C = A^C \cup B^C\]and
+  \[(b)\hspace{1cm}(A \cup B)^C = A^C \cap B^C.\]
+\end{theorem}
+\begin{proof}[Proof of \cref{thm:demorgan}]
 
+\begin{itemize}
+  \item[(b)] \emph{(A similar argument follows\dots)}
+\end{itemize}
+\end{proof}
+\begin{proposition}\label{prop:demorgangen}
+  \begin{align*}
+    (a)\, \left(\bigcap_{n=1}^\infty A_n\right)^C = \bigcup_{n=1}^\infty A_n^C \\
+    (b)\, \left(\bigcup_{n=1}^\infty A_n\right)^C = \bigcap_{n=1}^\infty A_n^C 
+  \end{align*}
+\end{proposition}
 
-% \begin{definitionEnd}[Composite]
-%   Given $f: A \rightarrow B$ and $g: B \rightarrow C$, the \textbf{composite} $g \circ f$ of $f$ and $g$ is the function $g \circ f: A \rightarrow C$, defined by the equation $(g\circ f)(a) = g(f(a))$. The rule of this composition: \[\{(a,c)\,|\,\text{For some } b \in B, f(a) = b \text{ and } g(b) = c\}\]
-% \end{definitionEnd}
-% \begin{proofEnd}
-%   Some examples here, perhaps.
-% \end{proofEnd}
+\begin{proof}[Proof of \cref{prop:demorgangen}]
+  Consider Proposition (b). Working from the left-hand side, we have
+  \begin{align*}
+    \left(\bigcup_{n=1}^\infty A_n\right)^C &= \{x : x \notin \bigcup A_n\}\\
+    &= \{x : x\notin A_n \forall\, n \in \mathbb{N}\}\\
+    &= \bigcap \{x : x \notin A_n\}\\
+    &= \bigcap A_n^C
+  \end{align*}
+  (a) can be logically deduced from this result. Consider the RHS, $\bigcup A_n^C$. Taking the complement:
+  \begin{align*}
+    \left(\bigcup A_n^C\right)^C &\overset{\text{via (b)}}{=} \bigcap A_n^{C^C}\\
+    &= \bigcap A_n
+  \end{align*}
+  Taking the complement of both sides, we have $\bigcup A_n^C = \left(\bigcap A_n\right)^C$, proving (a). 
+\end{proof}
 
-% \begin{lemmaEnd}
-%   Two equivalence classes are either disjoint or equal.
-% \end{lemmaEnd}
-% \begin{proofEnd}
-%   Let $E$ be the equivalence class determined by $x$ and $E'$ the equivalence class determined by $x'$. Assume $E \cap E' \neq \varnothing$, and take $y \in E \cap E'$. By definition of equivalence classes, $y \sim x$ and $y \sim x'$.
+\subsection{Functions}
+\begin{definition}
+  Let $A, B$ be sets. A \emph{function} $f$ is a rule assigned to each $x \in A$ a corresponding unique element $f(x) \in B$. We denote \[f: A \to B.\]
+\end{definition}
+\begin{definition}
+  The \emph{domain} of a function $f: A \to B$, denoted $\text{Dom}(f) = A$. The \emph{range} of $f$, denoted $\text{Ran}(f) = \{f(x) : x \in A\}$. Clearly, $\text{Ran}(f) \subseteq B$, though equality is not necessary.
+\end{definition}
+\begin{example}
+  The function $f(x) = \sin x$, $f: \mathbb{R} \to [-1, 1]$. Here, $\text{Dom}(f) = \mathbb{R}$, and $\text{Ran}(f) = [-1, 1]$.
+\end{example}
+\begin{example}[Dirichlet Function]\footnotemark
+  $f:\mathbb{R} \to \mathbb{R}$, $f(x) = \begin{cases}
+    1, x \in \mathbb{Q}\\
+    0, x \notin \mathbb{Q}
+  \end{cases}$. Despite not having a true "explicit" formula, so to speak, this is still a valid function (under modern definitions).
+\end{example}
+\footnotetext{Look up a \href{https://en.wikipedia.org/wiki/Dirichlet_function}{graph} of this function. Its beautiful. It's also interesting to note that its integral is simply 0.}
 
-%   By the property of symmetry, $x \sim y$, and by transivity, $x \sim x'$. Thus, $x \in E'$, and it follows that since $x \in E$, $E \subset E'$. The same logic applies in the other direction, such that $E' \subset E$, and thus $E = E'$.
-% \end{proofEnd}
+\subsubsection{Properties of Functions}
 
+\begin{proposition}
+  Let $f: A \to B$, $C \subseteq A$, $f(C) = \{f(x) : x \in C\}$. We claim $f(C_1 \cup C_2) = f(C_1) \cup f(C_2)$.
+\end{proposition}
+\begin{proof}[Proof]
+  We will prove this by showing (1) $\subseteq$ and (2) $\supseteq$.
+
+  \begin{itemize}
+    \item[(1)] $y \in f(C_1 \cup C_2) \implies \text{ for some } x \in C_1 \cup C_2, y = f(x)$. This means that either for some $x \in C_1, y = f(x)$, or for some $x \in C_2, y = f(x)$. This implies that either $y \in f(C_1)$, or $y \in f(C_2)$, and thus $y$ \textit{must} be in their union, ie $y \in C_1 \cup C_2$.
+    \item[(2)] $y \in f(C_1) \cup f(C_2) \implies y \in f(C_1)$ or $y \in f(C_2)$. This means that for some $x \in C_1, y = f(x)$, or for some $x \in C_2, y = f(x)$. Thus, $x$ \textit{must} be in $C_1 \cup C_2$, and for some $x \in C_1 \cup C_2, y = f(x) \implies y \in f(C_1 \cup C_2)$.
+  \end{itemize}
+  (1) and (2) together imply that $f(C_1 \cup C_2) = f(C_1)\cup f(C_2)$.
+\end{proof}
+
+\begin{example}\label{example:union}
+  Let $A_n = 1, 2, \dots$ be a sequence of sets. Prove that $f(\bigcup_{n=1}^{\infty} A_n) = \bigcup_{n=1}^{\infty}f(A_n)$.
+  \begin{proof}[Proof]
+    Let $y \in f(\bigcup_{n=1}^\infty A_n)$. This implies that $\exists x \in \bigcup_{n=1}^\infty A_n$ s.t. $f(x) = y$. This implies that $x \in A_n$ for some $n$, and $y \in f(A_n)$ for that same "some" $n$, and thus $y$ must be in the union of all possible $f(A_n)$, ie $y \in \bigcup f(A_n)$. This shows $\subseteq$, use similar logic for the reverse.
+  \end{proof}
+\end{example}
+
+\begin{proposition}\label{prop:intersection}
+  $f(C_1 \cap C_2) \subseteq f(C_1) \cap f(C_2)$
+  \footnotemark
+\end{proposition}
+\footnotetext{NB: the reverse is not always true, ie these sets are not always equal; "lack" of equality is more "common" than not.}
+
+\begin{proof}[Proof]
+  $y \in f(C_1 \cap C_2) \implies$ for some $x \in C_1 \cap C_2, y = f(x)$. This implies that for some $x \in C_1, y = f(x)$ \textbf{and} for some $x \in C_2, y = f(x)$. Note that this does \textit{not} imply that these $x$'s are the same, ie this reasoning is not reversible as in the previous union case. This implies that $y \in f(C_1)$ and $y \in f(C_2) \implies y \in f(C_1) \cap f(C_2)$.
+\end{proof}
+
+\begin{example}
+  Prove that if $A_n, n = 1, 2, \dots$, $f(\bigcap_{n=1}^{\infty} A_n) \subseteq \bigcap_{n=1}^{\infty}f(A_n)$.
+  \begin{proof}[Proof (Sketch)]
+    Use the same idea as in \cref{example:union}, but, naturally, with intersections.
+  \end{proof}
+\end{example}
+
+\begin{example}
+  Take $f(x) = \sin x$, $A = \mathbb{R}, B = \mathbb{R}$, and take $C_1 = [0, 2 \pi], C_2 = [2 \pi, 4 \pi]$. Then, $f(C_1) = [-1,1]$, and $f(C_2) = [-1,1]$. But $C_1 \cap C_2 = \{2 \pi\}$; $f(\{2 \pi\}) = \{\sin 2 \pi\} = \{0\}$, and thus $f(C_1 \cap C_2) = \{0\}$, while $f(C_1) \cap f(C_2) = [-1,1]$, as shown in \cref{prop:intersection}.
+\end{example}
+
+\begin{definition}[Inverse Image of a Set]
+  Let $f: A \to B$ and $D \subseteq B$. The \emph{inverse image} of $D$ by $F$ is denoted $f^{-1}(D)$\footnotemark and is defined as \[f^{-1}(D) = \{x \in A : f(x) \in D\}.\]
+\end{definition}
+\footnotetext{Note that this is \textbf{not} equivalent to the typical definition of an inverse \textit{function}; $f^{-1}$ may not exist}
+\begin{example}
+  $A = [0, 2 \pi], B = \mathbb{R}, f(x) = \sin x, D = [0,1]$. 
+  
+  $f^{-1}(D) = \{x \in A: f(x) \in D\} = \{x \in [0, 2 \pi] : \sin(x) \in [0,1]\} = [0,\pi]$.
+\end{example}
+
+\begin{proposition}\label{prop:intersectionsimple}
+  Given function $f$ and sets $D_1, D_2$,
+  \begin{itemize}
+    \item[(a)] $f^{-1}(D_1 \cup D_2) = f^{-1}(D_1) \cup f^{-1}(D_2)$
+    \item[(b)] $f^{-1}(D_1 \cap D_2) = f^{-1}(D_1) \cap f^{-1}(D_2)\footnotemark$ 
+  \end{itemize}
+\end{proposition}
+\footnotetext{Just see next proposition; if you really need convincing, just use $2$ rather than $\infty$ as the upper limit of the unions/intersections and use the same proof.}
+
+\begin{proposition}
+  Let $A_n, n = 1,2,3 \dots$. Then, 
+  \begin{itemize}
+    \item[(a)] $f^{-1}(\bigcup_{n=1}^{\infty}A_n) = \bigcup_{n=1}^{\infty}f(A_n)$
+    \item[(b)] $f^{-1}(\bigcap_{n=1}^{\infty}A_n) = \bigcap_{n=1}^{\infty}f(A_n)$
+  \end{itemize}
+\end{proposition}
+
+\begin{proof}[Proof]\footnotemark
+  \begin{itemize}
+    \item[(a)]
+  \begin{align*}
+    x \in f^{-1}(\bigcup_{n=1}^{\infty}A_n) &\iff f(x) \in \bigcup_{n=1}^\infty A_n\\
+    & \iff f(x) \in A_n \text{ for some } n \in \mathbb{N}\\
+    & \iff x \in f^{-1}(A_n) \text{ for some } n \in \mathbb{N}\\
+    & \iff x \in \bigcup_{n=1}^\infty f^{-1}(A_n)
+  \end{align*}
+  \item[(b)]
+  \begin{align*}
+    x \in f^{-1}(\bigcap_{n=1}^{\infty}A_n) &\iff f(x) \in \bigcap_{n=1}^\infty A_n\\
+    &\iff f(x) \in A_n \text{ for all } n \in \mathbb{N}\\
+    &\iff x \in f^{-1}(A_n) \text{ for all } n \in \mathbb{N}\\
+    &\iff x \in \bigcap_{n=1}^\infty f^{-1}(A_n)\footnotemark
+  \end{align*}
+  \end{itemize}
+\end{proof}
+\footnotetext{This is a "proof by definitions" as I like to call it.}
+\footnotetext{Similar proof can be used to prove \cref{prop:intersectionsimple}, less generally.}
+
+\begin{remark}
+  $f: A \to B$, $A_1 \subseteq A$. Given $f(A_1^C)$ and $f(A_1)^C$, there is \textbf{no general relation} between the two.
+
+  For instance, take $A = [0, 6 \pi], B = [-1, 2], C = [0, 2 \pi]$, and $f(x) = \sin x$. Then, $f(C) = [-1,1],$ and $f(C^C) = f([-1,0)) = [-1,1]$, but $f(C)^C = [-1,1]^C = (1,2]$, and $f(C^C) \neq f(C)^C$; in fact, these sets are disjoint.
+  % VERIFY
+\end{remark}
+
+\begin{proposition}
+  Let $f: A\to B$ and let $D \subseteq B$. Then $f^{-1} (D^C) = [f^{-1}(D)]^C$.
+\end{proposition}
+\begin{proof}[Proof]
+  \begin{align*}
+    f^{-1}(D^C) &= \{x: f(x) \in D^C\} = \{x : f(x) \notin D\}\\
+    [f^{-1}(D)]^C &= [\{x:f(x) \in D\}]^C = \{x : x \notin f^{-1}(D)\} = \{x : f(x) \notin D\}
+  \end{align*}
+\end{proof}
+
+\subsection{Reals}
+\begin{axiom}[Of Completeness]\label{axiom:ac}
+  Any non-empty subset of $\mathbb{R}$ that is bound from above has at least one upper bound (also called the supremum).
+
+  In other words; let $A \subseteq \mathbb{R}$ and suppose $A$ is bounded from above ($A$ has at a least upper bound). Then $\sup(A)$ exists.
+\end{axiom}
+
+Real numbers, algebraically have the same properties as the rationals; we have addition, multiplication, inverse of non-zero real numbers, and we have the relation $<$. All together, $\mathbb{R}$ is an ordered field. 
+
+\begin{definition}
+  Let $A \subseteq \mathbb{R}$. A number $b \in \mathbb{R}$ is called an \textbf{upper bound} for $A$ if for any $x \in A$, $x \leq B$.
+
+  A number $l \in \mathbb{R}$ is called a \textbf{lower bound} for $A$ if for any $x \in A$, $x \geq l$.
+\end{definition}
+
+\begin{definition}[The Least Upper Bound]
+  Let $A \subseteq \mathbb{R}$. A real number $s$ is called the \textbf{least upper bound} for $A$ if the following holds:
+  \begin{itemize}
+    \item[(a)] $s$ is an upper bound for $A$
+    \item[(b)] if $b$ is any other upper bound for $A$, then $s \leq b$.
+  \end{itemize}
+
+  The least upper bound of a set $A$ is \emph{unique}, if it exists; if $s$ and $s'$ are two least upper bounds, then by (a), $s$ and $s'$ are upper bound for $A$, and by (b), $s \leq s'$ and $s' \leq s$, and thus $s = s'$.
+
+  This least upper bound is called the \emph{supremum} of $A$, denoted $\sup(A)$.
+\end{definition}
+
+\begin{definition}[The Greatest Lower Bound]
+  Let $A \subset \mathbb{R}$. A number $i \in \mathbb{R}$ is called the \textbf{greatest lower bound} for $A$ if the following holds:
+  \begin{itemize}
+    \item[(a)] $i$ is a lower bound for $A$
+    \item[(b)] if $l$ is any other lower bound for $A$, then $i \geq l$.
+  \end{itemize}
+  If $i$ exists, it is called the \emph{infimum} of $A$ and is denoted $i = \inf(A)$, and is unique by the same argument used for $\sup(A)$.
+\end{definition}
+
+\begin{proposition}
+  Let $A \subseteq \mathbb{R}$ and let $s$ be an upper bound for $A$. Then $s = \sup(A)$ iff for any $\varepsilon>0$, there exists $x \in A$ s.t. $s- \varepsilon < x$.
+\end{proposition}
+\begin{proof}[Proof]
+  We have two statements:
+  \begin{enumerate}
+    \item[I.] $s = \sup(A)$;
+    \item[II.] For any $\epsilon > 0$, $\exists x \in A$  s.t. $s - \epsilon < x$;
+  \end{enumerate}
+  and we desire to show that I $\iff$ II.
+  \begin{itemize}
+    \item I $\implies$ II: Let $\epsilon > 0$. Then, since $s = \sup(A)$, $s - \epsilon$ \textit{cannot} be an upper bound for $A$ (as $s$ is the least upper bound, and thus $s - \epsilon < s$ cannot be an upper bound at all). Thus, there exists $x \in A$ such that $s - \epsilon < x$, and thus if I holds, II must hold.
+    \item II $\implies$ I: suppose that this does not hold, ie II holds for an upper bound $s$ for A, but $s \ne \sup(A)$. Then, there exists some upper bound $b$ of $A$ s.t. $b < s$. Take $\epsilon = s - b$. $\epsilon > 0$, and since II holds, there exists $x \in A$ such that $s - \epsilon < x$. But since $s - \epsilon = b$ and thus $b<x$, then $b$ cannot be an upper bound for $A$, contradicting our initial condition. So, if II $\implies$ I does \textit{not} hold, we have a "impossibility", ie a value $b$ which is an upper bound for $A$ which cannot be an upper bound, and thus II $\implies$ I.
+  \end{itemize}
+\end{proof}
+
+\begin{proposition}
+  Let $A \subseteq \mathbb{R}$ and let $i$ be a lower bound for $A$. Then $i = \inf(A) \iff$ for every $\epsilon > 0$ there exists $x \in A$ s.t. $x < i + \epsilon$.\footnotemark
+\end{proposition}
+\footnotetext{Use similar argument to proof of previous proposition.}
+
+\begin{remark}
+\cref{axiom:ac} can also be expressed in terms of infimum. Define $-A = \{-x : x \in A\}$. Then, if $b$ is an upper bound for $A$, then $b \geq x \forall x \in A$, then $-b \leq -x \forall x \in A$, ie -b is a lower bound of $-A$. Similarly, if $l$ is a lower bound for $A$, $-l$ is an upper bound for $-A$.
+
+Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is bounded from below, \[-\inf(A) = \sup(-A).\]
+\end{remark}
+
+\begin{axiom}[AC (infimum)]
+  Let $A \subseteq \mathbb{R}$; if $A$ bounded from below, $\inf(A)$ exists.
+\end{axiom}
+
+\begin{definition}[$\max$, $\min$]
+  Let $A \subseteq \mathbb{R}$. An $M \in A$ is called a \emph{maximum} of $A$ if for any $x \in A$, $x \leq M$. $M$ is an upper bound for $A$, \textbf{but also} $M \in A$.
+
+  If $M$ exists, then $M = \sup(A)$; $M$ is an upper bound, and if $b$ any other upper bound, then $b \geq M$, because $M \in A$, and thus $M = \sup(A)$.
+
+  NB: $M = \max(A)$ \textbf{need not} exist, while $\sup(A)$ must exist. Consider $A = [0,1)$; $\sup(A) = 1$, but there exists no $\max(A)$.
+
+  The same logic exists for the existence of minimum vs infimum (consider $(0,1)$, with no maximum nor minimum).
+\end{definition}
+
+\begin{theorem}[Nested interval property of $\mathbb{R}$]
+  Let $I_n = [a_n, b_n] = \{x : a_n \leq x \leq b_n\}, n  = 1,2,3 \dots$ be an infinite sequence of bounded, closed intervals s.t. \[I_1 \subseteq I_2 \subseteq I_3 \subseteq \dots I_n \subseteq I_{n+1} \subseteq \dots \]
+  Then, $\bigcap_{n=1}^\infty I_n \neq \varnothing$ (note that this does \emph{not} hold in $\mathbb{Q}$).
+\end{theorem}
+\begin{proof}[Proof]
+  We have $I_n = [a_n, b_n], I_{n+1} = [a_{n+1}, b_{n+1}], \dots$. And the inclusion $I_n \subseteq I_{n+1}$. $a_n \leq a_{n+1} \leq b_{n+1} \leq b_{n}, \forall n \geq 1$. So, the sequence $a_n$ (left-end) is increasing, and the sequence $b_n$ (right-end) is decreasing. 
+  
+  We also have that for any $n, k \geq 1$, $a_n \leq b_k$. We see this by considering two cases:
+  \begin{itemize}
+    \item Case 1: $n \leq k$, then $a_n \leq a_k$ (as $a_n$ is increasing), and thus $a_n \leq a_k \leq b_k$.
+    \item Case 2: $n > k$, then $a_n \leq b_n \leq b_k$ (again, as $b_n$ is decreasing). 
+  \end{itemize}
+  Let $A = \{a_n : n \in \mathbb{N}\}$. Then, $A$ is bounded from above by \emph{any} $b_k$ (as in our inequality we showed above). Let $x = \sup(A)$, which must exist by \cref{axiom:ac}.
+
+  Note that as a result, \(x \geq a_n\) for all $n$, and for all $k$, \(x \leq b_k,\) as $x$ is the lowest upper bound and must be $\leq$ all other upper bounds, and so for all $n \geq 1$, $a_n \leq x \leq b_n$, ie $x \in I_n \forall n \geq 1$, and thus $x \in \bigcap_{n=1}^{\infty} I_n$ and so $\bigcap_{n=1}^{\infty} \neq \varnothing$.
+\end{proof}
+
+\begin{remark}
+  The proof above emphasized the left-end points; it can equivalently be proven via the right-end points, and using $y=\inf(\{b_n : n \in \mathbb{N}\}) = \inf(B)$, rather than $\sup(A)$, and showing that $y \in \bigcap I_n$.
+  % TODO
+\end{remark}
+
+\begin{remark}
+  Note too that, if $x = \sup(A)$ and $y = \sup(B)$, then $x, y \in \bigcap_{n=1}^\infty I_n$; in fact, $\bigcap_{n=1}^\infty I_n = [x,y]$.
+  % TODO: part 2
+\end{remark}
+
+\begin{remark}
+  The intervals $I_n$ \emph{must} be closed; if not, eg $I_n = (0, \frac{1}{n})$, then $\bigcap_{n=1}^\infty I_n = \varnothing$.
+\end{remark}
+
+\subsection{Density of Rationals in Reals}
+
+\begin{proposition}
+  \begin{itemize}
+    \item[(a)] For any $x \in \mathbb{R}$, there exists a natural number $n$ s.t. $n > x$.
+    \item[(b)] For any $y \in \mathbb{R}$ satisfying $y > 0$, $\exists n \in \mathbb{N}$ such that $\frac{1}{n} < y$.
+  \end{itemize}
+\end{proposition}
+\begin{remark}
+  (b) follows from (a) by taking $x = \frac{1}{y}$ in (a), then $\exists n\in \mathbb{N}$ s.t. $n > \frac{1}{y} \implies \frac{1}{n} < y$, and thus we need only prove (a).
+\end{remark}
 
 \newpage
 \section{Appendix}
-\printProofs
+\subsection{Tutorials}
+\subsubsection{Tutorial I (Sept 13)}
+
+\begin{enumerate}
+  \item We say $n$ odd if $\exists k$, $n = 2k+1$. Prove that the product of two odds is odd.
+  \begin{proof}[Proof]
+    Take two odd integers, $n_1 = 2k+1$ and $n_2 = 2j+1$. The product $n_1 \times n_2 = (2k+1)(2j+1) = 4kj+2(k+j)+1$. We have, then \[\underbrace{4kj+2(k+j)}_{\text{even}} + 1.\] Even + odd = odd, thus odd.
+  \end{proof}
+
+  \item \textbf{Proof by Contrapositive:} $P \implies Q \equiv \neg Q \implies \neg P$. 
+  Let $q \in \mathbb{Q}$. Prove: If $x \in \mathbb{R}\setminus\mathbb{Q}$, then $q+x$ is irrational.
+  \begin{proof}[Proof (contrapositive)]
+    Let $q+x$ be rational. The sum of rationals is rational, and thus $q,x \in \mathbb{Q}$, and thus $x \notin \mathbb{R} \setminus \mathbb{Q}$.
+  \end{proof}
+
+  \item \textbf{Proofs by Induction}
+  \begin{enumerate}
+    \item Prove that $1^3 + 2^3 + \dots + n^3 = \left(\frac{n(n+1)}{2}\right)^2$.
+    \begin{proof}
+      Let $P_n$ be the statement that $1^3 + \dots = \left(\frac{n(n+1)}{2}\right)^2$. $P_0$ holds as $1 = \frac{(1)(2)}{2}^2 = 1$. Let $P_n$ hold: \[1^3 + 2^3 + \dots + n^3 = \left(\frac{n(n+1)}{2}\right)^2\]
+      Adding $(n+1)^3$ to both sides:
+      \[
+        1^3 + 2^3 + \dots + n^3 + (n+1)^3 = \left(\frac{n(n+1)}{2}\right)^2 + (n+1)^3
+      \]
+      Focusing on the RHS:
+      \begin{align*}
+        \left(\frac{n(n+1)}{2}\right)^2 + (n+1)^3 &= (n+1)^2\left(\frac{n^2}{4} + (n+1)\right)\\
+        &= (n+1)^2\left(\frac{n^2 + 4n + 4}{4}\right)\\
+        &= (n+1)^2\left(\frac{(n+2)^2}{4}\right)\\
+        &= \left(\frac{(n+1)(n+2)}{2}\right)^2
+        & \equiv P_{n+1}
+      \end{align*}
+      Thus, by AI, $P_n$ holds for all $n \in \mathbb{N}$.
+    \end{proof}
+    \item We have an $8\times 8$ checker board. We remove the top-left and bottom-right squares. Prove that the remaining board cannot be covered by $2\times 1$ dominoes.
+    \begin{proof}[Proof]
+      Note that every domino must cover a black square and a white square. However, the board is missing 2 white squares (say). Thus, there are 62 squares (32 black, 30 white), and we would need \emph{exactly} 31 dominos (62/2). Each requires 1 black, 1 white tile, and thus we will run out of white squares before we reach our 31 dominos, and thus we cannot cover the board.
+    \end{proof}
+    \item Take $F_n$ to represent the $n$th Fibonacci number. Let $\varphi = \frac{1+\sqrt{5}}{2}$. Show that $F_n > \varphi^{n-2} \forall n \geq 3$.
+    \begin{proof}[Proof]
+      Let $P_n$ represent the "truth" of the given statement. $P_3: F_3 = F_2 + F_1 = 1 + 1 =2$. $\varphi^{1} = \varphi$; clearly $2 > \frac{1+\sqrt{5}}{2}$. Note that we should also prove $P_4, P_5$ for use in our induction.
+
+      $P_4: (\frac{1+\sqrt{5}}{2})^2 = \frac{1 + 2 \sqrt{5} + 5}{4} = \frac{6+2\sqrt{5}}{4} < 3$.
+
+      $P_5: (\frac{1+\sqrt{5}{2}})^3 \dots < 5$
+
+      Take $P_{n-1}, P_{n}$ to hold, ie $F_{n-1}>\varphi^{n-3}$ and $F_n > \varphi^{n-2}$.
+      \begin{align*}
+        F_{n+1} = F_n + F_{n-1} &> \varphi^{n-2} + \varphi^{n-3}\\
+        &= \varphi^{n-3}(\underbrace{\varphi+1}_{=\varphi^2})\\
+        &= \varphi^{n-1},
+      \end{align*} as desired, Noting that $\varphi + 1 = \frac{1+\sqrt{5}}{2} + 1 = \frac{1 + \sqrt{5}+2}{2} = \dots \varphi^2$.
+    \end{proof}
+    \item $a_1 = 1, a_2 = 8, a_n = a_{n-1} + 2 a_{n-2}$. Prove $a_n = 3 \cdot 2^{n-1} + 2 (-1)^n$.
+    \begin{proof}[Proof]
+      $a_1 = 1 =  3 \cdot 2^0 + 2(-1)^1 =3 -2 = 1$
+      $a_2 = 8 = 3\cdot 2^1 + 2(-1)^2 = 6+2 = 8$
+      So, $P_1, P_2$ holds. Assume $P_n$, $P_{n+1}$ holds. Then, we have $a_n = 3 \cdot 2^{n-1} + 2(-1)^n$ and so:
+      \begin{align*}
+        a_{n+1} &= 3 \cdot 2 ^{n-1} + 2(-1)^{n} + 2 \cdot \left(3\cdot 2^{n-2}+2(-1)^{n-1}\right)\\
+        &= \dots = 3\cdot 2^n + 2(-1)^{n+1}
+      \end{align*}
+      Thus, proven.
+    \end{proof}
+  \end{enumerate}
+  \item Show $A \setminus (B \setminus A) = A$.
+  \begin{proof}[Proof]
+    Let $x \in A \setminus(B \setminus A)$. $x$ must be in $A$, but not $B \setminus A$. Thus, $x$ is in $A$, but not in $B$. Thus, LHS $\subseteq$ RHS.
+
+    Let $x \in A$. Thus, $x \notin B \setminus A$, and thus $x \in A \setminus (B\setminus A)$, and so $A \subseteq A \setminus (B \setminus A)$. Thus, LHS = RHS.
+
+  \end{proof}
+
+  \item $A_n = \{nk : k \in \mathbb{N}\}, n \geq 2$. Find $\bigcup_{n=2}^\infty An \bigcap_{n=2}^\infty A_n$.
+  \begin{proof}
+    \begin{align*}
+      \bigcup_{n=2}^\infty A_n & = \bigcup \{2k, 3k, 4k, \dots\} = \{n : n \geq 2, n \in \mathbb{N}\} = \mathbb{N}\setminus \{1\}\\
+      \bigcap_{n=2}^\infty A_n &= \varnothing \textit{ consider just } n=2, n=3 \text{ cases...}
+    \end{align*}
+  \end{proof}
+\end{enumerate}
 
 \end{document}
