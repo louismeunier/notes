@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[12pt, oneside]{article}
 \usepackage{amsthm}
 \usepackage{libertine}
 \usepackage[margin=0.15in]{geometry}
@@ -15,14 +15,15 @@
 \usepackage{titlesec}
 \usepackage{thmtools}
 \usepackage{thm-restate}
-\usepackage[bottom]{footmisc}
+\usepackage[side]{footmisc}
 \usepackage{xcolor-solarized}
 \usepackage{svg}
 \usepackage{physics}
 \usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
 % \usepackage{cleveref}
 \usepackage[]{csquotes}
-\usepackage{hyperref}
+\usepackage{cleveref}
+
 
 \usepackage[createShortEnv]{proof-at-the-end}
 
@@ -32,54 +33,50 @@
 
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Definition,
-  refname={Definition, definition}, numberwithin=section
+  refname={Definition, definition}, numberwithin=section,
+  shaded={rulecolor=solarized-blue, rulewidth=2pt}
 ]{definition}
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Axiom,
   refname={Axiom, axiom},
-  numberwithin=section
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=2pt}
 ]{axiom}
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Lemma,
   refname={Lemma, lemma},
-  numberwithin=section
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{lemma}
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Corollary,
   refname={Corollary, corollary},
-  numberwithin=section
+  numberwithin=section,
+  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{corollary}
 
 \declaretheorem[
-  name=Exercise, 
-  refname={Exercise, exercise},
-  numberwithin=section,
-  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
-]{exercise}
-
-\declaretheorem[
-  thmbox=S,
-  name=Theorem,
-  refname={Theorem, theorem},
-  numberwithin=section
-]{theorem}
-
-
-\declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Remark,
   refname={Remark, remark},
   numberwithin=section
 ]{remark}
 
+\declaretheorem[
+  % thmbox=S,
+  name=Theorem,
+  refname={Theorem, theorem},
+  numberwithin=section,
+  shaded={rulecolor=solarized-red, rulewidth=1pt}
+]{theorem}
 
 \declaretheorem[
   % thmbox=M,
@@ -88,6 +85,15 @@
   numberwithin=section,
   shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{example}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Proposition,
+  refname={Proposition, proposition},
+  numberwithin=section,
+  shaded={rulecolor=solarized-magenta, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+]{proposition}
+
 
 \newEndThm[no proof here, restate, text proof={Examples}, one big link={\emph{See more}}]{definitionEnd}{definition}
 \newEndThm[no proof here, restate, one big link = {\emph{Proof}}]{lemmaEnd}{lemma}
@@ -145,8 +151,8 @@
 % kind of messy but what can you do
 \newpage
 % modify these as you wish
-\newgeometry{margin=0.5in, top=0.4in, bottom=0.75in}
-\parskip=0.5em
+\newgeometry{margin=0.25in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in, includemp}
+\parskip=0.6em
 
 \section{Introduction, Motivations, Overview}
 
@@ -407,10 +413,93 @@ This is called \textbf{linear stability analysis}, as are reducing the nonlinear
 
 We are studying the \textit{qualitative} behavior of solutions, which only makes sense if these solutions exist. Usually we require that the IVP $\dot{x} = f(x), x(0) = x_0$ to have a unique solution $x(t) \forall t \geq 0$, for every $x_0 \in \mathbb{R}$. If they were not unique, they have multiple solutions starting at some point or worse, at points $x_0$ where multiple solutions are possible orbits will cross each other. The very aspect that this doesn't happen is what makes phase plots useful.
 
-This is also why only autonomous ODEs are considereed; in nonautonomous ODES $\dot{x} = f(t,x)$, the value of $\dot{x}(t)$ at a particular value of $x$ will depend of $t$.
+This is also why only autonomous ODEs are considered; in nonautonomous ODES $\dot{x} = f(t,x)$, the value of $\dot{x}(t)$ at a particular value of $x$ will depend of $t$. For instance, consider $\dot{x} = -x+t$; without a $t$, this has very straightforward dynamics, but with the $t$ parameter, there are no fixed points and can't be analyzed as easily without solving exactly. Time-dependent problems will not be considered in this course, but they can be dealt with; esp, consider periodic forcing, eg $\dot{x} = x - x^3 + \cos t$. To study system such as this, we define a \textit{map}.
 
+Let $T$ be the period of the forcing, $T = 2 \pi$ here. Define a map \[S_T: x_0 \mapsto x (2\pi),\] where $x(2 \pi) = x(T)$ solves the ODE with initial $x(0) = x_0$. Note that $\cos$ takes the same values in $[0, 2\pi]$ as in $[2\pi, 4\pi]$, so we can use the same map $S_T$ to map from $x(2 \pi)$ to $x(4 \pi)$.
 
-% \section{Appendix}
-% \printProofs
+A fixed point of the map $S_T$ is a periodic orbit of the ODE of period $T$. In forced systems, period orbits must have period $n T$, an integer multiple of the forcing period; we'll stick with $\dot{x} = f(x)$ with $f: \mathbb{R} \to \mathbb{R}$.
+
+Lets consider $x(0) = x_0$; when is a solution $x(t)$ unique? When does it exist? What can "go wrong"/when?
+
+\begin{example}\label{ex:bad1}
+  $\dot{u} = u^{\frac{1}{3}}, u(0) = 0$. 
+  
+  Clearly, if $u(t) = 0 \forall t$ satisfies the ODE, and the initial condition (stays at 0). But we can also solve it exactly:
+  \begin{align*}
+    \dv{u}{t} = u^{\frac{1}{3}} \implies\int_{u(0)}^{u(t)} \frac{du}{u^{\frac{1}{3}}} &= \int_0^t dt\\
+    \left[\frac{3}{2}u^{\frac{2}{3}}\right]_0^{u(t)} &= t\\
+    u(t) &= \left(\frac{2t}{3}\right)^{\frac{3}{2}}
+  \end{align*}
+
+  This is different to previously; is it still a valid solution? Clearly, satisfies $u(0) = 0$. And for $t \geq 0$, $u(t) = (\frac{2t}{3})^{3/2} \implies \dv{u}{t} = \frac{3}{2}\left(\frac{2t}{3}\right)^{1/2}\cdot \frac{2}{3} = u^{1/3}$, and thus also satisfies ODE.
+
+  Notice that this fails when $t < 0$, as we would have to take the square root of a negative number. Thus, the solution only valid for $t \geq 0$ and at $t = 0$ it has $u(0) = \dot{u}(0) = 0$. "Appending" our first solution, we write:
+  \[u(t) = \begin{cases}
+    0 & t < 0\\
+    \left(\frac{2t}{3}\right)^{\frac{3}{2}} & t \geq 0
+  \end{cases},\] which is defined for all $t \in \mathbb{R}$, continuous for all $t \in \mathbb{R}$, differentiable for all $t \in \mathbb{R}$, $\dot{u}(t)$ is continuous, and satisfies $u(0) = 0$.
+
+  However; we actually have two "new" solutions; \[u(t) = \begin{cases}
+    0 & t < 0\\
+    +\left(\frac{2t}{3}\right)^{\frac{3}{2}} & t \geq 0
+  \end{cases}\] or \[u(t) = \begin{cases}
+    0 & t < 0\\
+    -\left(\frac{2t}{3}\right)^{\frac{3}{2}} & t \geq 0
+  \end{cases}.\]
+
+  For any $t_0 \geq 0$, $u(t) = \begin{cases}
+    0 & t \leq 0\\
+    \left(\frac{2}{3}\left(t-t_0\right)\right)^{\frac{3}{2}} & t \geq t_0
+  \end{cases}$, ie staying at $0$ for arbitrarily long time, then "spitting" away at $t = t_0$. Thus, this IVP has infinitely many solutions, and thus is not unique.
+   
+  In $\dot{u} = f(u) = u^{1/3}$, $f(u)$ is continuous on $\mathbb{R}$, and differential \emph{except} at $u = 0$, causing the non-uniqueness here; any other $u(t_0)$ would yield a unique solution.
+
+  In phase space, $f(u)$ has an unsteady state at $0$, and is increasing for $u > 0$ and decreasing for $u < 0$.
+\end{example}
+
+\begin{example}\label{ex:bad2}
+  $\dot{u} = f(u) = u^3$. Now, $f$ is continuous and differentiable on $\mathbb{R}$. We have an unsteady ss at $0$ again. Solving:
+  \begin{align*}
+    \dot{u} = u^3 \implies \int \frac{du}{u^3} &= \int dt\\
+    -\frac{1}{2u^2} &= t+C\\
+    \frac{1}{u^2} &= -2t -2c = k -2t\\
+    u^2 &= \frac{1}{k-2t}\\
+    u &= \pm \frac{1}{(k-2t)^\frac{1}{2}}.
+  \end{align*}
+  Let $u(0) = u_0 > 0$ (symmetrical over $u_0 < 0$). We need to take the positive square root for a positive $u_0$, so $u = \frac{+1}{(k-2t)^{1/2}}$. \begin{align*}
+    u(0) = u_0 \implies u_0 &= \frac{1}{(k-0)^{1/2}}\\
+    \cdots k & = \frac{1}{u_0^2}\\
+    \implies u(t) &= \frac{1}{\left(\frac{1}{u_0^2} - 2t\right)^{1/2}}
+  \end{align*}
+  For $u_0 > 0$ this solution becomes unbounded in \emph{finite} time. $u(0) = u_0 > 0$, then as $t \to \frac{1}{2u_0^2}, u(t) \to + \infty$.
+
+  "Purely" speaking, this is an issue, as the solution does not exist $\forall$ time. In "applications", we don't worry about this since if $u(t)$ getting "very large", it is already outside of the reasonable range of validity for the model.
+\end{example}
+
+\begin{theorem}
+  Consider the IVP $\dot{x}= f(x), x(0) = x_0 \in \mathbb{R}$. Suppose $f(x), f'(x)$ are both continuous on an open interval $I \subset \mathbb{R}$ and $x_0 \in I$. The, $\exists T > 0$ s.t. the problem has a solution $x(t)$ for $t \in (-T, T)$ with $x(t) \in I$ for all $t \in (-T,T)$, and this solution is unique.
+\end{theorem}
+
+\begin{remark}
+  Won't be proven.
+\end{remark}
+
+\begin{remark}
+  For \cref{ex:bad1}, $f'(x)$ not continuous at $x = 0$, and thus the theorem does not apply. Notice that if we consider the same system with $x(0) \neq 0$, we can choose some $I$ which contains $x_0$ but not $0$ and apply it there.
+\end{remark}
+
+\begin{corollary}
+  If $f(x), f'(x)$ both continuous on all $\mathbb{R}$, then the solution exists and is unique $\forall (T_-, T_+)$, and either $T_- = - \infty$ or $|x(t)| \to \infty$ as $t \to T_-$ (and similar for $T_+$).
+\end{corollary}
+
+In this course, we'll always consider $f$ as differentiable as we need it to be. $f \in C^1$ (\footnote{once continuously differentiable})then solutions are unique while bounded; this is often sufficient, but we'll need more differentiability for bifurcation theory, ie often take infinitely differentiable functions.
+
+\subsection{Impossibility of Oscillations}
+
+Suppose $\dot{x} = f(x)$ has a periodic solution so $x(t+T) = x(t) \forall t \in \mathbb{R}$ for some period $T > 0$.
+
+For a given value of $x$, $\dot{x}$ changes sign each time solution crosses $x$, so $f(x)$ also changes sign. But $f(x)$ uniquely defined for any particular value of $x$, so this cannot happen, ie, $\dot{x} = f(x)$ \textit{cannot} have periodic solutions.
+
+The same argument shows that all solutions $x(t)$ of $\dot{x} = f(x)$ for $x \in \mathbb{R}$ are \textbf{monotonic}.
 
 \end{document}

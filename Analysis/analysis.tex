@@ -536,11 +536,11 @@ Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is 
 \end{definition}
 
 \begin{theorem}[Nested interval property of $\mathbb{R}$]
-  Let $I_n = [a_n, b_n] = \{x : a_n \leq x \leq b_n\}, n  = 1,2,3 \dots$ be an infinite sequence of bounded, closed intervals s.t. \[I_1 \subseteq I_2 \subseteq I_3 \subseteq \dots I_n \subseteq I_{n+1} \subseteq \dots \]
+  Let $I_n = [a_n, b_n] = \{x : a_n \leq x \leq b_n\}, n  = 1,2,3 \dots$ be an infinite sequence of bounded, closed intervals s.t. \[I_1 \supseteq I_2 \supseteq I_3 \supseteq \dots I_n \supseteq I_{n+1} \supseteq \dots \]
   Then, $\bigcap_{n=1}^\infty I_n \neq \varnothing$ (note that this does \emph{not} hold in $\mathbb{Q}$).
 \end{theorem}
-\begin{proof}[Proof]
-  We have $I_n = [a_n, b_n], I_{n+1} = [a_{n+1}, b_{n+1}], \dots$. And the inclusion $I_n \subseteq I_{n+1}$. $a_n \leq a_{n+1} \leq b_{n+1} \leq b_{n}, \forall n \geq 1$. So, the sequence $a_n$ (left-end) is increasing, and the sequence $b_n$ (right-end) is decreasing. 
+\begin{proof}[Proof]\footnote{Sketch: show that the left-end points are increasing and the right-end points are decreasing. Show either that all the left-end points are bounded from above or that all the right-end points are bounded from below. As a result, there exists a sup/inf (depending on which end you choose) of the set of all the right/left points. For the sup case, all upper bounds must be $\geq$ sup, and thus the sup is in all $I_n$, and thus in their intersect, and thus the intersect is not empty.}
+  We have $I_n = [a_n, b_n], I_{n+1} = [a_{n+1}, b_{n+1}], \dots$. And the inclusion $I_n \supseteq I_{n+1}$. $a_n \leq a_{n+1} \leq b_{n+1} \leq b_{n}, \forall n \geq 1$. So, the sequence $a_n$ (left-end) is increasing, and the sequence $b_n$ (right-end) is decreasing. 
   
   We also have that for any $n, k \geq 1$, $a_n \leq b_k$. We see this by considering two cases:
   \begin{itemize}
@@ -558,7 +558,7 @@ Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is 
 \end{remark}
 
 \begin{remark}
-  Note too that, if $x = \sup(A)$ and $y = \sup(B)$, then $x, y \in \bigcap_{n=1}^\infty I_n$; in fact, $\bigcap_{n=1}^\infty I_n = [x,y]$.
+  Note too that, if $x = \sup(A)$ and $y = \inf(B)$, then $x, y \in \bigcap_{n=1}^\infty I_n$; in fact, $\bigcap_{n=1}^\infty I_n = [x,y]$.
   % TODO: part 2
 \end{remark}
 
@@ -568,15 +568,107 @@ Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is 
 
 \subsection{Density of Rationals in Reals}
 
-\begin{proposition}
+\begin{proposition}[Archimedian Property]\label{prop:archimedian}
   \begin{itemize}
     \item[(a)] For any $x \in \mathbb{R}$, there exists a natural number $n$ s.t. $n > x$.
     \item[(b)] For any $y \in \mathbb{R}$ satisfying $y > 0$, $\exists n \in \mathbb{N}$ such that $\frac{1}{n} < y$.
   \end{itemize}
 \end{proposition}
 \begin{remark}
+  (a) states that $\mathbb{N}$ is not a bounded subset of $\mathbb{R}$.
+
+\end{remark}
+  
+\begin{remark}
   (b) follows from (a) by taking $x = \frac{1}{y}$ in (a), then $\exists n\in \mathbb{N}$ s.t. $n > \frac{1}{y} \implies \frac{1}{n} < y$, and thus we need only prove (a).
 \end{remark}
+
+\begin{remark}
+  Recall that $\mathbb{Q}$ is an ordered field (operations $+, \cdot$ and a relation $<$). $\mathbb{Q}$ can be extended to a larger ordered field with extended definitions of these operations/relations, such that it contains elements that are larger than any natural numbers (ie, not bounded above). This is impossible in $\mathbb{R}$ due to AC.
+\end{remark}
+
+\begin{proof}[Proof]
+   Suppose (a) not true in $\mathbb{R}$, ie $\mathbb{N}$ is bounded from above in $\mathbb{R}$. Let $\alpha = \sup \mathbb{N}$, which exists by AC.
+
+   Consider $\alpha - 1$; since $\alpha - 1 < \alpha$, $\alpha - 1$ is not an upper bound of $\mathbb{N}$. So, there exists some $n \in \mathbb{N}$ s.t. $\alpha - 1 < n$; then, $\alpha < n+ 1$ where $n+1 \in \mathbb{N}$, and thus $\alpha$ is also not an upper bound, as there exists a natural number that is greater than $\alpha$. This contradicts the assumption that $\alpha = \sup \mathbb{N}$, so (a) must be true.
+\end{proof}
+
+\begin{theorem}[Density]
+  Let $a,b \in \mathbb{R}$ s.t. $a < b$. Then, $\exists x \in \mathbb{Q}$ s.t. $a < x < b$.
+\end{theorem}
+
+\begin{remark}
+  If you take $a \in \mathbb{R}$ and $\epsilon > 0$, then by the theorem, $\exists x \in \mathbb{Q}$ where $x \in (a - \epsilon, a + \epsilon)$. So any real number can be approximated arbitrarily closely (via choose of $\epsilon$) by a rational number.
+\end{remark}
+
+\begin{proof}[Proof]
+  Since $b - a > 0$, by (b) of \cref{prop:archimedian}, $\exists n \in \mathbb{N}$ s.t. $\frac{1}{n} < b -a$, ie $na + 1 < nb$.
+
+  Let $m \in \mathbb{Z}$ s.t. $m - 1 \leq na < m$. Such an integer must exists since $\bigcup_{m \in \mathbb{Z}} [m-1, m) = \mathbb{R}$, the family $[m-1,m), m \in \mathbb{Z}$ makes partitions of $\mathbb{R}$. Then, $na < m$ gives that $a < \frac{m}{n}$. On the other hand, $m -1 \leq na$ gives $m \leq na+1 < nb$. So $\frac{m}{n} < b$ and it follows that $\frac{m}{n}$ satisfies $a < \frac{m}{n} < b$.
+\end{proof}
+
+In the proof, we used the claim:
+
+\begin{proposition}
+  If $z \in \mathbb{R}$, then there exists $m \in \mathbb{Z}$ s.t. $m - 1 \leq z < m$.
+\end{proposition}
+
+\begin{proof}[Proof]
+  Let $S$ be a non-empty subset of $\mathbb{N}$. Then $S$ has the least element; $\exists m \in S$ s.t. $m \leq n, \forall n \in S$.
+
+  We can assume $z \geq 0$; if $0 \leq z < 1$, then we are done (take $m = 1$), and assume that $z \geq 1$. Let now $S = \{n \in \mathbb{N} : z < n\}$, $\neq \varnothing$ by \cref{prop:archimedian}, (a). Let $m$ be the least element of $S$. It exists by Well-Ordering Property; then, since $m \in S$, $z < m$. But, we also have $m - 1 \leq z$, otherwise, if $z < m-1$ then $m - 1 \in S$ and then $m$ is not the least element of $S$. Thus, we have $m -1 \leq z < m$, as required.
+\end{proof}
+
+\begin{theorem}
+  The set $J$ of irrationals is also dense in $\mathbb{R}$. That is, if $a,b \in \mathbb{R}, a < b$, $\exists$ irrational $y$ s.t. $a < y < b$ (noting that $J = \mathbb{R} \setminus \mathbb{Q}$).
+\end{theorem}
+
+\begin{proof}[Proof]
+  Fix $y_0 \in \mathbb{J}$. Consider $a - y_0$, $b - y_0$. $a - y_0 < b - y_0$, and by density of rationals, $\exists x \in \mathbb{Q}$ s.t. $a - y_0 < x < b - y_0$. Then, $a < y_0 + x < b$; let $y = x+y_0$, and we have $a < y < b$.
+
+  Note that $y$ cannot be rational; if $y \in \mathbb{Q}$, $y = x + y_0 \implies y - x = y_0$, and since $x \in \mathbb{Q}$, $y - x \in \mathbb{Q} \implies y_0 \in \mathbb{Q}$, contradicting the original choice of $y_0 \notin \mathbb{Q}$. Thus, $y \in J$.
+\end{proof}
+
+\begin{theorem}
+  $\exists$ a unique positive real number $\alpha$ s.t. $\alpha^2 = 2$.
+\end{theorem}
+
+\begin{proof}[Proof]
+
+  \begin{itemize}
+    We show both uniqueness, existence:
+    \item Uniqueness: if $\alpha^2 = 2$ and $\beta^2 = 2$, $\alpha \geq 0, \beta \geq 0$, then $0= \alpha^2 - \beta^2 = (\alpha - \beta)(\alpha + \beta) > 0$, and so $\alpha - \beta = 0 \implies \alpha = \beta$.
+    \item Existence: consider the set $A = \{x \in \mathbb{R} : x \geq 0 \text{ and } x^2 < 2\}$. $A$ is not empty as $1 \in A$. The set of $A$ is bounded above by 2, since if $x \geq 2$, then $x^2 \geq 4 > 2$, so $x \notin A$. So, by AC, $\sup A$ exists; let $\alpha = \sup A$. We will show that $\alpha^2 = 2$, by showing that both $\alpha^2 < 2$ and $\alpha^2 > 2$ are contradictions.
+    
+    \begin{itemize}[label=$\bullet$]
+      \item $\alpha^2 < 2$
+    
+      For any $n \in \mathbb{N}$ we expand \[\left(\alpha + \frac{1}{n}\right)^2 = \alpha^2 + \frac{2\alpha}{n} + \frac{1}{n^2} \leq \alpha^2 + \frac{2 \alpha + 1}{n},\] noting that $\frac{1}{n^2} \leq \frac{1}{n}$ for $n \geq 1$.
+
+      Let $y = \frac{2 - \alpha^2}{2\alpha + 1}$, which is strictly positive. By \cref{prop:archimedian}, $\exists n_0 \in \mathbb{N}$ s.t. \[\frac{1}{n_0} < \frac{2-\alpha^2}{2\alpha + 1} \text{ or } \frac{2\alpha + 1}{n_0} < 2 - \alpha^2.\] Substituting this $n_0$ into our inequality, we have \[\left(\alpha + \frac{1}{n_0}\right)^2 \leq \alpha^2 + \frac{2 \alpha + 1}{n_0} < \alpha^2 + 2 - \alpha^2 = 2.\] Since $\alpha + \frac{1}{n_0}$ is positive, $\alpha + \frac{1}{n_0} \in A$. But, since $\alpha = \sup A$, $\alpha + \frac{1}{n_0} \leq \alpha$, which is impossible, so $\alpha^2 < 2$ cannot be true.
+      \item $\alpha^2 > 2$
+      
+      Take $n \in \mathbb{N}$; \[\left(\alpha - \frac{1}{n}\right)^2 = \alpha^2 - \frac{2\alpha}{n} + \frac{1}{n^2} > \alpha^2 - \frac{2\alpha}{n}.\] Now, let $y = \frac{\alpha^2 - 2}{2\alpha}$; $y > 0$, and by \cref{prop:archimedian}, $\exists n_0 \in \mathbb{N}$ s.t. \[\frac{1}{n_0} < \frac{\alpha^2 - 2}{2 \alpha}, \text{ or } \frac{2\alpha}{n_0} < \alpha^2 - 2.\] Substituting this $n_0$, we have \[\left(\alpha - \frac{1}{n_0}\right)^2 > \alpha^2 - \frac{2 \alpha}{n_0} > \alpha^2 + 2 - \alpha^2 = 2.\] So for any $x \in A$, we have $\left(\alpha- \frac{1}{n_0}\right)^2 > 2 > x^2$. $\alpha - \frac{1}{n_0}> 0$, and $x > 0$, since $x \in A$. Then, $\left(\alpha - \frac{1}{n_0}\right)^2 > x^2$ gives that $\alpha - \frac{1}{n_0}>x$.
+
+      So, $\alpha - \frac{1}{n_0} > x$ for all $x \in A$. So $\alpha - \frac{1}{n_0}$ is an upper bound for $A$, but since $\alpha = \sup A$, $\alpha - \frac{1}{n_0} \geq \alpha$ ie $\alpha \geq \alpha + \frac{1}{n_0}$, which is impossible. So $\alpha^2 > 2$ cannot be true.
+    \end{itemize}
+
+    Thus, $\alpha^2 = 2$.
+  \end{itemize}
+\end{proof}
+
+\begin{remark}
+  A similar argument gives that for any $x \in \mathbb{R}$, $x \geq 0$, $\exists! \alpha \in \mathbb{R}$, $\alpha \geq 0$ such that $\alpha^2 = x$. This $x$ is called the \emph{square root} of $x$, denoted $\alpha = \sqrt{x}$.
+\end{remark}
+
+\begin{remark}
+  For any natural number $m \geq 2$ and $x \geq 0$, $\exists ! \alpha \in \mathbb{R}, \alpha \geq 0$ s.t. $\alpha^m = x$. The proof is similar, and we call $\alpha$ the $m$-th root of $x$.
+\end{remark}
+
+\begin{remark}
+  Our last proof also gives that $\mathbb{Q}$ cannot satisfy AC. Suppose it does, ie any set in $\mathbb{Q}$ bounded from above has a supremum $\in \mathbb{Q}$. Then, consider $B = \{x \in \mathbb{Q} : x \geq 0 \text{ and } x^2 < 2\}$; set $\alpha = \sup B$. The exact same proof can be used, but we will not be able to find an upper bound in $\mathbb{Q}$.
+\end{remark}
+
 
 \newpage
 \section{Appendix}

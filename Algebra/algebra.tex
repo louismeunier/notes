@@ -28,6 +28,7 @@
 
 % makes theorems, definitions, etc. "restatable" as shown
 % can add more with same format as you wish
+\renewcommand{\footnotesize}{\scriptsize}
 \renewcommand*{\proofname}{}
 \renewcommand*{\qedsymbol}{\(\blacksquare\)}
 % homework answers
@@ -50,7 +51,7 @@
   % thmbox=S,
   name=Axiom,
   refname={Axiom, axiom},
-  numberwithin=section,
+  numberwithin=subsection,
   shaded={rulecolor=solarized-orange, rulewidth=2pt}
 ]{axiom}
 
@@ -58,7 +59,7 @@
   % thmbox=S,
   name=Lemma,
   refname={Lemma, lemma},
-  numberwithin=section,
+  numberwithin=subsection,
   shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{lemma}
 
@@ -66,7 +67,7 @@
   % thmbox=S,
   name=Corollary,
   refname={Corollary, corollary},
-  numberwithin=section,
+  numberwithin=subsection,
   shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{corollary}
 
@@ -74,14 +75,14 @@
   % thmbox=S,
   name=Remark,
   refname={Remark, remark},
-  numberwithin=section
+  numberwithin=subsection
 ]{remark}
 
 \declaretheorem[
   % thmbox=S,
   name=Theorem,
   refname={Theorem, theorem},
-  numberwithin=section,
+  numberwithin=subsection,
   shaded={rulecolor=solarized-red, rulewidth=2pt}
 ]{theorem}
 
@@ -89,7 +90,7 @@
   % thmbox=M,
   name=Example,
   refname={Example, example},
-  numberwithin=section,
+  numberwithin=subsection,
   shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{example}
 
@@ -97,7 +98,7 @@
   % thmbox=S,
   name=Proposition,
   refname={Proposition, proposition},
-  numberwithin=section,
+  numberwithin=subsection,
   shaded={rulecolor=solarized-magenta, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{proposition}
 
@@ -584,7 +585,7 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 \end{definition}
 \footnotetext{Note that, generally, equivalence and order relations are very different.}
 
-\begin{example}
+\begin{example}\label{example:equiv1}
 \begin{enumerate}
   \item Let $n \geq 1$ be an integer. A \emph{permutation} $\sigma$ of $n$ elements is a bijection $\sigma: \{1, 2, \dots, n\} \to \{1, 2, \dots, n\}$. Their number is $n!$, ie there are $n!$ permutations of $n$ elements. The collection of all permutations of $n$ elements is denoted $S_n$, which we call the "symmetric group" on $n$ elements. We aim to define an equivalence relation on $S_n$.
   
@@ -598,9 +599,107 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 \end{enumerate}  
 \end{example}
 
-\begin{example}
+\begin{example}\label{example:equiv2}
   Define a relation on $\mathbb{Z}$ by saying that $x \sim y$ if $x-y$ even, ie $2|(x-y)$. This is reflexive, as $2|(x-x) = 0, x \sim x$, symmetric, since $(y-x) = -(x-y)$, and transitive $x-z = \underbrace{(x-y)}_{\text{even}}+\underbrace{(y-z)}_{\text{even }} \implies x \sim z$.
 \end{example}
+
+\begin{example}\label{example:equiv3}
+  We say two sets $A \sim B$ if $|A| = |B|$. $1_A = \text{Id}: A \to A, a \mapsto a$ shows $A \sim A$. $A \sim B \implies \exists f: A \to B$ bijective, then $f^{-1}: B \to A$ also bijective so $B \sim A$. If $A \sim B, B \sim A$ then $A \sim C$ (since $|A| = |B|, |B| = |C| \implies |A| = |C|$ as proved earlier).
+\end{example}
+
+\begin{definition}[Disjoint Union]
+  Let $S$ be a set, and $S_i, i \in I, \subseteq S$. $S$ is the \emph{disjoint union} of the $S_i$'s if $S = \cap_{i \in I} S_i$, and for any $i \neq j$, $S_i \cap S_j = \varnothing$\footnotemark; we denote 
+  \(S = \amalg_{i \in I} S_i.\)
+  We can say that $\{S_i\}$ for a \emph{partition} of $S$.
+\end{definition}
+\footnotetext{ie, no $S_i$'s share elements; think of "partitioning" $S$ such that no subsets overlap.}
+
+\begin{example}
+  Let $S = \{1,2\}$. Partitions are $\{1,2\}$, and $\{1\}, \{2\}$. 
+
+  Let $S = \{1,2,3\}$. Partitions are $\{1,2,3\}$, $\{1\}, \{2\},\{3\}$, \dots
+\end{example}
+
+\begin{definition}[Equivalence Class]
+  Given an equivalence relation $\sim$ of $A$ and some $x \in A$, the \emph{equivalence class} of $x$ is $[x] = \{y \in A : x \sim y\} \subseteq S$.
+\end{definition}
+
+\begin{theorem}\label{thm:equivclass}
+  The following theorems are related to equivalence classes:
+  \begin{itemize}
+    \item[(1)] the equivalence classes of $A$ form a partition of $A$;
+    \item[(2)] conversely, any partition of $A$ defines an equivalence relation on $A$ given by the partition.
+  \end{itemize}
+\end{theorem}
+
+\begin{lemma}\label{lemma:subequiv}
+  Let $X$ be an equivalence class; $a \in X$, then $X = [a]$.
+\end{lemma}
+\begin{proof}[Proof of \cref{lemma:subequiv}]
+  If $X$ is an equivalence class, $X = [x]$ for some $x \in A$, by definition. Let $a \in X$. If $b \in [a]$ then $b \sim a$ and as $a \in [x]$ then $a \sim x \implies b \sim x \implies b \in [x] \implies [a] \subseteq [x]$.
+
+  Otoh, $a \sim x \implies x \in [a]$, so $[x] \subseteq [a]$, and thus $[x] = [a]$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:equivclass}]
+  We prove (1), (2) individually.
+
+ (1) We aim to show that if the equivalence classes are $\{X_i\}_{i \in I}$ then $A = \amalg_{i \in I} X_i$. We say the following:
+ \begin{itemize}
+  \item[1.] Every $a \in A$ is in some equivalence class ($a \in [a]$).
+  \item[2.] Two different equivalence classes are disjoint $\iff$ if $X,Y$ equiv. classes s.t. $X \cap Y \ne \varnothing$ then $X = Y$.\footnotemark
+ \end{itemize}
+
+ Let $a \in X \cap Y \overset{\text{lemma}}{\implies} [a] = X, [a] = Y \implies X = Y$.
+
+ Here, consider the examples above;
+ \begin{itemize}
+  \item[-]\cref{example:equiv1}; $S_n$: there are $n$ equiv classes $X_i = \{\sigma \in S_n : \sigma(1) = i\}$. $S_n = X_1 \sqcup X_2 \sqcup \dots X_n$. $\sigma \in S_n$ and $\sigma(1) = i$, then $\sigma \in X_i$.
+  \item[-] \cref{example:equiv2}; $\mathbb{Z}$: two equiv. classes; $X = \text{even integers} = [0]$, $Y = \text{odd integers} = [1]$, so $\mathbb{Z} = \text{even} \sqcup \text{odd}$
+  \item[-] \cref{example:equiv3}; sets: an equivalence \textit{is} a cardinality. $n:=[\{1,2, \dots n\}] = $ all sets with $n$ elements. Similarly, we often write that $\aleph_0 := [\mathbb{N}] =$ inf. countable sets = sets un bijection with $\mathbb{N}$, and $2^{\aleph_0} := [\mathbb{R}]$.
+ \end{itemize}
+
+ (2) We are given a partition $A = \amalg_{i \in I} X_i$. We say $x \sim y$ if $\exists i \in I$ s.t. $x$ and $y$ belong to $X_i$ (noting that such an $i$ is unique if it exists, by definition of an equivalence class).
+
+ \begin{itemize}
+  \item $x\sim x$, clearly, since $x \in X_i \implies x \in X_i$
+  \item $x \sim y \implies y \sim x$, by similar logic
+  \item $x \sim y, y \sim z$ means that $x$ and $y$ in some same $X_i$, and $y$ and $z$ in some same $X_j$. So, $y \in X_i \int X_j$, but we are working with a partition so $X_i = X_j$, so $x \sim z$.
+ \end{itemize}
+
+ Thus, $\sim$ is an equivalence relation.\footnotemark
+\end{proof}
+\footnotetext{Contrapositive...}
+\footnotetext{This whole proof/theorem can sound pretty confusing. Abstractly, and non-rigorously, consider this: we define some "notion" of equivalence. Intuitively, if a set of items in, say, $A$, are equivalent, then they shouldn't be equivalent to any other items outside of that set (by our particular definition of equivalence). Thus, no "subsetting" of $A$ into equivalence classes will cause any subset to overlap; thus, we have a partition. This works in reverse through similar logic, where we even more concretely say that the very act of begin in the same partitioning of $A$ is to be equivalent.}
+
+\begin{example}
+  Let $A = $ students in this class. $x \sim y$ if $x, y$ have the same birthday. The equivalence classes in this case are the dates s.t. $\exists$ some student with that birthday.
+\end{example}
+
+\begin{definition}[Complete set of representatives]
+  If $~$ is an equiv. relation on $A$, a subset $\{a_i : i \in I\}\subseteq A$ is called a \emph{complete set of representatives} if the equivalence classes are $[a_i], i \in I$ with no repetitions.
+
+  You find such a subset by choosing from every equiv class one element.Considering our examples:
+  \begin{itemize}
+    \item For \cref{example:equiv1}, $S_n = X_1 \sqcup \dots X_n$, $X_i = \{\sigma : \sigma(1) = i\}$. We define \[\sigma_i (j) = \begin{cases}
+      i & j = 1\\
+      1 & j = i\\
+      j & \text{otherwise} 
+    \end{cases} = [\sigma_i]\] (switch $i,j$ and leave all others intact). $\{\sigma_1, \dots, \sigma_n\}$ are a complete set of representatives.
+    \item For \cref{example:equiv2} (even/odd in $\mathbb{Z}$), a complete set of reps could be $\{0,1\}$, ie $\mathbb{Z} = [0] \sqcup [1]$.
+\end{itemize}
+\end{definition}
+
+
+
+
+
+
+
+
+
+
+
 
 \subsection{Number Systems}
 \begin{definition}[Complex Numbers]
