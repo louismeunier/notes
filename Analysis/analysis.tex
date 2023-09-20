@@ -636,7 +636,7 @@ In the proof, we used the claim:
 \begin{proof}[Proof]
 
   \begin{itemize}
-    We show both uniqueness, existence:
+    We show both uniqueness, existence:\footnotemark
     \item Uniqueness: if $\alpha^2 = 2$ and $\beta^2 = 2$, $\alpha \geq 0, \beta \geq 0$, then $0= \alpha^2 - \beta^2 = (\alpha - \beta)(\alpha + \beta) > 0$, and so $\alpha - \beta = 0 \implies \alpha = \beta$.
     \item Existence: consider the set $A = \{x \in \mathbb{R} : x \geq 0 \text{ and } x^2 < 2\}$. $A$ is not empty as $1 \in A$. The set of $A$ is bounded above by 2, since if $x \geq 2$, then $x^2 \geq 4 > 2$, so $x \notin A$. So, by AC, $\sup A$ exists; let $\alpha = \sup A$. We will show that $\alpha^2 = 2$, by showing that both $\alpha^2 < 2$ and $\alpha^2 > 2$ are contradictions.
     
@@ -656,6 +656,8 @@ In the proof, we used the claim:
     Thus, $\alpha^2 = 2$.
   \end{itemize}
 \end{proof}
+
+\footnotetext{Proof sketch: uniqueness is clear. Existence follows from showing that $\alpha^2$ cannot be either $<$ or $> 2$. This is done by contradiction, taking some number slightly larger/smaller than $\alpha$ for the $</>$ resp., then showing that this number cannot be greater/less than $\alpha$. In the $<$ case, we show that $\alpha + \frac{1}{n_0}$ for a particular $n_0$ must be in $A$, and so $\alpha$ cannot be $\sup A$ and thus a contradiction is reached. For the $>$ case, we need slightly different logic (really, more algebra), and get to another contradiction, this time by showing that $\alpha - \frac{1}{n_0}$ is an upper bound for $A$ by our assumption, contradicting.}
 
 \begin{remark}
   A similar argument gives that for any $x \in \mathbb{R}$, $x \geq 0$, $\exists! \alpha \in \mathbb{R}$, $\alpha \geq 0$ such that $\alpha^2 = x$. This $x$ is called the \emph{square root} of $x$, denoted $\alpha = \sqrt{x}$.
