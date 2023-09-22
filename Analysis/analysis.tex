@@ -672,6 +672,114 @@ In the proof, we used the claim:
 \end{remark}
 
 
+\subsection{Cardinality}
+
+\begin{definition}
+  Let $f: A \to B$.
+  \begin{enumerate}
+    \item $f$ injective (one-to-one) if $a_1 \neq a_2 \implies f(a_1) \neq f(a_2)$
+    \item $f$ surjective (onto) if for any $b \in B \exists a \in A $ s.t. $f(a) = b$.
+    \item $f$ bijective if both.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Composition]
+  If $f: A \to B, g: B \to C$, the \emph{composite map} $h = g \circ f$ is define by $h(x) = g(f(x))$. Note that $h: A \to C$.
+\end{definition}
+
+\begin{example}
+  Consider functions $f,g$.
+  \begin{enumerate}
+    \item If $f, g$ injective, so is $h = g \circ f$
+    \item If $f, g$ bijective, then so is $h$
+    \item If $\exists E \subseteq C$, then $h^{-1}(E)= f^{-1}(g^{-1}(E))$
+  \end{enumerate}  
+\end{example}
+
+\begin{definition}
+  The inverse function\footnotemark is defined only for bijective map $f: A \to B$. $y \in B$, $f^{-1}(y) = x$ where $x \in A$ s.t. $f(x) = y$.
+\end{definition}
+
+\footnotetext{Not the same as the inverse \textit{image} of a set by a function, which is defined for any function.}
+
+\begin{example}
+  \begin{enumerate}
+    \item $A = \mathbb{R}, B = (0, \infty),f(x) = e^x$. $f$ is a bijection, and $f^{-1}(y) = \ln y, y \in (0, \infty).$
+    \item $A = (-\frac{\pi}{2}, \frac{\pi}{2}, B = \mathbb{R})$. $f(x) = \tan x$, $f^{-1}(y) = \arctan y$
+  \end{enumerate}
+\end{example}
+
+\begin{definition}[Equal Cardinalities]
+  Let $A,B$ be two sets. We say $A, B$ have the same cardinality, denote $A \sim B$ if there exists a function $f: A \to B$.
+\end{definition}
+
+\begin{example}
+  Let $E = \{2, 4, 6, \dots\}$ (even natural numbers). Define $f : \mathbb{N} \to E$ by $f(n) = 2n$. Thus, $f$ is a bijection, and $\mathbb{N} \sim E$.\footnotemark
+\end{example}
+
+\footnotetext{See \href{https://notes.louismeunier.net/Algebra/algebra.pdf}{these independent notes} for more.}
+
+\begin{theorem}
+  The relation $\sim$ is a relation of equivalence.
+  \begin{enumerate}
+    \item $A \sim A$
+    \item if $A \sim B$, then $B \sim A$
+    \item if $A \sim B$ and $B \sim C$, then $A \sim C$
+  \end{enumerate}
+\end{theorem}
+
+\begin{definition}[Countable]
+  A set $A$ is \emph{countable} if $\mathbb{N} \sim A$.
+\end{definition}
+
+\begin{remark}
+  According to this, finite sets are not countable; this is just a convention. Sometimes, we say a set is countable if it is finite \textit{or} to above definition holds, where we say that a set is \emph{countably infinite} if it is infinite and countable.
+
+  Other times, finite sets are treated separately than countable sets.
+\end{remark}
+
+\begin{theorem}
+  Suppose that $A \subseteq B$.
+  \begin{enumerate}
+    \item If $B$ is finite or countable, then so is $A$
+    \item If $A$ is infinite and uncountable, then so is $B$
+  \end{enumerate}
+\end{theorem}
+
+\begin{definition}[Cartesian Product]
+  If $A, B$ sets, $A \times B = \{(a,b) :a,b \in A,B\}$.
+\end{definition}
+
+\begin{proposition}
+  $\mathbb{N}\times \mathbb{N} \sim \mathbb{N}$; there exists a bijection $f: \mathbb{N} \times \mathbb{N} \to \mathbb{N}$.
+\end{proposition}
+
+\begin{theorem}
+  Let $A$ be a set. The following are equivalent statements:
+  \begin{enumerate}[label=(\roman*)]
+    \item $A$ is finite or a countable set;
+    \item there exists a surjection from $\mathbb{N}$ onto $A$;
+    \item there exists a injection from $A$ into $\mathbb{N}$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof]
+  \begin{itemize}
+    \item  (a)$ \implies$ (b): Suppose $A$ is finite and has $\mathbb{N}$ elements. Then there exists a bijection $h :\{1,2,\dots n\} \to A$. We now define a map $f: \mathbb{N} \to A$, by setting $$f(m) = \begin{cases}
+      h(m) & \text{if } m \leq n\\
+      h(n) & \text{if } m > n
+    \end{cases}.$$
+    $f$ is surjective, and thus (b) holds.
+    If (a) countable, $\exists$ bijection $f : \mathbb{N} \to A$, and any bijection is a surjection, so (b) also holds.
+  \end{itemize}
+\end{proof}
+
+
+
+
+
+
+
 \newpage
 \section{Appendix}
 \subsection{Tutorials}
@@ -755,5 +863,13 @@ In the proof, we used the claim:
     \end{align*}
   \end{proof}
 \end{enumerate}
+
+\subsection{Important}
+\begin{figure*}[!ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{cardinal.png}
+  \caption{Important!}
+  \label{fig:important}
+\end{figure*}
 
 \end{document}

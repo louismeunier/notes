@@ -702,12 +702,22 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 
 
 \subsection{Number Systems}
+\subsubsection{Complex Numbers}
 \begin{definition}[Complex Numbers]
   $\mathbb{C} = \{a + bi : a, b \in \mathbb{R}\}$. Equivalently, we can consider complex numbers as the points $(a,b) \in \mathbb{R}^2$.\footnotemark
 
   Given some $z = a + bi$, we can write $\re{z} = a, \im{z} =b$.
 \end{definition}
 \footnotetext{We can define the function $f: \mathbb{C} \to \mathbb{R}^2, f(a+bi) = (a,b)$, a bijection.}
+
+\begin{definition}[Algebra on Complex Numbers]
+  Given $z_i = x_i + y_i i$, we define:
+  \begin{itemize}
+    \item \emph{Addition}: $z_1 + z_2 = (x_1+ x_2) + (y_1 + y_2)i$. This is associative and commutative.
+    \item \emph{Multiplication}: $z_1 z_2 = (x_1x_2-y_1y_2)+(x_1y_2+x_2y_1)i$
+    \item \emph{Inverse}: $z \neq 0$, $\frac{1}{z} := \frac{\overline{z}}{|z|^2}$, noting that $z\cdot\frac{1}{z} = z\cdot\frac{\overline{z}}{|z|^2} = 1$
+  \end{itemize}
+\end{definition}
 
 \begin{definition}[Complex Conjugate]
   Given $z = a + bi$, the \emph{complex conjugate} of $z$ is $\overline{z} = a - bi$.
@@ -730,6 +740,45 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 \end{lemma}
 
 \footnotetext{(a), (b), and (c) are simply algebraic rearrangements of two complex numbers. (d.i) and (d.iii) follow from similar arguments, and finally (ii) is the triangle inequality restated in terms of complex numbers.}
+
+\begin{theorem}[Fundamental Theorem of Algebra]
+  Any polynomial $a_n x^n + \cdots + a_1 x + a_0$ for $a_i \in \mathbb{C}, n > 0, a_n \neq 0$, has a root in $\mathbb{C}$.
+\end{theorem}
+
+\begin{example}[Roots of Unity]
+  Let $n\geq 1, n \in \mathbb{Z}$. $x^n = 1$ has $n$ solutions in $\mathbb{C}$, called the roots of unity of order $n$. They are given as $(1, \frac{2\pi k}{n}), k = 0, 1,2, \dots, n-1$ in polar notation.
+\end{example}
+
+\begin{theorem}
+  Let $f(x) = a_n x^n + \cdots + a_1 x + a_0$ be a complex polynomial of degree $n$. Then, there are complex numbers $z_1, \dots. z_n$ s.t. \[f(x) = a_n \prod_{i=1}^n (x-z_i)\] each $z_i$ is a root of $f$, and any root of $f$ is one of the $z_i$'s.
+\end{theorem}
+
+\begin{proof}[Proof]
+  % TODO
+\end{proof}
+
+\begin{definition}[Complex Exponential]
+  The complex exponential, $e^z = 1 + \frac{z}{1} + \frac{z^2}{2!} + \dots$ can be Taylor expanded and we have that \[e^{i \theta} = \cos \theta + i \sin \theta.\]
+\end{definition}
+
+\begin{example}
+  If $z = e^{x+yi} = e^x \cdot e^{yi} = e^x (\cos y + i \sin y)$, then $z = (e^x, y)$ in polars.
+
+  We can apply this idea to prove some trigonometric formulas. Consider $e^{2i \theta}$; \begin{align*}
+      e^{2i \theta} &= (\cos \theta + i \sin \theta)^2 = \underbrace{\cos^2 \theta - \sin^2 \theta}_{\text{Re}} + \underbrace{2 \sin \theta \cos \theta }_{\text{Im}}i\\
+      e^{2i \theta} &= \underbrace{\cos(2 \theta)}_{\text{Re}} + i \underbrace{\sin (2 \theta)}_{\text{Im}}\\
+      &\implies \cos(2 \theta) = \cos^2 \theta - \sin^2 \theta\\
+      &\implies \sin(2 \theta) = 2 \sin \theta \cos \theta
+    \end{align*}
+\end{example}
+
+
+
+
+
+
+
+
 
 \section{Appendix}
 % \cantorbern*
