@@ -750,17 +750,21 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 \end{example}
 
 \begin{theorem}
-  Let $f(x) = a_n x^n + \cdots + a_1 x + a_0$ be a complex polynomial of degree $n$. Then, there are complex numbers $z_1, \dots. z_n$ s.t. \[f(x) = a_n \prod_{i=1}^n (x-z_i)\] each (1) $f(z_j) = 0 \forall j=1,\dots,n$, and (2) $f(\lambda) = 0 \implies \lambda = z_j$ for some $j$.
+  Let $f(x) = a_n x^n + \cdots + a_1 x + a_0$ be a complex polynomial of degree $n$. Then, there are complex numbers $z_1, \dots. z_n$ s.t. \[f(x) = a_n \prod_{i=1}^n (x-z_i) \qquad{(i)}\] each (ii) $f(z_j) = 0 \forall j=1,\dots,n$, and (iii) $f(\lambda) = 0 \implies \lambda = z_j$ for some $j$.\footnotemark
 \end{theorem}
+
+\footnotetext{
+Proof sketch: we prove by induction. First, we prove the base case of polynomials of $\deg = 1$, then we assume it holds for $\deg \leq n$. We then prove a separate lemma (also by induction) that allows us to rewrite our polynomial as the product of some $(x - \lambda)$ factor, another polynomial, and some residual. We then rewrite our original polynomial as the product of some linear term and another polynomial, plus some residual, then show that this residual is 0, and thus show that our polynomial of degree $n+1$ is simply the product of some linear term and a polynomial of degree $n$, the inductive assumption, and thus the general statement is true.
+
+The "sub"-claims follow naturally.
+}
 
 \begin{proof}[Proof (by induction)]
   If $n=1$, $f(x) = a_1 x + a_0 = a_1 \left(x - \frac{-a_0}{a_1}\right) = a_1 (x-z_1).$ Clearly, $f(z_1) = 0$.
   
-  If $0 = f(\lambda) = a_1(\lambda - z_1)$
+  % If $0 = f(\lambda) = a_1(\lambda - z_1)$
 
-  \textbf{NB:} we claim that $s_1, s_2 \in \mathbb{C}$ and $s_1\cdot s_2 = 0$, either $s_1=0$ or $s_2 = 0$. We have that $|s_1|\cdot|s_2| = |s_1\cdot s_2| = 0$, but $|s_1|, |s_2|$ real, so $|s_1|=|s_2| = 0$. Say $|s_1| = 0$; we can say $s_1 = x+y i$, then $|s_1|^2 = 0 =x^2 + y^2 \implies x = y = 0$.\footnotemark
-
-  Assume that true for polynomials of degree $n > 0$ and prove for $n+1$; let $f$ be a polynomial of degree $n+1$, $f(x) = a_{n+1} + x^{n+1} + \cdots$. Let $z_{n+1}$ be a roof of $f: f(z_{n+1}) = 0$. Such exists by the Fund'l Thm. We introduce the following lemma:
+  Assume that true for polynomials of degree $\leq n$ and prove for $n+1$; let $f$ be a polynomial of degree $n+1$, $f(x) = a_{n+1} + x^{n+1} + \cdots$. Let $z_{n+1}$ be a roof of $f: f(z_{n+1}) = 0$. Such exists by the Fund'l Thm. We introduce the following lemma:
   \begin{lemma}
     Let $g$ be a polynomial with complex coefficients. Let $\lambda \in \mathbb{C}$; then we can write $g(x) = (x-\lambda)h(x) + r, r \in \mathbb{C}, h$ a polynomial with complex coefficients as well.
   \end{lemma}
@@ -769,6 +773,8 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 
     Assume this is true for degrees $\leq n$,and that $g$ has degree $\leq n + 1$. $$g(x) = (x - \lambda)a_{n+1}x^n + b(x),$$ where $b(x) = g(x) - (x-\lambda)a_{n+1}x^n = a_n' x^n + a_{n-1}' x^{n-1} + \cdots,$ for some $a_n', \dots, a_0' \in \mathbb{C}$. We can apply induction to $b(x)$ (that has $\deg \leq n$); $b(x) = (x-\lambda)h_1(x)+r,$ so $$g(x) = (x-\lambda)\underbrace{(a_{n+1}x^n+h_1(x))}_{h(x)}+r,$$ as desired.
   \end{proof}
+
+  % we claim that $s_1, s_2 \in \mathbb{C}$ and $s_1\cdot s_2 = 0$, either $s_1=0$ or $s_2 = 0$. We have that $|s_1|\cdot|s_2| = |s_1\cdot s_2| = 0$, but $|s_1|, |s_2|$ real, so $|s_1|=|s_2| = 0$. Say $|s_1| = 0$; we can say $s_1 = x+y i$, then $|s_1|^2 = 0 =x^2 + y^2 \implies x = y = 0$.
 
   Now, we write our $f(x)$ as \[f(x) = (x-z_{n+1})h(x) + r, \] using the lemma. Then, \begin{align*}
     0 &= f(z_{n+1}) = (z_{n+1}-z_{n+1})h(z_{n+1}) + r\\
@@ -781,20 +787,21 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
   By induction, 
   \begin{align*}
     h(x) &= \underbrace{a_{n+1}}_{\text{lead coef of } h} \cdot \prod_{i=1}^{n}(x-z_i)\\
-    &\implies f(x) = a_{n+1} \prod_{i=1}^{n+1} (x-z_i) \quad \textit{ first "statement"}
+    &\implies f(x) = a_{n+1} \prod_{i=1}^{n+1} (x-z_i) \qquad (i)\text{ holds}
   \end{align*}
 
   Further:
 
   \begin{itemize}
-    \item (1): $f(z_j) = a_{n+1} \prod_{i=1}^{n+1} (z_j - z_i) = 0$ when $i =j$.
+    \item (ii): $f(z_j) = a_{n+1} \prod_{i=1}^{n+1} (z_j - z_i) = 0$ when $i =j$.
 
-    \item (2): if $f(\lambda) = 0$, then $a_{n+1} \prod_{i=1}^{n+1}(\lambda - z_i) = 0$. But oif a product of two complex numbers is 0, then one of them is 0. $a_{n+1} \neq 0$, so some $\lambda - z_i = 0$, ie $\lambda = z_i$ for some $i$.
+    \item (iii): if $f(\lambda) = 0$, then $a_{n+1} \prod_{i=1}^{n+1}(\lambda - z_i) = 0$. But if a product of two complex numbers is 0, then one of them is 0. $a_{n+1} \neq 0$, so some $\lambda - z_i = 0$, ie $\lambda = z_i$ for some $i$\footnotemark
   \end{itemize}
 \end{proof}
 
-\footnotetext{The same logic can be extended to any number of complex $z_i$'s; let $z_1 z_2 z_3 = 0 \implies z_1(z_2 z_3)$. As we showed, one of $z_1, (z_2z_3)$ are zero. If $z_1 \neq 0$, then $z_2z_3 = 0$. But then, one of $z_2, z_3$ must be zero, etc..}
-
+\footnotetext{
+This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ for $s_1, s_2 \in \mathbb{C}$. This is fairly straightforward to prove, and can be extended to any number of complex numbers, ie $\prod_{i=1}^n s_i = 0 \iff \text{ some } s_i = 0$
+}
 \begin{definition}[Complex Exponential]
   The complex exponential, $e^z = 1 + \frac{z}{1} + \frac{z^2}{2!} + \dots$ can be Taylor expanded and we have that \[e^{i \theta} = \cos \theta + i \sin \theta.\]
 \end{definition}
