@@ -835,20 +835,60 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
     \item (0) $\exists$ a zero element, 0, s.t. $0 + a = a + 0 = a, \forall a \in R$.
     \item (negative) $\forall a \in R, \exists b \in R$ s.t $a+b = 0$.
     \item ($\cdot$ associative) $a(bc) = (ab)c, \forall a,b,c \in R$.
-    \item (1) $\exists 1 \in R$ s.t. $1 \cdot a = a \cdot 1 = a, \forall a \in R$.
+    \item (1, multiplicative identity) $\exists 1 \in R$ s.t. $1 \cdot a = a \cdot 1 = a, \forall a \in R$.
     \item (distributive) $\forall a,b,c \in R$, $a(b+c) = ab + ac$
   \end{enumerate}
-
-  \begin{remark}
-    We de note require multiplication to be commutative, nor inverses for multiplication.
-  \end{remark}
-
-
 
   $\mathbb{Z}, \mathbb{Q}, \mathbb{R}, \mathbb{C}, \mathbb{R}[i] := \{a + b_i: a,b \in \mathbb{Z}\}, M_2(\mathbb{Z}) := \{\begin{matrix}
   a & b\\
   c & d
   \end{matrix} : a,b,c,d \in \mathbb{Z}\}, \dots$ are all examples of rings.
+
+\end{definition}
+
+
+\begin{remark}
+  We de note require multiplication to be commutative; if it is, we call $R$ a \textbf{commutative ring} (eg $M_2(\mathbb{Z}), M_2(\mathbb{R})$ are not commutative).
+
+  We also do not require inverse for multiplication (eg $2$ doesn't have an inverse in $\mathbb{Z}$).
+\end{remark}
+
+\begin{definition}[Field]
+  A \emph{commutative}, non-zero, ring $R$  s.t. $\forall x \in R$ and $x \neq 0$ ($\iff 1 \neq 0 $ in $R$, ie $R$ is not a zero ring), $\exists y \in R$ s.t. $xy=yx=1$ is a \emph{field}.
+
+  Fields include $\mathbb{Q}, \mathbb{R}, \mathbb{C}, \mathbb{Q}[i]$
+\end{definition}
+
+\begin{definition}[Zero Ring]
+  $\{0\}$ with $0 + 0 = 0, 0 \cdot 0 = 0$, where $1 = 0$ (identity element is 0). 
+\end{definition}
+
+\begin{example}
+  Show that $\mathbb{Q}[i]$ is a field.
+
+  If $x \in \mathbb{Q}[i], x = a + b i \neq 0$ then \[\frac{1}{a+bi} = \frac{a-bi}{(a+bi)(a-bi)} = \underbrace{\frac{a}{a^2+b^2}}_{\in \mathbb{Q}} - \underbrace{\frac{b}{a^2+b^2}}_{\in \mathbb{Q}}i \in \mathbb{Q}[i],\] and thus $\mathbb{Q}[i]$ has multiplicative inverses in $\mathbb{Q}[i]$.
+\end{example}
+
+\begin{corollary}
+  Note the following consequences of the above axioms:
+  \begin{enumerate}
+    \item $0$ is unique; if $x \in R$ has the property that $x + a = a+x = a \forall a \in R$, then $x = 0$.
+    \item $1$ is unique; if $x \in R$ has the property that $x\cdot a = a \cdot x = a \forall a \in R$, then $x = 1$.
+    \item The element $b$ s.t. $a+b = b+a = 0$ is uniquely determined by $a$; if $x \in R$ and $x + a = a+x = 0$, then $x = b$. We denote such $b$ as $-a$, ie \[-a + a = a+(-a) = a-a = 0.\]
+    \item $-(-a)=a$.
+    \item $-(x+y)=-x-y$.
+    \item $x\cdot 0 = 0 \cdot x = 0 \forall x \in R$.
+   \end{enumerate}
+\end{corollary}
+
+\begin{definition}[Subring]
+  Let $R$ be a ring. A subset $S \subseteq R$ is a \emph{subring} if \begin{enumerate}
+    \item $0,1 \in S$.
+    \item $x,y \in S \implies x + y, -x, x \cdot y \in S$.
+  \end{enumerate}
+  Then $S$ is a ring itself.
+
+  $\mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$ are subrings; $\mathbb{Z} \subseteq \mathbb{Z}[i] \subseteq \mathbb{Q}[i] \subseteq \mathbb{C}$ are subrings; $M_2 (\mathbb{Z}) \subseteq M_2(\mathbb{R})$ are subrings.
 \end{definition}
 
 
@@ -856,6 +896,13 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
 
 
 
+
+
+
+
+
+
+\newpage
 \section{Appendix}
 % \cantorbern*
 % \begin{proof}
