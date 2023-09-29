@@ -20,6 +20,7 @@
 \usepackage{cleveref}
 \usepackage[]{csquotes}
 \usepackage{xcolor-solarized}
+\usepackage{shortcuts}
 % \usepackage[createShortEnv]{proof-at-the-end}
 
 \renewcommand*{\proofname}{}
@@ -790,7 +791,7 @@ In the proof, we used the claim:
 
   Since each $A_n$ finite or countable, by (a) $\implies$ (b), there exists a surjection $$\varphi_n: \mathbb{N} \to A_n.$$ Now, let $h: \mathbb{N} \times \mathbb{N} \to A,$ (the union) by setting \[h(n,m) = \varphi_n(m).\] We aim to show that $h$ is also surjective.\\ If $a \in \bigcup_{n=1}^\infty A_n$, then $a \in A_n$ for some $n \in \mathbb{N}$. Since $\varphi_n : \mathbb{N} \to A_n$ is a surjection, there exists an $m \in \mathbb{N}$ s.t. $\varphi_n(m) = a$. By definition of $h$, we have \[h(n,m) = a,\] and thus $h$ is a surjection.
 
-  By \cref{prop:basicfactII}, there exists a bijection $f: \mathbb{N} \times \mathbb{N} \to \mathbb{N}$, and we can define the composite map \[h \circ f : \mathbb{N} \to A\,(= \cup_{n=1}^\infty A_n),\] which is a surjection as both $h,f$ are surjections. So, there exists a surhjection from $\mathbb{N} \to A$, and by \cref{prop:equivcountable}, (b) $\implies$ (a), and thus $A = \bigcup_{n=1}^\infty A_n$ is also finite our countable.
+  By \cref{prop:basicfactII}, there exists a bijection $f: \mathbb{N} \times \mathbb{N} \to \mathbb{N}$, and we can define the composite map \[h \circ f : \mathbb{N} \to A\,(= \cup_{n=1}^\infty A_n),\] which is a surjection as both $h,f$ are surjections. So, there exists a surjection from $\mathbb{N} \to A$, and by \cref{prop:equivcountable}, (b) $\implies$ (a), and thus $A = \bigcup_{n=1}^\infty A_n$ is also finite our countable.
 
 \end{proof}
 
@@ -812,7 +813,7 @@ In the proof, we used the claim:
   We prove that $A_2$ countable in essentially the same way.\\
   Then, $A_0 \cup A_1 \cup A_2$ is also countable, as it is the union of countable sets, and thus $\mathbb{Q}$ is also countable.
 \end{proof}
-
+\newpage
 \begin{theorem}
   The set $\mathbb{R}$ of real numbers is uncountable.\footnotemark
 \end{theorem}
@@ -838,32 +839,113 @@ In the proof, we used the claim:
 \end{proof}
 
 \begin{proposition}
-  Any bounded non-empty open interval $(a,b) \in \mathbb{R}$ is uncountable.
+  The set $(-1,1) \subseteq \mathbb{R}$ is uncountable.
 \end{proposition}
 
 \begin{proof}[Proof]
-  We will construct a bijection $f: (a,b) \to \mathbb{R}$ so that $(a,b) \sim \mathbb{R}$. Since $\mathbb{R}$ is  uncountable, so must $(a,b)$. 
+  We can write $\mathbb{R} = \bigcup_{n=1}^\infty (-n,n)$. If each $(-n,n)$ is countable, then $\mathbb{R}$ would also be countable, as a countable union of countable sets. Thus, there must exist some $n_0 \in \mathbb{N} \text{ s.t. } (-n_0, n_0)$ is not countable. The map\[f: (-n_0, n_0) \to (-1,1), f(x) = \frac{x}{n_0}\] is a bijection, and so $(-1,1)$ is uncountable.
+\end{proof}
+
+\begin{example}
+  Show that the map \[f(x) = \frac{x}{1-x^2}\] is a bijection between $(-1,1)$ and $\mathbb{R}$ ie $(-1,1) \sim \mathbb{R}$.
+\end{example}
+
+\begin{proof}[Proof]
   % TODO
 \end{proof}
 
 
 
+\begin{proposition}
+  Any bounded non-empty open interval $(a,b) \in \mathbb{R}$ is uncountable.
+\end{proposition}
+
+\begin{proof}[Proof]
+  We will construct a bijection $f: (a,b) \to \mathbb{R}$ so that $(a,b) \sim \mathbb{R}$. Since $\mathbb{R}$ is  uncountable, so must $(a,b)$. 
+  
+  The map \[f(x)=\frac{2(x-a)}{b-a} - 1\] is a bijection between $(a,b)$ and $(-1,1)$, and we have shown that $(-1,1) \sim \mathbb{R}$, so $(a,b) \sim \mathbb{R}$, and thus any open interval has the same cardinality as $\mathbb{R}$.
+\end{proof}
+
+\begin{example}
+  Prove that $\exists$ bijection between $[0,1)$ and $(0,1)$, and conclude that $[0,1) \sim (0,1) \sim \mathbb{R}$. Then conclude for any $a < b$, $[a,b) \sim \mathbb{R}$.
+\end{example}
+
+\begin{proof}[Proof]
+  % TODO
+\end{proof}
+
+\subsubsection{Power Sets}
+\begin{definition}[Power Set]
+  Let $A$ be a set. The \emph{power set} of $A$m denoted $\mathcal{P}(A)$ is the collection of all subsets of $A$.
+
+  Generally, if $A$ finite of size $n$, $\mathcal{P}(A)$ has $2^n$ elements.
+\end{definition}
+
+\begin{theorem}[Cantor Power Set Theorem]
+  Let $A$ be any set. Then there exists no surjection from $A$ onto $\mathcal{P}(A)$. 
+\end{theorem}
+
+\begin{proof}[Proof]
+  Suppose that there exists a surjection, \[f: A \to \pset{A}.\] Let $D \subseteq A$ defined as \[D = \{a \in A: a \notin f(a)\}.\] Since $D \subseteq \pset{A}$, and $f$ is surjective, there must exist some $a_0 \in A \st f(a_0) = D$.\\
+  We have two cases:
+  \begin{enumerate}
+    \item $a_0 \in D.$ But then, by definition of $D$, $a_0 \notin f(a_0) = D$, so $a_0 \in D$ is not possible as it implies $a_0 \notin D$.
+    \item $a_0 \notin D.$ But then, since $D = f(a_0)$, $a_0 \notin f(a_0)$, and so by definition of $D$, $a_0 \in D$, which is again not possible.
+  \end{enumerate}
+  So, the assumption of a surjection existing has led to $a_0 \in A$ such that neither $a_0 \in D$ nor $a_0 \notin D$, which is impossible. Thus there can be no surjective $f$.\\
+  Notice, though, that there exists an injection $A \to \pset{A}, a \mapsto \{a\}$, and thus there is an injection but no bijection.\\
+  Thus, we can say that $\pset{A}$ is strictly bigger than $A$.\\
+\end{proof}
 
 
+\section{Sequences}
 
+\begin{definition}
+  Let $A$ be a set. An $A$-valued sequence indexed by $\mathbb{R}$ is a map \[x: \mathbb{N} \to A.\] The value $x(n)$ is called the $n$-th element of the sequence. One writes $x(n) = x_n$, or lists its elements \[\{x_1, x_2, x_3, \dots\} \equiv \{x_n\}_{n \in \mathbb{N}} \equiv (x_n)_{n \in \mathbb{N}} \equiv \{x_n\}.\]
+\end{definition}
 
+\begin{definition}[Convergence]
+  We say that a sequence $(x_n)$ converges to a real number $x$ if for every $\epsilon > 0$, $\exists N \in \mathbb{N} \st$ for all $n \geq N$ we have \[|x_n - x| < \epsilon.\] If sequence $(x_n)$ converges to $x$, we write $\lim_{n \to \infty} x_n = x$.
+\end{definition}
 
+\begin{example}
+  Let $(x_n)$ be a sequence defined by $x_n = \frac{1}{n}, n \in \mathbb{N}$, then $\lim_{n \to \infty} x_n = 0$.
+\end{example}
 
+\begin{proof}[Proof]
+  Let $\epsilon > 0$. Let $N \in \mathbb{N} \st N > \frac{1}{\epsilon}$. Then for $n \geq N$, we have that $$0 < \frac{1}{n}\leq \frac{1}{N} < \epsilon.$$ So, for $n \geq N, |x_n - 0| < \epsilon$, and so the limit is $0$.
+\end{proof}
 
+\begin{definition}[Limit Redefinition]
+  The limit can be written in terms of quantifiers.
+  \[\lim_{n \to \infty} x_n = x\] means that \[(\forall \epsilon > 0)(\exists N \in \mathbb{N})(\forall n \geq N)(|x_n - x| < \epsilon).\]
+\end{definition}
 
+% TODO: add "strategy"
+\begin{definition}
+  Prove that $$\lim_{n\to \infty} \frac{n^2+1}{n^2} = 1.$$
+\end{definition}
+\begin{proof}[Proof]
+  Let $\epsilon > 0$. Let $N$ be a natural number such that $N > \frac{1}{\sqrt{\epsilon}}$. Then, for $n \geq N$,
+  \begin{align*}
+    |\frac{n^2+1}{n^2}-1| = |\frac{n^2+1-n^2}{n^2}| = \frac{1}{n^2} \leq \frac{1}{N^2} < \epsilon.
+  \end{align*}
+\end{proof}
 
+\begin{definition}[Divergent Sequences]
+  If a sequence $(x_n)$ does not converge to any real number $x$, we say that the sequence is divergent. For instance, consider \[x_n = (-1)^n, n \geq 1.\] The sequence alternates between $1$ and $-1$ and so intuitively does not converge. How do we prove it?
+\end{definition}
 
+\begin{proof}[Proof]
+  By contradiction; suppose that $x_n  = (-1)^n$ be a converging sequence. Let $x = \lim_{n\to \infty}x_n$. Take $\epsilon = 1$, then $\exists N \in \mathbb{N} \st$ for all $n \geq N$ we have that $|x-x_n| < \epsilon = 1$.\\
+  Consider indices $n = N, n = N+1$. We have \[|x_{N+1} - x_N| = |x_{n+1} - x + x - x_N| \leq \underbrace{|x_{N+1} -x| + |x - x_N|}_{\text{triangle inequality}} < 1 + 1 = 2.\] But we also have that $$|(-1)^{N+1}-(-1)^N| = |(-1)^{N+1}+(-1)^{N+1}| = 2,$$ We thus have that $2 < 2$, which is a contradiction. Thus, $x_n$ is not convergent.
+\end{proof}
 
-
-
-
-
-
+\subsection{Properties of Limits}
+  
+\begin{theorem}
+  A limit of a sequence is unique. In other words, if the sequence is converging, then its limit is unique. The sequence cannot converge to two distance numbers $x$ and $y$.
+\end{theorem}
 
 
 
