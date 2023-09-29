@@ -43,7 +43,7 @@
 \declaretheorem[
   % thmbox=S,
   name=Definition,
-  refname={Definition, definition}, numberwithin=subsection,
+  refname={Definition, definition}, numberwithin=section,
   shaded={rulecolor=solarized-blue, rulewidth=2pt}
 ]{definition}
 
@@ -51,7 +51,7 @@
   % thmbox=S,
   name=Axiom,
   refname={Axiom, axiom},
-  numberwithin=subsection,
+  numberwithin=section,
   shaded={rulecolor=solarized-orange, rulewidth=2pt}
 ]{axiom}
 
@@ -59,7 +59,7 @@
   % thmbox=S,
   name=Lemma,
   refname={Lemma, lemma},
-  numberwithin=subsection,
+  numberwithin=section,
   shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{lemma}
 
@@ -67,7 +67,7 @@
   % thmbox=S,
   name=Corollary,
   refname={Corollary, corollary},
-  numberwithin=subsection,
+  numberwithin=section,
   shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{corollary}
 
@@ -75,14 +75,14 @@
   % thmbox=S,
   name=Remark,
   refname={Remark, remark},
-  numberwithin=subsection
+  numberwithin=section
 ]{remark}
 
 \declaretheorem[
   % thmbox=S,
   name=Theorem,
   refname={Theorem, theorem},
-  numberwithin=subsection,
+  numberwithin=section,
   shaded={rulecolor=solarized-red, rulewidth=2pt}
 ]{theorem}
 
@@ -90,7 +90,7 @@
   % thmbox=M,
   name=Example,
   refname={Example, example},
-  numberwithin=subsection,
+  numberwithin=section,
   shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{example}
 
@@ -98,7 +98,7 @@
   % thmbox=S,
   name=Proposition,
   refname={Proposition, proposition},
-  numberwithin=subsection,
+  numberwithin=section,
   shaded={rulecolor=solarized-magenta, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{proposition}
 
@@ -110,6 +110,10 @@
     \footrule
     \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
 }
+
+% make \part title smaller and inline
+\titleformat{\part}[display]
+{\normalfont\Large\bfseries}{\,}{0pt}{\thepart . \Large}
 
 % title page settings
 \newcommand{\pageauthor}{Louis Meunier}
@@ -154,12 +158,20 @@
 \newgeometry{margin=0.25in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in, includemp}
 \parskip=0.6em
 
-\section{Fundamentals}
-\subsection{Sets}
-\subsubsection{Definition}
+\part{Fundamentals}
+
+% quotation
+\begin{displayquote}
+  "It is intuitively obvious." - Anonymous
+\end{displayquote}
+\begin{displayquote}
+  "Trivial" - Anonymous
+\end{displayquote}
+\section{Sets}
+\subsection{Definition}
 A \textbf{set} can be considered as a collection of elements; more intuitively, you can consider something a set if you can determine whether a given object belongs to it. Typically sets are defined as $A = \{1, 2, \dots\}$, by a property $A = \{x \,|\, x\%2 = 0\}$, or with an appropriate verbal description.
 
-\subsubsection{Set operations}
+\subsection{Set operations}
 There are a number of ways to "combine" sets:
 
 \begin{itemize}
@@ -181,7 +193,7 @@ There are a number of ways to "combine" sets:
   Since LHS $\subseteq$ RHS and RHS $\subseteq$ LHS, LHS = RHS.
 \end{proof}
 
-\subsubsection{Indexed sets}
+\subsection{Indexed sets}
 
 Let $I$ be a set. If for every $i \in I$, we have a set $B_i$, we say that we have a \textit{collection} of sets $B_i$ indexed by $I$. We write $\{B_i : i \in I\}$.
 
@@ -197,7 +209,7 @@ Let $I$ be a set. If for every $i \in I$, we have a set $B_i$, we say that we ha
   Let $I = \mathbb{R}$, and $B_i = [i, \infty] = \{r \in \mathbb{R} : r \geq i\}$. Then, $\bigcup_{i \in \mathbb{R}} B_i = \mathbb{R}$ and $\bigcap_{i \in \mathbb{R}} B_i = \emptyset$.
 \end{example}
 
-\subsubsection{Cartesian product}
+\subsection{Cartesian product}
 
 Let $A_1, A_2, \dots, A_n$ be sets. We define the \textbf{Cartesian product} \[A_1 \times A_2 \times \cdots \times A_n = \{(x_1, x_2, \dots, x_n) : x_i \in A_i, \text{ for } 1 \leq i \leq n\}.\] For instance, \[A \times B = \{(a, b) : a \in A, b \in B\}.\]
 
@@ -215,11 +227,11 @@ We can also define Cartesian products over an index set. Let $I$ be an index set
   We can say that a particular vector $(b_0, b_1, \dots) \in Y$ if for each $b_i$, $b_i \geq i$ (and $b_i \in \mathbb{N}$, of course). In other words, a particular item of the vector must be greater than or equal to its index. Thus, we can say \[(0, 1, 2, 3, \dots) \in Y\] while \[(2,2,2, 2, \dots) \notin Y\] since $a_3 = 2 \implies i = 3$, and $2 \ngeq 3$.
 \end{example}
 
-\subsection{Methods of Proof}
-\subsubsection{Proving equality via two inequalities}
+\section{Methods of Proof}
+\subsection{Proving equality via two inequalities}
 In short, say $x, y \in \mathbb{R}$. $x = y \iff x \leq y \text{ and } y \leq x$. Similarly, in the context of sets, we can say that, for two sets $X, Y$, $X = Y \iff X \subseteq Y \text{ and } Y \subseteq X$.
 
-\subsubsection{Contradiction (bwoc)}
+\subsection{Contradiction (bwoc)}
 
 Given a statement $P$, we can prove $P$ true by assuming $P$ false ($\equiv \neg P$), then arriving to a contradiction (this contradiction is often a violated axiom or basic rule of the system at hand.)
 \begin{example}
@@ -236,7 +248,7 @@ Show that there are no solutions to $x^2 - y^2 = 1$ in the positive integers.
 
 \footnotetext{$\mathbb{Z}_+$ is used to denote positive integers; similarly, $\mathbb{Z}_-$ denotes negative integers.}
 
-\subsubsection{Proving the contrapositive}
+\subsection{Proving the contrapositive}
 Logically, $A \implies B \iff \neg B \implies \neg A$\footnote{"I am hungry therefore I will eat" $\iff$ "I will \textit{not} eat therefore I am \textit{not} hungry." Notice too that $B$ need not imply $A$ ("I will eat therefore I am hungry"). If $A \implies B \iff B \implies A$, $A \equiv B$}.
 
 \begin{example}
@@ -246,7 +258,7 @@ Logically, $A \implies B \iff \neg B \implies \neg A$\footnote{"I am hungry ther
   \end{proof}
 \end{example}
 
-\subsubsection{Induction}
+\subsection{Induction}
 
 \begin{axiom}[Well-Ordering Principle]
   Every $S \subseteq \mathbb{N}$, where $S \neq \emptyset$, has a minimal element, ie $\exists a \in S \text{ s.t. } \forall b \in S, a \leq b$.
@@ -266,7 +278,7 @@ Logically, $A \implies B \iff \neg B \implies \neg A$\footnote{"I am hungry ther
  Assume not.\footnote{note that (a) and (b) of the Principle of Induction are still taken to be true; it is simply the conclusion that is assumed to be false. } Then, we define $S = \{n \in \mathbb{N} : n \geq n_0, P_n \text{ false}\}$. By the Well-Ordering Principle, there exists a minimal element $a \in S$. By definition, $a \geq n_0$, and as $P_{n_0}$ is taken to be true, then $a > n_0$ since $n_0 \notin S$. Thus, $a-1 \notin S$, as $a$ is the minimal element of $S$, and therefore $P_{a-1}$ is true. However, by (b), this implies $P_{a}$ is also true, and thus $a \notin P$, contradicting our initial assumption.
 \end{proof}
 
-\subsubsection{Pigeonhole principle}
+\subsection{Pigeonhole principle}
 \begin{axiom}
   If there are more pigeons than pigeonholes, then at least one pigeonhole must contain more than one pigeon.\footnotemark
 \end{axiom}
@@ -285,8 +297,9 @@ Logically, $A \implies B \iff \neg B \implies \neg A$\footnote{"I am hungry ther
   \end{proof}
 \end{example}
 
-\subsection{Functions}
+\section{Functions}
 
+\subsection{Types of Functions}
 \begin{definition}[Function]
   Given 2 sets $A, B$, a \emph{function} $f: A \to B$ is a rule such that $\forall a \in A, \exists! f(a) \in B$, where $\exists!$ denotes "there exists a unique".
   
@@ -316,6 +329,7 @@ Logically, $A \implies B \iff \neg B \implies \neg A$\footnote{"I am hungry ther
 The fibre of some $y \in Y$ is $f^{-1}({y}) = f^{-1}(y)$
 \end{definition}
 
+\subsection{Cardinality}
 \begin{definition}[Cardinality]
   The \emph{cardinality} of a set $A$, denoted $|A|$, is the number of elements in $A$, if $A$ is finite, or a more abstract notion of size if $A$ is infinite.
 \end{definition}
@@ -411,13 +425,6 @@ and
   Define $f: \mathbb{N} \to A$, $f(n) = n^2$. This is clearly injective \footnote{Notice that $f$ is only injective if we restrict the domain to $\mathbb{N}$; if we were to consider $\mathbb{Z}$, for instance, $f(-1) = f(1) = 1$.}, and thus $|A| \leq |\mathbb{N}|$.
 \end{proof}
 
-\begin{proposition}
-  $B = \{p \in \mathbb{N} : p \text{ prime}\}$ is infinite ($|B|=|\mathbb{N}|$).
-\end{proposition}
-\begin{proof}[Proof (Euclid)]
-  Let $f: \mathbb{N} \to B$, $f(n) = \text{the } n\text{th prime}$. This is clearly bijective, and is an example of \text{enumerating} a set. 
-\end{proof}
-
 \begin{definition}[Countable/enumerable]
   A set $A$ is \emph{countable} if $|A| = |\mathbb{N}|$, or $A$ is finite. 
   
@@ -502,8 +509,8 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 \end{align*}
 \end{definition}
 
-\subsection{Relations}
-
+\section{Relations}
+\subsection{Definitions}
 \begin{definition}[Relation]
   A \emph{relation} on a set $A$ is a subset $S \subseteq A \times A (= \{(x,y) : x, y \in A\})$.
 
@@ -541,7 +548,7 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 
   This includes 1), 2), 3), 4), and 5) above.
 \end{definition}
-
+\subsection{Orders, Equivalence Relations and Classes, Partitions}
 \begin{definition}[Partial Order]
   A \emph{partial order} on a set $A$ is a relation $x \sim y$ s.t.
   \begin{enumerate}
@@ -691,18 +698,8 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 \end{definition}
 
 
-
-
-
-
-
-
-
-
-
-
-\subsection{Number Systems}
-\subsubsection{Complex Numbers}
+\section{Number Systems}
+\subsection{Complex Numbers}
 \begin{definition}[Complex Numbers]
   $\mathbb{C} = \{a + bi : a, b \in \mathbb{R}\}$. Equivalently, we can consider complex numbers as the points $(a,b) \in \mathbb{R}^2$.\footnotemark
 
@@ -740,7 +737,7 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 \end{lemma}
 
 \footnotetext{(a), (b), and (c) are simply algebraic rearrangements of two complex numbers. (d.i) and (d.iii) follow from similar arguments, and finally (ii) is the triangle inequality restated in terms of complex numbers.}
-
+\subsection{Fundamental Theorem of Algebra, Etc}
 \begin{theorem}[Fundamental Theorem of Algebra]
   Any polynomial $a_n x^n + \cdots + a_1 x + a_0$ for $a_i \in \mathbb{C}, n > 0, a_n \neq 0$, has a root in $\mathbb{C}$.
 \end{theorem}
@@ -748,7 +745,7 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
 \begin{example}[Roots of Unity]
   Let $n\geq 1, n \in \mathbb{Z}$. $x^n = 1$ has $n$ solutions in $\mathbb{C}$, called the roots of unity of order $n$. They are given as $(1, \frac{2\pi k}{n}), k = 0, 1,2, \dots, n-1$ in polar notation.
 \end{example}
-
+\newpage
 \begin{theorem}
   Let $f(x) = a_n x^n + \cdots + a_1 x + a_0$ be a complex polynomial of degree $n$. Then, there are complex numbers $z_1, \dots. z_n$ s.t. \[f(x) = a_n \prod_{i=1}^n (x-z_i) \qquad{(i)}\] each (ii) $f(z_j) = 0 \forall j=1,\dots,n$, and (iii) $f(\lambda) = 0 \implies \lambda = z_j$ for some $j$.\footnotemark
 \end{theorem}
@@ -819,7 +816,9 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
 
 
 
-\subsection{Rings}
+\section{Rings}
+
+\subsection{Definitions}
 
 \begin{definition}[Ring]
   A ring R is a set with two operations
@@ -891,6 +890,120 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
   $\mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$ are subrings; $\mathbb{Z} \subseteq \mathbb{Z}[i] \subseteq \mathbb{Q}[i] \subseteq \mathbb{C}$ are subrings; $M_2 (\mathbb{Z}) \subseteq M_2(\mathbb{R})$ are subrings.
 \end{definition}
 
+\newpage
+\part{Arithmetic in the Integers}
+\begin{displayquote}
+Math $\equiv$ Poetry 
+\end{displayquote}
+
+\section{Division}
+\subsection{With Residue}
+\begin{theorem}
+  Let $a,b \in \mathbb{Z}$ with $b\neq 0$. There exist unique integers $q$ (quotient) and $r$ s.t.\[a = q \cdot b + r, 0 \leq r < |b|.\]
+\end{theorem}
+
+\begin{proof}[Proof]
+  Assume $b>0$ (similar proof applies for $b < 0$). Consider the set $S = \{a - bx: x\in \mathbb{Z}, a - bx \geq 0\}.$ Note that $S \neq \varnothing$. If $a \geq 0$, take $x = 0$. If $a < 0$, take $x = a$ to get $a-bx=a-ba=a(1-b) \geq 0$.\\
+  Thus, $S$ has a minimal element; let $r = \min(S)$. Because $r \in S, r \geq 0$, and \[r = a-ba \text{ some } q \in \mathbb{Z} \implies a= bq - r.\] Here, we claim $r < b$. If $r \geq b$, then $0 \leq r - b = a - b(q+1) \in S$, contradicting the minimality of $r$. Thus, $0 \leq r < b$.\\
+  We wish to show that $q, r$ are unique, meaning that if $a = bq' + r', q' \in \mathbb{Z}, 0 \leq r < b \implies q = q', r=r'$.\\
+  If $q = q'$, then $r = a -b q = a - bq' = r' \checkmark$.\\
+  Otherwise, wlog, say $q > q'$. We then have \begin{align*}
+    0 &= a - a = (bq +r) - (bq' + r')\\
+    &= b(q-q') + (r-r')\\
+    &\implies r' = r + b(q-q') \geq b,\,\bot (0 \leq r' < |b|)\\
+  \end{align*}
+\end{proof}
+
+\subsection{Without Residue}
+
+\begin{definition}
+  Let $a,b \in \mathbb{Z}$. We say $a$ divides $b$, $a|b$ if $b = a \cdot c,$ some $c \in \mathbb{Z}$ (If $a \neq 0$, this is the case $\iff$ the residue of dividing $b$ by $a$ is 0).
+\end{definition}
+
+\begin{lemma}
+  \begin{enumerate}
+    \item $0$ is divisible by any integer $a$
+    \item $0$ only divides $0$
+    \item $a|b \implies a|(-b)$
+    \item $a|b$ and $a|d \implies a|(b\pm d)$
+    \item $a|b \implies a|bd \forall d$
+    \item $a|b$ and $b|a \implies a =\pm b$
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}[Proof]
+  \begin{enumerate}
+    \item $0 = a\cdot 0 \forall a \checkmark$
+    \item $0 | b,$ then $b = 0 \cdot c$ some $c \implies b = 0\quad \checkmark$
+    \item $b = ac \implies -b = a \cdot (-c) \quad\checkmark$
+    \item $b = a\cdot c_1$, $d = a \cdot c_2$. $b \pm d = a(c_1 \pm c_2) \in \mathbb{Z} \quad\checkmark$
+    \item $b = ac$, so $bd = a \cdot (cd) \quad\checkmark$
+    \item $a | b \implies b = a \cdot c, b |a \implies a = b \cdot d$. If either $a = 0$ or $b = 0$, both are $0$, so $a = \pm b$. Assume $a \neq 0, b \neq 0$. Then, we have that $a = bd = acd \overset{a \neq 0}{\implies} cd = 1$. Either, $c = d = 1 \implies a = b$, or $c = d = -1 \implies a = -b$ \quad \checkmark
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+  Which integers could divide both $n$ and $n^3 + n + 1$?\\
+  Suppose $d$ does. then $d | n$ and $d | (n^3 + n + 1)$, then $d | n^3 \implies d |(n^3 + n) \implies d | ((n^3 + n + 1) - (n^3 +n))$, and so $d|1$ so $d = \pm 1$.
+\end{example}
+
+
+\subsection{Greatest Common Divisor (gcd)}
+
+\begin{definition}[GCD]
+  Let $a,b$ be integers, not both $0$.  The $\gcd$ of $a,b$ denoted $\gcd(a,b)$ is the greatest positive number divided both $a$ and $b$.
+\end{definition}
+
+\begin{remark}
+  Note that if both $a,b$ are not $0$, then $d = \gcd(a,b) \leq \min\{|a|,|b|\}$ because if $d | a$ then $a = d \cdot c \implies |a| = |d| \cdot |c| \implies |d| = d \leq |a|$.\\
+  Similarly, $|d| \leq |b|$.
+\end{remark}
+
+\begin{theorem}
+  Let $a,b \in \mathbb{Z}$, not both $0$. Let $d = \gcd (a,b)$. Then,
+  \begin{enumerate}
+    \item $\exists u,v \in \mathbb{Z} \st d = ua + vb$
+    \item $d$ is the minimal positive integer of the form $ua + vb$
+    \item every common divisor of $a,b$ divides $d$
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof]
+  Let $S = \{ma + nb : m,n \in \mathbb{Z}, ma + nb > 0\}$. $S \neq \varnothing$ because $a\cdot a + b \cdot b = a^2 +b^2 > 0$, so $a^2 + b^2 \in S$.\\
+  Let $D = \min(S)$, so $d = ua + vb, u,v \in \mathbb{Z}$. We claim that this $D$ equals $d = \gcd(a,b)$.\\ We claim first that $D | a$. We can write \begin{align*}
+    a &= D \cdot q + r, 0 \leq r < D,\\
+    r &= a - Dq = a - (ua + vb)q\\
+    &= a(1-uq) + b(-vq)\\
+    &\implies r > 0 \implies r \in S, \bot
+  \end{align*}
+  Thus, $D$ divides both $a$ and $b$.\\
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -903,7 +1016,7 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
 
 
 \newpage
-\section{Appendix}
+% \section{Appendix}
 % \cantorbern*
 % \begin{proof}
 % % TODO
@@ -911,7 +1024,7 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
 
 % \subsection{Homeworks}
 
-% \subsubsection{Quiz 1}
+% \subsection{Quiz 1}
 % % cheating
 % \hspace{1cm}\begin{exercise}
 % If the moon is made of blue cheese then 1 = 2.
