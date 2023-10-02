@@ -943,9 +943,166 @@ In the proof, we used the claim:
 
 \subsection{Properties of Limits}
   
+
+
+\begin{lemma}[Triangle Inequality]
+  For $x,y,z \in \mathbb{R},$
+  \[(i)\quad|x + y|  \leq |x| + |y|; \qquad (ii) \quad|x-y| \leq |x-z| + |z-y|\]
+\end{lemma}
+
+\begin{proof}[Sketch proof]
+  $(i)$:
+  $|x+y| = \begin{cases}
+    x + y & x + y \geq 0\\
+    -(x+y) & x + y \leq 0
+  \end{cases}$.
+  So if $x + y \geq 0$, $|x+y| = x + y \leq |x| + |y|$. \\
+  If $x+y >0, |x+y| = -(x+y) = (-x) + (-y) \leq |x| + |y$.\\\\
+  $(ii)$: $|x-y| = |x-z + z - y| \leq |x-z| + |z-y|$ (using $(i)$).
+\end{proof}
+
+\begin{definition}[Metric Space]
+  A pair $(X,d)$ where $X$ is a set and $d: X \times X \to [0, \infty)$ having the following properties:
+  \begin{enumerate}
+    \item $d(x,y) = 0 \iff x = y$;
+    \item $d(x,y) = d(y,x)$;
+    \item $\forall x,y,z \in X$, the triangle inequality holds;
+    \[d(x,y) \leq d(x,z) + d(z,y)\]
+  \end{enumerate}
+\end{definition}
+
+\begin{example}
+  $X = \mathbb{R}$  , $d(x,y) = |x-y|$. Clearly, 1., 2., 3. all hold.
+\end{example}
+
+
 \begin{theorem}
-  A limit of a sequence is unique. In other words, if the sequence is converging, then its limit is unique. The sequence cannot converge to two distance numbers $x$ and $y$.
+  A limit of a sequence is unique. In other words, if the sequence is converging, then its limit is unique. The sequence cannot converge to two distinct numbers $x$ and $y$.\footnotemark
 \end{theorem}
+
+\footnotetext{
+  Proof sketch: contradiction, assume two distinct limits, and take $\epsilon$ as their midpoint. Arrive at a contradiction by using triangle inequalities to show that $|x-y| < |x-y|$, and thus the limits cannot be distinct.
+}
+\begin{proof}[Proof]
+  By contradiction; suppose $\exists (x_n) \st \lim_{n \to \infty} x_n = x$ and $\lim_{n \to \infty} x_n = y$, and that $x \neq 0$.\\
+  Take $\epsilon = \frac{|x-y|}{2}$. Since $x \neq y$, we have that $\epsilon > 0$. Since $\lim_{n \to \infty} x_n = x$, $\exists N_1 \in \mathbb{N}$ s.t. for $n \geq N_1$, $|x_n - x| < \epsilon$. \\
+  Similarly,  since $\lim x_n = y$, $\exists N_2 \in \mathbb{N}$ s.t for $g \geq N_2, |x_n - y| < \epsilon$. \\
+  Take some $n \geq \max(N_1, N_2)$; then \begin{align*}
+    |x-y| = |x-x_n + x_n - y| &\leq |x-x_n|+|x_n-y|\\
+    &< \epsilon + \epsilon = |x-y|\\
+    &\implies |x-y| < |x-y|, \bot
+  \end{align*}
+\end{proof}
+
+\begin{theorem}\label{thm:convbound}
+  Any converging sequence is bounded.\footnotemark\\In other words, if $(x_n)$ is a converging sequence, $$\exists M > 0 \st |x_n| \leq M \forall n \geq 1.$$
+\end{theorem}
+
+\footnotetext{
+  Take $\epsilon = 1$, which is greater than $|x_n -x |$ by limit definition for $n \geq N$ for some $N$. We then use this to show that $|x_n| < 1 + |x|$, then construct a summation $M$ such that it bounds $|x_n|$; it is equal to $|x_1| + |x_2| + \cdots$ up to $|x_{N-1}|$, then plus $1+|x|$. We have finished.
+}
+
+
+\begin{proof}[Proof]
+  Let $(x_n)$ be a converging sequence, and $x = \lim_{n\to\infty} x_n$. Take $\epsilon = 1$ in the definition of the limit; then, $\exists N \in \mathbb{N} \st \forall n \geq N$, $|x_n - x| < 1$.\\
+  This gives that for $n \geq N$, $|x_n| = |x_n - x + x| \leq |x_n - x| + |x| < 1 + |x|$.\\
+  Let now $M = |x_1| + |x_2| + \cdots + |x_{N-1}| + (1 + |x|)$. Then, for any $n \geq 1$, $|x_n| \leq M$;\\If $n \leq N-1$, then $|x_n|$ is a summand in $M$, and thus $|x_n| \leq M$.\\ If $n \geq N$, then we have by the choice of $N$ that $|x_n| < 1 + |x| \leq M$.\\ Thus, for all $n \geq 1$, $|x_n| \leq M$, and is thus bounded given $(x_n)$ converges.
+\end{proof}
+
+\begin{proposition}[Algebraic Properties of Limits]\label{prop:apl}
+  Let $(x_n), (y_n)$ be sequences such that\footnotemark \[\lim x_n = x, \quad \lim y_n = y.\]
+  Then:
+  \begin{enumerate}
+    \item For any constant $c$, \(\lim c \cdot x_n = c \cdot \lim x_n = c\cdot x\)
+    \item $\lim (x_n + y_n) = \lim x_n + \lim y_n = x+y$
+    \item $\lim x_n \cdot y_n = (\lim x_n)(\lim y_n) = x\cdot y$
+    \item Suppose $y \neq 0$, $y_n \neq 0 \forall n \geq 1$. Then, $\lim \frac{x_n}{y_n} = \frac{\lim x_n}{\lim y_n} = \frac{x}{y}$
+  \end{enumerate}
+\end{proposition}
+
+\footnotetext{Note that while $x, y$ may not exist, some of the other limits may.}
+\begin{remark}
+  Let $X$ be the collection of all sequences of real numbers, $X = \{(x_n): x_n \text{ is a sequence}\}.$ If $(x_n) \in X$ and $c \in \mathbb{R}$, we can define $c \cdot(x_n) = (c\cdot x_n)$\footnotemark; this defines \emph{scalar multiplication} on $X$.\\ We can also define \emph{addition}; if $(x_n)$ and $(y_n)$ are two sequences in $X$, then $(x_n) + (y_n) = (x_n + y_n)$. Then, with these two operations $X$ is a \emph{vector space}.
+\end{remark}
+
+\footnotetext{NB: this denotes $c$ multiplying to each $n$th element in $x_n$, ie $c \cdot x_1$, $c \cdot x_2$, etc}
+
+\begin{example}
+  Take $x_n = (-1)^n, y_n = (-1)^{n+1}$, $n \geq 1$.\\
+  $(x_n) + (y_n) = 0, x_n \cdot y_n = -1$, and so $\lim x_n + y_n = 0, \lim x_n \cdot y_n = -1$, while neither $\lim x_n$ nor $\lim y_n$ exist.
+\end{example}
+
+\begin{proof}[Proof (part 3. of \cref{prop:apl})]
+  Take\footnotemark $\lim x_n = x, \lim y_n = y$. Since $(x_n)$ is converging, it is bound by \cref{thm:convbound}, and there exists $M > 0 \st \forall n \geq 1, |x_n| \leq M$.\\
+  Now, \begin{align*}
+    |x_n y_n - xy| &= |x_n y_n - x_n y + x_n y - xy|\\
+    & \leq |x_n y_n - x_n y| + |x_n y - xy|\\
+    &= |x_n| \cdot |y_n - y| + |y|\cdot |x_n - x|\\
+    &\leq M \cdot |y_n - y| + |y|\cdot |x_n -x| \quad (i)
+  \end{align*}
+  Let $\epsilon > 0$; since $\lim y_n = y$, there exists $N_1 \in \mathbb{N} \st n \geq N_1, |y_n - y| < \frac{\epsilon}{2M}$. Sim, since $\lim x_n = x, \exists N_2 \in \mathbb{N}$ s.t. $|x_n - x|  <\frac{\epsilon}{2(|y|+1)}$\\
+  Let $N = \max (N_1, N_2)$, $n \geq N$. Then, we have, with $(i)$,
+  \begin{align*}
+    (i) \quad |x_n y_n - xy| &\leq M\cdot |y_n - y| + |y| \cdot |x_n| - x\\
+    &< M\cdot \frac{\epsilon}{2M} + |y|\cdot \frac{\epsilon}{2 (|y|+1)}\\
+    &\leq \frac{\epsilon}{2} + \frac{\epsilon}{2}.
+  \end{align*}
+  Thus, for $n \geq N$, $|x_n y_n - xy| < \epsilon$, and by definition of the limit, $\lim x_n y_n = xy$.
+\end{proof}
+\footnotetext{
+Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \epsilon$, by using triangle inequalities to show inequality to a combination of $M$, arbitrarily small values (by def of limits of $x_n, y_n$ resp,), and $|y|$. QED.
+
+}
+
+\begin{theorem}[Order Properties of Limits]
+  Let $(x_n), (y_n)$ be two sequences such that \[\lim x_n = x, \quad \lim y_n = y.\]
+  \begin{enumerate}
+    \item $x_n \geq 0 \forall n \implies x \geq 0$.
+    \item $x_n \geq y_n \forall n \implies x \geq y$.
+    \item $c$ is constant since $c \leq x_n \forall n \geq 1 \implies c \leq x$. $x_n \leq c \forall n \geq 1 \implies x_n \leq c$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+  2., 3. follow from 1. Set $z_n = x_n - y_n \forall n \geq 1$. Then, $z_n \geq 0 \forall b \geq 1$, $\lim z_n = \lim (x_n-y_n) = \lim x_n - \lim y_n$ (as these limits exist) $= x-y$. By 1., $\lim z_n \geq 0$, and so either $x - y \geq 0$ or $x \geq y$.
+\end{remark}
+
+\begin{proof}[Proof of 1.]
+   Suppose 1. does not hold; suppose $\exists (x_n) \st \lim x_n = x$, $x_n \geq 0 \forall \geq,$ but $x <0$.\\
+   Let $\epsilon > 0 \st x < -2 \epsilon < 0$. With this $\epsilon, \lim x_n = x$ gives that $\exists N \in \mathbb N \st \forall n \geq N, |x_n - x| < \epsilon$, or particularly, $x_n - x < \epsilon$.\\
+   Then, $x_n < \epsilon + x$, and since $x < -2 \epsilon$, we have $\forall n \geq N$, $x_n < -\epsilon$, and thus $\forall n \geq N$, $x_n < 0$, a contradiction.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
