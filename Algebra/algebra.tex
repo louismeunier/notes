@@ -12,7 +12,7 @@
 \usepackage{pgfplots}
 \usepackage{listings}
 \usepackage{tabularx}
-\usepackage{titlesec}
+\usepackage{titlesec}[pagestyles]
 \usepackage{thmtools}
 \usepackage{thm-restate}
 \usepackage{xcolor-solarized}
@@ -29,7 +29,7 @@
 % makes theorems, definitions, etc. "restatable" as shown
 % can add more with same format as you wish
 \renewcommand{\footnotesize}{\scriptsize}
-\renewcommand*{\proofname}{}
+% \renewcommand*{\proofname}{}
 \renewcommand*{\qedsymbol}{\(\blacksquare\)}
 % homework answers
 % TODO: uncomment to show answers
@@ -184,7 +184,7 @@ There are a number of ways to "combine" sets:
 \begin{lemma}
   $A = (A\setminus B)\cup(A\cap B)$
 \end{lemma}
-\begin{proof}[Proof]
+\begin{proof}
   To prove set equivalencies, we must prove that both RHS $\subseteq$ LHS and LHS $\subseteq$ RHS; meaning, the LHS and RHS are subsets of each other, and are thus equal.
   
   First, to prove LHS $\subseteq$ RHS, let $a \in A$. If $a \notin B$, then $a \in A\setminus B$, and $a \in$ RHS. Else, if $a \in B$, then $a \in A \cap B$ and $a \in$ RHS. Thus, LHS $\subseteq$ RHS.
@@ -253,7 +253,7 @@ Logically, $A \implies B \iff \neg B \implies \neg A$\footnote{"I am hungry ther
 
 \begin{example}
   Let $X,Y$ be sets. Prove $X = X\setminus Y \implies X \cap Y = \emptyset$.
-  \begin{proof}[Proof]
+  \begin{proof}
     Prove contrapositive: $X \cap Y \neq \emptyset \implies X \neq X \setminus Y$. $X \cap Y \neq \emptyset \implies \exists t \in X \cap Y \implies t \in X \text{ and } t \in Y$, thus $t \notin X\setminus Y$, but $t \in X$, so $X \neq X \setminus Y$.
   \end{proof}
 \end{example}
@@ -286,7 +286,7 @@ Logically, $A \implies B \iff \neg B \implies \neg A$\footnote{"I am hungry ther
 
 \begin{example}
   Consider $n_1, \dots, n_6 \in \mathbb{N}$. There exist at least two of these $n$'s s.t. $n_i - n_j$ is evenly divisible by 5.
-  \begin{proof}[Proof]
+  \begin{proof}
     Let us rewrite each $n_i$ as $n_i = 5k_i + r_i$, where $k_i, r_i \in \mathbb{N}$, $k_i$ is the quotient, and $r_i$ is the residual. $r_i \in \{0, 1, 2, 3, 4\}$ (the only possible remainders when a number is divided by 5), and so there are 5 possible values of $r_i$, but 6 different $n_i$. Thus, two $n_i$ must have the same $r_i$, and we can write: 
     \begin{align*}
       n_i = 5k_i + r; &n_j = 5k_j + r\\
@@ -352,7 +352,7 @@ and
   If $|A| = |B|$ and $|B| = |C|$ then $|A|=|C|$
 \end{proposition}
 
-\begin{proof}[Proof]
+\begin{proof}
   $\exists f: A \to B$ bijective, and $\exists g: B \to C$ bijective. We desire to show that $\exists h : A \to C$ that is bijective. We can write $h = g \circ f$, where $h(a) = g(f(a))$. 
 
   To show that $h$ bijective:
@@ -375,7 +375,7 @@ and
   $|A|\leq |B|$if $ |B| \geq |A|$  
 \end{proposition}
   
-\begin{proof}[Proof]
+\begin{proof}
   If $A = \varnothing$, $|B|\geq |A|$ clearly.
 
   If $A \neq \varnothing$, we are given $\exists f: A \to B$ injective. Let us choose some $a_0 \in A$. We define $g: B \to A$ as \[g(b) = \begin{cases}
@@ -401,14 +401,14 @@ and
 \begin{proposition}
   If $|A_1|=|A_2|$ and $|B_1|=|B_2|$ then $|A_1 \times B_1| = |A_2 \times B_2|$.
 \end{proposition}
-\begin{proof}[Proof]
+\begin{proof}
   The first two statements define bijections $f: A_1 \to A_2$ and $g: B_1 \to B_2$, and we desire to have $f \times g:  A_1 \times B_1 \to A_2 \times B_2$. We define $f\times g(a_1, b_1) := (f(a_1), g(b_1))$. We must show that $f \times g$ is bijective.
   % TODO exercise
 \end{proof}
 
 \begin{example}
   Consider $A$ as the set of all points in the unit circle centered at $(0,0)$ in $\mathbb{R}^2$, and $B$ as the set of all points in the square of side length 2 centered at $(0,0)$ in $\mathbb{R}^2$ (ie, the circle is inscribed in the square). We wish to prove that $|A|=|B|$.
-  \begin{proof}[Proof]
+  \begin{proof}
     Let $f: A \to B$, $f(x) = x$. $f$ is injective, and thus $|A|\leq|B|$. 
     Let $g: A \to B$, $g(x) = \begin{cases}
       0; \sqrt{2}x \notin B\\
@@ -421,7 +421,7 @@ and
   $A = \{0, 1, 4, 9, \dots\}$. $|A| = |\mathbb{N}|$.
 \end{proposition}
 
-\begin{proof}[Proof]
+\begin{proof}
   Define $f: \mathbb{N} \to A$, $f(n) = n^2$. This is clearly injective \footnote{Notice that $f$ is only injective if we restrict the domain to $\mathbb{N}$; if we were to consider $\mathbb{Z}$, for instance, $f(-1) = f(1) = 1$.}, and thus $|A| \leq |\mathbb{N}|$.
 \end{proof}
 
@@ -437,7 +437,7 @@ and
   $|\mathbb{N}|=|\mathbb{Z}|$
 \end{proposition}
 
-\begin{proof}[Proof]
+\begin{proof}
   We aim to find a bijection $f: \mathbb{Z} \to \mathbb{N}$, ie one that maps integers to natural numbers. Consider the function \[f(x) = \begin{cases}
     2x & x \geq 0\\
     -2x-1 & x < 0
@@ -453,20 +453,20 @@ and
 \begin{remark}
   It is possible to construct a bijective $f: \mathbb{N} \times \mathbb{N} \to \mathbb{N}$; see assignment 1. % TODO: update reference
 \end{remark}
-\begin{proof}[Proof]
+\begin{proof}
   Let $f: \mathbb{N} \to \mathbb{N} \times \mathbb{N}, f(n) = (n,0)$, clearly an injection ($\implies |\mathbb{N}| \leq |\mathbb{N} \times \mathbb{N}|$)\footnote{Note that this function is \textit{not} surjective!}. The function $g(m,n) = 2^n 3^m$ is also injective, and thus $|\mathbb{N}| = |\mathbb{N}\times\mathbb{N}|$.
 \end{proof}
 
 \begin{corollary}\label{cor:yummycor}
   $|\mathbb{Z}|=|\mathbb{Z}\times\mathbb{Z}|$
 \end{corollary}
-\begin{proof}[Proof]
+\begin{proof}
   Consider $h: \mathbb{N} \to \mathbb{N}\times\mathbb{N}$, a bijection\footnote{Which must exist by the proof of the previous proposition.}, and $f: \mathbb{N} \to \mathbb{Z}$. Let $g=(f,f): \mathbb{N}\times\mathbb{N}\to\mathbb{Z}\times\mathbb{Z}$. The composition $g \circ h \circ f^{-1}: \mathbb{Z} \to \mathbb{N} \to \mathbb{N}\times \mathbb{N} \to \mathbb{Z} \times \mathbb{Z}$ is also a bijection, and thus $|\mathbb{Z}|=|\mathbb{Z}\times\mathbb{Z}|$.
 \end{proof}
 
 \begin{example}
   Show that $|\mathbb{N}|=|\mathbb{Q}|$.
-  \begin{proof}[Proof]
+  \begin{proof}
     First, we find an injection $\mathbb{Q} \to \mathbb{N}$. Let $f: \mathbb{Q} \to \mathbb{Z} \times \mathbb{Z}, f(n) = (p,q)$ where $\frac{p}{q} = n$ (by definition of $\mathbb{Q}$). Using the same function definitions as in \cref{cor:yummycor}, the composition $h^{-1}\circ g^{-1}\circ f: \mathbb{Q} \to \mathbb{Z}\times \mathbb{Z} \to \mathbb{N}\times\mathbb{N} \to \mathbb{N}$. This is a composition of injections, and is thus an injection itself, and thus $|\mathbb{Q}|\leq|\mathbb{N}|$. The identity function $1:\mathbb{N} \to \mathbb{Q}, 1(n) = n$ is clearly an injection as well as all naturals are rationals, and thus $|\mathbb{N}|\leq|\mathbb{Q}|$. By the Cantor-Bernstein Theorem, $|\mathbb{N}|=|\mathbb{Q}|$.
   \end{proof}
 \end{example}
@@ -902,7 +902,7 @@ Math $\equiv$ Poetry
   Let $a,b \in \mathbb{Z}$ with $b\neq 0$. There exist unique integers $q$ (quotient) and $r$ s.t.\[a = q \cdot b + r, 0 \leq r < |b|.\]
 \end{theorem}
 
-\begin{proof}[Proof]
+\begin{proof}
   Assume $b>0$ (similar proof applies for $b < 0$). Consider the set $S = \{a - bx: x\in \mathbb{Z}, a - bx \geq 0\}.$ Note that $S \neq \varnothing$. If $a \geq 0$, take $x = 0$. If $a < 0$, take $x = a$ to get $a-bx=a-ba=a(1-b) \geq 0$.\\
   Thus, $S$ has a minimal element; let $r = \min(S)$. Because $r \in S, r \geq 0$, and \[r = a-ba \text{ some } q \in \mathbb{Z} \implies a= bq - r.\] Here, we claim $r < b$. If $r \geq b$, then $0 \leq r - b = a - b(q+1) \in S$, contradicting the minimality of $r$. Thus, $0 \leq r < b$.\\
   We wish to show that $q, r$ are unique, meaning that if $a = bq' + r', q' \in \mathbb{Z}, 0 \leq r < b \implies q = q', r=r'$.\\
@@ -931,7 +931,7 @@ Math $\equiv$ Poetry
   \end{enumerate}
 \end{lemma}
 
-\begin{proof}[Proof]
+\begin{proof}
   \begin{enumerate}
     \item $0 = a\cdot 0 \forall a \checkmark$
     \item $0 | b,$ then $b = 0 \cdot c$ some $c \implies b = 0\quad \checkmark$
@@ -968,29 +968,144 @@ Math $\equiv$ Poetry
   \end{enumerate}
 \end{theorem}
 
-\begin{proof}[Proof]
+\begin{proof}
   Let $S = \{ma + nb : m,n \in \mathbb{Z}, ma + nb > 0\}$. $S \neq \varnothing$ because $a\cdot a + b \cdot b = a^2 +b^2 > 0$, so $a^2 + b^2 \in S$.\\
-  Let $D = \min(S)$, so $d = ua + vb, u,v \in \mathbb{Z}$. We claim that this $D$ equals $d = \gcd(a,b)$.\\ We claim first that $D | a$. We can write \begin{align*}
+  Let $D = \min(S)$, so $D = ua + vb, u,v \in \mathbb{Z}$. We claim that this $D$ equals $d = \gcd(a,b)$.\\ We claim first that $D | a$. We can write \begin{align*}
     a &= D \cdot q + r, 0 \leq r < D,\\
     r &= a - Dq = a - (ua + vb)q\\
     &= a(1-uq) + b(-vq)\\
     &\implies r > 0 \implies r \in S, \bot
   \end{align*}
-  Thus, $D$ divides both $a$ and $b$.\\
+  Thus, $D$ divides both $a$ and $b$, and so $D \leq d$ (any common divisor is leq gcd).\\
+  Let $e$ be any common divisor of $a,b$. We have
+  $$e | a \implies e |ua \quad \text{ and } \quad e|b ,\implies e|vb \implies e|(ua+vb)=D.$$ In particular, $d|D \implies d \leq D$. It follows that $D = d$.
+\end{proof}
+
+\begin{example}
+  $\gcd(7611, 592) = 1$. \\
+  One can write $1 = 195 \times 7611 - 2507 \times 592$. How do we know? Mathematica.
+\end{example}
+
+\subsection{Euclidean Algorithm}
+
+\begin{remark}
+  $\gcd(-a,b) = \gcd(a,b) =\gcd(a,-b) = \cdots$
+\end{remark}
+\begin{theorem}
+  Let $a,b$ be positive integers $a\geq b$. \\If $b | a$, then $\gcd(a,b) = b$.\\Else, perform the following:
+  \begin{align*}
+    a &= b \cdot q_0 + r_0, \quad 0 < r_0<b\\
+    b &= r_0\cdot q_1 + r_1, \quad 0 < r_1 < r_0\\
+    r_0 &= r_1 \cdot q_2 + r_2\\
+    \vdots & \qquad \vdots\\
+    r_{t-2} &= r{t-1}\cdot q_t+r_t, \quad 0 < r_t < r_{t-1}\\
+    r_{t-1}&=r_t\cdot q_{t+1} + \underbrace{0}_{r_{t+1}}
+  \end{align*}
+  Because the residues are non-negative decreasing integers, the process must stop; there is a first $t\st r_{t+1}=0$. Then, $\gcd(a,b) = r_t$, the last non-zero residue.
+\end{theorem}
+
+\begin{proof}
+  We first prove by induction that for all $0 \leq i \leq t+1$, $r_t $ divides both $r_{t-i}$ and $r_{t-i-1}$. ($\implies r_t|r_{-1}=b, r_t|r_{-2}=a$.)\\
+  \begin{itemize}
+    \item[(1)] $i =0$, then $r_t | r_t$ and $r_t|r_{t-1}$ (as $r_{t-1} = r_{t}\cdot q_{t+1}$)
+    \item[(2)] Suppose $r_t | r_{t-i}$ and $r_{t} | r_{t-i-1}$ for some $0 \leq i < t+1$. We have that $$r_{t-i-2} = r_{t-i-1} \cdot q_{t-i} + r_{t-i}$$ We then have that $$r_t | (r_{t-i} + r_{t-i-1}q_{t-i}) = r_{t-i-2},$$ so $r_t | \underbrace{r_{t-i-1}}_{r_{t-(i+1)}}$ and $r_t | \underbrace{r_{t-i-2}}_{r_{t-(i+1)-1}}.$ Then, $r_t | \gcd(a,b).$
+  \end{itemize}
+  Next we show that if $e|a$ and $e|b$ then $r|r_t$ ($\implies \gcd(a,b)|r_t$, then we would have $r_t = \gcd(a,b)$). We prove by induction on $0 \leq i \leq t+1$ that $e | r_{i-2}$ and $e | r_{i-1}$.
+  \begin{itemize}
+    \item[(1)] $i = 0$, then $e|r_{-2} = a$ and $e|r_{-1} =b$, base case holds
+    \item[(2)] Suppose $e|r_{i-2}$ and $e|r_{i-1}$ for some $i < t+1$. We have that $$r_{i-2} = r_{i-1}\cdot q_i + r_i, \quad e|(r_{i-2} - r_{i-1}\cdot q_i) = r_i.$$
+    So, $$e|\underbrace{r_i}_{r_{(i+1)-2}} \quad \text{ and } \quad e|\underbrace{r_i}_{r_{(i+1)-1}}$$
+  \end{itemize}
 \end{proof}
 
 
+\begin{example}
+  $a = 48, b = 27, d = \gcd{48,27}=?$
+  \begin{align*}
+    48 &= 27 \cdot 1 + 21\\
+    27 &= 21 \cdot 1 + 6\\
+    21 &= 6 \cdot 3 + 3\\
+    6 &= 3 \cdot 2 + 0\\
+    &\implies\gcd(48,27)=3\\
+    &\implies 3 = 21 - 6 \cdot 3\\
+     &= 21 - (27-21)3 \\
+     &= 21\cdot 4 - 27\cdot 3\\
+     &= (48-27)\cdot 4 - 27\cdot 3\\
+     &= 48 \cdot 4 - 7 \cdot 27
+  \end{align*}
+\end{example}
 
+\subsection{Primes}
 
+\begin{definition}[Prime]
+  An integer $n \neq 0, 1, -1$ is called prime if its only divisors are $\pm 1, \pm n$.\\
+  A positive integer $n$ is prime iff its only positive divisors are $1, n$.
+\end{definition}
 
+\begin{lemma}\label{lemma:primefactorization}
+ Every natural number $n > 1$ is a product of prime numbers.
+\end{lemma}
 
+\begin{proof}
+  We prove by induction.\\
+  Base case; $n = 2$, $2$ is prime, done.\\
+  Suppose it is true for all integers $1 < r \leq n$; we will prove for $n+1$.\footnotemark
+  \begin{itemize}
+    \item If $n+1$ is prime, we are done.
+    \item Else, $n+1$ has a non-trivial factorization, $n + 1 = r \cdot s$, where $1 < r \leq n, 1 < s \leq n$. By induction, there exists primes $p_i, q_i$ such that $r = p_1 \cdots p_a$ and $s = q_1 \cdots q_b$. We can then write $$n + 1 = r \cdot s = p_1 \cdots p_a q_1 \cdots q_b,$$ a product of primes, and so we are done.
+  \end{itemize}
+\end{proof}
+\footnotetext{Complete induction...}
 
+\begin{definition}[Empty Product]
+  1; when we say $n = p_1 \cdots p_a, 0 \leq a$, a product of primes, a = 0, empty product, means $n = 1$.
+\end{definition}
 
+\begin{corollary}
+  Any non-zero integer $n$ is of the form $$\epsilon \cdot p_1 \cdots p_a, \quad \epsilon \in \{\pm 1\}, $$ where $p_i$ are primes numbers, $a geq 0$.
+\end{corollary}
 
+\begin{proof}
+  If $n > 1$, this is the \cref{lemma:primefactorization} where $\epsilon = 1$. If $n < -1$, the by \cref{lemma:primefactorization}, $$-n = p_1 \cdots -p_n$$ so $n = -1 p_1 \cdots p_a = - p_1 \cdots p_a$.
+\end{proof}
 
+\begin{theorem}[Sieve of Eratosthenes]
+  Let $n > 1$ be an integer. If $n$ is not prime, then $n$ is divisible by some prime $1 < p \leq \sqrt{n}$.
+\end{theorem}
 
+\begin{proof}[Sketch Proof]
+  $n = p_1 \cdots p_a$. $n$ not prime, $a \geq 2$. If each $p_i > \sqrt{n}$, then $p_1 p_2 \cdots p_a < \sqrt{n}\cdot \sqrt{n} = n,\bot$
+\end{proof}
+  
+\begin{lemma}
+  Let $p>1$ be an integer. The following are equivalent:
+  \begin{enumerate}
+    \item $p$ is prime
+    \item If $p | ab$, product of two nonzero integers, then $p|a$ or $p|b$.
+  \end{enumerate}
+\end{lemma}
 
+\begin{proof}
+  Assume 2., suppose $p = st \in \mathbb{Z}$. wlog, $s,t > 0$ (else replace $s$ by $-s$, $t$ by $-t$). $p|st$, so by 2., say $p|s$ , wlog. We can write $s = p \times w$, then $p = s\cdot t = p\cdot w \cdot t$, which are all positive integers. It must be that $w = t = 1$, and thus $s = p$. Therefore, $p$ has no non-trivial factorizations and is thus prime.\\
+  Assume now that 1. holds. Given that $p | ab$. If $p|a$, we are done. Suppose $p \cancel{|} a$. Then, $\gcd(p,a) = 1$ (since only divisors of $p$ are 1, $p$, so $\gcd$ could only be $1,  p$, but if $\gcd = p$ then $p|a$ which is not the case). From a property of gcd's, we can write $1 = up + va$ for some $u,v \in \mathbb{Z}$. Multiplying this by $b$, we have $b = upb + vab$.\\
+  We have \begin{align*}
+    p|ab &\implies p |vab\\
+    p|p &\implies p |upb\\
+    &\implies p | (upb + vab) \text{, so } p |b
+  \end{align*}
+\end{proof}
 
+\begin{corollary}
+  Let $p$ be prime. Suppose $p | a_1 a_2 a_3 \cdots a_m$ where $a_i \in \mathbb{Z}, m \geq 1$. Then, $p| a_i$ for some $i$
+\end{corollary}
+
+\begin{proof}
+  By induction; we just showed the case $m = 2$. Suppose it is true for $m \geq 2$ and $p | a_1 a_2 \cdots a_{m+1}$; then, $p | \underbrace{(a_1 a_2\cdots a_m)}_{(i)}\cdot \underbrace{a_{m+1}}_{(ii)}$. Then, either $p | (i)$ or $p| (ii)$, so $p | a_{m+1}$ or $p | a_i, 1 \leq i \leq m$, as required.
+\end{proof}
+
+\begin{theorem}[Fundamental Theorem of Arithmetic]
+  Let $n \in \mathbb{Z}, n \neq 0$. There exists $\epsilon \in \{\pm 1\}$ and prime numbers $p_1, \cdots, p_a, a \geq 0$ such that $n = \epsilon \cdot p_1 \cdots p_a$.
+\end{theorem}
 
 
 

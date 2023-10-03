@@ -882,8 +882,10 @@ In the proof, we used the claim:
 \end{definition}
 
 \begin{theorem}[Cantor Power Set Theorem]
-  Let $A$ be any set. Then there exists no surjection from $A$ onto $\mathcal{P}(A)$. 
+  Let $A$ be any set. Then there exists no surjection from $A$ onto $\mathcal{P}(A)$. \footnotemark
 \end{theorem}
+
+\footnotetext{Certified Classic}
 
 \begin{proof}[Proof]
   Suppose that there exists a surjection, \[f: A \to \pset{A}.\] Let $D \subseteq A$ defined as \[D = \{a \in A: a \notin f(a)\}.\] Since $D \subseteq \pset{A}$, and $f$ is surjective, there must exist some $a_0 \in A \st f(a_0) = D$.\\
@@ -899,7 +901,7 @@ In the proof, we used the claim:
 
 
 \section{Sequences}
-
+\subsection{Definitions}
 \begin{definition}
   Let $A$ be a set. An $A$-valued sequence indexed by $\mathbb{R}$ is a map \[x: \mathbb{N} \to A.\] The value $x(n)$ is called the $n$-th element of the sequence. One writes $x(n) = x_n$, or lists its elements \[\{x_1, x_2, x_3, \dots\} \equiv \{x_n\}_{n \in \mathbb{N}} \equiv (x_n)_{n \in \mathbb{N}} \equiv \{x_n\}.\]
 \end{definition}
@@ -942,13 +944,13 @@ In the proof, we used the claim:
 \end{proof}
 
 \subsection{Properties of Limits}
-  
-
-
 \begin{lemma}[Triangle Inequality]
   For $x,y,z \in \mathbb{R},$
-  \[(i)\quad|x + y|  \leq |x| + |y|; \qquad (ii) \quad|x-y| \leq |x-z| + |z-y|\]
+  \[(i)\quad|x + y|  \leq |x| + |y|; \qquad (ii) \quad|x-y| \leq |x-z| + |z-y|\footnotemark\]
 \end{lemma}
+
+\footnotetext{Generally, proofs involving limits will consist of 1) picking/defining an $\epsilon$ based on given limit/series definitions, and then 2) using triangle inequality/related techniques to reach the desired conclusion.}
+
 
 \begin{proof}[Sketch proof]
   $(i)$:
@@ -1020,14 +1022,15 @@ In the proof, we used the claim:
   \end{enumerate}
 \end{proposition}
 
-\footnotetext{Note that while $x, y$ may not exist, some of the other limits may.}
+\footnotetext{Note that the contrary of these statements need not hold; ie, if $\lim (x_n \cdot y_n)$ exists, this does not imply the existence of $\lim x_n$ and $\lim y_n$. Consider \cref{example:counterlimitalgebra}}
+\newpage
 \begin{remark}
   Let $X$ be the collection of all sequences of real numbers, $X = \{(x_n): x_n \text{ is a sequence}\}.$ If $(x_n) \in X$ and $c \in \mathbb{R}$, we can define $c \cdot(x_n) = (c\cdot x_n)$\footnotemark; this defines \emph{scalar multiplication} on $X$.\\ We can also define \emph{addition}; if $(x_n)$ and $(y_n)$ are two sequences in $X$, then $(x_n) + (y_n) = (x_n + y_n)$. Then, with these two operations $X$ is a \emph{vector space}.
 \end{remark}
 
 \footnotetext{NB: this denotes $c$ multiplying to each $n$th element in $x_n$, ie $c \cdot x_1$, $c \cdot x_2$, etc}
 
-\begin{example}
+\begin{example}\label{example:counterlimitalgebra}
   Take $x_n = (-1)^n, y_n = (-1)^{n+1}$, $n \geq 1$.\\
   $(x_n) + (y_n) = 0, x_n \cdot y_n = -1$, and so $\lim x_n + y_n = 0, \lim x_n \cdot y_n = -1$, while neither $\lim x_n$ nor $\lim y_n$ exist.
 \end{example}
@@ -1050,9 +1053,7 @@ In the proof, we used the claim:
   Thus, for $n \geq N$, $|x_n y_n - xy| < \epsilon$, and by definition of the limit, $\lim x_n y_n = xy$.
 \end{proof}
 \footnotetext{
-Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \epsilon$, by using triangle inequalities to show inequality to a combination of $M$, arbitrarily small values (by def of limits of $x_n, y_n$ resp,), and $|y|$. QED.
-
-}
+Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \epsilon$, by using triangle inequalities to show inequality to a combination of $M$, arbitrarily small values (by def of limits of $x_n, y_n$ resp,), and $|y|$.}
 
 \begin{theorem}[Order Properties of Limits]
   Let $(x_n), (y_n)$ be two sequences such that \[\lim x_n = x, \quad \lim y_n = y.\]
