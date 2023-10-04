@@ -26,6 +26,7 @@
 % \usepackage{cleveref}
 \usepackage[]{csquotes}
 \usepackage{hyperref}
+\usepackage{mdframed}
 
 \usepackage[createShortEnv]{proof-at-the-end}
 
@@ -35,41 +36,41 @@
 
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Definition,
   refname={Definition, definition}, numberwithin=section
 ]{definition}
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Axiom,
   refname={Axiom, axiom},
   numberwithin=section
 ]{axiom}
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Lemma,
   refname={Lemma, lemma},
   numberwithin=section
 ]{lemma}
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Corollary,
   refname={Corollary, corollary},
   numberwithin=section
 ]{corollary}
 
 \declaretheorem[
-  name=Exercise, 
+  % name=Exercise, 
   refname={Exercise, exercise},
-  numberwithin=section,
-  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+  numberwithin=section
+  % shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{exercise}
 
 \declaretheorem[
-  thmbox=S,
+  % thmbox=S,
   name=Theorem,
   refname={Theorem, theorem},
   numberwithin=section
@@ -79,8 +80,8 @@
   % thmbox=M,
   name=Example,
   refname={Example, example},
-  numberwithin=section,
-  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+  numberwithin=section
+  % shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{example}
 
 \newEndThm[no proof here, restate, text proof={Examples}, one big link={\emph{See more}}]{definitionEnd}{definition}
@@ -127,7 +128,14 @@
     \end{tabularx}\\
     \rule[2ex]{0.8\textwidth}{1pt}
 \end{center}
-
+\begin{mdframed}[backgroundcolor=gray!20]
+  \centering
+  \underline{Course Summary:} 
+  
+  \textit{
+  Covers classical mechanic topics including applying Newton's Laws, the Work-Energy Theorem, conservation of momentum, oscillations, frames of reference, centres of mass, orbits, Kepler's Laws, Lagrangian mechanics. Large Calculus focus, representing situations functionally with differential equations, graphical analysis of trends.}
+\end{mdframed}
+  
 \setstretch{1.5}
 \tableofcontents
 
@@ -143,10 +151,11 @@
 % kind of messy but what can you do
 \newpage
 % modify these as you wish
-\newgeometry{margin=0.5in, top=0.4in, bottom=0.75in}
+\newgeometry{margin=0.4in, top=0.4in, bottom=0.5in}
 \parskip=0.5em
 
 \section{Introduction \& Notations}
+\textit{Content in this section provides a brief overview of the course, as well as basic problem solving, vector algebra, etc. It is safe to skip without loss of continuity.}
 \subsection{Vectors}
 This course deals mainly with \textit{scalars} (magnitude) and \textit{vectors} (magnitude and direction). We define algebra on vectors, briefly:
 \begin{itemize}
@@ -311,4 +320,329 @@ Say we have a particle with an initial velocity $v_0$ launched at an angle $\the
 In the $x$, we have $m \ddot{x} = 0$, $x(t) = v_0 \cos \theta t$. From here, we can rewrite $x(t)$ as $t$ as a function of $x$ and substitute into $y$ for a function $y = f(x)$. This gives \[
 y = \frac{v_0 \sin \theta x}{v_0 \cos \theta} - \frac{g}{2} \frac{x^2}{v_0^2 \cos^2 \theta} (= ax - bx^2)  
 \]
+
+\subsection{Forces}
+
+We (generally) have:
+\begin{itemize}
+  \item 2 "protons" @ 1 fermi (fm = $10^{-15} m$)
+  \item Nuclear strong, $2 \times 10^3 N$
+  \item E-M, $2 \times 10^2 N$
+  \item Weak force, $2 \times 10^{-11} N$
+  \item Gravity, $2 \times 10^{-34} N$
+\end{itemize}
+We have the force between two point masses, $m_a$, $m_b$, at a distance $r_{ab}$:
+\[\vec{F} = \frac{- G m_a m_b}{r^2_{ab}},\] noting that the negative sign $\implies$ gravity \textit{attractive}, and where the gravitational constant $G = 6.67 \times 10^{-11} \frac{\text{N} \cdot \text{m}^2}{\text{kg}^2}$.
+
+We consider some "extended object", a spherical shell of mass $M$ a distance $r$ (center) from a "smaller" object $m$. We can subdivide this shell into infinitesimal pieces, then sum (integrate) their respective forces using the formula above to find the total force.
+
+Say the distance between a particular "subsection" of the sphere is $s$ from $m$, and the change in angle in the shell section we have $\dv{\theta}$, with $\theta$ the angle from the shell section to $r$, and $\varphi$ is the angle between $s$ and $r$.
+
+We have \begin{align*}
+  F &= \frac{-G m \text{d}M}{s^2} \cdot \cos \varphi.\\
+  \dots
+\end{align*}
+
+\section{Statics}
+We have \textbf{static} motion when the net external force is $0$. Clearly, then,
+\[\sum F_\text{ext} = m \cancel{\vec{a}} = 0 \iff \vec{a} = 0.\]
+
+When analyzing a system we thus need to balance:
+\begin{itemize}
+  \item \textbf{Forces,} include
+  \begin{itemize}
+    \item Tension;
+    \item Normal ($\perp$ to surface, N3);
+    \item Friction (opposing direction of motion; $F_k = \mu_k N, F_s \leq \mu_s N$, kinetic vs static frictions resp.);
+    \item Gravity ($F_g = \frac{GM m}{R^2} \implies F_g = mg$, on earth);
+    \item Spring (\textit{Hooke's Law}, $\vec{F_s} = -k \vec{r}$ )
+  \end{itemize}
+  \item \textbf{Torques,} $\vec{\tau} = \vec{r} \cross \vec{F}.$ When dealing with rotational motion, sums of torques must be 0 as well to conserve stasis.
+\end{itemize}
+
+\begin{example}
+  Consider a ladder of length $l$ and mass $m$ leaning against a frictionless wall with another end on a floor with coefficient of friction $\mu$. Assuming the center of gravity is at the geometric center of the ladder ($\frac{l}{2}$), we can analyze the system as follows.\\
+  Take $N_1, N_2$ to represent the normal forces on the ladder from the floor and the wall resp, and $F_f$ as the friction force of the floor. We summarize the forces in the $[x]$ and $[y]$, and the torques:
+  \begin{align*}
+    [y]&\quad 0 = N_1 - mg \implies N_1 = mg \quad \textbf{(1)}\\
+    [x]&\quad 0 = N_2 - F_f \implies N_2 = F_f \quad \textbf{(2)}\\
+    [\tau] &\quad 0 = \vec{F} \cross \vec{r} \overset{\text{1D}}{=} F \cdot r = \underbrace{mg \cdot \frac{l}{2} \cdot \cos \theta}_{\text{rotation about c.o.m.}} - \underbrace{N_2 \cdot l \sin \theta}_{\text{about "floor point"}} \implies N_2 = \frac{mg}{2 \tan \theta} \quad \textbf{(3)}
+  \end{align*}
+  From \textbf{(1),(2),(3)}, we can find that the angle required for the ladder to not slip (ie, net forces and net torques sum to zero; will not slip nor rotate and fall), we require that \[\tan \theta \geq \frac{1}{2\mu}.\]
+\end{example}
+
+\section{Non-Zero Forces}
+
+
+\subsection{Trends of Common Forces}
+% TODO: with plots
+% TODO: forces on a big sphere.
+% TODO: conical pendiulum
+% TODO friction
+
+\subsection{Generalizing Forces as Functions}
+
+Consider the general form of Newton's Second Law: \[\vec{F} = m \vec{a}.\]
+This $\vec{F}$ can take a number of forms, depending on its dependence on different variables. Consider;
+\begin{itemize}
+  \item \textbf{Time}: $F(t) = m \dv[2]{x}{t} = m \dv{v}{t}$. This is separable ODE:
+  \begin{align*}
+    \int \dd{v} = v(t) &= \int \dd{t} \frac{F(t)}{m}\\
+    \implies x(t) &= \int \dd{t} v = \iint \dd{t} \frac{F(t)}{m}
+  \end{align*}
+  \item \textbf{Position}: $F(x) = m \dv{v}{t}$. We can rewrite our acceleration by the chain rule as $\dv{v}{t} = \dv{v}{x}\cdot \dv{x}{t} = \dv{v}{x}v$ (NB: this "trick" is very helpful in evaluating physical ODE problems such as this, where the reliance on a particular function of time is unknown, but can be obtained  from physical properties...). We can then write:
+  \begin{align*}
+    m \dv{v}{x}v &= F(x)\\
+    m \int \dd{v} v &= \int F(x) \dd{x}\\
+    \eval{\frac{1}{2}mv^2}_{D} &= \int_{D} \dd{x} F(x) \qquad \textit{NB: Work-Energy Thm}
+  \end{align*}
+  \item \textbf{Velocity}: $m \dv{v}{t} = F(v) \implies m \int \dd{v} \frac{1}{F(v)} = \int \dd{t}$; we will see this more later.
+\end{itemize}
+\subsection{Viscous Resistance}
+
+Consider some force that is dependent on velocity, $F(v)$ (friction, air resistance for instance, is often approximately modeled this way). Let's approximate this force function at small velocities by writing its Taylor Series expansion about $v= 0$ (note that higher order terms $O(v^n)$ can be consider negligible assuming $0 \leq v < 1$, a typical approach to this type of small-perturbation analysis):
+$$F(v) = F(0) + v \eval{\pdv{F}{v}}_{v=0} + \frac{v^2}{2!}\cdot \eval{\pdv[2]{F}{v}}_{v=0} + \cdots + O(v^n)$$
+
+Note that $v = 0 \implies a = 0 \implies F(0) = 0$, and thus the first term can be disregarded. Under a further assumption that $v\ll 1$ and remains so, we can eliminate $O(n^2)$ terms, and would be left with \[F(v) = - v \eval{\pdv{F}{v}}_{v=0} = -cv,\] with $c:=\eval{\pdv{F}{v}}_{v=0}$, a constant. This can be rewritten and solved as a simple ODE;
+\begin{align*}
+  F(v) = m \dv{v}{t} &= -cv\\
+  \frac{m}{v} \dd{v} &=-c \dd{t}\\
+  m \ln v &= -ct + k\\
+  v(0) = v0 &\implies k = m \ln v_0\\
+  &\implies v(t) = v_0 e^{-\frac{ct}{m}}\\
+  \tau := \frac{m}{c},\quad& v(t) = v_0 e^{-\frac{t}{\tau}}\\
+  &\implies x(t) = x_0 + v_0 \tau(1-e^{-\frac{t}{\tau}})
+\end{align*}
+% TODO: add plot?
+
+\begin{example}[Air resistance $\propto v$]
+  Consider a sky diver falling, with some initial velocity $v_0$, under the influence of gravity $F_g$ downwards (positive) and air resistance $F_v$ upwards (negative). Assuming that air resistance is proportional and opposing to velocity, we can write $F_v = - cv$ where $c$ a constant. From Newton's Second:
+  \begin{align*}
+    \sum F = ma = m \dv{v}{t} = F_g + F_v &= mg - cv\\
+  \int_{v_0}^v \dd{v^*} \frac{m}{mg - ct} &= \int_0^t \dd{t^*}\\
+  -\frac{m}{c}\ln\left(\frac{mg - cv}{mg - cv_0}\right)  &= t\\
+  v(t) &= g \tau (1-e^{-\frac{t}{\tau}}) + v_0e^{-\frac{t}{\tau}}, \quad \tau := \frac{m}{c}
+  \end{align*}
+  A common follow-up to this analysis is to compute the terminal velocity $v_t$. We will consider two methods to compute it in this situation.\\
+  First, consider the equation we found for $v(t)$. Taking the limit of $t \to \infty$, we have
+  \begin{align*}
+    v_t = \lim_{t \to \infty} v(t) &= \lim_{t \to \infty} \left[g \tau (1 -\cancelto{0}{e^{- \frac{t}{\tau}}}) + \cancelto{0}{v_0 e^{-\frac{t}{\tau}}}\right]\\
+    &= g\tau = \frac{gm}{c}
+  \end{align*}
+  Alteratively, consider our original formula,\[ma = mg - cv.\] Terminal velocity is reached when $a = 0$; more physically, when the forces in opposing directions completely cancel each other. Thus, we can solve for $v$ directly;
+  \[m\cdot 0 = mg - cv \implies mg = c v_t \implies v_t = \frac{gm}{c},\] equivalent to our previous computation.
+\end{example}
+
+\begin{example}[Air resistance $\propto v^2$]
+  Consider the previous example with $F_v = -c v^2$. We can write \[\sum F = m \dv{v}{t} = mg -cv^2 \implies v_t = \sqrt{\frac{mg}{c}}.\] A closed form of the position of the trajectory is possible, but difficult.
+\end{example}
+
+% TODO: move projectile motion, etc here.
+\section{Oscillations}
+ 
+Many natural systems experience \textit{oscillations,} characterized by some type of force that leads to repetitive motion.
+\subsection{Simple Springs}
+
+\textbf{Hooke's Law} states that $F_s = -kx$, where $k$ is a constant spring coefficient (typically $0 < k < 1$), and $x$ is the displacement \text{from equilibrium}. In general, we can write \begin{align*}
+  F_s = m \dv{v}{t} = m \dv{v}{x}v &= - kx\\
+  m\int \dd{v} v &= -k \int \dd{x} x\\
+  m \frac{v^2}{2} &= -k \frac{x^2}{2}\\
+  mv &= -kx \implies v = -\frac{k}{m}x
+\end{align*}
+Often, we write $\omega^2 := \frac{k}{m},$ the phase of the oscillator.\\
+\subsubsection{Series vs Parallel}
+Consider a spring of coefficient $k_1$ connected end-to-end to a spring of $k_2$, and let $x_1$, $x_2$ represent the equilibrium points of the spring system resp (where $x_2 = x_1 + $ equilibrium of spring $k_2$). Consider the springs as massless (or of being of infinitesimal, negligible mass), so the only forces in question are due to the spring force(s).\\
+At the endpoint of spring 1, we have \[F_1 : k_1 x_1 = (x_2 - x_1)k_2 \implies x_2 = \left(\frac{k_1+k_2}{k_2}\right)x_1.\] If we consider a mass on the end point of the system, we can write \begin{align*}
+  F = -k_2 \underbrace{(x_2 - x_1)}_{\text{displacement}} &= - \left(\frac{k_1 k_2}{k_1 +k_2}\right) x_2\\
+  &= - k_{\text{eff}} x_2
+\end{align*}
+Note that $\frac{1}{k_\text{eff}} = \frac{1}{k_1}+\frac{1}{k_2}$; this is the relationship between any number of springs connected in \textbf{series}.
+
+Next, consider two springs of $k_1$, $k_2$ each connecting a mass to a wall. We can write the force on the mass, taking $x$ to represent the displacement of the mass from equilibrium, as\[F = -k_1 x - k_2 x = -(k_1+k_2)x = - k_\text{eff} x,\]
+where $k_\text{eff} = k_1 + k_2$; these springs are in \textbf{parallel}.
+
+(Naturally, all of these analyses are under the assumption of no torsion, no gravity, etc (no other external forces))
+
+\subsection{Simple Harmonic Motion}
+
+Consider again a spring ($k$). From N2, we can write:
+\begin{align*}
+  m \dv[2]{v}{t} = -kx &\implies m \ddot{x} + kx = 0\\
+  &\implies \ddot{x} + \omega_0^2 x = 0
+\end{align*}
+
+This is a (fairly straightforward) second order linear homogenous equation (we will see non-homogenous versions of this later, when we introduce external forcing, etc.). The typical means of solving these is to assume $x(t)$ is of the form $A e^{\alpha t}$, plug in, and solve for the relevant constants (noting that $\alpha \in \mathbb{C}$):
+\begin{align*}
+  (A e^{\alpha t})'' + \omega^2 Ae^{\alpha t} &= 0\\
+  \cancel{A} \alpha^2 \cancel{e^\alpha t} + \omega^2 \cancel{Ae^{\alpha t}} &=0\\
+  &\implies \alpha^2 = -\omega^2\implies \alpha = \pm i \omega, i = \sqrt{-1}
+\end{align*}
+Note that all dependence on time cancelled, as desired, as well as $A$; we are working with a second-order ODE, so we must have two "free" constants dependent on initial conditions, represented by this $A$.\\
+Now, we have solutions of the form $x(t) = Ae^{\pm i \omega t}$. This form doesn't help us much physically, but we can simplify using Euler's formula, or, since we are dealing with purely a sign change in our parameters, the definition of $\cos (ix) = \cosh x  = \frac{e^{x}+e^{-x}}{2} \implies \frac{e^{i \omega t} + e^{-i \omega t}}{2} =\cos (\omega t)$. Generally, then, we can write \[x(t) = A \cos (\omega t + \varphi),\] where $A, \varphi$ are constants, typically defined by IVs.\\Note that, equivalently, we could have written \[x(t) = B \sin \omega t + C \cos \omega t,\] but chose to rewrite in terms of $\varphi$ for a more intuitive, physical meaning. Specifically, we have \[A \cos \varphi = C, A \sin \varphi = -B, \tan \varphi = - \frac{B}{C}.\] Graphically, this means that spring motion is a constant-amplitude sinusoidal wave that will oscillate forever. Realistically, forces such as friction, gravity, etc would cause a damping force over time and eventually slow the mass to a halt.
+\subsection{Damping Forces}
+Consider a mass $m$ connected to a spring $k$, but now add some form of resistance (typically described as a piston), where force opposes the motion of the mass and is proportional to velocity. We write $F_r = - b v$ where $b$ a constant. Writing the equation of motion:
+\begin{align*}
+  m \ddot{x} = - kx - bv\\
+  \ddot{x} + \frac{b}{m}\dot{x} + \frac{k}{m}x = 0\\
+  \equiv \ddot{x} + \gamma \dot{x} + \omega^2 x=0
+\end{align*}
+We now have a second order linear homogenous ode, but with an added $\dot x$. We can try the same approach, with a trial solution $x(t) = A e^{\alpha t}$:
+
+\begin{align*}
+  (Ae^{\alpha t})'' + \gamma (A e^{\alpha t})' + \omega^2Ae^{\alpha t} &= 0\\
+  \underbrace{\alpha^2 + \alpha \gamma + \omega^2}_{\text{characteristic polynomial}} &= 0\\
+  &\implies \alpha = -\frac{\gamma}{2} \pm \sqrt{\frac{\gamma^2}{4} - \omega^2}
+\end{align*}
+We thus have a number of cases based on the discriminant. Let $\tilde{\gamma} = \frac{\gamma}{2}$.
+\begin{itemize}
+  \item \textbf{underdamped; }$\tilde{\gamma}^2 < \omega^2 \implies $ discriminant $\in \mathbb{C}$, thus $\alpha = - \frac{\gamma}{2} \pm i \sqrt{\omega^2 - \frac{\gamma^2}{4}}.$ We then have a solution
+  \begin{align*}
+    x(t) &= e^{-\tilde{\gamma} t} = A_1 e^{i \tilde{\omega} t} + A_2 e^{-i \tilde{\omega} t}\\
+    &\implies \boxed{x(t) = \underbrace{A e^{-\tilde{\gamma}t}}_{\text{damping, } \to 0} \underbrace{\cos(\tilde{\omega}t + \varphi)}_{\text{oscillating}}}
+  \end{align*}
+   As $t\to \infty$, $x(t)\to 0$ because of the damping term. The inverse exponential goes to zero, functionally diminishing the amplitude of the cosine with time.
+  \item \textbf{overdamped; }$\tilde{\gamma}^2 > \omega^2 \implies$ discriminant $\in \mathbb{R}$, thus $\alpha = - \tilde{\gamma} \pm \sqrt{\tilde{\gamma}^2 - \omega^2} \implies \alpha \leq 0$. This yields a purely exponential solution,
+  \[\boxed{x(t) = Ae^{-\alpha_-t} + B e^{-\alpha_+ t}}\] since the oscillating term comes from an imaginary number in the exponential. Thus, there is no oscillation, and the solution tends to zero.
+  \item \textbf{critically damped; }$\tilde{\gamma}^2 = \omega^2\implies$ discriminant $=0$, we have only one root, and we thus are missing a solution case. One can use a new trial solution $x(t) = B t e^{-\tilde{\gamma}t}$, and after some computation, we have
+  \[\boxed{x(t) = Ae^{-\tilde{\gamma}t} +Bte^{-\tilde{\gamma}t}}\] Note the linear $t$ term in one of the exponentials. This will persist when looking at $x'(t)$, and will thus dominate the inverse exponential as $t \to 0$, hence the term "critically damped", as this type of damping will bring $x(t)$ to zero the fastest given the same initial conditions and spring constant.
+\end{itemize}
+% TODO: plots
+\subsection{Driven Oscillators and Resonance}
+
+% TODO: drawing
+
+Consider a spring ($k$) connected to a mass $m$ on one end and to a wall which is moving as a function of time, where $x_w(t)$ represents the location of the wall from equilibrium. We write \[x_w(t) = x_0 \cos \omega t,\] ie the wall oscillates. From N2:
+\begin{align*}
+  m \ddot{x} = -kx + kx_w &= -kx + \underbrace{k x_0}_{:= F_0} \cos \omega t\\
+  \ddot{x} + \omega_0^2x &= \frac{F_0}{m} \cos \omega t
+\end{align*}
+Solving for $x(t)$:
+\[x(t) = B \cos (\omega_0t + \varphi) + \frac{F_0}{m} \left(\frac{1}{w_0^2 - \omega^2}\right)\cos (\omega t).\]
+This is the general equation for a \textbf{driven oscillator}.\\
+Note too that \[\lim_{\omega \to \omega_0^-} = \infty; \quad \lim_{\omega \to \omega_0^+} = - \infty,\] an effect we call \textbf{resonance}. In reality, of course, some sort of damping (eg friction) makes these not go to infinity, but grow large/small regardless.\\
+\subsubsection{With Damping}
+
+Consider \[\ddot{x} + \gamma \dot x + \omega_0^2 x = \frac{F_0}{m} \cos \omega t,\] an equation for a damped, driven oscillator. This can be solved similarly to the previous, and also gives different damped cases. Consider the underdamped case:
+\[Ae^{-\tilde{\gamma}t}\cos(\tilde \omega t + \varphi_1) + \frac{F_0}{m}\cdot \frac{\cos(\omega t + \varphi_2)}{\left[(\omega_0^2-\omega^2)^2+\omega^2\gamma^2\right]^\frac{1}{2}}.\] When we are near resonance, $\omega \approx \omega_0 \implies \omega_0^2 - \omega^2 = (\omega_0 - \omega)(\omega_0+\omega) \approx 2 \omega_0,$ so we can approximate the denominator of the driven part as \[\left[\cdots \right]^\frac{1}{2}\approx \left[(\omega_0-\omega)^2 + \left(\frac{\gamma}{2}\right)^2\right].\]
+This $\left(\frac{\gamma}{2}\right)^2$ term serves as a "regulator" to the resonance effect.
+% TODO: add plots
+
+\subsection{Coupled Oscillators}
+% TODO: picture
+Consider a series of three springs and two equal masses of $m$ between a wall. Let $x_1$ be the displacement of the leftmost mass, and $x_2$ the displacement of the rightmost. We can write
+\[\textbf{(i)}\quad m\ddot{x_1} = -kx_1 + k(x_2 -x_1);\qquad \textbf{(ii)}\quad m\ddot{x_2} = -k(x_2-x_1)-kx_2\]
+Adding and subtracting \textbf{(i),(ii)}:
+\[\ddot{x_1}+\ddot{x_2}+\omega_0^2(x_1+x_2)=0; \qquad (\ddot{x_1} - \ddot{x_2})+3 \omega_0^2 (x_1 - x_2) = 0.\] We can let $y_1(t) = x_1 + x_2$ and $y_2(t) = x_1 - x_2$, and solve these separately as two homogenous second order ODEs, then add them back together. These $y_1, y_2$ are called the \textbf{normal modes}. This will yields
+\begin{align*}
+  x_1(t) = B_+ \cos(\omega_0t + \varphi_+) + B_- \cos(\sqrt{3}\omega_0t + \varphi_-)\\
+  x_2(t) = B_+ \cos(\omega_0t+\varphi_+) - B_- \cos(\sqrt{3} \omega_0 t + \varphi_-)
+\end{align*}
+
+We dub $\omega_0, \sqrt{3}\omega_0$ the \textbf{normal frequencies}. If both masses are given the same initial displacements, they will both oscillate at $\omega_0$; if they are given the same initial displacement but with opposite signs, they will oscillate at $\sqrt{3}\cdot\omega_0$.
+
+Note that, while this is being applied in the context of springs, similar ideas can be used in other forces proportional to displacement.
+
+\begin{example}
+  Take a "coupled" system of pendulums attached to a ceiling, with point masses at their ends and a spring connecting the two masses. Find their equations of motion and their normal frequencies.
+  % TODO
+\end{example}
+
+
+\section{Momentum}
+
+\subsection{Some Derivations}
+
+We can write \[\vec{F}^{\text{ext}} = \sum_i m_i \ddot{r}_i = M \ddot{\vec{R}},\] where $\vec{R}$ is the "center of mass coordinate"., ie \[\vec{R} - \frac{1}{M} \sum_i m_i \vec{r_i}.\]
+
+
+\subsection{Center of Mass}
+
+\begin{example}[Linear density]
+  Consider a rod with linear density (the density at a given point is proportional to the distance along the rod), $\lambda$;
+  \[\lambda(s) = \lambda_0 \left(\frac{S}{L}\right) = \dv{m}{x},\] where $S$ is the point along the length. The total mass:
+  \[M = \int_\text{rod} \dd{m} = \int_0^L \dd{m} = \int_0^L \lambda \dd{x} = \frac{x^2}{2}\cdot\eval{\frac{\lambda_0}{L}}_0^L = \frac{L \lambda_0}{2}.\]
+  We can now compute the center of mass $\mathsf{X}$:
+  \[\mathsf{X} = \frac{1}{M}\sum_i x_i m_i \overset{\text{continuous}}{=} \frac{1}{M}\int_0^L \dd m \,x = \frac{2}{L\lambda_0} \int_0^L \lambda \dd{x} = \frac{2}{L\lambda_0} \int_0^L \lambda_0 \frac{x^2}{L} \dd{x} = \frac{2}{L \lambda_0} \cdot \frac{\lambda_0 L^3}{3L} = \frac{2}{3}L.\] Note that there is no dependence on $\lambda$!
+\end{example}
+
+\begin{example}[Triangular sheet]
+  Consider a triangular sheet of height $h$ and base $b$, of uniform density $\rho$. We write \[\vec{R} = \frac{1}{M} \cdot \int \underbrace{\rho \dd{V}}_{\dd{M}} \vec{r}.\]
+  We have that $\dd{V} = \dd x \dd y \dd z$. We will assume that it is negligibly thin, so let $\dd z = 0$. This means we can write mass as $M = \rho \dd{x}\dd{y} := \rho A$, where $A$ is the area of the sheet. We can now compute its center of mass:
+  \begin{align*}
+    X_c &= \frac{1}{A}\iint \dd x \dd y x = \frac{hb}{2}\int \dd x \cdot x \cdot \int_0^{\frac{h}{b}x} = \frac{2}{3}b\\
+    Y_c &= \cdots = \frac{h}{3}
+  \end{align*}
+  Thus, the center of mass is $(X_c,Y_c)=(\frac{2}{3}b,\frac{h}{3})$.
+\end{example}
+
+\subsection{Variable Mass Problems}
+
+We define \textbf{momentum} as $P(t) = M\cdot v$, and $\dv{t} P(t) = F$. A common technique to approaching problems involving variable mass is to approach it first via infinitesimal changes in different variables over some $\Delta t$, then bring $\Delta t \to 0$ to find $F$. Generally, though, we have that \[\dv{t}P = \dv{t}(Mv) = \dv{M}{t} v + M \dv{v}{t}M = \dot{M}v +M \dot{v} = F.\]
+
+
+\begin{example}
+  Consider a cart of mass $M$, collecting rain at a rate $\dv{m}{t} = \sigma$, and traveling at a constant velocity $v$. What force must we apply for this constant velocity to persist, if any? Consider its momentum at some time $t$, and swiftly later at $t + \Delta t$:
+  \begin{align*}
+    P(t) &= Mv\\
+    P(t+\Delta t) &= (M+ \Delta)v \\
+    & \lim_{\Delta t} \frac{\Delta P}{\Delta t} = \lim \frac{\Delta m}{\Delta t} v \implies \dv{P}{t} = \dv{m}{t}v = \boxed{\sigma v = F}
+  \end{align*}
+  Say, now, we let $F = 0$. We would then have, setting $M_c$ as the mass of the cart alone, \begin{align*}
+    P(t) &= (M_c + \sigma t)v\\
+    P(t+\Delta t) & = (M_c + \sigma t + \sigma \Delta t)(v + \Delta v)\\
+    &\implies \Delta P = \sigma v \Delta t + (M_c + \sigma t) \Delta v = 0\\
+    &\implies\int \dd{t} \frac{\sigma}{M_c + \sigma t} = -\int \dd{v} \frac{1}{v}\\
+    &\implies v = v_0 \frac{M_c}{M_c + \sigma t}
+  \end{align*}
+\end{example}
+
+\subsubsection{Rocket Motion}
+
+Consider a rocket of mass $m$ moving at velocity $\vec{v}$ and expelling fuel of mass $\Delta m$, which leaves the rocket at some velocity $\Delta u$. We can write:
+\[\vec{P}(t) = m \vec{v}; \qquad \vec{P}(t+\Delta t) = (m-\Delta m)(\vec{v} + \Delta v)+ \Delta m (\vec{u} + \vec{v} + \Delta v)\] Working out the differentials, this yields the famous \textbf{rocket equation} \begin{align*}
+  \boxed{\vec{F} = m \dv{\vec{v}}{t} - \dv{m}{t}\vec{u}}
+\end{align*}
+
+\begin{example}[Rocket Eqn: \underline{Free space}]
+  $\vec{F} = 0 \implies m \dv{\vec{v}}{t} = \dv{m}{t} \vec{u} \implies \dd \vec{v} = \vec{u} \frac{\dd{m}}{m} \implies \vec{v_f} = - \vec{u} \ln \left(\frac{m_0}{m_f}\right).$
+\end{example}
+\begin{example}[Rocket Eqn: \underline{Force due to gravity}]
+  $F = mg = m \dv{\vec{v}}{t} - \vec{u}\dv{m}{t} \implies \vec{v_f} = gt - \vec{u} \ln \left(\frac{m_0}{m_f}\right)$
+\end{example}
+
+\begin{example}[Rope falling on a scale]
+  % TODO: picture?
+  Consider a rope of mass $m$ that is held above a scale such that part of it is resting on the scale. What does the scale read when the rope is left to fall?\\
+  % TODO: finish
+\end{example}
+
+\section{Work \& Energy}
+
+\subsection{Introduction: 1 Dimension}
+
+Consider force as a function of position, $\vec{F}(\vec{r}) = m \dv{\vec{v}}{t}$. We can simplify, in one direction, \begin{align*}
+  m \dv{v}{t} = m \dv{v}{x}\cdot\cancelto{v}{\dv{x}{t}} &= F(x)\\
+  \implies \int_{v_0}^v \dd{v^*} v^* &= \int_{x_0}^x \dd{x^*} F(x^*)\\
+  \underbrace{\frac{1}{2}mv^2 - \frac{1}{2}mv_0^2}_{\Delta \text{KE}} &= \underbrace{\int_{x_0}^x \dd{x^*} F(x^*)}_{:=\text{Work}}
+\end{align*}
+
+This derives the \textbf{Work-Energy Theorem}, ie \[\Delta \text{KE} = W.\]
+
+\begin{example}[Work due to gravity]
+  Consider $F = \vec{g}$. We can write \[\frac{1}{2}m v_1^2 - \frac{1}{2}m v_0^2 = \int_{z_0}^{z_1} - mg \dd{z} = -mg(z_1- z_2).\] Assume we end at zero velocity $v_1 = 0$ and define our "start" as zero displacement $z_0 = 0$, then we have \[z_1 = \frac{v_0^2}{2g},\] ie, the final position has no dependence on mass.
+\end{example}
+
+\subsection{Extension to Higher Dimensions}
+
+We wrote previously $\vec{F}(\vec{r}) = m \dv{\vec{v}}{t}$, a vector valued function with vector valued arguments. We can manipulate this into a nicer form akin to the 1-dim case as follows;
+\begin{align*}
+  \vec{F} \cdot \dd{\vec{r}} = m \dv{\vec{v}}{t} \cdot \dd{\vec{r}}\\
+  \star \dv{\vec{r}}{t} = \vec{v} \implies \dd{\vec{r}} = \dd{t} \vec{v}\star\\
+  \oint_R \vec{F} \cdot \dd{\vec{r}} = m \int_R\dv{\vec{v}}{\cancel{t}}\cdot \vec{v} \cancel{\dd{t}}
+\end{align*}
+Note that, we are "canceling" the differentials rather informally, but with an equivalent result as properly taking a double integral over time as well as distance. Note that, as $\vec{r}$ is some arbitrary curve/trajectory in space, we are "formally" taking a line integral, hence the $\oint$. We call the trajectory we are integrating over $R$; say it has endpoints $a,b$. We can then simplify\[
+  \oint_R \vec{F} \cdot \dd{\vec{r}} = m \int_a^b \dd{\vec{v}} \vec{v} = \frac{1}{2}m \left(v_a^2 - v_b^2\right),\] where our RHS is the familiar KE. Thus, 
+  \[\boxed{\oint_R \vec{F} \cdot \dd{\vec{r}} = \Delta \text{KE}} = W.\]
+
+Generally, the LHS can't necessarily be integrated but we can make some simplifying observations. First $\dd{\vec{r}}$ is always tangent to the trajectory $\vec{R}$, as should be familiar from the definition of a derivative. We can break down the force components along a given trajectory as the parallel and perpendicular components to the trajectory at a given point; \[\vec{F} = F_{\parallel} + F_\perp \implies \vec{F} \cdot \dd{r} = (F_{\parallel} + F_\perp)\cdot \dd{r}.\] However, by definition, the dot product of a vector with a perpendicular is equal to zero, and thus $\dd{r} \cdot F_\perp = 0$, and we thus need only be concerned with the parallel components of force.
 \end{document}
