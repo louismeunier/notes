@@ -319,10 +319,11 @@ While aforementioned dynamical systems were defined via ordinary differential eq
 % TODO : tent, maps, etc
 
 \newpage
+% \chapter{One-Dimensional Flows}
+\part{One-Dimensional Flows}
+\section{Flows on the Line}
 
-\section{Chapter 2}
-
-\subsection{Flows on the Line}
+\subsection{Introduction to Flows on the Line}
 
 Consider $\dot{x} = f(x)$ or $\dot{x} = f(x, \mu)$ where $\mu$ some parameter. Solutions will be $x(t) \in \mathbb{R}$, and will either have $f: \mathbb{R} \to \mathbb{R} (f(x))$ or $f: \mathbb{R}^2 \to \mathbb{R} (f(x,\mu))$.
 
@@ -501,5 +502,401 @@ Suppose $\dot{x} = f(x)$ has a periodic solution so $x(t+T) = x(t) \forall t \in
 For a given value of $x$, $\dot{x}$ changes sign each time solution crosses $x$, so $f(x)$ also changes sign. But $f(x)$ uniquely defined for any particular value of $x$, so this cannot happen, ie, $\dot{x} = f(x)$ \textit{cannot} have periodic solutions.
 
 The same argument shows that all solutions $x(t)$ of $\dot{x} = f(x)$ for $x \in \mathbb{R}$ are \textbf{monotonic}.
+
+\subsection{Potential or Gradient Flows}
+
+Idea: potential flow, dynamics evolve only "down hill". Stable steady states occur when $V(u)$ is at a minimum, and unstable steady states occur when $V(u)$ a maximum. 
+
+Mathematically, we just have $\dot{u} = f(u) = - \dv{V}{u}$. Consider the evolution of $V(u(t))$ as a function of $t$ on a solution:
+
+\begin{align*}
+  \dv{t} \left[V(u(t))\right] &= \dv{V}{u} \cdot \dv{u}{t}\\
+  &= - \left(\dv{V}{u}\right)^2
+\end{align*}
+So $\dv{t} \left[V(u(t))\right]$ strictly negative unless $\dv{V}{u} = 0$ when $V$ is flat and $\dot{u} =0$.
+
+Note that any 1 dim. dynamical system can be thought of as a potential flow. Say $\dot{u} = f(u)$; for a potential flow, we need $f(u) = - \dv{V}{u}$, so let $V(u) = - \int f(u) \dd{u}$.
+
+\begin{definition}[Double Well Potential]
+  Defined by \begin{align*}
+    V(u) &= -\frac{1}{2}u^2 + \frac{1}{4}u^4\\
+    \implies \dot{u} &= u - u^3
+  \end{align*}
+\end{definition}
+
+In higher dimensions, we may consider \textbf{gradient} flows. Consider $\dot{u} = f(u), u \in \mathbb{R}^d$ with $f(u) = - \grad V(u)$ where $V: \mathbb{R}^d \to \mathbb{R}$.
+
+\section{Bifurcation Theory}
+
+\subsection{Implicit Function Theorem}
+
+A solution $u(t) \in \mathbb{R}$ for an ODE but suppose the ODE depends on a parameter $\mu$ and so $\dot{u} = f(u, \mu), u(t), \mu \in \mathbb{R}$. We always keep $\mu$ \textit{fixed} when we solve the ODE; we are interested in how this change when we resolve  with different $\mu$.
+
+Take $f(u,\mu) : \mathbb{R}^2 \to \mathbb{R}$, and we'll always assume $f$ is continuous of each variable and any "necessary" derivatives exist. For "boring cases", we can use the implicit function theorem.
+
+\begin{theorem}[Implicit Function Theorem]\label{thm:ift}
+  If $f(u, \mu)$ is a continuously differentiable function of $u$ and $\mu$, and $\exists (u^*,\mu^*) \in \mathbb{R}^2$ s.t. $f(u^*,\mu^*) = 0$\footnotemark and $\pdv{f}{u}(u^*,\mu^*) \neq 0$, the $\exists$ a neighborhood of $(u^*, \mu^*) \in \mathbb{R}^2$ and a continuously differentiable function $g: \mathbb{R} \to \mathbb{R}$ s.t. $g(\mu^*)= u^*$ and for $\mu$ close to $\mu^*$ we have \[f(g(\mu), \mu) = 0\] and, moreover, for each such $\mu$ close to $\mu^*$, $g(\mu)$ is a unique value of $u$ close to $u^*$ s.t. $f(u, \mu) = 0$.\footnotemark
+\end{theorem}
+
+\footnotetext{$f(u^*, \mu^*) = 0 \implies \mu = u^*$ there is a s.s. at $u^*$}
+\footnotetext{Where a "neighborhood" refers to an open set containing the point (as long as point not on boundary).}
+
+Note that the theorem states that $f(u, \mu) \neq 0$ at all points in the neighborhood \textit{not} on the curve $u = g(\mu)$.
+
+In short, the theorem is stating that $u^*$ is a ss when $\mu = \mu^*$ and $\pdv{f}{u}(u^*, \mu^*)\neq 0$, then if we "change $\mu$ slightly", then $\mu^*$ will no longer be a ss, but at $\mu = g(\mu)$ \textit{close} to $\mu^*$, there is a ss. So, the steady state gets perturbed slightly when $\mu$ changes, and moreover, the assumption $\pdv{f}{u}(u^*, \mu^*)\neq 0$ means we have cases where linearization determines stability.
+
+\begin{align*}
+  \pdv{f}{u}(u^*, \mu^*) > 0 \implies u^* is unstable\\
+  \pdv{f}{u}(u^*, \mu^*) < 0 \implies u^* is stable
+\end{align*}
+
+For small enough perturbation $\mu$ from $\mu^*$, $\pdv{f}{u}(g(\mu), \mu)$ will have the same sign as $\pdv{f}{u}(u^*, \mu^*)$ so the stability of the perturbed fixed point will also have the same stability as the original fixed point.
+
+\begin{remark}
+  Since $0 = f(g(\mu), \mu)$, differentiate using chain rule:
+  % TODO; verify
+  \begin{align*}
+    0 &= \dv{\mu} f(g(\mu), \mu)\\
+    &= g'(\mu)\pdv{f}{u} \left(g(\mu), \mu\right) + \pdv{f}{\mu} \left(g(\mu), \mu\right)\\
+    \implies g'(\mu) &= - \frac{\pdv*{f}{\mu} \left(g(\mu), \mu\right)}{\pdv*{f}{u} \left(g(\mu), \mu\right)}
+  \end{align*}
+  Since $\pdv{f}{u} \left(g(\mu^*), \mu^*\right) \neq 0$, we have \[g'(\mu^*) = \frac{-\pdv{f}{\mu} \left(g(\mu^*), \mu^*\right)}{\pdv{f}{u} \left(g(\mu^*), \mu^*\right)}\]. 
+
+  We (could) similarly find $g''(\mu^*)$.
+\end{remark}
+
+\begin{remark}
+  \cref{thm:ift} is only defined on a neighborhood because its possible for $\pdv{f}{u} (g(\mu), \mu) = 0$ or $u = g(\mu)$ can break down if we try to push the result "too far" from the initial point.
+\end{remark}
+
+\begin{example}
+  Let $\dot{u} = f(u, \mu) = u - \mu$. If $\mu = \mu^* = 0$, then $\dot{u} = u \implies \dot{u} = 0$ is a ss; no matter how we vary $\mu$, we have identical dynamics, with just the exact location of the ss varying, and there are no qualitative changes with varying $\mu$. This is because $f(u, \mu) = u - \mu \implies \pdv{f}{u} \left(u, \mu\right) = 1 - 0 > 0$. To obtain qualitative changes in dynamics, we need \cref{thm:ift} to \emph{not} apply (ie $f(u^*, \mu^*) = 0$ \& $\pdv{f}{u} \left(u^*, \mu^*\right) = 0$, equiv. $f(u^*, \mu^*) = f_u (u^*, \mu^*) = 0$).
+\end{example}
+
+\subsection{Saddle-Node/Fold Bifurcation}
+
+\begin{example}
+  Consider $\dot{u} = f(u, \mu) = \mu + u^2$. Notice that $f(0,0) = 0$ so $u = 0$ is a ss when $\mu = 0$. $f_u(u, \mu) = 2u =0$ for $u = 0$, so \cref{thm:ift} does not apply. We can solve directly for the dynamics.
+
+ When $\mu < 0$ we have two steady states; as $\mu$ approaches 0, these combine and we have a half-stable steady state and $\mu = 0$, and finally when $\mu > 0$ we have no steady states.
+
+ Notice that varying $\mu$ without changing its sign does not change the dynamics qualitatively.
+
+ We can also show this algebraically; $0 = \mu + u^2 \implies u = \pm \sqrt{-\mu}, \mu < 0$, and $u = 0$ when $\mu = 0$.
+
+ $f_u = 2u$, so $f_u(+\sqrt{-\mu}, \mu) = 2 \sqrt{-\mu} > 0$ and $f_u(-\sqrt{-\mu}, \mu) = -2 \sqrt{-\mu} < 0$. So, the positive root is unstable and the negative is stable. The bifurcation will occur when $f(\pm \sqrt{-\mu}m \mu) = 0 \implies u = \mu = 0$.
+\end{example}
+
+\begin{definition}[Bifurcation Point]
+  Any point $(u^*, \mu^*) \in \mathbb{R}^2$ where qualitative dynamics change is called a \emph{bifurcation point}.
+
+  \textbf{NB:} a bifurcation point requires \emph{both} a particular $\mu$ and $u$.
+\end{definition}
+
+In dynamical system, it is useful to foliate the phase space and plot phase portraits for the whole family of dynamical systems together (ie, plot "against" $\mu$). This is called a \textit{bifurcation diagram}. Solid lines represent stable steady states, and dashed lines represent unstable steady states.
+
+% TODO: add
+
+In our example, we have what is called a \textbf{fold bifurcation}, named as such for the shape that occurs in the bifurcation graph.
+
+Note that $\dot{u} = -\mu + u^2$, $\dot{u} = - \mu - u^2$, and $\dot{u} = \mu - u^2$ are share similar bifurcation diagrams, but with different dynamics.
+
+\begin{example}
+  $\dot{u} = f(u, \mu) = \mu - u - e^{-u}$. Solving this exactly is either hard or impossible (and in any case annoying), but no need.
+
+  Steady states are defined by $0 = f(u, \mu) = \mu - u - e^{-u}$. This can be solved with the Lambert-W function (but don't bother).
+
+  We can write $\mu = u+e^{-u}$, then plot $\mu$ as a function of $u$ and swap the axes to see the steady states $u$ for each $\mu$.
+
+  Finally, we can approach this graphically. Let $g_1(u, \mu) = \mu - u, g_2(u, \mu) = e^{-u}$, then $f(u,\mu) = g_1(u,\mu) - g_2(u,\mu)$ so steady states occur when $g_1(u, \mu) = g_2(u,\mu)$.
+
+  % TODO graph
+  Graphically, we have either no, one, or two steady states depending on $\mu$.
+
+  For $\mu \ll 0$ no s.s.; for $\mu \gg 0$ two; we infer that there is one s.s at some $\mu$, which will be at the fold bifurcation. Call $u, \mu$ at this point $(u^*, \mu^*)$.
+
+  If $\mu > \mu^*$:
+  % TODO graph
+  For $u$ between steady states, $g_1 > g_2$ so $f(u,\mu) > 0$. For $u \gg 0$ or $u \ll 0$, then $g_2>g_1$ and $f<0$. Thus, we have the 
+  following dynamics:
+
+  If $\mu < \mu^*$, $f < 0$;
+
+  and for $\mu = \mu^*$:
+  % TODO graphs
+
+  All together, we have the following bifurcation diagram:
+  % TODO graph
+
+  To find the bifurcation point, there are two approaches; either from the graphs, solve for a point $(u^*, \mu^*)$ where $g_1, g_2$ touch. Think of $g_1, g_2$ as functions of $u$ with $\mu$ as a parameters;
+
+  \begin{align*}
+    g_1 = \mu - u &\implies \pdv{g_1}{u} = -1\\
+    g_2 = e^{-1} &\implies \pdv{g_2}{u} = \pdv{g_1}{u} = -1\\
+   & \implies - e^{-u} = -1\\
+    &\implies \log (e^{-u}) = log (1) = 0 \implies u = 0
+  \end{align*}
+
+  But $g_1(u, \mu)  = \mu$ when $u = 0$, and $g_2(u, \mu) = e^{-1} = 1$ when $u = 0$, so for the graphs to touch, $\mu = 1$. Then, $g_1, g_2$ have the same values and slope when $u = 0$. The bifurcation point is $(u^*, \mu^*) = (0,1)$.
+
+  Alternatively, at bifn point, we have that $f(u^*, \mu^*) = f_u(u^*, \mu^*) = 0$, so $0 = \mu^{*} - u^{*} - e^{-u^*}$ and $0 = f_u = -1 + e^{-u^*}$, which give the exact same equations (and, naturally, answers) as above.
+
+  Note: We used $g_1 > g_2$ or $g_1 < g_2$ to find the stability; alternatively, we can differentiate $f$ wrt $u$, and find $f_u = -1 + e^{-u}$.
+
+  If $u > 0$, $e^{-u} < 1$ and $f_u(u, \mu) < 0$, so we have stable ss. If $u < 0, e^{-u} > 0$ and $f_u(u, \mu) > 0$, so we have unstable ss. Then, we again have the bifurcation at $u = 0$.
+\end{example}
+
+\begin{remark}
+  Notice that this example's bifurcation diagram is very similar to the last; notice that \begin{align*}
+    \dot{u} &= \mu - u - e^{-u}\\
+&= \mu - u -[1-u+\frac{1}{2}u^2 - \frac{1}{6}u^3 + \dots]\\
+&= (\mu - 1) - \frac{1}{2}u^2 + \frac{1}{6}u^3 - \dots
+  \end{align*}
+  Let $w = \mu - 1$, then $$\dot{u} = w - \frac{1}{2}u^2 + \frac{1}{6}u^3 - \dots$$. Let $v = \frac{u}{2}$; then $$\dot{v} = \frac{\dot{u}}{2} = \frac{1}{2}\left(w - \frac{1}{2}u^2 + \frac{1}{6}u^3 + \dots \right).$$
+  Let $\lambda = \frac{w}{2}$ then $\lambda = \frac{1}{2}(\lambda - 1)$. Then $$\dot{v} = \underbrace{\lambda - v^2}_{\text{as in first example}} + \underbrace{\frac{2}{3}v^3 + O(v^4)}_{\text{very small when $v \approx 0$}}$$
+\end{remark}
+\begin{remark}[aside]
+  There exist so-called "near identity transformations" to remove these additional terms. Let $\sim v = v + $(something small), so $\dot{\tilde{v}}= \lambda - \tilde{v}^2 + O(\tilde{v}^4)$, then we can make the higher order terms "as high" as we want (again, this is all "valid" near the bifurcation point).
+
+  Overall, we can explain the similarities in the past two examples by changing variables effectively.
+\end{remark}
+
+To recognize saddle-node/fold bifurcations in a system, either:
+
+\begin{itemize}
+  \item observe a change in the number/stability of steady states; % TODO graphs
+  \item observe something like $\dot{u} = \mu - u^2 - O(u^3)$ in a differential equation;
+  \item check rigorous conditions. There are four conditions.
+\end{itemize}
+
+\begin{definition}[Saddle-Node Conditions]
+  The following must hold for a saddle-node bifurcation to exist at $(u^*, \mu^*)$:
+  \begin{enumerate}[label=\roman*)]
+    \item $f(u^*, \mu^*) = 0$
+    \item $f_u(u^*, \mu^*) = 0$
+    \item $f_{uu}(u^*, \mu^*) \neq 0$
+    \item $f_\mu(u^*, \mu^*) \neq 0$
+  \end{enumerate}  
+\end{definition}
+
+\begin{remark}
+  $\dot{u} = \mu - u^2$ is called the \textbf{normal form} for the saddle-node bifurcation. Other examples of fold bfn can be rewritten as a perturbation of the normal form by change of variables (as shown above).
+\end{remark}
+
+If one or the other of condition (iii), (iv) fail, then we have a different bifurcation.
+
+\subsection{Transcritical Bifurcations}
+
+Consider $\dot{u} = f(u,\mu) = \mu u - u^2$; this is the normal form of a \textbf{transcritical bifurcation}.
+
+Notice that $f(0,0) = 0$, and $f_u(0,0) = 0$, so we expect a bifurcation at $(0,0)$. $f_{uu}(u, \mu) = -2 \neq 0$, and $f_{\mu}(\mu, u) = u \implies f_{\mu}(0,0) = 0$. So, (iv) of the saddle-node conditions fails.
+
+By inspection, we have a steady state for $u = 0$ or $u = \mu$. So we have two steady states, unless $\mu = 0$, then they collide at $u = 0$.
+
+\subsubsection{Analyzing Stability}
+$f_u(u,\mu) = \mu - 2u$, so when $u = 0$, $f_u = \mu$. $f_u = \mu > 0$ for $\mu > 0$, so unstable, and $f_u < 0$ for $\mu < 0$, so $u = 0$ stable.
+
+For $u = \mu$, $f_u(\mu,\mu) = \mu - 2 \mu = -\mu$, so steady state $u = \mu$ has opposite stability of the s.s.s at $u=0$. So, we have the following bifurcation diagram:
+% TODO graph
+
+
+\begin{example}
+  $\dot{x} = f(x) = x(1-x^2) - a(1-e^{-bx})$. $e^0 = 1 \implies f(0) = 0 \forall t$, so $x=0$ is a steady state for all parameters.
+
+  We first check stability of this steady state:
+  $f_x(x) = (1-x^2)-2x^2-abe^{-bx} = 1-3x^2 - abe^{-bx}$. $f_x(0) = 1 - ab$, so for $ab < 1 \implies f_x > 0 \implies x = 0$ unstable, and for $ab > 1 \implies f_x < 0 \implies x= 0$ stable. Thus, we can expect a bifurcation when $ab=1$, as the stability would change here.
+
+  Since we are interested in $x\approx 0$, lets expand:
+  $$e^{-bx} = 1 - bx + \frac{1}{2}b^2x^2 - \cdots,$$then 
+  \begin{align*}
+  \dot{x} &= x(1-x^2)-a(1-[1-bx+\frac{1}{2}b^2x^2+\cdots])\\
+  &= \underbrace{(1-ab)}_{\mu}x+\frac{1}{2}ab^2x^2 +\underbrace{O(x^3)}_{\text{contains factor of } x^3}\\
+  &\approx \mu x + (\frac{1}{2}ab^2)x^2
+  \end{align*}
+  which is very similar to the normal form of the trans-critical bifurcation.
+
+  Since the bifurcation occurs at $ab = 1$, then $\frac{ab^2}{2}\approx \frac{b}{2}$ near bifn, and so \[\dot{x} \approx x [\mu + \frac{b}{2}x] + O(x^3).\] For $b < 0$, similar to previous example.
+
+  The extra fixed ss is then given by $\mu + \frac{b}{2}x \approx 0 \implies x \approx -\frac{2\mu}{b} = \frac{-2(1-ab)}{b}$.
+\end{example}
+
+\begin{definition}[Conditions for Transcritical]
+  Let $\dot{u} = f(u,\mu)$. The following are required for a transcritical bifurcation:
+  \begin{enumerate}[label=\roman*)]
+    \item $f(0,0) = 0$ (steady state)
+    \item $f_u(0,0) = 0$ (bifurcation exists)
+    \item $f_{uu}(0,0) \neq 0$
+    \item $f_\mu(0,0) = 0$ (not a fold bifurcation)
+    \item $[f_{u\mu}(0,0)]^2 > f_{uu}(0,0)f_{\mu \mu}(0,0)$
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  (iv) required, otherwise we would have a fold bifurcation. (v) insures a transcritical bifurcation. In the normal form, $\dot{u} = f(u, \mu) = \mu u - u^2$, we have $f_{\mu \mu} = 0$, and so for (v) to hold, everything simplifies to require that $f_{u, \mu} \neq 0$.
+\end{remark}
+
+
+\subsection{Pitchfork Bifurcations}
+
+There are two types of pitchfork bifurcartions.
+
+\subsubsection{Supercritical Pitchfork}
+Normal form:
+$$\dot{u} = \mu u - u^3 = f(u, \mu)$$
+Notice that $f$ is an odd function of $u$. These bifurcations are often seen with this type of (anti)symmetry, thought not exclusively.\\
+$u = 0$ is a ss $\forall \mu \in \mathbb{R}$. For stability,
+\begin{align*}
+  f_u &= \mu - 3u^2\\
+  &\implies f_u(0, \mu) = \mu,
+\end{align*}
+so $u=0$ stable for $\mu < 0$, unstable for $\mu > 0$.\\
+However, $f_{uu} = - 6u \implies f_{uu}(0,0) = 0$, so \textit{not} a transcritical bifurcartion.\\
+Solving algebraically:
+\[0 = f(u, \mu) = u[\mu - u^2]\] so $u = 0$, or $u^2 = \mu \implies u = \pm \sqrt{\mu}$ when $\mu > 0$. Thus, new steady states are "born" at $u = 0$ when $\mu =0$, so this is the bifn. \\For stability,
+\[f_u = (\pm \sqrt{\mu}, \mu) = \mu - 3(\pm \sqrt{\mu})^2 = -2 \mu,\] so both $u = +\sqrt{\mu}$ and $u = - \sqrt{\mu}$ have opposite stability to $u = 0$, when they exist.\\
+
+\subsubsection{Subcritical Pitchfork}
+
+$$\dot{u} = f(u,\mu) = \mu u + u^3.$$ As before, $f(0, \mu) = 0 \forall \mu \in \mathbb{R}$, so $u = 0$ always ss. For stability \[f_u = \mu + 3u^2,\] and $f_u(0, \mu) = \mu$ and $u  0$ stable when $\mu <0$ and unstable when $\mu > 0$.\\
+For $\cancel{0}$ ss, solve exactly
+\begin{align*}
+  0 = f(u, \mu) = \mu u + u^3 &= u(\mu + u^2)\\
+  \implies u^2 = -\mu, &\implies u = \pm \sqrt{- \mu}, \mu < 0
+\end{align*}
+For stability,
+$$f_u(+\sqrt{-\mu}, \mu) = \mu + 3(-\mu) =-2\mu > 0\, (\text{since } \mu <0)$$
+This is unstable, and similarly is $- \sqrt{-\mu}$. We essentially have an inverted pitchfork compared to the previous.\\ 
+This is called \textit{subcritical} because when the persistent steady state is unstable, there is no nearby stable steady state, \textit{not} because of the direction of the pitchfork.
+
+\begin{definition}[Conditions for Pitchfork Bifurcations]
+  Normal form, $\dot{u} = f(u, \mu) = \mu u \pm u^3$.
+  \begin{enumerate}[label=\roman*)]
+    \item $f(u^*, \mu^*) = 0$
+    \item $f_u(u^*, \mu^*) = 0$
+    \item $f_{uu}(u^*, \mu^*) = 0$
+    \item $f_\mu(u^*, \mu^*) = 0$
+    \item $f_{uuu}(u^*, \mu^*) \neq 0$
+    \item $f_{u\mu}(u^*, \mu^*) \neq 0$
+  \end{enumerate}
+  Other conditions exist to determine whether sub/super. Not practical to use.
+\end{definition}
+
+
+\begin{example}[3.4.1]
+  $\dot{u} = u - \beta \tanh u = f(u, \beta)$\footnotemark\\
+  $\tanh(0) = 0 \implies f(0, \beta) = 0 \forall \beta, u=0$ always a ss. Stability; $f_u(u,\beta) = 1 - \beta \sech^2u \implies f_u(0,\beta) = 1 -\beta \sech^2(0) = 1 - \beta.$\\$\beta > 1 \implies f_u(0, \beta)<0 \implies u = 0$ stable.\\
+  $\beta< 1\implies f_u(0, \beta) > 0 \implies u = 0$ unstable.\\
+  This indicates to existence of a bfn at $\beta = 1$. To find what type, we need to solve $u = \beta \tanh u$.\\
+  Let $g_1 = u, g_2 = \beta \tanh u \implies 0 = f(u, \beta) = g_1 - g_2 \implies g_1 = g_2$ at ss.\\
+  If $\beta < 0$, $u = 0$ is the only steady state, and we have that $f=g_1-g_2 = \begin{cases}
+    >0 & u>0\\
+    <0 &u < 0
+  \end{cases} \implies u = 0$ unstable.\\
+  If $\beta\gg 1$ there will be three intersections of $g_1, g_2$. For $\beta \gg 0$, $g_1 = u$ intersects $g_2 = \beta \tanh u$ on part of the graph where the function is very flat, ie near $\tanh u \approx \pm 1$ so the extra fixed points are near $u =\pm \beta$.\\
+  We know that $u = 0$ changes stability when $\beta = 1$, so a bfn will occur when $u = 0 $ and $\beta = 1$. $g'(u) = 1$ and $g_2'(0) = \beta$, so when $\beta = 1$ $g_2,g_2$ intersect tangentially at $u = 0$.
+\end{example}
+
+\footnotetext{See book, pg 58}
+
+\begin{remark}
+  Its easy to plot exact solutions for steady states on a computer.\\
+  Solve for $\beta = \frac{u}{\tanh u}$.
+\end{remark}
+
+\subsection{Normal Forms (Summary)}
+
+\begin{itemize}
+  \item $\dot{u} = \mu \pm u^2:$ saddle-node
+  \item $\dot{u} = \mu u - u^2:$ transcritical
+  \item $\dot{u} = \mu u \pm u^3:$ pitchfork
+\end{itemize}
+
+For other, non-normal forms, we can make a change of variables so that near the bifurcation point the dynamical system looks like one of these. These normal forms are all polynomials; Taylor Series.\\
+Consider $\dot{u} = f(u,\mu)$ with a bifurcation at $(u^*,\mu^*)$ so $$f(u^*,\mu^*) = f_u(u^*,\mu^*) = 0.$$ By Taylor's Theorem, SS close to bfn satisfy\begin{align*}
+  0 &= f(u,\mu) = f(u^*,\mu^*) + (u-u^*)f_u(u^*,\mu^*) \\&+ (\mu - \mu^*)f_\mu(u^*,\mu^*) + \frac{1}{2}(u - u^*)^2f_{uu}(u^*,\mu^*) \\&+ \frac{1}{2}(\mu - \mu^*)^2f_{\mu\mu}(u^*,\mu^*) + (u - u^*)(\mu-\mu^*)f_{\mu u}(u^*,\mu^*) + \text{h.o.t.}
+\end{align*}
+
+(or just use Taylor series in one variable multiple times). Since $f(u^*,\mu^*) = f_u(u^*,\mu^*) = 0$, we can rewrite (using Greek letters for constants:)
+\begin{align*}
+  0 &= \alpha (\mu - \mu^*)+\beta(u-\mu^*)^2 + \gamma (u - u^*)(\mu - \mu^*)+\delta (\mu-\mu^*)^2 + \text{ h.o.t.}
+\end{align*}
+
+This defines the steady states; letting $\dot{u} = f(u,\mu) = $ RHS, different combinations of $\alpha, \beta, \gamma, \delta$ above yield the standard bifns above.  
+
+
+\subsection{"Real Examples"}
+
+In the normal forms, there exactly one bifurcation at $(u^*,\mu^*) = (0,0)$. Often, there are multiple bfns occurring at different values of $u, \mu$.
+
+\begin{example}
+  Let $\dot{u} = \mu u - u^3 + u^5$. \\
+  $u = 0$ is always a ss. We expect a pitchfork bifurcation at $(0,0)$ because $|u^5| \ll |u^3| \ll |u|$ when $u \approx 0$, so we are "near" the normal form.\\
+  Solving $0 = u(\mu - u^2 + u^4)$. Additional steady states will satisfy $\mu = u^2 - u^4$. We have that $f_u = \mu - 3u^2 + 5u^4 \implies f_u (0,\mu) = \mu \begin{cases}
+    >0 & \mu > 0, \text{ stable}\\
+    <0 & \mu < 0 \text{ unstable}
+  \end{cases}$
+\end{example}
+
+\subsection{Imperfect Bifurcations}
+
+\begin{example}
+  Consider $\dot{x} = h + rx - x^3$ with two parameters $h$ and $r$. If $h=0 \implies \dot{x} = rx-x^3$, and thus we have a pitchfork bfn at $(x,r) = (0,0)$ if $r$ is varied with $h=0$ fixed.\\
+  Else, $h \neq 0$, $f(x)$ no longer symmetrical (stops begin odd) bfn changes. $h$ is often called the \emph{imperfection parameter}; harder to analyze analytically, but possible graphically.\\
+  Take $g_1(x) = rx - x^3, g_2(x) = -h, \dot{r} = g_1(x) - g_2(x) \implies \text{ss at } g_1 = g_2$\\
+  $r<0$, $r$ or $h$ varied s.t. $r<0$ always holds, there is a unique steady state, varies with parameters, and thus no bfns.\\
+  $r>0$, there can be either 1,2, or 3 ss; fixed $r$ and changing $h$, we don't see a pitchfork; the case of two steady states will occur between 1 and 3, and we thus only have a pitchfork when $h=0$; we see a saddle-node. This occurs when $g_1$ is at a min/max, ie $g_1' = r - 3x^2 \implies x = \pm \sqrt{\frac{r}{3}} \implies g_1(+) = \frac{r^{3/2}}{3^{1/2}}(1 - 1/3) = \frac{2r^{3/2}}{3^{3/2}}$, so $h = \frac{-2r}{3}\sqrt{\frac{r}{3}}$ at a bfn. Similar behavior occurs for negative root.
+\end{example}
+
+\begin{definition}[Cusp Point]
+  Point where the two curves of saddle-node bifurcations come together; an example of a co-dimension two bfn.
+\end{definition}
+
+In the earlier example; $h>h_c, h < -h_c$ implies a unique, stable ss. For $h \in (-h_c, h_c)$, there are three steady states, two of which are stable (\emph{bistable}).
+
+
+\begin{definition}[Hysteresis]
+  Cycle of "tipping points" due to variation of parameters.
+\end{definition}
+
+\section{Flows on Circle}
+\subsection{Summary}
+
+So far we've only consider dynamics on the real line. We can define the phase space as $\theta \in [0, 2 \pi)$, with an ODE of the form $\dot{\theta} = f(\theta)$ with periodic orbit.
+
+\section{Two-Dimensional Dynamical Systems}
+\subsection{Introduction}
+A two-dimensional system has the form 
+\begin{align*}
+  \dot{x} = f(x,y) \text{ or } \dot{x} = f(x,y;\mu)\\
+  \dot{y} = g(x,y) \text{ or }\dot{y} = g(x,y;\mu)
+\end{align*}
+
+where $\mu$ is a parameter. Let $u(t) = \begin{pmatrix}
+  x(t)\\
+  y(t)
+\end{pmatrix} \in \mathbb{R}^2$ be a soln for some initial $u(0) = \begin{pmatrix}
+  x(0)\\
+  y(0)
+\end{pmatrix}$.\\
+Notice that $\dot(u)(t) = \begin{pmatrix}
+  \dot{x}\\
+  \dot{y}
+\end{pmatrix} = \begin{pmatrix}
+  f(x,y)\\
+  g(x,y)
+\end{pmatrix}$. Let $E(u) = \begin{pmatrix}
+  f(x,y)\\
+  g(x,y)
+\end{pmatrix},$ so $\dot{u}(t) = E(u(t))$.
+
+\begin{example}
+  Nonlinear damped pendulum; $\ddot{x} + x^2 \dot{x} + \sin x = 0$.\\
+  Let $\dot{x} = y$, so $\dot{y} = \ddot{x} = -x^2 \dot{x} - \sin x = -x^2y-\sin x$.
+\end{example}
+
+
+
+
+
 
 \end{document}
