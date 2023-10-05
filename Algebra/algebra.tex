@@ -24,6 +24,7 @@
 \usepackage{cleveref}
 \usepackage[]{csquotes}
 \usepackage{shortcuts}
+\usepackage{mdframed}
 \usepackage[createShortEnv]{proof-at-the-end}
 
 % makes theorems, definitions, etc. "restatable" as shown
@@ -141,6 +142,12 @@
 \end{center}
 
 \setstretch{1.5}
+
+\begin{mdframed}[backgroundcolor=gray!20]
+  \underline{Course Outline:}\\
+  \textit{Introductory abstract algebra. Sets, functions, relations. Methods of proof. Arithmetic on integers. Fields, rings; groups, subgroups, cosets.}
+\end{mdframed}
+
 \tableofcontents
 
 % "enables" footer with section+subsection, etc. just comment it out if you don't want it
@@ -920,7 +927,7 @@ Math $\equiv$ Poetry
   Let $a,b \in \mathbb{Z}$. We say $a$ divides $b$, $a|b$ if $b = a \cdot c,$ some $c \in \mathbb{Z}$ (If $a \neq 0$, this is the case $\iff$ the residue of dividing $b$ by $a$ is 0).
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}[Properties of Division]\label{lemma:propertiesofdivison}
   \begin{enumerate}
     \item $0$ is divisible by any integer $a$
     \item $0$ only divides $0$
@@ -991,7 +998,7 @@ Math $\equiv$ Poetry
 \begin{remark}
   $\gcd(-a,b) = \gcd(a,b) =\gcd(a,-b) = \cdots$
 \end{remark}
-\begin{theorem}
+\begin{theorem}[Euclidean Algorithm]
   Let $a,b$ be positive integers $a\geq b$. \\If $b | a$, then $\gcd(a,b) = b$.\\Else, perform the following:
   \begin{align*}
     a &= b \cdot q_0 + r_0, \quad 0 < r_0<b\\
@@ -1001,8 +1008,9 @@ Math $\equiv$ Poetry
     r_{t-2} &= r{t-1}\cdot q_t+r_t, \quad 0 < r_t < r_{t-1}\\
     r_{t-1}&=r_t\cdot q_{t+1} + \underbrace{0}_{r_{t+1}}
   \end{align*}
-  Because the residues are non-negative decreasing integers, the process must stop; there is a first $t\st r_{t+1}=0$. Then, $\gcd(a,b) = r_t$, the last non-zero residue.
+  Because the residues are non-negative decreasing integers, the process must stop; there is a first $t\st r_{t+1}=0$. Then, $\gcd(a,b) = r_t$, the last non-zero residue.\footnotemark
 \end{theorem}
+\footnotetext{Sketch: we show the equivalence by proving that they each divide each other, and are thus equal by \cref{lemma:propertiesofdivison}. This is done by induction on the residuals dividing "each other", and working "backwards" essentially, then by induction on an arbitrary element dividing the residuals to show that it must then divide the gcd.}
 
 \begin{proof}
   We first prove by induction that for all $0 \leq i \leq t+1$, $r_t $ divides both $r_{t-i}$ and $r_{t-i-1}$. ($\implies r_t|r_{-1}=b, r_t|r_{-2}=a$.)\\
@@ -1062,7 +1070,7 @@ Math $\equiv$ Poetry
 \end{definition}
 
 \begin{corollary}
-  Any non-zero integer $n$ is of the form $$\epsilon \cdot p_1 \cdots p_a, \quad \epsilon \in \{\pm 1\}, $$ where $p_i$ are primes numbers, $a geq 0$.
+  Any non-zero integer $n$ is of the form $$\epsilon \cdot p_1 \cdots p_a, \quad \epsilon \in \{\pm 1\}, $$ where $p_i$ are primes numbers, $a \geq 0$.
 \end{corollary}
 
 \begin{proof}
@@ -1104,15 +1112,63 @@ Math $\equiv$ Poetry
 \end{proof}
 
 \begin{theorem}[Fundamental Theorem of Arithmetic]
-  Let $n \in \mathbb{Z}, n \neq 0$. There exists $\epsilon \in \{\pm 1\}$ and prime numbers $p_1, \cdots, p_a, a \geq 0$ such that $n = \epsilon \cdot p_1 \cdots p_a$.
+  Let $n \in \mathbb{Z}, n \neq 0$. There exists $\epsilon \in \{\pm 1\}$ and prime numbers $p_1, \cdots, p_a, a \geq 0$ such that $n = \epsilon \cdot p_1 \cdots p_a$, \textbf{uniquely}.\footnotemark
+\end{theorem}
+\footnotetext{
+Sketch: this shows only uniqueness, existence is proven by \cref{lemma:primefactorization}. Use induction; base case, $n=2$ trivial. Use complete induction, and proceed by contradiction (kind of). Assume that $n$ has two distinct prime factorizations. Then, break down by cases; $p_1 = q_1$ or not. If they are, then take some small $m$ covered by inductive assumption, set equal to $\frac{n}{p_1}$, meaning that if $p_1 = q_1$, the remaining $p_i = q_i$.\\ For inequality, show that $p_1 < q_1 \implies p_1 < p_1$ by showing that $p_1 | q_1 \cdots$, and thus $p_1 = q_i$ for some $i$, so $p_1 < q_1 \leq \cdots q_i =p_1$, and thus you have a contradiction.
+
+}
+
+\begin{proof}
+  First, it is clear that the sign is unique, so wlog, we only consider positive $n$. We have already proved that $\exists$ such a factorization by \cref{lemma:primefactorization}; we now aim to show that this is unique. We proceed by induction.\\
+  \textit{Base case:} $n = 1$; $p_i,q_j \geq 2$, only option is the empty product $a = b = 0$.\\
+  \textit{Assumption:} say holds for integers $1 \leq m \leq n -1$, $n \geq 2$ (numbers smaller than $n$). We are given \[n = p_1 \cdots p_a = q_1 \dots q_b.\]
+  \begin{itemize}
+    \item Suppose $p_1 = q_1$. Then $m = \frac{n}{p_1} = p_2 \cdots p_a = q_2 \cdots q_b \implies a = b$ and $p_i = q_i$ for $2 \leq i \leq a$ (and also, $p_1 = q_1$)
+    \item Otherwise, $p_1 \neq q_1$, and wlog (symmetric) $p_1 < q_1$. We have $p_1 | n$ so $p_1 | q_1 \cdots q_b \overset{p \text{ prime}}{\implies} p_1 | q_i$ for some $1 \leq i \leq b$ . As $p_i$ prime, $p_1 = q_i$, implying $p_1 < q_1 \leq q_2 \leq \cdots q_i = p_1$, a contradiction to the assumption that $p_1 < q_1$. Thus, $p_1 = q_1$.
+  \end{itemize}
+
+  Alternatively, we could write $n = \epsilon p_1^{a_1} \cdots p_s^{a_s}$ where $p_i$ are distinct prime numbers and $a_i > 0$ (ie, we are "collecting" the identical primes, and raising them to the power of how many times they appear) where $p_i$ and $a_i$ are unique.
+\end{proof}
+
+% !
+\begin{theorem}[Version of FTA for Rationals]
+  Let $q\neq 0$ be a rational number. Then, $\exists$ a unique sign $\epsilon \in \{\pm 1\}$, integer $s$, primes $p_1, \dots, p_a$ and exponents $a_i \neq 0 \st$
+  \[q = \epsilon \cdot p_1^{a_1} \cdots p_s^{a_s}\]
+\end{theorem}
+% TODO: sketch needed
+\begin{proof}
+  Write $q = \frac{m}{n}$, where $m,n \in \mathbb{Z}$. Then, we can write $m$ as \[m = \epsilon_m \cdot p_1^{b_1} \cdots p_s^{b_s};\qquad n = \epsilon_n \cdot p_1^{c_1}\cdots p_s^{c_s}\]
+  \begin{remark}
+    If we allow 0 as an exponents, we can write these such that the same primes appear in both $n$ and $m$.
+  \end{remark}
+  We can then write \[\frac{m}{n} = \frac{\epsilon_m}{\epsilon_n} p_1^{b_1-c_1}\cdots p_s^{b_s-c_s}.\] We can now omit the primes with $b_i - c_i = 0$ to get only non-zero exponentiated primes. We have thus shown existence\\
+  To show uniqueness, we can disregard the sign as before.  Say $0 < q = p_1^{a_1}\cdots p_s^{a_s} = p_1^{a_1'}\cdots p_s^{a_s'}$. If these are equivalent representations, then letting $c_i = a_i - a_i'$, we get that $1 = p_1^{c_1} \cdots p_s^{c_s}$; thus, we aim to show that $c_1 = \cdots c_s = 0$. wlog, we can rearrange these $c$'s such that $c_1, \cdots , c_t < 0, c_{t+1} , \cdots, c_s \geq 0$. This implies that $p_1^{-c_1} \cdots p_t^{-c_t} = p_{t+1}^{c_{t+1}} \cdots p_s^{c_s}$. This is an equality on integers, and as given by FTA, this is only possible if $c_i = 0 \forall i$.
+\end{proof}
+
+\begin{proposition}
+  $\sqrt{2} \notin \mathbb{Q}$
+\end{proposition}
+\begin{proof}
+  Suppose it is. Then $\sqrt{2} = p_1^{a_1}\cdots p_s^{a_s}$, $a_i \neq 0, p_i$ distinct primes. Then, we have \[2 = (p_1^{a_1} \cdots p_s^{a_s})^2 = p_1^{2a_1}\cdots p_s^{2a_s}.\] But, $2 = 2^1$, and by uniqueness of factorization, we get a contradiction because $1  \neq 2a_{i}$ for any i.
+\end{proof}
+
+\begin{theorem}
+  There exist infinitely many prime numbers.
 \end{theorem}
 
+\begin{proof}
+  Suppose $p_1, \dots, p_n$ are distinct prime numbers. Then, there exists a prime number $p_{n+1}$ which is not one of these. Let $N = p_1 p_2 \cdots p_n +1 > 1$, so $\exists p|N$ where $p$ prime. If $p =$ on of $p_1 \dots p_n$, say some $p_i$; then, $p | N$ and $p | p_1 p_2 \cdots p_n \implies p | (N - p_1 \cdots p_n) \implies p | 1$, which is a contradiction.
+\end{proof}
 
+\begin{proposition}
+  Let $a,b \neq 0, a,b \in \mathbb{Z}$. Then $a|b \iff a| \epsilon p_1^{a_1} \cdots p_m^{a_m}, a_1 > 0, p_i$ prime, $\epsilon \in \{\pm 1\}$ and $b = \mu p_1^{a_1'} \cdots p_m^{a_m'}q_1^{b_1}\cdots q_t^{b_t},a_i' \geq a_i, q_i$ primes, $b_i > 0$.
+\end{proposition}
 
-
-
-
-
+\begin{proof}
+  If we can, then $\frac{b}{a} = \underbrace{\frac{\mu}{\epsilon} \cdot p_1^{a_1'-a_1}\cdots p_m^{a_m'-a_m}q_1^{b_1}\cdots q_t^{b_t}}_{:=c} \implies b = a \cdot c \implies a|b$.\\
+  If $a|b$ so $b = a \cdot d$. We can write $a = \epsilon p_1^{a_1}\cdots p_m^{a_m}$, and $d = \epsilon' p_1^{r_1}\cdots p_m^{r_m}q_1^{b_1}\cdots q_t^{b_t}$, and let $b = (\epsilon \epsilon ')p_1^{a_1 + r_1} \cdots p_m^{a_m+r_m} q_1^{b_1}\cdots q_t^{b_t}$ (where $r_i$ > 0), and let $a_i' = a_i+r_i \geq a_i$.
+\end{proof}
 
 
 
