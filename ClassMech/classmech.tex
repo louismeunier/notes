@@ -377,7 +377,7 @@ When analyzing a system we thus need to balance:
 \subsection{Trends of Common Forces}
 % TODO: with plots
 % TODO: forces on a big sphere.
-% TODO: conical pendiulum
+% TODO: conical pendulum
 % TODO friction
 
 \subsection{Generalizing Forces as Functions}
@@ -642,7 +642,56 @@ We wrote previously $\vec{F}(\vec{r}) = m \dv{\vec{v}}{t}$, a vector valued func
 \end{align*}
 Note that, we are "canceling" the differentials rather informally, but with an equivalent result as properly taking a double integral over time as well as distance. Note that, as $\vec{r}$ is some arbitrary curve/trajectory in space, we are "formally" taking a line integral, hence the $\oint$. We call the trajectory we are integrating over $R$; say it has endpoints $a,b$. We can then simplify\[
   \oint_R \vec{F} \cdot \dd{\vec{r}} = m \int_a^b \dd{\vec{v}} \vec{v} = \frac{1}{2}m \left(v_a^2 - v_b^2\right),\] where our RHS is the familiar KE. Thus, 
-  \[\boxed{\oint_R \vec{F} \cdot \dd{\vec{r}} = \Delta \text{KE}} = W.\]
+  \[\boxed{\oint_R \vec{F} \cdot \dd{\vec{r}} = \Delta \text{KE}= W.} \]
 
 Generally, the LHS can't necessarily be integrated but we can make some simplifying observations. First $\dd{\vec{r}}$ is always tangent to the trajectory $\vec{R}$, as should be familiar from the definition of a derivative. We can break down the force components along a given trajectory as the parallel and perpendicular components to the trajectory at a given point; \[\vec{F} = F_{\parallel} + F_\perp \implies \vec{F} \cdot \dd{r} = (F_{\parallel} + F_\perp)\cdot \dd{r}.\] However, by definition, the dot product of a vector with a perpendicular is equal to zero, and thus $\dd{r} \cdot F_\perp = 0$, and we thus need only be concerned with the parallel components of force.
+
+\begin{example}[Inverse Square Field]
+  We have $F(r) - \frac{GmM}{r^2}$. We can write the work done on a particle to escape the field as \begin{align*}
+    W &= \lim_{r \to \infty}\int_{R_E}^{r} \dd{r^*}\left(\frac{-GmM}{r{^*}^2}\right)\\
+    &= \eval{\frac{GmM}{r}}_{R_E}^{\infty} = -\frac{GmM}{R_E}
+  \end{align*}
+  We can use this to find the escape velocity $v_e$, ie the initial velocity needed for a particle to \emph{just} escape such a field;
+  \begin{align*}
+    W = \Delta \text{KE} &= \cancelto{0}{\frac{1}{2}mv_f^2}-\frac{1}{2}mv_e^2\\
+    &= \frac{GmM}{R_E} \implies v_e = \sqrt{2 \frac{GM}{R_E}}=\sqrt{2 g R_E}\\
+  \end{align*} Recalling that $g:= \frac{GM}{R_E^2}$.
+\end{example}
+
+\begin{example}[Inverted Pendulum]
+  A string of length $l$ is attached to a vertical wall with a mass $m$ at its end. Given an initial angular displacement of $\varphi_0$, we can write:
+  \begin{align*}
+    \vec{F} \cdot \dd{\vec{r}} &= \underbrace{\cancelto{0}{\vec{T}\cdot \dd{\vec{r}}}}_{\perp \text{ motion}} + m \vec{g} \cdot \dd{\vec{r}}\\
+  \end{align*}
+  The $\parallel$ component of $m\vec{g}$, the only relevant component on the RHS, is simply $m g \sin \varphi$. We can also rewrite $\dd{\vec{r}}$ to have a solvable integral by noting the relationship between arc length and radius, $s = l \varphi \implies \dd{\vec{r}} = l \dd{\varphi}$. Substituting this in:
+  \begin{align*}
+    \oint \dd{\vec{r}}\cdot \vec{F} &= \int_{\varphi_0}^\varphi \dd{\varphi'} m g l \sin \varphi'\\
+    &= mgl \eval{(-\cos \varphi')}_{\varphi_0}^{\varphi}\\
+    &= mgl(\cos \varphi_0 - \cos \varphi)
+  \end{align*}
+\end{example}
+
+\begin{example}[Constant Uniform Force]
+  \begin{align*}
+    \vec{F} = F_0 \hat{m} \implies \oint \vec{F} \cdot \dd{\vec{r}} &= F_0 \oint \dd{\vec{r}}\cdot \hat{m}\\
+    &= F_0 \cdot \hat{m} \cdot \oint_a^b \left[\hat{i} \dd{x} + \hat{j} \dd{y} + \hat{k} \dd{z}\right]\\
+    &= F_0 \hat{m}\left[(x_b-x_a)\hat{i} + (y_b-y_a)\hat{j} + (z_b-z_a)\hat{k}\right]\\
+    &= F_0 \hat{m}(\vb{r_b} - \vb{r_a})
+  \end{align*}
+\end{example}
+
+\begin{example}[Central Force]
+  $\vec{F} = f(r) \hat{r}$
+\end{example}
+
+\subsection{Force Fields}
+
+In many of the examples of the previous section, the work done over an area depending solely on the force at the starting and ending points; this begs the question, in what situations is the work done \textit{independent} of the path taken? This is equivalent to asking how can we tell if a force is \textit{conservative}?\\
+Consider some path $\vec{r}$ from a point $\vec{r}_a$ to $\vec{r}_b$. If we consider $a$ and $b$ to be the same point (ie, we are in a loop), then we can write \[\oint_a^b \vec{F} \cdot \dd{\vec{r}} = f(\vec{r}_b) - f(\vec{r}_a) = 0.\] Consider the following theorem:
+\begin{theorem}[Stoke's Theorem]
+  \[\int_C\vec{F}\cdot \dd{\vec{r}} = \iint (\curl \vec{F}) \dd{\vec{s}}\]
+  (read: the line integral of a vector field over a loop is equal to the integral of the perpendicular components of the curl of that field over the surface enclosed by the loop in question.)
+\end{theorem}
+
+We define $\text{curl} \vec{F} :=\curl \vec{F}$. From Stoke's Thm, then, if we require the LHS to be zero, then $\curl \vec{F} = 0$.
 \end{document}
