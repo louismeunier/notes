@@ -11,6 +11,7 @@
 \usepackage{titleps}
 \usepackage{amsthm}
 \usepackage{titlesec}
+\usepackage{tikz}
 \usepackage[x11names]{xcolor}
 \colorlet{shadecolor}{LavenderBlush3}
 \usepackage{delarray}
@@ -1878,6 +1879,21 @@ Take a system defined as $\vec{x}(t) = c_1 (\frac{1}{2})^t \begin{bmatrix}
 \end{bmatrix}$. Intuitively, it should be clear that as $t \to \infty$, $\vec{x}(t)$ approaches $\vec{0}$, since for both $(\frac{1}{2})^t$ and $(\frac{1}{4})^t$, as $t$ increases, vectors they are being multiplied to approach $\vec{0}$. We can thus say that a linear dynamical system is stable if the eigenvalues of $A$ are all less than $1$ in magnitude (ie $|\lambda_i| < 1$). Since the eigenvalues do not depend on the initial condition of the system, we can say that the system is stable.
 
 Consider also the \textbf{phase portrait} of this system. A phase portrait is a graph of the system's solutions over time, which essentially treats $\vec{x}(t)$ as a parametric plot of the $x$ and $y$ coordinates of the vector. The phase portrait of the system is shown below:
+
+\begin{tikzpicture}[scale=1.5]
+    % axes
+    \draw[->] (-2,0) -- (2,0) node[right] {$x$};
+    \draw[->] (0,-2) -- (0,2) node[above] {$y$};
+    % eigenvectors
+    \draw[thick,red,->] (0,0) -- (3,-1) node[midway, above left] {$\mathbf{v_1}$};
+    \draw[thick,blue,->] (0,0) -- (0,1) node[midway, left] {$\mathbf{v_2}$};
+    % trajectory
+    \foreach \a/\b in {-1/1, 0.5/-0.5, 1.5/0.5}{
+      \draw[thick,green] plot[smooth, tension=.7] coordinates{(\a,\b) ({3*\a-1*\b*1/3},{-1*\a*1/3+1*\b*1/3})};
+    }
+    % equilibrium point
+    \filldraw[black] (0,0) circle (1pt) node[below left] {$(0,0)$};
+  \end{tikzpicture}
 
 \newpage
 \section{Summary of Terms}
