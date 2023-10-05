@@ -21,6 +21,7 @@
 \usepackage[]{csquotes}
 \usepackage{xcolor-solarized}
 \usepackage{shortcuts}
+\usepackage{mdframed}
 % \usepackage[createShortEnv]{proof-at-the-end}
 
 \renewcommand*{\proofname}{}
@@ -125,6 +126,12 @@
 \end{center}
 
 \setstretch{1.5}
+\begin{mdframed}[backgroundcolor=gray!20]
+  \underline{Course Outline:}\\\textit{
+    Fundamentals of set theory. Properties of the reals. Limits, limsup, liminf. Continuity. Functions. Differentiation.
+  }
+\end{mdframed}
+
 \tableofcontents
 
 % "enables" footer with section+subsection, etc. just comment it out if you don't want it
@@ -868,11 +875,12 @@ In the proof, we used the claim:
 
 \begin{example}
   Prove that $\exists$ bijection between $[0,1)$ and $(0,1)$, and conclude that $[0,1) \sim (0,1) \sim \mathbb{R}$. Then conclude for any $a < b$, $[a,b) \sim \mathbb{R}$.
-\end{example}
 
-\begin{proof}[Proof]
-  % TODO
-\end{proof}
+  \begin{proof}[Proof]
+    % TODO
+  \end{proof}
+
+\end{example}
 
 \subsubsection{Power Sets}
 \begin{definition}[Power Set]
@@ -912,11 +920,12 @@ In the proof, we used the claim:
 
 \begin{example}
   Let $(x_n)$ be a sequence defined by $x_n = \frac{1}{n}, n \in \mathbb{N}$, then $\lim_{n \to \infty} x_n = 0$.
+  \begin{proof}[Proof]
+    Let $\epsilon > 0$. Let $N \in \mathbb{N} \st N > \frac{1}{\epsilon}$. Then for $n \geq N$, we have that $$0 < \frac{1}{n}\leq \frac{1}{N} < \epsilon.$$ So, for $n \geq N, |x_n - 0| < \epsilon$, and so the limit is $0$.
+  \end{proof}
 \end{example}
 
-\begin{proof}[Proof]
-  Let $\epsilon > 0$. Let $N \in \mathbb{N} \st N > \frac{1}{\epsilon}$. Then for $n \geq N$, we have that $$0 < \frac{1}{n}\leq \frac{1}{N} < \epsilon.$$ So, for $n \geq N, |x_n - 0| < \epsilon$, and so the limit is $0$.
-\end{proof}
+
 
 \begin{definition}[Limit Redefinition]
   The limit can be written in terms of quantifiers.
@@ -924,15 +933,16 @@ In the proof, we used the claim:
 \end{definition}
 
 % TODO: add "strategy"
-\begin{definition}
+\begin{example}
   Prove that $$\lim_{n\to \infty} \frac{n^2+1}{n^2} = 1.$$
-\end{definition}
+
 \begin{proof}[Proof]
   Let $\epsilon > 0$. Let $N$ be a natural number such that $N > \frac{1}{\sqrt{\epsilon}}$. Then, for $n \geq N$,
   \begin{align*}
     |\frac{n^2+1}{n^2}-1| = |\frac{n^2+1-n^2}{n^2}| = \frac{1}{n^2} \leq \frac{1}{N^2} < \epsilon.
   \end{align*}
 \end{proof}
+\end{example}
 
 \begin{definition}[Divergent Sequences]
   If a sequence $(x_n)$ does not converge to any real number $x$, we say that the sequence is divergent. For instance, consider \[x_n = (-1)^n, n \geq 1.\] The sequence alternates between $1$ and $-1$ and so intuitively does not converge. How do we prove it?
@@ -1074,12 +1084,66 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
    Then, $x_n < \epsilon + x$, and since $x < -2 \epsilon$, we have $\forall n \geq N$, $x_n < -\epsilon$, and thus $\forall n \geq N$, $x_n < 0$, a contradiction.
 \end{proof}
 
+\begin{theorem}[The Squeeze Theorem]
+  Let $(x_n), (y_n), (z_n)$ be sequences such that \(x_n \leq y_n \leq z_n, \,\forall n \geq 1,\) and \(\lim_{n \to \infty} x_n = \lim_{n \to \infty} z_n = \ell,\) then \(\lim_{n \to \infty}y_n = \ell.\footnotemark\)
+\end{theorem}
+\footnotetext{Sketch: This follows a similar technique to many that follow. Use the definitions of the limits of $x_n, z_n$ to take an arbitrary $\epsilon$, and an $N$ for each respective limit. Take the max of these $N$'s, and show that for all $n \geq \max N_i$, you can show that f $y_n - l$ is less than $\epsilon$ and greater than $-\epsilon$. Really, this is just a proof of applying definitions correctly.}
 
+\begin{proof}[Proof]
+  Let $\epsilon > 0$. Since $\lim x_n = \ell$, there $\exists N_1 \in \mathbb{N} \st \forall n \geq N_1, |x_n - \ell| < \epsilon$.\\
+  Since $\lim z_n = \ell$, there $\exists N_2 \in \mathbb{N} \st \forall n \geq N_2, |z_n - \ell| < \epsilon$.\\
+  Take $N = \max \{N_1,N_2\}$ and take $n \geq N$. Then, \[y_n \leq z_n \implies y_n - \ell \leq z_n - \ell \leq |z_n - \ell| < \epsilon,\] since $n \geq \max\{N_1, N_2\} \implies n \geq N_2.$\\
+  Now, we have that \[y_n \geq x_n \implies y_n - \ell \geq x_n - \ell > - \epsilon, \] since $|x_n - \ell| < \epsilon $ for $n \geq N_1,$ and our $n$ is $\geq \max\{N_1,N_2\}.$ Thus, for $n \geq N$, \[-\epsilon < y_n - \ell < \epsilon \implies |y_n - \ell| < \epsilon,\] and thus $\lim y_n = \ell$, by definition.
+\end{proof}
 
+\begin{definition}[Increasing/Decreasing]
+  A sequence $(x_n)$ is called \emph{increasing} if $x_{n+1} \geq x_n \forall n \in \mathbb{N}$, and is \emph{decreasing} if $x_{n_1} \leq x_n \forall n \in \mathbb{N}$.
+\end{definition}
 
+\begin{definition}[Bounded from above/below]
+  A sequence $(x_n)$ is called \emph{bounded} from above if there exists some $M \in \mathbb{R} \st x_n \leq M \forall n \geq 1$.\\Sequence $(x_n)$ is bounded from below if there exists some $M \in \mathbb{R} \st x_n \geq M \forall n \geq 1$.
+\end{definition}
 
+\begin{theorem}[Monotone Convergence Theorem]
+  The following relate to bounded above/below and increasing/decreasing sequences:\footnotemark
+  \begin{enumerate}
+    \item Let $(x_n)$ be an increasing sequence that is bounded from above. Then $(x_n)$ is converging.
+    \item Let $(x_n)$ be a decreasing sequence that is bounded from below. then $(x_n)$ is converging.
+  \end{enumerate}
+\end{theorem}
+\newpage
+\footnotetext{Sketch: 1,2 are proven very similarly. For 1., take the set of all $x_n$ in the given sequence. Since the sequence is bounded, then so is the set, and so we can take its supremum. Use the $\epsilon$ definition of $\sup$ to show that this supremum is also the limit of the sequence (basically, a bunch of inequalities, and being careful with definitions). 2. follows identically but using the infimum.}
 
+\begin{proof}[Proof (of 1)]
+  Let $A = \{x_n: n \geq 1\}$. Since $(x_n)$ is bounded above by $M$, the set $A$ is bounded from above. Let $\alpha = \sup A$, which exists by AC.\\Let $\epsilon > 0$. Since $\alpha$ is the least upper bound for $A$, $\alpha - \epsilon$ is \textit{not} an upper bound of $A$ ($\alpha - \epsilon < \alpha$). Hence, there must exist some $N \in \mathbb{N}$ such that $\alpha - \epsilon < x_N$ (if it didn't exist, then $\alpha$ wouldn't be the supremum \dots). Then, for $n \geq N$, and since $(x_n)$ increasing, $$\alpha - \epsilon < x_N \leq x_n \leq \alpha.$$ Then, for all $n \geq N$, \[\alpha - \epsilon < x_n \leq \alpha \implies - \epsilon < x_n -\alpha \leq 0,\] and so $|x_n - \alpha| < \epsilon $ for $n \geq N$. By definition, $\alpha = \lim x_n$
+\end{proof}
 
+\begin{example}
+  % TODO
+  A sequence $(x_n)$ is called \emph{eventually increasing} if there exists some $N_0 \in \mathbb{N} \st \forall n \geq N_0 x_{n+1} \geq x_n$. If $(x_n)$ is eventually increasing and bounded from above, $\lim x_n = \alpha$ exists.
+\end{example}
+
+\begin{example}
+  Let $(x_n)$ be a sequence defined recursively by $x_1 = \sqrt{2}$ and $x_{n+1} = \sqrt{2 + x_n}, n \geq 1$. So $x_2 = \sqrt{2 + \sqrt{2}}, x_3 = \sqrt{2 + \sqrt{2 + \sqrt{2}}} \cdots$, $x_n = 2 \cos \frac{\pi}{2^{n+1}}, n \geq 1$. Show that $\lim x_n = 2$.
+  \begin{proof}[Proof]
+    We will prove this using the Monotone Convergence Thm by showing that the $x_n$ is bounded from above and increasing, which implies that the limit exists. We will then find the actual limit.\\
+    Recall that $n \geq 1, x_n \leq 2$. We will prove this by induction. Let $S \subseteq \mathbb{N}$ be the set of indices such that $x_n \leq 2$. Since $x_1 = \sqrt{2} < 2$, $1 \in S$. Now suppose some $n \in S$, ie $x_n \leq 2$. Then, we have that $x_{n+1} = \sqrt{2 + x_n} \leq \sqrt{2+2} = 2 \implies x_{n+1} \leq 2$. Thus, by induction, $n \in S \implies n+1 \in S \implies S = \mathbb{N}$, ie $x_{n} \leq 2 \forall n \in \mathbb{N}$. Thus, our sequence is bounded from above.\\
+    We now prove that $(x_n)$ is increasing. Let $S \subseteq \mathbb{N} \st n \in S \iff x_{n+1} \leq x_n$. $x_2 = \sqrt{2 + \sqrt{2}} \geq \sqrt{2} = x_1 \implies x_1 \leq x_2 \implies 1 \in S$. Suppose $n \in S \implies x_{n+1} \geq x_n$. Then, $x_{n+2} = \sqrt{2 + x_{n+1}} \geq \sqrt{2 + x_n} = x_{n+1} \implies n+1 \in S$. Thus, $S = \mathbb{N}, $ so $x_{n+1} \geq x_{n} \forall n \in \mathbb{N}$.\\
+    So the sequence $(x_n)$ is increasing and bounded from above, and thus $\exists \lim x_n = \alpha$. To find the value of $\alpha$, consider $x_{n+1} = \sqrt{2 + x_n}$, or $x_{n+1}^2 = 2 + x_n$. We can also write that $\alpha = \lim x_n = \lim x_{n+1}.\footnotemark$ We then have that $\lim x_{n+1} = \alpha \implies \lim x_{n+1}^2 = \alpha^2$, and thus $x_{n+1}^2 = 2+ x_n \implies \lim  x_{n+1}^2 = \lim (2+x_n) \implies \alpha^2 = 2 + \alpha  \implies \alpha = 2, -1$. $x_n \geq 0 \forall n$, by Order Limit Theorem, and so $\alpha \geq 0$ and thus $\alpha = 2$.
+  \end{proof}
+\end{example}
+
+\footnotetext{Add proof}
+
+\begin{example}
+  Let $(x_n)$ be defined recursively by $x_1 = 2$ and $x_{n+1} = \frac{1}{2}\left(x_n + \frac{2}{x_n}\right)$ for $n \geq 1$. Then, $(x_n)$ is converging and $\lim x_n = \sqrt{2}$.
+  \begin{proof}[Proof]
+    We will show that $(x_n)$ bounded from below and decreasing, implying the limit exists. We will show that for $n$, $x_n \geq \sqrt{2}$. For $n = 1$, $2 \geq \sqrt{2}$. For $n > 1$, we will use $\frac{1}{2} (a+b) \geq \sqrt{ab}$ for $a,b\geq 0$. The prove it, square both sides and observe \[\frac{1}{4}(a^2 + 2ab + b^2) \geq ab \iff a^2 + 2ab + b^2 \geq 0 \iff (a-b)^2 \geq 0.\] We then have that $x_{n+1} = \frac{1}{2}(x_n + \frac{2}{x_n}) \geq \dots \geq \sqrt{2} \implies x_n \geq \sqrt{2} \forall n \geq 1$, ie, it is bounded from below.\\
+    We will now show that the sequence is decreasing.
+    \[x_n - x_{n+1} = x_n - \frac{1}{2}(x_n + \frac{2}{x_n}) = \frac{1}{2}x_n - \frac{1}{x_n} = \frac{1}{2x_n}(x_n^2 - 2).\]
+    % TODO: finish
+  \end{proof}
+\end{example}
 
 
 
