@@ -235,7 +235,7 @@ The \textbf{Axiom of Induction} (AI), can be stated in a number of ways.
   then $S = \mathbb{N}$.
 \end{axiom}
 
-Finally, combing AI.ii and AI.iii;
+Finally, combining AI.ii and AI.iii;
 \begin{axiom}[AI.iv]
   Let $S \subseteq \mathbb{N}$ s.t.:
   \begin{enumerate}[label=(\alph*)]
@@ -266,7 +266,7 @@ Finally, combing AI.ii and AI.iii;
 
 Consider the set of naturals $\mathbb{N} = \{1, 2, 3, \dots\}$. Adding $0$ to $\mathbb{N}$ defines $\mathbb{N}_0 = \{0, 1, 2, \dots\}$. We define the \textbf{integers} as the set $\mathbb{Z} = \{\dots, -3, -2, -1, 0, 1, 2, 3, \dots\}$, or the set of all positive and negative whole numbers.
 
-Within $\mathbb{Z}$, we can define multiplication, addition and subtraction, with the neturals of 1 and 0, respectively. However, we cannot define division, as we are not guaranteed a quotient in $\mathbb{Z}$. This necessitates the \textbf{rationals}, $\mathbb{Q}$. We define \[\mathbb{Q} = \{\frac{p}{q}, p \in \mathbb{Z}, q \in \mathbb{Z}, q \neq 0\}.\]
+Within $\mathbb{Z}$, we can define multiplication, addition and subtraction, with the neutrals of 1 and 0, respectively. However, we cannot define division, as we are not guaranteed a quotient in $\mathbb{Z}$. This necessitates the \textbf{rationals}, $\mathbb{Q}$. We define \[\mathbb{Q} = \{\frac{p}{q}: p \in \mathbb{Z}, q \in \mathbb{Z}, q \neq 0\}.\]
 On $\mathbb{Q}$, we have the familiar operations of multiplication, addition, subtraction and properties of associativity, distributivity, etc. We can also define division, as $\frac{\frac{p}{q}}{\frac{p'}{q'}}= \frac{pq'}{qp'}$.
 
 We can also define a relation $<$ between fractions, such that 
@@ -648,7 +648,7 @@ In the proof, we used the claim:
     \item Uniqueness: if $\alpha^2 = 2$ and $\beta^2 = 2$, $\alpha \geq 0, \beta \geq 0$, then $0= \alpha^2 - \beta^2 = (\alpha - \beta)(\alpha + \beta) > 0$, and so $\alpha - \beta = 0 \implies \alpha = \beta$.
     \item Existence: consider the set $A = \{x \in \mathbb{R} : x \geq 0 \text{ and } x^2 < 2\}$. $A$ is not empty as $1 \in A$. The set of $A$ is bounded above by 2, since if $x \geq 2$, then $x^2 \geq 4 > 2$, so $x \notin A$. So, by AC, $\sup A$ exists; let $\alpha = \sup A$. We will show that $\alpha^2 = 2$, by showing that both $\alpha^2 < 2$ and $\alpha^2 > 2$ are contradictions.
     
-    \begin{itemize}[label=$\bullet$]
+    \begin{itemize}[label=]
       \item $\alpha^2 < 2$
     
       For any $n \in \mathbb{N}$ we expand \[\left(\alpha + \frac{1}{n}\right)^2 = \alpha^2 + \frac{2\alpha}{n} + \frac{1}{n^2} \leq \alpha^2 + \frac{2 \alpha + 1}{n},\] noting that $\frac{1}{n^2} \leq \frac{1}{n}$ for $n \geq 1$.

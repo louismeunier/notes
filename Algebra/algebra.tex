@@ -673,12 +673,12 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
   \item[-] \cref{example:equiv3}; sets: an equivalence \textit{is} a cardinality. $n:=[\{1,2, \dots n\}] = $ all sets with $n$ elements. Similarly, we often write that $\aleph_0 := [\mathbb{N}] =$ inf. countable sets = sets un bijection with $\mathbb{N}$, and $2^{\aleph_0} := [\mathbb{R}]$.
  \end{itemize}
 
- (2) We are given a partition $A = \amalg_{i \in I} X_i$. We say $x \sim y$ if $\exists i \in I$ s.t. $x$ and $y$ belong to $X_i$ (noting that such an $i$ is unique if it exists, by definition of an equivalence class).
+ (2) We are given a partition $A = \amalg_{i \in I} X_i$. We say $x \sim y$ if $\exists i \in I$ s.t. $x$ and $y$ belong to $X_i$ (noting that such an $i$ is unique if it exists by definition of a partition).
 
  \begin{itemize}
   \item $x\sim x$, clearly, since $x \in X_i \implies x \in X_i$
   \item $x \sim y \implies y \sim x$, by similar logic
-  \item $x \sim y, y \sim z$ means that $x$ and $y$ in some same $X_i$, and $y$ and $z$ in some same $X_j$. So, $y \in X_i \int X_j$, but we are working with a partition so $X_i = X_j$, so $x \sim z$.
+  \item $x \sim y, y \sim z$ means that $x$ and $y$ in some same $X_i$, and $y$ and $z$ in some same $X_j$. So, $y \in X_i \cap X_j$, but we are working with a partition so $X_i$ and $X_j$ are disjoint and so this intersection is either $\varnothing$, or the sets are equal; since we know it is not empty, $X_i = X_j$, and so $x \sim z$.
  \end{itemize}
 
  Thus, $\sim$ is an equivalence relation.\footnotemark
@@ -911,7 +911,7 @@ Math $\equiv$ Poetry
 
 \begin{proof}
   Assume $b>0$ (similar proof applies for $b < 0$). Consider the set $S = \{a - bx: x\in \mathbb{Z}, a - bx \geq 0\}.$ Note that $S \neq \varnothing$. If $a \geq 0$, take $x = 0$. If $a < 0$, take $x = a$ to get $a-bx=a-ba=a(1-b) \geq 0$.\\
-  Thus, $S$ has a minimal element; let $r = \min(S)$. Because $r \in S, r \geq 0$, and \[r = a-ba \text{ some } q \in \mathbb{Z} \implies a= bq - r.\] Here, we claim $r < b$. If $r \geq b$, then $0 \leq r - b = a - b(q+1) \in S$, contradicting the minimality of $r$. Thus, $0 \leq r < b$.\\
+  Thus, $S$ has a minimal element; let $r = \min(S)$. Because $r \in S, r \geq 0$, and \[r = a-bq \text{ some } q \in \mathbb{Z} \implies a= bq - r.\] Here, we claim $r < b$. If $r \geq b$, then $0 \leq r - b = a - b(q+1) \in S$, contradicting the minimality of $r$. Thus, $0 \leq r < b$.\\
   We wish to show that $q, r$ are unique, meaning that if $a = bq' + r', q' \in \mathbb{Z}, 0 \leq r < b \implies q = q', r=r'$.\\
   If $q = q'$, then $r = a -b q = a - bq' = r' \checkmark$.\\
   Otherwise, wlog, say $q > q'$. We then have \begin{align*}
@@ -1005,7 +1005,7 @@ Math $\equiv$ Poetry
     b &= r_0\cdot q_1 + r_1, \quad 0 < r_1 < r_0\\
     r_0 &= r_1 \cdot q_2 + r_2\\
     \vdots & \qquad \vdots\\
-    r_{t-2} &= r{t-1}\cdot q_t+r_t, \quad 0 < r_t < r_{t-1}\\
+    r_{t-2} &= r_{t-1}\cdot q_t+r_t, \quad 0 < r_t < r_{t-1}\\
     r_{t-1}&=r_t\cdot q_{t+1} + \underbrace{0}_{r_{t+1}}
   \end{align*}
   Because the residues are non-negative decreasing integers, the process must stop; there is a first $t\st r_{t+1}=0$. Then, $\gcd(a,b) = r_t$, the last non-zero residue.\footnotemark
@@ -1026,6 +1026,10 @@ Math $\equiv$ Poetry
   \end{itemize}
 \end{proof}
 
+\begin{remark}[Extended Euclidean Algorithm]
+  After completing the algorithm, one can then "work backwards" to write any $d = \gcd(a,b)$ as $d = ua + vb$.\\
+  Start by writing $d = r_{t-2} - r_{t-1}\cdot q_t$; then, substitute in preceding residuals, simplifying along the way (but making sure to leave the \emph{quotients} from each substitution, as these are what you will substitute in the next step), and continue until you have the desired form. Consider the following example:
+\end{remark}
 
 \begin{example}
   $a = 48, b = 27, d = \gcd{48,27}=?$
