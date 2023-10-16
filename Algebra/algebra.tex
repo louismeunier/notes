@@ -1195,12 +1195,113 @@ Sketch: this shows only uniqueness, existence is proven by \cref{lemma:primefact
   $90 = 2 \cdot 3^2 \cdot 5 \cdot 7^0; 210 = 2 \cdot 3 \cdot 5 \cdot 7$. $\gcd(90,210) = 2 \cdot 3 \cdot 5 \cdot 7^0 = 30\checkmark$.
 \end{example}
 
+\part{Congruences and Modular Arithmetic}
+
+\section{Congruence Relations}
+\subsection{Definitions}
+\begin{definition}
+  Fix $n \geq 1, n \in \mathbb{Z}$. We define a relation of $\mathbb{Z}$ by $x \sim y$ if $n | (x-y)$.
+\end{definition}
+
+\begin{example}
+$n = 2$; $x \sim y$ if they have the same parity, ie both even or both odd.  
+\end{example}
+
+\begin{lemma}
+  The above relation is an equivalence relation. We will denote the equivalence class of an integer $r$ by $\overline{r}$. Then, \[\overline{r} = \{\dots r - 2n, r - n, r , r+n, r + 2n, \dots\}.\]
+  The set \[
+  \{\overline{0}, \overline{1}, \cdots, \overline{n-1}\}  
+  \]
+is a complete set of representatives.
+\end{lemma}
+
+\begin{proof} We first show that the relation is an equivalence relation:\\
+  \textbf{Reflexive: } $x - x = 0 \implies n | (x-x) \forall n$, so $x \sim x$.\\
+  \textbf{Symmetric: } say $x \sim y \implies n | (x-y) \implies n | -(x-y) \implies n | (y - x) \implies y \sim x$.\\
+  \textbf{Transitive: } say $x \sim y, y \sim z \implies n | (x-y), n |(y-z) \implies n | ((x-y) + (y-z)) \implies n | (x-z) \implies x \sim z$.\\
+  Now, we show that the described set is a complete set of representatives, ie we aim to show \begin{enumerate}
+    \item \textit{any $x \in \mathbb{Z}$ belongs to some $\overline{r}, 0 \leq r \leq n-1$.}
 
 
+    Proof of 1: Given $x \in \mathbb{Z}$, we can write $x = q \cdot n + r, 0 \leq r \leq n - 1$, and $x - r = q \cdot n\implies n | (x-r)$, so $x \sim r$. Ie, $x \in \overline{r}$.
+    \item \textit{if $0 \leq r \leq s \leq n - 1$ and $\overline{r} = \overline{s}$, then $r = s$ (no repetitions, ie "repeat representation").}
+    
+
+   Proof of 2: If $\overline{r} = \overline{s}$, then $r \in \overline{r}$ and $r \in \overline{s}$, so $r \sim s$. So, $n | (s-r)$; but $0 \leq s - r \leq n - 1 < n$, implying $s-r = 0 \implies s = r$ (since it must be a multiple of $n$, but less than $n$).
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+  For $n = 2$, we have two equivalence classes, $\overline{0} =\text{evens} = \{2x : x \in \mathbb{Z}\}, \overline{1} = \text{odds} = \{2x + 1s: x \in \mathbb{Z}\}$.\\
+  For $n = 3$, we have three; $\overline{0} = \{3x : x \in \mathbb{Z}\}, \overline{1} = \{1 + 3x : x \in \mathbb{Z}\}, \overline{2} = \{2 + 3x : x \in \mathbb{Z}\}$.
+\end{example}
 
 
+\begin{definition}
+  $x \sim y$, we say $x$ is congruent to $y \text{ modulo } n$, and write \[x \equiv y \mod n.\]
+\end{definition}
 
+\begin{definition}
+  We use $\mathbb{Z}\setminus n \mathbb{Z}$ or $\mathbb{Z}_n$ to denote the collection of congruence classes $\mod n$, ie $\mathbb{Z}\setminus n \mathbb{Z} = \{\overline{0}, \overline{1}, \dots, \overline{n-1}\}$.
+\end{definition}
 
+\begin{theorem}\label{thm:zmodnzringfield}
+  $\mathbb{Z}\setminus n \mathbb{Z}$ is a commutative ring with $n$ elements. It is a field iff $n$ is prime.
+\end{theorem}
+\begin{proof}
+  We define $\overline{r} + \overline{s} = \overline{r + s}$, $\overline{r} \cdot \overline{s} = \overline{rs}$. This is well defined; meaning if we use other representatives $r', s'$, we'll get the same result. Ie, given $r \sim r', s \sim s'$, we need to show $\overline{r' + s'} = \overline{r+s}, \overline{r'\cdot s'} = \overline{r \cdot s}$, ie $n | ((r+s) - (r'+s')), n | (rs - r's')$.\\
+  $(r+s) - (r'+s') = (r - r') + (s-s')$; both $r-r'$ and $s - s'$ are divisible by $n$, so we can write $rs - r's' = r(s-s') + s'(r-r')$; this whole thing is divisible by $n$. Now, we can verify the axioms:
+  \begin{enumerate}
+    \item $\overline{r} + \overline{s} = \overline{s} + \overline{r}; \overline{r} + \overline{s} = \overline{r+s} = \overline{s + r} = \overline{s} + \overline{r}$ \quad \textit{(commutativity of addition)}
+    \item $\dots$
+    \item $\overline{0}$ is the neutral element; $\overline{0} + \overline{r} = \overline{0 + r} = \overline{r}$ \quad \textit{(neutral addition element)}
+    \item $\overline(r) + \overline{(-r)} = \overline{(-r)} + \overline{r} = \overline{0}$ \quad \textit{(inverse wrt addition)}
+    \item $\dots$
+    \item $\overline{1} \cdot \overline{r} = \overline{r}$
+    \item $\dots$
+    % TODO above
+  \end{enumerate}
+
+  We now aim to show that $\mathbb{Z} \setminus n \mathbb{Z} \iff n \in \mathbb{P}$. Suppose $n$ composite, namely $n a \cdot b$, $1 < a < n, 1 < b < n$. Note that $\overline{a}, \overline{b} \neq \overline{0}$; but, $\overline{a}\cdot \overline{b} = \overline{a \cdot b} = \overline{n} = \overline{0}$. If $\mathbb{Z}\setminus n \mathbb{Z}$ is a field, then $\exists \overline{y} \st \overline{y} \cdot \overline a = \overline{1}$. We have $(\overline{y} \cdot \overline{a}) \cdot \overline{b} = \overline{1} \cdot \overline{b} = \overline{b}$, but $\overline{y}\cdot (\overline{a} \cdot \overline{b}) = \overline{y} \cdot \overline{0} = \overline{0}$, a contradiction.\\
+  Suppose, now, $n \in \mathbb{P}$. To show $\mathbb{Z}/n \mathbb{Z}$ is a field; let $\overline{a}  \neq \overline{0} \in \mathbb{Z}/n \mathbb{Z}$, that is $n \cancel{|}a$. But $n$ is prime, so $\gcd(a,n) = 1$, so $\exists u,v \in \mathbb{Z}$ such that $1 = ua + vn$. But this means $$n|(1-ua) \implies ua \equiv 1 \mod n \implies \overline{u} \cdot \overline{a} = \overline{1} \in \mathbb{Z}/n \mathbb{Z},$$ and we have thus found a multiplicative inverse.
+\end{proof}
+
+\begin{example}
+  $n = 2$; we have \begin{tabular}{c|cc}
+    + & 0 & 1\\
+    \hline
+    0 & 0 & 1\\
+    \hline
+    1 & 1 & 0
+  \end{tabular} and \begin{tabular}{c | cc}
+    $\times$ & 0 & 1\\
+    \hline
+    0 & 0 & 0\\
+    \hline
+    1 & 0 & 1
+  \end{tabular};
+  $\overline{1} + \overline{1} = \overline{2} = \overline{0}$.
+\end{example}
+\begin{example}
+  $n = 3$; we have \begin{tabular}{c|ccc}
+    + & 0 & 1 & 2\\
+    \hline
+    0 & 0 & 0 & 0 \\
+    \hline
+    1 & 1 & 2 & 0\\
+    \hline
+    2 & 2 & 0 & 1
+  \end{tabular}
+  and \begin{tabular}{c|ccc}
+    $\times$ & 0 & 1 & 2\\
+    \hline
+    0 & 0 & 0 & 0\\
+    \hline
+    1 & 0 & 1 & 2\\
+    \hline
+    2 & 0 & 2 & 1
+  \end{tabular}; $\overline{2} + \overline{2} = \overline{4} = \overline{1}$.
+\end{example}
 
 
 
