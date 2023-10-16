@@ -163,6 +163,7 @@
 \newpage
 % modify these as you wish
 \newgeometry{margin=0.25in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in, includemp}
+\setstretch{1.2}
 \parskip=0.6em
 
 \part{Fundamentals}
@@ -768,7 +769,7 @@ The "sub"-claims follow naturally.
   
   % If $0 = f(\lambda) = a_1(\lambda - z_1)$
 
-  Assume that true for polynomials of degree $\leq n$ and prove for $n+1$; let $f$ be a polynomial of degree $n+1$, $f(x) = a_{n+1} + x^{n+1} + \cdots$. Let $z_{n+1}$ be a roof of $f: f(z_{n+1}) = 0$. Such exists by the Fund'l Thm. We introduce the following lemma:
+  Assume that true for polynomials of degree $\leq n$ and prove for $n+1$; let $f$ be a polynomial of degree $n+1$, $f(x) = a_{n+1} + x^{n+1} + \cdots$. Let $z_{n+1}$ be a root of $f: f(z_{n+1}) = 0$. Such exists by the Fund'l Thm. We introduce the following lemma:
   \begin{lemma}
     Let $g$ be a polynomial with complex coefficients. Let $\lambda \in \mathbb{C}$; then we can write $g(x) = (x-\lambda)h(x) + r, r \in \mathbb{C}, h$ a polynomial with complex coefficients as well.
   \end{lemma}
@@ -828,7 +829,7 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
 \subsection{Definitions}
 
 \begin{definition}[Ring]
-  A ring R is a set with two operations
+  A ring R is a set with two operations\footnotemark
   \begin{itemize}
     \item \emph{Addition:} $R \times R \overset{+}{\longrightarrow} R, \quad (a,b) \mapsto a+b$
     \item \emph{Multiplication:} $R \times R \overset{\cdot}{\longrightarrow} R, \quad (a,b) \mapsto a \cdot b$
@@ -841,7 +842,7 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
     \item (0) $\exists$ a zero element, 0, s.t. $0 + a = a + 0 = a, \forall a \in R$.
     \item (negative) $\forall a \in R, \exists b \in R$ s.t $a+b = 0$.
     \item ($\cdot$ associative) $a(bc) = (ab)c, \forall a,b,c \in R$.
-    \item (1, multiplicative identity) $\exists 1 \in R$ s.t. $1 \cdot a = a \cdot 1 = a, \forall a \in R$.
+    \item (1, multiplicative identity) $\exists 1 \in R$ s.t. $1 \cdot a = a \cdot 1 = a, \forall a \in R$.\footnotemark
     \item (distributive) $\forall a,b,c \in R$, $a(b+c) = ab + ac$
   \end{enumerate}
 
@@ -851,6 +852,8 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
   \end{matrix} : a,b,c,d \in \mathbb{Z}\}, \dots$ are all examples of rings.
 
 \end{definition}
+\footnotetext{Though not always explicitly stated, it is often specified that rings are \textit{closed} under addition/multiplication; $a,b \in R \implies a+b \text{ and } a \cdot b\in R$.}
+\footnotetext{Some texts (Hungerford) do not require the multiplicative identity to exist in a ring; those with this property are called "rings with identity". In general, these are all relatively arbitrary conventions - they are defined as such to make other operations/observations clearer; they are not steadfast, natural definitions.}
 
 
 \begin{remark}
@@ -892,7 +895,7 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
     \item $0,1 \in S$.
     \item $x,y \in S \implies x + y, -x, x \cdot y \in S$.
   \end{enumerate}
-  Then $S$ is a ring itself.
+  Then, $S$ is a ring itself.
 
   $\mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$ are subrings; $\mathbb{Z} \subseteq \mathbb{Z}[i] \subseteq \mathbb{Q}[i] \subseteq \mathbb{C}$ are subrings; $M_2 (\mathbb{Z}) \subseteq M_2(\mathbb{R})$ are subrings.
 \end{definition}
@@ -966,12 +969,12 @@ Math $\equiv$ Poetry
   Similarly, $|d| \leq |b|$.
 \end{remark}
 
-\begin{theorem}
+\begin{theorem}\label{thm:gcdproperties}
   Let $a,b \in \mathbb{Z}$, not both $0$. Let $d = \gcd (a,b)$. Then,
   \begin{enumerate}
-    \item $\exists u,v \in \mathbb{Z} \st d = ua + vb$
-    \item $d$ is the minimal positive integer of the form $ua + vb$
-    \item every common divisor of $a,b$ divides $d$
+    \item $\exists u,v \in \mathbb{Z} \st d = ua + vb$;
+    \item $d$ is the minimal positive integer of the form $ua + vb$, $u, v \in \mathbb{Z}$;
+    \item every common divisor of $a,b$ divides $d$.
   \end{enumerate}
 \end{theorem}
 
@@ -981,7 +984,7 @@ Math $\equiv$ Poetry
     a &= D \cdot q + r, 0 \leq r < D,\\
     r &= a - Dq = a - (ua + vb)q\\
     &= a(1-uq) + b(-vq)\\
-    &\implies r > 0 \implies r \in S, \bot
+    &\implies r > 0 \implies r \in S, \text{ contradicts minimality of } D
   \end{align*}
   Thus, $D$ divides both $a$ and $b$, and so $D \leq d$ (any common divisor is leq gcd).\\
   Let $e$ be any common divisor of $a,b$. We have
@@ -1054,6 +1057,10 @@ Math $\equiv$ Poetry
   A positive integer $n$ is prime iff its only positive divisors are $1, n$.
 \end{definition}
 
+\begin{remark}
+  The goal of this section is to prove \cref{thm:fta}, of unique prime factorization; we then extend it to the rationals. We introduce a number of lemmas/auxiliary results regarding primes to build up to the proof.
+\end{remark}
+
 \begin{lemma}\label{lemma:primefactorization}
  Every natural number $n > 1$ is a product of prime numbers.
 \end{lemma}
@@ -1089,7 +1096,7 @@ Math $\equiv$ Poetry
   $n = p_1 \cdots p_a$. $n$ not prime, $a \geq 2$. If each $p_i > \sqrt{n}$, then $p_1 p_2 \cdots p_a < \sqrt{n}\cdot \sqrt{n} = n,\bot$
 \end{proof}
   
-\begin{lemma}
+\begin{lemma}\label{lemma:primediv}
   Let $p>1$ be an integer. The following are equivalent:
   \begin{enumerate}
     \item $p$ is prime
@@ -1099,7 +1106,8 @@ Math $\equiv$ Poetry
 
 \begin{proof}
   Assume 2., suppose $p = st \in \mathbb{Z}$. wlog, $s,t > 0$ (else replace $s$ by $-s$, $t$ by $-t$). $p|st$, so by 2., say $p|s$ , wlog. We can write $s = p \times w$, then $p = s\cdot t = p\cdot w \cdot t$, which are all positive integers. It must be that $w = t = 1$, and thus $s = p$. Therefore, $p$ has no non-trivial factorizations and is thus prime.\\
-  Assume now that 1. holds. Given that $p | ab$. If $p|a$, we are done. Suppose $p \cancel{|} a$. Then, $\gcd(p,a) = 1$ (since only divisors of $p$ are 1, $p$, so $\gcd$ could only be $1,  p$, but if $\gcd = p$ then $p|a$ which is not the case). From a property of gcd's, we can write $1 = up + va$ for some $u,v \in \mathbb{Z}$. Multiplying this by $b$, we have $b = upb + vab$.\\
+  Assume now that 1. holds; $p | ab$. If $p|a$, we are done. 
+  \\Suppose $p \cancel{|} a$. Then, $\gcd(p,a) = 1$ (since only divisors of $p$ are 1, $p$, so $\gcd$ could only be $1,  p$, but if $\gcd = p$ then $p|a$ which is not the case). From a property of gcd's, we can write $1 = up + va$ for some $u,v \in \mathbb{Z}$. Multiplying this by $b$, we have $b = upb + vab$.\\
   We have \begin{align*}
     p|ab &\implies p |vab\\
     p|p &\implies p |upb\\
@@ -1115,7 +1123,7 @@ Math $\equiv$ Poetry
   By induction; we just showed the case $m = 2$. Suppose it is true for $m \geq 2$ and $p | a_1 a_2 \cdots a_{m+1}$; then, $p | \underbrace{(a_1 a_2\cdots a_m)}_{(i)}\cdot \underbrace{a_{m+1}}_{(ii)}$. Then, either $p | (i)$ or $p| (ii)$, so $p | a_{m+1}$ or $p | a_i, 1 \leq i \leq m$, as required.
 \end{proof}
 
-\begin{theorem}[Fundamental Theorem of Arithmetic]
+\begin{theorem}[Fundamental Theorem of Arithmetic]\label{thm:fta}
   Let $n \in \mathbb{Z}, n \neq 0$. There exists $\epsilon \in \{\pm 1\}$ and prime numbers $p_1, \cdots, p_a, a \geq 0$ such that $n = \epsilon \cdot p_1 \cdots p_a$, \textbf{uniquely}.\footnotemark
 \end{theorem}
 \footnotetext{
@@ -1128,8 +1136,8 @@ Sketch: this shows only uniqueness, existence is proven by \cref{lemma:primefact
   \textit{Base case:} $n = 1$; $p_i,q_j \geq 2$, only option is the empty product $a = b = 0$.\\
   \textit{Assumption:} say holds for integers $1 \leq m \leq n -1$, $n \geq 2$ (numbers smaller than $n$). We are given \[n = p_1 \cdots p_a = q_1 \dots q_b.\]
   \begin{itemize}
-    \item Suppose $p_1 = q_1$. Then $m = \frac{n}{p_1} = p_2 \cdots p_a = q_2 \cdots q_b \implies a = b$ and $p_i = q_i$ for $2 \leq i \leq a$ (and also, $p_1 = q_1$)
-    \item Otherwise, $p_1 \neq q_1$, and wlog (symmetric) $p_1 < q_1$. We have $p_1 | n$ so $p_1 | q_1 \cdots q_b \overset{p \text{ prime}}{\implies} p_1 | q_i$ for some $1 \leq i \leq b$ . As $p_i$ prime, $p_1 = q_i$, implying $p_1 < q_1 \leq q_2 \leq \cdots q_i = p_1$, a contradiction to the assumption that $p_1 < q_1$. Thus, $p_1 = q_1$.
+    \item Suppose $p_1 = q_1$. Then $m = \frac{n}{p_1} = p_2 \cdots p_a = q_2 \cdots q_b \implies a = b$ and $p_i = q_i$ for $2 \leq i \leq a$ (and also, $p_1 = q_1$) (covered by inductive hypothesis)
+    \item Otherwise, $p_1 \neq q_1$, and wlog (symmetric) $p_1 < q_1$. We have $p_1 | n$ so $p_1 | q_1 \cdots q_b \overset{p \text{ prime}}{\implies} p_1 | q_i$ for some $1 \leq i \leq b$ (by \cref{lemma:primediv}, extended to the product of any number of numbers). As $p_i$ prime, $p_1 = q_i$, implying $p_1 < q_1 \leq q_2 \leq \cdots q_i = p_1$, a contradiction to the assumption that $p_1 < q_1$. Thus, $p_1 = q_1$.
   \end{itemize}
 
   Alternatively, we could write $n = \epsilon p_1^{a_1} \cdots p_s^{a_s}$ where $p_i$ are distinct prime numbers and $a_i > 0$ (ie, we are "collecting" the identical primes, and raising them to the power of how many times they appear) where $p_i$ and $a_i$ are unique.
@@ -1137,7 +1145,7 @@ Sketch: this shows only uniqueness, existence is proven by \cref{lemma:primefact
 
 % !
 \begin{theorem}[Version of FTA for Rationals]
-  Let $q\neq 0$ be a rational number. Then, $\exists$ a unique sign $\epsilon \in \{\pm 1\}$, integer $s$, primes $p_1, \dots, p_a$ and exponents $a_i \neq 0 \st$
+  Let $q\neq 0$ be a rational number. Then, $\exists$ a unique sign $\epsilon \in \{\pm 1\}$, integer $s$, primes $p_1, \dots, p_a$ and exponents $a_i \in \mathbb{Z}, a_i \neq 0 \st$
   \[q = \epsilon \cdot p_1^{a_1} \cdots p_s^{a_s}\]
 \end{theorem}
 % TODO: sketch needed
@@ -1171,13 +1179,21 @@ Sketch: this shows only uniqueness, existence is proven by \cref{lemma:primefact
 
 \begin{proof}
   If we can, then $\frac{b}{a} = \underbrace{\frac{\mu}{\epsilon} \cdot p_1^{a_1'-a_1}\cdots p_m^{a_m'-a_m}q_1^{b_1}\cdots q_t^{b_t}}_{:=c} \implies b = a \cdot c \implies a|b$.\\
-  If $a|b$ so $b = a \cdot d$. We can write $a = \epsilon p_1^{a_1}\cdots p_m^{a_m}$, and $d = \epsilon' p_1^{r_1}\cdots p_m^{r_m}q_1^{b_1}\cdots q_t^{b_t}$, and let $b = (\epsilon \epsilon ')p_1^{a_1 + r_1} \cdots p_m^{a_m+r_m} q_1^{b_1}\cdots q_t^{b_t}$ (where $r_i$ > 0), and let $a_i' = a_i+r_i \geq a_i$.
+  If $a|b$ so $b = a \cdot d$. We can write $a = \epsilon p_1^{a_1}\cdots p_m^{a_m}$, and $d = \epsilon' p_1^{r_1}\cdots p_m^{r_m}q_1^{b_1}\cdots q_t^{b_t}$, and let $b = (\epsilon \epsilon ')p_1^{a_1 + r_1} \cdots p_m^{a_m+r_m} q_1^{b_1}\cdots q_t^{b_t}$ (where $r_i > 0$), and let $a_i' = a_i+r_i \geq a_i$.
 \end{proof}
 
+\begin{corollary}
+  Let $n = \epsilon p_1^{a_1}\cdots p_t^{a_t} \in \mathbb{Z}$, $\epsilon = \pm 1$, $p_i$ distinct primes, $a_i > 0$. Then the divisors of $n$ are precisely the integers \[\mu p_1^{c_1}\cdots p_t^{c_t}, \quad \mu = \pm 1, 0 \leq c_i \leq a_i.\]
+\end{corollary}
 
+\begin{remark}
+  Let $a,b \in \mathbb{Z}\setminus \{0\}$; we write \[a = \epsilon p_1 ^{a_1} \cdots p_t^{a_t}, b = \mu p_1^{b_1}\cdots p_t^{b_t}.\] We have $d = \gcd(a,b) = p_1^{\min(a_1,b_1)}\cdots p_t^{\min(a_t,b_t)}$.\\
+  \cref{thm:gcdproperties} also follows naturally from this manner of thinking, and can be proved accordingly.
+\end{remark}
 
-
-
+\begin{example}
+  $90 = 2 \cdot 3^2 \cdot 5 \cdot 7^0; 210 = 2 \cdot 3 \cdot 5 \cdot 7$. $\gcd(90,210) = 2 \cdot 3 \cdot 5 \cdot 7^0 = 30\checkmark$.
+\end{example}
 
 
 
