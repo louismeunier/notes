@@ -22,6 +22,7 @@
 \usepackage{xcolor-solarized}
 \usepackage{shortcuts}
 \usepackage{mdframed}
+\usepackage{nameref}
 % \usepackage[createShortEnv]{proof-at-the-end}
 
 % \renewcommand*{\proofname}{}
@@ -125,7 +126,7 @@
     \rule[2ex]{0.8\textwidth}{1pt}
 \end{center}
 
-\setstretch{1.5}
+\setstretch{1.3}
 \begin{mdframed}[backgroundcolor=gray!20]
   \underline{Course Outline:}\\\textit{
     Fundamentals of set theory. Properties of the reals. Limits, limsup, liminf. Continuity. Functions. Differentiation.
@@ -150,7 +151,7 @@
 % modify these as you wish
 \newgeometry{margin=0.25in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in, includemp}
 \parskip=0.6em
-\setstretch{1.3}
+\setstretch{1.4}
 
 
 \section{Logic, Sets, and Functions}
@@ -790,7 +791,7 @@ In the proof, we used the claim:
   \end{itemize}
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{thm:infiniteunion}
   Let $A_n, n = 1,2,\dots$ be a sequence of sets such that each $A_n$ is either finite or countable. Then, their union \[A = \bigcup_{n=1}^\infty A_n\] is also either finite or countable.
 \end{theorem}
 
@@ -1105,7 +1106,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
   A sequence $(x_n)$ is called \emph{bounded} from above if there exists some $M \in \mathbb{R} \st x_n \leq M \forall n \geq 1$.\\Sequence $(x_n)$ is bounded from below if there exists some $M \in \mathbb{R} \st x_n \geq M \forall n \geq 1$.
 \end{definition}
 
-\begin{theorem}[Monotone Convergence Theorem]
+\begin{theorem}[Monotone Convergence Theorem]\label{thm:mct}
   The following relate to bounded above/below and increasing/decreasing sequences:\footnotemark
   \begin{enumerate}
     \item Let $(x_n)$ be an increasing sequence that is bounded from above. Then $(x_n)$ is converging.
@@ -1195,14 +1196,94 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
   % TODO
   \footnotemark
 \end{example}
-\footnotetext{Midterm material ends here. There will be 5 questions. Memorize \textbf{everything}; homeworks, exercises, class material.}
+\footnotetext{Midterm material ends here. There will be 5 questions. Memorize \textbf{everything}; homeworks, exercises, class material. Study the solutions until you can recite it upwards, backwards, sideways.}
 
 
+\subsection{Subsequences and Bolzano-Weirestrass Theorem}
+
+\begin{definition}[Subsequence]
+  Let $(x_n)$ be a sequence of real numbers, and let $n_1 < n_2 < n_3 <\cdots < n_k < n_{k+1} < \cdots$ be a strictly increasing sequence of natural numbers. Then, the sequence \[(x_{n_1}, x_{n_2}, \cdots, x_{n_k}, x_{n_{k+1}} , \cdots )\] is called a \emph{subsequence} of $(x_n)$ and is denoted $(x_{n_k})_{k \in \mathbb{N}}$.
+\end{definition}
+
+\begin{remark}
+  $k$ is the index of the subsequence, $(x_{n_k})_{k\in\mathbb{N}}$, \textbf{not} $n$; $x_{n_1}$ is the 1st element, \dots, $x_{n_k}$ is the $k$-th element.
+\end{remark}
+
+\begin{example}
+  Let $x_{n} = \frac{1}{n}, (\frac{1}{n})_{n\in\mathbb{N}}$, and let $n_k = 2k+1, k \in \mathbb{N}$. $n_1 =3, n_2 = 5, n_3 = 7, \dots, n_k = 2k+1$. Our subsequence is then \[(x_{n_1}, x_{n_2}, \dots, x_{n_k}, \dots) = \left(\frac{1}{3}, \frac{1}{5}, \dots, \frac{1}{2k+1}, \dots\right) = \left(\frac{1}{2k+1}\right)_{k\in\mathbb{N}}\]is our subsequence of $(x_n)$.
+\end{example}
+
+\begin{remark}\label{remark:nkgeqk}
+  Note that for any $k, n_{k} \geq k$.\\ Let $S = \{k \in \mathbb{N} : n_k \geq k\}$. Then, $1 \in S$, since $n_1 \in \mathbb{N}, n_1 \geq 1$ . If $k \in S$, then $n_k \geq k$, and so, since $n_{k+1} > n_k$ (increasing), we have that $n_{k+1}> k \implies n_{k+1} \geq k+1$. So, $k+1 \in S, S= \mathbb{N}$.
+\end{remark}
+
+\begin{remark}\label{remark:limitsubsequence}
+  $\lim_{k\to\infty}x_{n_k} = x$ if $\forall \epsilon > 0$, $\exists K \in \mathbb{N} \st \forall k \geq K, \abs{x_{n_k} - x} < \epsilon$.
+\end{remark}
 
 
+\begin{theorem}
+  Let $(x_n)$ be a sequence such that $\lim_{n\to\infty} x_n = x$. Then, for any subsequence $(x_{n_k})_{k\in\mathbb{N}}$, we have that $\lim_{k\to\infty} x_{n_k} = x$
+\end{theorem}
+\begin{proof}
+  Let $\epsilon > 0$. Since $\lim_{n\to\infty} x_{n} = x$, $\exists N \in \mathbb{N} \st \forall n \geq N$, $\abs{x_n - x} < \epsilon$. Take $K = N$ (from \cref{remark:limitsubsequence}). Then, for $k \geq K$, we have from \cref{remark:nkgeqk} that $$n_k \geq k \geq K = N,$$ and hence $\abs{x_{n_k} - x} < \epsilon \implies \lim_{k\to\infty}x_{n_k} = x$.
+\end{proof}
+
+\begin{theorem}[Bolzano-Weirestrass Theorem]\label{thm:bwthm}\footnotemark
+  Any bounded sequence $(x_n)$ has a convergent subsequence.  
+  \end{theorem}
+  \footnotetext{Fundamental property of the real line; equivalent to AC.}
+\begin{example}
+  Take $x_n = (-1)^n, n \in\mathbb{N}$. This sequence does not converge. However, if we take a subsequence with $n_k =2k, k \in\mathbb{N}$. $x_{n_k} = (-1)^{2k} = 1$, so $(x_{n_k})$ is a constant sequence $1$ and converges to $1$.\\ Similarly, if $n_k = 2k+1, k \in \mathbb{N}$, then $x_{n_k} = (-1)^{2k+1} = -1$, and the subsequence converges to $-1$.
+\end{example}  
+
+\begin{proposition}\label{prop:prelimfact}
+  If $0 < b < 1$, then $\lim_{n\to\infty}b^{n} = 0$.
+\end{proposition}
+\begin{proof}
+  Let $x_n = b^n$. Then $x_n > 0$, and $x_{n+1} = b^{n+1} = b x_{n} > x_n$, and since $ 0 < b < 1$, $(x_n)$ is decreasing and bounded from below, $(x_n)$ converges by the \nameref{thm:mct}. Let $x = \lim_{n\to\infty}x_n$. Again, $x_{n+1} = b x_n$, so $\lim_{n\to\infty}x_{n+1} = \lim_{n\to\infty}bx_{n} = b\lim_{n\to\infty}x_n$, so $x = bx \implies (1-b)x = 0$. $0 < b < 1 \implies x = 0$.
+\end{proof}
 
 
+\begin{proof}[BW Proof (1): using Nested Interval Property]
+  \footnotemark Since $(x_n)$ bounded, $\exists M > 0 \st \abs{x_n} \leq M \forall n \in \mathbb{N}$. Let $I_1 = [-M, M]$ and $n_1 = 1$. We now construct $I_2, n_2$ as follows.
 
+  Divide $I_1$ into two intervals of the same size, $I_1' = [-M, 0], I_1'' = [0, M]$. Now, consider the sets $$A_1 = \{n \in \mathbb{N} : n > n_1 (= 1), x_n \in I_1'\},\quad A_2 = \{n \in \mathbb{N} : n > n_1, x_{n} \in I_1''\}$$ (ie, all the indices of all the elements in $I_1'$, $I_1''$ resp.). \\Hence, $A_1 \cup A_2 = \{n : n > n_1\}$, an infinite set, and hence, one of $A_1$, $A_2$ must be infinite (by \cref{thm:infiniteunion}).
+  If $A_1$ infinite, set $I_2 = I_1'$, $n_2 = \min A_1$. If $A_1$ finite, then $A_2$ infinite, and set $I_2 = I_1''$, $n_2 = \min A_2$.
+
+  Suppose now that $I_k$, $n_k$ are chosen, and that $I_k$ contains infinitely many elements of the sequence $(x_n)$. Divide $I_k$ into two equal sub-intervals, $I_k', I_k''$. We now introduce $$A_1^{(k)} = \{n \in \mathbb{N} : n > n_k\text{ and } x_{n}\in I_k'\}, \quad A_2^{(k)} = \{n \in \mathbb{N} : n > n_k \text{ and } x_{n} \in I_k'' \},$$  (similar to our construction of $A_1, A_2$). $A_1^{(k)} \cup A_2^{(k)}$ must be infinite, so one of the two must be infinite. If $A_1$ infinite, set $I_{k+1} = I_k'$, $n_{k+1} = \min A_{1}^{(k)}$. If $A_2$ infinite, set $I_{k+1} = I_{k}'', n_{k+1} = \min A_{2}^{(k)}$.
+
+  This gives now that $I_{k+1}$ and $n_{k+1}$, where $I_{k+1} \subseteq I_k, I_{k+1}$ contains infinitely many elements of the sequence. Further, by construction, $n_{k+1} > n_k$. This gives us a sequence of closed intervals $I_k = [a_k, b_k], k \in \mathbb{N}$ such that $I_1 \supseteq I_2 \supseteq \cdots \supseteq I_k \supseteq I_{k+1} \supseteq \cdots$, such that $x_{n_k} \in I_k$, and that $n_k$ is a strictly increasing sequence of natural numbers, defining subsequence $(x_{n_k})$.
+
+  Now, by construction, the length of $I_{k+1}$ is $\frac{1}{2}$ of the length of $I_k$. Since $I_k = [a_k, b_k]$, then \[
+  b_k - a_k = \frac{b_{k-1} - a_{k-1}}{2} = \cdots \frac{b_1 - a_1}{2^{k-1}} = \frac{2M}{2^{k-1}} = \frac{M}{2k^{k-2}}.
+  \]
+  Since $I_k, k \in \mathbb{N}$, is a nested sequence of closed intervals and by the nested interval property of the real line (AC), $\exists x \in \bigcap_{k=1}^{\infty} I_k$.
+  
+  We claim now that our subsequence $(x_{n_k})$ satisfies $\lim_{k\to\infty} x_{n_k} = x$. To see this, let $\epsilon > 0$. Since $\lim_{k\to\infty}\frac{M}{2^{k-2}} = \lim_{k\to\infty}\frac{4M}{2k} = 0$, by \cref{prop:prelimfact}, with $b = \frac{1}{2}$. There exists $K \in \mathbb{N}$ such that $\forall k \geq K$, we have $\frac{M}{2^{k-2}} = b_k - a_k < \epsilon$. So, since $I_k$ is a nested sequence of intervals, $\forall k \geq K$, $x_{n_k} \in I_K$ ($x_{n_k} \in I_k \subseteq I_K$). We also have that $x \in I_K$, since $x \in \bigcap I_k$. So, $x, x_{n_k} \in [a_K, b_K] \forall k \geq K$. So, for $k \geq K$, $\abs{x_{n_k} - x} \leq \abs{b_k - a_k} < \epsilon$. So for $\epsilon > 0$, $\exists K \in \mathbb{N} \st \forall k \geq K$, $\abs{x_{n_k}-x} < \epsilon$, and so $\lim_{k\to\infty} x_{n_k} = x$, as desired.
+\end{proof}
+% TODO: add sketch
+\footnotetext{Sketch: 
+
+See Abbott, pg 57, for good diagram.
+}
+
+\begin{definition}[Peak]
+  Let $(x_n)$ be a sequence of real numbers.  An element $x_m$ is called a \emph{peak} of this sequence if $x_m \geq x_n \forall n \geq m$. $x_m$ is bigger or equal then to any element of the sequence that follows it.\\
+  If a sequence is decreasing, then any element of the sequence is a peak.\\
+  If a sequence is increasing, then there is no peak.
+\end{definition}
+
+
+% Any sequence $(x_n)$ of real numbers must have a monotone subsequence. If, in addition, $(x_n)$ bounded, then this subsequence is also bounded, and converges by \nameref{thm:mct}.
+
+\begin{proof}[BW Proof (2): using Peaks]
+  Take sequence $(x_n)$. Then,
+  \begin{itemize}
+    \item \textbf{Case 1:} $(x_n)$ has \textit{infinitely} many peaks; enumerate the indices of those peaks as $n_1 < n_2 < n_3 < \cdots$, then $x_{n_k} < x_{n_{k+1}} \forall k$, since $x_{n_k}$ is a peak, $n_{k+1} > n_k$.  This gives a decreasing subsequence $(x_{n_k})$.
+    \item \textbf{Case 2:} $(x_n)$ has \textit{finitely} many peaks, with indices $m_1 < m_2 < \cdots < m_r$. Set $n_1 = m_r + 1$. Then $x_{n_1}$ is not a peak, and so $\exists$ $n_2 > n_1 \st x_{n_2} > x_{n_1}$. Now, $x_{n_2}$ is also not a peak, ($n_2 > n_1 > m_r$), and so there exists $n_3 > n_2$ such that $x_{n_3} > x_{n_2}$, and so on. In this way, we construct a subsequence $(x_{n_k})$ that is strictly increasing, that is, $x_{n_{k+1}} > x_{n_k}$.
+  \end{itemize}
+\end{proof}
 
 
 
