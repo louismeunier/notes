@@ -720,7 +720,7 @@ In the proof, we used the claim:
 \end{example}
 
 \begin{definition}[Equal Cardinalities]
-  Let $A,B$ be two sets. We say $A, B$ have the same cardinality, denote $A \sim B$ if there exists a function $f: A \to B$.
+  Let $A,B$ be two sets. We say $A, B$ have the same cardinality, denote $A \sim B$ if there exists a bijective function $f: A \to B$.
 \end{definition}
 
 \begin{example}
@@ -800,7 +800,7 @@ In the proof, we used the claim:
 
   Since each $A_n$ finite or countable, by (a) $\implies$ (b), there exists a surjection $$\varphi_n: \mathbb{N} \to A_n.$$ Now, let $h: \mathbb{N} \times \mathbb{N} \to A,$ (the union) by setting \[h(n,m) = \varphi_n(m).\] We aim to show that $h$ is also surjective.\\ If $a \in \bigcup_{n=1}^\infty A_n$, then $a \in A_n$ for some $n \in \mathbb{N}$. Since $\varphi_n : \mathbb{N} \to A_n$ is a surjection, there exists an $m \in \mathbb{N}$ s.t. $\varphi_n(m) = a$. By definition of $h$, we have \[h(n,m) = a,\] and thus $h$ is a surjection.
 
-  By \cref{prop:basicfactII}, there exists a bijection $f: \mathbb{N} \times \mathbb{N} \to \mathbb{N}$, and we can define the composite map \[h \circ f : \mathbb{N} \to A\,(= \cup_{n=1}^\infty A_n),\] which is a surjection as both $h,f$ are surjections. So, there exists a surjection from $\mathbb{N} \to A$, and by \cref{prop:equivcountable}, (b) $\implies$ (a), and thus $A = \bigcup_{n=1}^\infty A_n$ is also finite our countable.
+  By \cref{prop:basicfactII}, there exists a bijection $f: \mathbb{N} \to \mathbb{N} \times \mathbb{N}$, and we can define the composite map \[h \circ f : \mathbb{N} \to A\,(= \cup_{n=1}^\infty A_n),\] which is a surjection as both $h,f$ are surjections. So, there exists a surjection from $\mathbb{N} \to A$, and by \cref{prop:equivcountable}, (b) $\implies$ (a), and thus $A = \bigcup_{n=1}^\infty A_n$ is also finite our countable.
 
 \end{proof}
 
@@ -860,7 +860,14 @@ In the proof, we used the claim:
 \end{example}
 
 \begin{proof}
-  % TODO
+  Surjection is fairly trivial (if stuck, consider the graph of the function).\\Injection; given $f(x) = f(y)$ where $x,y \in (-1,1)$,\begin{align*}
+    \frac{x}{1-x^2} = \frac{y}{1-y^2}\\
+    x -xy^2 = y - yx^2\\
+    x-y = xy^2 - yx^2 = xy(y - x)\\
+    x-y = -xy(x-y)\\
+    \implies -xy = 1 \implies xy = -1, \text{ or } x - y = 0
+  \end{align*}
+  $xy = -1$ is impossible given the domain of the function, hence $x -y = 0 \implies x = y$, as desired.
 \end{proof}
 
 
@@ -878,11 +885,11 @@ In the proof, we used the claim:
 \begin{example}
   Prove that $\exists$ bijection between $[0,1)$ and $(0,1)$, and conclude that $[0,1) \sim (0,1) \sim \mathbb{R}$. Then conclude for any $a < b$, $[a,b) \sim \mathbb{R}$.
 
-  \begin{proof}
-    % TODO
-  \end{proof}
-
 \end{example}
+
+\begin{proof}
+% TODO
+\end{proof}
 
 \subsubsection{Power Sets}
 \begin{definition}[Power Set]
@@ -929,7 +936,7 @@ In the proof, we used the claim:
 
 
 
-\begin{definition}[Limit Redefinition]
+\begin{definition}[Quantifier of Limit]
   The limit can be written in terms of quantifiers.
   \[\lim_{n \to \infty} x_n = x\] means that \[(\forall \epsilon > 0)(\exists N \in \mathbb{N})(\forall n \geq N)(|x_n - x| < \epsilon).\]
 \end{definition}
@@ -1160,7 +1167,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
   Recall \cref{thm:convbound}, stating that a convergence sequence is bounded. Let $(x_n)$ be a convergent sequence bounded by $m$ and $M$ from below/above resp, ie 
   \[m \leq x_n \leq M, \forall n\]
   and let $A_n = \{x_k : k \geq n \}$ (the set of elements in the sequence "after" a particular index).\\ Let $y_n = \sup A_n$; by definition, $y_n \leq M$, and $y_n \geq m$, since $y_n \geq x_n \geq m$. Thus, we have \[A_1 \supseteq A_2 \supseteq \cdots \supseteq A_n \supseteq A_{n+1} \supseteq \cdots, \] and further, \[y_1 \geq y_2 \geq \cdots \geq y_n \geq y_{n+1} \geq \cdots;\] since $A_2 \subseteq A_1$, $y_1$ also an upper bound for $A_2$, and thus $y_2 \leq y_1$ by definition of a supremum. \\
-  So, the sequence $(y_n)$ is increasing, and bounded from below; by MCT, $\lim_{n\to\infty} y_n = y$ exists. Note too that since $m \leq y_n \leq M$, we have that $m \leq y \leq M$.\\
+  So, the sequence $(y_n)$ is decreasing, and bounded from below; by MCT, $\lim_{n\to\infty} y_n = y$ exists. Note too that since $m \leq y_n \leq M$, we have that $m \leq y \leq M$.\\
   This $y$ is called the \emph{limit superior} of $(x_n)$ denoted by \[\limsupbar x_n = \limsup_{n\to\infty}x_n.\]
   Now, similarly, note that $A_n$ is bounded below by $m$ and thus $z_n = \inf A_n$ exists. We further have that $z_n \leq x_n \leq M$, and that $z_n \geq m \forall n$, and we have \[z_1 \leq z_2 \leq \cdots \leq z_n \leq z_{n+1} \leq  \cdots, \] by a similar argument as before. So, as before, the sequence $(z_n)$ is increasing, and bounded from above by $M$. Again, by MCT, $\lim_{n\to\infty} z_n = z$ exists. We call $z$ the \emph{limit inferior} of $(x_n)$, and denote \[\liminfbar x_n = \liminf_{n\to\infty} x_n.\]
   We note that $y_n \geq z_n$, so $\limsupbar x_n \geq \liminfbar x_n\quad (y\geq z)$.\\
@@ -1175,7 +1182,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 \begin{theorem}[$\liminf$, $\limsup$ and convergence]\label{thm:infsupconvergence}
   Let $(x_n)$ be a \emph{bounded} sequence. The following are equivalent;
   \begin{enumerate}
-    \item The sequence $(x_n)$ is convergent, and \[\lim_{n\to\infty}x_n = x.\]
+    \item The sequence $(x_n)$ is convergent, and \(\lim_{n\to\infty}x_n = x.\)
     \item $\limsupbar x_n = \liminfbar x_n = x$.
   \end{enumerate}
 \end{theorem}
