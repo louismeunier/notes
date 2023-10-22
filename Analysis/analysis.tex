@@ -223,12 +223,13 @@ The \textbf{Axiom of Induction} (AI), can be stated in a number of ways.
 
 \begin{example}
   Using AI.ii, prove that for $n \geq 2$, $n^2 > n+1$
-  \begin{proof}
-    Again, very similar to the previous induction examples. Take $S$ to be the subset of $\mathbb{N}$ for which the statement holds. \textit{(a)} of AI.ii holds by inspection (where $m = 2$), and \textit{(b)} holds by assuming $n \in S$ and showing that $n+1 \in S$. Thus, $S = \{2, 3, 4, \dots \}$, and the statement holds $\forall n \geq 2$.
-  \end{proof}
 \end{example}
 
-\begin{axiom}[Principle of Complete Induction, AI.iii]
+\begin{proof}
+  Let $S \subseteq \mathbb{N}$ be the set of $n$ for which the statement holds. $n = 2 \implies 4 > 3$, so the base case holds. Consider $n^2 > n +1$ for some $n \geq 2$. Then, $(n+1)^2 = n^2 + 2n + 1 > n+1 + 2n + 1 = 3n + 2 > 2n + 2 > n + 2$, hence $S = \{2,3,4, \cdots \}$ (all $n \geq 2$).
+\end{proof}
+
+\begin{axiom}[Principle of Complete Induction, AI.iii]\label{axiom:inductioniii}
   Let $S \subseteq \mathbb{N}$ s.t.
   \begin{enumerate}[label=(\alph*)]
     \item $1 \in S$
@@ -377,10 +378,10 @@ We can consider historical reasoning for the extension of $\mathbb{Q}$ to $\math
 
 \begin{example}\label{example:union}
   Let $A_n = 1, 2, \dots$ be a sequence of sets. Prove that $f(\bigcup_{n=1}^{\infty} A_n) = \bigcup_{n=1}^{\infty}f(A_n)$.
-  \begin{proof}
-    Let $y \in f(\bigcup_{n=1}^\infty A_n)$. This implies that $\exists x \in \bigcup_{n=1}^\infty A_n$ s.t. $f(x) = y$. This implies that $x \in A_n$ for some $n$, and $y \in f(A_n)$ for that same "some" $n$, and thus $y$ must be in the union of all possible $f(A_n)$, ie $y \in \bigcup f(A_n)$. This shows $\subseteq$, use similar logic for the reverse.
-  \end{proof}
 \end{example}
+\begin{proof}
+  Let $y \in f(\bigcup_{n=1}^\infty A_n)$. This implies that $\exists x \in \bigcup_{n=1}^\infty A_n$ s.t. $f(x) = y$. This implies that $x \in A_n$ for some $n$, and $y \in f(A_n)$ for that same "some" $n$, and thus $y$ must be in the union of all possible $f(A_n)$, ie $y \in \bigcup f(A_n)$. This shows $\subseteq$, use similar logic for the reverse.
+\end{proof}
 
 \begin{proposition}\label{prop:intersection}
   $f(C_1 \cap C_2) \subseteq f(C_1) \cap f(C_2)$
@@ -504,9 +505,10 @@ Real numbers, algebraically have the same properties as the rationals; we have a
   If $i$ exists, it is called the \emph{infimum} of $A$ and is denoted $i = \inf(A)$, and is unique by the same argument used for $\sup(A)$.
 \end{definition}
 
-\begin{proposition}
-  Let $A \subseteq \mathbb{R}$ and let $s$ be an upper bound for $A$. Then $s = \sup(A)$ iff for any $\varepsilon>0$, there exists $x \in A$ s.t. $s- \varepsilon < x$.
+\begin{proposition}\label{prop:supepsilon}
+  Let\footnotemark $A \subseteq \mathbb{R}$ and let $s$ be an upper bound for $A$. Then $s = \sup(A)$ iff for any $\varepsilon>0$, there exists $x \in A$ s.t. $s- \varepsilon < x$.
 \end{proposition}
+\footnotetext{Note that this, and \cref{prop:infepsilon} that follows, are \textit{not} definitions: they are restatements, and do technically require proof.}
 \begin{proof}
   We have two statements:
   \begin{enumerate}
@@ -520,12 +522,12 @@ Real numbers, algebraically have the same properties as the rationals; we have a
   \end{itemize}
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\label{prop:infepsilon}
   Let $A \subseteq \mathbb{R}$ and let $i$ be a lower bound for $A$. Then $i = \inf(A) \iff$ for every $\epsilon > 0$ there exists $x \in A$ s.t. $x < i + \epsilon$.\footnotemark
 \end{proposition}
 \footnotetext{Use similar argument to proof of previous proposition.}
 
-\begin{remark}
+\begin{remark}\label{remark:negativesupinf}
 \cref{axiom:ac} can also be expressed in terms of infimum. Define $-A = \{-x : x \in A\}$. Then, if $b$ is an upper bound for $A$, then $b \geq x \forall x \in A$, then $-b \leq -x \forall x \in A$, ie -b is a lower bound of $-A$. Similarly, if $l$ is a lower bound for $A$, $-l$ is an upper bound for $-A$.
 
 Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is bounded from below, \[-\inf(A) = \sup(-A).\]
@@ -974,7 +976,7 @@ In the proof, we used the claim:
     -(x+y) & x + y \leq 0
   \end{cases}$.
   So if $x + y \geq 0$, $|x+y| = x + y \leq |x| + |y|$. \\
-  If $x+y >0, |x+y| = -(x+y) = (-x) + (-y) \leq |x| + |y$.\\\\
+  If $x+y >0, |x+y| = -(x+y) = (-x) + (-y) \leq |x| + |y|$.\\\\
   $(ii)$: $|x-y| = |x-z + z - y| \leq |x-z| + |z-y|$ (using $(i)$).
 \end{proof}
 
@@ -1140,10 +1142,17 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 
 \footnotetext{Add proof}
 
+\begin{corollary}\label{cor:recursiveaside}
+  For $a,b > 0$, then $\frac{1}{2}(a+b) \geq \sqrt{ab}$
+\end{corollary}
+\begin{proof}
+  $\left[\frac{1}{2}(a+b)\right]^2 = \frac{1}{4}(a^2 + 2ab + b^2) \geq ab \implies \frac{1}{2}(a+b)\geq \sqrt{ab}$
+\end{proof}
+
 \begin{example}
   Let $(x_n)$ be defined recursively by $x_1 = 2$ and $x_{n+1} = \frac{1}{2}\left(x_n + \frac{2}{x_n}\right)$ for $n \geq 1$. Then, $(x_n)$ is converging and $\lim x_n = \sqrt{2}$.
   \begin{proof}
-    We\footnotemark  will show that $(x_n)$ bounded from below and decreasing, implying the limit exists. We will show that for $n$, $x_n \geq \sqrt{2}$. For $n = 1$, $2 \geq \sqrt{2}$. For $n > 1$, we will use $\frac{1}{2} (a+b) \geq \sqrt{ab}$ for $a,b\geq 0$. The prove it, square both sides and observe \[\frac{1}{4}(a^2 + 2ab + b^2) \geq ab \iff a^2 + 2ab + b^2 \geq 0 \iff (a-b)^2 \geq 0.\] We then have that $x_{n+1} = \frac{1}{2}(x_n + \frac{2}{x_n}) \geq \dots \geq \sqrt{2} \implies x_n \geq \sqrt{2} \forall n \geq 1$, ie, it is bounded from below.\\
+    We\footnotemark  will show that $(x_n)$ bounded from below and decreasing, implying the limit exists. We will show that for $n$, $x_n \geq \sqrt{2}$. For $n = 1$, $2 \geq \sqrt{2}$. For $n > 1$, we will \cref{cor:recursiveaside}. We then have that $x_{n+1} = \frac{1}{2}(x_n + \frac{2}{x_n}) \geq \dots \geq \sqrt{2} \implies x_n \geq \sqrt{2} \forall n \geq 1$, ie, it is bounded from below.\\
     We will now show that the sequence is decreasing.
     \[x_n - x_{n+1} = x_n - \frac{1}{2}(x_n + \frac{2}{x_n}) = \frac{1}{2}x_n - \frac{1}{x_n} = \frac{1}{2x_n}(x_n^2 - 2).\]
     % TODO: finish
@@ -1156,7 +1165,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
   % \textit{(Sol'n: Show that for $n\geq 2$, $x_n \geq \sqrt{a}$, and that for $n \geq 2$, $x_n \geq x_{n+1}$, ie the sequence is decreasing and bounded from below. This shows that the limit exists and is equal to some $x$, and the relation gives that $x = \frac{1}{2}(x + \frac{a}{x})$; solve for $x$.)}
 \end{example}
 \begin{proof}
-  $x_{n+1} = \frac{1}{2}(x_n + \frac{a}{x_n}) \geq \sqrt{x_n \cdot \frac{a}{x_n}} = \sqrt{a}$, hence, $x_n$ is bounded from below by $\sqrt{a}$.\\
+  By \cref{cor:recursiveaside}, $x_{n+1} = \frac{1}{2}(x_n + \frac{a}{x_n}) \geq \sqrt{x_n \cdot \frac{a}{x_n}} = \sqrt{a}$, hence, $x_n$ is bounded from below by $\sqrt{a}$.\\
   We also have that $x_n - x_{n+1} = x_n - \frac{1}{2}x_{n} - \frac{a}{2x_n} = \frac{x_n}{2} - \frac{a}{2x_n} = \frac{1}{x_n}\left(x_n^2 - a\right)$. We have that $x_n \geq \sqrt{a} \implies x_{n}^2 \geq a \implies x_{n}^2 -a \geq 0$. Further, since the sequence is bounded from below by $\sqrt{a} > 0 (\impliedby a > 0)$, then $\frac{1}{x_{n}} > 0$ as well. Hence, $\frac{1}{x_n}(x_n^2 - a) \geq 0$, and thus $x_{n} - x_{n+1} \geq 0 \implies x_n \geq x_{n+1}$ and thus $x_{n}$ is decreasing.\\
   Thus, by the \nameref{thm:mct}, $x_n$ is convergent. Let $X:= \lim_{n\to\infty}x_n$. We have from the recursive definition, $\lim x_{n} = \lim \left(\frac{1}{2}(x_n + \frac{a}{x_n})\right)$. Since we know $x_{n}$ convergent, we can "split up" this limit using algebraic properties, hence\begin{align*}
     \lim x_n= \lim \frac{1}{2} x_n + \lim \frac{a}{2x_n} = \frac{1}{2}\lim x_n + \frac{a}{2} \lim \frac{1}{x_n}\\
@@ -1204,12 +1213,13 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 \end{proof}
 
 \begin{example}
-  Let $(x_n)$ be a bounded sequence. Then \[\limsup_{n\to\infty} (-x_n) = - \liminf_{n \to \infty} x_n.\] 
-  \textit{This follows from the earlier exercise; $A \subseteq \mathbb{R},$ $A$ bounded, $\sup(-A) = - \inf(A)$.}
-  % TODO
-  \footnotemark
+  Let\footnotemark $(x_n)$ be a bounded sequence. Then \[\limsup_{n\to\infty} (-x_n) = - \liminf_{n \to \infty} x_n.\]
 \end{example}
 \footnotetext{Midterm material ends here. There will be 5 questions. Memorize \textbf{everything}; homeworks, exercises, class material. Study the solutions until you can recite it upwards, backwards, sideways.}
+\begin{proof}
+  Recall \cref{remark:negativesupinf}; Let $A_n := \{x_k : k \geq n\}$ as in the definition of $\limsup, \liminf$. Let $y_n:=\sup A_n, z_n := \inf A_n$. By \cref{thm:infsupconvergence}, $\lim y_n = \lim z_n$. Further, $\sup (- A_n) = - \inf (A_n)$, where $-A_n = \{-x_k : k \geq n\}$; hence, $\limsup (-x_n) = -\liminf x_n$, as desired.
+\end{proof}
+
 
 
 \subsection{Subsequences and Bolzano-Weirestrass Theorem}
@@ -1317,96 +1327,108 @@ See Abbott, pg 57, for good diagram.
 
 
 
-\newpage
-\section{Appendix}
-\subsection{Tutorials}
-\subsubsection{Tutorial I (Sept 13)}
+% \newpage
+% \section{Appendix}
+% \subsection{Major Results \& their Implications}
 
-\begin{enumerate}
-  \item We say $n$ odd if $\exists k$, $n = 2k+1$. Prove that the product of two odds is odd.
-  \begin{proof}
-    Take two odd integers, $n_1 = 2k+1$ and $n_2 = 2j+1$. The product $n_1 \times n_2 = (2k+1)(2j+1) = 4kj+2(k+j)+1$. We have, then \[\underbrace{4kj+2(k+j)}_{\text{even}} + 1.\] Even + odd = odd, thus odd.
-  \end{proof}
+% \begin{itemize}
+%   \item \nameref{axiom:inductioniii}: important means of proof involving the naturals. Note that this is equivalent to the \textit{Well-Ordering Property} of the naturals, which states that any nonempty subset of $\mathbb{N}$ contains a minimal element. This means that one \textit{implies} the other; they are not \textit{independent} axioms of the naturals.
+%   \begin{proof}
+%     \textit{Induction $\implies$ WOP: } Let $S \subseteq \mathbb{N} \st \not\exists \min{S}$, let $P_n$ be the statement $n \notin S$. $P_0$ holds; say $P_n$ holds for some $n \geq 0$, ie $n \notin S$. Then, $n + 1 \notin S$, otherwise it would be the minimal element. Hence, $P_n$ holds $\forall n$ by AI, thus $S = \varnothing$, and thus WOP "holds" (so to speak).\\
+%     \textit{WOP $\implies$ Induction: } Let $n_0$ be the "base case" for some $P_n$. Let $S = \{n \in \mathbb{N} : n \geq n_0 \text{ and } P_{n} \text{ false}\}$. By WOP, $a:=\min{S}$ exists, so $P_{a}$ is false and $a \geq n_0$. Further, $P_{a-1}$ must be false, otherwise $a-1$ would be the minimal element of $S$. But then $P_{a-1} \implies P_{a}$ true, a contradiction; hence, if $P_{n_0}$ true, and $P_{n} \implies P_{n+1}$, then $P_n$ true $\forall n \geq n_0$ follows from WOP.
+%   \end{proof}
+%   \item \cref{prop:irr2};
+% \end{itemize}
 
-  \item \textbf{Proof by Contrapositive:} $P \implies Q \equiv \neg Q \implies \neg P$. 
-  Let $q \in \mathbb{Q}$. Prove: If $x \in \mathbb{R}\setminus\mathbb{Q}$, then $q+x$ is irrational.
-  \begin{proof}[Proof (contrapositive)]
-    Let $q+x$ be rational. The sum of rationals is rational, and thus $q,x \in \mathbb{Q}$, and thus $x \notin \mathbb{R} \setminus \mathbb{Q}$.
-  \end{proof}
 
-  \item \textbf{Proofs by Induction}
-  \begin{enumerate}
-    \item Prove that $1^3 + 2^3 + \dots + n^3 = \left(\frac{n(n+1)}{2}\right)^2$.
-    \begin{proof}
-      Let $P_n$ be the statement that $1^3 + \dots = \left(\frac{n(n+1)}{2}\right)^2$. $P_0$ holds as $1 = \frac{(1)(2)}{2}^2 = 1$. Let $P_n$ hold: \[1^3 + 2^3 + \dots + n^3 = \left(\frac{n(n+1)}{2}\right)^2\]
-      Adding $(n+1)^3$ to both sides:
-      \[
-        1^3 + 2^3 + \dots + n^3 + (n+1)^3 = \left(\frac{n(n+1)}{2}\right)^2 + (n+1)^3
-      \]
-      Focusing on the RHS:
-      \begin{align*}
-        \left(\frac{n(n+1)}{2}\right)^2 + (n+1)^3 &= (n+1)^2\left(\frac{n^2}{4} + (n+1)\right)\\
-        &= (n+1)^2\left(\frac{n^2 + 4n + 4}{4}\right)\\
-        &= (n+1)^2\left(\frac{(n+2)^2}{4}\right)\\
-        &= \left(\frac{(n+1)(n+2)}{2}\right)^2
-        & \equiv P_{n+1}
-      \end{align*}
-      Thus, by AI, $P_n$ holds for all $n \in \mathbb{N}$.
-    \end{proof}
-    \item We have an $8\times 8$ checker board. We remove the top-left and bottom-right squares. Prove that the remaining board cannot be covered by $2\times 1$ dominoes.
-    \begin{proof}
-      Note that every domino must cover a black square and a white square. However, the board is missing 2 white squares (say). Thus, there are 62 squares (32 black, 30 white), and we would need \emph{exactly} 31 dominos (62/2). Each requires 1 black, 1 white tile, and thus we will run out of white squares before we reach our 31 dominos, and thus we cannot cover the board.
-    \end{proof}
-    \item Take $F_n$ to represent the $n$th Fibonacci number. Let $\varphi = \frac{1+\sqrt{5}}{2}$. Show that $F_n > \varphi^{n-2} \forall n \geq 3$.
-    \begin{proof}
-      Let $P_n$ represent the "truth" of the given statement. $P_3: F_3 = F_2 + F_1 = 1 + 1 =2$. $\varphi^{1} = \varphi$; clearly $2 > \frac{1+\sqrt{5}}{2}$. Note that we should also prove $P_4, P_5$ for use in our induction.
+% \subsection{Tutorials}
+% \subsubsection{Tutorial I (Sept 13)}
 
-      $P_4: (\frac{1+\sqrt{5}}{2})^2 = \frac{1 + 2 \sqrt{5} + 5}{4} = \frac{6+2\sqrt{5}}{4} < 3$.
+% \begin{enumerate}
+%   \item We say $n$ odd if $\exists k$, $n = 2k+1$. Prove that the product of two odds is odd.
+%   \begin{proof}
+%     Take two odd integers, $n_1 = 2k+1$ and $n_2 = 2j+1$. The product $n_1 \times n_2 = (2k+1)(2j+1) = 4kj+2(k+j)+1$. We have, then \[\underbrace{4kj+2(k+j)}_{\text{even}} + 1.\] Even + odd = odd, thus odd.
+%   \end{proof}
 
-      $P_5: (\frac{1+\sqrt{5}{2}})^3 \dots < 5$
+%   \item \textbf{Proof by Contrapositive:} $P \implies Q \equiv \neg Q \implies \neg P$. 
+%   Let $q \in \mathbb{Q}$. Prove: If $x \in \mathbb{R}\setminus\mathbb{Q}$, then $q+x$ is irrational.
+%   \begin{proof}[Proof (contrapositive)]
+%     Let $q+x$ be rational. The sum of rationals is rational, and thus $q,x \in \mathbb{Q}$, and thus $x \notin \mathbb{R} \setminus \mathbb{Q}$.
+%   \end{proof}
 
-      Take $P_{n-1}, P_{n}$ to hold, ie $F_{n-1}>\varphi^{n-3}$ and $F_n > \varphi^{n-2}$.
-      \begin{align*}
-        F_{n+1} = F_n + F_{n-1} &> \varphi^{n-2} + \varphi^{n-3}\\
-        &= \varphi^{n-3}(\underbrace{\varphi+1}_{=\varphi^2})\\
-        &= \varphi^{n-1},
-      \end{align*} as desired, Noting that $\varphi + 1 = \frac{1+\sqrt{5}}{2} + 1 = \frac{1 + \sqrt{5}+2}{2} = \dots \varphi^2$.
-    \end{proof}
-    \item $a_1 = 1, a_2 = 8, a_n = a_{n-1} + 2 a_{n-2}$. Prove $a_n = 3 \cdot 2^{n-1} + 2 (-1)^n$.
-    \begin{proof}
-      $a_1 = 1 =  3 \cdot 2^0 + 2(-1)^1 =3 -2 = 1$
-      $a_2 = 8 = 3\cdot 2^1 + 2(-1)^2 = 6+2 = 8$
-      So, $P_1, P_2$ holds. Assume $P_n$, $P_{n+1}$ holds. Then, we have $a_n = 3 \cdot 2^{n-1} + 2(-1)^n$ and so:
-      \begin{align*}
-        a_{n+1} &= 3 \cdot 2 ^{n-1} + 2(-1)^{n} + 2 \cdot \left(3\cdot 2^{n-2}+2(-1)^{n-1}\right)\\
-        &= \dots = 3\cdot 2^n + 2(-1)^{n+1}
-      \end{align*}
-      Thus, proven.
-    \end{proof}
-  \end{enumerate}
-  \item Show $A \setminus (B \setminus A) = A$.
-  \begin{proof}
-    Let $x \in A \setminus(B \setminus A)$. $x$ must be in $A$, but not $B \setminus A$. Thus, $x$ is in $A$, but not in $B$. Thus, LHS $\subseteq$ RHS.
+%   \item \textbf{Proofs by Induction}
+%   \begin{enumerate}
+%     \item Prove that $1^3 + 2^3 + \dots + n^3 = \left(\frac{n(n+1)}{2}\right)^2$.
+%     \begin{proof}
+%       Let $P_n$ be the statement that $1^3 + \dots = \left(\frac{n(n+1)}{2}\right)^2$. $P_0$ holds as $1 = \frac{(1)(2)}{2}^2 = 1$. Let $P_n$ hold: \[1^3 + 2^3 + \dots + n^3 = \left(\frac{n(n+1)}{2}\right)^2\]
+%       Adding $(n+1)^3$ to both sides:
+%       \[
+%         1^3 + 2^3 + \dots + n^3 + (n+1)^3 = \left(\frac{n(n+1)}{2}\right)^2 + (n+1)^3
+%       \]
+%       Focusing on the RHS:
+%       \begin{align*}
+%         \left(\frac{n(n+1)}{2}\right)^2 + (n+1)^3 &= (n+1)^2\left(\frac{n^2}{4} + (n+1)\right)\\
+%         &= (n+1)^2\left(\frac{n^2 + 4n + 4}{4}\right)\\
+%         &= (n+1)^2\left(\frac{(n+2)^2}{4}\right)\\
+%         &= \left(\frac{(n+1)(n+2)}{2}\right)^2
+%         & \equiv P_{n+1}
+%       \end{align*}
+%       Thus, by AI, $P_n$ holds for all $n \in \mathbb{N}$.
+%     \end{proof}
+%     \item We have an $8\times 8$ checker board. We remove the top-left and bottom-right squares. Prove that the remaining board cannot be covered by $2\times 1$ dominoes.
+%     \begin{proof}
+%       Note that every domino must cover a black square and a white square. However, the board is missing 2 white squares (say). Thus, there are 62 squares (32 black, 30 white), and we would need \emph{exactly} 31 dominos (62/2). Each requires 1 black, 1 white tile, and thus we will run out of white squares before we reach our 31 dominos, and thus we cannot cover the board.
+%     \end{proof}
+%     \item Take $F_n$ to represent the $n$th Fibonacci number. Let $\varphi = \frac{1+\sqrt{5}}{2}$. Show that $F_n > \varphi^{n-2} \forall n \geq 3$.
+%     \begin{proof}
+%       Let $P_n$ represent the "truth" of the given statement. $P_3: F_3 = F_2 + F_1 = 1 + 1 =2$. $\varphi^{1} = \varphi$; clearly $2 > \frac{1+\sqrt{5}}{2}$. Note that we should also prove $P_4, P_5$ for use in our induction.
 
-    Let $x \in A$. Thus, $x \notin B \setminus A$, and thus $x \in A \setminus (B\setminus A)$, and so $A \subseteq A \setminus (B \setminus A)$. Thus, LHS = RHS.
+%       $P_4: (\frac{1+\sqrt{5}}{2})^2 = \frac{1 + 2 \sqrt{5} + 5}{4} = \frac{6+2\sqrt{5}}{4} < 3$.
 
-  \end{proof}
+%       $P_5: (\frac{1+\sqrt{5}{2}})^3 \dots < 5$
 
-  \item $A_n = \{nk : k \in \mathbb{N}\}, n \geq 2$. Find $\bigcup_{n=2}^\infty An \bigcap_{n=2}^\infty A_n$.
-  \begin{proof}
-    \begin{align*}
-      \bigcup_{n=2}^\infty A_n & = \bigcup \{2k, 3k, 4k, \dots\} = \{n : n \geq 2, n \in \mathbb{N}\} = \mathbb{N}\setminus \{1\}\\
-      \bigcap_{n=2}^\infty A_n &= \varnothing \textit{ consider just } n=2, n=3 \text{ cases...}
-    \end{align*}
-  \end{proof}
-\end{enumerate}
+%       Take $P_{n-1}, P_{n}$ to hold, ie $F_{n-1}>\varphi^{n-3}$ and $F_n > \varphi^{n-2}$.
+%       \begin{align*}
+%         F_{n+1} = F_n + F_{n-1} &> \varphi^{n-2} + \varphi^{n-3}\\
+%         &= \varphi^{n-3}(\underbrace{\varphi+1}_{=\varphi^2})\\
+%         &= \varphi^{n-1},
+%       \end{align*} as desired, Noting that $\varphi + 1 = \frac{1+\sqrt{5}}{2} + 1 = \frac{1 + \sqrt{5}+2}{2} = \dots \varphi^2$.
+%     \end{proof}
+%     \item $a_1 = 1, a_2 = 8, a_n = a_{n-1} + 2 a_{n-2}$. Prove $a_n = 3 \cdot 2^{n-1} + 2 (-1)^n$.
+%     \begin{proof}
+%       $a_1 = 1 =  3 \cdot 2^0 + 2(-1)^1 =3 -2 = 1$
+%       $a_2 = 8 = 3\cdot 2^1 + 2(-1)^2 = 6+2 = 8$
+%       So, $P_1, P_2$ holds. Assume $P_n$, $P_{n+1}$ holds. Then, we have $a_n = 3 \cdot 2^{n-1} + 2(-1)^n$ and so:
+%       \begin{align*}
+%         a_{n+1} &= 3 \cdot 2 ^{n-1} + 2(-1)^{n} + 2 \cdot \left(3\cdot 2^{n-2}+2(-1)^{n-1}\right)\\
+%         &= \dots = 3\cdot 2^n + 2(-1)^{n+1}
+%       \end{align*}
+%       Thus, proven.
+%     \end{proof}
+%   \end{enumerate}
+%   \item Show $A \setminus (B \setminus A) = A$.
+%   \begin{proof}
+%     Let $x \in A \setminus(B \setminus A)$. $x$ must be in $A$, but not $B \setminus A$. Thus, $x$ is in $A$, but not in $B$. Thus, LHS $\subseteq$ RHS.
 
-\subsection{Important}
-\begin{figure*}[!ht]
-  \centering
-  \includegraphics[width=0.8\textwidth]{cardinal.png}
-  \caption{Important!}
-  \label{fig:important}
-\end{figure*}
+%     Let $x \in A$. Thus, $x \notin B \setminus A$, and thus $x \in A \setminus (B\setminus A)$, and so $A \subseteq A \setminus (B \setminus A)$. Thus, LHS = RHS.
+
+%   \end{proof}
+
+%   \item $A_n = \{nk : k \in \mathbb{N}\}, n \geq 2$. Find $\bigcup_{n=2}^\infty An \bigcap_{n=2}^\infty A_n$.
+%   \begin{proof}
+%     \begin{align*}
+%       \bigcup_{n=2}^\infty A_n & = \bigcup \{2k, 3k, 4k, \dots\} = \{n : n \geq 2, n \in \mathbb{N}\} = \mathbb{N}\setminus \{1\}\\
+%       \bigcap_{n=2}^\infty A_n &= \varnothing \textit{ consider just } n=2, n=3 \text{ cases...}
+%     \end{align*}
+%   \end{proof}
+% \end{enumerate}
+
+% \subsection{Important}
+% \begin{figure*}[!ht]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{cardinal.png}
+%   \caption{Important!}
+%   \label{fig:important}
+% \end{figure*}
 
 \end{document}
