@@ -355,13 +355,12 @@ We can consider historical reasoning for the extension of $\mathbb{Q}$ to $\math
 \begin{example}
   The function $f(x) = \sin x$, $f: \mathbb{R} \to [-1, 1]$. Here, $\text{Dom}(f) = \mathbb{R}$, and $\text{Ran}(f) = [-1, 1]$.
 \end{example}
-\begin{example}[Dirichlet Function]\footnotemark
+\begin{example}[Dirichlet Function]
   $f:\mathbb{R} \to \mathbb{R}$, $f(x) = \begin{cases}
     1, x \in \mathbb{Q}\\
     0, x \notin \mathbb{Q}
   \end{cases}$. Despite not having a true "explicit" formula, so to speak, this is still a valid function (under modern definitions).
 \end{example}
-\footnotetext{Look up a \href{https://en.wikipedia.org/wiki/Dirichlet_function}{graph} of this function. Its beautiful. It's also interesting to note that its integral is simply 0.}
 
 \subsubsection{Properties of Functions}
 
@@ -478,7 +477,7 @@ We can consider historical reasoning for the extension of $\mathbb{Q}$ to $\math
   In other words; let $A \subseteq \mathbb{R}$ and suppose $A$ is bounded from above ($A$ has at a least upper bound). Then $\sup(A)$ exists.
 \end{axiom}
 
-Real numbers, algebraically have the same properties as the rationals; we have addition, multiplication, inverse of non-zero real numbers, and we have the relation $<$. All together, $\mathbb{R}$ is an ordered field. 
+Real numbers, algebraically, have the same properties as the rationals; we have addition, multiplication, inverse of non-zero real numbers, and we have the relation $<$. All together, $\mathbb{R}$ is an ordered field. 
 
 \begin{definition}
   Let $A \subseteq \mathbb{R}$. A number $b \in \mathbb{R}$ is called an \textbf{upper bound} for $A$ if for any $x \in A$, $x \leq B$.
@@ -568,12 +567,16 @@ Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is 
 
 \begin{remark}
   The proof above emphasized the left-end points; it can equivalently be proven via the right-end points, and using $y=\inf(\{b_n : n \in \mathbb{N}\}) = \inf(B)$, rather than $\sup(A)$, and showing that $y \in \bigcap I_n$.
-  % TODO
 \end{remark}
 
 \begin{remark}
-  Note too that, if $x = \sup(A)$ and $y = \inf(B)$, then $x, y \in \bigcap_{n=1}^\infty I_n$; in fact, $\bigcap_{n=1}^\infty I_n = [x,y]$.
-  % TODO: part 2
+  Note too that, if $x = \sup(A)$ and $y = \inf(B)$, then $x, y \in \bigcap_{n=1}^\infty I_n$; in fact, $\bigcap_{n=1}^\infty I_n = [x,y]$. This can be done by
+  \begin{itemize}
+    \item Use the main proof to show $x \in \bigcap I_n$
+    \item Use the previous remark to show $y \in \bigcap I_n$
+    \item Show $x \leq y \implies [x,y] \subseteq \bigcap I_n$
+    \item Show $\bigcap I_n \subseteq [x,y] \implies $ equality.
+  \end{itemize}
 \end{remark}
 
 \begin{remark}
