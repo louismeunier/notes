@@ -960,6 +960,36 @@ In the proof, we used the claim:
   Consider indices $n = N, n = N+1$. We have \[|x_{N+1} - x_N| = |x_{n+1} - x + x - x_N| \leq \underbrace{|x_{N+1} -x| + |x - x_N|}_{\text{triangle inequality}} < 1 + 1 = 2.\] But we also have that $$|(-1)^{N+1}-(-1)^N| = |(-1)^{N+1}+(-1)^{N+1}| = 2,$$ We thus have that $2 < 2$, which is a contradiction. Thus, $x_n$ is not convergent.
 \end{proof}
 
+\begin{example}
+  Evaluate the following examples using the $\epsilon$ definition:
+  \begin{enumerate}
+    \item $\lim_{n\to\infty} \frac{\sin n}{\sqrt[3]{n}} = 0$
+    \item $\lim_{n\to\infty} \frac{n!}{n^n} = 0$
+    \item $\lim_{n\to\infty} \frac{(1+2+\cdots + n)^2}{n^4} = \frac{1}{4}$
+  \end{enumerate}
+\end{example}
+
+\begin{proof}
+  \begin{enumerate}
+    \item For all $\epsilon > 0$; take $\frac{1}{N} < \epsilon^3 \implies \frac{1}{\sqrt[3]{N}} < \epsilon$. Then, $\forall n \geq N$, \begin{align*}
+      n \geq N \implies \sqrt[3]{n} \geq \sqrt[3]{N} \implies \frac{1}{\sqrt[3]{n}} \leq \frac{1}{\sqrt[3]{N}}\\
+      -1 \leq \sin n \leq 1 \implies \abs{\sin n} \leq 1 \implies \abs{\frac{\sin n}{\sqrt[3]{n}}} \leq \abs{\frac{1}{\sqrt[3]{N}}} \leq \frac{1}{\sqrt[3]{N}} < \epsilon\\
+      \implies \lim_{n\to\infty} \frac{\sin n}{\sqrt[3]{n}} = 0
+    \end{align*}
+    \item Take $\frac{1}{N} \leq \epsilon$. Then, $\forall \epsilon > 0$, $\forall n \geq N \implies \frac{1}{n} \leq \frac{1}{N}$, \begin{align*}
+      \frac{n!}{n^n} > 0 \implies \abs{\frac{n!}{n^n}} = \frac{n!}{n^n} = \frac{n(n-1)(n-2)\cdots 1}{n\cdot n \cdots n} = \frac{n}{n} \cdot \frac{n-1}{n} \cdot \frac{n-2}{n} \cdots \frac{1}{n}\\
+      \leq 1 \cdot 1 \cdots 1 \cdot \frac{1}{n}\\
+      \leq \frac{1}{n} \leq \frac{1}{N} < \epsilon\\
+      \implies \lim_{n\to\infty} \frac{n!}{n^n} = 0
+    \end{align*}
+    \item Note first that $(1+2+ \cdots + n)^2 = (\frac{n(n+1)}{2})^2$ (see \cref{example:ai.i}). Take $\frac{1}{N} < \frac{\epsilon}{2}$; then, $\forall \epsilon > 0$, we have that $\forall n \geq N$, \begin{align*}
+      \abs{\frac{(1+2+\cdots + n)^2}{n^4} - \frac{1}{4}} = \frac{\frac{n^2(n+1)^2}{4}}{n^4} - \frac{n^4}{n^4} = \frac{n^4+2n^3+n^2 - n^4}{n^4}\\
+      = \frac{2n^3 + n^2}{n^4} = \frac{2n+1}{n^2} \leq \frac{2n}{n^2} \leq \frac{2}{n} \leq \frac{2}{N} < \epsilon\\
+      \implies \lim_{n\to\infty} \frac{(1+2+\cdots + n)^2}{n^4} = \frac{1}{4}
+    \end{align*}
+  \end{enumerate}
+\end{proof}
+
 \subsection{Properties of Limits}
 \begin{lemma}[Triangle Inequality]
   For $x,y,z \in \mathbb{R},$
