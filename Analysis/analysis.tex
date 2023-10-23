@@ -15,7 +15,7 @@
 \usepackage{titlesec}
 \usepackage{thmtools}
 \usepackage{thm-restate}
-\usepackage[side]{footmisc}
+\usepackage[side, ragged,multiple,flushmargin]{footmisc}
 \usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
 \usepackage{cleveref}
 \usepackage[]{csquotes}
@@ -23,6 +23,7 @@
 \usepackage{shortcuts}
 \usepackage{mdframed}
 \usepackage{nameref}
+
 % \usepackage[createShortEnv]{proof-at-the-end}
 
 % \renewcommand*{\proofname}{}
@@ -95,10 +96,11 @@
 % makes "quoted" text actually look correct
 \MakeOuterQuote{"}
 
+
 % page footer
 \newpagestyle{mypage}{%
-    \footrule
-    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
+    % \footrule
+    \setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
 }
 
 % title page settings
@@ -108,6 +110,7 @@
 
 % black square for qed symbol
 \renewcommand{\qedsymbol}{$\blacksquare$}
+
 
 \titleformat{\section}
 {\centering\normalfont\Large\bfseries}
@@ -147,11 +150,18 @@
 
 % \color{solarized-red}{Theorems},\color{solarized-orange}{ Axioms, Lemmas, Corollaries},\color{solarized-blue}{ Definitions}, \color{solarized-cyan}{ Examples}, \color{solarized-magenta}{ Propositions},\color{darkgray}{ Remarks}
 
+% auto labelling for sections/subsections
+\let\origsection=\section
+\let\origsubsection=\subsection
+
+\renewcommand\section[1]{\origsection{#1}\label{\thesection}}
+\renewcommand\subsection[1]{\origsubsection{#1}\label{\thesubsection}}
+
 % need to change margins and such here for rest of document
 % kind of messy but what can you do
-\newpage
+% \newpage
 % modify these as you wish
-\newgeometry{margin=0.25in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in, includemp}
+\newgeometry{margin=0.2in, top=0.2in, left=0.2in, bottom=0.5in, marginparwidth=1.7in, marginparsep=0.3in, outer=0.2in, includemp}
 \parskip=0.6em
 \setstretch{1.4}
 
@@ -1075,7 +1085,6 @@ In the proof, we used the claim:
 \end{proposition}
 
 \footnotetext{Note that the contrary of these statements need not hold; ie, if $\lim (x_n \cdot y_n)$ exists, this does not imply the existence of $\lim x_n$ and $\lim y_n$. Consider \cref{example:counterlimitalgebra}}
-\newpage
 \begin{remark}
   Let $X$ be the collection of all sequences of real numbers, $X = \{(x_n): x_n \text{ is a sequence}\}.$ If $(x_n) \in X$ and $c \in \mathbb{R}$, we can define $c \cdot(x_n) = (c\cdot x_n)$\footnotemark; this defines \emph{scalar multiplication} on $X$.\\ We can also define \emph{addition}; if $(x_n)$ and $(y_n)$ are two sequences in $X$, then $(x_n) + (y_n) = (x_n + y_n)$. Then, with these two operations $X$ is a \emph{vector space}.
 \end{remark}
@@ -1194,6 +1203,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 \end{example}
 
 \footnotetext{This example, as well as the more general one after it, rely on applying 1) the monotone convergence theorem, then 2) using Algebraic Limit Properties to turn the problem into an algebraic problem, using the given recursive relation.}
+
 \begin{example}
   Let $a> 0$ and let $(x_n)$ be a sequence defined recursively by $x_1$ is arbitrary (positive), and \[x_{n+1} = \frac{1}{2}(x_n + \frac{a}{x_n}), \quad n \geq 1.\] Show that $\lim_{n\to\infty}x_n = \sqrt{a}$.
   % \textit{(Sol'n: Show that for $n\geq 2$, $x_n \geq \sqrt{a}$, and that for $n \geq 2$, $x_n \geq x_{n+1}$, ie the sequence is decreasing and bounded from below. This shows that the limit exists and is equal to some $x$, and the relation gives that $x = \frac{1}{2}(x + \frac{a}{x})$; solve for $x$.)}
@@ -1355,11 +1365,135 @@ See Abbott, pg 57, for good diagram.
     \item \textbf{Case 1:} $(x_n)$ has \textit{infinitely} many peaks; enumerate the indices of those peaks as $n_1 < n_2 < n_3 < \cdots$, then $x_{n_k} < x_{n_{k+1}} \forall k$, since $x_{n_k}$ is a peak, $n_{k+1} > n_k$.  This gives a decreasing subsequence $(x_{n_k})$.
     \item \textbf{Case 2:} $(x_n)$ has \textit{finitely} many peaks, with indices $m_1 < m_2 < \cdots < m_r$. Set $n_1 = m_r + 1$. Then $x_{n_1}$ is not a peak, and so $\exists$ $n_2 > n_1 \st x_{n_2} > x_{n_1}$. Now, $x_{n_2}$ is also not a peak, ($n_2 > n_1 > m_r$), and so there exists $n_3 > n_2$ such that $x_{n_3} > x_{n_2}$, and so on. In this way, we construct a subsequence $(x_{n_k})$ that is strictly increasing, that is, $x_{n_{k+1}} > x_{n_k}$.
   \end{itemize}
+  If in addition $(x_n)$ is bounded, say $\abs{x_n} \leq M \forall n$, then the monotone subsequence constructed in \textbf{Cases 1, 2} is also bounded; ie $\abs{x_{n_k}} \leq M \forall k$. Thus, by \nameref{thm:mct}, $(x_{n_k})$ is converging.
 \end{proof}
 
+\subsection{Cauchy Sequences}
+\begin{definition}[Cauchy Criterion]\label{def:cauchycriterion}
+  A sequence $(x_n)$ is called \emph{Cauchy} if for every $\epsilon > 0$, $\exists N \in \mathbb{N} \st \forall n, m \geq N, \abs{x_n - x_m} < \epsilon$. 
+\end{definition}
 
+\begin{theorem}\label{thm:cauchyconvergence}
+  A sequence $(x_n)$ is convergent iff it is Cauchy.
+\end{theorem}
 
+\begin{remark}
+  This is, again, an "equivalent" formulation of AC; at least, the direction $(x_n)$ Cauchy $\implies$ convergent is. The other direction, convergent $\implies$ Cauchy, does \textit{not} rely on AC.
+\end{remark}
 
+\begin{remark}
+  AC $\iff$ BW, AC $\iff$ MCT, AC $\iff$ NIP; AC $\iff$ Cauchy Criterion $+$ Archimedian Property
+\end{remark}
+
+\begin{remark}
+  Beyond the real line, AC (in terms of $\sup$) cannot be formulated, because of the lack of ordering. In this case, the Cauchy criterion can be used to extend AC to other spaces.
+\end{remark}
+
+\begin{proof}(\cref{thm:cauchyconvergence}; 
+  \textbf{$(x_n)$ Convergent $\implies$ Cauchy }) \\Suppose $\lim_{n\to\infty} x_n = x$. Let $\epsilon >0$, $N \in \mathbb{N} \st \forall n \geq N$, $\abs{x_n - x} < \frac{\epsilon}{2}$. Then, for $n,m \geq N$,
+  \begin{align*}
+    \abs{x_n - x_m} = \abs{x_n - x + x - x_m} \leq \abs{x_n - x} + \abs{x_m - x} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\\
+    \implies \abs{x_n - x_m} < \epsilon,
+  \end{align*}
+  hence $(x_n)$ is Cauchy.
+\end{proof}
+\begin{remark}
+  To prove $\impliedby$, we first introduce the following theorem(s); see \cref{proof:cauchyconvergenceimpliedby} for the remainder.
+\end{remark}
+
+\begin{theorem}\label{thm:cauchysubsequence}
+  Let $(x_n)$ be a Cauchy sequence and suppose that $(x_n)$ has a convergent subsequence $(x_{n_k})$. Then $(x_n)$ is also convergent.
+\end{theorem}
+
+\begin{proof}
+  Let $x = \lim_{n\to\infty} x_{n_k}$. Let $\epsilon > 0$. Then, $\exists K \in \mathbb{N}$ such that $\forall k \geq K$, $\abs{x_{n_k} - x} < \epsilon$. We have too that $(x_n)$ Cauchy, ie $\exists N \in \mathbb{N} \st \forall n,m \geq N$, $\abs{x_{n} - x_m} < \frac{\epsilon}{2}$. \\Let now $K_0 \geq \max \{K, N\}$. Recall that $n_{K_0} \geq K_0 \geq N$. Take now $n \geq N$, and estimate \begin{align*}
+    \abs{x_n - x} = \abs{x_n - x_{n_{K_0}}+x_{n_{K_0}}-x} \leq \abs{x_n - x_{n_{K_0}}} + \abs{x_{n_{K_0}}-x}
+  \end{align*}
+  Since $K_0 \geq K$, $\abs{x_{n_{K_0}} - x} < \frac{\epsilon}{2}$. Since $n_{K_0} \geq N$, we also have $\abs{x_{n} - x_{n_{K_0}}} < \frac{\epsilon}{2}$. Thus, we have \[\abs{x_n - x} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon,\] hence $\lim_{n\to\infty} x_n = x$.
+\end{proof}
+\begin{remark}
+  This did \textit{not} use AC.
+\end{remark}
+\begin{theorem}\label{thm:cauchybounded}
+  Any Cauchy sequence is bounded.
+\end{theorem}
+\begin{proof}
+  Let $(x_n)$ be Cauchy. We aim tos hwo that $\exists M > 0 \st \forall n \in \mathbb{N}, \abs{x_n} \leq M$.\\
+  Take $\epsilon = 1$ in the definition of Cauchy sequence. Let $N$ be such that $\forall n,m \geq N$, $\abs{x_n - x_m} < 1$. We can take $m = N$, and so for all $n \geq N$, $\abs{x_n - x_{N}} < 1$, which gives that for $n \geq N$,
+  \begin{align*}
+    \abs{x_n} = \abs{x_{n} - x_{N} + x_N} \leq \abs{x_n- x_N} + \abs{x_N} < 1 + \abs{x_N}
+  \end{align*}
+  Let $$M = \abs{x_1} + \abs{x_2} + \dots \abs{x_{N-1}} + \abs{x_N} + 1.$$ Then, if $n \leq N$, $\abs{x_n} \leq M$; if $n \geq M, \abs{x_n} \leq M$, so $\forall n \geq 1, \abs{x_n} \leq M$, hence $(x_n)$ is bounded.
+\end{proof}
+\begin{remark}
+  This did not use AC.
+\end{remark}
+\begin{proof}(\cref{thm:cauchyconvergence}; $(x_n)$\textbf{ Convergent $\impliedby$ Cauchy}) \\If $(x_n)$ Cauchy, then $(x_n)$ is bounded by \cref{thm:cauchybounded}, and thus by \nameref{thm:bwthm}, $(x_n)$ has a convergent subsequence $(x_{n_k})$. Then, by \cref{thm:cauchysubsequence}, $(x_n)$ must converge.
+\end{proof}\label{proof:cauchyconvergenceimpliedby}
+
+\begin{example}\label{example:recursivenessity}
+  Let $(x_n)$ be a sequence defined recursively by $x_1 = 1$, $x_2 = 2$, $x_{n+1} = \frac{1}{2}(x_n + x_{n-1}), n \geq 2$. Prove that $(x_n)$ is a convergence sequence, and find its limit.
+\end{example}
+\begin{remark}
+  Before solving, we establish a number of properties about the sequence.
+\end{remark}
+\begin{proposition}[Property I]\label{prop:exercisecauchypropI}
+  $1 \leq x_n \leq 2 \forall n \geq 1$
+\end{proposition}
+\begin{proof}
+  We proceed by induction. Let $S \subseteq \mathbb{N}$ be the set of all $n$ such that $1 \leq x_n \leq 2$. \\
+  \textit{Base Case}: $1 \in x$, since $x_1 = 1$.\\
+  \textit{Assumption:} suppose $\{1,2, \dots, n\} \in S$. We want to show that $n+1 \in S$.\\
+  If $n = 1$, then $x_2 = 2$, so $x_2 \in S$. If $n > 1$, then \[x_{n+1} = \frac{1}{2} (x_n + x_{n+1}),\] and by inductive assumption, $1 \leq x_n \leq 2$ and $1 \leq x_{n-1} \leq 2$, hence $$1 \leq x_{n+1} \leq 2,$$ hence $n+1 \in S$, and thus $S = \mathbb{N}$.
+\end{proof}
+\begin{proposition}[Property II]\label{prop:exercisecauchypropII}
+  For all $n \geq 1$, $\abs{x_{n+1} - x_n} = \frac{1}{2^{n-1}}$.
+\end{proposition}
+\begin{proof}
+  We proceed by induction. Let $S \subseteq \mathbb{N}$ be the set of all $n$ such that the statement holds for $x_n$.\\
+  \textit{Base Case: } $x_2 = 2$, $x_1 = 1$, hence $2 - 1 = 1 = \frac{1}{2^0} = 1$, holds.\\
+  \textit{Assumption: } suppose $n \in S$, ie $\abs{x_{n+1} - x_{n}} = \frac{1}{2^{n-1}}$ holds for $n$. Then, \begin{align*}
+    \abs{x_{n+2} - x_{n+1}} = \abs{\frac{1}{2}(x_{n+1} + x_n) - x_{n+1}}\\
+    = \abs{\frac{1}{2} x_n - \frac{1}{2} x_{n+1}} = \frac{1}{2} \abs{x_{n+1} - x_n}\\
+    \textit{(assumption } \implies )\qquad = \frac{1}{2} \cdot \frac{1}{2^{n-1}} = \frac{1}{2^{n}},
+  \end{align*}
+  hence the statement holds for $n+1$, and $S = \mathbb{N}$.
+\end{proof}
+\begin{corollary}\label{cor:examplecauchycor}
+  For any $r \neq 1$, and any $k \in \mathbb{N}$, $1 + r + r^2 + \cdots + r^k = \frac{1-r^{k+1}}{1-r}$.
+\end{corollary}
+% TODO proof above
+\begin{proposition}[Property III]\label{prop:exercisecauchypropIII}
+  $(x_n)$ a Cauchy sequence.
+\end{proposition}
+\begin{proof}
+  Let $\epsilon > 0$. We need to find $N \in \mathbb{N}$ such that $\forall n, m \geq N$, $\abs{x_{n} - x_m} < \epsilon$. Let $N$ be such that\footnotemark $\frac{1}{2^{N-2}} = \frac{4}{2^N} < \epsilon$. Let, now, $n,m \geq N$, and suppose $n > m$ (when $n=m$, we are done; when $n < m$, simply switch the variables wlog). We can write \begin{align*}
+    \abs{x_n - x_m} = \abs{x_n - x_{n-1} + x_{n+1} - x_{n-2} + x_{n-2} + \cdots - x_{m+1} + x_{m+1} - x_m}\\
+    \leq \abs{x_n - x_{n-1}} + \abs{x_{n-1} - x_{n-2}} + \cdots + \abs{x_{m+1} - x_m} \footnotemark
+  \end{align*}
+  Using \nameref{prop:exercisecauchypropII} we can write \begin{align*}
+    \abs{x_{n} - x_m} &\leq \frac{1}{2^{m-1}} + \frac{1}{2^m} + \cdots \frac{1}{2^{n-2}}\\
+    &= \frac{1}{2^{m-1}}\left(1 + \frac{1}{2} + \cdots + \frac{1}{2^{n-m-1}}\right)
+  \end{align*}
+  By \cref{cor:examplecauchycor}, with $r = \frac{1}{2}$ and $k = n - m - 1$, we have \[
+    \frac{1}{2^{m-1}}\left(1 + \frac{1}{2} + \cdots + \frac{1}{2^{n-m-1}}\right) = \frac{1}{2^{m-1}} \left(
+  \frac{1 - \left(\frac{1}{2}\right)^{n-m}}{1 - \frac{1}{2}}
+    \right) < \frac{1}{2^{m-2}} \leq \frac{1}{2^{N-2}}.
+  \]
+  We have chosen $N$ so that $\frac{1}{2^{N-2}} < \epsilon$, hence for $n,m \geq N$, $\abs{x_n - x_m} < \epsilon$, and thus our sequence is Cauchy, so $\lim_{n\to\infty} x_n = X$ exists.
+\end{proof}
+
+\footnotetext[36]{$\lim \frac{1}{2^n} = 0$, so such an $N$ exists.}
+\footnotetext[37]{"Telescoping" the sequence; the inequality follows directly from the triangle inequality.}
+
+\begin{proof}(Of \cref{example:recursivenessity})\\
+  By \nameref{prop:exercisecauchypropIII}, the limit $\lim x_{n} = X$ exists. From the recursive definition, we can write \begin{align*}
+    X = \lim x_n = \lim (\frac{1}{2}(x_{n-1} + x_{n-2}))\\
+    \implies X = \frac{1}{2}(X+ X) = X,
+  \end{align*}
+  which, while true, is useless. How do we find the limit?
+  
+\end{proof}
 
 
 
@@ -1479,5 +1613,4 @@ See Abbott, pg 57, for good diagram.
 %   \caption{Important!}
 %   \label{fig:important}
 % \end{figure*}
-
 \end{document}
