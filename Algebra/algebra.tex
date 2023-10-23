@@ -108,9 +108,10 @@
 
 % page footer
 \newpagestyle{mypage}{%
-    \footrule
-    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
+    % \footrule
+    \setfoot{\scriptsize\textcolor{gray}{§\ref{sec:\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
 }
+
 
 % make \part title smaller and inline
 \titleformat{\part}[display]
@@ -160,11 +161,18 @@
 
 % need to change margins and such here for rest of document
 % kind of messy but what can you do
-\newpage
+
 % modify these as you wish
 \newgeometry{margin=0.25in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in, includemp}
 \setstretch{1.2}
 \parskip=0.6em
+% auto labelling for sections/subsections
+
+\let\origsection=\section
+\let\origsubsection=\subsection
+
+\renewcommand\section[1]{\origsection{#1}\label{sec:\thesection}}
+\renewcommand\subsection[1]{\origsubsection{#1}\label{sec:\thesubsection}}
 
 \part{Fundamentals}
 
@@ -1242,11 +1250,12 @@ is a complete set of representatives.
 \end{definition}
 
 \begin{definition}
-  We use $\mathbb{Z}\setminus n \mathbb{Z}$ or $\mathbb{Z}_n$ to denote the collection of congruence classes $\mod n$, ie $\mathbb{Z}\setminus n \mathbb{Z} = \{\overline{0}, \overline{1}, \dots, \overline{n-1}\}$.
+  We use $\mathbb{Z}/ n \mathbb{Z}$ or $\mathbb{Z}_n$ to denote the collection of congruence classes $\mod n$, ie $\mathbb{Z}/ n \mathbb{Z} = \{\overline{0}, \overline{1}, \dots, \overline{n-1}\}$.
 \end{definition}
 
 \begin{theorem}\label{thm:zmodnzringfield}
-  $\mathbb{Z}\setminus n \mathbb{Z}$ is a commutative ring with $n$ elements. It is a field iff $n$ is prime.
+  $\mathbb{Z}/ n \mathbb{Z}$ is a commutative ring with $n$ elements. It is a field iff $n$ is prime.\\
+  We often denote $\mathbb{Z}/p \mathbb{Z}$ where $p$ prime as $\mathbb{F}_p$.
 \end{theorem}
 \begin{proof}
   We define $\overline{r} + \overline{s} = \overline{r + s}$, $\overline{r} \cdot \overline{s} = \overline{rs}$. This is well defined; meaning if we use other representatives $r', s'$, we'll get the same result. Ie, given $r \sim r', s \sim s'$, we need to show $\overline{r' + s'} = \overline{r+s}, \overline{r'\cdot s'} = \overline{r \cdot s}$, ie $n | ((r+s) - (r'+s')), n | (rs - r's')$.\\
@@ -1262,7 +1271,7 @@ is a complete set of representatives.
     % TODO above
   \end{enumerate}
 
-  We now aim to show that $\mathbb{Z} \setminus n \mathbb{Z} \iff n \in \mathbb{P}$. Suppose $n$ composite, namely $n a \cdot b$, $1 < a < n, 1 < b < n$. Note that $\overline{a}, \overline{b} \neq \overline{0}$; but, $\overline{a}\cdot \overline{b} = \overline{a \cdot b} = \overline{n} = \overline{0}$. If $\mathbb{Z}\setminus n \mathbb{Z}$ is a field, then $\exists \overline{y} \st \overline{y} \cdot \overline a = \overline{1}$. We have $(\overline{y} \cdot \overline{a}) \cdot \overline{b} = \overline{1} \cdot \overline{b} = \overline{b}$, but $\overline{y}\cdot (\overline{a} \cdot \overline{b}) = \overline{y} \cdot \overline{0} = \overline{0}$, a contradiction.\\
+  We now aim to show that $\mathbb{Z} /n \mathbb{Z} \iff n \in \mathbb{P}$. Suppose $n$ composite, namely $n a \cdot b$, $1 < a < n, 1 < b < n$. Note that $\overline{a}, \overline{b} \neq \overline{0}$; but, $\overline{a}\cdot \overline{b} = \overline{a \cdot b} = \overline{n} = \overline{0}$. If $\mathbb{Z}\setminus n \mathbb{Z}$ is a field, then $\exists \overline{y} \st \overline{y} \cdot \overline a = \overline{1}$. We have $(\overline{y} \cdot \overline{a}) \cdot \overline{b} = \overline{1} \cdot \overline{b} = \overline{b}$, but $\overline{y}\cdot (\overline{a} \cdot \overline{b}) = \overline{y} \cdot \overline{0} = \overline{0}$, a contradiction.\\
   Suppose, now, $n \in \mathbb{P}$. To show $\mathbb{Z}/n \mathbb{Z}$ is a field; let $\overline{a}  \neq \overline{0} \in \mathbb{Z}/n \mathbb{Z}$, that is $n \cancel{|}a$. But $n$ is prime, so $\gcd(a,n) = 1$, so $\exists u,v \in \mathbb{Z}$ such that $1 = ua + vn$. But this means $$n|(1-ua) \implies ua \equiv 1 \mod n \implies \overline{u} \cdot \overline{a} = \overline{1} \in \mathbb{Z}/n \mathbb{Z},$$ and we have thus found a multiplicative inverse.
 \end{proof}
 
@@ -1303,16 +1312,301 @@ is a complete set of representatives.
   \end{tabular}; $\overline{2} + \overline{2} = \overline{4} = \overline{1}$.
 \end{example}
 
+\begin{lemma}
+  Let $R$ be a commutative ring. If $R$ has zero divisors then $R$ is not a field.
+\end{lemma}
+
+\begin{proof}
+  Let $x \neq 0$ be a zero divisor, and $y \neq 0 \st xy = 0$. If $R$ a field, then $\exists z \in R \st zx = 1$. But then, $z(xy) = z \cdot 0 = 0$, and $z(xy) = (zx)y = 1\cdot y = y$, hence $y$ must be 0, a contradiction.
+\end{proof}
+% TODO: add second proof?
+\begin{definition}[Unit]
+  An element $x$ in a ring $R$ is called a \emph{unit} if $\exists y \in R$ such that $xy = yx = 1$.
+\end{definition}
+\begin{example}
+  If $R$ a field, then any nonzero $x \in R$ is a unit. If $R = \mathbb{Z}/6\mathbb{Z}$, then $2,3,4$ are not units, but $1$ and $5$ are units.
+\end{example}
+% TODO: review, this shits confusing
+\begin{proposition}
+  Take $n > 1$. An element $\overline{a} \in \mathbb{Z}/n\mathbb{Z}$ is a unit iff $\gcd(a,n) = 1$.
+\end{proposition}
+
+\begin{proof}
+  Note: $\gcd (a,n)= 1$ depends only on the congruence class $\overline{a}$; $\gcd (a+kn, n) = \gcd(a,n)$. Suppose $\overline{a}$ is a unit, ie $\exists \overline{y} \in \mathbb{Z}/n\mathbb{Z} \st \overline{y} \cdot \overline{a} = \overline{1} \implies \overline{ya} = \overline{1} \implies ya - 1 = k \cdot n$, for some $k \in \mathbb{Z}$, ie $ya - kn = 1$. Thus, if $d | a$ and $d|n$, then $d|1 \implies d = \pm 1 \implies \gcd (a,n) = 1$. \\Conversely, suppose $\gcd (a,n) = 1$. Then, $\exists u,v \in \mathbb{Z} \st ua + vn = 1 \implies \overline{u} \cdot \overline{a} + \overline{v} \overline{n} = \overline{1}$. Now, $\overline{n} = \overline{0} \implies \overline{v} \cdot \overline{n} = \overline{0}$, so $\overline{u} \cdot \overline{a}= 1$, hence $\overline{a}$ is a unit.
+\end{proof}
+
+\begin{corollary}
+  If $n$ is prime any $\overline{a} \neq \overline{0}$ is a unit. 
+\end{corollary}
+
+% TODO: finish catching up above
+
+
+\subsection{Binomial Coefficients}
+
+\begin{definition}[Binomial Coefficient]
+  Let $m \geq n$ be non-negative integers. $m \choose n$ ($m$ choose $n$) ways to choose $m$ objects among $n$ objects, where order doesn't matter, where $m \choose{n}$$= \frac{m!}{n!(m-n)!}$.\\
+  We also have that \[\begin{pmatrix}
+    n\\
+    l
+  \end{pmatrix} + \begin{pmatrix}
+    n\\
+    l-1
+  \end{pmatrix} = \begin{pmatrix}
+    n+1\\
+    l
+  \end{pmatrix}\]
+\end{definition}
+
+\[
+\begin{array}{rrrrrrr}
+  & & & \begin{pmatrix}
+    0\\0
+  \end{pmatrix} & & & \\
+  & & \begin{pmatrix}
+    1\\
+    0
+  \end{pmatrix} & & \begin{pmatrix}
+    1\\1
+  \end{pmatrix} & \\
+  & \begin{pmatrix}
+    2\\0
+  \end{pmatrix} && \begin{pmatrix}
+    2 \\1
+  \end{pmatrix} && \begin{pmatrix}
+    2 \\ 2
+  \end{pmatrix} & \\
+  \begin{pmatrix}
+    3 \\0
+  \end{pmatrix} && \begin{pmatrix}
+    3 \\1
+  \end{pmatrix} & &
+  \begin{pmatrix}
+    3 \\2
+  \end{pmatrix} & &
+  \begin{pmatrix}
+    3 \\3
+  \end{pmatrix}
+\end{array}
+\]
+\textit{Pascal's Triangle}
+\begin{lemma}\label{lemma:binomialprime}
+  Let $p \in \mathbb{P}$, and let $1 \leq n \leq p - 1$. Then, $$p | \begin{pmatrix}
+    p\\n
+  \end{pmatrix}$$.
+\end{lemma}
+
+
+\begin{proof}
+  First note that if $1 \leq a \leq p -1, p \not|a!$. If $p | a! = 1\cdot 2 \cdot 3 \cdots a$, then $p | b$ where $b = \{1, 2, \dots a\}$. But we have that $1 \leq b \leq p$, so this is not possible.\\
+  Now, we have $\begin{pmatrix}
+    p\\
+    n
+  \end{pmatrix} = \frac{p!}{n!(p-n)!} = d \in \mathbb{Z} \implies p! = d \cdot n!(p-n)!$. As $p | p!$ and $p\not|n!$ nor $(p-n)!$, (as shown above) since $n \leq p -1, p-n \leq - 1$, so, since $p$ prime, $p | d$.
+\end{proof}
 
 
 
+\subsection{Solving Equations in \texorpdfstring{$\mathbb{Z}/n\mathbb{Z}$}{Z/nZ}}
 
+\begin{definition}
+  
+\end{definition}
+\subsubsection{Linear Equations}
+% TODO: should be before
 \newpage
+\subsection{Fermat's Little Theorem}
+\begin{theorem}[Fermat's Little Theorem]\label{thm:fermatslittle}
+  Let $p$  be a prime number. Let $a\not\equiv 0\mod p$ then \[a^{p-1}\equiv 1 \mod p.\]
+\end{theorem}
+
+\begin{remark}
+  This implies that, for every $a$, $a^p \equiv a \mod p$. Conversely, If $a \not\equiv 0 \mod p$, then $a^p \equiv a \mod p \implies a^{p-1} \equiv 1 \mod p$ by multiplying both sides with the congruence class $b \st ba \equiv 1 \mod p$.
+\end{remark}
+
+\begin{lemma}\label{lemma:fermatslittlelemma}
+  Let $R$ be a commutative ring and $x,y \in R$. Interpret $\begin{pmatrix}
+    n\\
+    i
+  \end{pmatrix}$ as adding $1$ to itself $\begin{pmatrix}
+    n\\
+    i
+  \end{pmatrix}$ times. Then, the binomial formula holds in $R$, ie\[(x+y)^{n} = \sum_{i=0}^{n} \begin{pmatrix}
+    n\\
+    i
+  \end{pmatrix}x^{i}y^{n-i}.\]
+  Ie, $\begin{pmatrix}
+    n\\
+    j
+  \end{pmatrix}$ means $1_R + \cdots + 1_R, \begin{pmatrix}
+    n\\j
+  \end{pmatrix}$ times.
+\end{lemma}
+
+\begin{proof}(Of \cref{lemma:fermatslittlelemma})
+  We proceed by induction. Case $n= 1$, clear; $(x+y)^1 = x^1 + y^1 \checkmark$.\\
+  Assume it holds for $n$. We write \begin{align*}
+    (x+y)^{n+1} = (x+y)^{n}(x+y) &= \underbrace{\left(\sum_{j=0}^n \begin{pmatrix}
+      n\\j
+    \end{pmatrix}x^{n-j}y^j\right)}_{\text{assumption}}\cdot(x+y)\\
+    &= \sum_{l=0}^{n+1} c_l x^{n+1 - l} \cdot y^l
+  \end{align*}
+  where $c_l = \underbrace{\begin{pmatrix}
+    n\\l
+  \end{pmatrix}}_{\text{from } \begin{pmatrix}
+  n\\l
+  \end{pmatrix}x^{n-l}y^lx} + \underbrace{\begin{pmatrix}
+    n\\l-1
+  \end{pmatrix}}_{\text{from } \begin{pmatrix}
+  n\\l-1
+  \end{pmatrix}x^{n-(l-1)y^{l-1}y}} = \begin{pmatrix}
+    n+1\\l
+  \end{pmatrix}$, hence $(x+y)^{n+1} = \sum_{l=0}^{n+1} \begin{pmatrix}
+    n+1\\l
+  \end{pmatrix} x^{n+1-l}y^{l}$.
+\end{proof}
+
+\begin{proof}(Of \nameref{thm:fermatslittle})
+  We aim to show that $a^p \equiv a \mod p$ for any $a$. It is sufficient to show that it holds for $1 \leq a \leq p - 1$.\\
+  We prove by induction on $1 \leq a \leq p -1$. $a = 1 \implies 1^p \equiv 1 \mod p$.\\ Suppose it holds for $1 \leq a\leq p -2$, and prove for $a+1$. Then, by \cref{lemma:fermatslittlelemma}, \begin{align}
+    (a+1)^{p} &= \sum_{i=0}^{p} \begin{pmatrix}
+      p\\
+      i
+    \end{pmatrix}a^{i}\\
+    &\equiv a^p + \begin{pmatrix}
+      p\\1
+    \end{pmatrix}a^{p-1} + \begin{pmatrix}
+      p\\2
+    \end{pmatrix}a^{p-2} + \cdots + \begin{pmatrix}
+      p\\p-1
+    \end{pmatrix}a + 1\\
+    &\equiv 1 + a^p \quad \text{(by \cref{lemma:binomialprime})}\\
+    &\equiv 1 + a\quad \text{by induction hypothesis}
+  \end{align}
+  Since $1 + a \not\equiv 0 \mod p$, it has an inverse in $y \in \mathbb{F}_p, y(1+a) \equiv 1$. Then, $y(1+a)^p\equiv y(1+a) \equiv 1$. Also, $y(1+a)^p = y(1+a)(1+a)^{p-1} \equiv (1+a)^{p-1}$, hence $(1+a)^{p-1} \equiv 1$.
+\end{proof}
+
+
+\begin{example}[Application of \nameref{thm:fermatslittle}]
+  Calculate $2^{2023} \cdot 3^9 \mod 7$. Divide $2023$ by $6 = 7-1 = p - 1$ with residue. $2023 = 6 \cdot 337 + 1$, and $9 = 1 \cdot 6 + 3$.\\
+  $2^{2023} \cdot 3^9 = 2(2^{6})^{337}\cdot 3^6 \cdot 3^3$. By FLT, this is equivalent to $2(1)^{337}\cdot 1 \cdot 3^3 \equiv 2 \cdot 27 \equiv 54 \equiv 5 \mod 7$.
+\end{example}
+
+
+\part{Arithmetic of Polynomials}
+
+\section{Analog to Integers}
+
+\subsection{Definitions}
+
+\begin{definition}[Polynomial Ring]
+  Let $\mathbb{F}$ be a field, and let $\mathbb{F}[x]$ be the ring of polynomials with coefficients in $\mathbb{F}$, ie \[\mathbb{F}[x] = \{a_n x^{n} + \cdots a_1 x + a_0 : a_i \in \mathbb{F}\}.\]
+  Operations of addition, multiplication are defined as is familiar.
+\end{definition}
+
+\begin{example}
+  $\mathbb{F} = \mathbb{Z}/3 \mathbb{Z}$. We have \begin{align*}
+    (x^2 + x + 1)(2x + 1) + 2x^2 + 5 \equiv 2x^3 + (\cancelto{0}{1+2})x^2 + \cancelto{0}{(1+2)}x + 1 + 2x^2 + 6\\
+    \equiv 2x^3 + 2x^2 + \cancel{6} \mod 3
+  \end{align*}
+\end{example}
+
+\begin{definition}[$\deg$]
+  If $f = a_n x^n + \cdots a_1 x + a_0$ has $a_n \neq 0$, we say $\deg f = n$, unless $f = 0$, where $\deg f$ undefined.\\
+  If $f,g$ not zero, then $\deg (f \cdot g) = \deg (f) + \deg (g)$; thus, if $f,g$ are not zero, $f \cdot g \neq 0$. If $f \cdot g = 0$, we must have either that $f = 0$ or $g = 0$, or both. Thus, this is a commutative ring with no zero divisors. 
+\end{definition}
+
+\begin{theorem}[Division with Residue]
+  Let $f,g \in \mathbb{F}[x]$, $g \neq 0$. Then, $\exists !$ polynomials $g, r \in \mathbb{F}[x]$ s.t. $f = q \cdot g + r$, where either $r = 0$ or $\deg (r) < \deg (g)$; furthermore, $q,r$ are unique.
+\end{theorem}
+
+\begin{proof}
+  If $f = 0$, then take $q = 0, r = 0$ (no other choice). Take $f \neq 0$ wlog. We first prove \textit{existence} by induction on $\deg f$. 
+  \begin{itemize}
+    \item \textit{Base:} $\deg f = 0$: If $\deg g > 0$, let $q = 0$, $r =f$, hence $f = 0 \cdot g + f$. Otherwise, if $\deg g = 0$, then $g$ is a constant, then $f = (f g^{-1}) \cdot g + 0$.
+    \item \textit{Assumption:} suppose true for all polynomials $h \in \mathbb{F}[x]$ such that $\deg h \leq n$ and $\deg f = n+1$.  Say $f = a_{n+1}x^{n+1} + $ l.o.t.\footnotemark, and $g = b_{m} x^{m} + $ l.o.t., where $b_m \neq 0$. 
+    \begin{itemize}
+      \item If $n+1 < m$, then $f = 0 \cdot g + f$, $\deg f < \deg g$.
+      \item If $n + 1 \geq m$, then $f(x) = \underbrace{a_{n+1} b_{m}^{-1} x^{n+1-m} g}_{=a_{n+1}x^{n+1} + \text{ l.o.t}} + h(x)$, where $h$ is essentially the "difference" between the expression. Note that $\deg h \leq n$; hence, by induction $h(x) = \tilde{q}(x)\cdot g(x) + r(x)$, where either $r(x) = 0$ or $\deg r < \deg g$. This implies that $$f(x) = \underbrace{(a_{n+1} b_m^{-1} x^{n+1-m} + \tilde{q}(x))}_{q(x)} g(x) + r(x).$$
+    \end{itemize}
+  \end{itemize}
+  Thus, the proof holds for all $\deg f$. We know show uniqueness. Suppose $f = q_1 g + r_1 = q_2 g + r_2$, where $r_i = 0$ or $\deg r_i < \deg g$. Consider \[(q_1 - q_2)g = r_2 - r_1.\] If RHS $\neq 0$, then the LHS $\neq 0$, hence $q_1 - q_2 \neq 0$. Since $g \neq 0$, then $\deg( \text{LHS}) = \deg (q_1 - q_2) + \deg g \geq \deg g$. But $\deg \text{RHS} \leq \max (\deg r_1, \deg r_2) < \deg g$, and we have a contradiction. Hence, RHS = $0 \implies $ LHS = 0, hence $q_1 - q_2 = 0$, so $r_1 = r_2$, $q_1 = q_2$, and the polynomial is thus unique.
+\end{proof}
+\footnotetext{Lower order terms}
+
+
+\begin{definition}[Divisibility]
+  We say $g | f$ if $r = 0$; namely,
+  \[f = q \cdot g \text{ for some } q \in \mathbb{F}[x].\] As before, $g | f \implies g | hf$ for any $h \in \mathbb{F}[x]$; $g | f_1, g|f_2 \implies g | (f_1 \pm f_2)$; etc. Many of the other consequences of divisibility in integers follow similarly.
+\end{definition}
+
+
+\subsection{GCD}
+\begin{definition}[GCD of Polynomials]
+  Let $f,g \in \mathbb{F}[x]$ not both 0. The greatest common divisor of $f,g$ denoted $\gcd (f,g)$ is a \emph{monic} polynomial of largest degree dividing both $f$ and $g$.
+\end{definition}
+
+\begin{definition}[Monic]
+  $f = a_n x^{n} + \cdots + a_0$, $a_n \neq 0$ is \emph{monic} if $a_n = 1$ (leading term is one).
+\end{definition}
+
+\begin{theorem}[GCD]
+  $\gcd (f,g) $ exists and is unique. Furthermore, of the nonzero monic polynomials of the form $$u(x) f(x) + v(x) g(x),$$ it has the minimal degree. Any common example of $f,g$ divides the gcd.
+\end{theorem}
+
+\begin{proof}
+  \begin{itemize}
+    \item \textit{Existence: } Let $S := \{a(x) : a(x) \text{ monic, nonzero}; a(x) = u(x) f(x) + v(x) g(x).\}$. $S \neq \varnothing$; if $f \neq 0$, rather $f = a_n x^{n} + $ l.o.t., then $a(x) = a_{n}^{-2} f(x)\cdot f(x) + 0 \cdot g(x) \in S$ (if $f = 0$, use $g$ by same argument). Choose some $h(x) \in S$ have the minimal positive degree.
+  
+    \item \textit{Unique: } suppose $h_1(x) \in S$ and $\deg h = \deg h_1 = d$, $h = x^{d} + \text{lot} = uf + vg$, $h_1 = x^{d} + \text{log} = u_1f + v_1g$. Now either:
+    \begin{itemize}
+      \item $h- h_1 = 0$ (done)
+      \item $\deg (h-h_1) < \deg h$. However, $h-h_1 = (u-u_1)f + (v-v_1) g$. $h-h_1 = a_e x^{e} + \text{lot}$, then $ae^{-1}(h-h_1)$ is monic of $\deg < \deg h$, and is in $S$, a contradiction. 
+      
+      Hence, $h$ must be unique.
+    \end{itemize}
+    \item $h|f, h|g$: Write \[f = q \cdot h + r.\] If $r = 0, h | f$. Else, $r = f - q \cdot h$, and thus $r \in S$, and we can write $r = f -q (uf + vg) = (f-qu)f - (qv)g$. Thus, after normalization (ie "divide out" to make monic), $r \in S$, and has a smaller degree then $h$, and we thus have a contradiction, and so $r = 0$. Thus, $h | f, h | g$.
+    \item \textit{Maximality of $\deg (h)$:} Suppose $t(x) | f, t(x) | g$, thus $t(x) | (uf + vg)$, so $t | h$. Thus, $\deg t \leq \deg h$, and further $h$ has the maximal possible degree, hence $h$ is the monic common divisor of max degree.
+    \item \textit{Uniqueness of GCD:} Say $h_1$ another common divisor of $f, g$ of the same degree of $h$. We have that $\deg {h} = \deg{h_1}$ and $h_1 | h$, and further $h, h_1$ monic, then $h = h_1$.
+  \end{itemize}
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 % \section{Appendix}
-% \cantorbern*
-% \begin{proof}
-% % TODO
-% \end{proof}
+
 
 % \subsection{Homeworks}
 
