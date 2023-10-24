@@ -817,7 +817,7 @@ In the proof, we used the claim:
 
   Since each $A_n$ finite or countable, by (a) $\implies$ (b), there exists a surjection $$\varphi_n: \mathbb{N} \to A_n.$$ Now, let $h: \mathbb{N} \times \mathbb{N} \to A,$ (the union) by setting \[h(n,m) = \varphi_n(m).\] We aim to show that $h$ is also surjective.\\ If $a \in \bigcup_{n=1}^\infty A_n$, then $a \in A_n$ for some $n \in \mathbb{N}$. Since $\varphi_n : \mathbb{N} \to A_n$ is a surjection, there exists an $m \in \mathbb{N}$ s.t. $\varphi_n(m) = a$. By definition of $h$, we have \[h(n,m) = a,\] and thus $h$ is a surjection.
 
-  By \cref{prop:basicfactII}, there exists a bijection $f: \mathbb{N} \to \mathbb{N} \times \mathbb{N}$, and we can define the composite map \[h \circ f : \mathbb{N} \to A\,(= \cup_{n=1}^\infty A_n),\] which is a surjection as both $h,f$ are surjections. So, there exists a surjection from $\mathbb{N} \to A$, and by \cref{prop:equivcountable}, (b) $\implies$ (a), and thus $A = \bigcup_{n=1}^\infty A_n$ is also finite our countable.
+  By \cref{prop:basicfactII}, there exists a bijection $f: \mathbb{N} \to \mathbb{N} \times \mathbb{N}$, and we can define the composite map \[h \circ f : \mathbb{N} \to A\,(= \cup_{n=1}^\infty A_n),\] which is a surjection as both $h,f$ are surjections. So, there exists a surjection from $\mathbb{N} \to A$, and by \cref{prop:equivcountable}, (b) $\implies$ (a), and thus $A = \bigcup_{n=1}^\infty A_n$ is also finite or countable.
 
 \end{proof}
 
