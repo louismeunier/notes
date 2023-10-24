@@ -434,11 +434,11 @@ We can consider historical reasoning for the extension of $\mathbb{Q}$ to $\math
 \end{proposition}
 \footnotetext{Just see next proposition; if you really need convincing, just use $2$ rather than $\infty$ as the upper limit of the unions/intersections and use the same proof.}
 
-\begin{proposition}
+\begin{proposition}[$\textcolor{red}{\star}$]
   Let $A_n, n = 1,2,3 \dots$. Then, 
   \begin{itemize}
-    \item[(a)] $f^{-1}(\bigcup_{n=1}^{\infty}A_n) = \bigcup_{n=1}^{\infty}f(A_n)$
-    \item[(b)] $f^{-1}(\bigcap_{n=1}^{\infty}A_n) = \bigcap_{n=1}^{\infty}f(A_n)$
+    \item[(a)] $f^{-1}(\bigcup_{n=1}^{\infty}A_n) = \bigcup_{n=1}^{\infty}f^{-1}(A_n)$
+    \item[(b)] $f^{-1}(\bigcap_{n=1}^{\infty}A_n) = \bigcap_{n=1}^{\infty}f^{-1}(A_n)$
   \end{itemize}
 \end{proposition}
 
@@ -533,7 +533,7 @@ Real numbers, algebraically, have the same properties as the rationals; we have 
   \end{itemize}
 \end{proof}
 
-\begin{proposition}\label{prop:infepsilon}
+\begin{proposition}[$\textcolor{red}{\star}$]\label{prop:infepsilon}
   Let $A \subseteq \mathbb{R}$ and let $i$ be a lower bound for $A$. Then $i = \inf(A) \iff$ for every $\epsilon > 0$ there exists $x \in A$ s.t. $x < i + \epsilon$.\footnotemark
 \end{proposition}
 \footnotetext{Use similar argument to proof of previous proposition.}
@@ -579,7 +579,7 @@ Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is 
   The proof above emphasized the left-end points; it can equivalently be proven via the right-end points, and using $y=\inf(\{b_n : n \in \mathbb{N}\}) = \inf(B)$, rather than $\sup(A)$, and showing that $y \in \bigcap I_n$.
 \end{remark}
 
-\begin{remark}
+\begin{remark}[$\textcolor{red}{\star}$]
   Note too that, if $x = \sup(A)$ and $y = \inf(B)$, then $x, y \in \bigcap_{n=1}^\infty I_n$; in fact, $\bigcap_{n=1}^\infty I_n = [x,y]$. This can be done by
   \begin{itemize}
     \item Use the main proof to show $x \in \bigcap I_n$
@@ -949,7 +949,7 @@ In the proof, we used the claim:
 
 
 
-\begin{definition}[Quantifier of Limit]
+\begin{definition}[Quantifier of Limit $\textcolor{red}{\star}$]
   The limit can be written in terms of quantifiers.
   \[\lim_{n \to \infty} x_n = x\] means that \[(\forall \epsilon > 0)(\exists N \in \mathbb{N})(\forall n \geq N)(|x_n - x| < \epsilon).\]
 \end{definition}
@@ -1040,7 +1040,7 @@ In the proof, we used the claim:
 % \end{example}
 
 
-\begin{theorem}
+\begin{theorem}[$\textcolor{red}{\star}$]
   A limit of a sequence is unique. In other words, if the sequence is converging, then its limit is unique. The sequence cannot converge to two distinct numbers $x$ and $y$.\footnotemark
 \end{theorem}
 
@@ -1204,7 +1204,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 
 \footnotetext{This example, as well as the more general one after it, rely on applying 1) the monotone convergence theorem, then 2) using Algebraic Limit Properties to turn the problem into an algebraic problem, using the given recursive relation.}
 
-\begin{example}
+\begin{example}[$\textcolor{red}{\star}$]
   Let $a> 0$ and let $(x_n)$ be a sequence defined recursively by $x_1$ is arbitrary (positive), and \[x_{n+1} = \frac{1}{2}(x_n + \frac{a}{x_n}), \quad n \geq 1.\] Show that $\lim_{n\to\infty}x_n = \sqrt{a}$.
   % \textit{(Sol'n: Show that for $n\geq 2$, $x_n \geq \sqrt{a}$, and that for $n \geq 2$, $x_n \geq x_{n+1}$, ie the sequence is decreasing and bounded from below. This shows that the limit exists and is equal to some $x$, and the relation gives that $x = \frac{1}{2}(x + \frac{a}{x})$; solve for $x$.)}
 \end{example}
