@@ -12,7 +12,7 @@
 \usepackage{pgfplots}
 \usepackage{listings}
 \usepackage{tabularx}
-\usepackage{titlesec}
+\usepackage[pagestyles]{titlesec}
 \usepackage{thmtools}
 \usepackage{thm-restate}
 \usepackage[side, ragged,multiple,flushmargin]{footmisc}
@@ -590,12 +590,12 @@ Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is 
 \end{remark}
 
 \begin{remark}
-  The intervals $I_n$ \emph{must} be closed; if not, eg $I_n = (0, \frac{1}{n})$, then $\bigcap_{n=1}^\infty I_n = \varnothing$. \\Say $\bigcap I_n \neq \varnothing$; take then some $x \in \bigcap I_n$. Then, $x \in (0, \frac{1}{n}) \forall n \in \mathbb{N}$. But by \cref{prop:archimedian}, $\forall x \in \mathbb{R}$, $\exists N \in \mathbb{N} \st \frac{1}{N} < x$. Clearly, $x$ must be greater than $0$ to exist in the intersection; hence, there will always exist some sufficiently large $N$ such that $\frac{1}{N} < x \implies x \notin (1, \frac{1}{N}) \implies x \notin \bigcap I_n \implies \bigcap I_n = \varnothing$.
+  The intervals $I_n$ \emph{must} be closed; if not, eg $I_n = (0, \frac{1}{n})$, then $\bigcap_{n=1}^\infty I_n = \varnothing$. \\Say $\bigcap I_n \neq \varnothing$; take then some $x \in \bigcap I_n$. Then, $x \in (0, \frac{1}{n}) \forall n \in \mathbb{N}$. But by \cref{prop:archimedean}, $\forall x \in \mathbb{R}$, $\exists N \in \mathbb{N} \st \frac{1}{N} < x$. Clearly, $x$ must be greater than $0$ to exist in the intersection; hence, there will always exist some sufficiently large $N$ such that $\frac{1}{N} < x \implies x \notin (1, \frac{1}{N}) \implies x \notin \bigcap I_n \implies \bigcap I_n = \varnothing$.
 \end{remark}
 
 \subsection{Density of Rationals in Reals}
 
-\begin{proposition}[Archimedian Property]\label{prop:archimedian}
+\begin{proposition}[Archimedean Property]\label{prop:archimedean}
   \begin{itemize}
     \item[(a)] For any $x \in \mathbb{R}$, there exists a natural number $n$ s.t. $n > x$.
     \item[(b)] For any $y \in \mathbb{R}$ satisfying $y > 0$, $\exists n \in \mathbb{N}$ such that $\frac{1}{n} < y$.
@@ -629,7 +629,7 @@ Thus, if $A$ is bounded from above, then \[-\sup(A) = \inf(-A),\] and if $A$ is 
 \end{remark}
 
 \begin{proof}
-  Since $b - a > 0$, by (b) of \cref{prop:archimedian}, $\exists n \in \mathbb{N}$ s.t. $\frac{1}{n} < b -a$, ie $na + 1 < nb$.
+  Since $b - a > 0$, by (b) of \cref{prop:archimedean}, $\exists n \in \mathbb{N}$ s.t. $\frac{1}{n} < b -a$, ie $na + 1 < nb$.
 
   Let $m \in \mathbb{Z}$ s.t. $m - 1 \leq na < m$. Such an integer must exists since $\bigcup_{m \in \mathbb{Z}} [m-1, m) = \mathbb{R}$, the family $[m-1,m), m \in \mathbb{Z}$ makes partitions of $\mathbb{R}$. Then, $na < m$ gives that $a < \frac{m}{n}$. On the other hand, $m -1 \leq na$ gives $m \leq na+1 < nb$. So $\frac{m}{n} < b$ and it follows that $\frac{m}{n}$ satisfies $a < \frac{m}{n} < b$.
 \end{proof}
@@ -643,7 +643,7 @@ In the proof, we used the claim:
 \begin{proof}
   Let $S$ be a non-empty subset of $\mathbb{N}$. Then $S$ has the least element; $\exists m \in S$ s.t. $m \leq n, \forall n \in S$.
 
-  We can assume $z \geq 0$; if $0 \leq z < 1$, then we are done (take $m = 1$), and assume that $z \geq 1$. Let now $S = \{n \in \mathbb{N} : z < n\}$, $\neq \varnothing$ by \cref{prop:archimedian}, (a). Let $m$ be the least element of $S$. It exists by Well-Ordering Property; then, since $m \in S$, $z < m$. But, we also have $m - 1 \leq z$, otherwise, if $z < m-1$ then $m - 1 \in S$ and then $m$ is not the least element of $S$. Thus, we have $m -1 \leq z < m$, as required.
+  We can assume $z \geq 0$; if $0 \leq z < 1$, then we are done (take $m = 1$), and assume that $z \geq 1$. Let now $S = \{n \in \mathbb{N} : z < n\}$, $\neq \varnothing$ by \cref{prop:archimedean}, (a). Let $m$ be the least element of $S$. It exists by Well-Ordering Property; then, since $m \in S$, $z < m$. But, we also have $m - 1 \leq z$, otherwise, if $z < m-1$ then $m - 1 \in S$ and then $m$ is not the least element of $S$. Thus, we have $m -1 \leq z < m$, as required.
 \end{proof}
 
 \begin{theorem}
@@ -672,10 +672,10 @@ In the proof, we used the claim:
     
       For any $n \in \mathbb{N}$ we expand \[\left(\alpha + \frac{1}{n}\right)^2 = \alpha^2 + \frac{2\alpha}{n} + \frac{1}{n^2} \leq \alpha^2 + \frac{2 \alpha + 1}{n},\] noting that $\frac{1}{n^2} \leq \frac{1}{n}$ for $n \geq 1$.
 
-      Let $y = \frac{2 - \alpha^2}{2\alpha + 1}$, which is strictly positive. By \cref{prop:archimedian}, $\exists n_0 \in \mathbb{N}$ s.t. \[\frac{1}{n_0} < \frac{2-\alpha^2}{2\alpha + 1} \text{ or } \frac{2\alpha + 1}{n_0} < 2 - \alpha^2.\] Substituting this $n_0$ into our inequality, we have \[\left(\alpha + \frac{1}{n_0}\right)^2 \leq \alpha^2 + \frac{2 \alpha + 1}{n_0} < \alpha^2 + 2 - \alpha^2 = 2.\] Since $\alpha + \frac{1}{n_0}$ is positive, $\alpha + \frac{1}{n_0} \in A$. But, since $\alpha = \sup A$, $\alpha + \frac{1}{n_0} \leq \alpha$, which is impossible, so $\alpha^2 < 2$ cannot be true.
+      Let $y = \frac{2 - \alpha^2}{2\alpha + 1}$, which is strictly positive. By \cref{prop:archimedean}, $\exists n_0 \in \mathbb{N}$ s.t. \[\frac{1}{n_0} < \frac{2-\alpha^2}{2\alpha + 1} \text{ or } \frac{2\alpha + 1}{n_0} < 2 - \alpha^2.\] Substituting this $n_0$ into our inequality, we have \[\left(\alpha + \frac{1}{n_0}\right)^2 \leq \alpha^2 + \frac{2 \alpha + 1}{n_0} < \alpha^2 + 2 - \alpha^2 = 2.\] Since $\alpha + \frac{1}{n_0}$ is positive, $\alpha + \frac{1}{n_0} \in A$. But, since $\alpha = \sup A$, $\alpha + \frac{1}{n_0} \leq \alpha$, which is impossible, so $\alpha^2 < 2$ cannot be true.
       \item $\alpha^2 > 2$
       
-      Take $n \in \mathbb{N}$; \[\left(\alpha - \frac{1}{n}\right)^2 = \alpha^2 - \frac{2\alpha}{n} + \frac{1}{n^2} > \alpha^2 - \frac{2\alpha}{n}.\] Now, let $y = \frac{\alpha^2 - 2}{2\alpha}$; $y > 0$, and by \cref{prop:archimedian}, $\exists n_0 \in \mathbb{N}$ s.t. \[\frac{1}{n_0} < \frac{\alpha^2 - 2}{2 \alpha}, \text{ or } \frac{2\alpha}{n_0} < \alpha^2 - 2.\] Substituting this $n_0$, we have \[\left(\alpha - \frac{1}{n_0}\right)^2 > \alpha^2 - \frac{2 \alpha}{n_0} > \alpha^2 + 2 - \alpha^2 = 2.\] So for any $x \in A$, we have $\left(\alpha- \frac{1}{n_0}\right)^2 > 2 > x^2$. $\alpha - \frac{1}{n_0}> 0$, and $x > 0$, since $x \in A$. Then, $\left(\alpha - \frac{1}{n_0}\right)^2 > x^2$ gives that $\alpha - \frac{1}{n_0}>x$.
+      Take $n \in \mathbb{N}$; \[\left(\alpha - \frac{1}{n}\right)^2 = \alpha^2 - \frac{2\alpha}{n} + \frac{1}{n^2} > \alpha^2 - \frac{2\alpha}{n}.\] Now, let $y = \frac{\alpha^2 - 2}{2\alpha}$; $y > 0$, and by \cref{prop:archimedean}, $\exists n_0 \in \mathbb{N}$ s.t. \[\frac{1}{n_0} < \frac{\alpha^2 - 2}{2 \alpha}, \text{ or } \frac{2\alpha}{n_0} < \alpha^2 - 2.\] Substituting this $n_0$, we have \[\left(\alpha - \frac{1}{n_0}\right)^2 > \alpha^2 - \frac{2 \alpha}{n_0} > \alpha^2 + 2 - \alpha^2 = 2.\] So for any $x \in A$, we have $\left(\alpha- \frac{1}{n_0}\right)^2 > 2 > x^2$. $\alpha - \frac{1}{n_0}> 0$, and $x > 0$, since $x \in A$. Then, $\left(\alpha - \frac{1}{n_0}\right)^2 > x^2$ gives that $\alpha - \frac{1}{n_0}>x$.
 
       So, $\alpha - \frac{1}{n_0} > x$ for all $x \in A$. So $\alpha - \frac{1}{n_0}$ is an upper bound for $A$, but since $\alpha = \sup A$, $\alpha - \frac{1}{n_0} \geq \alpha$ ie $\alpha \geq \alpha + \frac{1}{n_0}$, which is impossible. So $\alpha^2 > 2$ cannot be true.
     \end{itemize}
@@ -1304,7 +1304,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 \end{remark}
 
 
-\begin{theorem}
+\begin{theorem}\label{thm:convsubsequence}
   Let $(x_n)$ be a sequence such that $\lim_{n\to\infty} x_n = x$. Then, for any subsequence $(x_{n_k})_{k\in\mathbb{N}}$, we have that $\lim_{k\to\infty} x_{n_k} = x$
 \end{theorem}
 \begin{proof}
@@ -1369,11 +1369,11 @@ See Abbott, pg 57, for good diagram.
 \end{proof}
 
 \subsection{Cauchy Sequences}
-\begin{definition}[Cauchy Criterion]\label{def:cauchycriterion}
+\begin{definition}[Cauchy Sequence]\label{def:cauchydefinition}
   A sequence $(x_n)$ is called \emph{Cauchy} if for every $\epsilon > 0$, $\exists N \in \mathbb{N} \st \forall n, m \geq N, \abs{x_n - x_m} < \epsilon$. 
 \end{definition}
 
-\begin{theorem}\label{thm:cauchyconvergence}
+\begin{theorem}[Cauchy Criterion]\label{thm:cauchyconvergence}
   A sequence $(x_n)$ is convergent iff it is Cauchy.
 \end{theorem}
 
@@ -1382,7 +1382,7 @@ See Abbott, pg 57, for good diagram.
 \end{remark}
 
 \begin{remark}
-  AC $\iff$ BW, AC $\iff$ MCT, AC $\iff$ NIP; AC $\iff$ Cauchy Criterion $+$ Archimedian Property
+  AC $\iff$ BW, AC $\iff$ MCT, AC $\iff$ NIP; AC $\iff$ Cauchy Criterion $+$ Archimedean Property
 \end{remark}
 
 \begin{remark}
@@ -1432,8 +1432,10 @@ See Abbott, pg 57, for good diagram.
 \end{proof}\label{proof:cauchyconvergenceimpliedby}
 
 \begin{example}\label{example:recursivenessity}
-  Let $(x_n)$ be a sequence defined recursively by $x_1 = 1$, $x_2 = 2$, $x_{n+1} = \frac{1}{2}(x_n + x_{n-1}), n \geq 2$. Prove that $(x_n)$ is a convergence sequence, and find its limit.
+  Let\footnotemark $(x_n)$ be a sequence defined recursively by $x_1 = 1$, $x_2 = 2$, $x_{n+1} = \frac{1}{2}(x_n + x_{n-1}), n \geq 2$. Prove that $(x_n)$ is a convergence sequence, and find its limit.
 \end{example}
+\footnotetext{
+Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $x_n$ (spec, odd $n$) and find a closed form of it which is nicer to evaluate. Use then \cref{thm:convsubsequence} to conclude that the limit of the subsequence is equal to the limit of the sequence.}
 \begin{remark}
   Before solving, we establish a number of properties about the sequence.
 \end{remark}
@@ -1491,13 +1493,109 @@ See Abbott, pg 57, for good diagram.
     X = \lim x_n = \lim (\frac{1}{2}(x_{n-1} + x_{n-2}))\\
     \implies X = \frac{1}{2}(X+ X) = X,
   \end{align*}
-  which, while true, is useless. How do we find the limit?
-  
+  which, while true, is useless. Rather, consider the subsequence $$(x_{2k+1})_{k\in\mathbb{N}}$$ of $(x_n)$. We claim, then, that \[x_{2k+1} = 1 + \frac{1}{2} + \frac{1}{2^3} + \cdots + \frac{1}{2^{k-1}}, k \geq 1. \qquad \star\] Note that $\forall n \geq 1$, $x_{2n} \geq x_{2n-1}$ and $x_{2n} \geq x_{2n+1}$. We can argue by induction. Let $S \subseteq \mathbb{N}$ for which the relation holds. Since $x_1 = 1$, $x_2 = 2$, $x_3 = \frac{3}{2}$, we have that $x_{2} \geq x_1$, $x_2 \geq x_3$, and so the relation holds, ie $1 \in S$. Suppose that $n \in S$, ie $x_{2n} \geq x_{2n-1}, x_{2n} \geq x_{2n+1}$ for some $n \geq 1$. We can write \begin{align*}
+    x_{2k+2} = \frac{1}{2}(x_{2k+1} + x_{2k}) \geq \frac{1}{2}(x_{2n+1} + x_{2n+1}) \geq x_{2n+1}\\
+    \implies x_{2n+3} = \frac{1}{2}(x_{2n+2} + x_{2n+1}) \leq \frac{1}{2}(x_{2n+2}+x_{2n+2}) = x_{2n+2}
+  \end{align*}
+  Hence $x_{2n+2} \geq x_{2n+1}$ and $x_{2n+2} \geq x_{2n+3}$, $n+1 \in S$, and hence $S = \mathbb{N}$, and our relation holds $\forall n \in \mathbb{N}$.
+
+  Recall now that $\forall n, \abs{x_{n+1} - x_n} = \frac{1}{2^{n-1}}$. We then have the following, given the relation we proved above; \begin{align*}
+    x_{2n+1} - x_{2n-1} &= \underbrace{x_{2n+1} - x_{2n}}_{\leq 0} + \underbrace{x_{2n} - x_{2n-1}}_{\geq 0}\\
+    &= -\frac{1}{2^{2n-1}} + \frac{1}{2^{2n-2}} = -\frac{1}{2^{2n-1}}  +\frac{2}{2^{2n-1}} = \frac{1}{2^{2n-1}}
+  \end{align*}
+  From here, we can prove the claim $\star$ by induction. % TODO
+
+  Summing up the RHS of $\star$, and factoring out a $\frac{1}{2}$, we have \[
+  x_{2k+1} = 1 + \frac{1}{2}\left(1 + \frac{1}{2^2} + \cdots + \left(\frac{1}{2^2}\right)^{k-1}\right).
+  \]
+  Recalling \cref{cor:examplecauchycor}, and taking $r = \frac{1}{4}$ and $\ell = k - 1$, we have \begin{align*}
+    x_{2k+1} &=1+ \frac{1}{2}\left(\frac{1 - \left(\frac{1}{4}\right)^k}{1 - \frac{1}{4}}\right)\\
+    &= 1 + \frac{2}{3}\left(1 - \left(\frac{1}{4}\right)^k\right)\\
+    & = \frac{5}{3} - \frac{2}{3}\left(\frac{1}{4}\right)^k
+  \end{align*}
+  Thus, we have that $\lim_{k\to\infty} x_{2k+1} = \frac{5}{3}$, as the term $(\frac{1}{4})^k$ goes to zero.
+
+  Now, since $\lim_{n\to\infty} x_{n} = X$ and we showed $x_{n}$ convergent, then each of its subsequences converges to the same limit. Thus, $X = \frac{5}{3}$, ie, \[\lim_{n\to\infty} x_{n} = \frac{5}{3}.\]
+\end{proof}
+\begin{remark}
+  Generally, this type of approach is quite tedious. The next example(s) will try to generalize it.
+\end{remark}
+\begin{example}
+  Consider the recursive relation $x_{n+1} = \frac{1}{2} x_{n} + \frac{1}{2} x_{n-1}\quad \star$.
+\end{example}
+\begin{proof}
+  We have the following \textit{characteristic equation} of the sequence:\[x^2 = \frac{1}{2} x + \frac{1}{2},\] with solutions $a = 1, b = -\frac{1}{2}$. We can now write the following sequence: \[x_{n} = C_1 a^{n} + C_2 b^n = C_1 + C_2 (-\frac{1}{2})^n, \quad \star\star\] where $C_1, C_2$ are arbitrary constants. We claim that this sequences satisfies our recursive relation, $\star$; note that 
+  \begin{align*}
+    \left(-\frac{1}{2}\right)^{n+1} &= \left(-\frac{1}{2}\right)^{n-1} \cdot \frac{1}{4} = \left(-\frac{1}{2}\right)\left(\left(-\frac{1}{2}\right)\frac{1}{2} + \frac{1}{2}\right)\\
+    \implies x_{n+1} &= C_1 + C_2\left(-\frac{1}{2}\right)^{n+1}\\
+   &= \frac{C_1}{2} + \frac{C_1}{2} + C_2\left(-\frac{1}{2}\right)^{n-1}\left(\left(-\frac{1}{2}\right)\frac{1}{2} + \frac{1}{2}\right)\\
+    &= \frac{C_1}{2} + \frac{C_1}{2}+C_2\left(-\frac{1}{2}\right)^{n} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n}\\
+    &= \frac{C_1}{2} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n} + \frac{C_1}{2} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n-1}\\
+    &= \frac{x_n}{2} + \frac{x_{n-1}}{2}
+  \end{align*}
+  Hence, our $\star\star$ is our so-called \textit{general solution} to $\star$. The only factor we must find, then, are our $C_1$, $C_2$. Recall our initial $x_1 = 1, x_2 = 2$. Plugging these into $\star\star$, then, gives \[x_1 = C_1 + C_2\left(-\frac{1}{2}\right) = 1; \quad x_2 = C_1 + C_2 \left(-\frac{1}{2}\right)^2 = 2,\] which is simply a system of two equations for two unknowns, $C_1, C_2$. Solving them\footnotemark, we have \[C_1 = \frac{5}{3},\quad C_2 = \frac{4}{3},\] hence we have the general formula \[
+    x_{n} = \frac{5}{3} + \frac{4}{3}\left(-\frac{1}{2}\right)^{n}  
+  \]
+  The RHS of this sum goes to zero, and thus our limit is \[\lim_{n\to\infty}x_n = \frac{5}{3}.\]
 \end{proof}
 
+\footnotetext{
+% TODO
+}
 
+\begin{remark}
+  From this general form, we can conclude, as in \cref{example:recursivenessity}, that $x_{2n} \geq x_{2n-1}, x_{2n} \geq x_{2n+1}$, since $x_{2n} > \frac{5}{3}, x_{2n+1} < \frac{5}{3}, x_{2n-1} < \frac{5}{3}$; ie, the same property that we used to prove the previous example holds here.
+\end{remark}
 
+\begin{remark}
+  Any recursively defined sequence of the form $x_{n+1} = A x_{n} + B x_{n-1}, n > 1$ where $A, B \in \mathbb{R}$, can be solved using the characteristic equation \[x^2 = A x + B,\] with solutions $a = \frac{A + \sqrt{A^2 + 4B}}{2}, b = \frac{A - \sqrt{A^2 + 4B}}{2}$. It may be that $a,b \in \mathbb{C}$; we shall not consider these cases. Indeed, we have: \begin{align*}
+    x_{n+1} &= C_1 a^{n+1} + C_2 b^{n+1}\\
+    &= \cdots \\
+    &= C_1 a^{n-1}(Aa + B) + C_2b^{n-1} (Ab+B)\\
+    &= C_1 A a^{n}  + C_1 a^{n-1} B + C_2 A b^n + C_2 B b^{n-1}\\
+    &= A (C_1a^{n} + C_2 b^n) + B(C_1 a^{n-1} + C_2 b^{n-1})\\
+    &= A x_n + B x_{n-1}
+  \end{align*}
+  Given initial $x_1, x_2$, then we have that \[x_1 = C_1 a + C_2 b, \quad x_2 = C_2 a^2 + C_2 b^2.\]
+  $C_1, C_2$ are uniquely determined by this relation, as long as the matrix of coefficients \[\left|\begin{matrix}
+    a & b \\
+    a^2 & b^2
+  \end{matrix}\right| = ab^2 - ba^2 \neq 0.\] n the case $a = b,$ or $a = 0$ or $b = 0$, then the determinant is also equal to $0$, and we thus have to use a different method. As long as the determinant is nonzero, then we have a valid specific definition. 
+\end{remark}
 
+\begin{remark}
+  The recursive relation $x_{n+1} = A x_{n} + B x_{n-1}$ is a discrete analog of a differential equation.
+\end{remark}
+
+\subsection{Contractive Sequences}
+
+\begin{definition}[Contractive Sequences]
+  A sequence $(x_n)$ of real numbers is called contractive with contractive constant $K$, where $0 < K < 1$, if $\abs{x_{n+2} - x_{n+1}} \leq K \abs{x_{n+1} - x_n} \forall n \geq 1$, ie, the distance between successive elements of the sequence are contracted at least by a factor of $K$.
+
+  We have, by extension, that \begin{align*}
+    \abs{x_n - x_{n-1}} \leq K \abs{x_{n-1} - x_{n-2}}\\
+    \leq K^2 \abs{x_{n-2} - x_{n-3}}\\
+    \leq \cdots \\
+    \leq K^{n-2} \abs{x_2 - x_1}.
+  \end{align*}
+\end{definition}
+
+\begin{theorem}
+  Let $(x_n)$ be a contractive sequence with contractive constant $K$. Then, $(x_n)$ is a Cauchy sequence, and in particular, $(x_n)$ converges.
+\end{theorem}
+
+\begin{proof}
+  Let $n,m \in \mathbb{N}$ such that $n > m \geq 2$. Then, we have \begin{align*}
+    \abs{x_n - x_m} &= \abs{x_n - x_{n-1} + x_{n-1} - x_{n-2} +x_{n-2} - \cdots  - x_{m+1} + x_{m+1} - x_m}\\
+    &\leq \abs{x_n - x_{n-1}} + \abs{x_{n-1} - x_{n-2}} + \cdots + \abs{x_{m+1} - x_m}\\
+    &\leq K^{n-2} \abs{2 - x_1} + K^{n-3} \abs{x_2 -x_1} + \cdots + K^{m-1} \abs{x_2 - x_1}\\
+    &= K^m-1\abs{x_2 - x_1} \left(1 + K + K^2 + \cdots + K^{n-m-1}\right)\\
+    &= K^{m-1}\abs{x_2 - x_1} \frac{1-K^{n-m}}{1-K} \quad \textit{by \cref{cor:recursiveaside}}\\
+    &< \frac{K^{m-1}\abs{x_2 - x_1}}{1-K}\\
+   &\implies \abs{x_n - x_m} < \frac{K^{m-1}\abs{x_2 - x_1}}{1 - K} \forall n > m \geq 2
+  \end{align*}
+
+\end{proof}
 
 
 
