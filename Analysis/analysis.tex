@@ -1272,14 +1272,72 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 \end{proof}
 
 \begin{example}
-  Let\footnotemark $(x_n)$ be a bounded sequence. Then \[\limsup_{n\to\infty} (-x_n) = - \liminf_{n \to \infty} x_n.\]
+  Let $(x_n)$ be a bounded sequence. Then \[\limsup_{n\to\infty} (-x_n) = - \liminf_{n \to \infty} x_n.\]
 \end{example}
-\footnotetext{Midterm material ends here. There will be 5 questions. Memorize \textbf{everything}; homeworks, exercises, class material. Study the solutions until you can recite it upwards, backwards, sideways.}
+
 \begin{proof}
   Recall \cref{remark:negativesupinf}; Let $A_n := \{x_k : k \geq n\}$ as in the definition of $\limsup, \liminf$. Let $y_n:=\sup A_n, z_n := \inf A_n$. By \cref{thm:infsupconvergence}, $\lim y_n = \lim z_n$. Further, $\sup (- A_n) = - \inf (A_n)$, where $-A_n = \{-x_k : k \geq n\}$; hence, $\limsup (-x_n) = -\liminf x_n$, as desired.
 \end{proof}
 
+\begin{remark}
+  Given $(x_n)$ bounded and $\alpha \geq 0$, then the following holds:
+  \[
+  \limsupbar (\alpha x_n) = \alpha \limsupbar(x_n) \quad \text{ and } \quad \liminfbar  (\alpha x_n) = \alpha \liminfbar x_n.
+  \]
+\end{remark}
 
+\begin{proposition}
+  Let $(x_n)$ and $(y_n)$ be bounded sequences. Then, \[
+    \text{(1)} \qquad \limsupbar (x_n + y_n) \leq \limsupbar x_n + \limsupbar y_n  
+  \]
+  and \[
+  \text{(2)} \qquad \liminfbar (x_n + y_n) \geq \liminfbar x_n + \liminfbar y_n
+  \]
+\end{proposition}
+
+
+\begin{proof}
+  (1) Take $A_n = \{x_k + y_k : k \geq n\}$, $B_n = \{x_k : k \geq n\}$, $C_n = \{y_k : k \geq n\}$. Then, take \[
+  B_n + C_n = \{x_k + y_j : k \geq n, j \geq n\} \supseteq A_n  
+  \]
+  and so $\sup A_n \leq \sup (B_n + C_n)$. We have shown previously (assignment question) that $\sup (B_n + C_n) = \sup B_n + \sup C_n$. Let now \[
+    t_n = \sup A_n \quad  r_n = \sup B_n \quad s_n = \sup C_n, 
+  \]
+  so $t_n \leq r_n + s_n$, that is, $\lim t_n \leq \lim r_n + \lim s_n$, and thus $\limsupbar (x_n + y_n) \leq \limsupbar x_n + \limsupbar y_n $, proving (1).\\
+  (2) The same argument holds, replacing each instance of $\limsupbar$ with $\liminfbar$ and reversing inequalities where necessary. Alternatively, it follows directly from (1) by negating the sequences where appropriate.
+\end{proof}
+
+\begin{proposition}
+  Let $(x_n)$ be a bounded sequence. Then \begin{enumerate}
+    \item $\limsupbar x_n = \inf \{t : \{n : x_{n} > t\} \text{ is either empty or finite }\}$
+    \item $\liminfbar x_n = \sup \{t : \{n : x_n < t\} \text{ is either empty or finite }\}$
+  \end{enumerate}
+\end{proposition}
+
+
+
+\begin{remark}
+  (2) follows from (1) by either repeating the argument used to prove (1) (changing notation), or using the fact that $\liminfbar x_n = - \limsupbar (- x_n)$.
+\end{remark}
+
+\begin{remark}
+  The set $\{n : x_n > t\}$ is empty or finite iff $\exists$ $n_t \in \mathbb{N} \st \forall n > n_t$, $x_n \leq t$. The set is empty or finite if $t$ is an \emph{eventual upper bound} for $(x_n)$; that is, starting with sufficiently large $n_t$, $x_n \leq t \forall n \geq t$.
+
+  In other words, $t$ is an upper bound if we neglect finitely many elements. Hence, (1) states equivalently states that $\limsupbar x_n$ is the infimum of the eventual upper bounds for $(x_n)$. 
+\end{remark}
+
+\begin{proof}(Of (1)) Let $A = \{t : \{n : x_n > t\} \text{ is either empty or finite }\}$. We note that this set is non-empty and bounded from below, hence the inf is well-defined. We can see this by recalling that $(x_n)$ bounded, hence $\forall n$ $\exists m, M \st m \leq x_n \leq M$. Then, $\{n : x_n > M\}$ is empty, hence $M \in A$. Otoh, if $t < m$, then the set $\{n : x_n > t\} = \mathbb{N}$ since $x_n \geq m > t \forall n$. So, if $t < m$, then $t \notin A$ and hence $m$ is a lower bound for $A$. 
+
+We have now that $\limsupbar x_n$ is a lower bound for $A$m, and hence $\limsupbar x_n \leq \inf A$. Let $t \in A$. We aim to show that $\limsupbar x_n \leq t$.
+
+The set $\{n : x_n > t\}$ is finite by definition; assume $t \in A$. We can then let \[
+  n_t = \max \{n : x_n\}.  
+\]
+Then, if $K > n_t$, it must be that $x_k \leq t$. Consider now $n > n_t$, then $y_n = \sup \{ x_k : k \geq n\}$ and since $x_k \leq t$ for $k \geq n$, and $t$ upper bounds $\{x_k: k \geq n\}$, we have that $y_n \leq t$ for $n > n_t$. Hence, for sufficiently large $n$, $y_n \leq t$, thus $\lim y_n \leq t \implies \limsupbar x_n \leq t$. 
+
+Thus, $\limsupbar x_n \leq \inf A$. % TODO
+  
+\end{proof}
 
 \subsection{Subsequences and Bolzano-Weirestrass Theorem}
 
@@ -1570,7 +1628,7 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
 \subsection{Contractive Sequences}
 
 \begin{definition}[Contractive Sequences]
-  A sequence $(x_n)$ of real numbers is called contractive with contractive constant $K$, where $0 < K < 1$, if $\abs{x_{n+2} - x_{n+1}} \leq K \abs{x_{n+1} - x_n} \forall n \geq 1$, ie, the distance between successive elements of the sequence are contracted at least by a factor of $K$.
+  A sequence $(x_n)$ of real numbers is called contractive with contractive constant $K$, where $0 < K < 1$, if  $\abs{x_{n+2} - x_{n+1}} \leq K \abs{x_{n+1} - x_n} \forall n \geq 1$, ie, the distance between successive elements of the sequence are contracted at least by a factor of $K$.
 
   We have, by extension, that \begin{align*}
     \abs{x_n - x_{n-1}} \leq K \abs{x_{n-1} - x_{n-2}}\\
@@ -1774,8 +1832,8 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
 
 \begin{proof}(\nameref{prop:eulerstep3})
   We aim to show that for all $n,k$, $x_n < y_k$. 
-  \begin{itemize}
-    \item[Case 1;] $n = k$: \[
+  \begin{itemize}[label=-]
+    \item (Case 1) $n = k$: \[
     x_n = \left(1 + \frac{1}{n}\right)^n < \left(
       1 + \frac{1}{n}
     \right)\left(
@@ -1784,10 +1842,10 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
       1 + \frac{1}{n}
     \right)^{n+1} = y_n
     \]
-    \item[Case 2;] $n > k$: \[
+    \item (Case 2) $n > k$: \[
     y_k > y_n > x_n \text{ by Case 1, since $(y_n)$ strictly decreasing.}  
     \]
-    \item[Case 3;] $n < k$: \[
+    \item (Case 3) $n < k$: \[
       x_{n} < x_k < y_k \text{ by Case 1, since $(x_n)$ strictly increasing.}  
     \]
   \end{itemize}
@@ -1808,9 +1866,17 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
   \lim_{n\to\infty} y_n = \lim_{n\to\infty} \left(1 + \frac{1}{n}\right) \cdot \lim_{n\to\infty} x_n = \lim x_n,  
   \]
   that is, $(x_n)$ and $(y_n)$ converge to the same limit, which we define as \[
-  e = \lim_{n\to\infty} \left(1 + \frac{1}{n}\right)^n = \left(1 + \frac{1}{n}\right)^{n+1}.  
+  e \equiv \lim_{n\to\infty} \left(1 + \frac{1}{n}\right)^n = \left(1 + \frac{1}{n}\right)^{n+1}.  
   \]
 \end{proof}
+
+\begin{remark}
+  This proof naturally gives that $\forall n \in \mathbb{N}$, \[\left(1 + \frac{1}{n}\right)^n < e < \left(1 + \frac{1}{n}\right)^{n+1},\] which we can use to estimate $e$ arbitrarily.
+\end{remark}
+
+\begin{example}
+  Consider the sequence $S_n = \sum_{k=0}^{n} \frac{1}{k!}$. Show that the sequence $(S_n)$ is Cauchy and that $\lim_{n\to\infty} S_n = e$.
+\end{example}
 
 
 
@@ -1827,6 +1893,22 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
 \begin{theorem}[Stolz-Cesàro]
   Let $(y_n)$ be a strictly monotone sequence of positive numbers. Consider some other sequence $(x_n)$. We have, then, if \[\lim_{n\to\infty} \frac{x_{n+1}-x_n}{y_{n+1}-y_n} = L\] exists, then the limit \[\lim_{n\to\infty} \frac{x_n}{y_n} = L\] as well.
 \end{theorem}
+
+\begin{lemma}[Fekete's Subadditive Lemma]
+   A sequence $(x_n)$ is called \emph{subadditive} if $\forall n, m \in \mathbb{N}$, \[
+   x_{n+m} \leq x_n + x_m 
+   \]
+   holds. For any subadditive sequence $(x_n)$, its limit exists, and moreover, \[
+    \lim_{n\to\infty} x_n = \inf \{\frac{x_n}{n} : n \in \mathbb{N}\}.
+   \]
+\end{lemma}
+
+\begin{definition}[Lacunary Sequence]
+  A\footnotemark sequence $x_n$ is called \emph{lacunary} if there exists some real number $q$ such that $\forall n \in \mathbb{N}$, \[
+    \frac{x_{n+1}}{x_n} \geq q > 1.
+  \]
+\end{definition}
+\footnotetext{Prof. Sid Trudeau presented this at a Diversity in Math event!} 
 % \subsection{Major Results \& their Implications}
 
 % \begin{itemize}
