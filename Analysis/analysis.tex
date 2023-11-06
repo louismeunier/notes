@@ -1328,7 +1328,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 
 \begin{proof}(Of (1)) Let $A = \{t : \{n : x_n > t\} \text{ is either empty or finite }\}$. We note that this set is non-empty and bounded from below, hence the inf is well-defined. We can see this by recalling that $(x_n)$ bounded, hence $\forall n$ $\exists m, M \st m \leq x_n \leq M$. Then, $\{n : x_n > M\}$ is empty, hence $M \in A$. Otoh, if $t < m$, then the set $\{n : x_n > t\} = \mathbb{N}$ since $x_n \geq m > t \forall n$. So, if $t < m$, then $t \notin A$ and hence $m$ is a lower bound for $A$. 
 
-We have now that $\limsupbar x_n$ is a lower bound for $A$m, and hence $\limsupbar x_n \leq \inf A$. Let $t \in A$. We aim to show that $\limsupbar x_n \leq t$.
+We have now that $\limsupbar x_n$ is a lower bound for $A$, and hence $\limsupbar x_n \leq \inf A$. Let $t \in A$. We aim to show that $\limsupbar x_n \leq t$.
 
 The set $\{n : x_n > t\}$ is finite by definition; assume $t \in A$. We can then let \[
   n_t = \max \{n : x_n\}.  
@@ -1476,7 +1476,7 @@ See Abbott, pg 57, for good diagram.
   Any Cauchy sequence is bounded.
 \end{theorem}
 \begin{proof}
-  Let $(x_n)$ be Cauchy. We aim tos hwo that $\exists M > 0 \st \forall n \in \mathbb{N}, \abs{x_n} \leq M$.\\
+  Let $(x_n)$ be Cauchy. We aim to show that $\exists M > 0 \st \forall n \in \mathbb{N}, \abs{x_n} \leq M$.\\
   Take $\epsilon = 1$ in the definition of Cauchy sequence. Let $N$ be such that $\forall n,m \geq N$, $\abs{x_n - x_m} < 1$. We can take $m = N$, and so for all $n \geq N$, $\abs{x_n - x_{N}} < 1$, which gives that for $n \geq N$,
   \begin{align*}
     \abs{x_n} = \abs{x_{n} - x_{N} + x_N} \leq \abs{x_n- x_N} + \abs{x_N} < 1 + \abs{x_N}
@@ -1676,7 +1676,7 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
 \end{remark}
 
 \begin{remark}
-  The result that every contractive sequence is convergence is a simple example of the more general \emph{"Fixed Point Theorems"}; this proof can be generalized to the \emph{Banach Fixed Point Theorem} on arbitrary metric spaces. This is further used to establish the existence and uniqueness of solutions of differential, integral equations.\footnote{See the \href{https://en.wikipedia.org/wiki/Picard-Lindelöf theorem}{Picard-Lindelöf Theorem}}
+  The result that every contractive sequence is convergent is a simple example of the more general \emph{"Fixed Point Theorems"}; this proof can be generalized to the \emph{Banach Fixed Point Theorem} on arbitrary metric spaces. This is further used to establish the existence and uniqueness of solutions of differential, integral equations.\footnote{See the \href{https://en.wikipedia.org/wiki/Picard-Lindelöf theorem}{Picard-Lindelöf Theorem}}
 \end{remark}
 
 \begin{remark}
