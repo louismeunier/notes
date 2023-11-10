@@ -23,6 +23,8 @@
 \usepackage{shortcuts}
 \usepackage{mdframed}
 \usepackage{nameref}
+\usepackage{xfrac}
+\usepackage{ mathrsfs }
 
 % \usepackage[createShortEnv]{proof-at-the-end}
 
@@ -30,34 +32,36 @@
 
 
 \declaretheorem[
-  % thmbox=S,
-  name=Definition,
+  % thmbox=M,
+  name=\textcolor{solarized-blue}{$\rightarrowtail$ \underline{Definition}},
   refname={Definition, definition}, numberwithin=section,
-  shaded={rulecolor=solarized-blue, rulewidth=2pt}
+  shaded={rulecolor=solarized-blue}
 ]{definition}
 
 \declaretheorem[
-  % thmbox=S,
-  name=Axiom,
+  % thmbox=M,
+  name=\textcolor{solarized-orange}{$\rightarrowtail$ \underline{Axiom}},
   refname={Axiom, axiom},
   numberwithin=section,
-  shaded={rulecolor=solarized-orange, rulewidth=2pt}
+  shaded={rulecolor=solarized-orange}
 ]{axiom}
 
 \declaretheorem[
   % thmbox=S,
-  name=Lemma,
+  name=\textcolor{solarized-orange}{$\rightarrowtail$ \underline{Lemma}},
   refname={Lemma, lemma},
   numberwithin=section,
-  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+  shaded={}
+  % shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{lemma}
 
 \declaretheorem[
   % thmbox=S,
-  name=Corollary,
+  name=\textcolor{solarized-orange}{\underline{Corollary}},
   refname={Corollary, corollary},
   numberwithin=section,
-  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+  shaded={}
+  % shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 ]{corollary}
 
 \declaretheorem[
@@ -68,11 +72,12 @@
 ]{remark}
 
 \declaretheorem[
-  % thmbox=S,
-  name=Theorem,
+  % thmbox=M,
+  name=\textcolor{solarized-red}{$\rightarrowtail$ \underline{Theorem}},
   refname={Theorem, theorem},
   numberwithin=section,
-  shaded={rulecolor=solarized-red, rulewidth=1pt}
+  shaded={}
+  % shaded={rulecolor=solarized-red, rulewidth=1pt}
 ]{theorem}
 
 \declaretheorem[
@@ -80,15 +85,16 @@
   name=Example,
   refname={Example, example},
   numberwithin=section,
-  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+  shaded={bgcolor=solarized-cyan!10}
 ]{example}
 
 \declaretheorem[
   % thmbox=S,
-  name=Proposition,
+  name=\textcolor{solarized-magenta}{$\rightarrowtail$ \underline{Proposition}},
   refname={Proposition, proposition},
   numberwithin=section,
-  shaded={rulecolor=solarized-magenta, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
+  shaded={}
+  % shaded={rulecolor=solarized-magenta}
 ]{proposition}
 
 
@@ -134,7 +140,8 @@
   \underline{Course Outline:}\\\textit{
     Fundamentals of set theory. Properties of the reals. Limits, limsup, liminf. Continuity. Functions. Differentiation.\\
     \underline{References:}\\
-    \textit{\emph{Understanding Analysis}, Abbott; \emph{Introduction to Real Analysis}, Bartle; \emph{Analysis I}, Tao}
+    \textit{\emph{Understanding Analysis}, Abbott; \emph{Introduction to Real Analysis}, Bartle; \emph{Analysis I}, Tao}\\
+    Based on Lectures from Fall, 2023.
   }
 \end{mdframed}
 
@@ -173,11 +180,11 @@ The \textbf{natural numbers}, $\mathbb{N} = \{1, 2, 3, \dots \}$, are specified 
 
 \begin{enumerate}[label=(\arabic*)]
   \item 1 $\in$ $\mathbb{N}$
-  \footnote{using 0 instead of 1 is also valid, but we will use 1 here.}
+  \footnote{using 0 instead of 1 is also valid, but we will use 1 here, and throughout the rest of course.}
   \item every natural number has a successor in $\mathbb{N}$
   \item 1 is not the successor of any natural number
   \item if the successor of $x$ is equal to the successor of $y$, then $x$ is equal to $y$
-  \footnote{axioms (2)-(4) can be equivalently stated in terms of a successor function $s(n)$ more rigorously, but won't here}
+  \footnote{axioms (2)-(4) can be equivalently stated in terms of a successor function $s(n)$ more \href{https://en.wikipedia.org/wiki/Set-theoretic_definition_of_natural_numbers\#Definition_as_von_Neumann_ordinals}{rigorously}, but won't here}
   \item \textbf{the axiom of induction}
 \end{enumerate}
 
@@ -234,12 +241,12 @@ The \textbf{Axiom of Induction} (AI), can be stated in a number of ways.
 \end{axiom}
 
 \begin{example}
-  Using AI.ii, prove that for $n \geq 2$, $n^2 > n+1$
-\end{example}
+  Using AI.ii, prove that for $n \geq 2$, $n^2 > n+1$.
 
-\begin{proof}
-  Let $S \subseteq \mathbb{N}$ be the set of $n$ for which the statement holds. $n = 2 \implies 4 > 3$, so the base case holds. Consider $n^2 > n +1$ for some $n \geq 2$. Then, $(n+1)^2 = n^2 + 2n + 1 > n+1 + 2n + 1 = 3n + 2 > 2n + 2 > n + 2$, hence $S = \{2,3,4, \cdots \}$ (all $n \geq 2$).
-\end{proof}
+  \begin{proof}
+    Let $S \subseteq \mathbb{N}$ be the set of $n$ for which the statement holds. $n = 2 \implies 4 > 3$, so the base case holds. Consider $n^2 > n +1$ for some $n \geq 2$. Then, $(n+1)^2 = n^2 + 2n + 1 > n+1 + 2n + 1 = 3n + 2 > 2n + 2 > n + 2$, hence $S = \{2,3,4, \cdots \}$ (all $n \geq 2$).
+  \end{proof}  
+\end{example}
 
 \begin{axiom}[Principle of Complete Induction, AI.iii]\label{axiom:inductioniii}
   Let $S \subseteq \mathbb{N}$ s.t.
@@ -389,10 +396,12 @@ We can consider historical reasoning for the extension of $\mathbb{Q}$ to $\math
 
 \begin{example}\label{example:union}
   Let $A_n = 1, 2, \dots$ be a sequence of sets. Prove that $f(\bigcup_{n=1}^{\infty} A_n) = \bigcup_{n=1}^{\infty}f(A_n)$.
+
+  \begin{proof}
+    Let $y \in f(\bigcup_{n=1}^\infty A_n)$. This implies that $\exists x \in \bigcup_{n=1}^\infty A_n$ s.t. $f(x) = y$. This implies that $x \in A_n$ for some $n$, and $y \in f(A_n)$ for that same "some" $n$, and thus $y$ must be in the union of all possible $f(A_n)$, ie $y \in \bigcup f(A_n)$. This shows $\subseteq$, use similar logic for the reverse.
+  \end{proof}
 \end{example}
-\begin{proof}
-  Let $y \in f(\bigcup_{n=1}^\infty A_n)$. This implies that $\exists x \in \bigcup_{n=1}^\infty A_n$ s.t. $f(x) = y$. This implies that $x \in A_n$ for some $n$, and $y \in f(A_n)$ for that same "some" $n$, and thus $y$ must be in the union of all possible $f(A_n)$, ie $y \in \bigcup f(A_n)$. This shows $\subseteq$, use similar logic for the reverse.
-\end{proof}
+
 
 \begin{proposition}\label{prop:intersection}
   $f(C_1 \cap C_2) \subseteq f(C_1) \cap f(C_2)$
@@ -874,7 +883,7 @@ In the proof, we used the claim:
 
 \begin{example}
   Show that the map \[f(x) = \frac{x}{1-x^2}\] is a bijection between $(-1,1)$ and $\mathbb{R}$ ie $(-1,1) \sim \mathbb{R}$.
-\end{example}
+
 
 \begin{proof}
   Surjection is fairly trivial (if stuck, consider the graph of the function).\\Injection; given $f(x) = f(y)$ where $x,y \in (-1,1)$,\begin{align*}
@@ -886,6 +895,8 @@ In the proof, we used the claim:
   \end{align*}
   $xy = -1$ is impossible given the domain of the function, hence $x -y = 0 \implies x = y$, as desired.
 \end{proof}
+\end{example}
+
 
 
 
@@ -982,7 +993,7 @@ In the proof, we used the claim:
     \item $\lim_{n\to\infty} \frac{n!}{n^n} = 0$
     \item $\lim_{n\to\infty} \frac{(1+2+\cdots + n)^2}{n^4} = \frac{1}{4}$
   \end{enumerate}
-\end{example}
+
 
 \begin{proof}
   \begin{enumerate}
@@ -1004,6 +1015,7 @@ In the proof, we used the claim:
     \end{align*}
   \end{enumerate}
 \end{proof}
+\end{example}
 
 \subsection{Properties of Limits}
 \begin{lemma}[Triangle Inequality]\label{lemma:triangleneq}
@@ -1135,7 +1147,7 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
    Then, $x_n < \epsilon + x$, and since $x < -2 \epsilon$, we have $\forall n \geq N$, $x_n < -\epsilon$, and thus $\forall n \geq N$, $x_n < 0$, a contradiction.
 \end{proof}
 
-\begin{theorem}[The Squeeze Theorem]
+\begin{theorem}[The Squeeze Theorem]\label{thm:squeezetheorem}
   Let $(x_n), (y_n), (z_n)$ be sequences such that \(x_n \leq y_n \leq z_n, \,\forall n \geq 1,\) and \(\lim_{n \to \infty} x_n = \lim_{n \to \infty} z_n = \ell,\) then \(\lim_{n \to \infty}y_n = \ell.\footnotemark\)
 \end{theorem}
 \footnotetext{Sketch: This follows a similar technique to many that follow. Use the definitions of the limits of $x_n, z_n$ to take an arbitrary $\epsilon$, and an $N$ for each respective limit. Take the max of these $N$'s, and show that for all $n \geq \max N_i$, you can show that f $y_n - l$ is less than $\epsilon$ and greater than $-\epsilon$. Really, this is just a proof of applying definitions correctly.}
@@ -1169,8 +1181,9 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 \end{proof}
 
 \begin{example}
-  % TODO
   A sequence $(x_n)$ is called \emph{eventually increasing} if there exists some $N_0 \in \mathbb{N} \st \forall n \geq N_0, x_{n+1} \geq x_n$. If $(x_n)$ is eventually increasing and bounded from above, $\lim x_n = \alpha$ exists.
+  \begin{proof}(Sketch) If $(x_n)$ eventually increasing, say $\forall n \geq N_0$, and bounded above, then if we consider $x_n'$ as the sequence of $x_n$ where $n' = n - N_0$, it must converge by \nameref{thm:mct}. Hence, taking $N = N_0$, $x_n$ too must converge.
+  \end{proof}
 \end{example}
 
 \begin{example}
@@ -1206,34 +1219,35 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 
 \begin{example}[$\textcolor{red}{\star}$]
   Let $a> 0$ and let $(x_n)$ be a sequence defined recursively by $x_1$ is arbitrary (positive), and \[x_{n+1} = \frac{1}{2}(x_n + \frac{a}{x_n}), \quad n \geq 1.\] Show that $\lim_{n\to\infty}x_n = \sqrt{a}$.
-  % \textit{(Sol'n: Show that for $n\geq 2$, $x_n \geq \sqrt{a}$, and that for $n \geq 2$, $x_n \geq x_{n+1}$, ie the sequence is decreasing and bounded from below. This shows that the limit exists and is equal to some $x$, and the relation gives that $x = \frac{1}{2}(x + \frac{a}{x})$; solve for $x$.)}
+
+  \begin{proof}
+    By \cref{cor:recursiveaside}, $x_{n+1} = \frac{1}{2}(x_n + \frac{a}{x_n}) \geq \sqrt{x_n \cdot \frac{a}{x_n}} = \sqrt{a}$, hence, $x_n$ is bounded from below by $\sqrt{a}$.\\
+    We also have that $x_n - x_{n+1} = x_n - \frac{1}{2}x_{n} - \frac{a}{2x_n} = \frac{x_n}{2} - \frac{a}{2x_n} = \frac{1}{x_n}\left(x_n^2 - a\right)$. We have that $x_n \geq \sqrt{a} \implies x_{n}^2 \geq a \implies x_{n}^2 -a \geq 0$. Further, since the sequence is bounded from below by $\sqrt{a} > 0 (\impliedby a > 0)$, then $\frac{1}{x_{n}} > 0$ as well. Hence, $\frac{1}{x_n}(x_n^2 - a) \geq 0$, and thus $x_{n} - x_{n+1} \geq 0 \implies x_n \geq x_{n+1}$ and thus $x_{n}$ is decreasing.\\
+    Thus, by the \nameref{thm:mct}, $x_n$ is convergent. Let $X:= \lim_{n\to\infty}x_n$. We have from the recursive definition, $\lim x_{n} = \lim \left(\frac{1}{2}(x_n + \frac{a}{x_n})\right)$. Since we know $x_{n}$ convergent, we can "split up" this limit using algebraic properties, hence\begin{align*}
+      \lim x_n= \lim \frac{1}{2} x_n + \lim \frac{a}{2x_n} = \frac{1}{2}\lim x_n + \frac{a}{2} \lim \frac{1}{x_n}\\
+      \implies X = \frac{1}{2}X + \frac{a}{2X}\\
+      \implies \frac{X}{2} = \frac{a}{2X} \implies X^2 = a \implies X = \sqrt{a},
+    \end{align*}
+    which completes the proof.
+  \end{proof}
 \end{example}
-\begin{proof}
-  By \cref{cor:recursiveaside}, $x_{n+1} = \frac{1}{2}(x_n + \frac{a}{x_n}) \geq \sqrt{x_n \cdot \frac{a}{x_n}} = \sqrt{a}$, hence, $x_n$ is bounded from below by $\sqrt{a}$.\\
-  We also have that $x_n - x_{n+1} = x_n - \frac{1}{2}x_{n} - \frac{a}{2x_n} = \frac{x_n}{2} - \frac{a}{2x_n} = \frac{1}{x_n}\left(x_n^2 - a\right)$. We have that $x_n \geq \sqrt{a} \implies x_{n}^2 \geq a \implies x_{n}^2 -a \geq 0$. Further, since the sequence is bounded from below by $\sqrt{a} > 0 (\impliedby a > 0)$, then $\frac{1}{x_{n}} > 0$ as well. Hence, $\frac{1}{x_n}(x_n^2 - a) \geq 0$, and thus $x_{n} - x_{n+1} \geq 0 \implies x_n \geq x_{n+1}$ and thus $x_{n}$ is decreasing.\\
-  Thus, by the \nameref{thm:mct}, $x_n$ is convergent. Let $X:= \lim_{n\to\infty}x_n$. We have from the recursive definition, $\lim x_{n} = \lim \left(\frac{1}{2}(x_n + \frac{a}{x_n})\right)$. Since we know $x_{n}$ convergent, we can "split up" this limit using algebraic properties, hence\begin{align*}
-    \lim x_n= \lim \frac{1}{2} x_n + \lim \frac{a}{2x_n} = \frac{1}{2}\lim x_n + \frac{a}{2} \lim \frac{1}{x_n}\\
-    \implies X = \frac{1}{2}X + \frac{a}{2X}\\
-    \implies \frac{X}{2} = \frac{a}{2X} \implies X^2 = a \implies X = \sqrt{a},
-  \end{align*}
-  which completes the proof.
-\end{proof}
 
 \begin{example}
   Evaluate\footnotemark the limit of $x_{n}$ given the recursive relation $x_{n+1} = \frac{1}{4-x_n}, x_1 = 3$. 
+  \begin{proof}
+    We aim to show that $(x_n)$ is bounded from below and decreasing.\\
+    \textbf{Bounded from below: } we claim $x_n > 0$; we proceed by induction. $x_1 = 3 > 0$ holds; say $x_{n} > 0$ for some $n \geq 1$. Then, we have \[
+    x_n > 0 \implies - x_n < 0 \implies 4 - x_n < 4 \implies \frac{1}{4-x_{n}} > \frac{1}{4} > 0 \implies  x_{n+1} = \frac{1}{4-x_n} > 0,
+    \]
+    so the sequence is bounded from below by 0.\\
+    \textbf{Decreasing: } $(x_n)$ decreasing iff $x_{n + 1} \leq x_n \forall n$. We have $x_2 = \frac{1}{4-3} = 1 \implies x_1 = 3 \geq 1$ holds. Say $x_{n-1} \geq x_{n}$ for some $n \geq 1$. Then, we have \[
+    x_{n-1} \geq x_n \implies 4 - x_{n-1} \leq 4 - x_{n} \implies \frac{1}{4-x_{n-1}}\geq \frac{1}{4-x_n} = x_{n+1}\implies x_{n} \geq x_{n+1}
+    \]
+    and thus the sequence decreases, and by \cref{thm:mct} the limit exists. Let $X = \lim_{n\to\infty} x_{n} = \lim_{n\to\infty} \frac{1}{4-x_{n-1}} \implies X = \frac{1}{4-X} \implies 4X-X^2 = 1 \implies 0 = X^2-4X+1 \implies X = \cdots = 2 \pm \sqrt{3}$. We must take the negative root, since $X$ is decreasing and thus must be less than $3$. 
+  \end{proof}
 \end{example}
 \footnotetext{Abbott, pg 54 exercise 2.4.2}
-\begin{proof}
-  We aim to show that $(x_n)$ is bounded from below and decreasing.\\
-  \textbf{Bounded from below: } we claim $x_n > 0$; we proceed by induction. $x_1 = 3 > 0$ holds; say $x_{n} > 0$ for some $n \geq 1$. Then, we have \[
-  x_n > 0 \implies - x_n < 0 \implies 4 - x_n < 4 \implies \frac{1}{4-x_{n}} > \frac{1}{4} > 0 \implies  x_{n+1} = \frac{1}{4-x_n} > 0,
-  \]
-  so the sequence is bounded from below by 0.\\
-  \textbf{Decreasing: } $(x_n)$ decreasing iff $x_{n + 1} \leq x_n \forall n$. We have $x_2 = \frac{1}{4-3} = 1 \implies x_1 = 3 \geq 1$ holds. Say $x_{n-1} \geq x_{n}$ for some $n \geq 1$. Then, we have \[
-  x_{n-1} \geq x_n \implies 4 - x_{n-1} \leq 4 - x_{n} \implies \frac{1}{4-x_{n-1}}\geq \frac{1}{4-x_n} = x_{n+1}\implies x_{n} \geq x_{n+1}
-  \]
-  and thus the sequence decreases, and by \cref{thm:mct} the limit exists. Let $X = \lim_{n\to\infty} x_{n} = \lim_{n\to\infty} \frac{1}{4-x_{n-1}} \implies X = \frac{1}{4-X} \implies 4X-X^2 = 1 \implies 0 = X^2-4X+1 \implies X = \cdots = 2 \pm \sqrt{3}$. We must take the negative root, since $X$ is decreasing and thus must be less than $3$. 
-\end{proof}
+
 
 \subsection{Limit Superior, Inferior}
 
@@ -1273,11 +1287,12 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 
 \begin{example}
   Let $(x_n)$ be a bounded sequence. Then \[\limsup_{n\to\infty} (-x_n) = - \liminf_{n \to \infty} x_n.\]
-\end{example}
 
 \begin{proof}
   Recall \cref{remark:negativesupinf}; Let $A_n := \{x_k : k \geq n\}$ as in the definition of $\limsup, \liminf$. Let $y_n:=\sup A_n, z_n := \inf A_n$. By \cref{thm:infsupconvergence}, $\lim y_n = \lim z_n$. Further, $\sup (- A_n) = - \inf (A_n)$, where $-A_n = \{-x_k : k \geq n\}$; hence, $\limsup (-x_n) = -\liminf x_n$, as desired.
 \end{proof}
+
+\end{example}
 
 \begin{remark}
   Given $(x_n)$ bounded and $\alpha \geq 0$, then the following holds:
@@ -1335,8 +1350,17 @@ The set $\{n : x_n > t\}$ is finite by definition; assume $t \in A$. We can then
 \]
 Then, if $K > n_t$, it must be that $x_k \leq t$. Consider now $n > n_t$, then $y_n = \sup \{ x_k : k \geq n\}$ and since $x_k \leq t$ for $k \geq n$, and $t$ upper bounds $\{x_k: k \geq n\}$, we have that $y_n \leq t$ for $n > n_t$. Hence, for sufficiently large $n$, $y_n \leq t$, thus $\lim y_n \leq t \implies \limsupbar x_n \leq t$. 
 
-Thus, $\limsupbar x_n \leq \inf A$. % TODO
-  
+Thus, $\limsupbar x_n \leq \inf A$.
+\end{proof}
+
+\begin{proof}(Of (1), Concise)
+  % TODO; improve previous proof. Its rather poor. This following is the same but shorter.
+  Let $\alpha = \inf A$ and $\epsilon > 0$. Then $\alpha - \epsilon$ is not in $A$, $\alpha - \epsilon$ is not an eventual upper bound for $x_n$. Since $\alpha - \epsilon \not\in A$, the set $\{n : x_n > \alpha - \epsilon\}$ is infinite.\footnote{This is important; understand why this is}. Hence, for any $m$ we can find $n$ such that $n \geq m$ and $x_n > \alpha - \epsilon$.
+
+  Let, now, $$y_m = \sup \{x_n : n \geq m\}.$$ By our last observation, we have that $y_m > \alpha - \epsilon$. By \nameref{thm:orderpropertiesoflimits}, \[
+  \limsupbar x_n = \lim_{m\to\infty} y_n \geq \alpha - \epsilon,
+  \]
+  so for any $\epsilon > 0$, $\limsupbar x_n \geq \alpha - \epsilon$, and thus $\limsupbar x_n \geq \alpha = \inf A$, and the proof is complete.
 \end{proof}
 
 \subsection{Subsequences and Bolzano-Weirestrass Theorem}
@@ -1432,8 +1456,14 @@ See Abbott, pg 57, for good diagram.
 \end{definition}
 
 \begin{theorem}[Cauchy Criterion]\label{thm:cauchyconvergence}
-  A sequence $(x_n)$ is convergent iff it is Cauchy.
+  A sequence $(x_n)$ is convergent iff it is Cauchy.\footnotemark
 \end{theorem}
+
+\footnotetext{
+Sketch: Convergent $\implies$ Cauchy; use definition of Cauchy, add/subtract limit of sequence, triangle inequality (and choose your $\epsilon$ to be $\sfrac{\epsilon}{2}$, optional).
+
+Convergent $\impliedby$ Cauchy; show that any Cauchy sequence is bounded (\cref{thm:cauchybounded}), and thus has a converging subsequence (\nameref{thm:bwthm}); finally, show that any Cauchy sequence that has a converging subsequence itself converges (\cref{thm:cauchysubsequence}), and you are done.
+}
 
 \begin{remark}
   This is, again, an "equivalent" formulation of AC; at least, the direction $(x_n)$ Cauchy $\implies$ convergent is. The other direction, convergent $\implies$ Cauchy, does \textit{not} rely on AC.
@@ -1481,7 +1511,7 @@ See Abbott, pg 57, for good diagram.
   \begin{align*}
     \abs{x_n} = \abs{x_{n} - x_{N} + x_N} \leq \abs{x_n- x_N} + \abs{x_N} < 1 + \abs{x_N}
   \end{align*}
-  Let $$M = \abs{x_1} + \abs{x_2} + \dots \abs{x_{N-1}} + \abs{x_N} + 1.$$ Then, if $n \leq N$, $\abs{x_n} \leq M$; if $n \geq M, \abs{x_n} \leq M$, so $\forall n \geq 1, \abs{x_n} \leq M$, hence $(x_n)$ is bounded.
+  Let\footnote{While this seems like an arbitrary definition, this is a common "trick" to find a bound of a sequence based on its terms.} $$M = \abs{x_1} + \abs{x_2} + \dots \abs{x_{N-1}} + \abs{x_N} + 1.$$ Then, if $n \leq N$, $\abs{x_n} \leq M$; if $n \geq M, \abs{x_n} \leq M$, so $\forall n \geq 1, \abs{x_n} \leq M$, hence $(x_n)$ is bounded.
 \end{proof}
 \begin{remark}
   This did not use AC.
@@ -1580,22 +1610,23 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
 \end{remark}
 \begin{example}
   Consider the recursive relation $x_{n+1} = \frac{1}{2} x_{n} + \frac{1}{2} x_{n-1}\quad \star$.
+  \begin{proof}
+    We have the following \textit{characteristic equation} of the sequence:\[x^2 = \frac{1}{2} x + \frac{1}{2},\] with solutions $a = 1, b = -\frac{1}{2}$. We can now write the following sequence: \[x_{n} = C_1 a^{n} + C_2 b^n = C_1 + C_2 (-\frac{1}{2})^n, \quad \star\star\] where $C_1, C_2$ are arbitrary constants. We claim that this sequences satisfies our recursive relation, $\star$; note that 
+    \begin{align*}
+      \left(-\frac{1}{2}\right)^{n+1} &= \left(-\frac{1}{2}\right)^{n-1} \cdot \frac{1}{4} = \left(-\frac{1}{2}\right)\left(\left(-\frac{1}{2}\right)\frac{1}{2} + \frac{1}{2}\right)\\
+      \implies x_{n+1} &= C_1 + C_2\left(-\frac{1}{2}\right)^{n+1}\\
+     &= \frac{C_1}{2} + \frac{C_1}{2} + C_2\left(-\frac{1}{2}\right)^{n-1}\left(\left(-\frac{1}{2}\right)\frac{1}{2} + \frac{1}{2}\right)\\
+      &= \frac{C_1}{2} + \frac{C_1}{2}+C_2\left(-\frac{1}{2}\right)^{n} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n}\\
+      &= \frac{C_1}{2} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n} + \frac{C_1}{2} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n-1}\\
+      &= \frac{x_n}{2} + \frac{x_{n-1}}{2}
+    \end{align*}
+    Hence, our $\star\star$ is our so-called \textit{general solution} to $\star$. The only factor we must find, then, are our $C_1$, $C_2$. Recall our initial $x_1 = 1, x_2 = 2$. Plugging these into $\star\star$, then, gives \[x_1 = C_1 + C_2\left(-\frac{1}{2}\right) = 1; \quad x_2 = C_1 + C_2 \left(-\frac{1}{2}\right)^2 = 2,\] which is simply a system of two equations for two unknowns, $C_1, C_2$. Solving them\footnotemark, we have \[C_1 = \frac{5}{3},\quad C_2 = \frac{4}{3},\] hence we have the general formula \[
+      x_{n} = \frac{5}{3} + \frac{4}{3}\left(-\frac{1}{2}\right)^{n}  
+    \]
+    The RHS of this sum goes to zero, and thus our limit is \[\lim_{n\to\infty}x_n = \frac{5}{3}.\]
+  \end{proof}
 \end{example}
-\begin{proof}
-  We have the following \textit{characteristic equation} of the sequence:\[x^2 = \frac{1}{2} x + \frac{1}{2},\] with solutions $a = 1, b = -\frac{1}{2}$. We can now write the following sequence: \[x_{n} = C_1 a^{n} + C_2 b^n = C_1 + C_2 (-\frac{1}{2})^n, \quad \star\star\] where $C_1, C_2$ are arbitrary constants. We claim that this sequences satisfies our recursive relation, $\star$; note that 
-  \begin{align*}
-    \left(-\frac{1}{2}\right)^{n+1} &= \left(-\frac{1}{2}\right)^{n-1} \cdot \frac{1}{4} = \left(-\frac{1}{2}\right)\left(\left(-\frac{1}{2}\right)\frac{1}{2} + \frac{1}{2}\right)\\
-    \implies x_{n+1} &= C_1 + C_2\left(-\frac{1}{2}\right)^{n+1}\\
-   &= \frac{C_1}{2} + \frac{C_1}{2} + C_2\left(-\frac{1}{2}\right)^{n-1}\left(\left(-\frac{1}{2}\right)\frac{1}{2} + \frac{1}{2}\right)\\
-    &= \frac{C_1}{2} + \frac{C_1}{2}+C_2\left(-\frac{1}{2}\right)^{n} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n}\\
-    &= \frac{C_1}{2} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n} + \frac{C_1}{2} + \frac{C_2}{2}\left(-\frac{1}{2}\right)^{n-1}\\
-    &= \frac{x_n}{2} + \frac{x_{n-1}}{2}
-  \end{align*}
-  Hence, our $\star\star$ is our so-called \textit{general solution} to $\star$. The only factor we must find, then, are our $C_1$, $C_2$. Recall our initial $x_1 = 1, x_2 = 2$. Plugging these into $\star\star$, then, gives \[x_1 = C_1 + C_2\left(-\frac{1}{2}\right) = 1; \quad x_2 = C_1 + C_2 \left(-\frac{1}{2}\right)^2 = 2,\] which is simply a system of two equations for two unknowns, $C_1, C_2$. Solving them\footnotemark, we have \[C_1 = \frac{5}{3},\quad C_2 = \frac{4}{3},\] hence we have the general formula \[
-    x_{n} = \frac{5}{3} + \frac{4}{3}\left(-\frac{1}{2}\right)^{n}  
-  \]
-  The RHS of this sum goes to zero, and thus our limit is \[\lim_{n\to\infty}x_n = \frac{5}{3}.\]
-\end{proof}
+
 
 \footnotetext{
 % TODO
@@ -1618,7 +1649,11 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
   $C_1, C_2$ are uniquely determined by this relation, as long as the matrix of coefficients \[\left|\begin{matrix}
     a & b \\
     a^2 & b^2
-  \end{matrix}\right| = ab^2 - ba^2 \neq 0.\] n the case $a = b,$ or $a = 0$ or $b = 0$, then the determinant is also equal to $0$, and we thus have to use a different method. As long as the determinant is nonzero, then we have a valid specific definition. 
+  \end{matrix}\right| = ab^2 - ba^2 \neq 0.\] In the case $a = b,$ or $a = 0$ or $b = 0$, then the determinant is also equal to $0$, and we thus have to use a different method. As long as the determinant is nonzero, then we have a valid specific definition. 
+\end{remark}
+
+\begin{remark}
+  Note that nothing in this derivation assumed $x_n$ convergent; this form can indeed be found even if $x_n$ diverges. It will simply also diverge.
 \end{remark}
 
 \begin{remark}
@@ -1639,8 +1674,11 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
 \end{definition}
 
 \begin{theorem}\label{thm:contractiveconvergence}
-  Let $(x_n)$ be a contractive sequence with contractive constant $K$. Then, $(x_n)$ is a Cauchy sequence, and in particular, $(x_n)$ converges.
+  Let\footnotemark $(x_n)$ be a contractive sequence with contractive constant $K$. Then, $(x_n)$ is a Cauchy sequence, and in particular, $(x_n)$ converges.
 \end{theorem}
+\footnotetext{
+  Sketch: start with $\abs{x_n - x_m}$, and add/subtract each term between $x_n$ and $x_m$, use triangle inequality, "substitute" in contractive constant, collect like terms, and simplify. This creates an upper bound for $\abs{x_n - x_m}$, which converges to $0$, then use this converges to define the epsilon to use in the Cauchy definition.
+}
 
 \begin{proof}
   Let $n,m \in \mathbb{N}$ such that $n > m \geq 2$. Then, we have \begin{align*}
@@ -1688,7 +1726,7 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
 
 \begin{example}
   Let $(x_n)$ be a sequence defined recursively by $x_1 = 2$, $x_{n+1} = 2 + \frac{1}{x_n}$. Prove that the sequence converges and find its limit.
-\end{example}
+
 
 \begin{proof}
   First, we note that $x_n \geq 2 \forall n$. Now, we aim to show that $(x_n)$ is contractive with $K = \frac{1}{4}$:\begin{align*}
@@ -1706,21 +1744,23 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
 \end{align*}
 $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must be that $X = 1 + \sqrt{2}$.
 \end{proof}
+\end{example}
 
 \begin{example}
   Show that the sequence $x_n = 1 + \frac{1}{2} + \cdots + \frac{1}{n}, n \geq 1$, diverges.
+  \begin{proof}
+    Note that \[
+    x_{2n} - x_n = \underbrace{\frac{1}{n+1} + \frac{1}{n+2} + \cdots + \frac{1}{2n}}_{n \text{ terms, each } \geq \frac{1}{2n}} \geq n \cdot \frac{1}{2n} \geq \frac{1}{2}, \quad \ast
+    \]
+    which means that the sequence cannot be Cauchy hence it cannot be convergent (see \cref{thm:cauchyconvergence}). 
+    
+    More thoroughly, suppose $(x_n)$ is convergent, that is, it is Cauchy. Take $\epsilon  = \frac{1}{4}$; since $(x_n)$ Cauchy, there must exist some $N$ such that $\forall n,m \geq N$, \[\abs{x_{n} - x_m} < \epsilon = \frac{1}{4}.\] But if we take, then, $n = 2N$ and $m = N$, then \[
+      \abs{x_{2N} - x_N} < \frac{1}{4},
+    \]
+    which is impossible, as we have shown in $\ast$ that $\abs{x_{2N} - x_N} \geq \frac{1}{2}$ $\forall N$, hence we have reached a contradiction.
+  \end{proof}
 \end{example}
-\begin{proof}
-  Note that \[
-  x_{2n} - x_n = \underbrace{\frac{1}{n+1} + \frac{1}{n+2} + \cdots + \frac{1}{2n}}_{n \text{ terms, each } \geq \frac{1}{2n}} \geq n \cdot \frac{1}{2n} \geq \frac{1}{2}, \quad \ast
-  \]
-  which means that the sequence cannot be Cauchy hence it cannot be convergent (see \cref{thm:cauchyconvergence}). 
-  
-  More thoroughly, suppose $(x_n)$ is convergent, that is, it is Cauchy. Take $\epsilon  = \frac{1}{4}$; since $(x_n)$ Cauchy, there must exist some $N$ such that $\forall n,m \geq N$, \[\abs{x_{n} - x_m} < \epsilon = \frac{1}{4}.\] But if we take, then, $n = 2N$ and $m = N$, then \[
-    \abs{x_{2N} - x_N} < \frac{1}{4},
-  \]
-  which is impossible, as we have shown in $\ast$ that $\abs{x_{2N} - x_N} \geq \frac{1}{2}$ $\forall N$, hence we have reached a contradiction.
-\end{proof}
+
 
 \subsection{Euler's Number \texorpdfstring{$e$}{e}}
 
@@ -1879,6 +1919,205 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
 \end{example}
 
 
+\subsection{Limit Points}
+\begin{definition}[Limit Point]
+  Let $(x_n)$ be a sequence. A number $x \in \mathbb{R}$ is called a \emph{limit point} or \emph{accumulation point} if $\exists$ a subsequence $(x_{n_k})$ of $(x_n)$ such that $\lim_{k\to\infty} x_{n_k} = x$. We denote by $\mathscr{L}$ the set of limit points.
+\end{definition}
+
+\begin{remark}
+  Note that $\mathscr{L}$ could be an empty set; however, if $x_n$ bounded, then $\mathscr{L} \neq 0$ by \nameref{thm:bwthm}. Further, $\mathscr{L}$ is a bounded subset of $\mathbb{R}$.
+\end{remark}
+
+\begin{proposition}\label{prop:limitpointinifinite}
+  Let $(x_n)$ be a sequence. Then, $x \in \fl$ iff $\forall \epsilon > 0$ the set $\{n : \abs{x_n - x} < \epsilon\}$ is infinite.
+\end{proposition}
+
+\begin{proof}
+  Suppose first that $x \in \fl$ and let $(x_{n_k})$ be a subsequence such that $\lim_{k\to\infty} x_{n_k} = x$. Let $\epsilon > 0$. Then $\exists K \in \mathbb{N}$ s.t. $\forall k \geq K$, $\abs{x_{n_k} - x} < \epsilon$.
+
+  Then, the set \[
+  \{n_k : k \geq K\}   \subseteq \{n : \abs{x_n - x} < \epsilon\}.
+  \]
+  Since the LHS set is infinite, the RHS must be too.
+
+  We now show the converse. Suppose that $\forall \epsilon > 0,$ the set $\{n : \abs{x_{n} - x} < \epsilon\}$ % TODO:
+  Take $\epsilon = 1$, then the set $\{n : \abs{x_n - x} < 1\}$ is an infinite set. Take $n_1 = \min \{n : \abs{x_n - x} < 1\}$. We can now define $n_k$, where $k = 2,3,\dots$ recursively. Suppose that some $n_K$ chosen. Then, take $\epsilon = \frac{1}{K+1}$, and consider \[
+  \{n : n > n_K, \abs{x_n - x} < \frac{1}{K+1}\}.  
+  \]
+  This set has infinitely many elements, since $\{n : \abs{x_n - x} < \frac{1}{K+1}\}$ is also infinite. % TODO; why?
+  We then set $n_{k+1} = \min \{n : n > n_k, \abs{x_n - x} < \frac{1}{k+1}\},$ which defines a strictly increasing sequence $(n_k)_{k \geq 1}$ of natural numbers such that for any $K$, $\abs{x_{n_k} - x} < \frac{1}{K}$. So, $\lim_{k\to\infty} \abs{x_{n_k} - x} = 0$ which gives that $\lim_{k\to\infty} x_{n_k} = x$, so $x \in \fl$.
+\end{proof}
+
+\begin{theorem}\label{thm:limsupliminflimitpoints}
+  Let $(x_n)$ be a bounded sequence. Then, \begin{enumerate}
+    \item $\limsupbar x_n = \sup \fl$
+    \item $\liminfbar x_n = \inf \fl$
+  \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+  The following proof shows even more, that is, $\limsupbar x_n = \sup \fl$ and $\limsupbar x_n \in \fl$ (same for $\liminfbar$).
+\end{remark}
+
+\begin{remark}
+  1. $\implies$ 2. by changing the sign of $x_n$, as "always".
+\end{remark}
+
+\begin{proof}
+  % TODO; sketch
+  We will show first that $\limsupbar x_n \geq \sup \fl$.
+
+  Let $x \in \fl$ and let $(x_{n_k})$ be a subsequence such that $\lim_{k\to\infty} x_{n_k} = x$. Let $y_n = \sup \{x_{m}: m \geq n\}$. We have, then, that $y_n \geq x_n$, and that $\limsupbar x_{n} = \lim y_n$, hence $\forall k$, $y_{n_k} \geq x_{n_k},$ and that $\limsupbar x_n = \lim_{k\to\infty} y_{n_k}$ ($(y_n)$ is a convergent sequence, so any subsequence converges to the same limit.) So, we have that $$\limsupbar x_n = \lim_{k\to\infty} y_{n_k} \geq \lim_{k\to\infty} x_{n_k} = x,$$ that is, for any $x \in \fl$, $\limsupbar x_n  \geq x \implies \limsupbar x_n$ upper bounds $\fl$. Since $\sup$ least upper bound, it must be that $\limsupbar x_n \geq \sup \fl$.
+
+  We now show that $\limsupbar x_n \leq \sup \fl$; indeed, we will show that $\limsupbar x_n \in \fl$ and thus must be $\leq \sup \fl$. We will show this by constructing a subsequence of $(x_n)$ that converges to $\limsupbar x_n$.
+
+  Set $n_1 = 1$. Suppose $n_k$ defined. Then, \[
+  y_{n_k + 1} = \sup \{x_n : n \geq n_k + 1\}.  
+  \]
+  If we consider $y_{n_k + 1} - \frac{1}{k+1},$ then this number is smaller than $y_{n_k + 1}$ and is thus not an upper bound for the set $\{x_n n \geq n_k + 1\}.$ Then there exists some $n_{k+1} \geq n_k + 1 > n_k$ such that \[
+  y_{n_k + 1} - \frac{1}{k+1} \leq x_{n_{k+1}}   \leq y_{n_{k+1}} = \sup \{x_n : n \geq n_{k+1}\}.
+  \]
+  So, we have constructed a strictly increasing sequence $(n_k)$ of natural numbers such that $\forall k\geq 1,$ $$y_{n_k+1} - \frac{1}{k+1} \leq x_{n_{k+1}} \leq y_{n_{k+1}}. \quad \star$$ Consider the subsequences $(y_{n_k + 1})$ and $(y_{n_{k+1}})$ of $(y_n)$, and a subsequence $(x_{n_{k+1}})$ of $(x_n)$. Since $y_n$ converges, and $\lim_{n\to\infty} y_n = \limsupbar x_n$, we have that \[
+    \lim_{k\to\infty} y_{n_k + 1} = \limsupbar x_n; \text{ and } \lim_{k\to\infty} y_{n_{k+1}} = \limsupbar x_n,
+    \]
+    and so, given this and $\star$, by the \nameref{thm:squeezetheorem},  $\lim_{k\to\infty} x_{n_{k+1}} = \limsupbar_{n\to\infty} x_n$, and so $\limsupbar x_n \in \fl$.
+\end{proof}
+
+\begin{corollary}
+  Let $(x_n)$ be a bounded sequence and $\alpha = \liminfbar x_n, \beta = \limsupbar x_n$. Then, $\alpha, \beta \in \fl$ (that is, they are limit points of $(x_n)$), and for any $x \in \fl$, $\alpha \leq x \leq \beta$ (that is, $\fl$ is a closed set).
+\end{corollary}
+
+\subsection{Properly Divergent Sequences}
+\begin{definition}[Properly Divergent Sequences]
+  Let $(x_n)$ be a sequence. We say that $(x_n)$ \emph{properly diverges} to $\infty$ if for any $\mathbb{R}$ $\exists N \in \mathbb{N}$ such that $\forall n \geq N, x_n \geq \alpha$. We write \[\lim_{n\to\infty} x_n = \infty.\] That is, \[(\forall \alpha \in \mathbb{R})(\exists N \in \mathbb{N})(\forall n \geq N)(x_n \geq \alpha).\] We analogously say $(x_n)$ diverges to $- \infty$ if $\forall \alpha \in \mathbb{R} \exists N \in \mathbb{N} \st \forall n \geq N, x_n \leq \alpha$.
+\end{definition}
+
+\begin{example}
+$x_n = n$ properly diverges to $\infty$; $x_n = -n$ properly diverges to $-\infty$.
+\end{example}
+\begin{example}
+  Let $C > 1$. Then, $\lim_{n\to\infty} C^n = \infty$.
+  \begin{proof}
+    Write $C = 1 + x$ where $x > 0$. By \nameref{prop:bernoullineq}, $\forall n \geq 1$, \[
+    C^n = (1+x)^n \geq 1+nx.  
+    \]
+    Let $\alpha \in \mathbb{R}$. If $\alpha \leq 0$, then $\forall n, C^n > \alpha$. If $\alpha < 0$, let $N \in \mathbb{N}, N \geq \frac{\alpha}{x}.$ SO, $\forall n \geq N,$ $C^n \geq 1 + nx > \alpha$ and $\lim_{n\to\infty} C^n = \infty$. 
+  \end{proof}
+\end{example}
+
+
+\begin{proposition}\label{prop:unboundedpropdiv}
+  Let $(x_n)$ be increasing. Then $\lim_{n \to \infty} x_n = \infty$ iff $x_n$ not bounded from above.
+\end{proposition}
+
+\begin{proof}
+  ($\implies$) Let $M \in \mathbb{R}$. Since $(x_n) \to \infty$, $\exists N \in \mathbb{N} \st \forall n \geq N, x_n \geq M$, that is, $x_n$ is unbounded.\\
+  Suppose $x_n$ not bounded from above. Let $\alpha \in \mathbb{R},$ then, $\exists N \st x_N > \alpha$. $(x_n)$ increasing $\implies \forall n \geq N, x_n \geq x_N > \alpha \implies \lim_{n\to\infty} x_n = \infty$.
+\end{proof}
+\begin{proposition}
+  Let $(x_n)$ be decreasing. Then $\lim_{n\to\infty} x_n = - \infty \iff (x_n)$ not bounded from below.
+\end{proposition}
+\begin{remark}
+  Follows from \cref{prop:unboundedpropdiv}.
+\end{remark}
+
+\begin{proposition}
+  Let $(x_n), (y_n)$ be sequences such that $x_n \leq y_n \forall n$. Then \begin{enumerate}
+    \item $\lim_{n\to\infty} x_n = \infty \implies \lim_{n\to\infty} y_n = \infty$
+    \item $\lim_{n\to\infty} y_n = -\infty \implies \lim_{n\to\infty} x_n = -\infty$
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}(Of 1.) Let $\alpha \in \mathbb{R};$ since $\lim x_n = \infty, \exists N \st \forall n \geq N, x_n \geq \alpha \implies \forall n \geq y_n \geq x_n \geq \alpha \implies \lim y_n = \infty$.
+\end{proof}
+
+\begin{proposition}
+  Let $(x_n)$ be a sequence and $c > 0$. Then $\lim x_n = \infty \iff \lim c \cdot x_n = \infty$. The converse follows for $c < 0$ and $\to - \infty$.
+\end{proposition}
+\begin{proof}
+  % TODO: trivial
+\end{proof}
+
+\begin{proposition}
+  Let $(x_n)$ and $(y_n)$ be strictly positive sequences. Suppose that for some $L > 0$, \[
+  \lim_{n \to\infty} \frac{x_n}{y_n} = L.
+  \]
+  Then, $\lim x_n = \infty \iff \lim y_n = \infty$.
+\end{proposition}
+
+\begin{proof}
+  Take $\epsilon = \frac{L}{2}$. Then, $\frac{x_n}{y_n}\to L \implies \exists N \st \forall n \geq N, L - \epsilon < \frac{x_n}{y_n} < L + \epsilon \iff L - \frac{L}{2} < \frac{x_n}{y_n} < L + \frac{L}{2}$. So, $\forall n \geq N, \frac{L}{2} < \frac{x_n}{y_n} < \frac{3L}{2} \implies \frac{L}{2} y_n < x_n < \frac{3}{2} L y_n$. Hence, if $x_n \to \infty$, it must be that $y_n \to \infty$, by the previous inequality. The other side of the implication follows similarly.
+\end{proof}
+
+\begin{proposition}
+  Let $(x_n), (y_n)$ be two sequences such that $(x_n)$ is properly divergent and $y_n$ bounded. Then their sum is also diverging.
+\end{proposition}
+
+\begin{proof}
+  % TODO: trivial
+\end{proof}
+
+\begin{example}
+  $x_n = n, y_n = \frac{-n}{2}$. $x_n \to \infty, y_n \to - \infty$ while $x_n + y_n \to \infty$.
+  % TODO: other examples
+\end{example}
+
+\begin{definition}[Limsup (Generalized)]
+  Let $(x_n)$ be a sequence bounded from \emph{above}. Define, as previously, $y_n := \sup \{x_k : k \geq n\}$; recall that this sequence is decreasing, and moreover, that $\lim_{n\to\infty} y_n$ exists. 
+  
+  This limit is finite, as seen previously, if $y_n$ bounded from \emph{below}. If it is not, $y_n$ diverges and as it is decreasing, $\lim y_n = - \infty$. Recall that $\limsup x_n = \lim y_n$, hence if $x_n$ bounded from above, $\limsupbar x_n$ exists, and is either a real number, or $-\infty$.
+
+  In the case $x_n$ \emph{not bounded above}, then we \emph{define} $\limsupbar x_n = \infty$. In this way, we define $\limsupbar x_n$ for all sequences, regardless of convergence or boundedness.
+\end{definition}
+
+\begin{definition}[Liminf (Generalized)]
+  Let $(x_n)$ be a sequence. If $(x_n)$ bounded from below, let $z_n = \inf \{x_k : k \geq n\}$. This is an increasing sequence. We define $\liminfbar x_n := \lim z_n$; $\lim z_n $ finite $\iff x_n$ bounded from above, and infinite otherwise (ie, $\liminfbar x_n = \infty \iff x_n$ unbounded from above).
+
+  If $x_n$ not bounded from below, then $\liminfbar x_n := - \infty$.
+\end{definition}
+
+\begin{proposition}
+  Practically all previously proven properties of limsup/liminf hold with these generalizations:
+  \begin{enumerate}
+    \item $\liminfbar x_n \leq \limsupbar x_n$, $-\infty < x < \infty \forall x \in \mathbb{R}$.
+    \item $(x_n)$ converging or properly diverging and $\lim x_n = a \iff \liminfbar x_n= \limsupbar x_n = a$ (noting that $a \in \mathbb{R} \cup \{-\infty, \infty\}$\footnotemark)
+    \item $\liminfbar (-x_n) = - \liminfbar x_n$\footnotemark
+    \item $\limsupbar x_n = \inf \{
+      t : \{n : x_n > t\} \text{ finite or empty}
+    \}$ and $\liminfbar x_n = \sup \{t : \{x_n < t\} \text{ finite or empty}\}$.\footnotemark
+  \end{enumerate}
+\end{proposition}
+
+\footnotetext{See: Extended Real Line}
+\footnotetext{We take, here, $-(-\infty) \equiv \infty$}
+\footnotetext{We \emph{define} $\inf \varnothing = \infty$ and $\sup \varnothing = - \infty$, as a convention. Moreover, if a set $A$ is not bounded from below, then we have $\inf A = - \infty$, and if $A$ not bounded from above, $\sup A = \infty$.}
+
+\begin{definition}[Limit Set]
+  The \textit{limit set} of a sequence $(x_n)$ is the collection of all $x \in \mathbb{R} \cup \{- \infty, \infty\}$ s.t. for some subsequence $(x_{n_k})$ of $x_n$, $\lim_{k\to\infty} x_{n_k} = x$. Then, we have, as before, $\limsupbar x_n = \sup \fl$, $\liminfbar x_n = \inf \fl$.
+\end{definition}
+
+\begin{remark}
+  Not all concepts defined on convergent/bounded sequences extend easily to properly divergent sequences. For instance, $\limsupbar (x_n + y_n) \leq \limsupbar x_n + \limsupbar y_n$ holds for bounded sequences $x_n, y_n$, but does not generally hold if $\limsupbar x_n = \infty$, etc..
+\end{remark}
+
+\subsection{Functional Limits and Continuity}
+
+\begin{definition}[Cluster Point]
+  Let $A \subseteq \mathbb{R}$. A point $c \in \mathbb{R}$ is called a \emph{cluster} or \emph{limit} point of $A$ if $\forall \epsilon > 0$, $\exists x \in A$, $x \neq c$, s.t. $0 < \abs{x-c} < \epsilon$.
+\end{definition}
+
+\begin{remark}
+  Note that this definition does \emph{not} require $c \in A$.
+\end{remark}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1904,11 +2143,11 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
 \end{lemma}
 
 \begin{definition}[Lacunary Sequence]
-  A\footnotemark sequence $x_n$ is called \emph{lacunary} if there exists some real number $q$ such that $\forall n \in \mathbb{N}$, \[
+  Asequence $x_n$ is called \emph{lacunary} if there exists some real number $q$ such that $\forall n \in \mathbb{N}$, \[
     \frac{x_{n+1}}{x_n} \geq q > 1.
   \]
 \end{definition}
-\footnotetext{Prof. Sid Trudeau presented this at a Diversity in Math event!} 
+
 % \subsection{Major Results \& their Implications}
 
 % \begin{itemize}
