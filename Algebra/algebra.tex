@@ -24,7 +24,8 @@
 \usepackage{cleveref}
 \usepackage[]{csquotes}
 \usepackage{shortcuts}
-\usepackage{mdframed}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{stackengine}
 \usepackage[createShortEnv]{proof-at-the-end}
 
 % makes theorems, definitions, etc. "restatable" as shown
@@ -32,45 +33,9 @@
 \renewcommand{\footnotesize}{\scriptsize}
 % \renewcommand*{\proofname}{}
 \renewcommand*{\qedsymbol}{\(\blacksquare\)}
-% homework answers
-% TODO: uncomment to show answers
-\xsimsetup{
-  load-style=layouts,
-  % solution/print=true,
-  exercise/template=minimal,
-  solution/template=runin,
-}
+
+\DeclareMathOperator*{\lcm}{lcm}
 % TODO: subsection numbering
-\declaretheorem[
-  % thmbox=S,
-  name=Definition,
-  refname={Definition, definition}, numberwithin=section,
-  shaded={rulecolor=solarized-blue, rulewidth=2pt}
-]{definition}
-
-\declaretheorem[
-  % thmbox=S,
-  name=Axiom,
-  refname={Axiom, axiom},
-  numberwithin=section,
-  shaded={rulecolor=solarized-orange, rulewidth=2pt}
-]{axiom}
-
-\declaretheorem[
-  % thmbox=S,
-  name=Lemma,
-  refname={Lemma, lemma},
-  numberwithin=section,
-  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
-]{lemma}
-
-\declaretheorem[
-  % thmbox=S,
-  name=Corollary,
-  refname={Corollary, corollary},
-  numberwithin=section,
-  shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
-]{corollary}
 
 \declaretheorem[
   % thmbox=S,
@@ -79,29 +44,37 @@
   numberwithin=section
 ]{remark}
 
-\declaretheorem[
-  % thmbox=S,
-  name=Theorem,
-  refname={Theorem, theorem},
-  numberwithin=section,
-  shaded={rulecolor=solarized-red, rulewidth=2pt}
-]{theorem}
+\mdfdefinestyle{example}{
+  roundcorner=8pt,
+  linecolor=white,
+  leftmargin=15,rightmargin=15,
+  backgroundcolor=solarized-cyan!20,
+  skipabove=10pt, skipbelow=10pt,
+  innertopmargin=2pt, innerbottommargin=5pt,
+  innerleftmargin=8pt, innerrightmargin=8pt
+}
 
-\declaretheorem[
-  % thmbox=M,
-  name=Example,
-  refname={Example, example},
-  numberwithin=section,
-  shaded={rulecolor=solarized-cyan, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
-]{example}
+\mdfdefinestyle{general-thm}{
+  roundcorner=8pt,
+  linecolor=white,
+  % leftmargin=5,rightmargin=5,
+  backgroundcolor=gray!10,
+  skipabove=10pt, skipbelow=10pt,
+  innertopmargin=2pt, innerbottommargin=5pt,
+  innerleftmargin=8pt, innerrightmargin=8pt
+}
 
-\declaretheorem[
-  % thmbox=S,
-  name=Proposition,
-  refname={Proposition, proposition},
-  numberwithin=section,
-  shaded={rulecolor=solarized-magenta, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
-]{proposition}
+\mdtheorem[style=example]{example}{$\circledast $ \underline{Example}}[section]
+
+\mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
+
+\mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\hookrightarrow $ \underline{Proposition}}}[section]
+\mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
+\mdtheorem[style=general-thm]{corollary}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}}[section]
+\mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
+\mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
+\mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
+
 
 % makes "quoted" text actually look correct
 \MakeOuterQuote{"}
@@ -762,7 +735,7 @@ If $\alpha, \beta$ are cardinalities $\alpha = |A|, \beta = |B|$, Cantor defined
   Let $n\geq 1, n \in \mathbb{Z}$. $x^n = 1$ has $n$ solutions in $\mathbb{C}$, called the roots of unity of order $n$. They are given as $(1, \frac{2\pi k}{n}), k = 0, 1,2, \dots, n-1$ in polar notation.
 \end{example}
 \newpage
-\begin{theorem}
+\begin{theorem}\label{thm:complexpolynomial}
   Let $f(x) = a_n x^n + \cdots + a_1 x + a_0$ be a complex polynomial of degree $n$. Then, there are complex numbers $z_1, \dots. z_n$ s.t. \[f(x) = a_n \prod_{i=1}^n (x-z_i) \qquad{(i)}\] each (ii) $f(z_j) = 0 \forall j=1,\dots,n$, and (iii) $f(\lambda) = 0 \implies \lambda = z_j$ for some $j$.\footnotemark
 \end{theorem}
 
@@ -1571,23 +1544,670 @@ is a complete set of representatives.
   \end{itemize}
 \end{proof}
 
+\begin{theorem}[Euclidean Algorithm (Polynomials)]
+  Each
+  \begin{align*}
+    f = q_0 \cdot g + r_0, &\quad r_0 = 0 \text{ or } \deg(r_0) < \deg (g)\\
+    g = q_1 \cdot r_0 + r_1, &\quad r_1 = 0 \text{ or }\deg(r_1)<\deg(r_0)\\
+    r_0 = q_2 \cdot r_1+r_2 &\quad \cdots\\
+    \vdots \\
+    r_{n-1} = q_{n+1}r_n&
+  \end{align*}
+  We have that $r_n$, once normalized, is the $\gcd(f,g)$ (ie if $r_n(x) = a_n x^{n} + \text{lot}$, we normalize by dividing by $a_n$).
+\end{theorem}
+\begin{proof}
+  % TODO: near identical to previous
+\end{proof}
+
+\begin{example}
+  $f = x^3 - x^2 + 2x - 2$, $g = x^2 - 4x + 3 \in \mathbb{Q}[x]$.
+  \begin{align*}
+    f = (x^2 - 4x + 3)(x+3) + (11x-11)\\
+    x^2 - 4x + 3 = (11x-11)(\frac{1}{11}x-\frac{3}{11})
+  \end{align*}
+  Hence, $\gcd(f,g) = \frac{1}{11}(11x - 11) = x-1$. The same process follows to find $u,v$; we have $x - 1 = \frac{1}{11}(f-g(x+3)) = \frac{1}{11}f - \frac{1}{11}(x+3)g$.
+\end{example}
+
+\begin{example}
+  $\mathbb{F} = \mathbb{F}_2 = \mathbb{Z}/2\mathbb{Z} = \{0,1\}$ where $1 + 1 =0$. Take $f = x^5 + x^3 + x^2 + x, g = x^3 + x^2 + x$.\begin{align*}
+    f = (x^3+x^2+x)(x^2+x+1) + x^2\\
+    x^3+x^2+x = x^2(x+1) + x\\
+    x^2 = x \cdot x
+  \end{align*}
+  Hence, $\gcd (f,g) = x$. We also have that $x = g - x^2(x+1) = g-(f-(x^2+x+1)g)(x+1) = g(1+(x^2+x+1)(x+1)) - (x+1)f = g \cdot x^3 + f\cdot (x+1)$
+\end{example}
+
+\begin{lemma}
+  Let $f(x) \in \mathbb{F}[x]$ and $\alpha \in \mathbb{F}$ such that $f(\alpha) = 0$. Then, $(x-\alpha) | f(x)$
+\end{lemma}
+
+\begin{proof}
+  Divide with residue: $f(x) = q_0 (x) (x-\alpha) + r$, st $r = 0$ or $\deg (r) < 1$. If $r = 0$, we are done. Now, substitute $\alpha$; $0 = f(\alpha) = \underbrace{q(\alpha)\cdot (\alpha - \alpha)}_{=0} + r \implies r = 0$.
+\end{proof}
+
+\begin{corollary}
+  If $f$ has $\deg n > 0$ and $f(\alpha_i) = 0$ for distinct $\alpha_1, \dots, \alpha_n$, then $f = c \cdot \prod_{i=1}^{n} (x-\alpha_i)$. This implies that, if $\beta \neq \alpha_i$ for any $i$, then $f(\beta) \neq 0$. We can conclude that a polynomial of degree $n$ has at most $n$ distinct roots.
+\end{corollary}
+
+\begin{example}
+  Do the polynomials in $\mathbb{R}[x]$ $f = x^6 + x^4 - x^2 - 1, g = x^3 + 2x^2 + x + 2$ have a common solution? They do, iff $d = \gcd(f,g)$ has a real root. In this case, $\gcd(f,g) = x^2 + 1 = (x-i)(x+i)$, so $f,g$ have no common real roots.
+\end{example}
+
+\begin{definition}[Associates]
+  Two nonzero polynomials $f,g \in \mathbb{F}[x]$ are called \emph{associates} if $\exists \alpha \in \mathbb{F}, \alpha \neq 0$, st $\alpha f = g$ (we commonly denote $\mathbb{F}^{\times} = \mathbb{F}\setminus\{0\}$)
+\end{definition}
+
+\begin{remark}
+  Associate polynomials have the same degree.
+\end{remark}
+
+\begin{lemma}
+  This is an equivalence relation and the representatives for the equivalence are the monic polynomials.
+\end{lemma}
+
+\begin{proof}
+  $f \sim f$, since $1 \cdot f = f$.\\
+  If $f \sim g,$ we have $\alpha f = g \implies \frac{1}{\alpha} g = f \implies g \sim f$.\\
+  If $f \sim g, g \sim h$ ie $\alpha f = g$ and $\beta g = h$, then $(\alpha \beta)f = \beta g = h$, noting that $\alpha \beta \neq 0$. Thus, this is an equivalence relation.\\
+  If $f = a_n x^{n} + \text{lot}$, $a_n \neq 0$, then $\frac{1}{a_n} f \sim f$, and $\frac{a_n f} = x^{n} +\text{lot}$, a monic polynomial, hence any equivalence class has a representative which is a monic polynomial.\\
+  Further, if $f, g$ monic and $\alpha f = g$, then $\alpha = 1$, hence $f = g$.
+\end{proof}
+
+\begin{definition}[Irreducible Polynomial]
+  A non-constant polynomial $f$ ($\deg f > 0$) is called \emph{irreducible} if any $g | f$ satisfies $g ~ 1$ (namely, a constant) or $g \sim f$ (namely, $g = \alpha f$ for some $\alpha \in \mathbb{F}^{\times}$).\footnotemark
+\end{definition}
+\footnotetext{This can be seen as an analog to primes; $p \in \mathbb{Z}$ prime if $m | p \implies m = \pm 1$ or $m = \pm p$. Irreducible polynomials are the "primes of the rings of polynomials."}
+\begin{remark}
+  If $\deg f > 1$, $f(x)$ irreducible $\implies$ $f$ has no root in $\mathbb{F}$; if $f(\alpha) = 0$, then $f(x) = (x-\alpha)f_1(x)$, $f_1(x) \in \mathbb{F}[x]$, hence we have a non-trivial factorization since $(x-\alpha) \not\sim 1, (x-\alpha) \not \sim f \implies f$ reducible. \\The converse does not hold; consider $x^2 + 1, x^2 + 2 \in \mathbb{R}[x]$; $f(x) = (x^2+1)(x^2+2)$ is reducible, clearly, but has no real root.
+\end{remark}
+
+\begin{remark}
+  Any linear polynomial, of the form $ax + b$ where $a \neq 0$, is irreducible.
+\end{remark}
+
+\begin{remark}
+  Irreducibility depends on the field in question, eg $x^2 +1$ is irreducible in $\mathbb{R}[x]$, but $x^2 + 1 = (x-i)(x+i)$, so it is reducible in $\mathbb{C}[x]$.
+\end{remark}
+
+\begin{proposition}\label{prop:divirredequiv}
+  Suppose\footnotemark $\deg f \geq 1$. The following are equivalent:
+  \begin{enumerate}
+    \item $f$ irreducible;
+    \item $f | gh \implies f | g$ or $f | h$.
+  \end{enumerate}
+\end{proposition}
+
+\footnotetext{Recall \cref{lemma:primediv}, in the integers}
+
+\begin{proof}
+  \textbf{1. $\implies$ 2.: } suppose $f$ irreducible and $f | gh$. If $f \not | g$, then $\gcd (f,g) = 1$. Then, we can write \begin{align*}
+    1 = uf + vg, \text{ some } u(x), v(x) \in \mathbb{F}[x]\\
+    \implies h = \underbrace{ufh}_{f|} + \underbrace{vgh}_{f|} \implies f | h
+  \end{align*}
+  \textbf{1. $\impliedby$ 2.: } suppose $f = gh$, and say wlog $f | g$. So, $f | g$ and $g|f \implies \deg g = \deg f$ and so $g = f \cdot t$, and $\deg t$ must be 0, therefore $t$ constant, and thus $h$ must be constant ie $h \sim 1$, hence $f$ irreducible.
+\end{proof}
+
+\begin{lemma}\label{lemma:irredmonicpoly}
+  Any non-zero polynomial $f \in \mathbb{F}[x]$ can be written as \[f = c \cdot f_1 \cdot f_2 \cdots f_n, \]
+  where all $f_i \in \mathbb{F}[x]$ are irreducible, monic, and $c \in \mathbb{F}[x]$.
+\end{lemma}
+\begin{proof}
+  (By induction on $\deg f$)
+  \begin{itemize}
+    \item $\deg f = 0 \implies f$ constant ($f = f$)
+    \item Suppose true for $0 \leq \deg g \leq n$ and let $f$ be a polynomial of $\deg f = n+1$. 
+    
+    If $f$ irreducible, $\exists c$ (leading coefficient, in fact) such that $f = c \cdot f_1$, with $f_1$ monic and irreducible (if $f \sim h$, then $f$ irreducible $\iff h$ irreducible), and we are done.
+
+    Else, $f = f_1 \cdot f_2$ is a non-trivial factorization ie $\deg (f_1) < \deg f, \deg f_2 < \deg f$ (neither scalars). We can write, $f_1 = c_1 p_1(x) \cdots p_a(x)$ and $f_2 = c_2 p_{a+1}(x) \cdots p_b (x)$, where each $p_i$ irreducible and monic, by our assumption, hence $f = f_1 f_2 = (c_1 c_2) p_1 \cdots p_b (x)$, and our inductive step is done and thus the statement holds.
+  \end{itemize}
+\end{proof}
+
+\begin{theorem}[Unique Factorization for Polynomials]\label{thm:ufpoly}
+  Let $f(x) \in \mathbb{F}[x]$ be a non-zero polynomial. Then, we have \[f = c \cdot p_1 (x)^{a_1} \cdots p_r(x)^{a_r}\] where $c \in \mathbb{F}^{\times}, p_i (x)$ monic, distinct, irreducible polynomials, and $a_i > 0$. Moreover, $c$, $p_i(x)$'s, and $a_i$'s are uniquely determined.
+\end{theorem}
+\begin{remark}
+  Existence follows from \cref{lemma:irredmonicpoly} by collecting like polynomials under $a_i$. It remains to prove uniqueness.
+\end{remark}
+
+\begin{proof}
+  Because $p_i(x)$ monic, leading coefficient of rhs $c$ must be the leading coefficient of the lhs, ie $c$ determined by $f$.\\
+  Suppose we have two decompositions, say \[f = c \cdot p_1 (x)^{a_1}\cdots p_r(x)^{a_r} = \tilde{c} \cdot q_1(x)^{b_1} \cdots q_s(x)^{b_s}.\] We must have $c = \tilde{c}$. Then, $r = s$ and after renaming the $q_i$, we have that $q_i = p_i$ and $a_i = b_i$. We proceed by induction on $\deg f$. 
+  \begin{itemize}
+    \item $\deg f = 0$: since we have irreducible polynomials which must have positive degree\footnotemark, hence the only option is $r = s = 0$, hence $f = c = \tilde{c}$.
+    \item Suppose true for polynomials $h(x)$ such that $0 \leq \deg h \leq n$, and $\deg f = n+1$. Note, first, that $r \geq 1$, $s \geq 1$ (else $f$ constant). We have that \[p_1(x) | f = c \cdot q_1(x)^{b_1} \cdots q_s (x)^{b_s} \overset{\text{\cref{prop:divirredequiv}}}{\implies} \underbrace{p_1(x) | c}_{c \text{ const, not possible}} \text{ or } p_1(x) | q_i(x) \text{ for some }i. \]
+    We have that $q_i (x)$ irreducible, so $p_1(x) \sim q_i(x)$, but they are both monic, so $p_1(x) = q_i(x)$. Rename, then, $q_i$ as $q_1$, ie $p_1 = q_1$. This implies, then that $c\cdot p_1^{a_1 - 1}p_2^{a_2} \cdots p_r^{a_r} = c \cdot q_1^{b_1 - 1}q_2^{b_2} \cdots q_s^{b_s}$. Then, by induction, we can "rename" each of the $q_i$, if needed, hence $p_i = q_i \forall i$, and we are done.
+  \end{itemize}
+\end{proof}
+\footnotetext{Analog to primes $\neq 0, \pm 1$}
 
 
+\begin{theorem}[Unique Factorization for Polynomials]\label{thm:uniquefactorizationpoly}
+  Let $f(x) \in \mathbb{F}[x]$ be a non-zero polynomial. There exists a unique $c \in \mathbb{F}^x$ and distinct, monic, irreducible polynomials $f_1(x), \dots, f_r(x)$ with $r \geq 0$ and positive integers $a_i$ s.t. \[f(x) = c \cdot f_1(x)^{a_1} \cdots f_r(x)^{a_r}.\]
+\end{theorem}
+
+\begin{corollary}
+  Let $f(x), g(x)$ be non-zero polynomials. Then, $f|g$ iff we can write \[
+  f(x) = c f_1(x)^{a_1'}\cdots f_r(x)^{a_r'}, g(x) = d f_1(x)^{a_1}\cdots f_r(x)^{a_r}
+  \]
+  where $c,d \in \mathbb{F}^{x}$, $f_i$ are irreducible monic polynomials with $r \geq 0$, and $0 \leq a_i' \leq a_i, 0 < a_i$.
+\end{corollary}
+
+\begin{proof}
+  If we have such an expression, then $g = f \cdot h$ where $h = d c ^{-1} \cdot f_1(x)^{a_1 - a_1'} \cdots f_r(x)^{a_r - a_r'}$ is a polynomial as $a_i - a_i' \geq 0$. Conversely, suppose $f | g$ so $g = fh$. Write \begin{align*}
+    f = c \cdot f_1(x)^{a_1'} \cdots f_s(x)^{a_s'}, c \in \mathbb{F}^{x}, a_i' > 0\\
+    h = e \cdot f_1(x)^{b_1} \cdots f_s(x)^{b_2} f_{sh}(x)^{a_{sh}} \cdots f_r(x)^{a_r}\\
+    \implies g = (ce) \cdot f_1(x)^{a_1'+b_1} \cdots f_s(x)^{a_s'+b_s} f_{s+1}(x)^{a_{sh}} \cdots f_r(x)^{a_r},
+  \end{align*}
+  and let $d = c \cdot e$, $a_i = a_i' + b_i$ for $1 \leq i \leq s$.
+\end{proof}
+\begin{corollary}[GCD, LCM]
+  If $f,g$ are non-zero polynomials $f(x) = c \cdot f_1(x)^{a_1} \cdots f_r(x)^{a_r}, g = d \cdot f_1(x)^{b_1} \cdots f_r(x)^{b_r}$, $c,d \in \mathbb{F}^{x}, a_i \geq 0, b_i \geq 0$, $f_i$ distinct monic irreducible. Then \begin{align*}
+    \gcd (f,g) = f_1^{\min (a_1, b_1)} \cdots f_r^{\min (a_r, b_r)}\\
+    \lcm (f,g) = f_1^{\max (a_1, b_1)} \cdots f_r^{\max (a_r, b_r)}
+  \end{align*}
+\end{corollary}
+
+\begin{remark}
+  How does one tell if a polynomial is irreducible?
+  \begin{enumerate}
+    \item Any linear polynomial $ax + b, a \neq 0$ is irreducible.
+    \item If $f(x) \in \mathbb{F}[x]$ has degree 2 or 3, $f(x)$ reducible iff $f(x)$ has a root in $\mathbb{F}$.
+    \item Over $\mathbb{C}$, the only irreducible polynomials are the linear polynomials (recall \cref{thm:complexpolynomial})
+    \item Over $\mathbb{R}$ any irreducible polynomial has degree 1 or 2. \footnote{Show}
+    \item Let $f(x) \in \mathbb{Q}[x]$ of degree $d$.
+    \begin{enumerate}
+      \item $d=1$: $f(x)$ irreducible
+      \item $d = 2, 3$: $f(x)$ reducible $\iff f$ has a rational root.
+      \item $d > 3$: $f(x) reducible \impliedby f$ has a root.
+    \end{enumerate}
+    \item Let $\mathbb{F} = \mathbb{F}_p$ where $p$ prime. Let $g(x) \in \mathbb{F}$ be a non-constant polynomial. Then, $g(x)$ has a root in $\mathbb{F}$ iff $\gcd (g, x^p - 1) \neq 1$.
+  \end{enumerate}
+  While no general method exists to determine reducibility, there is a general method to determine existence of roots.
+\end{remark}
+% TODO: add rational (prop 16.5.3)
+\begin{proposition}
+  Let $f(x) = a_n x^{n} + \cdots + a_1 x + a_0$ be a non-constant polynomial with integer coefficients, $a_n \neq 0$. Let $f(\frac{a}{b}) = 0$ where $(a,b) = 1$. Then, $b | a_n$, $a|a_0$.
+\end{proposition}
+
+\begin{proof}
+  We have $\left(\frac{a}{b}\right)^n a_n + \left(\frac{a}{b}\right)^{n-1}a_{n-1} + \cdots + \left(\frac{a}{b}\right)a_1 + a_0 = 0$. Multiple by $b_n$ to get 
+  \[
+  \lefteqn{\underbrace{a^n \cdot a_n + a^{n-1} b a_{n-1} + \cdots + a b^{n-1}a_1}_{a|}\phantom{ + a_0 b^n = 0}}a^n \cdot a_n + \overbrace{a^{n-1} b a_{n-1} + \cdots + a b^{n-1}a_1 + a_0 b^n}^{b|} = 0
+  \]
+  Which implies \[
+  \begin{cases}
+    a | a_0 b^n \implies a | a_0\\
+    b | a^n a_n \implies b | a_n
+  \end{cases}  
+  \]
+\end{proof}
+
+\begin{proposition}
+  $f(x) \in \mathbb{F}[x]$ has a root $a \in \mathbb{F} \iff (x-a)|f(x) \iff \gcd (f(x), x^p - x) \neq 1$. Further, $f(x) \in \mathbb{F}[x]$ has a non-zero root $a \in \mathbb{F}\setminus \{0\} \iff (x-a) | f(x) \iff \gcd (f(x), x^{p-1} - 1) \neq 1$.
+\end{proposition}
+
+\begin{example}
+  Is $-1$ a square in $\mathbb{F}_{113}$? \footnotemark
+\end{example}
+
+\footnotetext{Yes/No $\iff p \equiv_4 1,3 $}
+
+\begin{proof}
+  This is equivalent to asking is $x^2 + 1$ irred in $\mathbb{F}_{113} \iff \gcd (x^2 + 1, x^{112} - 1) \neq 1$.
+
+  \begin{align*}
+    x^{112} - 1 = (x^2 + 1)(x^{110} - x^{108}+x^{106} - \cdots + \underbrace{(-1)^{55}}_{^\frac{p-3}{2}}) - (\underbrace{(-1)^{55}}_{^\frac{p-3}{2}} + 1)\\
+    \implies (x^2+1)| x^{112} -1 \implies \gcd(x^2 + 1, x^{112} - 1) = x^2 +1
+  \end{align*}
+  Hence, $-1$ is indeed a square ($-1 \equiv_{113} 15^2$, in fact).
+\end{proof}
+
+\section{Rings}
+
+\subsection{Ideals}
+
+\begin{definition}[Ideal]\label{def:ideal}
+  An \emph{ideal} $I$ of $R$ is a subset of $R$ such that 
+  \begin{enumerate}
+    \item $0 \in I$;
+    \item $x,y \in I \implies x + y \in I$;
+    \item $x \in R, y \in I \implies xy \in I$. 
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  Typically, $1 \notin I$. If $I = R$, then it is; if $1 \in I$, then $\forall r \in R, r \cdot = r \in I$, hence $I = R$ (by criterion (3)). In other words, ideals are typically \emph{not} subrings. \footnote{This is a direct result of our convention of requiring subrings to contain $1$; many texts do not require subrings to contain the multiplicative elements, so in these cases ideals would then typically be subrings as well. We will not adopt this convention.}
+\end{remark}
+
+\begin{example}
+  We consider some trivial examples:
+  \begin{itemize}
+    \item $I = \{0\}$
+    \item $I = R$. 
+    \item $R = \mathbb{F}$ a field, and $I \neq \{0\}$, then $I = R$. That is, any non-zero ideals of a field are trivial and generally uninteresting.
+  \end{itemize}
+\end{example}
+
+\begin{definition}[Principal Ideals]
+  Let $r \in R$ and let $(r) = \left\langle r\right\rangle := Rr = \{sr : s \in R\} = r R$. This is an ideal; $0 = 0 \cdot r$; $s_1 r + s_2 r = (s_1 + s_2)r \in I$; $s\cdot s_1 r = (s s_1)\cdot r \in I$.
+\end{definition}
+
+\begin{example}
+  Any integer $m \in \mathbb{Z}$, $m \mathbb{Z}$ is an ideal of $\mathbb{Z}$.
+\end{example}
+
+\begin{definition}[Units of R]
+  Consider a commutative ring $R$. We denote \[
+  R^{\text{x}} = \{u \in R : \exists v \in R \text{ with } uv = vu = 1\}  
+  \]
+  the \emph{units} of $R$.
+\end{definition}
+
+\begin{remark}
+  $1 \in R^{\text{x}}$. If $u_1, u_2 \in R^{\text{x}}$ then $u_1u_2 \in R^{\text{x}}$, because $\exists v_i \st v_i u_i = 1$ hence $(v_2 v_1) (u_1 u_2) = v_2(\cancelto{1}{v_1u_1})(u_2) = (v_2u_2)=1$. That is, the product of units is a unit.
+\end{remark}
+\begin{example}
+  Consider the following examples of units:
+  \begin{itemize}
+    \item $\mathbb{Z}^{\text{x}} = \{\pm 1\}$
+    \item $R = \mathbb{F}$ then $\mathbb{F}^{\text{x}} = \mathbb{F}\setminus \{0\}$.
+    \item $\mathbb{F}[x]^\text{x} = \mathbb{F}^{\text{x}}$ (the degree of the units must be zero, hence they are simply the constants of the field.)
+    \item $\mathbb{Z}[\sqrt{2}]^{\text{x}} = \{a + b\sqrt{2} : a^2 - 2b^2 = \pm 1\}$\footnotemark
+  \end{itemize}
+\end{example}
+
+\footnotetext{These $(a,b)$ solve the \textit{Pell Equations}, $x^2 - 2y^2 = \pm 1$}.
+
+\begin{definition}[Associates]
+  Define $r_1, r_2 \in R$ as \emph{associates} if there $\exists u \in R^{\text{x}} \st u r_1 = r_2$.\footnotemark
+\end{definition}
+
+\footnotetext{This is an extension of the previous definition of associates for polynomials to an arbitrary ring.}
+
+\begin{proposition}
+  Take $r_1, r_2 \in R$. Then $r_1 \sim r_2$ is an equivalence relation.
+\end{proposition}
+
+\begin{proof}
+  % TODO
+\end{proof}
+
+\begin{lemma}\label{lemma:relatedasssociates}
+  Let $r_1, r_2 \in R$. If $r_1 \sim r_2$ then $(r_1) = (r_2)$.
+\end{lemma}
+
+\begin{remark}
+  The converse does not always hold; it holds if $R$ is an \emph{integral domain.}
+\end{remark}
+
+\begin{definition}[Integral Domain]
+  A ring $R$ is an \emph{integral domain} if $xy = 0 \implies x = 0 \text{ or } y = 0$.
+\end{definition}
+
+\begin{proof}
+  Say $u r_1 = r_2$; then $(r_2) = R r_2 = R u r_1 = (Ru)\cdot r_1 \subseteq R \cdot r_1 = (r_1)$. Then, $r_1 \sim r_2 \implies (r_2) \subseteq (r_1)$. Equivalence relation $\implies$ symmetric, hence $r_2 \sim r_1 \implies (r_1) \subseteq (r_2)$, hence we have equality.\\
+  We consider the converse; $(r) = (s) \implies r \sim s$. $r \in (r) = (s) \implies r = us$ for some $u \in R$, and $s\in (r) \implies s = vr$ for some $v \in R$. This implies then that \[(1-uv) \cdot r = 0.\]
+  This gives two possibilities: $r = 0 \implies s = vr = 0$, or $r\neq 0 \implies 1 - uv = 0 \implies uv = 1 \implies u,v$ units, hence $r = u\cdot s  \implies r \sim s$ by definition. This holds only if the ring is an integral domain.
+\end{proof}
+\begin{theorem}
+  Every ideal of $\mathbb{Z}$ is of the form $\langle m \rangle = m \cdot \mathbb{Z}$ for a unique non-negative integer $m$ which implies the ideals of $\mathbb{Z}$ are all principal and are exactly
+  \[
+  (0) = \{0\}, (1) = \mathbb{Z} , (2) = 2 \mathbb{Z}, (3) = 3 \mathbb{Z}, (4) = 4 \mathbb{Z}, \dots
+  \]
+\end{theorem}
+
+% TODO \triangleleft 
+\begin{proof}
+  If\footnote{The symbol $I \triangleleft R$ denotes $I$ is a principal ideal of $R$} $I \triangleleft \mathbb{Z}$, if $I = \{0\}$ then $I = (0)$. If $I \neq \{0\}$, $\exists$ some $m \neq 0$ such that $m \in I$ and then also $- m = -1 \cdot m \in I \implies I$ contains a positive integer. Let $n \in I$ be the minimal positive element belonging to $I$. We claim that $I = (n)$.\\
+  On the one hand, $n \in I \implies k n \in I \forall k \in \mathbb{Z} \implies (n) \subseteq I$. Conversely, let $t \in I$, and write \[
+    t = kn + r, 0 \leq r < n.  
+  \]
+  If $r \neq 0$, note that $r = t - kn$, and since both $t$ and $n \implies -kn \in I$, then it must be that $r \in I$. But $r < n$, hence we have a contradiction, and it must be that $r = 0 \implies t = kn \in (n) \implies I \subseteq (n)$.
+\end{proof}
+
+\begin{theorem}
+  \footnotemark Let $I \triangleleft \mathbb{F}[x]$, $\mathbb{F}$ a field. Then, $I = (0)$ or $I = (f)$ for a unique monic polynomial $f$. Moreover, if $f \neq g$ are monic polynomials, then $(f) \neq (g)$.
+\end{theorem}
+
+\footnotetext{This proof follows almost precisely from the logic of the previous proof.}
+
+\begin{proof}
+  If $I = \{0\}$ then $I = (0)$. Else, $\exists f \in I, f \neq 0$. Then, for a suitable $\alpha \in \mathbb{F}^\text{x}$, then $\alpha f$ monic, and it must be that $\alpha f \in I$. This implies that $I$ contains some monic polynomial.\\
+  Let $g \in I$ be a monic polynomial of minimal degree among all nonzero polynomials of $I$. Note that $(g) = \mathbb{F}[x]\cdot g \subseteq I$. Let $h \in I$ and divide $h$ by $g$ with residue. Then, we have \[
+    h = q \cdot g + r, r = 0 \text{ or } \deg (r) < \deg (g).
+  \]
+  Note that $r = h - qg$ where $h \in I$ and $q\cdot g \in I$, hence if $r = \neq 0$, then $\deg(r)< \deg(g)$ and we found a smaller degree polynomial in the ideal and we have a contradiction of our choice of $g$. So, we must have \[
+  r = 0 \implies h = q \cdot g \implies h \in (g) \implies I \subseteq (g).
+  \]
+  It remains to show that $f,g$ monic and $(f) = (g) \implies f = g$. We have that $(f) = (g) \implies f \sim g$, as $\mathbb{F}[x]$ is an integral domain (\cref{lemma:relatedasssociates}), so we can write $f = u \cdot g$ for some $u \in \mathbb{F}[x] = \mathbb{F}^\text{x}  = \mathbb{F} - \{0\}$, which implies \[
+  f = u \cdot g \implies x^{n} + \text{l.o.t.} = u \cdot (x^n + \text{l.o.t})   \implies u = 1 \implies f = g.
+  \]
+\end{proof}
+
+\begin{example}
+  Consider $x \in \mathbb{F}[x]$, and the ideal 
+  \begin{align*}
+    (x) = \{a_n x^n + \cdots + a_1 x \cancel{+ a_0} : a_i \in \mathbb{F}, a_0 = 0\}\\
+    = \{f \in \mathbb{F}[x] : f(0) = 0\}
+  \end{align*}
+\end{example}
+
+\begin{example}
+  $I = \{f \in \mathbb{F}[x] : f(0) = 0, f(1) = 0\}$. Show that $I$ is an ideal, and that $I = (x \cdot (x- 1))$.
+\end{example}
+% TODO
+
+\begin{definition}[Generalized Way to Create Ideals]
+  Let $r_1, \dots, r_n$ be elements of a ring $R$. We write 
+  \begin{align*}
+  \langle r_1 ,\dots, r_n \rangle  := Rr_1 + R r_2 + \cdots + R r_n\\
+  = \{\sum_{i=1}^{n} s_i r_i : s_i \in R\}
+\end{align*}
+For instance, $r_1 = 1 \cot r_1 + 0 \cdot r_2 + \cdots + 0 \cdot r_n \in \langle r_1, \dots, r_n\rangle$. We call this ideal the "generalize ideal"; call it $I = \langle r_1, \dots, r_n \rangle$. We show that it is indeed an ideal below.
+\end{definition}
+
+\begin{proof}
+  \begin{align*}
+    \text{(1)} \quad 0 = 0 \cdot r_1 + \cdots  + 0 \cdot r_n \in I\\
+    \text{(2)} \quad \sum_{i=1}^n s_i r_i + \sum_{i}^n r_i r_i\\
+    = \sum^n (s_i + t_i)r_i \in I\\
+    \text{(3)} \quad  s \cdots \sum s_i r_i = \sum (s s_i) r_i \in I
+  \end{align*}
+\end{proof}
+
+\begin{example}
+  Let $m, n$ be nonzero integers. Then, we can write $\langle m, n\rangle = \langle \gcd (m,n)\rangle$.
+\end{example}
+\begin{example}
+  Let $R = \mathbb{C}[x, y] = \{
+  \sum_{i,j=0}^{N} a_{ij}x^iy^j : a_{ij}
+  \}$. An ideal would be \begin{align*}
+    I = \langle x, y\rangle = \{
+      f(x,y) : f \text{ has no constant term, ie } a_{00} = 0
+    \}
+  \end{align*}
+  This is because if $f \in $ LHS, then $f = f_1 \cdot x + f_2 \cdot y, f_1 , f_2 \in \mathbb{C}[x,y]$ (noting that it has no constant term), and conversely, if $f \in $ RHS, it does not have a constant term either, that is, $f = \sum a_{i,j} x^i y^j$ with $a_{00} = 0$, so we can write $f = x \cdot \sum_{i \geq 1,j} a_{ij} x^{j-1} y^{j} + y\sum_{i = 0,j} a_{ij} x^i y^{j-1}$; $i = 0 \implies j \geq 1$, and thus have "$x$ times something plus $y$ times something" and hence $f \in I$. We can equivalently write \[
+  I = \{f(x,y) \in \mathbb{C}[x,y] : f(0,0) = 0\}.  
+  \]
+  Note that this ideal is \emph{not} a principal ideal, that is, $\not \exists$ polynomial $f(x,y) \st \langle x,y \rangle = \langle f(x,y)\rangle$. % TODO: prove.
+\end{example}
+
+\subsection{Homomorphism}
+
+\begin{definition}[Homomorphism]
+  Let $R, S$ be commutative rings.\footnotemark A function $f : R \to S$ is called a \emph{ring homomorphism} if\footnotemark \begin{enumerate}
+    \item $f(1_{R}) = 1_{S} \qquad $ \textit{(identity)}
+    \item $f(x+y) = f(x) + f(y) \qquad $ \textit{(respects addition)}
+    \item $f(xy) = f(x)f(y) \qquad $ \textit{(respects multiplication)}
+  \end{enumerate}
+  $\forall x,y \in R$.
+\end{definition}
+\footnotetext{Throughout this section, references to arbitrary sets $R$, $S$ may be made. It is safe to assume that these are rings even if not explicitly stated.}
+\footnotetext{Note the "preservation" of the properties of rings each requirement necessitates.}
+\begin{proposition}
+  These axioms imply the following consequences:
+  \begin{enumerate}
+     \item[(i)] $f(0_{R}) = 0_{S}$
+     \item[(ii)] $-f(x) = f(-x)$
+     \item[(iii)] $f(x-y) = f(x) - f(y)$
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (i) $f(0_R) = f(0_R + 0_R) = f(0_R) + f(0_R)$. Adding $-f(0_R)$ to both sides, we get $0_S = f(0_R)$.\\
+  (ii) We will aim to show that $f(x) + f(-x) = 0_S$, equivalently. We have 
+  \begin{align*}
+    f(x) + f(-x) &= f(x+(-x)) \quad \text{by axiom 2}\\
+    &= f(0_R) = 0_S \quad \text{by (1)}
+  \end{align*}
+  as desired.\\
+  (iii) $f(x-y) = f(x + (-y)) = f(x) + f(-y) = f(x) + (-f(y)) = f(x) - f(y)$.
+\end{proof}
+
+\begin{proposition}
+  $\image(f) = \{f(r) : r \in R\}$ is a subring of $S$.
+\end{proposition}
+
+\begin{remark}
+  We need to check the following (ring axioms):
+  \begin{enumerate}
+    \item[(i)] $0, 1 \in \image (f)$
+    \item[(ii)] $x_1, x_2 \in \image (f) \implies x_1 + x_2 \in \image(f)$
+    \item[(iii)] $x_1, x_2 \in \image (f) \implies x_1 \cdot x_2 \in \image(f)$
+    \item[(iv)] $x \in \image (f) \implies -x \in \image (f)$
+  \end{enumerate}
+\end{remark}
+\begin{proof}
+ \begin{enumerate}
+  \item[(i)] $f(0_R) = 0_S, f(1_R) = 1_S$, by the previous proposition and by definition resp.
+  \item[(ii), (iii)] Say $x_i = f(r_i)$; then $x_1 \overset{+}{\times} x_2 = f(r_1 ) \overset{+}{\times} f(r_2) = f(r_1 \overset{+}{\times} r_2) \in \image (f)$
+  \item[(iv)] If $x = f(r), -x = -f(r) = f(-r) \in \image(f)$, from the previous proposition.
+ \end{enumerate}
+\end{proof}
+% TODO fix above overset
+\begin{definition}[Kernel]
+  Let $f: R \to S$ be a homomorphism. The \emph{kernel} of $f$ is defined as \[
+  \ker{F} := \{r \in R : f(r) = 0_S\} \equiv f^{-1}(0).  
+  \]
+\end{definition}
+
+\begin{proposition}
+  The following propositions relate to the kernel of a homomorphism:
+  \begin{itemize}
+    \item[(i)] $\ker (f) \triangleleft R$
+    \item[(ii)] $f $ injective $\iff \ker (f) = \{0_R\}$
+    \item[(iii)] $f(x) = f(y) \iff x - y \in \ker (f)$
+  \end{itemize}
+\end{proposition}
+
+\begin{remark}
+  To show that some $t \in \ker (f)$, we need only to show that $f(t) = 0_S$.
+\end{remark}
+
+\begin{proof}
+  \begin{itemize}
+    \item[(i)] We show each axiom: $f(0_R) = 0_S \in \ker(f)$; $x,y \in \ker(f) \implies f(x)  + f(y) = 0_S + 0_S = 0_S$; $f(rx) = f(r)f(x) = f(r) \cdot 0_S = 0_S$.
+    \item[(ii)] Suppose $f$ injective. Then, $0_R$ is the unique element mapping to $0_S$, by definition of an injective function. Hence, $\ker f = \{0_R\} = (0_R)$. Conversely, suppose $\ker f = \{0_R\}$ and that $f(x) = f(y)$. Note that $f(x - y) = f(x) - f(y) = f(x) - f(x) = 0_S \implies x - y \in \ker (f) \implies x - y = 0_R \implies x = y$.
+    \item[(iii)] $f(x) = f(y) \iff f(x) - f(y) = 0_S \iff f(x - y) = 0_S \iff x - y \in \ker (f)$.
+  \end{itemize}
+\end{proof}
+
+\begin{corollary}
+  Let $s \in S$ and let $f^{-1}(s) = \{r \in R : f(r) = s\}.$ Then, either $f^{-1}(s) = \varnothing$, or $f^{-1}(s) = x + \ker (f) = \{x + r : r \in \ker (f)\} \subseteq R$ for any $x \st f(x) = s$.
+\end{corollary}
+
+\begin{proof}
+  If $f^{-1}(s) \neq \varnothing, \exists x \in R \st f(x) = s$. If $x + r \in x + \ker R$, then $f(x + r) = f(x) + f(r) = s + 0_S = s$. Hence, $f^{-1}(s) \supseteq x + \ker (f)$.
+
+% TODO; add ref
+  Suppose $y \in f^{-1}(s) \implies f(x) = f(y) = s$. This implies $r = y - x \in \ker f$ (by previous proposition). Note that $x+r = y$; hence $y \in x + \ker (f) \implies f^{-1}(s) \subseteq x + \ker (f)$.
+\end{proof}
+
+\begin{example}
+  $R = \mathbb{Z}$, $S = \mathbb{Z}/n \mathbb{Z}$ where $n \geq 1 \in \mathbb{Z}$. Take $f : R \to S$ where $f(a) = a \mod n = \bar{a}$. This is a ring homomorphism:
+  \begin{itemize}
+    \item $f(1) \equiv_n 1$, the identity of $\mathbb{Z}/n \mathbb{Z}$.
+    \item $\overline{a + b} = \bar{a} + \bar {b}$.
+    \item $\overline{ab} = \bar{a} \cdot \bar{b}$.
+  \end{itemize}
+  This is surjective, hence $\image (f) = \mathbb{Z}/n\mathbb{Z}$. We have that $\ker (f) = \{a \in \mathbb{Z} : \bar{a} \equiv_n 0\} = (n) = n \mathbb{Z}$.
+
+  Now what is $f^{-1}(\overline{1})$? Take some $x \in \mathbb{Z}$. $f(x) = \overline{x} = \overline{1};$ take $x = 1$, then $f^{-1}(1) = 1 + n \mathbb{Z}$. Generally, then, we have $f^{-1}(\overline{r}) = r + n \mathbb{Z}$.
+\end{example}
+
+\begin{example}
+  Let $\mathbb{F}$ be a field and $b \in \mathbb{F}$ a fixed element. $\varphi : \mathbb{F}[x] \to \mathbb{F}$, where $\varphi(f(x)) = f(b)$. So, $f(x) = a_n x^n + \cdots + a_1 x + a_0$, $\varphi (f(x)) = a_n b^n + \cdots + a_1 b + a_0$. This is a ring homomorphism.
+  % TODO: show
+  \begin{itemize}
+    \item $f(1) = 1$
+  \end{itemize}
+  We have too that $\varphi$ is surjective; given $c \in \mathbb{F}$, we can show that $\varphi(x + (c - b)) = b + (c- b) = c$. 
+
+  $\ker \varphi = (x-b)$ % TODO: show
+\end{example}
+
+\begin{example}
+Let $R, S$ be rings. Then, $R \times S$ is a ring. % TODO  
+\end{example}
+
+\begin{example}
+  Consider the map \[
+  R \to R \times S, \quad r \mapsto (r,0).
+  \]
+  This is \emph{not} a ring homomorphism since $f(1) = (1,0) \neq (1,1)$ (that is, unless $0_s = 1_s$, that is, $S$ is the zero ring).
+
+  OTOH, take 
+  \begin{align*}
+    \varphi : R \times S \to R, \quad (r,s) \mapsto r\\
+    \psi : R \times S \to S, \quad (r,s) \mapsto s
+  \end{align*}
+  These are indeed ring homomorphisms. % TODO
+
+  We also have \[\ker \varphi = \{0\} \times S, \ker \psi = R \times \{0\}.\]
+\end{example}
+
+\begin{example}
+  Take a polynomial in $\mathbb{R}[x]$ and fix $\alpha_1 < \alpha_2 < \cdots < \alpha_n \in \mathbb{R}$. Take \[
+  \varphi : \mathbb{R}[x] \mapsto \mathbb{R}^n, \quad f(x) \mapsto (f(\alpha_1), f(\alpha_2), \dots, f(\alpha_n)).
+  \]
+  This is a homomorphism. % TODO
+  We also have that $\varphi$ is surjective. Let $$e_i = \cdots(0, \dots, 0, 1, 0, \dots, 0),$$ ie a unit vector where the $i$th entry is 1. Take \begin{align*}
+    f_i(x) = \prod_{j=1, j \neq i}^n (x - \alpha_j)/ \prod_{j=1, j \neq i}^n (\alpha_i-\alpha_j).
+  \end{align*}
+  Note that $f_i(\alpha_i) = 1$ and $0$ for all other $\alpha_j$, and thus $\varphi (f_i) = e_i$. Further, $\varphi(r_1 f_1 + \cdots + r_n f_n) = \sum_{i=1}^n \varphi(r_i f_i) = \sum_{i=1}^n \varphi(r_i) \varphi(f_i) = \sum_{i=1}^{n} r_i e_i = (r_1, \dots, r_n)$, hence $\varphi$ surjective.
+
+  Finally, we have that $\ker \varphi = \langle \prod_{i=1}^{n}(x-\alpha_i)\rangle$.
+\end{example}
+
+\subsection{Cosets}
+
+\begin{definition}[Relation on Cosets]
+  Let $R$ be a commutative ring and $I \triangleleft R$. Define a relation on $R$ as $x \sim y$ if $x -y \in I$.
+\end{definition}
+
+\begin{lemma}
+  The following relate to relation defined previously.
+  \begin{enumerate}
+    \item This is an equivalence relation.
+    \item Every equivalence class is of the form $x + I$, where $x+I$ is called a \emph{coset} of $I$, for some $x \in R$.
+    \item $x + I = y + I \iff x - y \in I$.
+    \item Either $(x+I) \cap (y+I) = \varnothing$ or $x + I = y + I$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  \begin{enumerate}
+    \item (i) $x \sim x \impliedby x - x = 0$. $x - x = 0 \in I$ by definition. (ii) $x \sim y \implies x - y \in I \implies -1 (x-y) \in I \implies y-x \in I \implies y \sim x$, again by definition. (iii) $x \sim y$, $y \sim z \implies x -y, y - z \in I \implies x - y +  y - z \in I \implies x -z \in I \implies x \sim z$, as the ideal is closed under addition, hence $\sim$ is an equivalence relation.
+    \item $x + I = \{x + t : t \in I\} \subseteq R$. Suppose $y \in x + I,$ then $y = x + t$ then $x - y = x - (x+t) = -1\cdot t \in I$. That is, $x \sim y$. Suppose $y \sim x$. Then, $y - x =: t \in I \implies y = x + (y-x) = x + t \in x+ I \implies $ equivalence class of $x$ is $x + I$.
+    \item This is equivalent to saying the equivalence class of $x$ is the equivalence class of $y$ iff $x \sim y$, which follows by definition.
+    \item Follows by the fact that equivalence classes partition the set they are defined on (recall \cref{thm:equivclass}).
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+  Say $R = \mathbb{Z}, I = n \mathbb{Z}$. Then, the cosets are just the congruence classes ($n \mathbb{Z}, 1 + n \mathbb{Z} , \dots, (n-1) + n \mathbb{Z}$) $\mod n$.
+\end{example}
+
+\subsection{\texorpdfstring{The Ring $R/I$}{The Ring R/I}}
+
+\begin{definition}
+  Consider \footnotemark $R / I$. We define operations as \[
+  (x+I) + (y+I) := (x+y) + I, \quad (x + I) \cdot (y+I) := (x\cdot y) + I.  
+  \]
+  Equivalently, letting $\overline{x} = x + I$, we write \[
+  \overline{x}  + \overline{y} = \overline{x+y}, \quad \overline{x} \cdot \overline{y} = \overline{x\cdot y}.
+  \]
+
+\end{definition}
 
 
+\footnotetext{Recall how we defined the elements of the ring $\mathbb{Z}/n \mathbb{Z}$. This can be seen as a generalization of this idea; read "R" mod "I".}
 
+\begin{remark}
+  By this definition, we can see that every element of $R / I$ is a coset, that is, of the form $x + I$; this is not unique, however, as it is possible that $x + I = y + I$ despite $x \neq y$.
+\end{remark}
 
+\begin{theorem}[$R/I$ is a Commutative Ring]\label{thm:rmodicommutativering}
+  $R/I = \{\overline{x} : x \in R\}$ is a commutative ring, where $0 = \overline{0} = I, 1 = \overline{1} = 1 + I$. Moreover, the function \[
+  \pi : R \to R /I, \quad x \mapsto \overline{x},  
+  \]
+  is a surjective ring homomorphism with $\ker \pi = I$.
+\end{theorem}
 
+\begin{corollary}
+  Any\footnotemark ideal is the kernel of some ring homomorphism.
+\end{corollary}
 
+\footnotetext{Direct consequence of \cref{thm:rmodicommutativering}}
+\begin{proof}(Of \cref{thm:rmodicommutativering})
+  We first sow that the operations are well defined, that is, if $\bar{x} = \bar{x}_1, \bar{y} = \bar{y}_1$, then $\overline{x+y} = \overline{x_1+y_1}$, and $\overline{x} \cdot \overline{y} = \overline{x_1 \cdot y_1}$. \footnote{For instance, in $\mathbb{Z}/8 \mathbb{Z}, $ we have that $\overline{3} + \overline{10} = \overline{3 + 10}= \overline{13} = \overline{5}$, which is equivalent to saying $\overline{3} + \overline{2} = \overline{3+2} = \overline{5}$. We aim to show this holds for general $R/I$.}
+  We have, then, \begin{align*}
+    x - x_1 \in I, y - y_1 \in I \implies (x+y) - (x_1 + y_1) = \underbrace{(x - x_1)}_{\in I} + \underbrace{(y- y_1)}_{\in I} \in I\\
+    xy - x_1 y_1 = \underbrace{x}_{\in R}(\underbrace{y - y_1}_{\in I}) + \underbrace{y_1}_{\in R}(\underbrace{x - x_1}_{\in I}) \in I,
+  \end{align*}
+  hence the operations are well defined. We now verify (some of) the ring axioms:
+  \begin{enumerate}
+    \item $\overline{x} + \overline{y} = \overline{x+y} = \overline{y+x} = \overline{y}+\overline{x}$
+    \item $\overline{0} + \overline{x} = \overline{0+x} = \overline{x}$
+    \item $\overline{x} + (\overline{-x}) = \overline{x+(-x)} = \overline{0} \implies \overline{x}$ has an inverse for addition, $- \overline{x} = \overline{-x}$
+    \item $\cdots$
+    \item $\cdots$
+    \item $\cdots$
+    \item $\cdots$
+    \item $\overline{x}(\overline{y} + \overline{z}) = \overline{x} \cdot \overline{x+y} = \overline{x(y+z)} = \overline{xy+yz} = \overline{xy} + \overline{xz} = \overline{x} \cdot \overline{y} + \overline{x} \cdot \overline{z}$,
+  \end{enumerate}
+  hence, it is a commutative ring.
 
+  Now consider the map $\pi: R \to R/I, \pi(x) = \overline{x}$. We verify it is indeed a ring homomorphism:
+  \begin{enumerate}
+    \item $\pi(1) = \overline{1} = 1_{R/I}$
+    \item $\pi(x+y) = \overline{x+y} = \overline{x} + \overline{y} = \pi(x) + \pi (y)$
+    \item $\pi (x\cdot y) = \overline{x\cdot y} = \overline{x} \cdot \overline{y} = \pi (x) \cdot \pi (y)$
+  \end{enumerate}
+  Hence, $\pi$ is indeed a ring homomorphism. Its kernel is:
+  \[
+  \ker (\pi) = \{x \in R : \pi(x) = \overline{0}\} = \{x \in R : x + I = 0 + I = I\} = \{x \in R: x \sim 0\}  = \{x \in R : x \in I\} = I.
+  \]
+\end{proof}
 
+\begin{example}[Of $R/I$'s]
+  \begin{enumerate}
+    \item $R = \mathbb{Z}, I = n \mathbb{Z}$, $a + n \mathbb{Z} = \overline{a} = a \mod n$, that is, this is modular arithmetic on the integers. The homomorphism is $\mathbb{Z} \to \mathbb{Z}/n\mathbb{Z}, a \mapsto \overline{a}$, which has a kernel of $n \mathbb{Z}$.
+    \item $R = \mathbb{F}[x], I = \langle f(x)\rangle, f(x)$ monic, non-constant polynomial. (We have that $ \langle f(x)\rangle =  \langle \alpha f(x)\rangle \forall \alpha \in \mathbb{F}^{\times},$ so monic wlog; a constant polynomial $f = \alpha, \alpha \in \mathbb{F}^{\times}$ would have $I = \mathbb{F}[x]$ so $R/I = \{0\}$, an uninteresting case, so we require non-constant $f$.)
+    
+    In this context, $g(x) \sim h(x) \iff g(x)-f(x) \in \langle f(x)\rangle \iff f(x) | (g(x)-h(x))$, that is, $\overline{g} = \overline{h} \iff f | (g-h)$.
+  \end{enumerate}
+\end{example}
 
+\begin{example}
+  Consider $\mathbb{R}[x]/\langle x^2 + 1\rangle$. We claim that $\overline{a_1 + b_1 x} = \overline{a_2 + b_2 x} \implies a_1 = a_2, b_1 = b_2$. We can check:
+  \begin{align*}
+    \overline{a_1 + b_1 x} = \overline{a_2 + b_2 x} \iff (x^2 + 1) | (a_1 - a_2) + (b_1 - b_2)x,
+  \end{align*}
+  but this is impossible, since the RHS is linear and the LHS is quadratic, \emph{unless} the RHS is $0$, hence, that $a_1 - a_2 = 0 \iff a_1 = a_2$ and $b_1 - b_2 = 0 \iff b_1 = b_2$, as desired.
 
+  Further, we claim that any coset is represented by some $a+bx$. Suppose $\overline{g}$ a coset. Then,
+  \begin{align*}
+    g = q \cdot (x^2 + 1) + r(x), \quad, r(x) = 0 \text{ or } \deg (r(x)) < 2\\
+    \implies r(x) = a, a \in \mathbb{R} \text{ or } r(x) = a + bx, a, b \in \mathbb{R}\\
+    \implies r(x) = a+bx, a, b \in \mathbb{R},
+  \end{align*}
+  that is, $r(x)$ can be written as $a +bx$ for $a,b$ in the field or zero. Hence, we have $g(x) - r(x) = q \cdot (x^2 +1),$ and since $(x^2 + 1 )| q \cdot (x^2 + 1),$ then $g(x) \sim r(x) \implies \overline{g} = \overline{r}$. Hence, we can conclude that every element of $\mathbb{R}[x]/\langle x^2 + 1 \rangle$ is of the form $\overline{a + bx}, a, b \in \mathbb{R}$, for unique $a,b$.
 
-
-
-
-
+  Operations in this case would work as:
+  \begin{align*}
+    \overline{a_1 + b_1 x} + \overline{a_2 + b_2 x} &= \overline{(a_1 + a_2) + (b_1 + b_2)x}\\
+    \overline{a_1 + b_1 x} \cdot \overline{a_2 + b_2 x} &= \overline{(a_1 + b_1x)(a_2 + b_2 x)} = \overline{a_1a_2 + (a_1 b_2 + a_2 b_1)x + b_1 b_2 x^2}
+  \end{align*}
+  But note that $x^2 = (x^2+1)-1 \implies \overline{x^2} = \overline{-1}$, so $b_1 b_2 x^2 = - b_1 b_2$, so this simplifies to \[
+    \overline{a_1a_2 + (a_1 b_2 + a_2 b_1)x - b_1b_2} = \overline{(a_1a_2- b_1b_2) + (a_1 b_2 + a_2 b_1)x }.
+  \]
+  But note the similarity to multiplication in $\mathbb{C}$. In this way, we can define a bijection\footnotemark \[\mathbb{R}[x]/(x^2+1) \cong \mathbb{C}, \quad a + bi \mapsto \overline{a+bx}.\]
+\end{example}
+\footnotetext{Note that $A \cong B$ means that $A$ is \emph{isomorphic} to $B$.}
+\begin{remark}
+  This concept works generally. % TODO: show
+\end{remark}
 
 
 
@@ -1606,6 +2226,7 @@ is a complete set of representatives.
 
 
 % \section{Appendix}
+
 
 
 % \subsection{Homeworks}
