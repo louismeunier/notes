@@ -64,12 +64,12 @@
 %   % shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
 % ]{corollary}
 
-\declaretheorem[
-  % thmbox=S,
-  name=Remark,
-  refname={Remark, remark},
-  numberwithin=section
-]{remark}
+% \declaretheorem[
+%   % thmbox=S,
+%   name=Remark,
+%   refname={Remark, remark},
+%   numberwithin=section
+% ]{remark}
 
 % \declaretheorem[
 %   % thmbox=M,
@@ -96,12 +96,19 @@
 %   shaded={}
 %   % shaded={rulecolor=solarized-magenta}
 % ]{proposition}
+
+\declaretheorem[
+  % thmbox=S,
+  name=Remark,
+  refname={Remark, remark},
+  numberwithin=section
+]{remark}
+
 \mdfdefinestyle{example}{
   roundcorner=8pt,
   linecolor=white,
   leftmargin=15,rightmargin=15,
   backgroundcolor=solarized-cyan!20,
-  ntheorem=true,
   skipabove=10pt, skipbelow=10pt,
   innertopmargin=2pt, innerbottommargin=5pt,
   innerleftmargin=8pt, innerrightmargin=8pt
@@ -112,22 +119,23 @@
   linecolor=white,
   % leftmargin=5,rightmargin=5,
   backgroundcolor=gray!10,
-  ntheorem=true,
   skipabove=10pt, skipbelow=10pt,
   innertopmargin=2pt, innerbottommargin=5pt,
   innerleftmargin=8pt, innerrightmargin=8pt
 }
 
-\mdtheorem[style=example]{example}{\underline{Example}}[section]
+\mdtheorem[style=example]{example}{$\circledast $ \underline{Example}}[section]
 
-\mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\rightarrowtail$ \underline{Theorem}}}[section]
+\mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
 
-\mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\rightarrowtail$ \underline{Proposition}}}[section]
-\mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\rightarrowtail$ \underline{Theorem}}}[section]
-\mdtheorem[style=general-thm]{corollary}{\textcolor{solarized-orange}{$\rightarrowtail$ \underline{Corollary}}}[section]
-\mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\rightarrowtail$ \underline{Lemma}}}[section]
-\mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\rightarrowtail$ \underline{Axiom}}}[section]
-\mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\rightarrowtail$ \underline{Definition}}}[section]
+\mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\hookrightarrow $ \underline{Proposition}}}[section]
+\mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
+\mdtheorem[style=general-thm]{corollary}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}}[section]
+\mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
+\mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
+\mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
+
+
 
 % makes "quoted" text actually look correct
 \MakeOuterQuote{"}
