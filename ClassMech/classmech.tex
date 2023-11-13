@@ -694,4 +694,161 @@ Consider some path $\vec{r}$ from a point $\vec{r}_a$ to $\vec{r}_b$. If we cons
 \end{theorem}
 
 We define $\text{curl} \vec{F} :=\curl \vec{F}$. From Stoke's Thm, then, if we require the LHS to be zero, then $\curl \vec{F} = 0$.
+
+\section{Collisions \& Conservation Laws}
+
+\subsection{2D}
+% example: general
+% todo: add picture
+Consider two balls of mass $m_1$, $m_2$ initially traveling at velocities of $v_1$, $v_2$ respectively, in the $x$-direction solely. \textit{Conservation of momentum} states that momentum, that is, $\vec{P} = m \vec{v}$ must be conserved following a collision. Note the vector notation: this is not accidental. Momentum must be conserved vectorially, that is, direction-wise. In our standard example, we would write
+\begin{align*}
+[x]& \quad m_1 v_1 = m_1 v_1' \cos \theta + m_2 v_2' \cos \phi  \\
+[y]& \quad 0 = m_1 v_1' \sin \theta - m_2 v_2' \sin \phi
+\end{align*}
+Where $\theta, \phi$ are the angles of reflection from the horizontal the balls experience respectively. Note that we have four unknowns in this case, $v_1', v_2', \theta, \phi$, but only 2 equations relating them. Under certain assumptions of lack of friction, etc, we can also assume that kinetic energy is conserved; this would then be called a \textbf{elastic collision} (think that the balls "bounce"; they don't stick together, as this would require some other force to keep them together). This allows us to derive another equation:
+\[
+\frac{v_1'}{v_1} = \frac{m_1}{m_1 + m_2}\left(\cos \theta \pm \sqrt{\cos^2 \theta - \left(\frac{m_1^2 - m_2^2}{m_1^2}\right)}\right)  
+\]
+which follows directly form the equation for kinetic energy applied to the before/after collision velocities. The square root in this equation gives us a few different cases:
+\begin{enumerate}
+  \item $m_1 > m_2 \implies \cos^2 \theta \geq 1 - \frac{m_2^2}{m_1^2},$ indicating that $\theta$ must be restricted to relatively small angles.
+  \item $m_1 < m_2 \implies \sqrt{\cdots} \in \mathbb{R},$ that is, there is no restriction on $\theta$.
+  \item $m_1 = m_2 \implies v_1' = v_1 \cos \theta = v_1' + v_2 ' \cos (\theta + \phi) \implies v_2' \cos (\theta + \phi) = 0 \implies \theta + \phi = \frac{\pi}{2}$.
+\end{enumerate}
+
+\subsection{Centre of Mass Frame}
+% example: angles and collisions, etc
+Often, it is inconvenient to do the analysis above, even with only two bodies, since we have to worry about constantly tracking several measurements over time. Instead, it is often helpful to consider the movement of the \textbf{centre of mass} of a system. The center of mass coordinate, generally, of $n$ bodies is calculated
+\[
+\vb{R}  = \frac{\sum_{i}^{n} m_i \vb{r}_i} {\sum_i^n m_i}
+\]
+where $\vb{P}, M$ are measurements of the entire system now, rather than individual quantities. From here, we can consider the velocity of the center of mass by computing \[
+\vb{P} = M \vb{V} \implies \vb{V} = \frac{\vb{P}}{M}.
+\]
+
+Consider this the velocity of the center of mass; the other particles move at a given \textbf{lab} velocity relative to the so-called lab frame, and have another velocity relative to the moving center of mass, that is,
+\[
+\vb{v}_i = \vb{v}_i^{c}  + \vb{V}
+\]
+
+where we use $^c$ to denote quantities in the center of mass frame. Note, here, that masses initially at rest will appear to move at $- \vb{V}$ in the c.o.m. We can also consider other quantities in c.o.m.:
+\[
+m_i \vb{v}_i^c \equiv \vb{P}_1^c = m_i(\vb{v}_i - \vb{V}) = m_i (\vb{v}_i - \frac{\vb{P}}{M}) = \frac{m_1m_2}{m_1 + m_2} (\vb{v}_1 - \vb{v}_2) \equiv \underbrace{\mu}_{\textbf{reduced mass}} (\vb{v}_1 - \vb{v}_2) 
+\]
+
+\subsubsection{Angles}
+Recall that in the lab frame, we had two angles to worry about, $\theta, \phi$. Now, we have only 1, and thus reduced cases to worry about; the angle that the velocity of the center of mass $\vb{V}$ travels post-collision, $\theta_c$, can be derived \[  
+  \tan \theta  = \frac{\sin \theta_c}{\cos \theta_c + \frac{m_1}{m_2}};
+\]
+giving us the cases 
+\begin{enumerate}
+  \item $m_1 < m_2$: $\frac{V}{v_1^{c'}} = \frac{V}{\frac{m_2 v_1}{m_1+m_2}} = \frac{m_1}{m_2} < 1 \implies V < v_1^{c'}$, hence no restriction on $\theta$.
+  \item $m_1 > m_2$: $\frac{m_1}{m_2} > 1 \implies V > v_1^{c'}$, hence we have a restriction on $\theta$ % TODO: what is it?
+\end{enumerate}
+% TODO: add pictures
+
+\subsubsection{Conservation of Energy in CM}
+Consider a two-body elastic collision. In the CM frame:
+\begin{alignat*}{2}
+  \frac{1}{2}m_1 (v_1^{c})^2 + \frac{1}{2}m_2 (v_2^c)^2 = \frac{1}{2}m_2(v_1^{c'})^2 + \frac{1}{2}m_2(v_2^{c'})^2 && \qquad \text{(Energy Conservation)}\\
+  |m_1 \vb{v}_1^c| = |m_2 \vb{v}_2^c| \qquad && \text{(Magnitudes, pre-collision)}\\
+  |m_1 \vb{v}_1^{c'}| = |m_2 \vb{v}_2^{c'}| \qquad && \text{(Magnitudes, post-collisions)}
+\end{alignat*}
+
+Now, we can rewrite this in terms of the original velocities given the conservation of energy in the lab frame:
+\begin{align*}
+  K^{\text{lab}} &= \frac{1}{2}m_1 v_1^2 + \frac{1}{2}m_2 v_2^2\\
+  &= \underbrace{\frac{1}{2}m_1 (v_1^c)^2 + \frac{1}{2} (v_2^c)^2}_{K^{\text{cm}}} + \underbrace{\frac{1}{2}(m_1 + m_2)(V)^2}_{\text{"Energy" of CM moving}} + \cancelto{\vb{P}^c = 0}{\frac{1}{2}(m_1 v_1^c + m_2 v_2^c)V}\\
+  \implies K^\text{lab} = K^\text{cm} + \frac{1}{2}\bf{M} \vb{V}^2
+\end{align*}
+
+That is, we can consider that there is always some energy, $\frac{1}{2}\bf{M}\vb{V}^2$, which we note is constant, that is \textit{locked} in the motion of the center of mass.
+
+% TODO: examples
+
+\section{Rotational Motion}
+
+\subsection{Angular Momentum}
+
+\begin{definition}[Angular Momentum]
+  The \emph{angular momentum} of a point mass is defined by \[
+    \vb{L} = \vb{r} \times \vb{p},  
+  \]
+  where $\vb{r}$ is the position of the vector to a given origin and $\vb{p}$ is the momentum of the mass. Equivalently, \[
+  |\vb{L}|  = |\vb{r}||\vb{p}|\sin \theta,
+  \]
+  where $\theta$ is the angle between the $\vb{r}$ and $\vb{p}$ vectors.
+\end{definition}
+
+% example: conical pendulum
+
+\subsection{Torque}
+
+\begin{definition}[Torque]
+  \emph{Torque} is defined on a point mass \[
+    \vb{\tau} = \vb{r} \times \vb{F},
+    \]
+    that is, a force $\vb{F}$ acts on a particle at a distance $\vb{r}$.
+\end{definition}
+
+
+Make note of the following:
+\begin{align*}
+  \vb{L} &= \vb{r} \times \vb{p}\\
+  \implies \dv{\vb{L}}{t} &= \dv{t}\left(\vb{r} \times \vb{p}\right)\\
+  &= \dv{\vb{r}}{t} \times \vb{p} + \vb{r} \times \dv{\vb{p}}{t}\\
+  &= \cancel{\vb{v} \times m \vb{v}} + \vb{r} \times \vb{F}\\
+  &= \vb{r} \times \vb{F} \equiv \vb{\tau}
+\end{align*}
+That is, the time derivative of angular momentum is torque.
+
+% TODO torque vs forces diagram
+% TODO conical pendulum again?
+\subsubsection{Central Forces}
+% TODO (graD) example from hw
+% TODO example from notes with projectile from rocket
+
+\begin{definition}[Central Force]
+  A \emph{central force} is one of the form \[
+  \vb{F} = f(r) \hat{r},  
+  \]
+  that is, a function of the distance from a particular radius, which acts radially.
+\end{definition}
+
+Consider the torque done by an arbitrary central force:
+\[
+  \vb{\tau} = \vb{r} \times \vb{F} = \vb{r} \times f(r) \hat{r} = 0.  
+\]
+This implies, then, that $\dv{\vb{L}}{t} = 0$ as well, that is, angular momentum is a constant and thus we are restricted to purely planar, 2D movement.
+
+\subsubsection{Torque on Extended Objects}
+% TODO: diagram and stuff
+
+\subsection{Moments of Inertia}
+
+% some examples of calculations, general approachj
+\begin{theorem}[Parallel Axis Theorem]
+  
+\end{theorem}
+
+\begin{theorem}[Perpendicular Axis Theorem]
+  
+\end{theorem}
+
+% add example of how to do both
+
+\subsection{Conservation of Angular Momentum}
+
+% lots of examples
+
+\subsection{Rotational \& Translational Motion}
+
+\subsection{Slipping \& Rolling}
+% examples
+
+\section{Lagrangian Mechanics}
+
+The previous sections have all taken a \textbf{Newtonian} approach to mechanics, centered on laws relating forces in a system. This section will "derive" and review a different perspective on mechanics, called \textbf{Lagrangian Mechanics}, centered on the concept of minimization of energies; forces "no longer exist".
+\subsection{Introduction to Calculus of Variations}
+
 \end{document}
