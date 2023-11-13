@@ -25,6 +25,8 @@
 \usepackage{nameref}
 \usepackage{xfrac}
 \usepackage{ mathrsfs }
+\usepackage{xpatch}
+
 
 % \usepackage[createShortEnv]{proof-at-the-end}
 
@@ -107,9 +109,9 @@
 \mdfdefinestyle{example}{
   roundcorner=8pt,
   linecolor=white,
-  leftmargin=15,rightmargin=15,
+  leftmargin=10,rightmargin=10,
   backgroundcolor=solarized-cyan!20,
-  skipabove=10pt, skipbelow=10pt,
+  skipabove=5pt, skipbelow=5pt,
   innertopmargin=2pt, innerbottommargin=5pt,
   innerleftmargin=8pt, innerrightmargin=8pt
 }
@@ -134,6 +136,20 @@
 \mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
 \mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
 \mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
+
+% grr broken references
+\newcommand{\thmautorefname}{Theorem}
+\makeatletter
+\xpatchcmd{\theorem}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+\newcommand{\propautorefname}{Proposition}
+\makeatletter
+\xpatchcmd{\proposition}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+% \newcommand{\thmautorefname}{Theorem}
+% \makeatletter
+% \xpatchcmd{\thm}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+% \makeatother
 
 
 
@@ -902,7 +918,7 @@ In the proof, we used the claim:
   $$\mathbb{R} \cap \left( \bigcap_{n=1}^\infty I_n \right) = \varnothing.$$ Otoh, $\bigcap_{n=1}^\infty I_n \subseteq \mathbb{R}$, so we must have that $\bigcap_{n=1}^\infty I_n = \varnothing$ contradicting the nested interval property of the real line which states that this intersection must not be empty. We thus have a contradiction, and our assumption that $\mathbb{R}$ countable fails. \footnotemark
 \end{proof}
 \footnotetext{Note that \cref{thm:nestedinterval} is built upon the Axiom of Completeness, a "fact" of $\mathbb{R}$ (what makes it "distinct" from $\mathbb{Q}, \mathbb{N}$, etc). Thus, we are really just using AC, with some abstractions sts.}
-% TODO: add proof sketch
+
 \begin{proposition}
   The set $J$ of all irrational numbers in $\mathbb{R}$ is uncountable.
 \end{proposition}
@@ -1003,10 +1019,8 @@ In the proof, we used the claim:
   \[\lim_{n \to \infty} x_n = x\] means that \[(\forall \epsilon > 0)(\exists N \in \mathbb{N})(\forall n \geq N)(|x_n - x| < \epsilon).\]
 \end{definition}
 
-% TODO: add "strategy"
 \begin{example}
-  Prove that $$\lim_{n\to \infty} \frac{n^2+1}{n^2} = 1.$$
-
+  Prove\footnotemark that $$\lim_{n\to \infty} \frac{n^2+1}{n^2} = 1.$$
 \begin{proof}
   Let $\epsilon > 0$. Let $N$ be a natural number such that $N > \frac{1}{\sqrt{\epsilon}}$. Then, for $n \geq N$,
   \begin{align*}
@@ -1014,6 +1028,8 @@ In the proof, we used the claim:
   \end{align*}
 \end{proof}
 \end{example}
+
+\footnotetext{Work backwards to start; how can you simply the sequence (that is, build a string of inequalities) such that defining an $N$ in terms of $\epsilon$ becomes apparent?}
 
 \begin{definition}[Divergent Sequences]
   If a sequence $(x_n)$ does not converge to any real number $x$, we say that the sequence is divergent. For instance, consider \[x_n = (-1)^n, n \geq 1.\] The sequence alternates between $1$ and $-1$ and so intuitively does not converge. How do we prove it?
@@ -1248,8 +1264,14 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
   \begin{proof}
     We\footnotemark  will show that $(x_n)$ bounded from below and decreasing, implying the limit exists. We will show that for $n$, $x_n \geq \sqrt{2}$. For $n = 1$, $2 \geq \sqrt{2}$. For $n > 1$, we will \cref{cor:recursiveaside}. We then have that $x_{n+1} = \frac{1}{2}(x_n + \frac{2}{x_n}) \geq \dots \geq \sqrt{2} \implies x_n \geq \sqrt{2} \forall n \geq 1$, ie, it is bounded from below.\\
     We will now show that the sequence is decreasing.
-    \[x_n - x_{n+1} = x_n - \frac{1}{2}(x_n + \frac{2}{x_n}) = \frac{1}{2}x_n - \frac{1}{x_n} = \frac{1}{2x_n}(x_n^2 - 2).\]
-    % TODO: finish
+    \[x_n - x_{n+1} = x_n - \frac{1}{2}(x_n + \frac{2}{x_n}) = \frac{1}{2}x_n - \frac{1}{x_n} = \frac{1}{2x_n}(x_n^2 - 2) \geq \frac{1}{2x_n}(\sqrt{2}^2 - 2) \geq 0,\]
+    where the second-to-last inequality holds from the lower bound we found on $x_n$. Having shown that $x_n$ decreasing and is bounded from below, we conclude that it converges by \nameref{thm:mct}. To find its limit, let $L := \lim x_n$. Then, \[
+      \lim x_{n} = \lim \left(\frac{1}{2}x_{n-1} + \frac{2}{x_{n-1}}\right) = \frac{1}{2}\lim x_{n-1} + \lim \frac{1}{x_{n-1}},
+    \]
+    and since the limit of $x_n$ is equal to the limit of $x_{n-1}$, we have that \[
+    L = \frac{1}{2} L + \frac{1}{L} \implies L^2 = 2 \implies L = \pm\sqrt{2},
+    \]
+    but we know that $x_n \geq \sqrt{2}$ hence we can ignore the negative root, and thus $x_n$ converges to $\sqrt{2}$.
   \end{proof}
 \end{example}
 
@@ -1391,8 +1413,7 @@ Then, if $K > n_t$, it must be that $x_k \leq t$. Consider now $n > n_t$, then $
 Thus, $\limsupbar x_n \leq \inf A$.
 \end{proof}
 
-\begin{proof}(Of (1), Concise)
-  % TODO; improve previous proof. Its rather poor. This following is the same but shorter.
+\begin{proof}(Of (1), More Concise)
   Let $\alpha = \inf A$ and $\epsilon > 0$. Then $\alpha - \epsilon$ is not in $A$, $\alpha - \epsilon$ is not an eventual upper bound for $x_n$. Since $\alpha - \epsilon \not\in A$, the set $\{n : x_n > \alpha - \epsilon\}$ is infinite.\footnote{This is important; understand why this is}. Hence, for any $m$ we can find $n$ such that $n \geq m$ and $x_n > \alpha - \epsilon$.
 
   Let, now, $$y_m = \sup \{x_n : n \geq m\}.$$ By our last observation, we have that $y_m > \alpha - \epsilon$. By \nameref{thm:orderpropertiesoflimits}, \[
@@ -1464,9 +1485,8 @@ Thus, $\limsupbar x_n \leq \inf A$.
   
   We claim now that our subsequence $(x_{n_k})$ satisfies $\lim_{k\to\infty} x_{n_k} = x$. To see this, let $\epsilon > 0$. Since $\lim_{k\to\infty}\frac{M}{2^{k-2}} = \lim_{k\to\infty}\frac{4M}{2k} = 0$, by \cref{prop:prelimfact}, with $b = \frac{1}{2}$. There exists $K \in \mathbb{N}$ such that $\forall k \geq K$, we have $\frac{M}{2^{k-2}} = b_k - a_k < \epsilon$. So, since $I_k$ is a nested sequence of intervals, $\forall k \geq K$, $x_{n_k} \in I_K$ ($x_{n_k} \in I_k \subseteq I_K$). We also have that $x \in I_K$, since $x \in \bigcap I_k$. So, $x, x_{n_k} \in [a_K, b_K] \forall k \geq K$. So, for $k \geq K$, $\abs{x_{n_k} - x} \leq \abs{b_k - a_k} < \epsilon$. So for $\epsilon > 0$, $\exists K \in \mathbb{N} \st \forall k \geq K$, $\abs{x_{n_k}-x} < \epsilon$, and so $\lim_{k\to\infty} x_{n_k} = x$, as desired.
 \end{proof}
-% TODO: add sketch
-\footnotetext{Sketch: 
 
+\footnotetext{Sketch: this proof is somewhat diagonal in nature (if one can say that); if you understand the proof of Cantor's Theorem using the Nested Interval property, this should follow naturally. In short, construct subsequences such that the subsequence has all its terms contained in a "nest" of intervals, and show that the length (sts) of these intervals converges to 0. But these are subsets of $\mathbb{R}$, their intersect must contain some element, show that this element is indeed to limit of the subsequence in question.
 See Abbott, pg 57, for good diagram.
 }
 
@@ -1590,7 +1610,15 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
 \begin{corollary}\label{cor:examplecauchycor}
   For any $r \neq 1$, and any $k \in \mathbb{N}$, $1 + r + r^2 + \cdots + r^k = \frac{1-r^{k+1}}{1-r}$.
 \end{corollary}
-% TODO proof above
+\begin{proof}
+  We proceed by induction. $k = 1 \implies r^{0} = \frac{1-r^{1}}{1-r} = 1$, holds. Suppose $1 + \cdots r^{k-1} = \frac{1-r^{k}}{1-r}$ holds for some $k - 1 \in \mathbb{N}$. Then, we have that \begin{align*}
+    1 + \cdots r^{k-1} + r^{k} &= \frac{1-r^{k}}{1-r} + r^{k} = \frac{1-r^{k} + (1-r)r^k}{1-r}\\
+    &= \frac{1 \cancel{- r^{k}} + \cancel{r^{k}} - r^{k+1}}{1 - r}\\
+    &= \frac{1 + 1 - r^{k+1}}{1-r},
+  \end{align*}
+  hence, the statement for $k-1 \implies$ the statement for $k$, hence it holds $\forall k \in \mathbb{N}$ and the proof is complete.
+\end{proof}
+
 \begin{proposition}[Property III]\label{prop:exercisecauchypropIII}
   $(x_n)$ a Cauchy sequence.
 \end{proposition}
@@ -1629,7 +1657,7 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
     x_{2n+1} - x_{2n-1} &= \underbrace{x_{2n+1} - x_{2n}}_{\leq 0} + \underbrace{x_{2n} - x_{2n-1}}_{\geq 0}\\
     &= -\frac{1}{2^{2n-1}} + \frac{1}{2^{2n-2}} = -\frac{1}{2^{2n-1}}  +\frac{2}{2^{2n-1}} = \frac{1}{2^{2n-1}}
   \end{align*}
-  From here, we can prove the claim $\star$ by induction. % TODO
+  From here, we can prove the claim $\star$ by induction.
 
   Summing up the RHS of $\star$, and factoring out a $\frac{1}{2}$, we have \[
   x_{2k+1} = 1 + \frac{1}{2}\left(1 + \frac{1}{2^2} + \cdots + \left(\frac{1}{2^2}\right)^{k-1}\right).
@@ -1665,10 +1693,6 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
   \end{proof}
 \end{example}
 
-
-\footnotetext{
-% TODO
-}
 
 \begin{remark}
   From this general form, we can conclude, as in \cref{example:recursivenessity}, that $x_{2n} \geq x_{2n-1}, x_{2n} \geq x_{2n+1}$, since $x_{2n} > \frac{5}{3}, x_{2n+1} < \frac{5}{3}, x_{2n-1} < \frac{5}{3}$; ie, the same property that we used to prove the previous example holds here.
@@ -1813,27 +1837,32 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
 \end{remark}
 
 \begin{proposition}[Step 1]\label{prop:eulerstep1}
-  $x_n$ is strictly increasing.
+  $x_n$ is strictly increasing. \footnotemark
 \end{proposition}
+\footnotetext{Proof sketch: lots of very ugly algebra, starring Bernoulli's inequality.}
 
 \begin{proposition}[Step 2]\label{prop:eulerstep2}
-  $y_n$ is strictly decreasing.
+  $y_n$ is strictly decreasing.\footnotemark
 \end{proposition}
+\footnotetext{Proof sketch: precisely the same idea as Step 1, with just ast much ugly algebra.}
 
 \begin{proposition}[Step 3]\label{prop:eulerstep3}
-  For any $n,k$, $x_n < y_k$.
+  For any $n,k$, $x_n < y_k$. \footnotemark
 \end{proposition}
+\footnotetext{Proof sketch: very a-lá Nested Interval Property. 3 cases.}
 
 \begin{proposition}[Step 4]\label{prop:eulerstep4}
- $ (x_n)$ is bounded from above and $(y_n)$ is bounded from below.
+ $(x_n)$ is bounded from above and $(y_n)$ is bounded from below. \footnotemark
 \end{proposition}
+\footnotetext{Proof sketch: follows directly from Step 3; any element of $y_n$, namely $y_1$, upper bounds $x_n$, and any element of $x_n$, namely $x_1$, lower bounds $y_n$.}
 
 \begin{proposition}[Step 5]\label{prop:eulerstep5}
   $(x_n)$ and $(y_n)$ are converging sequences that \[
   \lim_{n\to\infty} x_n = \lim_{n\to\infty} y_n,  
   \]
-  which we denote by the number $e$.
+  which we denote by the number $e$.\footnotemark
 \end{proposition}
+\footnotetext{Proof sketch: the sequences converge by MCT (following from the previous steps). $y_n$ is just $x_n$ times a term (note the exponent), so you can pull out this term in the limit, and using algebraic properties of limits, show that $x_n$ and $y_n$ converge to the same limit.}
 
 \begin{remark}
   \nameref{prop:eulerstep3}, \nameref{prop:eulerstep4}, \nameref{prop:eulerstep5} are "easier"; the main parts of the proof deal with \nameref{prop:eulerstep1}, \nameref{prop:eulerstep2}. We will prove it using \nameref{prop:bernoullineq}.
@@ -1886,7 +1915,6 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
   \end{align*}
   hence, $\frac{x_{n+1}}{x_{n}}> 1 \implies x_{n+1} > x_n \forall n$, ie it is strictly increasing.
 \end{proof}
-% TODO: add sketches for all
 \begin{proof}(Of \nameref{prop:eulerstep2})
   We need to show $\frac{y_n}{y_{n+1}} > 1 \forall n > 1$. We have \begin{align*}
     \frac{y_n}{y_{n+1}} = \frac{\left(1 + \frac{1}{n}\right)^{n+1}}{\left(
@@ -1978,7 +2006,7 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
   \]
   Since the LHS set is infinite, the RHS must be too.
 
-  We now show the converse. Suppose that $\forall \epsilon > 0,$ the set $\{n : \abs{x_{n} - x} < \epsilon\}$ % TODO:
+  We now show the converse. Suppose that $\forall \epsilon > 0,$ the set $\{n : \abs{x_{n} - x} < \epsilon\}$ % TODO: don't really know?
   Take $\epsilon = 1$, then the set $\{n : \abs{x_n - x} < 1\}$ is an infinite set. Take $n_1 = \min \{n : \abs{x_n - x} < 1\}$. We can now define $n_k$, where $k = 2,3,\dots$ recursively. Suppose that some $n_K$ chosen. Then, take $\epsilon = \frac{1}{K+1}$, and consider \[
   \{n : n > n_K, \abs{x_n - x} < \frac{1}{K+1}\}.  
   \]
@@ -2050,7 +2078,7 @@ $x_n = n$ properly diverges to $\infty$; $x_n = -n$ properly diverges to $-\inft
 
 \begin{proof}
   ($\implies$) Let $M \in \mathbb{R}$. Since $(x_n) \to \infty$, $\exists N \in \mathbb{N} \st \forall n \geq N, x_n \geq M$, that is, $x_n$ is unbounded.\\
-  Suppose $x_n$ not bounded from above. Let $\alpha \in \mathbb{R},$ then, $\exists N \st x_N > \alpha$. $(x_n)$ increasing $\implies \forall n \geq N, x_n \geq x_N > \alpha \implies \lim_{n\to\infty} x_n = \infty$.
+  ($\impliedby$) Suppose $x_n$ not bounded from above. Let $\alpha \in \mathbb{R},$ then, $\exists N \st x_N > \alpha$. $(x_n)$ increasing $\implies \forall n \geq N, x_n \geq x_N > \alpha \implies \lim_{n\to\infty} x_n = \infty$.
 \end{proof}
 \begin{proposition}
   Let $(x_n)$ be decreasing. Then $\lim_{n\to\infty} x_n = - \infty \iff (x_n)$ not bounded from below.
@@ -2138,25 +2166,110 @@ $x_n = n$ properly diverges to $\infty$; $x_n = -n$ properly diverges to $-\inft
   Not all concepts defined on convergent/bounded sequences extend easily to properly divergent sequences. For instance, $\limsupbar (x_n + y_n) \leq \limsupbar x_n + \limsupbar y_n$ holds for bounded sequences $x_n, y_n$, but does not generally hold if $\limsupbar x_n = \infty$, etc..
 \end{remark}
 
+% TODO: fix footnote numbering...
 \subsection{Functional Limits and Continuity}
 
 \begin{definition}[Cluster Point]
-  Let $A \subseteq \mathbb{R}$. A point $c \in \mathbb{R}$ is called a \emph{cluster} or \emph{limit} point of $A$ if $\forall \epsilon > 0$, $\exists x \in A$, $x \neq c$, s.t. $0 < \abs{x-c} < \epsilon$.
+  Let\footnotemark $A \subseteq \mathbb{R}$. A point $c \in \mathbb{R}$ is called a \emph{cluster} or \emph{limit} point of $A$ if $\forall \epsilon > 0$, $\exists x \in A$, $x \neq c$, s.t. $0 < \abs{x-c} < \epsilon$.
 \end{definition}
+\footnotetext{Read: a point is a cluster point if there exists points (other than itself) in the set that are arbitrarily close ("epsilon close") to it.}
 
 \begin{remark}
   Note that this definition does \emph{not} require $c \in A$.
 \end{remark}
 
+\begin{proposition}
+  Let $A \subseteq \mathbb{R}, c \in \mathbb{R}$. Then, TFAE:
+  \begin{enumerate}
+    \item $c$ is a cluster point of $A$
+    \item $\exists$ a sequence $(x_n) \st \forall x_n \in A, x_n \neq c,$ and $\lim x_{n} = c$.
+  \end{enumerate}
+\end{proposition}
 
+\begin{proof}
+  % TODO: clarify why we use $\frac{1}{n}$ rahter than just deifnition epsilon? because then you can definitively say forall n rather than just epsilon?
+(1. $\implies$ 2.) Let $c$ be a cluster point of $A$, and take $\epsilon = \frac{1}{n}$ in the definition of a cluster point. Then, by definition, $\exists x_n \in A, x_n \neq c, \st 0 < \abs{x_n - c} < \frac{1}{n}$. This defines a sequence $x_n \in A$, $x_n \neq c \forall n,$ with the property that $\forall n, \abs{x_n - c} < \frac{1}{n}$. Moreover, this gives, by definition, that $\lim x_n = c$.
 
+(2. $\implies$ 1.) Suppose there exists a sequence $(x_n)$ in $A$, $x_n \neq c$, such that $\lim x_n = c$. Take $\epsilon > 0,$ and let $N$ be such that $\forall n \geq N$, $\abs{x_n - c} < \epsilon$. Take $x = x_N$; then, we have that $x \in A, x\neq c,$ and $0 < \abs{x-c} < \epsilon.$ By definition, then, $c$ is a cluster point, and the proof is complete. 
+\end{proof}
 
+\begin{example}
+  Let $A = (0,1)$. Then, $0$ is a cluster point of $A$.
+  \begin{proof}
+    Consider the sequence $x_n = \frac{1}{n+1}$. Then, since $0<(x_n)<1$, $x_n \in A \forall n$, moreover, $x_n \neq 0$. Hence, $\lim x_n = 0,$ hence $0$ is a cluster point of $A$.
+    % TODO: show that set of all cluster points of $A$ is the closed interval $[0,1]$.
+  \end{proof}
+\end{example}
 
+\begin{example}
+  Let $A = (0,1) \cup \{5\}$. Is $5$ a cluster point?
+  \begin{proof}
+    No; it is impossible to find arbitrarily ($\epsilon$) close points to $5$ in the set; $\not\exists x \in A, x \neq 5$ such that $0 < \abs{x - 5} < \epsilon$. Then, the set of all cluster points of $A$ is equal $[0,1]$.
+  \end{proof}
+\end{example}
 
+\begin{example}
+  Let $A = \{\frac{1}{n} : n \in \mathbb{N}\}$. Then, $c = 0$ is the only cluster point of $A$.
+  \begin{proof}
+    We show first $c = 0$ is indeed a cluster point. Let $x_n = \frac{1}{n};$ then, $x_n \in A \forall n, x_n \neq 0, $ and moreover, $\lim x_n = 0,$ hence $c = 0$ a cluster point of $A$.
 
+    We now show that $0$ is the only cluster point of $A$. % TODO
+  \end{proof}
+\end{example}
 
+\begin{example}
+Let $A = \mathbb{Q}$. Then, the set of cluster points is precisely $\mathbb{R}$.
 
+\begin{proof}
+  Take $x \in \mathbb{R}, \epsilon > 0$. Consider the interval $(x, x + \epsilon)$; by density of the rationals, $\exists q \in \mathbb{Q} \st q \in (x, x + \epsilon)$. Hence, $\exists q \in \mathbb{Q}, q \neq x \st 0 < \abs{x - q} < \epsilon,$ hence, $x$ a cluster point of $A$.
+\end{proof}
+\end{example}
 
+\begin{definition}[Functional Limits]
+  Let $A \subseteq \mathbb{R},$ $f : A \to \mathbb{R}$, and $c$ a cluster point of $A$. Then, we say that the limit of $f$ at $c$ is $L$, denoted \[\lim_{x \to c} f(x) = L,\] if $\forall \epsilon > 0, \exists \delta > 0 \st \forall x \in A$ satisfying $0 < \abs{x - c} < \delta,$ we have that $\abs{f(x) - L} < \epsilon$.
+\end{definition}
+
+\begin{remark}
+  "As $x$ gets closer and closer to $c$, $f(x)$ gets closer and closer to $L$".
+\end{remark}
+
+\begin{remark}
+  The point $c$ may or may not be in $A$ (for instance, $\lim_{x \to 0} \frac{\sin x}{x} = 1$). However, it must be that $c$ is a cluster point of $A$; this is what "allows" the arbitrary closeness to $L$ in the definition of a limit.
+\end{remark}
+
+\begin{remark}
+  This definition is often called the "$\epsilon-\delta$" definition of functional limits. Quantified, it states \[
+  (\forall \epsilon > 0)(\exists \delta > 0)(\forall x \in A)(0 < \abs{x - c} < \delta\implies \abs{f(x) - L} < \epsilon).  
+  \]
+\end{remark}
+
+\begin{example}
+  Let $A = (0, \infty),$ let $f(x) = \frac{1}{x},$ $x \in A$, and let $c \in A$. Prove that $\lim_{x\to c} f(x) = \frac{1}{c}$.
+  \begin{proof}
+    Note: $c$ a cluster point of $A$ since for $\epsilon > 0, x = c + \frac{\epsilon}{2} \in A, x \neq c, 0 < \abs{x - c} = \frac{\epsilon}{2} < \epsilon$ (hence the limit is indeed well-defined).
+
+    Fix $\epsilon > 0$; take $\delta = \min \{\frac{1}{2}c, \frac{1}{2}c^2\epsilon\}$. Then, \begin{align*}
+      \abs{\frac{1}{x} - \frac{1}{c}} = \abs{\frac{c-x}{xc}} = \frac{\abs{x - c}}{\abs{xc}}< \frac{\delta}{\abs{xc}},
+    \end{align*}
+    if $x \in A$ is such that $0 < \abs{x - c} < \delta$. Since $\abs{x - c} < \delta$, we have that $x -c > - \delta \implies x > c - \delta$. We also have, by definition, $\delta \leq \frac{1}{2} c,$ hence, $x > \frac{c}{2}$. This gives that $\frac{1}{\abs{xc}} = \frac{1}{xc} < \frac{1}{\frac{c}{2}c} = \frac{2}{c^2}$. We thus have that, for $0 < \abs{x - c} < \delta$, that $\abs{\frac{1}{x} - \frac{1}{c}} < \frac{2}{c^2}\delta$. But we also have that $\delta \leq \frac{c^2}{2}\epsilon,$ hence $\abs{\frac{1}{x} - \frac{1}{c}}< \frac{2}{c^2} \frac{c^2}{2}\epsilon \implies \abs{\frac{1}{x} - \frac{1}{c}} < \epsilon$. Thus, $\lim_{x\to c} \frac{1}{x} = \frac{1}{c}$.
+  \end{proof}
+\end{example}
+
+\subsubsection{Sequential Characterization of Functional Limits}
+
+\begin{theorem}\label{thm:sequentialfunctionallimit}
+  Let $A \subseteq \mathbb{R}, f : A \to \mathbb{R}$, and let $c$ be a cluster point of $A$. Then, TFAE:
+  \begin{enumerate}
+    \item $\lim_{x\to c}f(x) = L$.
+    \item For any sequence $(x_n) \in A,$ $x_n \neq c$, such that $\lim x_n = c,$ we have that the sequence $(f(x_n))$ converges to $L4$, that is, $\lim_{n\to\infty} f(x_n) = L$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  (1. $\implies$ 2.) By 1., $\forall \epsilon > 0, \exists \delta > 0 \st \forall x \in A, x \neq c$ such that $0 < \abs{x - c} < \delta,$ we have $\abs{f(x) - L} < \epsilon$. Let $(x_n)$ be a sequence in $A$ s.t. $x_n \neq c$ and $\lim_{n\to\infty} x_n = c$. We wish to show that $\lim_{n\to\infty} f(x_n) = L$. Take $\epsilon > 0$; then, we have that $\exists \delta > 0 \st \forall x \in A$ satisfying $0 <\abs{x - c} < \delta$, we have $\abs{f(x) - L} < \epsilon$. Fix such a $\delta$; then, since $\lim_{n\to\infty} x_n = c,$ $\exists N \st \forall n \geq N, \abs{x_{n} - c} < \delta$. Then, it follows from the definition of $\delta$ that for $n \geq N$, $\abs{f(x_n) - L} < \epsilon$, hence $\lim_{n\to\infty} f(x_n) = L$, and 2. holds.
+
+  (2. $\implies$ 1.) Suppose not. Then, $\forall \epsilon > 0,$ we can find $\delta > 0$ such that $\forall x \in A \st 0 < \abs{x - c} < \delta$ we have $\abs{f(x) - L} < \epsilon$. But then, this means that $\exists \epsilon_0 > 0 \st \forall \delta > 0, \exists x \in A, x \neq C \st$ $0 < \abs{x - c} < \delta$ and $\abs{f(x) - L} \geq \epsilon_0$. So, for this $\epsilon_0 >0,$ we can take $\delta = \frac{1}{n},$ which gives $x_n \in A, x_n \neq c$, such that $0 < \abs{x_n - c} < \frac{1}{n}$ and $\abs{f(x) - L} \geq \epsilon_0$. This gives us a sequence $(x_n) \in A, x_n \neq c$, such that $\lim_{n\to\infty} \abs{x_n - c} = 0 \implies \lim_{n\to\infty} x_n = c$,  and $\abs{f(x_n) - L} \geq \epsilon_0 \forall n$. But this means that we have a sequence $x_n \st \lim x_{n} = c$, and the sequence $(f(x_n))$ does not converge to $L$. But this contradicts 2.; hence, we have come to a contradiction, and 1. holds.
+\end{proof}
 
 
 \newpage
