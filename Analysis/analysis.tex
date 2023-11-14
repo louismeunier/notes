@@ -1464,7 +1464,7 @@ Thus, $\limsupbar x_n \leq \inf A$.
   If $0 < b < 1$, then $\lim_{n\to\infty}b^{n} = 0$.
 \end{proposition}
 \begin{proof}
-  Let $x_n = b^n$. Then $x_n > 0$, and $x_{n+1} = b^{n+1} = b x_{n} > x_n$, and since $ 0 < b < 1$, $(x_n)$ is decreasing and bounded from below, $(x_n)$ converges by the \nameref{thm:mct}. Let $x = \lim_{n\to\infty}x_n$. Again, $x_{n+1} = b x_n$, so $\lim_{n\to\infty}x_{n+1} = \lim_{n\to\infty}bx_{n} = b\lim_{n\to\infty}x_n$, so $x = bx \implies (1-b)x = 0$. $0 < b < 1 \implies x = 0$.
+  Let $x_n = b^n$. Then $x_n > 0$, and $x_{n+1} = b^{n+1} = b x_{n} < x_n$, and since $ 0 < b < 1$, $(x_n)$ is decreasing and bounded from below, $(x_n)$ converges by the \nameref{thm:mct}. Let $x = \lim_{n\to\infty}x_n$. Again, $x_{n+1} = b x_n$, so $\lim_{n\to\infty}x_{n+1} = \lim_{n\to\infty}bx_{n} = b\lim_{n\to\infty}x_n$, so $x = bx \implies (1-b)x = 0$. $0 < b < 1 \implies x = 0$.
 \end{proof}
 
 
@@ -2213,7 +2213,7 @@ $x_n = n$ properly diverges to $\infty$; $x_n = -n$ properly diverges to $-\inft
   \begin{proof}
     We show first $c = 0$ is indeed a cluster point. Let $x_n = \frac{1}{n};$ then, $x_n \in A \forall n, x_n \neq 0, $ and moreover, $\lim x_n = 0,$ hence $c = 0$ a cluster point of $A$.
 
-    We now show that $0$ is the only cluster point of $A$. % TODO
+    We now show that $0$ is the only cluster point of $A$. % TODO 
   \end{proof}
 \end{example}
 
