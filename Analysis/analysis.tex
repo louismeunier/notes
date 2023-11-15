@@ -1106,7 +1106,7 @@ In the proof, we used the claim:
 % \end{example}
 
 
-\begin{theorem}[$\textcolor{red}{\star}$]
+\begin{theorem}[$\textcolor{red}{\star}$]\label{thm:uniquelimitsequence}
   A limit of a sequence is unique. In other words, if the sequence is converging, then its limit is unique. The sequence cannot converge to two distinct numbers $x$ and $y$.\footnotemark
 \end{theorem}
 
@@ -2270,6 +2270,76 @@ Let $A = \mathbb{Q}$. Then, the set of cluster points is precisely $\mathbb{R}$.
 
   (2. $\implies$ 1.) Suppose not. Then, $\forall \epsilon > 0,$ we can find $\delta > 0$ such that $\forall x \in A \st 0 < \abs{x - c} < \delta$ we have $\abs{f(x) - L} < \epsilon$. But then, this means that $\exists \epsilon_0 > 0 \st \forall \delta > 0, \exists x \in A, x \neq C \st$ $0 < \abs{x - c} < \delta$ and $\abs{f(x) - L} \geq \epsilon_0$. So, for this $\epsilon_0 >0,$ we can take $\delta = \frac{1}{n},$ which gives $x_n \in A, x_n \neq c$, such that $0 < \abs{x_n - c} < \frac{1}{n}$ and $\abs{f(x) - L} \geq \epsilon_0$. This gives us a sequence $(x_n) \in A, x_n \neq c$, such that $\lim_{n\to\infty} \abs{x_n - c} = 0 \implies \lim_{n\to\infty} x_n = c$,  and $\abs{f(x_n) - L} \geq \epsilon_0 \forall n$. But this means that we have a sequence $x_n \st \lim x_{n} = c$, and the sequence $(f(x_n))$ does not converge to $L$. But this contradicts 2.; hence, we have come to a contradiction, and 1. holds.
 \end{proof}
+
+\begin{proposition}
+  A functional limit is unique. That is, if $f : A \to \mathbb{R}$ and $c$ a cluster point of $A$, if $\lim_{x\to c} f = L$ an $\lim_{x\to c} f = M,$ $L = M$.
+\end{proposition}
+
+\begin{proof}(Sequential) Let $x_n$ be a sequence in $A$ such that $x_n \neq c$ and $\lim_{n\to\infty} x_n = c$. Then by the sequential characterization, $\lim_{x\to c} f(x) = L \implies \lim_{n\to\infty} f(x_n) = L,$ and $\lim_{x\to c} f(x) = M \implies \lim_{n\to \infty} f(x_n) = M$. That is, the sequence $f(x_n)$ converges to both $L$ and $M$, but the limit of a sequence is unique (if it exists), hence $L = M$. $\qquad$ \qedsymbol
+
+\noindent($\epsilon-\delta$)\footnote{Note the similarity of this proof and that which we used to prove limits of sequences are unique (\cref{thm:uniquelimitsequence}).} Take $\epsilon = \frac{\abs{L - M}}{2},$ and suppose $L \neq M$, hence $\epsilon > 0$. Since $\lim_{x\to c}f(x) = L, \exists \delta_1 > 0 \st \forall x \in A 0 < \abs{x - c} < \delta_1$, we have $\abs{f(x) - L} < \epsilon$. Similarly, since $\lim_{x \to c} f(x) = M, \exists \delta_2 > 0 \st \forall x \in A, 0 < \abs{x - c} < \delta_2,$ we have that $\abs{f(x) - M} < \epsilon$. Take $\delta = \min\{\delta_1, \delta_2 \}$ and let $x \in A \st 0 < \abs{x - c} < \delta$. Then, \begin{align*}
+  \abs{L - M} = \abs{L - f(x) + f(x) - M} \leq \abs{L - f(x)} + \abs{f(x) - M} \\
+  < \epsilon + \epsilon = 2 \epsilon = \abs{L - M},
+\end{align*}
+which implies $\abs{L - M} < \abs{L - M}$, a contradiction. Hence, $L = M$.
+\end{proof}
+
+\begin{theorem}[Algebraic Properties of Functional Limits]\label{thm:algebraicpropfunctionallimit}
+  Let $A \subseteq \mathbb{R}, f, g : A \to \mathbb{R}$, and let $c$ be a cluster point of $A$. Suppose $\lim_{x\to c} f(x) = L$ and $\lim_{x \to c} g(x) = M$. Then,
+  \begin{enumerate}
+    \item For any constant $k \in \mathbb{R},$ $
+      \lim_{x \to c} (k \cdot f(x)) = k \cdot \lim_{x\to c} f(x) = k \cdot L.$
+    \item $\lim_{x\to c}(f(x) + g(x)) = L + M$
+    \item $\lim_{x\to c} (f(x) \cdot g(x)) = L \cdot M$
+    \item If $g(x) \neq 0 \forall x \in A,$ and $M \neq 0$, $\lim_{x\to c} \frac{f(x)}{g(x)} = \frac{L}{M}$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}(Of 3.; Sequential) Let $x_n$ be sequence in $A$, $x_n \neq c$, and $\lim_{n\to \infty} x_n = c$. Then, $\lim_{n\to\infty} f(x_n) = L$ and $\lim_{n \to \infty} g(x) = M$. But then, by product rule of converging sequences (\cref{prop:apl}), $\lim_{n\to\infty} (f(x_n)g(x_n)) = \lim_{n\to\infty} f(x_n) \lim_{n\to\infty}g(x_n) = L \cdot M$. Moreover, by sequential characterization of functional limits, we have that $\lim_{x \to c} (f(x)g(x)) = L \cdot M$.$\quad$ \qedsymbol
+
+\noindent($\epsilon-\delta$) Since $\lim_{x\to c}f(x) = L,$ if we take $\epsilon = 1$, we can find $\delta_1 > 0 \st \forall x \in A$, $x \neq c, 0 < \abs{x - c} < \delta_1$, we have that $\abs{f(x) - L} < 1$. For such an $x$, we have that $\abs{f(x)} = \abs{f(x) - L + L} \leq \abs{f(x) - L} + \abs{L} < 1 + L$. Take now $\epsilon > 0$. Since $\lim_{x\to c} f(x) = L$ and $\lim_{x\to c} g(x) = M$, we can find $\delta_2 > 0 \st \forall 0 < \abs{x - c} < \delta_2,$ we have that $\abs{f(x) - L} < \frac{\epsilon}{2(\abs{M} +1)}, \abs{g(x) - M} < \frac{\epsilon}{2 (\abs{L} + 1)}$. Take now $\delta = \min\{\delta_1, \delta_2\}$, and let $x$ be s.t. $0 < \abs{x - c} < \delta$. Then, \begin{align*}
+  \abs{(f(x)\cdot g(x)) - (L\cdot M)} = \abs{f(x)g(x) - f(x)M + f(x)M - LM} \\
+  \leq \abs{f(x) g(x) - f(x)M} + \abs{f(x)M - LM}\\
+  = \abs{f(x)}\abs{g(x) - M} + \abs{M}\abs{f(x) - L}\\
+  < (1 + \abs{L})\abs{g(x) - M} + \abs{M}\abs{f(x) - L}\\
+  < (1+\abs{L})\frac{\epsilon}{2(\abs{L}+1)} + \abs{M} \frac{\epsilon}{2(\abs{M}+1)} \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+\end{align*}
+where the fourth line follows directly from $\delta \leq \delta_1$ as defined previously.
+\end{proof}
+
+\begin{theorem}[Functional Squeeze Theorem]\label{thm:functionalsqueeze}
+  Let $A \subseteq \mathbb{R},f,g,h : A \to \mathbb{R},$ and let $c$ be a cluster point of $A$. Suppose that for all $x \in A$, we have that $f(x) \leq g(x) \leq h(x)$ , and that $\lim_{x\to c} f(x) = \lim_{x \to c} h(x) = L$, then $\lim_{x\to c} g(x) = L$.
+\end{theorem}
+
+\begin{proof}
+  (Sequential) Let $x_n$ be a sequence in $A, x_n \neq c$ such that $\lim_{n\to\infty} x_n = c$. Then, we have $\lim_{n\to\infty} f(x_n) = \lim_{x \to c} f(x) = L$ and similarly $\lim_{n\to\infty} h(x_n) = \lim_{x \to c} h(x) = L$. Now, we have that $\forall n,$ $f(x_n) \leq g(x_n) \leq h(x_n)$. By the squeeze theorem for sequences, $\lim_{n\to\infty} g(x_n) = L \quad$ \qedsymbol.
+
+  \noindent ($\epsilon-\delta$) Let $\epsilon > 0$. Since $\lim_{x\to c} f(x) = L$, $\exists \delta_1 > 0 \st \forall x \in A \st 0 < \abs{x - c} < \delta_1$ we have $\abs{f(x) - L}< \epsilon$. Since $\lim_{x \to c} h(x) = L$, we have that $\exists \delta_2>0 \st \forall x \in A \st 0 < \abs{x - c} < \delta_2$ we have $\abs{h(x) - L} < \epsilon$. Let $\delta = \min\{\delta_1, \delta_2\}$ and let $x$ be such that $x \in A, 0 < \abs{x - c} < \delta$. Then, \[
+    - \epsilon < f(x) - L \leq g(x) - L \leq h(x) - L < \epsilon,
+    \]
+    thus, $\abs{g(x) - L} < \epsilon$ whenever $0 < \abs{x - c} < \delta$, hence $\lim_{x \to c} g(x) = L$.
+\end{proof}
+\begin{remark}
+  Note the similarity between the $\epsilon-\delta$ proofs above and the proofs of corresponding properties for sequences.
+\end{remark}
+
+\begin{definition}[Divergence Criterion of a Function]
+  Let $f : A \to \mathbb{R}$ and let $c$ be a cluster point of $A$. The following criterion state that the limit of $f$ at $c$ does not exist:
+  \begin{enumerate}
+    \item Suppose there exists a sequence $x_n \in A, x_n \neq c, \st$ $\lim_{n \to \infty} x_n = c$, \newline$\st \lim_{n \to \infty} f(x_n)$ does not exist. Then, $\lim_{x \to c} f(x)$ also does not exist.
+    \item  Suppose there exist two sequences $x_n, y_n \in A, x_n, y_n \neq c, \st \lim_{n\to\infty} x_n = \lim_{n\to\infty} y_n = c,$ and the limits $\lim_{n\to\infty} f(x_n)$ and $\lim_{n\to\infty} f(y_n)$, but these two limits are different, then $\lim_{x\to c} f(x)$ does not exist.
+  \end{enumerate}
+\end{definition}
+
+\begin{example}
+  Let $A = (0, \infty), f(x) = \sin \frac{1}{x}$ and $c = 0$. Then, $\lim_{x \to 0} \sin \frac{1}{x}$ does not exist.
+  \begin{proof}
+    (Using divergence criterion 1.) Take $x_n = \frac{1}{(2n+1) \frac{\pi}{2}}$. Then, $x_n > 0$, and $\lim_{n \to \infty} x_n = 0 = c$. Moreover, $f(x_n) = \sin (\frac{1}{x_n}) = \sin ((2n+1)(\frac{\pi}{2})) = (-1)^{n}$. This sequence does not converge, and so $\lim_{x \to 0} \sin \frac{1}{x}$ does not exist. $\quad$ \qedsymbol
+
+    \noindent(Using divergence criterion 2.) Take $x_n = \frac{1}{2n\pi}, y_n = \frac{1}{2n\pi + \frac{\pi}{2}}$, noting that $\lim_{n\to\infty} x_n = \lim_{n \to \infty} y_n = 0$. Then, $f(x_n) = \sin \frac{1}{x_n} = \sin (2n \pi) = \forall n$, while $f(y_n) = \sin \frac{1}{y_n} = \sin (2n \pi + \frac{\pi}{2}) = 1 \forall n$, hence, $\lim_{n\to\infty} f(x_n) \neq \lim_{n\to\infty} f(y_n),$ and thus $\lim_{x\to c} f(x)$ does not exist.
+  \end{proof}
+\end{example}
+
 
 
 \newpage
