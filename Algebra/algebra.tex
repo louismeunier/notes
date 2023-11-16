@@ -16,7 +16,9 @@
 \usepackage{thmtools}
 \usepackage{thm-restate}
 \usepackage{xcolor-solarized}
+\usepackage{footnote}
 \usepackage[side, ragged]{footmisc}
+
 \usepackage{marginnote}
 \usepackage{xsim}
 \usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
@@ -27,6 +29,9 @@
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{stackengine}
 \usepackage[createShortEnv]{proof-at-the-end}
+
+\usepackage{xpatch}
+
 
 % makes theorems, definitions, etc. "restatable" as shown
 % can add more with same format as you wish
@@ -74,6 +79,21 @@
 \mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
 \mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
 \mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
+
+
+% grr broken references
+\newcommand{\thmautorefname}{Theorem}
+\makeatletter
+\xpatchcmd{\theorem}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+\newcommand{\propautorefname}{Proposition}
+\makeatletter
+\xpatchcmd{\proposition}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+
+\usepackage{etoolbox}
+\BeforeBeginEnvironment{theorem}{\savenotes}
+\AfterEndEnvironment{theorem}{\spewnotes}
 
 
 % makes "quoted" text actually look correct
@@ -1772,9 +1792,10 @@ is a complete set of representatives.
   \begin{enumerate}
     \item $0 \in I$;
     \item $x,y \in I \implies x + y \in I$;
-    \item $x \in R, y \in I \implies xy \in I$. 
+    \item $x \in R, y \in I \implies xy \in I$.\footnotemark 
   \end{enumerate}
 \end{definition}
+\footnotetext{Consider 2. to state that $I$ closed under addition. 3. can be considered as a sort-of "absorption" quality; thinking about this in the more concrete case of $n \mathbb{Z}$ may make more sense. Think about this $x \cdot y$ as a "multiple" in a sense of $y$.}
 
 \begin{remark}
   Typically, $1 \notin I$. If $I = R$, then it is; if $1 \in I$, then $\forall r \in R, r \cdot = r \in I$, hence $I = R$ (by criterion (3)). In other words, ideals are typically \emph{not} subrings. \footnote{This is a direct result of our convention of requiring subrings to contain $1$; many texts do not require subrings to contain the multiplicative elements, so in these cases ideals would then typically be subrings as well. We will not adopt this convention.}
@@ -2202,20 +2223,157 @@ Let $R, S$ be rings. Then, $R \times S$ is a ring. % TODO
   But note that $x^2 = (x^2+1)-1 \implies \overline{x^2} = \overline{-1}$, so $b_1 b_2 x^2 = - b_1 b_2$, so this simplifies to \[
     \overline{a_1a_2 + (a_1 b_2 + a_2 b_1)x - b_1b_2} = \overline{(a_1a_2- b_1b_2) + (a_1 b_2 + a_2 b_1)x }.
   \]
-  But note the similarity to multiplication in $\mathbb{C}$. In this way, we can define a bijection\footnotemark \[\mathbb{R}[x]/(x^2+1) \cong \mathbb{C}, \quad a + bi \mapsto \overline{a+bx}.\]
+  But note the similarity to multiplication in $\mathbb{C}$. In this way, we can define a bijection\footnotemark\[\mathbb{R}[x]/(x^2+1) \cong \mathbb{C}, \quad a + bi \mapsto \overline{a+bx}.\]
 \end{example}
-\footnotetext{Note that $A \cong B$ means that $A$ is \emph{isomorphic} to $B$.}
+\footnotetext{Note that $A \cong B$ means that $A$ is \emph{isomorphic} to $B$.} 
+
 \begin{remark}
   This concept works generally. % TODO: show
 \end{remark}
 
+\begin{lemma}\label{lemma:completesetofreppoly}
+  Suppose $n = \deg (f)\geq 1$. Then, a complete set of representatives for the cosets is \[\circledast = \{g(x) : \deg g < n\} = \{ b_{n-1} x^{n-1} + \cdots + b_0 : b_i \in \mathbb{F}\}.\]
+\end{lemma}
+
+\begin{proof}
+  Take $h(x) \in \mathbb{F}[x]$, and write $h(x) = q(x)f(x) + r(x)$, where either $r(x) = 0$ or $\deg r < n$. Then, $h(x) -r(x) = q(x)f(x) \in I \implies h(x) + I = r(x) + I$ (that is, $h$ and $r$ are $\sim$). So, any coset is represented as an element of $\circledast$. It remains to show that this holds for any coset, that is, if $g_1, g_2 \in \circledast$ and $g_1 + I = g_2 + I \implies g_1 = g_2$. We have that $g_1 - g_2 \in I = f(x) \cdot \mathbb{F}[x]$ for any nonzero $f, \deg f \leq n$. Moreover, $\deg (g_1 - g_2) < n,$ hence, $g_1 = g_2$.
+\end{proof}
+
+\begin{example}
+  Take $f(x) = x^2 + 1$; here, $\circledast =\{a x + b : a,b \in \mathbb{F}\}$.
+\end{example}
+
+\begin{remark}
+  Consider the analog to integer modular arithmetic. For addition, we have that $\overline{g_1} + \overline{g_2} = \overline{g_1 + g_2}, \deg{g_1 + g_2} < n$. For multiplication, we have $\overline{g_1}\cdot\overline{g_2} = \overline{g_1g_2}$. But now,$\deg{g_1 g_2}$ is potentially $\geq n$, so we write $\overline{g_1 g_2} = \overline{r},$ where $r$ the residue of dividing $g_1 g_2$ by $f$ (which then must have degree $<n$).
+\end{remark}
+
+\begin{theorem}\label{thm:fieldcontstructionpoly}
+  Let $\mathbb{F}$ be a field. Let $f(x) \in \mathbb{F}$ be a non-constant irreducible polynomial. Then, $R = \mathbb{F}[x]/(f(x))$ is a field \emph{containing} $\mathbb{F}$. 
+  
+  Moreover, if $\# \mathbb{F} = q, \deg(f) = n$, then $\# R = q^n$.
+\end{theorem}
+
+\begin{example}
+  Take, $\mathbb{F}_2$, and consider $\mathbb{F}[x]/(x^2 + x+ 1)$; this is a field with $4$ elements. Namely, they are $0, 1, x, 1 + x$; these are the only polynomials of $\deg < 2$ with coefficients in $\mathbb{F}_2$. We can write operations in the field:
+  \begin{center}
+    \text{(Addition)}
+    \begin{tabular}{c|cccc}
+      + & 0 & 1 & $x$ & $1+x$\\
+      \hline
+      0 & 0 & 1 & $x$ & $x+1$\\
+      1 & 1 & 0 & $x+1$ & $x$\\
+      $x$ & $x$ & $x+1$ & 0 & 1\\
+      $1 + x$ & $x +1$ & $x$ & 1 & 0
+    \end{tabular}\\
+    \text{(Multiplication)}
+    \begin{tabular}{c|cccc}
+      $\cdot$ & 0 & 1 & $x$ & $x+1$\\
+      \hline
+      0 & 0 & 0 & 0 & 0\\
+      1 & 0 & 1 & $x$ & $x+1$ \\
+      $x$ & 0 & $x$ & $x+1$ & 1\\
+      $x + 1$ & 0 &$ x+1$ & 1 & $x$
+    \end{tabular}
+  \end{center}
+\end{example}
+
+\begin{proof}(Of \cref{thm:fieldcontstructionpoly}) We have shown previously that $\mathbb{F}[x]/I$ a commutative ring; further, $\overline{0} \neq \overline{1},$ because of the set $\circledast$ above. Hence it remains to show that there exists inverses.\footnotemark
+
+  Let $\overline{g} \in \mathbb{F}[x]/(f(x)),$ $\overline{g} \neq \overline{0}$, that is, $f \not|g$. This implies, moreover, that $\gcd (f,g) = 1$, since $f$ irreducible (the divisors of $f$ are thus $1$ and $f$; $f$ does not divide $g$ as shown, hence the $\gcd$ is 1). This implies that $\exists u(x), v(x) \in \mathbb{F}[x] \st 1 = u(x)f(x) + v(x)g(x) \implies \overline{1} = \overline{u(x) f(x)} + \overline{v(x)g(x)}$. But $u(x) f(x)$ a multiple of $f(x)$ hence $\in I \implies \overline{u(x)f(x)} \in \overline{0} \implies \overline{1} = \overline{0} + \overline{v(x)}\overline{g(x)} \implies \overline{v(x)}\overline{g(x)} = \overline{1},$ that is, $v(x)$ is the inverse wrt multiplication of $g(x)$, as desired.
+  
+  % TODO prove last statement
+\end{proof}
+
+\footnotetext{Note the similarities to proving that $\mathbb{Z}/p\mathbb{Z}$ where $p$ prime a field; that is, yet again, primes in $\mathbb{Z}$ are analogous to irreducible polynomials in $\mathbb{F}[x]$.}
 
 
+\begin{example}
+  We construct a field with 25 elements. Take $\mathbb{F}_5 = \mathbb{Z}/5\mathbb{Z}$ and $f(x) = x^2-2$ (irreducible $\mod 5$). Take $\mathbb{L} = \mathbb{F}_5[x]/(x^2 - 2)$, which is then a field with $25$ elements by \cref{thm:fieldcontstructionpoly}, spec, of the form $\{a + bx: a, b \in \mathbb{F}_5\}$.
+\end{example}
 
+\begin{remark}
+  The polynomial $t^2 -2$ is irreducible in $\mathbb{F}_5$, but it actually has a root in $\mathbb{L}$ as defined above. Namely, the root is $x$ ($\overline{x}$). To check: $\overline{x}^2 - \overline{2} = \overline{x^2 - 2} = \overline{0}$.\footnotemark
+\end{remark}
 
+\footnotetext{"You're not being cheated, its a tautology."}
 
+\begin{remark}
+  We could have defined $\tilde{\mathbb{L}} = \mathbb{F}_5[x]/(x^2 - 3)$; these are isomorphic fields, that is, $\tilde{\mathbb{L}}\cong \mathbb{L}$. Moreover, we have that $t^2 - 3$ has a root in $\tilde{\mathbb{L}},$ so it must have a root in $\mathbb{L}$ as well.
 
+  Take $(ax + b) \in \mathbb{L}$. We want that $(ax+b)^2  =3$. That is,
+  \begin{align*}
+    (ax+b)^2 = a^2 x^2 + 2abx + b^2\\
+    = 2a^2 + 2abx + b^2 \\
+    = 2abx + (b^2 + 2a^2) = 3 \implies a = 0 \text{ or } b = 0
+  \end{align*}
+  In the case $a = 0$, we have that $b^2 = 3 \implies 3$ a square, which is not true in $\mathbb{F}_5$. Taking $b = 0$, then, we have $2a^2 = 3 \implies a = \pm 2$. We can verify:
+  \[
+  \overline{3} = (\overline{2} \overline{x})^2 \in \mathbb{L}.
+  \]
+\end{remark}
 
+\begin{remark}
+  $L$ contains $\mathbb{F}$ is not very precise; more specifically, we have that $\exists$ a map $\mathbb{F} \to L,$ $\alpha \mapsto \overline{\alpha} = \alpha + \langle f(x) \rangle$. This an injective ring homomorphism, and thus $\mathbb{F} \cong \Im(\mathbb{F})$, that is, $\mathbb{F}$ is isomorphic to the image of $\mathbb{F}$.
+\end{remark}
+
+\begin{theorem}
+  Let $g(t) \in \mathbb{F}[t]$ be a non-constant polynomial. Then, $\exists$ a field $L \supseteq \mathbb{F} \st g$ has a root in $L$.
+\end{theorem}
+
+\begin{proof}
+  WLOG, assume $g(t)$ irreducible. Take another variable $x$, and let $L = \mathbb{F}[x]/\langle g(x) \rangle$; this is a field as $g$ irreducible, and again, it contains $\mathbb{F}$ (that is, a field isomorphic to $\mathbb{F}$). Then, in $L$, the element $\overline{x}$ solves $g(t) = a_n t^n + \cdots + a_0, a_i \in \mathbb{F}$. We have, $g(\overline{x}) = \overline{a_n} \overline{x}^{n} + \cdots + \overline{a_0} = \overline{a_n x^n + \cdots a_0} = \overline{g(x)} = g(x) + \langle g(x)\rangle = \langle g(x) \rangle = 0_L$.
+\end{proof}
+
+\begin{example}
+  $\mathbb{F} = \mathbb{R}, g(t) = t^2 + 1.$ $L = \mathbb{R}[x]/\langle x^2+1\rangle, \overline{x}$ a root of $t^2 + 1$. In this case, we can denote $\overline{x} = i$, that is, $i = \sqrt{-1}$; $L \cong \mathbb{C}$.
+\end{example}
+
+\begin{theorem}[First Isomorphism Theorem]\label{thm:firstiso}
+  Let $\varphi: R \to S$ be a surjective homomorphism of rings. Let $I = \ker \varphi$. Then, $R/I \cong S$.
+\end{theorem}
+
+\begin{proof}
+  Denote the elements of $R /I$ by $\overline{r}$. Define $\varPhi : R/I \to S,$ $\varPhi(\overline{r}) = \varphi(r)$. We show this is a ring homomorphism:
+  \begin{itemize}
+    \item (Well defined) if $\overline{r} = \overline{r_1},$ we aim to show that $\varphi(r) = \varphi(r_1)$. $\overline{r} = \overline{r_1} \implies r - r_1 = a \in I = \ker \varphi$. $\varphi(r) = \varphi(a+r_1) = \varphi(a) + \varphi(r_1) = 0 + \varphi(r_1) = \varphi(r_1)$.
+    \item (Homomorphism) $\varPhi(\overline{r} +/\cdot \overline{s}) = \varPhi (\overline{r +/\cdot \overline{s}}) = \varphi(r + /\cdot s) = \varphi(r) +/\cdot \varphi(s) = \varPhi(\overline{r}) +/\cdot \varPhi(\overline{s})$.
+  \end{itemize}
+  To show $\varPhi$ bijective:
+  \begin{itemize}
+    \item (Surjective) Given $s \in S, \exists r \in R \st \varphi(r) = s$, since $\varphi$ surjective. Then, $\varPhi (\overline{r}) = \varphi(r) = s \implies \varPhi$ surjective.
+    \item (Injective) This is equivalent to showing $\ker \varPhi = \{\overline{0}\}$. Suppose $\varPhi(\overline{r}) = 0_S \implies \varphi(r) = 0_S \implies r \in \ker \varphi = I \implies \overline{r} = 0_{R/I}$
+  \end{itemize}
+  Hence, $\varPhi$ a bijective ring homomorphism and so $R/I \cong S$.
+\end{proof}
+
+\begin{example}
+Let $R = \mathbb{R}[x], S = \mathbb{C}$. Let $\varphi : R \to S,$ $\varphi(f(x)) = f(i)$. $\varphi$ is a homomorphism of rings:
+\[
+\varphi (f +/\cdot g) = (f+/\cdot g)(i) = f(i) +/\cdot g(i); \quad \varphi (1) = 1.
+\]
+Let $I = \ker \varphi$. Note that $x^2 + 1 \in I (i^2 + 1 = 0), \implies \langle x^2 + 1 \rangle \subseteq I$. We know, further, that $I = \langle g(x)\rangle$ for some $g(x) \in \mathbb{R}[x]$ (any ideal of $\mathbb{R}[x]$ principal), so $x^2 + 1 \in I \implies g(x) | (x^2+1)$. But $x^2 + 1$ is irreducible, hence $g(x) \sim 1 \implies I = \mathbb{R}[x]$ or $g(x) \sim x^2 + 1 \implies I = \langle x^2 + 1\rangle$. This first case is not possible, since this implies $1 \in \mathbb{R}[x],$ since $\varphi(1) = 1 \neq 0,$ hence $g(x) = x^2 + 1 \implies I = \langle x^2 + 1 \rangle$, and thus by \nameref{thm:firstiso}, $\mathbb{R}[x]/\langle x^2 + 1\rangle \cong \mathbb{C}$.
+\end{example}
+
+\begin{theorem}[Chinese Remainder Theorem]\label{thm:chineseremaindertheorem}
+  Let $m,n$ be relatively prime positive integers. Then, $\mathbb{Z}/mn\mathbb{Z} \cong \mathbb{Z}/m \mathbb{Z} \times \mathbb{Z}/n \mathbb{Z}$.
+\end{theorem}
+
+\begin{proof}
+Define a function $\varphi : \mathbb{Z} \to \mathbb{Z}/m\mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}$, $\varphi(a) = (a \mod m, a \mod n)$. We show $\varphi$ a ring homomorphism:
+\begin{align*}
+\varphi(a +/\cdot b) = (a+/\cdot b \mod m, a + /\cdot b \mod n) \\
+= (a \mod m + /\cdot b \mod m, a \mod n + /\cdot b \mod n)   \\
+= (a \mod m, a \mod n) +/\cdot (b \mod m, b \mod n)\\
+= \varphi(a) +/\cdot \varphi(b)\\
+\varphi(1) = (1 \mod m, 1 \mod n) = 1_{\mathbb{Z}/m\mathbb{Z} \times \mathbb{Z}/n \mathbb{Z}}
+\end{align*}
+We also have \begin{align*}
+\ker \varphi  = \{a  \in \mathbb{Z} : \varphi(a) = (a \mod m, b \mod n) = (0,0)\} \\
+= \{a : m | a \text{ and } n| a\} = \{a : \lcm (m,n) | a\} = \{a : mn | a\} = mn\mathbb{Z}
+\end{align*}
+
+Let $S = \im \varphi$ which is a subring of $\mathbb{Z}/m \mathbb{Z} \times \mathbb{Z}/n \mathbb{Z}$. Then, $\varphi :\mathbb{Z} \to S$ is a surjective ring homomorphism with kernel $mn \mathbb{Z}$, and so by \nameref{thm:firstiso}, $\mathbb{Z}/mn \mathbb{Z} \cong S$. Note that the LHS has $m \cdot n$ elements, hence $S$ must have $m \cdot n$ elements as well, and thus $S = \mathbb{Z} /m \mathbb{Z} \times \mathbb{Z}/n \mathbb{Z}$. Thus, $\mathbb{Z}/mn \mathbb{Z} \cong \mathbb{Z}/m\mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}$.
+\end{proof}
 
 
 
