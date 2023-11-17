@@ -858,7 +858,7 @@ This claim relies on the claim that $s_1 \cdot s_2 = 0 \iff s_1$ or $s_2 = 0$ fo
 
 
 \begin{remark}
-  We de note require multiplication to be commutative; if it is, we call $R$ a \textbf{commutative ring} (eg $M_2(\mathbb{Z}), M_2(\mathbb{R})$ are not commutative).
+  We do not require multiplication to be commutative; if it is, we call $R$ a \textbf{commutative ring} (eg $M_2(\mathbb{Z}), M_2(\mathbb{R})$ are not commutative).
 
   We also do not require inverse for multiplication (eg $2$ doesn't have an inverse in $\mathbb{Z}$).
 \end{remark}
@@ -2101,6 +2101,12 @@ Let $R, S$ be rings. Then, $R \times S$ is a ring. % TODO
 \end{example}
 
 \subsection{Cosets}
+\begin{definition}[Coset]
+  Let $R$ be a ring and $I \idealof R$. A \emph{coset} of $I$ is a subset of $R$ of the form \[a + I = \{a + i : i \in I\},\] where $a \in R$.
+\end{definition}
+\begin{remark}
+  Note that the coset, while defined with respect to $I$, need not be a subset of $I$, but is by definition a subset of the ring $R$.
+\end{remark}
 
 \begin{definition}[Relation on Cosets]
   Let $R$ be a commutative ring and $I \triangleleft R$. Define a relation on $R$ as $x \sim y$ if $x -y \in I$.
@@ -2129,9 +2135,9 @@ Let $R, S$ be rings. Then, $R \times S$ is a ring. % TODO
   Say $R = \mathbb{Z}, I = n \mathbb{Z}$. Then, the cosets are just the congruence classes ($n \mathbb{Z}, 1 + n \mathbb{Z} , \dots, (n-1) + n \mathbb{Z}$) $\mod n$.
 \end{example}
 
-\subsection{\texorpdfstring{The Ring $R/I$}{The Ring R/I}}
+\subsection{Quotient Rings: \texorpdfstring{The Ring $R/I$}{The Ring R/I}}
 
-\begin{definition}
+\begin{definition}[Quotient Ring]
   Consider \footnotemark $R / I$. We define operations as \[
   (x+I) + (y+I) := (x+y) + I, \quad (x + I) \cdot (y+I) := (x\cdot y) + I.  
   \]
@@ -2328,6 +2334,13 @@ Let $R, S$ be rings. Then, $R \times S$ is a ring. % TODO
   $\mathbb{F} = \mathbb{R}, g(t) = t^2 + 1.$ $L = \mathbb{R}[x]/\langle x^2+1\rangle, \overline{x}$ a root of $t^2 + 1$. In this case, we can denote $\overline{x} = i$, that is, $i = \sqrt{-1}$; $L \cong \mathbb{C}$.
 \end{example}
 
+\subsection{Isomorphisms}
+
+\begin{definition}[Isomorphism]
+  Let $f : R \to S$ be a ring homomorphism. If $f$ bijective, we say that $R$ is \emph{isomorphic} to $S$, and denote $R \cong S$. We say that $f$ is an \emph{isomorphism} between $R$ and $S$.
+\end{definition}
+
+
 \begin{theorem}[First Isomorphism Theorem]\label{thm:firstiso}
   Let $\varphi: R \to S$ be a surjective homomorphism of rings. Let $I = \ker \varphi$. Then, $R/I \cong S$.
 \end{theorem}
@@ -2373,8 +2386,99 @@ We also have \begin{align*}
 \end{align*}
 
 Let $S = \im \varphi$ which is a subring of $\mathbb{Z}/m \mathbb{Z} \times \mathbb{Z}/n \mathbb{Z}$. Then, $\varphi :\mathbb{Z} \to S$ is a surjective ring homomorphism with kernel $mn \mathbb{Z}$, and so by \nameref{thm:firstiso}, $\mathbb{Z}/mn \mathbb{Z} \cong S$. Note that the LHS has $m \cdot n$ elements, hence $S$ must have $m \cdot n$ elements as well, and thus $S = \mathbb{Z} /m \mathbb{Z} \times \mathbb{Z}/n \mathbb{Z}$. Thus, $\mathbb{Z}/mn \mathbb{Z} \cong \mathbb{Z}/m\mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}$.
+
+We can alternatively prove surjectivity directly. Since $\gcd(m,n) = 1, \exists u,v \in \mathbb{Z} \st 1 = um + vn$, hence we have \[
+\varphi(um) = (um \mod m, 1 - vn \mod n) = (0, 1)
+\]
+and
+\[ 
+  \varphi(vn) = (1 - um \mod m, vn \mod n) = (1,0)
+\]
+Hence, \begin{align*}
+\varphi(aum + bvn) = \varphi(aum) + \varphi(bvn) = \varphi(\underbrace{um + \cdots +um}_{a \text{ times}}) +  \varphi(\underbrace{vn + \cdots +vn}_{b \text{ times}})\\
+= a \varphi(um) + b \varphi(vn)\\
+= a (0,1) + b(1,0)\\
+= (0, a) + (b,0) = (b, a),
+\end{align*}
+hence $\varphi$ surjective. Again, the kernel is $\ker \varphi = mn \mathbb{Z}$ and so $\mathbb{Z}/mn\mathbb{Z} \cong \mathbb{Z}/m\mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}$
 \end{proof}
 
+\begin{example}[Application of \nameref{thm:chineseremaindertheorem}]
+  Let $m = 11, n = 13$. Find an integer $x \st$ $x \equiv_{11} 2$ and $x \equiv_{13} 3$.
+  \begin{proof}
+    We can express $1 = \gcd (11, 13) = um + vn = 11u + 13 v$. Working out the Euclidean algorithm, this yields $u = 6$ and $v = 5$, that is, $1 = 6 \cdot 11 - 5 \cdot 13 = 66 - 65$. We have \[
+    66 \mapsto(0, 1) \in \zmod{11} \times \zmod{13},
+    \]
+    and \[-65 \mapsto (1,0) \in \zmod{11} \times \zmod{13}.\]
+    Hence, $3 \cdot 66 + 2 \cdot -65 \mapsto(2, 3) \in \zmod{11}\times\zmod{13}$, so $x = 3 \cdot 66 + 2 \cdot -65 = 68$.
+  \end{proof}
+\end{example}
+
+\section{Groups}
+\subsection{Definitions}
+\begin{definition}[Group]
+  A \emph{group} $G$ is a non-empty set with an operation \[
+  G \times G \to G, \quad (a,b) \mapsto a \ast b,  
+  \]
+  s.t. \begin{enumerate}
+    \item (Associative) $a \ast (b \ast c) = (a\ast b)\ast c$
+    \item (Two-Sided Identity) $\exists$ an element of $G$, denoted $1_G$ s.t. $\forall a \in G, 1_G \ast a = a \ast 1_G = a$
+    \item (Two-Sided Unit) $\forall a \in G, \exists b \in G \st a \ast b = b \ast a = 1_G$
+  \end{enumerate}
+\end{definition}
+
+\begin{proposition}[Basic Properties of Groups]
+  The following are direct consequences of the definition of a group:
+  \begin{enumerate}
+    \item $1_G$ unique: if $c \in G \st a \cdot c = c \cdot a = a \forall a \in G,$ then $c = 1_G$
+    \item Given $a \in G, b \st a \ast b = b \ast a = 1_G$ is unique: if $a \ast c = c \ast a = 1_G,$ then $c = b$. We denote $b = a^{-1}$.
+    \item $(a_1 \ast a_2)^{-1} = a_2^{-1} \ast a_1^{-1}$.
+    \item $ab = ac \implies b = c$
+    \item Define for $a \in G, n \in \mathbb{Z}$, \[
+      a^{n} := \begin{cases}
+        1_G & n = 0\\
+        \underbrace{a \ast \cdots \ast a}_{a \text{ times}} & n > 0\\
+        \underbrace{a^{-1} \ast \cdots \ast a^{-1}}_{-n \text{ times}} & n < 0
+      \end{cases}
+      \]
+      Then, $a^{n+m} = a^n a^m$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  \begin{enumerate}
+    \item $c = c \ast 1_G = 1_G$
+    \item $b = b \ast 1_G = b \ast (a \ast c) = (b \ast a) \ast c = 1_G \ast c = c \implies b = c$
+    \item $(a_1a_2)(a_2^{-1}a_1^{-1}) = a_1 a_2^{-1}a_2a_1^{-1} = a_1 1_G a_1^{-1} = a_1 a_1^{-1} = 1_G$. The converse follows.
+    \item $ab = ac \implies a^{-1} ab = a^{-1}ac \implies 1_G b = 1_G c \implies b = c$
+    \item %TODO: to show
+  \end{enumerate}
+\end{proof}
+
+\begin{proposition}[What "Doesn't Hold" in Groups]
+  \begin{enumerate}
+    \item Only one operation, $\ast$.
+    \item Typically, $ab \neq ba$, that is, not commutative (see \cref{def:abeliangroup}).
+  \end{enumerate}
+\end{proposition}
+
+\begin{definition}[Commutative/Abelain Group]\label{def:abeliangroup}
+  If $\forall a, b \in G, ab = ba,$ $G$ is called \emph{commutative} or \emph{abelian}. Sometimes, if $G$ abelian, we write the operation as $+$ and the neutral element as $0$.
+\end{definition}
+
+\begin{example}[Basic Examples of Groups]
+  \begin{itemize}
+    \item $G = \{1\}$, where $1 \ast 1 = 1$.
+    \item $G = \mathbb{Z}$ or $G = \zmod{n}$, where $\ast = +$. Moreover, if $R$ a ring, then $R$ is an abelian group with addition.
+    \item For a field $\mathbb{F}$, $(\mathbb{F}, +)$ is an abelian group, as is $(\mathbb{F}^{\times}, \cdot)$.
+    \item If $R$ a ring (need not be commutative), then $R^{\times} = \{u \in R : \exists v \in R, uv = vu = 1\}$ (the units) is a group with multiplication.
+    
+    \begin{itemize}
+      \item $\mathbb{Z}, \mathbb{Z}^{\times} = \{\pm 1\}$ is a group.
+      \item $R = M_2 (\mathbb{R})$. The units $R^{\times}$ are all the invertible matrices, that is, with non-zero determinant. $(R, +)$ and $(R, \cdot)$ are both groups.
+      \item More generally, $R = M_2(\mathbb{F})$, a ring, has units $R^{\times} = M_2(\mathbb{F})^{\times} =: GL_2 (\mathbb{F})$. Note that this is a non-abelian group under multiplication (as matrix multiplication not commutative).
+    \end{itemize}
+  \end{itemize}
+\end{example}
 
 
 
