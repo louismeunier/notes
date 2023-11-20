@@ -2040,7 +2040,7 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
   Set $n_1 = 1$. Suppose $n_k$ defined. Then, \[
   y_{n_k + 1} = \sup \{x_n : n \geq n_k + 1\}.  
   \]
-  If we consider $y_{n_k + 1} - \frac{1}{k+1},$ then this number is smaller than $y_{n_k + 1}$ and is thus not an upper bound for the set $\{x_n n \geq n_k + 1\}.$ Then there exists some $n_{k+1} \geq n_k + 1 > n_k$ such that \[
+  If we consider $y_{n_k + 1} - \frac{1}{k+1},$ then this number is smaller than $y_{n_k + 1}$ and is thus not an upper bound for the set $\{x_n :n \geq n_k + 1\}.$ Then there exists some $n_{k+1} \geq n_k + 1 > n_k$ such that \[
   y_{n_k + 1} - \frac{1}{k+1} \leq x_{n_{k+1}}   \leq y_{n_{k+1}} = \sup \{x_n : n \geq n_{k+1}\}.
   \]
   So, we have constructed a strictly increasing sequence $(n_k)$ of natural numbers such that $\forall k\geq 1,$ $$y_{n_k+1} - \frac{1}{k+1} \leq x_{n_{k+1}} \leq y_{n_{k+1}}. \quad \star$$ Consider the subsequences $(y_{n_k + 1})$ and $(y_{n_{k+1}})$ of $(y_n)$, and a subsequence $(x_{n_{k+1}})$ of $(x_n)$. Since $y_n$ converges, and $\lim_{n\to\infty} y_n = \limsupbar x_n$, we have that \[
@@ -2167,7 +2167,7 @@ $x_n = n$ properly diverges to $\infty$; $x_n = -n$ properly diverges to $-\inft
 \end{remark}
 
 % TODO: fix footnote numbering...
-\subsection{Functional Limits and Continuity}
+\section{Functional Limits and Continuity}
 
 \begin{definition}[Cluster Point]
   Let\footnotemark $A \subseteq \mathbb{R}$. A point $c \in \mathbb{R}$ is called a \emph{cluster} or \emph{limit} point of $A$ if $\forall \epsilon > 0$, $\exists x \in A$, $x \neq c$, s.t. $0 < \abs{x-c} < \epsilon$.
@@ -2255,7 +2255,7 @@ Let $A = \mathbb{Q}$. Then, the set of cluster points is precisely $\mathbb{R}$.
   \end{proof}
 \end{example}
 
-\subsubsection{Sequential Characterization of Functional Limits}
+\subsection{Sequential Characterization of Functional Limits}
 
 \begin{theorem}\label{thm:sequentialfunctionallimit}
   Let $A \subseteq \mathbb{R}, f : A \to \mathbb{R}$, and let $c$ be a cluster point of $A$. Then, TFAE:
@@ -2339,6 +2339,144 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
     \noindent(Using divergence criterion 2.) Take $x_n = \frac{1}{2n\pi}, y_n = \frac{1}{2n\pi + \frac{\pi}{2}}$, noting that $\lim_{n\to\infty} x_n = \lim_{n \to \infty} y_n = 0$. Then, $f(x_n) = \sin \frac{1}{x_n} = \sin (2n \pi) = \forall n$, while $f(y_n) = \sin \frac{1}{y_n} = \sin (2n \pi + \frac{\pi}{2}) = 1 \forall n$, hence, $\lim_{n\to\infty} f(x_n) \neq \lim_{n\to\infty} f(y_n),$ and thus $\lim_{x\to c} f(x)$ does not exist.
   \end{proof}
 \end{example}
+
+\subsection{Left/Right Limits}
+
+\begin{definition}[Left/Right Limits]
+  \begin{enumerate}
+    \item Let $A\subseteq \mathbb{R}, f : A \to \mathbb{R}$, and suppose that $c$ is a cluster point of the set \[
+      A \cap (c, \infty) = \{x \in A : x > c\}.
+    \]
+    Then we say that a real number $L$ is the \emph{right limit} of $f$ at $c$, denoted \[
+    \lim_{x\to c^+} f(x)= L,
+    \]
+    if $\forall \epsilon > 0, \exists \delta > 0 \st \forall x \in A \st 0 < x - c < \delta \implies \abs{f(x) - L} < \epsilon$.
+    \item Let $A \subseteq \mathbb{R}, f: A \to \mathbb{R},$ and suppose that $c$ is a cluster point of \[
+    A \cap (- \infty, c) = \{x \in A : x < c\}.
+    \]
+    Then we say that a real number $L$ is the \emph{left limit} of $f$ at $c$, denoted \[
+    \lim_{x \to c^-} f(x) = L,  
+    \]
+    if $\forall \epsilon > 0, \exists \delta > 0 \st \forall x \in A \st - \delta < x - c < 0 \implies \abs{f(x) - L} < \epsilon$.
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  Sometimes, but not always, the right/left endpoints are equivalent to the "usual" limit.
+\end{remark}
+
+\begin{example}[The Heaviside Function]
+  Let $f: \mathbb{R} \to \mathbb{R}$ defined $f(x) = \begin{cases}
+    1 & x \geq 0\\
+    0 & x < 0
+  \end{cases}$. We have \[\lim_{x\to 0^+} f(x) = 1; \quad \lim_{x\to 0^-} f(x) = 0.\]
+  Let $\epsilon > 0$. Take $\delta > 0$. Then, $\forall x \st 0 < x < \delta, \abs{f(x) - 1} = \abs{1 - 1} =  0 < \epsilon$, hence $\lim_{x\to 0^+} f(x) = 0$. % TODO: minusq
+
+  % TODO: Prove that $\lim_{x\to 0} f(x)$ does not exist.
+\end{example}
+
+\begin{proposition}\label{prop:leftrightequiv}
+  Let $A \subseteq \mathbb{R}, f : A \to \mathbb{R},$ and let $c$ be a cluster point of the sets $A \cap (c, \infty)$ and  $A \cap (-\infty, c)$. TFAE:
+  \begin{enumerate}
+    \item $\lim_{x\to c} f(x) = L$
+    \item $\lim_{x\to c^+} f(x) = \lim_{x \to c^-} f(x) = L$
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  (1. $\implies$ 2.) Let $\epsilon > 0$ and $\delta \st \forall x \in A \st 0 < \abs{x - c} < \delta \implies \abs{f(x) - L} < \epsilon$. Then, we have that $\abs{f(x) - L} < \epsilon \impliedby 0 < x - c < \delta$, and moreover, $\abs{f(x) - L} < \epsilon \impliedby -\delta < x - c < 0$, that is, $\lim_{x\to c^+} f(x) = \lim_{x \to c^-} f(x) = L$, hence 2. holds.
+
+  \noindent (2. $\implies$ 1.) Let $\epsilon > 0$. Since $\lim_{x\to c^+} f(x) = L, \exists \delta_1 > - \st 0 < x - c < \delta_1 \implies \abs{f(x) - L} < \epsilon$. Since $\lim_{x\to c^-} f(x) = L, \exists \delta_2 > 0 \st \forall x \in A \st - \delta_2 < x - c < 0 \implies \abs{f(x) - L} < \epsilon$. Take $\delta = \min \{\delta_1, \delta_2\}$. Then, if $0 < \abs{x - c} < \delta$, then we have that either $0 < x - c < \delta \leq \delta_1,$ or $- \delta_2 \leq - \delta < x - c < 0$. In either case, $\abs{f(x) - L} < \epsilon$, so $\lim_{x\to c}f(x) = L$ and 1. holds. 
+\end{proof}
+
+\begin{theorem}\label{thm:sequentialrightlimit}
+  Let $A \subseteq \mathbb{R}, f : A \to \mathbb{R},$ and let $c$ be a cluster point of the set \(A \cap (c, \infty).\)Then, TFAE:
+  \begin{enumerate}
+    \item $\lim_{x\to c^+} f(x) = L$
+    \item For any sequence $(x_n) \in A \st x_n > c \forall n$, and $\lim_{n\to\infty} x_n = c,$ we have that $\lim_{n\to\infty} f(x_n) = L$. 
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  % TODO
+\end{proof}
+
+\subsection{Limits and Infinity}
+\subsubsection{Infinite Limits}
+
+\begin{definition}[Infinite Limits]
+  Let $A \subseteq \mathbb{R}, f : A \to \mathbb{R}, c$ a cluster point of $A$. 
+  \begin{enumerate}
+    \item $\lim_{x \to c} f(x) = \infty$ if $\forall M \in \mathbb{R}, \exists \delta > 0 \st \forall x \in A \st 0 < \abs{x - c} < \delta, f(x) \geq M$.
+    \item $\lim_{x \to c} f(x) = -\infty$ if $\forall M \in \mathbb{R}, \exists \delta > 0 \st \forall x \in A \st 0 < \abs{x - c} < \delta, f(x) \leq M$.
+  \end{enumerate}
+\end{definition}
+
+\begin{example}
+  Let $A = (-\infty, 0) \cup (0, \infty)$ and let $f(x) = \frac{1}{x^2}$. Show that $\lim_{x \to 0} f(x) = \infty$.
+  \begin{proof}
+    Let $M \in \mathbb{R}$, and take $\delta = \frac{1}{\sqrt{\abs{M} + 1}}$. Then, $\forall x \in A \st 0 < \abs{x} < \delta,$ we have that \[
+    f(x) = \frac{1}{x^2} > \frac{1}{\delta^2} = \abs{M}+1   > M,
+    \]
+    hence the limit holds.
+  \end{proof}
+\end{example}
+
+\begin{example}
+  \begin{enumerate}
+    \item Give a sequential characterization of $\lim_{x\to c} f(x) = \infty \text{ and } - \infty$.
+    \item Give the definition of right/left hand limits going to infinity, $\lim_{x\to c^+} f(x) =  \infty \text{ and }- \infty, \lim_{x\to c^-} f(x) = \infty \text{ and }- \infty$.
+    \item Let $A = (-\infty, 0)\cup(0,\infty), f(x) = \frac{1}{x}$. Show that $$\lim_{x\to 0^-} f(x) = -\infty, \lim_{x\to 0^+} f(x) = \infty.$$
+  \end{enumerate}
+\end{example}
+
+\begin{proposition}[Order Properties of Infinite Limits]\label{prop:orderpropertiesofinfinitelimits}
+  Let $A \subseteq \mathbb{R}, f, g: A \to \mathbb{R}$, and suppose $f(x) \leq g(x) \forall x \in A$. Let $c$ be a cluster point of $A$. Then, \begin{enumerate}
+    \item $\lim_{x\to c}f(x) = \infty \implies \lim_{x\to c} g(x) = \infty$
+    \item $\lim_{x\to c}g(x) = -\infty \implies \lim_{x\to c} f(x) = -\infty$
+  \end{enumerate}
+\end{proposition}
+\begin{proof}(1.) Let $M \in \mathbb{R}$. Since $\lim_{x\to c} f(x) = \infty, \exists \delta>0 \st \forall x \in A \st 0 < \abs{x - c} < \delta, f(x) \geq M$. But then $g(x) \geq f(x) \forall x$, hence $g(x) \geq M \implies \lim_{x\to c} g(x) = \infty$.
+\end{proof}
+
+\subsubsection{Limits at Infinity}
+
+\begin{definition}[Limit at $\pm$ Infinity]
+  \begin{itemize}
+    \item Let $A \subseteq \mathbb{R}$. Suppose that for some $a \in \mathbb{R}, (a, \infty) \subseteq A$. Let $f: A \to \mathbb{R}$. We say that a real number $L$ is the limit of $f$ at $\infty$ if $\forall \epsilon > 0$ $\exists K > a \st \forall x \geq K, $ we have $\abs{f(x) - L} < \epsilon$.
+
+    \item Let $A \subseteq \mathbb{R}$ and suppose that for some $a \in \mathbb{R}, (-\infty, a) \subseteq A$. Let $f: A \to \mathbb{R}$. We say that a real number $L$ is the limit of $f$ at $-\infty$ if $\forall \epsilon > 0, \exists K < a \st \forall x \leq K, \abs{f(x) - L} < \epsilon$.
+  \end{itemize}
+\end{definition}
+
+\begin{example}[$\frac{\sin x}{x}$ at infinity]
+  Let $A = (0, \infty)$ and $f(x) = \frac{\sin x}{x}$. Prove that $\lim_{x\to\infty} f(x) = 0$.
+  \begin{proof}
+    Let $\epsilon >0$. Take $K = \frac{2}{\epsilon}$. Then, for $x \geq K$, $\abs{f(x)} = \abs{\frac{\sin x}{x}} \leq \frac{1}{x} \leq \frac{1}{K} = \frac{\epsilon}{2} < \epsilon$.
+  \end{proof}
+\end{example}
+
+\begin{example}
+  "Sequentialize" limits at infinity.
+\end{example}
+
+
+\subsubsection{Infinite Limits at Infinity}
+
+\begin{definition}[Infinite Limits at Infinity]
+  % TODO: definition (combo of both above) and sequentialization
+\end{definition}
+
+\subsection{Continuity}
+\begin{definition}[Continuity]
+  Let $A \subseteq \mathbb{R}, f: A \to \mathbb{R},$ and $c \in A$. We say $f$ is \emph{continuous} at $c$ if $\forall \epsilon > 0, \exists \delta > 0 \st \forall x \in A \st \abs{x - c} < \delta$, we have that $\abs{f(x) - f(c)} < \epsilon$. Quantified: $f$ continuous at $c$ if
+  \[
+  (\forall \epsilon > 0)(\exists \delta > 0)(\forall x \in A)(\abs{x - c} < \delta \implies \abs{f(x) - f(c)} < \epsilon).
+  \]
+
+  If $f$ not continuous at some $c$, we say $f$ \emph{discontinuous} at $c$.
+
+  If $c \in A$ a cluster point of $A$, $f$ is continuous at $c$ iff $\lim_{x\to c} f(x) = f(c)$. If $c$ not a cluster point, continuity at $c$ still defined, while $\lim_{x\to c} f(x)$ not.
+\end{definition}
 
 
 
