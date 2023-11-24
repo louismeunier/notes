@@ -2006,12 +2006,12 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
   \]
   Since the LHS set is infinite, the RHS must be too.
 
-  We now show the converse. Suppose that $\forall \epsilon > 0,$ the set $\{n : \abs{x_{n} - x} < \epsilon\}$ % TODO: don't really know?
-  Take $\epsilon = 1$, then the set $\{n : \abs{x_n - x} < 1\}$ is an infinite set. Take $n_1 = \min \{n : \abs{x_n - x} < 1\}$. We can now define $n_k$, where $k = 2,3,\dots$ recursively. Suppose that some $n_K$ chosen. Then, take $\epsilon = \frac{1}{K+1}$, and consider \[
-  \{n : n > n_K, \abs{x_n - x} < \frac{1}{K+1}\}.  
+  We now show the converse. Suppose that $\forall \epsilon > 0,$ the set $\{n : \abs{x_{n} - x} < \epsilon\}$ is infinite. % TODO: don't really know?
+  Take $\epsilon = 1$, then the set $\{n : \abs{x_n - x} < 1\}$ is an infinite set. Take $n_1 = \min \{n : \abs{x_n - x} < 1\}$. We can now define $n_k$, where $k = 2,3,\dots$ recursively. Suppose that some $n_k$ chosen. Then, take $\epsilon = \frac{1}{K+1}$, and consider \[
+  \{n : n > n_k, \abs{x_n - x} < \frac{1}{k+1}\}.  
   \]
-  This set has infinitely many elements, since $\{n : \abs{x_n - x} < \frac{1}{K+1}\}$ is also infinite. % TODO; why?
-  We then set $n_{k+1} = \min \{n : n > n_k, \abs{x_n - x} < \frac{1}{k+1}\},$ which defines a strictly increasing sequence $(n_k)_{k \geq 1}$ of natural numbers such that for any $K$, $\abs{x_{n_k} - x} < \frac{1}{K}$. So, $\lim_{k\to\infty} \abs{x_{n_k} - x} = 0$ which gives that $\lim_{k\to\infty} x_{n_k} = x$, so $x \in \fl$.
+  This set has infinitely many elements, since $\{n : \abs{x_n - x} < \frac{1}{k+1}\}$ is also infinite. % TODO; why?
+  We then set $n_{k+1} = \min \{n : n > n_k, \abs{x_n - x} < \frac{1}{k+1}\},$ which defines a strictly increasing sequence $(n_k)_{k \geq 1}$ of natural numbers such that for any $k$, $\abs{x_{n_k} - x} < \frac{1}{k}$. So, $\lim_{k\to\infty} \abs{x_{n_k} - x} = 0$ which gives that $\lim_{k\to\infty} x_{n_k} = x$, so $x \in \fl$.
 \end{proof}
 
 \begin{theorem}\label{thm:limsupliminflimitpoints}
@@ -2067,7 +2067,7 @@ $x_n = n$ properly diverges to $\infty$; $x_n = -n$ properly diverges to $-\inft
     Write $C = 1 + x$ where $x > 0$. By \nameref{prop:bernoullineq}, $\forall n \geq 1$, \[
     C^n = (1+x)^n \geq 1+nx.  
     \]
-    Let $\alpha \in \mathbb{R}$. If $\alpha \leq 0$, then $\forall n, C^n > \alpha$. If $\alpha < 0$, let $N \in \mathbb{N}, N \geq \frac{\alpha}{x}.$ SO, $\forall n \geq N,$ $C^n \geq 1 + nx > \alpha$ and $\lim_{n\to\infty} C^n = \infty$. 
+    Let $\alpha \in \mathbb{R}$. If $\alpha \leq 0$, then $\forall n, C^n > \alpha$. If $\alpha > 0$, let $N \in \mathbb{N}, N \geq \frac{\alpha}{x}.$ SO, $\forall n \geq N,$ $C^n \geq 1 + nx > \alpha$ and $\lim_{n\to\infty} C^n = \infty$. 
   \end{proof}
 \end{example}
 
@@ -2257,11 +2257,11 @@ Let $A = \mathbb{Q}$. Then, the set of cluster points is precisely $\mathbb{R}$.
 
 \subsection{Sequential Characterization of Functional Limits}
 
-\begin{theorem}\label{thm:sequentialfunctionallimit}
+\begin{theorem}\label{thm:seqqqqqqqquentialfunctionallimit}
   Let $A \subseteq \mathbb{R}, f : A \to \mathbb{R}$, and let $c$ be a cluster point of $A$. Then, TFAE:
   \begin{enumerate}
     \item $\lim_{x\to c}f(x) = L$.
-    \item For any sequence $(x_n) \in A,$ $x_n \neq c$, such that $\lim x_n = c,$ we have that the sequence $(f(x_n))$ converges to $L4$, that is, $\lim_{n\to\infty} f(x_n) = L$.
+    \item For any sequence $(x_n) \in A,$ $x_n \neq c$, such that $\lim x_n = c,$ we have that the sequence $(f(x_n))$ converges to $L$, that is, $\lim_{n\to\infty} f(x_n) = L$.
   \end{enumerate}
 \end{theorem}
 
@@ -2478,7 +2478,60 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
   If $c \in A$ a cluster point of $A$, $f$ is continuous at $c$ iff $\lim_{x\to c} f(x) = f(c)$. If $c$ not a cluster point, continuity at $c$ still defined, while $\lim_{x\to c} f(x)$ not.
 \end{definition}
 
+\begin{theorem}[Sequentual Characterization of Continuity]
+  Let $f: A \to \mathbb{R}$, $c \in A$. TFAE:
+  \begin{enumerate}
+    \item $f$ continuous at $c$
+    \item for any sequence $(x_n) \in A \st \lim_{n\to\infty} x_n = c,$ $\lim_{n\to\infty} f(x_n) = f(c)$
+  \end{enumerate}
+\end{theorem}
+\begin{remark}
+% TODO
+\end{remark}
+\begin{remark}
+  This theorem can be directly deduced from sequential characterization of functional limits.
+\end{remark}
 
+\begin{proposition}[Algebraic Operations]
+  Let $f, g: A \to \mathbb{R}, c \in A$. Suppose $f,g$ continuous at $c$. Then:
+  \begin{enumerate}
+    \item $\forall k \in \mathbb{R}, kf$ continuous at $c$
+    \item $h = f + g$ continuous at $c$
+    \item $h = f \cdot g$ continuous at $c$
+    \item If $g(x) \neq 0 \forall x \in A,$ $h = \frac{f}{g}$ continuous at $c$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}(Of 3.)
+  % TODO
+\end{proof}
+
+\begin{theorem}[Composition of Functions and Continuity]
+  Let $f: A \to \mathbb{R}, g : B \to \mathbb{R}$ be two functions such that \[
+    f(A) = \{f(x) : x \in A\}   \subseteq B
+  \]
+  so that the composite function $h(x) = g \circ f (x) = g(f(x))$ is well defined on $A$. Suppose $c \in A$ such that $f$ continuous at $c$ and $g$ continuous at $f(c)$. Then, $h$ also continuous at $c$.
+\end{theorem}
+
+\begin{proof}(Using sequential characterization)
+% TODO
+\noindent($\epsilon - \delta$)
+  % TODO
+\end{proof}
+
+\begin{example}
+  $f: \mathbb{R} \to \mathbb{R}, f(x) = x$.
+\end{example}
+
+\subsubsection{Extensions By Continuity}
+
+\begin{definition}
+  Let $f: A \to \mathbb{R}$, $c$ a cluster point of $A \st c \notin A$.
+  % TODO
+\end{definition}
+
+\begin{example}
+  $f(x) = x \sin \frac{1}{x}$, defined on $A = (-\infty, 0)\cup(0,\infty)$. $0$ a cluster point of $A$. Note that $\lim_{x\to 0} f(x) = 0$, since $\abs{f(x)} \leq \abs{x}$, so if we extend $f$ to $0$ by setting $f(0) = 0$, then the extended function is continuous at $0$.
+\end{example}
 
 \newpage
 \section{Appendix}
