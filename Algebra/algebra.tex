@@ -2484,8 +2484,10 @@ hence $\varphi$ surjective. Again, the kernel is $\ker \varphi = mn \mathbb{Z}$ 
   For example, $\mathbb{Z}/n\mathbb{Z}$ and $\mathbb{Z}$ are cyclic; we have $\mathbb{Z}/n\mathbb{Z} = \langle \overline{1}\rangle$ and $\mathbb{Z} = \langle 1 \rangle$. Note that cyclic $\implies$ abelian, hence any non-abelian group is not cyclic.
 \end{example}
 
-\begin{definition}[Order]
-  The \emph{order} of $g \in G$ is the minimal positive $n \in \mathbb{Z}_+ \st g^{n} = 1$. If not such $n$ exists, we say that the order of $g$ is $\infty$. We denote $\ord(G)$.
+\begin{definition}[Order of $g/G$]
+  The \emph{order} of $G$, denoted $\sharp G$ or $|G|$, is the number of elements in $G$. If $G$ infinite, it is denoted $\infty$.
+
+  The \emph{order} of an element $g \in G$ is the minimal positive $n \in \mathbb{Z}_+ \st g^{n} = 1$. If not such $n$ exists, we say that the order of $g$ is $\infty$. We denote $\ord(G)$.
 \end{definition}
 
 \begin{example}[Orders]
@@ -2561,13 +2563,261 @@ hence $\varphi$ surjective. Again, the kernel is $\ker \varphi = mn \mathbb{Z}$ 
 \end{example}
 
 \begin{definition}[Cycles]
-  Let $1 \leq a \leq n$ and $i_1, i_2, \dots, i_a$ distinct elements of $[1, n]$. We denote $\sigma = (i_1\, i_2\,\cdots \,i_a)$ as a \emph{cycle} of length $a$, equal to the permutation $\sigma$ such that $\sigma (i_j) = i_{j+1} \forall j = 1, \dots, a$ and $\sigma(t) = t \forall t \notin \{i_1, \dots, i_a\}$. For instance, \[
+  Let\footnotemark $1 \leq a \leq n$ and $i_1, i_2, \dots, i_a$ distinct elements of $[1, n]$. We denote $\sigma = (i_1\, i_2\,\cdots \,i_a)$ as a \emph{cycle} of length $a$, equal to the permutation $\sigma$ such that $\sigma (i_j) = i_{j+1} \forall j = 1, \dots, a$ and $\sigma(t) = t \forall t \notin \{i_1, \dots, i_a\}$. For instance, for $n=7$, \[
   (5\, 1\,6) = \begin{pmatrix}
     1 & 2 & 3 & 4 & 5 & 6 & 7\\
     6 & 2 & 3 &4 & 1 & 5 & 7
   \end{pmatrix}.  
   \]
 \end{definition}
+\footnotetext{Note that indices $j$ here should be read mod $a$. That is, if you have $(i_1 i_2)$, then this would "read" as $i_1 \mapsto i_2$ and $i_2 \mapsto i_{3\mod 2} = i_1$.
+
+
+
+}
+\begin{example}[$n=3$]
+  $\sigma = (1 \,2 \,3) = \begin{pmatrix}
+    1 & 2 & 3\\
+    2 & 3 & 1
+  \end{pmatrix}$, $\tau = (1\, 2) = \begin{pmatrix}
+    1 & 2 & 3\\
+    2 & 1 & 3
+  \end{pmatrix}$. Consider:
+  \begin{align*}
+  \sigma \tau = (1 2 3)(1 2) = (1 3)(2) = (1 3)  \\
+\tau \sigma = (1 2)(1 2 3) = (1)(2 3) = (2 3)\\
+  \end{align*}
+Hence, since these are not equal, $S_3$ not commutative; moreover, $S_n$ for $n \geq 3$ is not commutative.
+
+More generally, consider $\sigma = (i_1, \dots, i_a).$ Let $k \geq 1$ Then, \begin{align*}
+  \sigma^k = \sigma \circ \cdots \circ \sigma\\
+  \sigma^2 = (i_1, i_2, i_3, i_4, \dots) \quad k = 2\\
+  \sigma^k(i_j) = i_{j+k}\\
+  \sigma^{k}(t) = t \forall t \notin \{i_1, \dots, i_a \}\\
+  \sigma^k = 1 \text{ for } k = a,
+\end{align*}
+that is, the order of a cycle of length $a$ is $a$.
+\end{example}
+
+\begin{proposition}[Facts about Cycles]
+  \begin{enumerate}
+    \item Disjoint cycles commute. Say $\sigma = (i_1, \dots, i_a)$ and $\tau = (i_{a+1}, \dots, i_b)$, and $\{i_1, \dots, i_a\}\cap \{i_{a+1}, \dots, i_b\} = \varnothing$. Then, $\sigma \tau = \tau \sigma$.
+    \item Any permutation can be written as a product of disjoint cycles.
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  \begin{enumerate}
+    \item If $t\notin \{i_1, \dots, i_b\}$, $\sigma \tau(t) = \sigma(\tau(t)) = \sigma (t) = t$. Else, we have \begin{align*}
+      \sigma \tau (i_s) = \begin{cases}
+        \sigma (i_{s+1}) & a+ 1 \leq s \leq b\\
+        i_{a+1} & s = b\\
+        \sigma(i_s) & 1 \leq s \leq a
+      \end{cases} = \begin{cases}
+        i_{s+1} & a+1 \leq s \leq b\\
+        i_{a+1} & s = b\\
+        i_{s+1} & 1 \leq s \leq a
+      \end{cases}
+    \end{align*}
+    (where indices are read mod $a$) Calculating $\tau \sigma$ yields the same result.
+    \item We won't prove. Consider the following example.
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+  Let 
+  % $$
+  % \sigma = \begin{pmatrix}
+    % 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+    % 5 & 1 & 3 &12 & 7 & 9 & 2 & 6 & 10 & 11 & 8 & 4&
+  % \end{pmatrix}
+  % $$.
+   We can write \[
+    \sigma = (1 \,5\, 7 \,2)(3)(4 \, 12)(6\, 9 \, 10 \, 11 \, 8).
+  \]
+\end{example}
+
+\begin{example}[Composition of Disjoint Permutations]
+  Given $\sigma \in S_n$, write $\sigma = \tau_1 \tau_2 \cdots \tau_r$. $\tau_i$ is a cycle of length $a_i$ where the $\tau_i$ disjoint. Then, we can write \begin{align*}
+    \sigma^2 = \tau_1 \cdots \tau_r \tau_1 \cdots \tau_r\\
+    = \tau_1^2 \cdots \tau_r^2\\
+    \sigma^k = \tau_1^k\tau_2^k \cdots \tau_r^k
+  \end{align*}
+  Hence, we have that $\sigma^k = 1 \iff \tau_1^k = \tau_2^k = \cdots = \tau_r^k = 1 \iff a_1 | k, a_2 | k, \dots, a_r | k$ (this follows from \cref{lemma:multipledivides}). Hence, $\lcm (a_1, \cdots a_r) | k$ and thus $\ord (\sigma) = \lcm(a_1, \dots, a_r)$. Note that, if the cycles \emph{not} disjoint, this usually fails.
+\end{example}
+
+\begin{lemma}\label{lemma:multipledivides}
+Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
+\end{lemma}
+
+\begin{proof}
+  Write $k = q \cdot a + r, 0 \leq r < a$. Then, $1 = g^k = (g^a)^q g^r = 1^q g^r = g^r \implies r = 0 \implies a | k$.
+\end{proof}
+
+\begin{example}[Subgroups of $S_n$]
+  Let $T \subseteq [1, n], \sharp T = t$, $A_T = \{\sigma \in S_n : \sigma(b) = b \forall b \in T\}$ (that is, all elements in $T$ are fixed.), and $B_T = \{\sigma \in S_n : \sigma (T) = T\}$. We have that $A_T < B_T < S_N$. Moreover, $\sharp A_T = (n-t)!$ and $\sharp B_T = t! (n-t)!$.
+\end{example}
+
+\subsection{\texorpdfstring{Dihedral Groups $D_n$}{Dihedral Groups}}
+
+
+\begin{definition}[$D_n$]
+  $D_n$ or the \emph{dihedral group} is the group of symmetries of a regular $n$-gon in the plane, where $n \geq 3$ (that is $n = 3$ a triangle, $n=4$ a square, etc).
+
+  Let $x$ represent a planar rotation (about the $z$ axis), and $y$ a rotation about $y$. Then, $\ord x = n$ and $\ord y = 2$.
+\end{definition}
+
+\begin{proposition}
+  Every symmetry $\sigma \in D_n$ is uniquely determined by $\sigma (1)$ and $\sigma (2)$. That is, $\sigma = \tau \iff \sigma(1) = \tau(1), \sigma(2) = \tau(2)$.
+  
+  Moreover, the elements of $D_n$ are precisely \[
+  D_n = \{
+    e, x, \dots, x^{n-1}, y, xy, x^2y, \dots, x^{n-1}y
+  \},  
+  \]
+  that is, $D_n$ has precisely $2n$ elements. Further, $D_n$ not abelian.
+\footnotemark
+% TODO: include x^ay=yx^{-a}, and more general props better organized
+\end{proposition}
+\footnotetext{Read: "an $n$-gon has precisely $2n$ distinct symmetries". Note that $e \equiv \mathbb{1}$, that is, the identity element (no rotations).}
+\begin{proof}
+  We have, for $a \st 0 \leq a \leq n -1$,
+  \begin{tabular}{c|cc}
+    & 1 & 2\\
+    \hline
+    $x^a$ & $1 + a$ & $2 + a$\\
+    $x^{a}y$ & $1 + a$ & $a$
+  \end{tabular}. We claim these are distinct: if $\sigma \in D_n,$ then $\sigma(1) = 1 + a$, then either $\sigma(2) = a$ or $2 + a$, and so either $\sigma = x^ay$ or $\sigma = x^a$, respectively.
+
+  To show $xyxy = 1$: % TODO
+
+  To show that $D_n$ not abelian we have that \begin{align*}
+    xyxy = 1 \implies xyx = y^{-1} = y\\
+    \implies xy = yx^{-1}
+  \end{align*}
+  In this case, if $D_n$ abelian, then $xy = yx \implies x = x^{-1} \implies x^2 = 1$, which is a contradiction.
+
+  Moreover, we have then that $xy = yx^{-1}$, and so we can write \begin{align*}
+    x^ay = yx^{-a} \implies x^{a+1}y = x(x^ay) = x(yx^{-a})\\
+    = (xy)x^{-a} = yx^{-1}x^{-a} = yx^{-(a+1)},
+  \end{align*}
+  that is, $\forall a$, $x^{a}y = yx^{-a}$.
+\end{proof}
+
+\begin{example}[In $D_5$]
+  What is, in $D_5$, the element $x^3yxyx^2yx^4$?
+  \begin{proof}
+    \begin{align*}
+      x^3y(xy)x^2yx^4 = x^3y(yx^{-1})x^2yx^4\\
+      =x^3\cancel{y^2}x^{-1}x^2yx^4 \\
+      = (x^4y)x^4\\ 
+      = (yx^{-4})x^4\\
+      = y
+    \end{align*}
+  \end{proof}
+\end{example}
+
+\begin{definition}[Direct Product]
+  If $G_1, G_2$ are groups, $G_1 \times G_2$ also a group, where 
+  \begin{itemize}
+    \item $(x_1, y_1)(x_2y_2) = (x_1x_2, y_1y_2)$. 
+    \item $1 = (1,1)$
+    \item $(x,y)^{-1} = (x^{-1}, y^{-1})$
+  \end{itemize}
+\end{definition}
+
+\newpage
+\subsection{Cosets and Lagrange's Theorem}
+
+\begin{definition}[Left Coset]
+  Let $H < G$. A \emph{left coset} of $H$ in $G$ is a subset of $G$ of the form $$gH := \{g h : h \in H \}.$$
+\end{definition}
+
+\begin{lemma}[Facts about Cosets]\label{lemma:cosets1}
+  \begin{enumerate}
+    \item The cosets are equivalence classes for the relation on $G$ defined $x \sim y$ if $y^{-1}x \in H$.
+    \item Two cosets are either equal or disjoint; $G = \amalg_{\{g_i : i \in I\}} g_i H$ for a suitable $\{g_i : i \in I\} \subseteq G$ ($I$ some index set).
+    \item $xH = yH \iff y^{-1}x \in H \iff x^{-1}y \in H \iff \exists h \in H \st x = yh$.
+    \item $xH = H \iff x \in H$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{example}[$S_3$]
+  Let $G = S_3$, $H = \{1, (123), (132)\} = \langle (123)\rangle$. Examples of cosets of $H$ would then be \begin{align*}
+    &H = \{1, (123), (132)\}\\
+    &(12)H = (13)H = (23)H = \{(12), (23), (13)\}
+  \end{align*}
+\end{example}
+
+\begin{example}[$\mathbb{Z}/6\mathbb{Z}$]
+  Let $G = \zmod 6, H = \langle 3 \rangle = \{0, 3\}$. \begin{align*}
+    &1 + H = \{1, 4\}\\
+    &2 + H = \{2, 5\}\\
+    &3 + H = \{3, 0\} = H
+  \end{align*}
+\end{example}
+
+\begin{definition}[Index of a Subgroup]
+  Let $G$ be finite, $H < G$. We define the \emph{index} of $H$ in $G$, denoted $[G : H]$ as the number of distinct left cosets of $H$ in $G$.
+\end{definition}
+
+\begin{proof}(Of \cref{lemma:cosets1})
+  \begin{enumerate}
+    \item (Equivalence relation) 
+    \begin{enumerate}
+      \item $x\sim x \impliedby x^{-1}x = 1 \in H$
+      \item $x \sim y \implies y^{-1}x \in H \implies x^{-1}y = (y^{-1}x)^{-1} \in H$
+      \item $x \sim y, y \sim z \implies y^{-1}x \in H, z^{-1}y \in H \implies z^{-1}y\cdot y^{-1}x \in H \implies z^{-1}x \in H \implies x \sim y$
+    \end{enumerate}
+    (Equivalence class of $x$) If $x \in y, y^{-1}x \in H \implies x^{-1}y \in H \implies y = x (x^{-1}y) \in xH$. Conversely, if $y \in xH \implies y = xh$, some $y \in H$. $y^{-1}x = (xh)^{-1} x = h^{-1}x^{1}x = h^{-1} \in H \implies x \sim y$.
+    \item (Cosets equal/disjoint) This follows directly from 1. by properties of equivalence relations.
+    \item (Equivalence) $xH = yH \implies x, y$ have same equivalence class and so $x \sim y \implies x^{-1}y \in H$. Then, $xH = yH \implies yH = xH$, so the same logic follows symmetrically. $x^{-1}y \in H \implies x \sim y \implies x = y h,$ some $h \in H$.
+    \item ($xH = H \iff x \in H$) Let $y = 1$. This then follows directly from 3.
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Lagrange's Theorem]\label{thm:lagrange}
+  Let $G$ be finite, $H < G$. Then,
+  \[[G:H]|H| = |G|,\] and in particular, \[|H|\mid|G|\]
+\end{theorem}
+
+\begin{corollary}
+  Let $G$ be a finite group, $g \in G$. Then, $\ord g \mid G$.
+\end{corollary}
+\begin{proof}
+  $\ord g = |\langle g\rangle| \,\mid\,|G|$, by Lagrange's Theorem.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
