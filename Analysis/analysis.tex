@@ -2335,12 +2335,39 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
   \end{enumerate}
 \end{definition}
 
-\begin{example}
+\begin{example}[$f(x) = \sin \frac{1}{x}$]
   Let $A = (0, \infty), f(x) = \sin \frac{1}{x}$ and $c = 0$. Then, $\lim_{x \to 0} \sin \frac{1}{x}$ does not exist.
   \begin{proof}
     (Using divergence criterion 1.) Take $x_n = \frac{1}{(2n+1) \frac{\pi}{2}}$. Then, $x_n > 0$, and $\lim_{n \to \infty} x_n = 0 = c$. Moreover, $f(x_n) = \sin (\frac{1}{x_n}) = \sin ((2n+1)(\frac{\pi}{2})) = (-1)^{n}$. This sequence does not converge, and so $\lim_{x \to 0} \sin \frac{1}{x}$ does not exist. $\quad$ \qedsymbol
 
     \noindent(Using divergence criterion 2.) Take $x_n = \frac{1}{2n\pi}, y_n = \frac{1}{2n\pi + \frac{\pi}{2}}$, noting that $\lim_{n\to\infty} x_n = \lim_{n \to \infty} y_n = 0$. Then, $f(x_n) = \sin \frac{1}{x_n} = \sin (2n \pi) = \forall n$, while $f(y_n) = \sin \frac{1}{y_n} = \sin (2n \pi + \frac{\pi}{2}) = 1 \forall n$, hence, $\lim_{n\to\infty} f(x_n) \neq \lim_{n\to\infty} f(y_n),$ and thus $\lim_{x\to c} f(x)$ does not exist.
+  \end{proof}
+\end{example}
+
+\begin{example}[Abbott, 4.2E2]
+  Let $x_n = \frac{2}{\pi n}, y_n = \frac{1}{(2+n)\pi}$. Then, we have that both $(x_n) \to 0$ and $(y_n) \to 0$, but \[
+  f(x_n) = \cos (\frac{\pi n}{2}) = 0 \forall n; \quad f(y_n) = \cos ((2 + n) \pi) = 1 \forall n,
+  \]
+  hence, $\lim_{n\to\infty} f(x_n) = 1 \neq \lim_{n\to\infty}f(y_n) = 0$, so the limit does not exist.
+
+  Consider now $\lim_{x\to 0} x \cos \frac{1}{x}$. Fix $\epsilon > 0$, and take $\delta = \epsilon$, then, we have that $\forall x \st 0 < \abs{x - 0} < \delta$. Then, we have by properties of $\cos$, \[
+  \abs{x \cos \frac{1}{x}} \leq \abs{x} < \delta = \epsilon,
+  \]
+  hence the function converges to $0$.
+\end{example}
+
+\begin{example}[Abbott, 4.2E14]
+  Let $f : A \subseteq \mathbb{R}, f : A \to \mathbb{R}$, $c \in \mathbb{R}$ be a cluster point of $A$, and $f(x) \geq 0 \forall x \in A$. Prove that $\lim_{x \to c} \sqrt{f(x)} = \sqrt{ \lim_{x\to c}f(x)}$.
+  \begin{proof}
+    (Seq'n) Define $L := \lim_{x\to c} f(x)$. Then, we have that $\forall x_n \in A\setminus\{c\} \st (x_n) \to c$, $\lim_{n\to\infty} f(x_n) = L$. We can write, then,
+    \[
+    L = \lim_{n \to \infty} f(x_n) = \lim_{n\to\infty} \sqrt{f(x_n)}\sqrt{f(x_n)} = \left(\lim_{n\to\infty}\sqrt{f(x_n)}\right)^{2},
+    \]
+    and taking the square root of both sides, we have the desired result. Note that this used the assumption that $\exists\lim_{n\to\infty} x_n \implies \exists\lim_{n\to\infty} \sqrt{x_n}$.
+
+
+    \noindent($\epsilon-\delta$) %TODO
+
   \end{proof}
 \end{example}
 
@@ -2394,15 +2421,21 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
 \end{proof}
 
 \begin{theorem}\label{thm:sequentialrightlimit}
-  Let $A \subseteq \mathbb{R}, f : A \to \mathbb{R},$ and let $c$ be a cluster point of the set \(A \cap (c, \infty).\)Then, TFAE:
+  Let\footnotemark $A \subseteq \mathbb{R}, f : A \to \mathbb{R},$ and let $c$ be a cluster point of the set \(A \cap (c, \infty).\)Then, TFAE:
   \begin{enumerate}
     \item $\lim_{x\to c^+} f(x) = L$
     \item For any sequence $(x_n) \in A \st x_n > c \forall n$, and $\lim_{n\to\infty} x_n = c,$ we have that $\lim_{n\to\infty} f(x_n) = L$. 
   \end{enumerate}
 \end{theorem}
 \begin{proof}
-  % TODO
+  ($\implies$)
+
+
+  \noindent($\impliedby$)
+  % TODO:
 \end{proof}
+
+\footnotetext{Abbott, 4.3E1 (Theorem 4.3.2)}
 
 \subsection{Limits and Infinity}
 \subsubsection{Infinite Limits}
@@ -2463,6 +2496,18 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
   "Sequentialize" limits at infinity.
 \end{example}
 
+\begin{example}[Abbott, 4.4E9]
+  Prove that if $f: (a, \infty) \to \mathbb{R}$ is such that $\lim_{x\to\infty} xf(x) = L\in\mathbb{R}$ exists, $$\lim_{x\to\infty} f(x) = 0.$$
+  \begin{proof}
+    \begin{align*}
+      \lim_{x\to\infty} xf(x) = L&\implies \forall \epsilon > 0, \exists M \st \forall x \geq M > 0, \abs{x f(x) - L} < \epsilon\\
+      &\implies L - \epsilon < x f(x) < L + \epsilon\\
+      &\implies \underbrace{\frac{L-\epsilon}{x}}_{\to 0} < f(x) < \underbrace{\frac{L+\epsilon}{x}}_{\to 0}\\
+      &\overset{\text{squeeze theorem}}{\implies} \lim_{x\to\infty} f(x) = 0
+    \end{align*}
+    Noting that we take $M > 0$ wlog.
+  \end{proof}
+\end{example}
 
 \subsubsection{Infinite Limits at Infinity}
 
