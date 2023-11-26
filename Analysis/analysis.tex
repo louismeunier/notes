@@ -2031,7 +2031,11 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
 
 \begin{proof}
   % TODO; sketch
-  We will show first that $\limsupbar x_n \geq \sup \fl$.
+  We\footnote{
+  Sketch: show double inequality. First, show that $\limsup \geq \sup \fl$, by using the fact that $x_n$ bounded, and so $y_n$ (the sequence that converges to $\limsup$) converges and is $\geq x_n \forall n$, and so must be greater than any subsequence.
+
+  To show $\limsup \leq \sup \fl$, show that $\limsup \in \fl$, and hence must be equal to $\sup \fl$. To do this, create to two subsequences of $y_n$ (note - $y_n$ NOT $x_n$) that both converge to $x_n$. Note that these exist since $y_n$ converges. The real proof is in constructing the sequence of indices $n_k$ such that $y_{n_k}$ "bounds" (so to speak) some $x_{n_k}$. Then, using squeeze theorem, $x_{n_k} \to \limsup x_n$, so $\limsup x_n \in \fl$ and the proof is complete.
+  } will show first that $\limsupbar x_n \geq \sup \fl$.
 
   Let $x \in \fl$ and let $(x_{n_k})$ be a subsequence such that $\lim_{k\to\infty} x_{n_k} = x$. Let $y_n = \sup \{x_{m}: m \geq n\}$. We have, then, that $y_n \geq x_n$, and that $\limsupbar x_{n} = \lim y_n$, hence $\forall k$, $y_{n_k} \geq x_{n_k},$ and that $\limsupbar x_n = \lim_{k\to\infty} y_{n_k}$ ($(y_n)$ is a convergent sequence, so any subsequence converges to the same limit.) So, we have that $$\limsupbar x_n = \lim_{k\to\infty} y_{n_k} \geq \lim_{k\to\infty} x_{n_k} = x,$$ that is, for any $x \in \fl$, $\limsupbar x_n  \geq x \implies \limsupbar x_n$ upper bounds $\fl$. Since $\sup$ least upper bound, it must be that $\limsupbar x_n \geq \sup \fl$.
 
@@ -2046,7 +2050,7 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
   So, we have constructed a strictly increasing sequence $(n_k)$ of natural numbers such that $\forall k\geq 1,$ $$y_{n_k+1} - \frac{1}{k+1} \leq x_{n_{k+1}} \leq y_{n_{k+1}}. \quad \star$$ Consider the subsequences $(y_{n_k + 1})$ and $(y_{n_{k+1}})$ of $(y_n)$, and a subsequence $(x_{n_{k+1}})$ of $(x_n)$. Since $y_n$ converges, and $\lim_{n\to\infty} y_n = \limsupbar x_n$, we have that \[
     \lim_{k\to\infty} y_{n_k + 1} = \limsupbar x_n; \text{ and } \lim_{k\to\infty} y_{n_{k+1}} = \limsupbar x_n,
     \]
-    and so, given this and $\star$, by the \nameref{thm:squeezetheorem},  $\lim_{k\to\infty} x_{n_{k+1}} = \limsupbar_{n\to\infty} x_n$, and so $\limsupbar x_n \in \fl$.
+    and so, given this and $\star$, by the \nameref{thm:squeezetheorem},  $\lim_{k\to\infty} x_{n_{k+1}} = \limsupbar x_n$, and so $\limsupbar x_n \in \fl$.
 \end{proof}
 
 \begin{corollary}
@@ -2268,7 +2272,7 @@ Let $A = \mathbb{Q}$. Then, the set of cluster points is precisely $\mathbb{R}$.
 \begin{proof}
   (1. $\implies$ 2.) By 1., $\forall \epsilon > 0, \exists \delta > 0 \st \forall x \in A, x \neq c$ such that $0 < \abs{x - c} < \delta,$ we have $\abs{f(x) - L} < \epsilon$. Let $(x_n)$ be a sequence in $A$ s.t. $x_n \neq c$ and $\lim_{n\to\infty} x_n = c$. We wish to show that $\lim_{n\to\infty} f(x_n) = L$. Take $\epsilon > 0$; then, we have that $\exists \delta > 0 \st \forall x \in A$ satisfying $0 <\abs{x - c} < \delta$, we have $\abs{f(x) - L} < \epsilon$. Fix such a $\delta$; then, since $\lim_{n\to\infty} x_n = c,$ $\exists N \st \forall n \geq N, \abs{x_{n} - c} < \delta$. Then, it follows from the definition of $\delta$ that for $n \geq N$, $\abs{f(x_n) - L} < \epsilon$, hence $\lim_{n\to\infty} f(x_n) = L$, and 2. holds.
 
-  (2. $\implies$ 1.) Suppose not. Then, $\forall \epsilon > 0,$ we can find $\delta > 0$ such that $\forall x \in A \st 0 < \abs{x - c} < \delta$ we have $\abs{f(x) - L} < \epsilon$. But then, this means that $\exists \epsilon_0 > 0 \st \forall \delta > 0, \exists x \in A, x \neq C \st$ $0 < \abs{x - c} < \delta$ and $\abs{f(x) - L} \geq \epsilon_0$. So, for this $\epsilon_0 >0,$ we can take $\delta = \frac{1}{n},$ which gives $x_n \in A, x_n \neq c$, such that $0 < \abs{x_n - c} < \frac{1}{n}$ and $\abs{f(x) - L} \geq \epsilon_0$. This gives us a sequence $(x_n) \in A, x_n \neq c$, such that $\lim_{n\to\infty} \abs{x_n - c} = 0 \implies \lim_{n\to\infty} x_n = c$,  and $\abs{f(x_n) - L} \geq \epsilon_0 \forall n$. But this means that we have a sequence $x_n \st \lim x_{n} = c$, and the sequence $(f(x_n))$ does not converge to $L$. But this contradicts 2.; hence, we have come to a contradiction, and 1. holds.
+  (2. $\implies$ 1.) Suppose not. Then, $\forall \epsilon > 0,$ we can find $\delta > 0$ such that $\forall x \in A \st 0 < \abs{x - c} < \delta$ we have $\abs{f(x) - L} < \epsilon$. But then, this means that $\exists \epsilon_0 > 0 \st \forall \delta > 0, \exists x \in A, x \neq C \st$ $0 < \abs{x - c} < \delta$ and $\abs{f(x) - L} \geq \epsilon_0$. So, for this $\epsilon_0 >0,$ we can take $\delta = \frac{1}{n},$ which gives $x_n \in A, x_n \neq c$, such that $0 < \abs{x_n - c} < \frac{1}{n}$ and $\abs{f(x_n) - L} \geq \epsilon_0$. This gives us a sequence $(x_n) \in A, x_n \neq c$, such that $\lim_{n\to\infty} \abs{x_n - c} = 0 \implies \lim_{n\to\infty} x_n = c$,  and $\abs{f(x_n) - L} \geq \epsilon_0 \forall n$. But this means that we have a sequence $x_n \st \lim x_{n} = c$, and the sequence $(f(x_n))$ does not converge to $L$. But this contradicts 2.; hence, we have come to a contradiction, and 1. holds.
 \end{proof}
 
 \begin{proposition}
@@ -2327,7 +2331,7 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
   Let $f : A \to \mathbb{R}$ and let $c$ be a cluster point of $A$. The following criterion state that the limit of $f$ at $c$ does not exist:
   \begin{enumerate}
     \item Suppose there exists a sequence $x_n \in A, x_n \neq c, \st$ $\lim_{n \to \infty} x_n = c$, \newline$\st \lim_{n \to \infty} f(x_n)$ does not exist. Then, $\lim_{x \to c} f(x)$ also does not exist.
-    \item  Suppose there exist two sequences $x_n, y_n \in A, x_n, y_n \neq c, \st \lim_{n\to\infty} x_n = \lim_{n\to\infty} y_n = c,$ and the limits $\lim_{n\to\infty} f(x_n)$ and $\lim_{n\to\infty} f(y_n)$, but these two limits are different, then $\lim_{x\to c} f(x)$ does not exist.
+    \item  Suppose there exist two sequences $x_n, y_n \in A, x_n, y_n \neq c, \st \lim_{n\to\infty} x_n = \lim_{n\to\infty} y_n = c,$ and the limits $\lim_{n\to\infty} f(x_n)$ and $\lim_{n\to\infty} f(y_n)$ exist, but these two limits are different, then $\lim_{x\to c} f(x)$ does not exist.
   \end{enumerate}
 \end{definition}
 
@@ -2502,7 +2506,7 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
   \end{enumerate}
 \end{proposition}
 \begin{proof}(Of 3.)
-  % TODO
+  Let $(x_n) \in A \st \lim_{n\to\infty} x_n = c$. Since $f, g$ continuous at $c$, we have that $\lim_{n\to\infty}f(x_n) = f(c)$ and $\lim_{n\to\infty}g(x_n) = g(c)$. By algebraic properties of limits, then, $\lim_{n\to\infty} f(x_n)g(x_n) = f(c)g(c)$ and so $\forall (x_n) \in A \st \lim_{n\to\infty} x_n= c,$ we have that $\lim_{n\to\infty} h(x_n) = h(c)$ where $h = f \cdot g$ and thus $h$ continuous at $c$.
 \end{proof}
 
 \begin{theorem}[Composition of Functions and Continuity]
@@ -2513,21 +2517,57 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
 \end{theorem}
 
 \begin{proof}(Using sequential characterization)
-% TODO
-\noindent($\epsilon - \delta$)
-  % TODO
+Let $(x_n) \in A \st \lim_{n\to\infty} x_n = c$. $f$ continuous at $c$, so $\lim_{n\to\infty} f(x_n) = f(c)$. Let $(f(x_n))_{n \geq 1}$ is a sequence in $B$ such that $\lim_{n\to\infty} f(x_n) = f(c)$ and so $g$ is continuous at $f(c)$. Then, $\lim_{n\to\infty} g(f(x_n)) = g(f(c))$ so $\forall (x_n) \in A \st \lim_{n\to\infty} x_n = c$. We thus have that $\lim_{n\to\infty} h(x_n) = h(c)$ where $h = g \circ f$, hence $h$ is continuous at $c$.
+
+\noindent($\epsilon - \delta$) Fix $\epsilon > 0$. Since $g$ is continuous at $f(c),$ $\exists \delta' > 0 \st \forall y \in B \st \abs{y - f(c)} < \delta$, $\abs{g(y) - g(f(c))} < \epsilon$.
+
+Since $f$ continuous at $c, \exists \delta'>0 \st \forall x \in A \st \abs{x - c} < \delta', \abs{f(x)-f(c)}< \delta'$. Then, for such $x$, $\abs{g(f(x)) - g(f(c))} < \epsilon$ and the proof is complete, taking $h = g \circ f$.
 \end{proof}
 
 \begin{example}
   $f: \mathbb{R} \to \mathbb{R}, f(x) = x$.
+  \begin{proof}
+  \end{proof}
+\end{example}
+
+\begin{example}[$f(x)  = \sin x$]
+  Show that $f(x) = \sin x$ continuous on any $c \in \mathbb{R}$.
+  \begin{proof}
+    Fix $\epsilon > 0$. Take $\delta = \epsilon$, and take $x \st \abs{x - c} < \delta$. Then, \begin{align*}
+      \abs{\sin x - \sin c} = \abs{2 \sin \left(\frac{x - c}{2}\right) \cos \left(\frac{x+c}{2} \right)}\\
+      = 2 \abs{\sin \left(\frac{x - c}{2}\right)}\abs{\cos \left(\frac{x+c}{2} \right)}\\
+      \leq 2\abs{\frac{x-c}{2}} = \abs{x - c} < \delta = \epsilon.
+    \end{align*}
+  \end{proof}
+\end{example}
+
+\begin{example}[Dirichlet Function]
+  Let $f: \mathbb{R} \to \mathbb{R}$, $x\mapsto\begin{cases}
+    1 & x \in \mathbb{Q}\\
+    0 & x \in \mathbb{R}\setminus\mathbb{Q}
+  \end{cases}$. Show $f$ discontinuous $\forall c \in \mathbb{R}$.
+  \begin{proof}
+    Fix $c \in \mathbb{R}$ and let $n \in \mathbb{N}$. Consider the interval $(c - \frac{1}{n}, c + \frac{1}{n})$. By density of the rationals, there must exist some $x_n \in \mathbb{Q} \st x_n \in (c - \frac{1}{n}, c + \frac{1}{n})$, and similarly, by density of the irrationals, there must exists some $y_n \in \mathbb{J}, y_n \in (c - \frac{1}{n}, c + \frac{1}{n})$.
+
+    We have, then, \[
+    \abs{x_n - c}  < \frac{1}{n} \text{ and } \abs{y_n - c} < \frac{1}{n}, 
+    \]
+    and moreover, $f(x_n) = 1$ and $f(y_n) = 0 \forall n$. We also have $\lim_{n\to\infty} x_n = \lim_{n\to\infty} y_n = c$, and so $f$ cannot be continuous.
+  \end{proof}
 \end{example}
 
 \subsubsection{Extensions By Continuity}
 
-\begin{definition}
-  Let $f: A \to \mathbb{R}$, $c$ a cluster point of $A \st c \notin A$.
-  % TODO
+\begin{definition}[Extension by Continuity]
+  Let $f: A \to \mathbb{R}$, $c$ a cluster point of $A \st c \notin A$. Since $c \notin A,$ we cannot say whether $f$ continuous or not at $a$, but we can \emph{extend} $f$ to $A \cup \{c\}$ by setting \[F(x) := \begin{cases}
+    f(x) & x \in A \\
+    L & x = c
+  \end{cases}.\]
 \end{definition}
+
+\begin{remark}
+  Since $c$ a cluster point of $A \cup \{c\}$, we have that $F$ continuous at $c$ iff $\lim_{x\to c}F(x) = L \iff \lim_{x\to c} f(x) = L$. Hence, if $f : A \to \mathbb{R}$, $c$ a cluster point of $A$, $c \notin A$, and $\lim_{x \to c} = L$, $F$ is continuous at $c$. If $\lim_{x\to c} f(x)$ DNE, $f$ cannot be extended.
+\end{remark}
 
 \begin{example}
   $f(x) = x \sin \frac{1}{x}$, defined on $A = (-\infty, 0)\cup(0,\infty)$. $0$ a cluster point of $A$. Note that $\lim_{x\to 0} f(x) = 0$, since $\abs{f(x)} \leq \abs{x}$, so if we extend $f$ to $0$ by setting $f(0) = 0$, then the extended function is continuous at $0$.
@@ -2559,6 +2599,8 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
     \frac{x_{n+1}}{x_n} \geq q > 1.
   \]
 \end{definition}
+
+
 
 % \subsection{Major Results \& their Implications}
 

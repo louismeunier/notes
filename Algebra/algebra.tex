@@ -2788,6 +2788,93 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
   $\ord g = |\langle g\rangle| \,\mid\,|G|$, by Lagrange's Theorem.
 \end{proof}
 
+\begin{proof}(Of \nameref{thm:lagrange})
+  Let $G$ be a finite group, $H < G$. Since the cosets of a subgroup form a disjoint union of the group itself, we can write \[
+  G = \amalg_{i\in I} g_i H,  
+  \]
+  for some index set $I$. Let $a, b \in G$, and define the function \[f: aH \to bH, \quad x \mapsto ba^{-1}x.\]
+  We claim this is a well-defined, bijective function. \begin{itemize}
+    \item (Well-Defined) Let $x = ah$ for some $h \in H$. Then, $ba^{-1}x = ba^{-1}ah= bh \in bH$, hence the map is well-defined.
+    \item (Surjective) Take $y \in bH, y = bh$. This is the image of $ah$ (where $a$ fixed as defined), that is, $ba^{-1}ah = bh$ as desired.
+    \item (Injective) Consider $ba^{-1} x_1 = ba^{-1} x_2$. Multiplying both sides by $ab^{-1} \implies x_1 = x_2$.
+  \end{itemize}
+  Thus, this is indeed well-defined bijective map, moreover, each coset of $g_i H$ has the same number of elements. Specifically, this is the same number of elements in the coset $H = eH$. Thus, we have that \[\mid G \mid = \mid H \mid \cdot \mid I \mid.\]
+\end{proof}
+
+\begin{remark}[Applications of Lagrange's Theorem]
+  \begin{enumerate}
+    \item Let $G$ be a finite group of primer order $p$; then, $G$ is cyclic, moreover, every element of $G$, $\neq e$, generates $G$.
+    \item Every element of a group must have an order that divides the order of the group. This follows from Lagrange's combined with the fact that $\ord g = \mid \langle g \rangle$. For instance, a group of order $6$ cannot have an element of order $4$ nor $5$.
+  \end{enumerate}
+\end{remark}
+  
+  \subsection{Homomorphisms/Isomorphisms}
+
+  \begin{definition}[Group Homorphism]
+    Let $G, H$ be groups, and define $f : G \to H$. $f$ is called a \emph{group homomorphism} if \[f(g_1 g_2) = f(g_1)f(g_2),\] $\forall g_1, g_2 \in G$.
+
+    The \emph{kernel} of $f$ is \[
+    \ker f = \{g \in G : f(g) = e_H\}.  
+    \]
+  \end{definition}
+
+  \begin{lemma}
+    Let $f : G \to H$ be a group homomorphism.
+    \begin{enumerate}
+      \item $f(e_G) = e_H$\footnotemark;
+      \item $f(g^{-1}) = f(g)^{-1}$;
+      \item $\im f < H$ (that is, the image of $f$ is a subgroup of $H$)
+    \end{enumerate}
+  \end{lemma}
+
+  \begin{proof}
+    \begin{enumerate}
+      \item $f(e_G) = f(e_G e_G) = f(e_G)f(e_G) \implies f(e_G)^{-1} f(e_G) = f(e_G)^{-1} f(e_G)f(e_G) \implies e_H = f(e_G)$
+      \item $e_H = f(e_G) = f(g g^{-1}) = f(g)f(g^{-1}) \implies f(g^{-1}) = f(g)^{-1}$
+      \item $e_H = f(e_G) \in \im f$. Let $h_1, h_2 \in \im f$, and let $h_i = f(g_i)$. Then, $h_1 h_2 = f(g_1 g_2)$ and $h_1^{-1} = f(g_1)^{-1} \implies e_H, h_1h_2, h_1^{-1} \in \im f$, hence $\im f$ a subgroup of $H$.
+    \end{enumerate}
+  \end{proof}
+  \footnotetext{Note that this is a consequence, not an axiom, as it was in ring homomorphisms.}
+
+  \begin{proposition}
+    Let $f: G \to H$ be a group homomorphism. $\ker f < G$, and $f$ injective iff $\ker f = \{e_G\}$.
+  \end{proposition}
+
+  \begin{proof}
+    We have that $e_G \in \ker f$ from before. Suppose $g_1, g_2 \in \ker f \implies f(g_1) = f(g_2) = e_H \implies f(g_1 g_2) = f(g_1) f(g_2) = e_H e_H = e_H \implies g_1 g_2 \in \ker f$. Suppose $g \in \ker f \implies f(g^{-1}) = f(g)^{-1} = e_H^{-1} = e_H \implies g^{-1} \in \ker f$, hence all the group axioms hold and $\ker f < G$.
+
+    ($\implies$) Suppose $f$ injective. Then, $f(e_G) = e_H$ uniquely, and so $\ker f = \{e_G\}$. ($\impliedby$) Suppose $\ker f = \{e_G\},$ and $f(g_1) = f(g_2)$. Then, $e_H = f(g_1)^{-1}f(g_2) = f(g_1^{-1})f(g_2) = f(g_1^{-1}g_2) \implies g_1^{-1}g_2 \in \ker f \implies g_1^{-1}g_2 = e_G \implies g_1 = g_2 \implies f$ injective.
+  \end{proof}
+
+  \begin{definition}[Group Isomorphism]
+    A group homomorphism $f: G \to H$ is a \emph{isomorphism} if it is bijective. We denote $G \cong H$; being isomorphic is an equivalence relation on groups.
+  \end{definition}
+
+  \begin{remark}
+    Note that the inverse function $g = f^{-1}$ an isomorphism as well.
+  \end{remark}
+
+  \begin{example}
+    Let $n \in \mathbb{Z}^{+}$. Then, any two cyclic groups of order $n$ are isomorphic.
+
+    \begin{proof}
+      Suppose $G = \langle g\rangle, H = \langle h\rangle$ of order $n$. Define $f(g^{a}) = h^a$ for any integer $a$. This is well defined ($g^{a} = g^{b} \implies g^{a-b} = e_G \implies n | (a-b) \implies f(g^{a}) = h^a = h^{b}(h^{n})^k = h^b = f(g^b)$). This is a surjective homomorphism, and is also injective because $f(g^{a}) = h^a = e_H \implies n | a \implies g^{a} = e_G$.
+      Thus, any cyclic group of order $n$ is isomorphic. Moreover, any cyclic group of order $n$ is isomorphic to $\mathbb{Z}/n\mathbb{Z}$ over addition.
+    \end{proof}
+  \end{example}
+
+  \begin{example}
+    Let $p \in \mathbb{P}$ Then, any two groups of order $p$ are isomorphic (since any group of a prime order must be cyclic).
+  \end{example}
+
+  \begin{theorem}[Cayley]\label{thm:cayley}
+    Let $G$ be a finite group of order $n$. Then, $G$ is isomorphic to a subgroup of $S_n$.
+  \end{theorem}
+
+  \begin{proof}
+    % TODO:
+  \end{proof}
+
 
 
 
