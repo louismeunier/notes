@@ -146,6 +146,10 @@
 \makeatletter
 \xpatchcmd{\proposition}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
 \makeatother
+\newcommand{\axiomautorefname}{Axiom}
+\makeatletter
+\xpatchcmd{\axiom}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
 % \newcommand{\thmautorefname}{Theorem}
 % \makeatletter
 % \xpatchcmd{\thm}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
@@ -2601,6 +2605,21 @@ Since $f$ continuous at $c, \exists \delta'>0 \st \forall x \in A \st \abs{x - c
   \end{proof}
 \end{example}
 
+\begin{example}[Thomae's Function]
+  Let $f: \mathbb{R}^{+} \to \mathbb{R}$, $x \mapsto \begin{cases}
+    0 & x \in \mathbb{J}\\
+    \frac{1}{n} & x = \frac{m}{n} \in \mathbb{Q}, \gcd(m,n) = 1
+  \end{cases}$.
+  
+  Show $f$ discontinuous for any $a \in \mathbb{Q}$ and continuous for any $a \in \mathbb{J}$.
+  \begin{proof}
+    Let $a > 0$ be rational. Then, $f(a) > 0$, by construction of the function. Let $(x_n) \in \mathbb{J} \st (x_n) \to a$. Then, $\lim_{n\to\infty} f(x_n) = 0$, despite $f(a) > 0$, hence $f$ is not continuous at $a$.
+% TODO
+    % Let $a > 0$ be irrational. Then, $$
+  \end{proof}
+\end{example}
+
+
 \subsubsection{Extensions By Continuity}
 
 \begin{definition}[Extension by Continuity]
@@ -2617,6 +2636,111 @@ Since $f$ continuous at $c, \exists \delta'>0 \st \forall x \in A \st \abs{x - c
 \begin{example}
   $f(x) = x \sin \frac{1}{x}$, defined on $A = (-\infty, 0)\cup(0,\infty)$. $0$ a cluster point of $A$. Note that $\lim_{x\to 0} f(x) = 0$, since $\abs{f(x)} \leq \abs{x}$, so if we extend $f$ to $0$ by setting $f(0) = 0$, then the extended function is continuous at $0$.
 \end{example}
+
+\subsection{Continuity on Bounded \& Closed Interval}
+
+\begin{definition}[Bounded Function]
+  Let $A$ be a set. A function $f : A \to \mathbb{R}$ is called \emph{bounded} if $\exists M > 0 \st \abs{f(x)} \leq M \forall x \in A$.
+\end{definition}
+
+\begin{theorem}[Closed Domain \& Continuous Implies Bounded]\label{thm:closeddomaincontinuous}
+  Let $f : [a, b] \to \mathbb{R}$ be a continuous function. Then, $f$ is bounded.
+\end{theorem}
+
+\begin{proof}
+We proceed by contradiction. Suppose there exists a continuous function $f : [a, b] \to \mathbb{R}$ that is not bound. Then, for any $n \in \mathbb{N}$, it is \emph{not} true that $\abs{f(x)} \leq n \forall x \in [a, b]$ (otherwise, this $n$ would be a bound).
+
+So, for any $n$, $\exists x_n \in [a, b] \st \abs{f(x_n)} > n$. Then, $(x_n)$ is a sequence in $[a,b]$ and by the \nameref{thm:bwthm}, this sequence has a subsequence $(x_{n_k})$ that converges to some $x \in [a,b]$, that is, \[\lim_{k\to\infty} x_{n_k} = x.\] So, by the sequential characterization of continuity, we have then that $$\lim_{k \to \infty} f(x_{n_k}) = f(x).$$ Hence, $(f(x_{n_k}))$ is a converging sequence of real numbers. But by the construction of $x_n$, we have \[\abs{f(x_{n_k})} > n_k \geq k,\] so $(f(x_{n_k}))$ is a converging sequence of real numbers that is not bounded, which contradicts the fact that any converging sequence is bounded.
+\end{proof}
+
+\begin{example}["Not Closed" Domain]
+  Consider the function $f: (0, 1] \to \mathbb{R}, x \mapsto \frac{1}{x}$. This function is continuous, and the interval $(0, 1]$ is bounded but \emph{not} closed. Hence, the function is \emph{not} bounded on this interval; for any $M > 0$, if we take $x \in (0, 1]$ such that $0 < x < \frac{1}{M+1}$, we have that $f(x) = \frac{1}{x} > M + 1 > M$.
+\end{example}
+
+\begin{definition}[Absolute Max/Min]
+  Let $f : A \to \mathbb{R}$. We say that $f$ has \emph{absolute maximum} at $\overline{x} \in A$ if $f(\overline{x}) \geq f(x) \forall x \in A$. $f$ has \emph{absolute minimum} at $\underline{x} \in A$ if $f(\underline{x}) \leq f(x) \forall x \in A$.
+\end{definition}
+
+\begin{theorem}
+  Let $f : [a, b] \to \mathbb{R}$ be a continuous function. Then, $f$ has an absolute maximum and absolute minimum on $[a, b]$.
+\end{theorem}
+
+\begin{proof}
+  (of absolute maximum\footnotetext{Absolute minimum case follows by taking $-f$.}) Consider the set \[
+  f([a, b]) = \{f (x) : x \in [a, b]\}.
+  \]
+  By \cref{thm:closeddomaincontinuous}, $f$ is bounded on $[a, b],$ so there exists some $M > 0$ such that $$
+  f([a, b]) \subseteq [-M, M].
+  $$So, the set $f([a,b])$ is bounded, and by Axiom \nameref{axiom:ac}, $s = \sup (f ([a,b]))$ exists. Hence, $s \geq f(x) \forall x \in [a, b]$. We aim to show then that $\exists \overline{x} \in [a, b] \st s = f(\overline{x})$.
+
+  Let $n \in \mathbb{N}$. Since $s - \frac{1}{n}$ is not an upper bound of $f([a, b])$, $$\exists x_n \in [a, b] \st s - \frac{1}{n} < f(x_n) \leq s. \quad \circledast$$
+  By \nameref{thm:bwthm}, $(x_n)$ has a converging subsequence $(x_{n_k})$. Let $\overline{x} = \lim_{k\to\infty} x_{n_{k}}$. By the sequential characterization of continuity, then, we have that $f(\overline{x}) = \lim_{k\to\infty} f(x_{n_k})$. By $\circledast$, we have \[
+  s - \frac{1}{n_k} < f(x_{n_k}) \leq s.
+  \]
+  Moreover, we have that $n_k \geq k \implies \frac{1}{n_k} \leq \frac{1}{k} \implies - \frac{1}{n_k} \geq -\frac{1}{k}$. Hence, $$s - \frac{1}{k} < f(x_{n_k}) \leq s,$$ and so by the squeeze theorem, $\lim_{k\to\infty} f(x_{n_k}) = s = f(\overline{x})$, and the proof is complete.
+\end{proof}
+
+\begin{theorem}[Location of the Roots]\label{thm:locationoftheroots}
+    Let $f:[a, b] \to \mathbb{R}$ be a continuous function such that $$
+    f(a) < 0 < f(b).
+    $$
+    Then, $\exists c \st a < c < b$ and $f(c) = 0$.
+\end{theorem}
+\begin{proof}
+  Let $S = \{x \in [a, b] : f(x) \leq 0\}$. $S \neq \varnothing$ since $a \in S$. $S$ also bounded (it is a subset of a bounded interval). Let $c = \sup S$ (exists by AC). We claim this $c$ is the point as defined in the theorem; we aim to show that $f(c) = 0$.
+
+  Let $\epsilon = \min \{\frac{\abs{f(a)}}{2}, \frac{f(b)}{2}\} > 0$. Since $f$ continuous at $a$, $\exists \delta' > 0 \st \forall x \in [a, b] \st \abs{x - a} < \delta'$, we have $\abs{f(x) - f(a)} < \epsilon$. Since $f$ is continuous at $b$, $\exists \delta'' > 0 \st \forall x \in [a, b] \st \abs{x - b} < \delta'',$ we have $\abs{f(x) - f(b)} < \epsilon$. Let $\delta = \min \{\delta', \delta'', \frac{b -a}{2}\}$. Then, $\forall x \in [a, a+ \delta),$ we have that \[
+  f(x) - f(a) < \epsilon \leq \frac{\abs{f(a)}}{2} \implies f(x) < \frac{\abs{f(a)}}{2} + f(a) = \frac{f(a)}{2} < 0.
+  \]
+  So, $\forall x \in [a, a + \delta), f(x) < 0$ and thus $[a, a + \delta) \subseteq S$. Hence, $c$, being the supremum of $S$, must have that $c \geq a + \delta > 0$.
+
+  Since $\delta \leq \delta''$, we have that $\forall x \in (b - \delta, b]$, \[
+  f(x) - f(b) > - \epsilon \geq -\frac{f(b)}{2} \implies f(x) > f(b) - \frac{f(b)}{2} = \frac{f(b)}{2} > 0.
+  \]
+  So, $\forall x \in (b - \delta, b],$ we have that $f(x) > 0$. So, if we take $[b - \frac{\delta}{2},  b]$, then for every $x \in$ this interval $f(x) > 0$ and so $S \subseteq [a, b - \frac{\delta}{2})$, and thus $c = \sup S \leq b - \frac{\delta}{2}$. Hence, $\exists \delta$ such that $a + \delta \leq c \leq b - \frac{\delta}{2}$. So, $c$ satisfies $a < c < b$.
+
+  We now show that $f(c) \leq 0$ and $f(c) \geq 0$ and so $f(c) = 0$.
+  
+  \noindent($f(c) \leq 0$) Let $n \in \mathbb{N}$ and consider $c - \frac{1}{n}$; this is not an upper bound of $S$, so $\exists (x_n) \in S \st c - \frac{1}{n} < x_n \leq c$. This gives us a sequence such that $\lim_{n\to\infty} (x_n) = c$. Since $f$ is continuous, by the sequential characterization of continuity, we have that $\lim_{n\to\infty} f(x_n) = f(c)$. Moreover, $x_n \in S$ and thus $f(x_n)\leq 0$ (by construction of $S$), hence $f(c) \leq 0$.
+
+  \noindent($f(c) \geq 0$) Since $c < b$, we can find $(x_n) \in [a, b] \st x_n > c, \lim_{n\to\infty} x_n = c$ ($x_n = c + \frac{1}{n}$, for instance). We must have that $f(x_n) > 0$; otherwise, $f(x_n) \leq 0 \implies x_n \in S,$ and since we have $x_n > 0$, this would contradict the fact that $c$ an upper bound for $S$. So, we have that $\lim_{n\to\infty} x_n = c \implies \lim_{n\to\infty} f(x_n) = f(c) \geq 0$, that is, $f(c) \geq 0$.
+
+  Thus, having show both $f(c) \leq 0$ and $f(c) \geq 0$, we conclude that $\exists c \in [a, b] \st a < c < b$, where $f(c) = 0$, and the proof is complete.
+\end{proof}
+
+\subsection{\texorpdfstring{Intervals in $\mathbb{R}$}{Intervals in the Reals}}
+
+\begin{definition}[Types of Intervals in $\mathbb{R}$]
+  \emph{(Bounded Intervals)}
+  \begin{itemize}
+    \item $[a, b] = \{x : a \leq x \leq b\} \subseteq \mathbb{R}$
+    \item $(a, b) = \{x : a < x < b\} \subseteq \mathbb{R}$
+    \item $[a, b) = \{x : a \leq x < b\} \subseteq \mathbb{R}$
+    \item $(a, b] = \{x : a < x \leq b\} \subseteq \mathbb{R}$
+  \end{itemize}
+  \emph{(Unbounded Intervals)}
+  \begin{itemize}
+    \item $[a, \infty) = \{x : x \geq a\}$
+    \item $(a, \infty) = \{x : x > a\}$
+    \item $(-\infty, a] = \{ x : x \leq a\}$
+    \item $(-\infty, a) = \{ x : x < a\}$
+  \end{itemize}
+  \begin{itemize}
+    \item $\mathbb{R} = (- \infty, \infty)$
+  \end{itemize}
+\end{definition}
+
+\begin{remark}
+  If you take any interval and any two points $x < y$ in the interval, then $[x, y]$ is completely contained within the given interval. 
+\end{remark}
+
+\begin{theorem}
+  Let $S \subseteq \mathbb{R}$ that contains more than two points. Suppose $S$ has the property that $\forall x, y \in S \st x < y$, $[x, y] \subseteq S$. Then, $S$ is an interval.
+\end{theorem}
+
+\begin{proof}
+  Suppose $S$ bounded. Then, $a = \inf S, b = \sup S$ exist. Then, for any $x \in S$, $a \leq x \leq b$, so $S \subseteq [a, b]$. Let now $a < z < b$. $z < b \implies z$ not an upper bound of $S$ so $\exists y \in S \st z < y$. $z > a \implies z$ not a lower bound of $S$ so $\exists x \in S \st x < z$. Then, $x < z < y, x,y \in S$, so $[x, y] \subseteq S \implies z \in S$. So, $(a, b) \subseteq S \subseteq [a, b]$ and thus $S$ must be a bounded interval (one of those types defined above).
+\end{proof}
 
 \newpage
 \section{Appendix}
@@ -2640,7 +2764,7 @@ Since $f$ continuous at $c, \exists \delta'>0 \st \forall x \in A \st \abs{x - c
 \end{lemma}
 
 \begin{definition}[Lacunary Sequence]
-  Asequence $x_n$ is called \emph{lacunary} if there exists some real number $q$ such that $\forall n \in \mathbb{N}$, \[
+  A sequence $x_n$ is called \emph{lacunary} if there exists some real number $q$ such that $\forall n \in \mathbb{N}$, \[
     \frac{x_{n+1}}{x_n} \geq q > 1.
   \]
 \end{definition}
