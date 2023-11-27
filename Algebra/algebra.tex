@@ -2747,6 +2747,10 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
     &H = \{1, (123), (132)\}\\
     &(12)H = (13)H = (23)H = \{(12), (23), (13)\}
   \end{align*}
+  We can write, then,
+  \[
+  G = H \amalg (12)H.
+  \]
 \end{example}
 
 \begin{example}[$\mathbb{Z}/6\mathbb{Z}$]
@@ -2782,7 +2786,7 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
 \end{theorem}
 
 \begin{corollary}
-  Let $G$ be a finite group, $g \in G$. Then, $\ord g \mid G$.
+  Let $G$ be a finite group, $g \in G$. Then, $\ord g |\mid G\mid$.
 \end{corollary}
 \begin{proof}
   $\ord g = |\langle g\rangle| \,\mid\,|G|$, by Lagrange's Theorem.
@@ -2798,7 +2802,12 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
     \item (Surjective) Take $y \in bH, y = bh$. This is the image of $ah$ (where $a$ fixed as defined), that is, $ba^{-1}ah = bh$ as desired.
     \item (Injective) Consider $ba^{-1} x_1 = ba^{-1} x_2$. Multiplying both sides by $ab^{-1} \implies x_1 = x_2$.
   \end{itemize}
-  Thus, this is indeed well-defined bijective map, moreover, each coset of $g_i H$ has the same number of elements. Specifically, this is the same number of elements in the coset $H = eH$. Thus, we have that \[\mid G \mid = \mid H \mid \cdot \mid I \mid.\]
+  Thus, this is indeed well-defined bijective map, moreover, each coset of $g_i H$ has the same number of elements. Specifically, we have \[
+  \sharp G = \sum_{i\in I} |g_i H|   = \sum_{i\in I} |H| = |I| \cdot |H|.
+  \] Thus, we have that \[|G| = | H | \cdot | I |,\] moreover, in the language of the theorem,
+  \[
+  |G| = |H| \cdot [G: H].
+  \]
 \end{proof}
 
 \begin{remark}[Applications of Lagrange's Theorem]
@@ -2807,18 +2816,22 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
     \item Every element of a group must have an order that divides the order of the group. This follows from Lagrange's combined with the fact that $\ord g = \mid \langle g \rangle$. For instance, a group of order $6$ cannot have an element of order $4$ nor $5$.
   \end{enumerate}
 \end{remark}
+
+\begin{remark}
+  Note that if $n \mid |G|$, this does \emph{not} imply that $\exists$ an element of $G$ of order $n$. Indeed, taking $n = \abs{G}$, this would imply that group $G$ would be cyclic.
+\end{remark}
   
   \subsection{Homomorphisms/Isomorphisms}
 
   \begin{definition}[Group Homorphism]
     Let $G, H$ be groups, and define $f : G \to H$. $f$ is called a \emph{group homomorphism} if \[f(g_1 g_2) = f(g_1)f(g_2),\] $\forall g_1, g_2 \in G$.
 
-    The \emph{kernel} of $f$ is \[
+    The \emph{kernel} of $f$ is taken \[
     \ker f = \{g \in G : f(g) = e_H\}.  
     \]
   \end{definition}
 
-  \begin{lemma}
+  \begin{lemma}[Consequences of Homomorphisms]
     Let $f : G \to H$ be a group homomorphism.
     \begin{enumerate}
       \item $f(e_G) = e_H$\footnotemark;
@@ -2829,8 +2842,16 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
 
   \begin{proof}
     \begin{enumerate}
-      \item $f(e_G) = f(e_G e_G) = f(e_G)f(e_G) \implies f(e_G)^{-1} f(e_G) = f(e_G)^{-1} f(e_G)f(e_G) \implies e_H = f(e_G)$
-      \item $e_H = f(e_G) = f(g g^{-1}) = f(g)f(g^{-1}) \implies f(g^{-1}) = f(g)^{-1}$
+      \item \begin{align*}
+        &f(e_G) = f(e_G e_G) = f(e_G)f(e_G) \\
+        &\implies f(e_G)^{-1} f(e_G) = f(e_G)^{-1} f(e_G)f(e_G) \\
+        &\implies e_H = f(e_G)
+      \end{align*}
+      \item \begin{align*}
+        &e_H = f(e_G) = f(g g^{-1}) = f(g)f(g^{-1}) \\
+        &\implies f(g)^{-1}e_H = f(g)^{-1}f(g)f(g^{-1})\\
+        &\implies f(g^{-1}) = f(g)^{-1}
+      \end{align*}
       \item $e_H = f(e_G) \in \im f$. Let $h_1, h_2 \in \im f$, and let $h_i = f(g_i)$. Then, $h_1 h_2 = f(g_1 g_2)$ and $h_1^{-1} = f(g_1)^{-1} \implies e_H, h_1h_2, h_1^{-1} \in \im f$, hence $\im f$ a subgroup of $H$.
     \end{enumerate}
   \end{proof}
@@ -2843,38 +2864,143 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
   \begin{proof}
     We have that $e_G \in \ker f$ from before. Suppose $g_1, g_2 \in \ker f \implies f(g_1) = f(g_2) = e_H \implies f(g_1 g_2) = f(g_1) f(g_2) = e_H e_H = e_H \implies g_1 g_2 \in \ker f$. Suppose $g \in \ker f \implies f(g^{-1}) = f(g)^{-1} = e_H^{-1} = e_H \implies g^{-1} \in \ker f$, hence all the group axioms hold and $\ker f < G$.
 
-    ($\implies$) Suppose $f$ injective. Then, $f(e_G) = e_H$ uniquely, and so $\ker f = \{e_G\}$. ($\impliedby$) Suppose $\ker f = \{e_G\},$ and $f(g_1) = f(g_2)$. Then, $e_H = f(g_1)^{-1}f(g_2) = f(g_1^{-1})f(g_2) = f(g_1^{-1}g_2) \implies g_1^{-1}g_2 \in \ker f \implies g_1^{-1}g_2 = e_G \implies g_1 = g_2 \implies f$ injective.
+
+    \noindent($\implies$) Suppose $f$ injective. Then, $f(e_G) = e_H$ uniquely, and so $\ker f = \{e_G\}$. 
+    
+    \noindent($\impliedby$) Suppose $\ker f = \{e_G\},$ and $f(g_1) = f(g_2)$. Then, $e_H = f(g_1)^{-1}f(g_2) = f(g_1^{-1})f(g_2) = f(g_1^{-1}g_2) \implies g_1^{-1}g_2 \in \ker f \implies g_1^{-1}g_2 = e_G \implies g_1 = g_2 \implies f$ injective.
   \end{proof}
 
   \begin{definition}[Group Isomorphism]
-    A group homomorphism $f: G \to H$ is a \emph{isomorphism} if it is bijective. We denote $G \cong H$; being isomorphic is an equivalence relation on groups.
+    A group homomorphism $f: G \to H$ is a \emph{isomorphism} if it is bijective. We denote $G \cong H$ if such a function exists.
   \end{definition}
+\begin{proposition}
+  Let $f : G \to H$ be an isomorphism. Then, $g = f^{-1} : H \to G$ also an isomorphism. 
+\end{proposition}
 
-  \begin{remark}
-    Note that the inverse function $g = f^{-1}$ an isomorphism as well.
-  \end{remark}
+\begin{proof}
+  $g$ bijective, as $f$ bijective and thus its inverse is also bijective. It remains to show that $\forall x,y \in H, f^{-1} (xy) = f^{-1}(x) \cdot f^{-1}(y)$. We have:
+  \begin{align}
+    f(f^{-1}(xy)) = f(f^{-1}(x)f^{-1}(y)) \implies f(f^{-1}(xy)) = xy\\
+    f(f^{-1}(x)f^{-1}(y)) = f(f^{-1}(x))f(f^{-1}(y)) = xy,
+  \end{align}
+  noting that as both lines evaluate equivalently while computed in different orders, the claim holds, hence $g = f^{-1}$ a bijective homomorphism and is thus an isomorphism.
+\end{proof}
 
-  \begin{example}
-    Let $n \in \mathbb{Z}^{+}$. Then, any two cyclic groups of order $n$ are isomorphic.
+\begin{proposition}[Isomorphism an Equivalence Relation]
+  $\cong$ is an equivalence relation on groups.
+\end{proposition}
+\begin{proof}
+\begin{enumerate}
+  \item (reflexive) $G \cong G$ by $f = e_G$
+  \item (symmetric) $G_1 \cong G_2 \implies G_1 \overset{f}{\to} G_2 \implies G_2 \overset{f^{-1}}{\to} G_1 \implies G_2 \cong G_1$
+  \item (transitive) $f: G_1 \to G_2, g: G_2 \to G_3$, then consider $g \circ f : G_1 \to G_2$. This is bijective (composition of bijections is bijective). Take $x, y \in G_1$, then $(g\circ f)(xy) = g(f(xy)) = g(f(x)f(y)) = g(f(x))g(f(y)) = (g \circ f)(x) (g\circ f)(y)$, hence $g\circ f$ a homomorphism.
+\end{enumerate}  
+\end{proof}
 
-    \begin{proof}
-      Suppose $G = \langle g\rangle, H = \langle h\rangle$ of order $n$. Define $f(g^{a}) = h^a$ for any integer $a$. This is well defined ($g^{a} = g^{b} \implies g^{a-b} = e_G \implies n | (a-b) \implies f(g^{a}) = h^a = h^{b}(h^{n})^k = h^b = f(g^b)$). This is a surjective homomorphism, and is also injective because $f(g^{a}) = h^a = e_H \implies n | a \implies g^{a} = e_G$.
-      Thus, any cyclic group of order $n$ is isomorphic. Moreover, any cyclic group of order $n$ is isomorphic to $\mathbb{Z}/n\mathbb{Z}$ over addition.
-    \end{proof}
-  \end{example}
-
-  \begin{example}
-    Let $p \in \mathbb{P}$ Then, any two groups of order $p$ are isomorphic (since any group of a prime order must be cyclic).
-  \end{example}
-
-  \begin{theorem}[Cayley]\label{thm:cayley}
-    Let $G$ be a finite group of order $n$. Then, $G$ is isomorphic to a subgroup of $S_n$.
-  \end{theorem}
+\begin{example}[Cyclic; $\abs{G} = \abs{H} = n \implies G \cong H$]
+  Let\footnotemark $n \in \mathbb{Z}^{+}$. Then, any two cyclic groups of order $n$ are isomorphic.
 
   \begin{proof}
-    % TODO:
+    Suppose $G = \langle g\rangle, H = \langle h\rangle$ of order $n$. Define $f(g^{a}) = h^a$ for any integer $a$. This is well defined ($g^{a} = g^{b} \implies g^{a-b} = e_G \implies n | (a-b) \implies f(g^{a}) = h^a = h^{b}(h^{n})^k = h^b = f(g^b)$). This is a surjective ($h^a = f(g^a) \forall h,g$) homomorphism ($f(g^ag^b) = f(g^{a+b}) = h^{a+b}=h^{a}h^{b}=f(g^a)f(g^b)$), and is also injective because $f(g^{a}) = h^a = e_H \implies n | a \implies g^{a} = e_G$.
+    Thus, any cyclic group of order $n$ is isomorphic. Moreover, any cyclic group of order $n$ is isomorphic to $\mathbb{Z}/n\mathbb{Z}$ over addition.
   \end{proof}
+\end{example}
+\footnotetext{This proof assumes finite groups, but this is true generally for non-finite groups.}
 
+
+\begin{corollary}
+  Let $p \in \mathbb{P}$. Then, any two groups of order $p$ are isomorphic are cyclic, and isomorphic to $\zmod p$.
+\end{corollary}
+
+\begin{proof}
+  Suppose $\abs{G} = p$. Choose any $g \in G, g \neq e_G$. Let $H = \langle g\rangle$. By \nameref{thm:lagrange}, $\abs{H} \mid \abs{G} = p$, so $\abs{H} = 1$ or $p$, but by construction, $\abs{H} = p$ (since $g \neq e_G$) , hence $\abs{H} = \abs{G}$. Thus, $G$ a cyclic group of order $p$ and is thus, by the previous example, we have that $G \cong \zmod p$.
+\end{proof}
+
+\begin{theorem}[Cayley]\label{thm:cayley}
+  Let $G$ be a finite group of order $n$. Then, $G$ is isomorphic to a subgroup of $S_n$.
+\end{theorem}
+
+\begin{proof}
+  Let $g \in G$, and let $\sigma_g : G \to G, a \mapsto ga$. We claim that $\sigma_g$ a permutation.
+
+  Note first that $\sigma_g$ injective, \[
+  \sigma_g(a) = \sigma_g(b) \implies ga = gb \implies a = b,  
+  \]
+  and surjective, since \[
+  \forall b \in G, \sigma_g(g^{-1}b) = b.  
+  \]
+  
+  Now consider the map \[
+  G \to S_n, \quad g \mapsto \sigma_g.
+  \]
+  This map is a homomorphism:
+  \[
+  \sigma_{gh}(a) = gha = \sigma_g(\sigma_h(a)) \implies \sigma_{gh} = \sigma g\circ \sigma_h,
+  \]
+  noting that the operation in $S_n$ is $circ$. This homomorphism is injective; let $\sigma_g$ be the identity permutation. Then, $\sigma_g(e) = e \implies ge = e \implies g = e$. Thus, since the image of a homomorphism is a subgroup, the image of $G$ under this map is a subgroup of $S_n$, that is, $G < S_n$ and the proof is complete.
+\end{proof}
+
+\begin{lemma}
+  Let $T, Z$ be sets, and $f : T \to Z$ a bijection. Then, the group of permutations of $T$ and $Z$ are isomorphic.
+\end{lemma}
+
+\begin{proof}
+  Let $\sigma \in S_T$. Then, $f \circ \sigma \circ f^{-1} : Z \to Z$ is a bijection. Hence, we have the map \[S_T \to S_Z, \quad \sigma \mapsto f\circ \sigma\circ f^{-1}.\]
+  This is a group homomorphism; given $\sigma_1, \sigma_2 \in S_T$, $$f \circ \sigma_1 \circ \sigma_2 \circ f^{-1} = (f\sigma_1f^{-1})(f \sigma_2f^{-1}).$$ Similarly, given $\tau \in S_Z$, we can define the map \[S_Z \to S_T, \quad \tau \mapsto f^{-1} \circ \tau \circ f.\] This is also a homomorphism, hence, there exists a bijective homomorphism between $S_T \to S_Z$ and thus the two are isomorphic.
+\end{proof}
+
+\subsection{Group Actions on Sets}
+
+\begin{definition}[Group Action]
+  Let $G$ a group, $S \neq \varnothing$. $G$ \emph{acts on} $S$ if we have a function \[
+    G \times S \to S, \quad (g,s) \mapsto g \star s,  
+  \]
+  where \begin{enumerate}
+    \item $e \star s = s \forall s \in S$;
+    \item $(g_1 g_2) \star s = g_1 \star (g_2\star s) \forall g_1, g_2 \in G, s \in S$.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Orbit]
+  Let $G, S$ be as defined above. Let $s \in S$. The \emph{orbit} of $s$ is defined \[
+  \orb{s} = \{g \star s : g \in G\} \subseteq S.
+    \]
+    Note that this is equal to all the images of $s$ under $\star$.
+\end{definition}
+
+\begin{definition}[Stabilizer]
+  Let $G, S$ be as defined above. Let $s \in S$. The \emph{stabilizer} is defined \[
+  \stab{s} = \{g \in G : g \star s = s\}  \subseteq G.
+  \]
+\end{definition}
+
+\begin{lemma}[Properties of Group Actions]
+  \begin{enumerate}
+    \item Let $s_1, s_2 \in S$. $s_1 \sim s_2$ if $\exists g \in G \st g \star s_1 = s_2$ . This is an equivalence relation; the equivalence class of $s_1$ is $\orb s_1$.
+    \item Let $s \in S$. $\stab s < G$.
+    \item Suppose $G, S$ finite. Then, \[
+    \mid \orb s \mid = \frac{\mid G \mid}{\mid \stab s \mid}.
+    \]
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  \begin{enumerate}
+    \item \begin{itemize}
+      \item (Reflexive) $e \star s = s \implies s \sim s$
+      \item (Symmetric) $s_1 \sim s_2 \implies \exists g \in G \st g \star s_1 = s_2 \implies g^{-1} \star (g \star s_1) = g^{-1} \star s_2$ and $(g^{-1} g) \star s_1 = g^{-1} \star s_2$. Hence, $e\star s_1 = g^{-1} \star s_2 \implies s_1 = g^{-1} s_2 \implies s_2 \sim s_1$.
+      \item (Transitive) Suppose $s_1 \sim s_2$, $s_2 \sim s_3$. Then, $\exists g_1, g_2 \in G \st g_1 \star s_1 = s_2, g_2 \star s_2 = s_3 \implies (g_2 g_1) \star s_1= g_2 \star (g_1 \star s_1) = g_2 \star s_2 = s_3 \implies s_1 \sim s_3$.
+    \end{itemize}
+    By definition, the equivalence class of some $s_1$ is all elements such that $g \star s_1$ for some $g \in G$, the very definition of $\orb s_1$.
+    \item Let $H = \stab s$.
+    \begin{itemize}
+      \item (Identity) $e \star s = s \implies e \in H$
+      \item (Closure) Let $g_1, g_2 \in H \implies g_1 \star s = s, g_2 \star s = s \implies (g_1 g_2) \star s = g_1 \star (g_2 \star s) = g_1 \star s = s \implies g_1 g_2 \in H$.
+      \item (Inverses) Let $g \in H \implies g star s = s \implies g^{-1} (g \star s) = g^{-1} \star s \implies (g^{-1} g) \star s = g^{-1} \star s \implies e\star s = g^{-1} \star s \implies s = g^{-1} \star s \implies g^{-1} \in H$
+    \end{itemize}
+    \item We claim there exists a bijection between the left cosets of $H$ and $\orb s$. % TODO
+  \end{enumerate}
+\end{proof}
 
 
 
