@@ -28,6 +28,7 @@
 \usepackage{shortcuts}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{stackengine}
+\usepackage{ stmaryrd }
 \usepackage[createShortEnv]{proof-at-the-end}
 
 \usepackage{xpatch}
@@ -38,6 +39,8 @@
 \renewcommand{\footnotesize}{\scriptsize}
 % \renewcommand*{\proofname}{}
 \renewcommand*{\qedsymbol}{\(\blacksquare\)}
+
+\renewcommand*{\proofname}{\underline{Proof}}
 
 \DeclareMathOperator*{\lcm}{lcm}
 % TODO: subsection numbering
@@ -2857,19 +2860,6 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
   \end{proof}
   \footnotetext{Note that this is a consequence, not an axiom, as it was in ring homomorphisms.}
 
-  \begin{proposition}
-    Let $f: G \to H$ be a group homomorphism. $\ker f < G$, and $f$ injective iff $\ker f = \{e_G\}$.
-  \end{proposition}
-
-  \begin{proof}
-    We have that $e_G \in \ker f$ from before. Suppose $g_1, g_2 \in \ker f \implies f(g_1) = f(g_2) = e_H \implies f(g_1 g_2) = f(g_1) f(g_2) = e_H e_H = e_H \implies g_1 g_2 \in \ker f$. Suppose $g \in \ker f \implies f(g^{-1}) = f(g)^{-1} = e_H^{-1} = e_H \implies g^{-1} \in \ker f$, hence all the group axioms hold and $\ker f < G$.
-
-
-    \noindent($\implies$) Suppose $f$ injective. Then, $f(e_G) = e_H$ uniquely, and so $\ker f = \{e_G\}$. 
-    
-    \noindent($\impliedby$) Suppose $\ker f = \{e_G\},$ and $f(g_1) = f(g_2)$. Then, $e_H = f(g_1)^{-1}f(g_2) = f(g_1^{-1})f(g_2) = f(g_1^{-1}g_2) \implies g_1^{-1}g_2 \in \ker f \implies g_1^{-1}g_2 = e_G \implies g_1 = g_2 \implies f$ injective.
-  \end{proof}
-
   \begin{definition}[Group Isomorphism]
     A group homomorphism $f: G \to H$ is a \emph{isomorphism} if it is bijective. We denote $G \cong H$ if such a function exists.
   \end{definition}
@@ -2897,16 +2887,28 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
 \end{enumerate}  
 \end{proof}
 
-\begin{example}[Cyclic; $\abs{G} = \abs{H} = n \implies G \cong H$]
+\begin{proposition}[Cyclic; $\abs{G} = \abs{H} = n \implies G \cong H$]
   Let\footnotemark $n \in \mathbb{Z}^{+}$. Then, any two cyclic groups of order $n$ are isomorphic.
-
+\end{proposition}
   \begin{proof}
     Suppose $G = \langle g\rangle, H = \langle h\rangle$ of order $n$. Define $f(g^{a}) = h^a$ for any integer $a$. This is well defined ($g^{a} = g^{b} \implies g^{a-b} = e_G \implies n | (a-b) \implies f(g^{a}) = h^a = h^{b}(h^{n})^k = h^b = f(g^b)$). This is a surjective ($h^a = f(g^a) \forall h,g$) homomorphism ($f(g^ag^b) = f(g^{a+b}) = h^{a+b}=h^{a}h^{b}=f(g^a)f(g^b)$), and is also injective because $f(g^{a}) = h^a = e_H \implies n | a \implies g^{a} = e_G$.
     Thus, any cyclic group of order $n$ is isomorphic. Moreover, any cyclic group of order $n$ is isomorphic to $\mathbb{Z}/n\mathbb{Z}$ over addition.
-  \end{proof}
-\end{example}
+\end{proof}
 \footnotetext{This proof assumes finite groups, but this is true generally for non-finite groups.}
 
+
+\begin{lemma}
+  Let $f: G \to H$ be a group homomorphism. $\ker f < G$, and $f$ injective iff $\ker f = \{e_G\}$.
+\end{lemma}
+
+\begin{proof}
+  We have that $e_G \in \ker f$ since $f(1_{G}) = 1_H$. Suppose $g_1, g_2 \in \ker f \implies f(g_1) = f(g_2) = e_H \implies f(g_1 g_2) = f(g_1) f(g_2) = e_H e_H = e_H \implies g_1 g_2 \in \ker f$. Suppose $g \in \ker f \implies f(g^{-1}) = f(g)^{-1} = e_H^{-1} = e_H \implies g^{-1} \in \ker f$, hence all the group axioms hold and $\ker f < G$.
+
+
+  \noindent($\implies$) Suppose $f$ injective. Then, $f(e_G) = e_H$ uniquely, and so $\ker f = \{e_G\}$. 
+  
+  \noindent($\impliedby$) Suppose $\ker f = \{e_G\},$ and $f(g_1) = f(g_2)$. Then, $e_H = f(g_1)^{-1}f(g_2) = f(g_1^{-1})f(g_2) = f(g_1^{-1}g_2) \implies g_1^{-1}g_2 \in \ker f \implies g_1^{-1}g_2 = e_G \implies g_1 = g_2 \implies f$ injective.
+\end{proof}
 
 \begin{corollary}
   Let $p \in \mathbb{P}$. Then, any two groups of order $p$ are isomorphic are cyclic, and isomorphic to $\zmod p$.
@@ -2915,6 +2917,33 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
 \begin{proof}
   Suppose $\abs{G} = p$. Choose any $g \in G, g \neq e_G$. Let $H = \langle g\rangle$. By \nameref{thm:lagrange}, $\abs{H} \mid \abs{G} = p$, so $\abs{H} = 1$ or $p$, but by construction, $\abs{H} = p$ (since $g \neq e_G$) , hence $\abs{H} = \abs{G}$. Thus, $G$ a cyclic group of order $p$ and is thus, by the previous example, we have that $G \cong \zmod p$.
 \end{proof}
+
+\begin{proposition}
+  Let $f : G_1 \to G_2$ be a homomorphism and $H < G_1$. Then, $f(H) < G_2$.
+\end{proposition}
+
+\begin{proof}
+  \begin{itemize}
+    \item $1_{G_2} \in H \implies 1_{G_2} = f(1_{G_1}) \in f(H)$
+    \item $x,y \in f(H) \implies \exists a, b \in H \st x = f(a), y = f(b) \implies xy = f(a)f(b) = f(ab)$. $a\cdot b \in H \implies f(ab) \in f(H) \implies xy \in f(H)$
+    \item $x \in f(H) \implies x^{-1} = f(a^{-1})$ for $a \in H$. Then, $a^{-1} \in H \implies f(a^{-1}) \in f(H)$.
+  \end{itemize}
+  Hence, $f(H) < G_2$
+\end{proof}
+
+\begin{lemma}
+  Let $g \in G_1, f : G_1 \to G_2$ a homomorphism. Then, $\ord (f(g)) | \ord (g)$.
+\end{lemma}
+
+\begin{proof}
+  Suppose $n = \ord g \implies g^n = 1 \implies f(g^n) = f(g)^n = f(1_{G_1}) = 1_{G_2} \implies f(g)^n = 1_{G_2} \implies \ord (f(g)) | n$.
+\end{proof}
+
+\begin{corollary}
+  If $f : G_1 \to G_2$ an isomorphism, $f$ induces bijections between subgroups of $H < G_1$ and $K < G_2$, that is, \[
+  G_1> H \mapsto f(H) < G_2; \quad G_1 > f^{-1}(K) \mapsfrom K < G_2.
+  \]
+\end{corollary}
 
 \begin{theorem}[Cayley]\label{thm:cayley}
   Let $G$ be a finite group of order $n$. Then, $G$ is isomorphic to a subgroup of $S_n$.
@@ -2937,7 +2966,7 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
   \[
   \sigma_{gh}(a) = gha = \sigma_g(\sigma_h(a)) \implies \sigma_{gh} = \sigma g\circ \sigma_h,
   \]
-  noting that the operation in $S_n$ is $circ$. This homomorphism is injective; let $\sigma_g$ be the identity permutation. Then, $\sigma_g(e) = e \implies ge = e \implies g = e$. Thus, since the image of a homomorphism is a subgroup, the image of $G$ under this map is a subgroup of $S_n$, that is, $G < S_n$ and the proof is complete.
+  noting that the operation in $S_n$ is $\circ$. This homomorphism is injective; let $\sigma_g$ be the identity permutation. Then, $\sigma_g(e) = e \implies ge = e \implies g = e$. Thus, since the image of a homomorphism is a subgroup, the image of $G$ under this map is a subgroup of $S_n$, that is, $G < S_n$ and the proof is complete.
 \end{proof}
 
 \begin{lemma}
@@ -2961,6 +2990,31 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
   \end{enumerate}
 \end{definition}
 
+\begin{example}\label{ex:groupactions1}
+  $D_n$ acts on the vertices of the $n$-gon; \[
+  x^{a}(i) = i + a; \quad y(i) = n - i + 2  
+  \]
+\end{example}
+\begin{example}[Conjugation]\label{ex:groupactions2}
+  $G$ acts on itself by \[
+  G \times G \to G, \quad (g,h) \mapsto ghg^{-1}.  
+  \]
+\end{example}
+
+\begin{example}\label{ex:groupactions3}
+  Let $H < G$. $H$ acts on $G$ by \[
+  H \times G \to G, \quad (h, g) \mapsto hg = h \star g.
+  \]
+\end{example}
+
+\begin{example}\label{ex:groupactions4}
+  $D_4$ acts on the set $S$ of $9$ elements where the $9$ elements form a $3\times 3$ square. Now suppose we were to color each square by one of the three colors red, green, blue. Then, we'd have $3^9$ possible colored squares. A natural question would be to ask how many colored $3\times 3$ squares exist, up to symmetries?
+\end{example}
+
+\begin{example}\label{ex:groupactions5}
+  $\mathbb{R}$ acts on the sphere $S$; some $\theta \in \mathbb{R}$ rotates the sphere by $\theta$.
+\end{example}
+
 \begin{definition}[Orbit]
   Let $G, S$ be as defined above. Let $s \in S$. The \emph{orbit} of $s$ is defined \[
   \orb{s} = \{g \star s : g \in G\} \subseteq S.
@@ -2968,19 +3022,36 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
     Note that this is equal to all the images of $s$ under $\star$.
 \end{definition}
 
+\begin{remark}
+  In \cref{ex:groupactions5}, the orbit of $s\in S$ would be the latitude line; that is, all points with the same distance from the rotation axis.
+
+  In \cref{ex:groupactions3}, the orbit of $x \in H$ would be $\orb x = Hx = \{hx : h \in H\}$, a right coset of $H$ in $G$.
+\end{remark}
+
 \begin{definition}[Stabilizer]
   Let $G, S$ be as defined above. Let $s \in S$. The \emph{stabilizer} is defined \[
   \stab{s} = \{g \in G : g \star s = s\}  \subseteq G.
   \]
 \end{definition}
 
+\begin{remark}
+  In \cref{ex:groupactions5}, $\stab s = 2 \pi \mathbb{Z}$; unless $s$ at the pole, then $\stab s = \mathbb{R}$.
+
+  In \cref{ex:groupactions3}, take $s \in G$. Then, $\stab s = \{h \in H : h \star s = hs = s\} = \{1\}$.
+
+  In \cref{ex:groupactions2}, $\stab s = \{g \in G : gsg^{-1} = g \star s = s\} = \{g \in G : gs = sg\}$, which is defined as the \emph{centralizer} of $s$, that is, the elements that commute with $s$.
+\end{remark}
+
+\begin{definition}[Collection of Cosets]\label{def:collectionofcosets}
+  If $H < G$ denote by $G \setminus H$ the collection of left cosets $xH$ of $H$ in $G$. We have then\[
+  \abs{G \setminus H} = [G : H] = \frac{\abs{G}}{\abs{H}},
+  \]
+  if $G$ finite (by \nameref{thm:lagrange}).
+\end{definition}
 \begin{lemma}[Properties of Group Actions]
   \begin{enumerate}
     \item Let $s_1, s_2 \in S$. $s_1 \sim s_2$ if $\exists g \in G \st g \star s_1 = s_2$ . This is an equivalence relation; the equivalence class of $s_1$ is $\orb s_1$.
     \item Let $s \in S$. $\stab s < G$.
-    \item Suppose $G, S$ finite. Then, \[
-    \mid \orb s \mid = \frac{\mid G \mid}{\mid \stab s \mid}.
-    \]
   \end{enumerate}
 \end{lemma}
 
@@ -2991,17 +3062,110 @@ Say $g \in G$ has order $a$. Let $k \geq 1$, then $g^k = 1 \implies a | k$.
       \item (Symmetric) $s_1 \sim s_2 \implies \exists g \in G \st g \star s_1 = s_2 \implies g^{-1} \star (g \star s_1) = g^{-1} \star s_2$ and $(g^{-1} g) \star s_1 = g^{-1} \star s_2$. Hence, $e\star s_1 = g^{-1} \star s_2 \implies s_1 = g^{-1} s_2 \implies s_2 \sim s_1$.
       \item (Transitive) Suppose $s_1 \sim s_2$, $s_2 \sim s_3$. Then, $\exists g_1, g_2 \in G \st g_1 \star s_1 = s_2, g_2 \star s_2 = s_3 \implies (g_2 g_1) \star s_1= g_2 \star (g_1 \star s_1) = g_2 \star s_2 = s_3 \implies s_1 \sim s_3$.
     \end{itemize}
-    By definition, the equivalence class of some $s_1$ is all elements such that $g \star s_1$ for some $g \in G$, the very definition of $\orb s_1$.
+    By definition, the equivalence class of some $s_1$ is all elements such that $g \star s_1 = s_1$ for some $g \in G$, the very definition of $\orb s_1$.
     \item Let $H = \stab s$.
     \begin{itemize}
       \item (Identity) $e \star s = s \implies e \in H$
-      \item (Closure) Let $g_1, g_2 \in H \implies g_1 \star s = s, g_2 \star s = s \implies (g_1 g_2) \star s = g_1 \star (g_2 \star s) = g_1 \star s = s \implies g_1 g_2 \in H$.
-      \item (Inverses) Let $g \in H \implies g star s = s \implies g^{-1} (g \star s) = g^{-1} \star s \implies (g^{-1} g) \star s = g^{-1} \star s \implies e\star s = g^{-1} \star s \implies s = g^{-1} \star s \implies g^{-1} \in H$
+      \item (Closure) Let $g_1, g_2 \in H \implies g_1 \star s = s, g_2 \star s = s \implies (g_1 g_2) \star s = g_1 \star (g_2 \star s) = g_1 \star s = s \implies g_1 g_2 \in H$
+      \item (Inverses) Let $g \in H \implies g \star s = s \implies g^{-1} (g \star s) = g^{-1} \star s \implies (g^{-1} g) \star s = g^{-1} \star s \implies e\star s = g^{-1} \star s \implies s = g^{-1} \star s \implies g^{-1} \in H$
     \end{itemize}
-    \item We claim there exists a bijection between the left cosets of $H$ and $\orb s$. % TODO
   \end{enumerate}
 \end{proof}
 
+\begin{proposition}[Orbit-Stabilizer Formula]\label{prop:orbitstab}
+  There exists a bijection $G\setminus \stab s \to \orb s$, that is, between the left cosets of $\stab s$ in $G$ (see \cref{def:collectionofcosets}) and the orbit of $s$.
+\end{proposition}
+
+\begin{proof}
+  Let $H := \stab s$. Define a function $\Psi : G \setminus H \to \orb s$, where $\Psi (gH) := g \star s$.
+  \begin{itemize}
+    \item (Well-defined) Suppose $gH = g_1 H$; then, $g_1 = gh, h \in H \implies g_1 \star s = g \star (h \star s) \underbrace{=}_{h \in \stab} g \star s$.
+    \item (Surjective) Any element of $\orb s$ is of the form $g \star s$ for some $g$, namely, of the form $\Psi(gH)$
+    \item (Injective) Suppose $\psi (gH) = \psi (g_1 H)$. Then, we have \[
+    g \star s = g_1 \star s \overset{\times g^{-1}}\implies  s = g^{-1}g_1 \star s \implies g^{-1}g_1 \in \stab s = H \implies g_1 H = gH
+    \]
+  \end{itemize}
+\end{proof}
+
+\begin{corollary}
+  Suppose $G$ finite. Then, \[
+    \abs{\orb s} = \abs{G \setminus H} = [G : H]= \frac{\abs{G}}{\abs{\stab s}} = \frac{\abs{G}}{\abs{H}}.
+    \]
+\end{corollary}
+
+\begin{proof}
+  Follows from \nameref{prop:orbitstab} and \nameref{thm:lagrange}.
+\end{proof}
+
+\begin{definition}[Fix, I, N]
+  Let $G$ be a group acting on $S$. Then, for $g \in G, s \in S$, we have \[
+  \fix g := \sharp \{ s \in S : g \star s = s\} = \sharp \text{ fixed pts of g}.
+  \]
+  Define too \[
+  I(g, s) := \begin{cases}
+    1 & g \star s = s\\
+    0 & \text{else}
+  \end{cases}  
+  \]
+  and $$N := \sharp \orb \text{ of } G \text{ in } S.$$
+\end{definition}
+
+\begin{theorem}[Burnside's Lemma]\label{thm:burnside}
+  Assume $S, G$ finite.
+  \[
+  N = \frac{1}{\sharp G} \sum_{g \in G} \fix g.  
+  \]
+\end{theorem}
+
+\begin{proof}
+  We will evaluate \begin{align*}
+    \sum_{s \in S} \sum_{g \in G} I(g, s) = \sum_{s\in S}\abs{\stab s}\\
+    \overset{\text{\cref{prop:orbitstab}}}{=} \sum_{s\in S}\frac{\abs{G}}{\abs{\orb s}}\\
+    = \abs{G}\sum_{s\in S} \frac{1}{\abs{\orb s}}\\
+    \overset{\star}{=} \abs{G}\cdot  N
+  \end{align*}
+
+  $\star:$ any orbit $\orb s$ of size $t$ contributes $\frac{1}{t} = \frac{1}{\abs{\orb s}}$ $t$ times.
+
+
+  OTOH, \begin{align*}
+    \sum_{s\in S} \sum_{g\in G}I(g,s) =  \sum_{g\in G}\sum_{s\in S} I(g,s)\\
+    \sum_{g \in G} \fix g\\
+    \implies \sum_{g \in G} \fix g = \abs{G}\cdot  N\\
+    \implies N = \frac{1}{\abs{G}} \sum_{g \in G} \fix g. 
+  \end{align*}
+\end{proof}
+
+
+\begin{remark}
+  Recall \cref{ex:groupactions4}; we had asked how many possibilities of a $3 \times 3$ square ($S$), colored with three different colors, existed up to symmetries by $D_4$. This is equivalent to asking for the number of orbits that exists for $S$. 
+
+  We have \begin{align*}
+    &\fix 1 = \sharp S = 3^9 \quad \text{ anything times 1 brings it to itself}\\
+    &\fix x = 3^3 \quad \text{ }\\
+    &\fix x^{-1} = 3^3\\
+    &\fix x^2 = 3^5
+   \end{align*}
+
+  For general $D_n$, all the elements in $D_n \setminus \langle x\rangle = \{x^ay: a = 0, \dots, n - 1\}$ are reflections. They are also orientation reversing and order two ($x^{a}y \cdot x^a y = y x^{-a}x^a y = y^2 = 1$).
+
+  Hence, we have that $\fix y = 3^6 = \fix x^2 y = \fix xy = \fix x^3 y$.
+
+  Hence, we have from Burnside's, \begin{align*}
+    N = \frac{1}{8} \left(3^9 + 2 \cdot 3^3 + 3^5 + 4 \cdot 3^6\right) = 2862.
+  \end{align*}
+\end{remark}
+
+\subsection{More on Dihedral Group}
+
+\begin{lemma}
+  Let $x \in D_n$. Then, $\ord x^a = \frac{n}{\gcd a, n}$. As a permutation of the $n$ vertices of the corresponding $n$-gon, we have $x^a = $ product of disjoint cycles, each of this same length.
+\end{lemma}
+
+\begin{corollary}
+  The $\sharp$ of elements $y \in \langle x \rangle \st \langle x \rangle = \langle y \rangle$ is $\varphi (n)$. Such $y = x^a$ and of $\ord$ n. The $\sharp$ of such $y$'s is $\sharp \{1 \leq a \leq n \st (a,n) = 1\} =: \varphi (n)$.
+\end{corollary}
+  
 
 
 

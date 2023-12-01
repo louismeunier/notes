@@ -24,80 +24,17 @@
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{nameref}
 \usepackage{xfrac}
-\usepackage{ mathrsfs }
+\usepackage{mathrsfs}
 \usepackage{xpatch}
+\usepackage{catchfile}
+\usepackage{ marvosym }
 
+\renewcommand*{\proofname}{\underline{Proof}}
 
-% \usepackage[createShortEnv]{proof-at-the-end}
+\newcommand{\getenv}[2][]{%
+  \CatchFileEdef{\temp}{"|kpsewhich --var-value #2"}{\endlinechar=-1}%
+  \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
 
-% \renewcommand*{\proofname}{}
-
-
-% \declaretheorem[
-%   % thmbox=M,
-%   name=\textcolor{solarized-blue}{$\rightarrowtail$ \underline{Definition}},
-%   refname={Definition, definition}, numberwithin=section,
-%   shaded={rulecolor=solarized-blue}
-% ]{definition}
-
-% \declaretheorem[
-%   % thmbox=M,
-%   name=\textcolor{solarized-orange}{$\rightarrowtail$ \underline{Axiom}},
-%   refname={Axiom, axiom},
-%   numberwithin=section,
-%   shaded={rulecolor=solarized-orange}
-% ]{axiom}
-
-% \declaretheorem[
-%   % thmbox=S,
-%   name=\textcolor{solarized-orange}{$\rightarrowtail$ \underline{Lemma}},
-%   refname={Lemma, lemma},
-%   numberwithin=section,
-%   shaded={}
-%   % shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
-% ]{lemma}
-
-% \declaretheorem[
-%   % thmbox=S,
-%   name=\textcolor{solarized-orange}{\underline{Corollary}},
-%   refname={Corollary, corollary},
-%   numberwithin=section,
-%   shaded={}
-%   % shaded={rulecolor=solarized-orange, rulewidth=1pt, bgcolor={rgb}{1,1,1}}
-% ]{corollary}
-
-% \declaretheorem[
-%   % thmbox=S,
-%   name=Remark,
-%   refname={Remark, remark},
-%   numberwithin=section
-% ]{remark}
-
-% \declaretheorem[
-%   % thmbox=M,
-%   name=\textcolor{solarized-red}{$\rightarrowtail$ \underline{Theorem}},
-%   refname={Theorem, theorem},
-%   numberwithin=section,
-%   shaded={}
-%   % shaded={rulecolor=solarized-red, rulewidth=1pt}
-% ]{theorem}
-
-% \declaretheorem[
-%   % thmbox=M,
-%   name=Example,
-%   refname={Example, example},
-%   numberwithin=section,
-%   shaded={bgcolor=solarized-cyan!10}
-% ]{example}
-
-% \declaretheorem[
-%   % thmbox=S,
-%   name=\textcolor{solarized-magenta}{$\rightarrowtail$ \underline{Proposition}},
-%   refname={Proposition, proposition},
-%   numberwithin=section,
-%   shaded={}
-%   % shaded={rulecolor=solarized-magenta}
-% ]{proposition}
 
 \declaretheorem[
   % thmbox=S,
@@ -119,7 +56,7 @@
 \mdfdefinestyle{general-thm}{
   roundcorner=8pt,
   linecolor=white,
-  % leftmargin=5,rightmargin=5,
+  leftmargin=5,rightmargin=5,
   backgroundcolor=gray!10,
   skipabove=10pt, skipbelow=10pt,
   innertopmargin=2pt, innerbottommargin=5pt,
@@ -150,12 +87,6 @@
 \makeatletter
 \xpatchcmd{\axiom}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
 \makeatother
-% \newcommand{\thmautorefname}{Theorem}
-% \makeatletter
-% \xpatchcmd{\thm}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
-% \makeatother
-
-
 
 % makes "quoted" text actually look correct
 \MakeOuterQuote{"}
@@ -173,7 +104,7 @@
 \newcommand{\pagesubtitle}{MATH254}
 
 % black square for qed symbol
-\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewcommand{\qedsymbol}{\Libra}
 
 
 \titleformat{\section}
@@ -2742,6 +2673,215 @@ So, for any $n$, $\exists x_n \in [a, b] \st \abs{f(x_n)} > n$. Then, $(x_n)$ is
   Suppose $S$ bounded. Then, $a = \inf S, b = \sup S$ exist. Then, for any $x \in S$, $a \leq x \leq b$, so $S \subseteq [a, b]$. Let now $a < z < b$. $z < b \implies z$ not an upper bound of $S$ so $\exists y \in S \st z < y$. $z > a \implies z$ not a lower bound of $S$ so $\exists x \in S \st x < z$. Then, $x < z < y, x,y \in S$, so $[x, y] \subseteq S \implies z \in S$. So, $(a, b) \subseteq S \subseteq [a, b]$ and thus $S$ must be a bounded interval (one of those types defined above).
 \end{proof}
 
+\begin{theorem}[Bolzano's Intermediate Value Theorem]\label{thm:bolzanosintermediate}
+  Let $I$ be an interval and $f : I \to \mathbb{R}$ a continuous function. Let $a, b\in I$ and suppose $f(a) < f(b)$. Then, for any $k \st f(a) < k < f(b),$ $\exists c$ between $a$ and $b \st f(c) = k$. 
+\end{theorem}
+
+\begin{proof}
+  \begin{itemize}
+    \item(Case 1 : $a < b$) Consider $h(x) = f(x) - k$ on the closed and bounded interval $[a,b]$. Note that $h(a) = f(a) - k < 0$, and $h(b) = f(b) - k > 0$. By \nameref{thm:locationoftheroots}, there exists a $a < c < b$ s.t. $h(c) = 0 = f(c) - k \implies f(c) = k$, as desired.
+    \item(Case 2: $a > b$) Consider $h(x) = k - f(x)$ on the closed and bounded interval $[b, a]$. The remainder of the proof follows identically to (Case 1).
+  \end{itemize}
+\end{proof}
+
+\begin{theorem}\label{thm:pseudointermediate}
+  Let $I = [a, b]$ and $f: I \to \mathbb{R}$ a continuous function. Let $k$ be s.t. $\inf f(I)\leq k \leq \sup f(I)$. Then, $\exists c \in I \st f(c) = k$.
+\end{theorem}
+
+\begin{proof}
+  Recall that $m = \inf f(I)$ is the absolute minimum of $f$ on $I$ and $M = \sup f(I)$ is the absolute maximum of $f$ on $I$. Moreover, $\exists \overline{x}, \underline{x} \in I \st f(\overline{x}) = M, f(\underline{x}) = m$. Hence, we have that our $k$ satisfies \[
+  f(\ubar{x}) \leq k \leq f(\obar{x}).
+  \]
+  If $k = f(\ubar{x})$, take $c = \ubar{x}$. If $k = f(\obar{x})$, take $c = \obar{x}$. Otherwise, the inequality is strict, and we have $f(\ubar{x}) < k < f(\obar{x})$. By \nameref{thm:bolzanosintermediate}, we have that $\exists c$ between $\ubar{x}$ and $\obar{x} \st f(c) = k$. Moreover, $c \in [a,b]$.
+\end{proof}
+
+\begin{theorem}
+  Let $I = [a, b]$ and $f: I \to \mathbb{R}$ a continuous function. Then, $f(I)$ is also a bounded and closed interval.
+\end{theorem}
+
+\begin{proof}
+  Let $m = \inf f(I)$, $M = \sup f(I)$. Then, for any $x \in [a, b]$, $m \leq f(x) \leq M$, hence, $f(I) \subseteq [m , M]$. OTOH, by \cref{thm:pseudointermediate}, for any $m \leq k \leq M$, $\exists c \in [a, b] \st f(c) = k$, hence, $[m, M] \subseteq f(I)$, and thus $f(I) = [m,M]$ and the proof is complete. Moreover, $f(I)$ is precisely $[\inf f(I), \sup f(I)]$.
+\end{proof}
+
+\begin{theorem}
+  Let $I$ be an interval in $\mathbb{R}$. Let $f : I \to \mathbb{R}$ be a continuous function. Then, $f(I)$ is also an interval. 
+\end{theorem}
+
+\begin{proof}
+  We assume $f$ is not just a constant function. We aim to show that if $\alpha, \beta \in f(I), \alpha < \beta$, then $[\alpha, \beta] \subseteq f(I)$, that is, $f(I)$ an interval. 
+  
+  Let $a,b \in I$ be such that $f(a) = \alpha, f(b) = \beta$. We have that $f(a) < f(b),$ so for any $k \st \alpha \leq k \leq \beta$, by \nameref{thm:bolzanosintermediate}, $\exists c \in I \st f(c) = k$. Hence, $[\alpha, \beta] \subseteq f(I)$, and the proof is complete.
+\end{proof}
+
+\begin{remark}
+  This argument does not specify the actual "shape" of the intervals $f(I)$ look like. 
+  \begin{itemize}
+    \item If $I = \mathbb{R}$, can $f(I)$ be bounded and closed? Yes; take $f(x) = \sin x$; then, $f(\mathbb{R}) = [-1, 1]$
+    \item If $I = (a, b)$, can $f(I) = \mathbb{R}$? Yes; take $I = (-\frac{\pi}{2}, \frac{\pi}{2}),$ $f(x) = \tan x$.
+  \end{itemize}
+\end{remark}
+
+\subsection{Uniform Continuity}
+
+\begin{remark}
+  Recall that in the definition of continuity, the "choice" of $\delta$ depended both on $c$ (the point in the domain) and $\epsilon$. Uniform continuity defines a manner in which $\delta$ can be chosen \emph{without} relying on $c$; if this is the case for a function $f : A \to \mathbb{R}$, we say that $f$ is uniformly continuous on $A$.
+\end{remark}
+
+\begin{definition}[Uniform Continuity]
+  Let $f: A \to \mathbb{R}$. We say $f$ is \emph{uniformly continuous} on $A$ if \[
+  (\forall \epsilon >0)(\exists \delta > 0)(\forall c \in A)(\forall x \in A)(\abs{x - c} < \delta \implies \abs{f(x) - f(c)} < \epsilon).
+  \]
+\end{definition}
+
+\begin{remark}
+  The difference, quantifiers-wise, is the position of the $(\forall c \in A)$; since here the "choice" of $c$ comes after the choice of $\delta$, $\delta$ is independent, in contrast with "local" continuity.
+\end{remark}
+
+\begin{example}
+  Let $f(x) = x$. Then, $f$ is uniformly continuous on $\mathbb{R}$.
+  \begin{proof}
+    Let $\epsilon > 0, \delta = \epsilon$. Then, $\forall c \in \mathbb{R}$, if $x \st \abs{x - c} < \delta$, then we have $\abs{f(x) - f(c)} = \abs{x - c} < \epsilon$.
+  \end{proof}
+\end{example}
+
+\begin{example}
+  Let $f(x) = x^2$. Then, $f$ is not uniformly continuous on $\mathbb{R}$.
+  \begin{proof}
+    We proceed by contradiction. Suppose $f$ uniformly continuous. Take $\epsilon = 1$, then, $\exists \delta > 0 \st \forall x, c \in A \st \abs{x - c} < \delta,$ $\abs{f(x) - f(c)} = \abs{x^2 - c^2} < 1$. Take $x = \frac{1}{\delta} + \delta, c = \frac{1}{\delta} + \frac{\delta}{2}$. Then, we have
+    \[\abs{x - c} = \frac{\delta}{2} < \delta,\]
+    but
+    \begin{align*}
+      \abs{x^2 - c^2} = \abs{(\frac{1}{\delta} + \delta)^2 - (\frac{1}{\delta} + \frac{\delta}{2})^2}\\
+      = \cdots = \abs{1 + \frac{3\delta^2}{4}} > 1,
+    \end{align*}
+    a contradiction. 
+  \end{proof}
+\end{example}
+
+\begin{example}
+  Let $f(x) = \sqrt{x}$. Then, $f$ is uniformly continuous on $[0, \infty)$.
+  \begin{proof}
+    Let $\epsilon > 0$. Take $\delta = \frac{\epsilon^2}{2}$. Let $x, c \geq 0$, and suppose $\abs{x - c} < \delta$. We consider two cases:
+    \begin{itemize}
+      \item (Case 1) $x,c \in [0, \frac{\epsilon^2}{4})$. Then, \begin{align*}
+        \abs{\sqrt{x} - \sqrt{c}} \leq \sqrt{x} + \sqrt{c}
+        \\< \sqrt{\frac{\epsilon^2}{4}} + \sqrt{\frac{\epsilon^2}{4}} = 2\cdot\frac{\epsilon}{2} = \epsilon.
+      \end{align*}
+      \item (Case 2) Either $x$ or $c \geq \frac{\epsilon^2}{4}$. then \begin{align*}
+        \abs{\sqrt{x} - \sqrt{c}} = \abs{(\sqrt{x} - \sqrt{c}) \frac{\sqrt{x} +\sqrt{c}}{\sqrt{x} + \sqrt{c}}} = \frac{\abs{x - c}}{\sqrt{x} + \sqrt{c}}\\
+        < \frac{\delta}{\frac{\epsilon}{2}} = \frac{\frac{\epsilon^2}{2}}{\frac{\epsilon}{2}} = \epsilon.
+      \end{align*}
+    \end{itemize}
+  \end{proof}
+\end{example}
+
+\begin{example}
+  Let $f(x) = \sin (\frac{1}{x})$ is not uniformly continuous on $(0, 1]$.
+  \begin{proof}
+    Suppose that $f$ is indeed uniformly continuous. Take $\epsilon = \frac{1}{2}$. Then, $\exists \delta > 0 \st \forall x, c \in (0, 1] \st \abs{x - c} < \delta, \abs{f(x) - f(c)} = \abs{\sin x - \sin c} < \frac{1}{2}$. Take $n\in \mathbb{N} \st \frac{1}{n} < \delta$. Take $x = \frac{1}{n \pi}, c = \frac{1}{(2n+1)\frac{\pi}{2}} = \frac{1}{n\pi + \frac{\pi}{2}}$. Then, \begin{align*}
+      \abs{x - c} = \abs{\frac{1}{n\pi} - \frac{1}{n\pi + \frac{\pi}{2}}} = \frac{\frac{\pi}{2}}{n \pi (n \pi + \frac{\pi}{2})} < \delta
+    \end{align*}
+    Then, we have 
+    \begin{align*}
+      f(x) - f(c) = \abs{\sin \frac{1}{\frac{1}{n\pi}} - \sin \frac{1}{\frac{1}{(2n+1)\frac{\pi}{2}}}}\\
+      = \abs{(-1)^n} = 1> \frac{1}{2},
+    \end{align*}
+    a contradiction.
+  \end{proof}
+\end{example}
+\subsection{Sequential Characterization of Non-Uniform Continuity}
+
+\begin{theorem}
+  Let $f: A \to \mathbb{R}$ be a continuous function. TFAE:
+  \begin{enumerate}
+    \item $f$ is \emph{not} uniformly continuous on $A$;
+    \item $\exists \epsilon_0 > 0$ and two sequences $(x_n), (y_n) \in A \st \lim_{n\to\infty} (x_n - y_n) = 0$ and $\abs{f(x_n) - f(y_n)} \geq \epsilon_0 \forall n$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  (1. $\implies$ 2.) For $f$ to be \emph{not} uniformly continuous, then it is \emph{not} true that $\forall \epsilon > 0 \exists \delta > 0 \st \forall x, y \in A$, if $\abs{x - y} < \delta, \abs{f(x) - f(y)} < \epsilon$. That is, $\exists \epsilon_0 > 0 \st \forall \delta > 0,$ one can find $x, y \in A \st \abs{x - y} < \delta$ and $\abs{f(x) - f(y)} \geq \epsilon_0$. 
+  
+  Take this $\epsilon_0$ and let $\delta = \frac{1}{n}$. Then, $\exists x_n, y_n \in A \st \abs{x_n - y_n} < \frac{1}{n}$ and $\abs{f(x_n) - f(y_n)} \geq \epsilon_0$. This defines sequences $(x_n), (y_n) \in A \st \lim_{n\to\infty} (x_n - y_n) = 0$ and $\abs{f(x_n) - f(y_n)} \geq \epsilon_0 \forall n$, hence 2. holds.
+
+  \noindent (2. $\implies$ 1.) We argue by contradiction. Suppose there $\exists f$ continuous, $f: [a, b] \to \mathbb{R} \st$ 2. holds but 1. does not; that is, $f$ uniformly continuous and $\exists \epsilon_0 > 0$ and $(x_n), (y_n) \in A \st \lim (x_n - y_n) = 0$ and $\abs{f(x_n) - f(y_n)} \geq \epsilon_0 \forall n$.
+
+  Take this $\epsilon_0$ in the definition of uniform continuity; then, if $f$ uniformly continuous, $\exists \delta > 0 \st \forall x, y\in A \st \abs{x - y} < \delta$, we have $\abs{f(x) - f(y)} < \epsilon_0$. Consider our $(x_n), (y_n)$. Since $\lim_{n\to\infty} (x_n - y_n) = 0, \exists N \st \forall n \geq N, \abs{x_n - y_n} < \delta$. But then, this implies that $\forall n \geq N$, we have that $\abs{f(x_n) - f(y_n)} < \epsilon_0$. But this contradicts our original assumption in 2., and hence 1. must hold and the proof is complete.
+\end{proof}
+
+\begin{example}[$f(x) = x^2$]
+  Show that $f(x) = x^2$ \emph{not} uniformly continuous on $\mathbb{R}$.
+  \begin{proof}
+    Take $x_n = n + \frac{1}{n}$, $y_n = n$. Then, $x_n - y_n = \frac{1}{n}$ hence $\lim_{n\to\infty} (x_n - y_n) = 0$. OTOH, \begin{align*}
+      f(x_n) - f(y_n) = n^2 + 2 + \frac{1}{n^2} - n^2 = 2 + \frac{1}{n^2} \geq 2,
+    \end{align*}
+    hence, by the sequential characterization, taking $\epsilon_0 = 2$, $f$ is not uniformly continuous on $\mathbb{R}$.
+  \end{proof}
+\end{example}
+
+\begin{example}[$f(x) = \sin \frac{1}{x}$]
+  Show that $f(x) = \sin \frac{1}{x}$ \emph{not} uniformly continuous on $(0, 1]$
+  \begin{proof}
+    Let $x_n = \frac{1}{n\pi + \frac{\pi}{2}}, y_n = \frac{1}{n\pi}$. Both of these converge to $0$, hence their differences do as well. OTOH, $\abs{f(x_n) - f(y_n)} = \abs{-1 - 0} = 1 \geq 1$, hence, $f$ is not uniformly continuous with $\epsilon_0 = 1$.s
+  \end{proof}
+\end{example}
+
+\begin{theorem}\label{thm:closedanduniform}
+  Let $f: [a, b] \to \mathbb{R}$ be a continuous function. Then, $f$ is uniformly continuous on $[a,b]$.
+\end{theorem}
+
+\begin{proof}
+  We proceed by contradiction. Suppose $\exists f: [a, b] \to \mathbb{R}$ that is continuous but not uniformly continuous on $[a,b]$. Then, by the sequential characterization, $\exists \epsilon_0 > 0$ and $x_n, y_n \in [a, b] \st \lim_{n\to\infty} (x_n - y_n) = 0$ and $\abs{f(x_n) - f(y_n)} \geq \epsilon_0 \forall n$. 
+
+  Since $[a,b]$ bounded, by \nameref{thm:bwthm}, the sequence $(x_n)$ has a convergent subsequence $(x_{n_k})$ that converges to $z \in [a, b]$ (since $[a,b]$ closed). We can write \begin{align*}
+    \abs{y_{n_k} - z} = \abs{y_{n_k} - x_{n_k} + x_{n_k} + z}\\
+    \leq \underbrace{\abs{y_{n_k} - x_{n_k}}}_{\to 0} + \underbrace{\abs{x_{n_k} - z}}_{\to 0}.
+  \end{align*}
+  Hence, by the \nameref{thm:squeezetheorem}, $\abs{y_{n_k} -z}$ converges to 0 so $(y_{n_k})$ also converges to $z$, that is \[
+  \lim_{k\to\infty} x_{n_k} = \lim_{k\to\infty} y_{n_k} = z.  
+  \]
+  Since $f$ continuous on $[a,b]$, we have that $\lim_{k\to\infty} f(x_{n_k}) = f(z)$ and $\lim_{k\to\infty} f(y_{n_k}) = f(z)$, and so \[
+  \lim_{k\to\infty} (f(x_{n_k}) - f(y_{n_k}))  = z - z = 0,
+  \]
+  By definition, then, $\exists K \st \forall k \geq K$, $\abs{f(x_{n_k}) - f(y_{n_k})} < \epsilon_0$. This is a contradiction, hence, $f$ uniformly continuous and the proof is complete.
+\end{proof}
+
+\begin{theorem}[Preservation of Cauchy Criterion by Uniformly Continuous Functions]
+  Let $f: A \to \mathbb{R}$ be a uniformly continuous function. Let $(x_n)\in A$, and assume $x_n$ Cauchy. Then, $(f(x_n))$ is also a Cauchy sequence.
+\end{theorem}
+\begin{proof}
+  Let $\epsilon > 0$. Since $f$ uniformly continuous on $A$, there is $\delta > 0 \st \forall x,y \in A, \abs{x - y} < \delta \implies \abs{f(x) - f(y)} < \epsilon$. Since $(x_n)$ Cauchy, $\exists N \st \forall n, m \geq N$, $\abs{x_n - x_m} < \delta$. But then, $\forall n, m \geq N,$ we have $\abs{f(x_n) - f(y_n)} < \epsilon$, and hence $(f(x_n))$ is Cauchy.
+\end{proof}
+
+\begin{theorem}\label{thm:cauchysequenceimpliescauchyimage}
+  Let $(a,b)$ be an bounded, \emph{open} interval and $f: (a,b) \to \mathbb{R}$ a continuous function. TFAE:
+  \begin{enumerate}
+    \item $f$ is uniformly continuous on $(a,b)$;
+    \item $f$ can be at the end points $a,b$ such that it is continuous on the closed interval $[a,b]$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+  This is called "Extension by uniform continuity".
+\end{remark}
+
+\begin{proof}
+  (2. $\implies$ 1.) If $f$ can be extended to $a,b$ so that it is continuous on $[a,b]$, then it is also uniformly continuous by \cref{thm:closedanduniform}. Then, $f$ is also uniformly continuous on any subset $[a,b]$, in particular, on $(a,b) \subseteq [a,b]$.
+
+  \noindent (1. $\implies$ 2.) Let $(x_n) \in (a,b)$ that converges to $a$. $(x_n)$ Cauchy, and by \cref{thm:cauchysequenceimpliescauchyimage}, $(f(x_n))$ also Cauchy, hence $L = \lim_{n\to\infty} f(x_n)$ exists; define ("extend") $f(a) = L$. It remains to show that $f$ continuous with this extension.
+
+  Let $(u_n)$ be an arbitrary sequence in $(a, b)$ such that $\lim_{n\to\infty} u_n = a$. Let $\epsilon > 0$. Since $f$ is uniformly continuous on $(a,b)$, then $\exists \delta > 0 \st \forall x, y \in (a, b),$ $\abs{x - y} < \delta \implies \abs{f(x) - f(y)} < \frac{\epsilon}{2}$. Now, we have that $\lim_{n\to\infty} u_n = a, \lim_{n\to\infty} x_n = a$, so $\lim_{n\to\infty} (u_n - x_n) = 0$. Hence, $\exists N_1 \st \forall n \geq N_1, \abs{u_n - x_n} < \delta$. This implies, then, that $\forall n \geq N_1$, we have $\abs{f(u_n) - f(x_n)} < \frac{\epsilon}{2}$.
+
+  We have, by our extension, that $\lim_{n\to\infty} f(x_n) = L$, hence, $\exists N_2 \st \forall n \geq N_2, \abs{f(x_n) - L} < \frac{\epsilon}{2}$. Let, now, $N = \max \{N_1, N_2\}$. Then, $\forall n \geq N$, \begin{align*}
+    \abs{f(u_n) - L} = \abs{f(u_n) - f(x_n) + f(x_n) - L}\\
+    \leq \abs{f(u_n) - f(x_n)} + \abs{f(x_n) - L}\\
+    < \frac{\epsilon}{2}  + \frac{\epsilon}{2} = \epsilon, 
+  \end{align*}
+  that is, $\forall n \geq N, \abs{f(u_n) - L} < \epsilon$. Hence, for any arbitrary $(u_n) \in (a,b)$ such that $(u_n) \to a$, $\lim{n\to \infty} u_n = L$, hence, as we have set $f(a) = L$, by sequential characterization of continuity, $f$ is continuous at $a$.
+
+  The proof for $b$, the RHS endpoint, follows identically.
+\end{proof}
+
 \newpage
 \section{Appendix}
 \subsection{Interesting Results}
@@ -2768,7 +2908,6 @@ So, for any $n$, $\exists x_n \in [a, b] \st \abs{f(x_n)} > n$. Then, $(x_n)$ is
     \frac{x_{n+1}}{x_n} \geq q > 1.
   \]
 \end{definition}
-
 
 
 % \subsection{Major Results \& their Implications}
@@ -2872,4 +3011,8 @@ So, for any $n$, $\exists x_n \in [a, b] \st \abs{f(x_n)} > n$. Then, $(x_n)$ is
 %   \caption{Important!}
 %   \label{fig:important}
 % \end{figure*}
+% \getenv[\HOME]{}
+
+
+% \HOME
 \end{document}
