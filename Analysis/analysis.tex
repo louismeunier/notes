@@ -1333,17 +1333,24 @@ Proof sketch: take an upper bound of $x_n$. Then, show that $|x_n y_n - xy| < \e
 \begin{remark}
   The set $\{n : x_n > t\}$ is empty or finite iff $\exists$ $n_t \in \mathbb{N} \st \forall n > n_t$, $x_n \leq t$. The set is empty or finite if $t$ is an \emph{eventual upper bound} for $(x_n)$; that is, starting with sufficiently large $n_t$, $x_n \leq t \forall n \geq t$.
 
-  In other words, $t$ is an upper bound if we neglect finitely many elements. Hence, (1) states equivalently states that $\limsupbar x_n$ is the infimum of the eventual upper bounds for $(x_n)$. 
+  In other words, $t$ is an upper bound if we neglect finitely many elements. Hence, (1) states equivalently states that $\limsupbar x_n$ is the infimum of the eventual upper bounds for $(x_n)$;
+  \begin{align*}
+    \{n : x_n > t\} \text{ empty or finite} \iff\\
+    \begin{cases}
+      \text{empty} & x_n \leq \forall n \iff t \text{ an upper bound of } x_n\\
+      \text{finite} & t \text{ upper bounds} x_n \text{ for an infinite number of }n\text{'s}
+    \end{cases}
+  \end{align*}
 \end{remark}
 
 \begin{proof}(Of (1)) Let $A = \{t : \{n : x_n > t\} \text{ is either empty or finite }\}$. We note that this set is non-empty and bounded from below, hence the inf is well-defined. We can see this by recalling that $(x_n)$ bounded, hence $\forall n$ $\exists m, M \st m \leq x_n \leq M$. Then, $\{n : x_n > M\}$ is empty, hence $M \in A$. Otoh, if $t < m$, then the set $\{n : x_n > t\} = \mathbb{N}$ since $x_n \geq m > t \forall n$. So, if $t < m$, then $t \notin A$ and hence $m$ is a lower bound for $A$. 
 
-We have now that $\limsupbar x_n$ is a lower bound for $A$, and hence $\limsupbar x_n \leq \inf A$. Let $t \in A$. We aim to show that $\limsupbar x_n \leq t$.
+We have now that $\limsupbar x_n$ is a lower bound for $A$, and hence $\limsupbar x_n \geq \inf A$. Let $t \in A$. We aim to show that $\limsupbar x_n \leq t$.
 
 The set $\{n : x_n > t\}$ is finite by definition; assume $t \in A$. We can then let \[
-  n_t = \max \{n : x_n\}.  
+  n_t = \max \{n : x_n > t\}.  
 \]
-Then, if $K > n_t$, it must be that $x_k \leq t$. Consider now $n > n_t$, then $y_n = \sup \{ x_k : k \geq n\}$ and since $x_k \leq t$ for $k \geq n$, and $t$ upper bounds $\{x_k: k \geq n\}$, we have that $y_n \leq t$ for $n > n_t$. Hence, for sufficiently large $n$, $y_n \leq t$, thus $\lim y_n \leq t \implies \limsupbar x_n \leq t$. 
+Then, if $k > n_t$, it must be that $x_k \leq t$. Consider now $n > n_t$, then $y_n = \sup \{ x_k : k \geq n\}$ and since $x_k \leq t$ for $k \geq n$, and $t$ upper bounds $\{x_k: k \geq n\}$, we have that $y_n \leq t$ for $n > n_t$. Hence, for sufficiently large $n$, $y_n \leq t$, thus $\lim y_n \leq t \implies \limsupbar x_n \leq t$. 
 
 Thus, $\limsupbar x_n \leq \inf A$.
 \end{proof}
@@ -1683,7 +1690,7 @@ Sketch: show $x_n$ Cauchy $\implies x_n$ converges, then take a subsequence of $
     &\leq \abs{x_n - x_{n-1}} + \abs{x_{n-1} - x_{n-2}} + \cdots + \abs{x_{m+1} - x_m}\\
     &\leq K^{n-2} \abs{2 - x_1} + K^{n-3} \abs{x_2 -x_1} + \cdots + K^{m-1} \abs{x_2 - x_1}\\
     &= K^m-1\abs{x_2 - x_1} \left(1 + K + K^2 + \cdots + K^{n-m-1}\right)\\
-    &= K^{m-1}\abs{x_2 - x_1} \frac{1-K^{n-m}}{1-K} \quad \textit{by \cref{cor:recursiveaside}}\\
+    &= K^{m-1}\abs{x_2 - x_1} \frac{1-K^{n-m}}{1-K} \quad \textit{by \cref{cor:examplecauchycor}}\\
     &< \frac{K^{m-1}\abs{x_2 - x_1}}{1-K}\\
    &\implies \abs{x_n - x_m} < \frac{K^{m-1}\abs{x_2 - x_1}}{1 - K} \forall n > m \geq 2\\\\
    &\lim \frac{K^{m-1}}{1-K}\abs{x_2 - x_1} = 0 \implies \forall \epsilon > 0, \exists N \st \forall m > N, \frac{K^{m-1}}{1-K}\abs{x_2 - x_1} < \epsilon\\
@@ -1942,11 +1949,11 @@ $1 - \sqrt{2} < 0$, which can't hold since $x_n \geq 0 \forall n$, hence it must
   Since the LHS set is infinite, the RHS must be too.
 
   We now show the converse. Suppose that $\forall \epsilon > 0,$ the set $\{n : \abs{x_{n} - x} < \epsilon\}$ is infinite. % TODO: don't really know?
-  Take $\epsilon = 1$, then the set $\{n : \abs{x_n - x} < 1\}$ is an infinite set. Take $n_1 = \min \{n : \abs{x_n - x} < 1\}$. We can now define $n_k$, where $k = 2,3,\dots$ recursively. Suppose that some $n_k$ chosen. Then, take $\epsilon = \frac{1}{K+1}$, and consider \[
-  \{n : n > n_k, \abs{x_n - x} < \frac{1}{k+1}\}.  
+  Take $\epsilon = 1$, then the set $\{n : \abs{x_n - x} < 1\}$ is an infinite set. Take $n_1 = \min \{n : \abs{x_n - x} < 1\}$. We can now define $n_k$, where $k = 2,3,\dots$ recursively. Suppose that some $n_k$ chosen. Then, take $\epsilon = \frac{1}{k}$, and consider \[
+  \{n : n > n_k, \abs{x_n - x} < \frac{1}{k}\}.  
   \]
-  This set has infinitely many elements, since $\{n : \abs{x_n - x} < \frac{1}{k+1}\}$ is also infinite. % TODO; why?
-  We then set $n_{k+1} = \min \{n : n > n_k, \abs{x_n - x} < \frac{1}{k+1}\},$ which defines a strictly increasing sequence $(n_k)_{k \geq 1}$ of natural numbers such that for any $k$, $\abs{x_{n_k} - x} < \frac{1}{k}$. So, $\lim_{k\to\infty} \abs{x_{n_k} - x} = 0$ which gives that $\lim_{k\to\infty} x_{n_k} = x$, so $x \in \fl$.
+  This set has infinitely many elements, since $\{n : \abs{x_n - x} < \frac{1}{k}\}$ is also infinite. % TODO; why?
+  We then set $n_{k+1} = \min \{n : n > n_k, \abs{x_n - x} < \frac{1}{k}\},$ which defines a strictly increasing sequence $(n_k)_{k \geq 1}$ of natural numbers such that for any $k$, $\abs{x_{n_k} - x} < \frac{1}{k}$. So, $\lim_{k\to\infty} \abs{x_{n_k} - x} = 0$ which gives that $\lim_{k\to\infty} x_{n_k} = x$, so $x \in \fl$.
 \end{proof}
 
 \begin{theorem}\label{thm:limsupliminflimitpoints}
@@ -2462,7 +2469,7 @@ where the fourth line follows directly from $\delta \leq \delta_1$ as defined pr
   If $c \in A$ a cluster point of $A$, $f$ is continuous at $c$ iff $\lim_{x\to c} f(x) = f(c)$. If $c$ not a cluster point, continuity at $c$ still defined, while $\lim_{x\to c} f(x)$ not.
 \end{definition}
 
-\begin{theorem}[Sequentual Characterization of Continuity]
+\begin{theorem}[Sequential Characterization of Continuity]
   Let $f: A \to \mathbb{R}$, $c \in A$. TFAE:
   \begin{enumerate}
     \item $f$ continuous at $c$
