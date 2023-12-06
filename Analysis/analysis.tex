@@ -1050,7 +1050,7 @@ In the proof, we used the claim:
   Proof sketch: contradiction, assume two distinct limits, and take $\epsilon$ as their midpoint. Arrive at a contradiction by using triangle inequalities to show that $|x-y| < |x-y|$, and thus the limits cannot be distinct.
 }
 \begin{proof}
-  By contradiction; suppose $\exists (x_n) \st \lim_{n \to \infty} x_n = x$ and $\lim_{n \to \infty} x_n = y$, and that $x \neq 0$.\\
+  By contradiction; suppose $\exists (x_n) \st \lim_{n \to \infty} x_n = x$ and $\lim_{n \to \infty} x_n = y$, and that $x \neq y$.\\
   Take $\epsilon = \frac{|x-y|}{2}$. Since $x \neq y$, we have that $\epsilon > 0$. Since $\lim_{n \to \infty} x_n = x$, $\exists N_1 \in \mathbb{N}$ s.t. for $n \geq N_1$, $|x_n - x| < \epsilon$. \\
   Similarly,  since $\lim x_n = y$, $\exists N_2 \in \mathbb{N}$ s.t for $g \geq N_2, |x_n - y| < \epsilon$. \\
   Take some $n \geq \max(N_1, N_2)$; then \begin{align*}
@@ -2917,159 +2917,179 @@ So, for any $n$, $\exists x_n \in [a, b] \st \abs{f(x_n)} > n$. Then, $(x_n)$ is
   \]
 \end{definition}
 
-\subsection{Extra - Assignment 4}
+% \subsection{Extra - Assignment 4}
 
-\begin{question}
-  Let $I := [a,b], f: I \to \mathbb{R}$ a continuous function such that $f(x) > 0 \forall x \in I$. Prove that $\exists \alpha > 0 \st f(x)\geq \alpha \forall x \in I$.
-\end{question}
-\begin{proof}
-  Suppose not. Then, for any $\alpha >0$, $\exists x \in I \st f(x) < \alpha$. Moreover, $\frac{1}{n} > 0 \forall n \implies$ (taking $\alpha = \frac{1}{n} \forall n \in \mathbb{N}$) that $\forall n \in \mathbb{N}, \exists (x_n) \in I \st f(x_n) < \frac{1}{n}$. Note that this particular $x_n$ exists for \emph{any} $n \in \mathbb{N}$ by our assumption. Hence, we have created a sequence $$(x_n)_{n\in\mathbb{N}} < \frac{1}{n} \forall n.$$ But note that $(x_n) \in I \forall n$, a bounded sequence, hence $(x_n)$ has a converging subsequence $(x_{n_k})$ by \cref{thm:bwthm}; let $X := \lim_{k\to\infty} x_{n_k}$. Moreover, since \[
-  a \leq x_{n_k} \leq b \forall k \in \mathbb{N},  
-  \]
-  by order properties of limits, $a \leq X \leq b$ as well; that is, $X \in I$. Hence, $f$ continuous at $X$ (since $f$ continuous on all of $I$), and moreover, the previously inequality concerning $x_n$ still holds, that is,
-  \[
-  f(x_{n_k}) < \frac{1}{n_k},
-  \]
-  but moreover, $n_k \geq k \implies \frac{1}{n_k} \leq \frac{1}{k}$ (by necessity of a subsequence), so we further have 
-  \[
-  f(x_{n_k}) < \frac{1}{n_k} \leq \frac{1}{k}  \forall k \in \mathbb{N}.
-  \]
-  By the sequential criterion of continuity, $f(X) = \lim_{k\to\infty} (x_{n_k}) \leq \lim_{k\to\infty} \frac{1}{n_k} = 0 \implies f(X) \leq 0$. Thus, $\exists X \in I \st f(X) \leq 0,$ contradicting our original assumption, and the proof is complete.
-\end{proof}
+% \begin{question}
+%   Let $I := [a,b], f: I \to \mathbb{R}$ a continuous function such that $f(x) > 0 \forall x \in I$. Prove that $\exists \alpha > 0 \st f(x)\geq \alpha \forall x \in I$.
+% \end{question}
+% \begin{proof}
+%   Suppose not. Then, for any $\alpha >0$, $\exists x \in I \st f(x) < \alpha$. Moreover, $\frac{1}{n} > 0 \forall n \implies$ (taking $\alpha = \frac{1}{n} \forall n \in \mathbb{N}$) that $\forall n \in \mathbb{N}, \exists (x_n) \in I \st f(x_n) < \frac{1}{n}$. Note that this particular $x_n$ exists for \emph{any} $n \in \mathbb{N}$ by our assumption. Hence, we have created a sequence $$(x_n)_{n\in\mathbb{N}} < \frac{1}{n} \forall n.$$ But note that $(x_n) \in I \forall n$, a bounded sequence, hence $(x_n)$ has a converging subsequence $(x_{n_k})$ by \cref{thm:bwthm}; let $X := \lim_{k\to\infty} x_{n_k}$. Moreover, since \[
+%   a \leq x_{n_k} \leq b \forall k \in \mathbb{N},  
+%   \]
+%   by order properties of limits, $a \leq X \leq b$ as well; that is, $X \in I$. Hence, $f$ continuous at $X$ (since $f$ continuous on all of $I$), and moreover, the previously inequality concerning $x_n$ still holds, that is,
+%   \[
+%   f(x_{n_k}) < \frac{1}{n_k},
+%   \]
+%   but moreover, $n_k \geq k \implies \frac{1}{n_k} \leq \frac{1}{k}$ (by necessity of a subsequence), so we further have 
+%   \[
+%   f(x_{n_k}) < \frac{1}{n_k} \leq \frac{1}{k}  \forall k \in \mathbb{N}.
+%   \]
+%   By the sequential criterion of continuity, $f(X) = \lim_{k\to\infty} (x_{n_k}) \leq \lim_{k\to\infty} \frac{1}{n_k} = 0 \implies f(X) \leq 0$. Thus, $\exists X \in I \st f(X) \leq 0,$ contradicting our original assumption, and the proof is complete.
+% \end{proof}
 
-\begin{question}
-  Let $I:=[a,b], f: I \to \mathbb{R}$ a continuous function such that $\forall x \in I, \exists y \in I \st \abs{f(y)} \leq \frac{1}{2}\abs{f(x)}$. Prove that $\exists c \in I \st f(c) = 0$.
-\end{question}
+% \begin{question}
+%   Let $I:=[a,b], f: I \to \mathbb{R}$ a continuous function such that $\forall x \in I, \exists y \in I \st \abs{f(y)} \leq \frac{1}{2}\abs{f(x)}$. Prove that $\exists c \in I \st f(c) = 0$.
+% \end{question}
 
-\begin{proof}
-  We aim to construct a sequence. Let $x_1 \in [a,b]$ be arbitrary. Given $x_n$, let $x_{n+1}$ be the minimal element of $I \st \abs{f(x_{n+1})} \leq \frac{1}{2}\abs{f(x_n)}$, which exists by the description of the function. Note that this means that \[
-  \abs{f(x_n)} \leq \frac{1}{2}\abs{f(x_{n-1})} \leq \cdots \leq \frac{1}{2^n}\abs{f(x_1)},
-  \]
-  hence \[
-    - \frac{1}{2^n} f(x_1) \leq f(x_n) \leq \frac{1}{2^n}f(x_1),
-  \]
-  and thus $(f(x_n))_{n \in \mathbb{N}} \to 0$. Moreover, $(x_n) \in I \forall n$ hence $(x_n)$ bounded and thus there exists a converging subsequence $(x_{n_k})$ that converges; let (suggestively) $c:= \lim_{k\to\infty} x_{n_k}$. Then, by the sequential criterion of continuity, $(x_(n_k)) \to c \implies \lim_{k\to\infty}f(x_{n_k}) = f(c)$. But $f(x_{n_k})$ converges to the same point as $f(x_{n})$ (namely $0$) and thus we have that \[
-    \lim_{k\to\infty}f(x_{n_k}) = f(c) = \lim_{n\to\infty} f(x_n) = 0 \implies f(c) = 0,  
-  \]
-  and the proof is complete.
-\end{proof}
+% \begin{proof}
+%   We aim to construct a sequence. Let $x_1 \in [a,b]$ be arbitrary. Given $x_n$, let $x_{n+1}$ be the minimal element of $I \st \abs{f(x_{n+1})} \leq \frac{1}{2}\abs{f(x_n)}$, which exists by the description of the function. Note that this means that \[
+%   \abs{f(x_n)} \leq \frac{1}{2}\abs{f(x_{n-1})} \leq \cdots \leq \frac{1}{2^n}\abs{f(x_1)},
+%   \]
+%   hence \[
+%     - \frac{1}{2^n} f(x_1) \leq f(x_n) \leq \frac{1}{2^n}f(x_1),
+%   \]
+%   and thus $(f(x_n))_{n \in \mathbb{N}} \to 0$. Moreover, $(x_n) \in I \forall n$ hence $(x_n)$ bounded and thus there exists a converging subsequence $(x_{n_k})$ that converges; let (suggestively) $c:= \lim_{k\to\infty} x_{n_k}$. Then, by the sequential criterion of continuity, $(x_(n_k)) \to c \implies \lim_{k\to\infty}f(x_{n_k}) = f(c)$. But $f(x_{n_k})$ converges to the same point as $f(x_{n})$ (namely $0$) and thus we have that \[
+%     \lim_{k\to\infty}f(x_{n_k}) = f(c) = \lim_{n\to\infty} f(x_n) = 0 \implies f(c) = 0,  
+%   \]
+%   and the proof is complete.
+% \end{proof}
 
-\begin{question}
-  Let $f: [0,1] \to \mathbb{R}$ be a continuous function such that $f(0) = f(1) = 0$. Prove that there $\exists c \in [0, \frac{1}{2}] \st f(c) = f(c + \frac{1}{2})$.
-\end{question}
+% \begin{question}
+%   Let $f: [0,1] \to \mathbb{R}$ be a continuous function such that $f(0) = f(1) = 0$. Prove that there $\exists c \in [0, \frac{1}{2}] \st f(c) = f(c + \frac{1}{2})$.
+% \end{question}
 
-\begin{proof}
-  Let $h(x) := f(x) - f(x + \frac{1}{2})$. Clearly, $h$ is continuous; more rigorously, let $a(x, y) = x - y$, $b(x) = x + \frac{1}{2}$. Then, $h = a \circ (f, f \circ b)$. $a$ and $b$ simply linear functions and thus continuous, and so by composition of linear function, $h$ is continuous as well.
+% \begin{proof}
+%   Let $h(x) := f(x) - f(x + \frac{1}{2})$. Clearly, $h$ is continuous; more rigorously, let $a(x, y) = x - y$, $b(x) = x + \frac{1}{2}$. Then, $h = a \circ (f, f \circ b)$. $a$ and $b$ simply linear functions and thus continuous, and so by composition of linear function, $h$ is continuous as well.
 
-  Then, we have that \begin{align*}
-    h(0) = f(0) - f(\frac{1}{2}) = - f(\frac{1}{2})\\
-    h(\frac{1}{2}) = f(\frac{1}{2}) - f(1) = f(\frac{1}{2}) = 0,
-  \end{align*}
-  hence, we have that $h(0)=-f(\frac{1}{2})$ and $h(\frac{1}{2}) = f(\frac{1}{2})$. That is, $h(0)$ and $h(\frac{1}{2})$ must have different signs, and thus by the location of roots theorem, $\exists c \in [0, \frac{1}{2}] \st h(c) = 0$. But by our definition of $h$, we have that \[
-  h(c) = f(c) - f(c+\frac{1}{2}) = 0 \implies f(c) = f(c + \frac{1}{2}),
-  \]
-  and the proof is complete.
-\end{proof}
+%   Then, we have that \begin{align*}
+%     h(0) = f(0) - f(\frac{1}{2}) = - f(\frac{1}{2})\\
+%     h(\frac{1}{2}) = f(\frac{1}{2}) - f(1) = f(\frac{1}{2}) = 0,
+%   \end{align*}
+%   hence, we have that $h(0)=-f(\frac{1}{2})$ and $h(\frac{1}{2}) = f(\frac{1}{2})$. That is, $h(0)$ and $h(\frac{1}{2})$ must have different signs, and thus by the location of roots theorem, $\exists c \in [0, \frac{1}{2}] \st h(c) = 0$. But by our definition of $h$, we have that \[
+%   h(c) = f(c) - f(c+\frac{1}{2}) = 0 \implies f(c) = f(c + \frac{1}{2}),
+%   \]
+%   and the proof is complete.
+% \end{proof}
 
-\begin{question}
-  Let $I := [a, b]. f: I \to \mathbb{R}$ continuous, where $f(a) < 0$ and $f(b) > 0$. Let $W := \{x \in I : f(x) < 0\}$. Let $c = \sup w$. Prove $f(c) = 0$.
-\end{question}
+% \begin{question}
+%   Let $I := [a, b]. f: I \to \mathbb{R}$ continuous, where $f(a) < 0$ and $f(b) > 0$. Let $W := \{x \in I : f(x) < 0\}$. Let $c = \sup W$. Prove $f(c) = 0$.
+% \end{question}
 
-\begin{proof}
-  % TODO
-\end{proof}
+% \begin{proof}
+%   % TODO
+% \end{proof}
 
-\begin{question}
-  Prove that $\forall x \in \mathbb{R}$,
-  \[
-  \chi(x) := \lim_{m\to\infty} \left(
-    \lim_{n\to\infty} \cos^{n}(\pi m! x)
-  \right)  
-  \]
-  exists, and that $\chi(x)$ is discontinuous $\forall x \in \mathbb{R}$.
-\end{question}
-\begin{proof}
-  % Suppose $x \in \mathbb{J}$. Then, $|\cos^n(\pi m! x)| < 1^n \forall m, n$, since $\cos = \pm 1$ for only integer multiples of $\pi$.
-  Consider $m$ fixed. Then, $\chi_m (x) = \lim_{n\to\infty} \cos^n(\pi m! x)$. We claim that $\chi_m(x) = 0 \forall x \in \mathbb{J}$. Note that % TODO: prove that cos^n goes to 0 for non 2pi answers
-  % TODO: show that cos^n goes to 1 for integer answers. Done.
+% \begin{question}
+%   Prove that $\forall x \in \mathbb{R}$,
+%   \[
+%   \chi(x) := \lim_{m\to\infty} \left(
+%     \lim_{n\to\infty} \cos^{n}(\pi m! x)
+%   \right)  
+%   \]
+%   exists, and that $\chi(x)$ is discontinuous $\forall x \in \mathbb{R}$.
+% \end{question}
+% \begin{proof}
+%   % Suppose $x \in \mathbb{J}$. Then, $|\cos^n(\pi m! x)| < 1^n \forall m, n$, since $\cos = \pm 1$ for only integer multiples of $\pi$.
+%   Consider $m$ fixed; let $\chi_m (x) = \lim_{n\to\infty} \cos^n(\pi m! x)$. We claim that $\chi_m(x) = 0 \forall x \in \mathbb{J}$. Note that % TODO: prove that cos^n goes to 0 for non 2pi answers
+%   % TODO: show that cos^n goes to 1 for integer answers. Done.
 
-  Suppose $x = \frac{p}{q} \in \mathbb{Q}$. Then, the argument $\pi m!x$ is always an integer multiple of $\pi \forall x$
-\end{proof}
+%   Suppose $x = \frac{p}{q} \in \mathbb{Q}$. Then, the argument $\pi m!x$ is always an integer multiple of $\pi \forall x$
+% \end{proof}
 
-\begin{question}
-  Let $I = (0, \infty), f: I \to \mathbb{R}$ be a continuous and bounded function. Show that $\forall T \in \mathbb{R}, \exists (x_n) \st \lim_{n\to\infty} x_n = \infty$, and \[
-  \lim_{n\to\infty} \left[f(x_{n} + T) - f(x_{n})\right].
-  \]
-\end{question}
+% \begin{question}
+%   Let $I = (0, \infty), f: I \to \mathbb{R}$ be a continuous and bounded function. Show that $\forall T \in \mathbb{R}, \exists (x_n) \st \lim_{n\to\infty} x_n = \infty$, and \[
+%   \lim_{n\to\infty} \left[f(x_{n} + T) - f(x_{n})\right].
+%   \]
+% \end{question}
 
-\begin{proof}
-  Fix $T \in \mathbb{R}$. Let $A := \{x : f(x + T) - f(x) > 0\}$ and $B := \{x : f(x + T) - f(x) < 0\}$. We consider the following cases; (I) both $A$ and $B$ unbounded, (II) one of $A$ or $B$ bounded, and (III) both $A$ and $B$ bounded.
+% \begin{proof}
+%   Fix $T \in \mathbb{R}$. Let $A := \{x : f(x + T) - f(x) > 0\}$ and $B := \{x : f(x + T) - f(x) < 0\}$. We consider the following cases; (I) both $A$ and $B$ unbounded, (II) one of $A$ or $B$ bounded, and (III) both $A$ and $B$ bounded.
 
-  (I) If both $A$ and $B$ unbounded, we have that for any element in one, we can find another that is larger. Define, then, a sequence of $a_n \in A \st a_n > n \forall n$ and $b_n \in B \st b_n > n \forall n$ (that is, we require both to grow more than linearly, guaranteeing that both go to $\infty$). Moreover, note that both these sequences are well defined, by our assumption that both sets are unbounded, and there thus exist "sufficient" elements in both to define our sequence $\forall n$. 
+%   (I) If both $A$ and $B$ unbounded, we have that for any element in one, we can find another that is larger. Define, then, a sequence of $a_n \in A \st a_n > n \forall n$ and $b_n \in B \st b_n > n \forall n$ (that is, we require both to grow more than linearly, guaranteeing that both go to $\infty$). Moreover, note that both these sequences are well defined, by our assumption that both sets are unbounded, and there thus exist "sufficient" elements in both to define our sequence $\forall n$. 
 
-  Now, note that $\forall n,$ we have \[
-  f(a_n + T) - f(a_n) > 0  \text{ and } f(b_n + T) - f(b_n)  < 0.
-  \]
-  Taking $g(x) = f(x + T) - f(x)$, we see that, by the location of roots theorem, $\exists x_n \in [a_n, b_n] \st g(x_n) = f(x_n + T) - f(x_n) = 0 \forall n$. Moreover, since $x_n \in [a_n, b_n] \forall n$, and both of these sequences go to $\infty$, so must $x_n$, and the claim holds.
+%   Now, note that $\forall n,$ we have \[
+%   f(a_n + T) - f(a_n) > 0  \text{ and } f(b_n + T) - f(b_n)  < 0.
+%   \]
+%   Taking $g(x) = f(x + T) - f(x)$, we see that, by the location of roots theorem, $\exists x_n \in [a_n, b_n] \st g(x_n) = f(x_n + T) - f(x_n) = 0 \forall n$. Moreover, since $x_n \in [a_n, b_n] \forall n$, and both of these sequences go to $\infty$, so must $x_n$, and the claim holds.
 
-  (II) Suppose $B$ bounded wlog. Then, this implies that $\exists M \st \forall x \geq M, f(x + T) - f(x) \geq 0$. Let $x_1 > M$ be arbitrary, and let $x_n = x_{n-1} + T = x_1 + (n-1)T$. Then, we clearly have that $x_n$ is a monotone, strictly increasing sequence, and hence $(x_n) \to \infty$. Moreover, we have that \[
-  f(x_n + T) - f(x_n) \geq 0  \implies f(x_{n+1}) - f(x_n) \geq 0,  
-  \]
-  hence, $f(x_n)$ is a decreasing sequence, bounded below (by 0), and hence converges. Since $\lim_{n\to\infty} f(x_n) = \lim_{n\to\infty} f(x_{n+1})$, this gives \begin{align*}
-    \lim_{n\to\infty}\left[ f(x_{n} + T) - f(x_n)\right]\\
-    = \lim_{n\to\infty} f(x_{n+1}) - \lim_{n\to\infty} f(x_{n}) = 0,
-  \end{align*}
-  and the claim holds.
+%   (II) Suppose $B$ bounded wlog. Then, this implies that $\exists M \st \forall x \geq M, f(x + T) - f(x) \geq 0$. Let $x_1 > M$ be arbitrary, and let $x_n = x_{n-1} + T = x_1 + (n-1)T$. Then, we clearly have that $x_n$ is a monotone, strictly increasing sequence, and hence $(x_n) \to \infty$. Moreover, we have that \[
+%   f(x_n + T) - f(x_n) \geq 0  \implies f(x_{n+1}) - f(x_n) \geq 0,  
+%   \]
+%   hence, $f(x_n)$ is a decreasing sequence, bounded below (by 0), and hence converges. Since $\lim_{n\to\infty} f(x_n) = \lim_{n\to\infty} f(x_{n+1})$, this gives \begin{align*}
+%     \lim_{n\to\infty}\left[ f(x_{n} + T) - f(x_n)\right]\\
+%     = \lim_{n\to\infty} f(x_{n+1}) - \lim_{n\to\infty} f(x_{n}) = 0,
+%   \end{align*}
+%   and the claim holds.
 
-  (III) If both $A$ and $B$ bounded, then $\exists M \st \forall x\geq M, f(x+T) - f(x)$ is neither strictly less nor greater than $0$, hence $f(x+T) - f(x) = 0$. Then, let $(x_n)$ be any strictly increasing sequence such that $x_n > x_{n-1} > \cdots > x_1 > M$. This clearly goes to $\infty$, and moreover, $f(x_n + T) - f(x_n) = 0 \forall n,$ and the proof is complete.
-\end{proof}
+%   (III) If both $A$ and $B$ bounded, then $\exists M \st \forall x\geq M, f(x+T) - f(x)$ is neither strictly less nor greater than $0$, hence $f(x+T) - f(x) = 0$. Then, let $(x_n)$ be any strictly increasing sequence such that $x_n > x_{n-1} > \cdots > x_1 > M$. This clearly goes to $\infty$, and moreover, $f(x_n + T) - f(x_n) = 0 \forall n,$ and the proof is complete.
+% \end{proof}
 
-\begin{question}
-  Let $f: [a,b] \to \mathbb{R}$ be a continuous function. Prove that \[
-  m(x) := \inf \{f(y) : a \leq y \leq x\}, \quad M(x) = \sup \{f(y) : a \leq y \leq x\}
-  \]
-  are continuous on $I$.
-\end{question}
+% \begin{question}
+%   Let $f: [a,b] \to \mathbb{R}$ be a continuous function. Prove that \[
+%   m(x) := \inf \{f(y) : a \leq y \leq x\}, \quad M(x) = \sup \{f(y) : a \leq y \leq x\}
+%   \]
+%   are continuous on $I$.
+% \end{question}
 
-\begin{proof}
-  We prove the result for $M$.
-\end{proof}
+% \begin{proof}
+%   We prove the result for $M$.
+% \end{proof}
 
-\begin{question}
-  Let $I = [0, \infty), f: I \to\mathbb{R}$ be a continuous function such that $L := \lim_{x\to\infty} f(x)$ exists Prove that $f$ is uniformly continuous.
-\end{question}
+% \begin{question}
+%   Let $I = [0, \infty), f: I \to\mathbb{R}$ be a continuous function such that $L := \lim_{x\to\infty} f(x)$ exists Prove that $f$ is uniformly continuous.
+% \end{question}
 
-\begin{proof}
-  % TODO
-\end{proof}
-\begin{question}
-  Prove that $\sin(x^2)$ not uniformly continuous on $\mathbb{R}$.
-\end{question}
+% \begin{proof}
+% Fix $\epsilon > 0$. Then, by definition, $\exists M > 0 \st \forall x \geq M, |f(x) - L| < \frac{\epsilon}{2}$. 
 
-\begin{proof}
-  (Sequential) Let $(x_n) := \sqrt{2n \pi + \frac{\pi}{2}}$ and $(y_n) := \sqrt{2n \pi + \frac{3\pi}{2}}$. We have that \begin{align*}
-    y_n - x_n = \sqrt{2n \pi + \frac{3\pi}{2}} - \sqrt{2n \pi + \frac{\pi}{2}}\\
-    = \frac{(\sqrt{2n \pi + \frac{3\pi}{2}} - \sqrt{2n \pi + \frac{\pi}{2}})(\sqrt{2n \pi + \frac{3\pi}{2}} + \sqrt{2n \pi + \frac{\pi}{2}})}{\sqrt{2n \pi + \frac{3\pi}{2}} + \sqrt{2n \pi + \frac{\pi}{2}}}\\
-    = \frac{\frac{\pi}{2} - \frac{3\pi}{2} + 2n \pi - 2n \pi}{{\sqrt{2n \pi + \frac{3\pi}{2}} + \sqrt{2n \pi + \frac{\pi}{2}}}}\\
-    \leq \frac{-\pi}{\frac{\pi}{2} + 4n \pi + \frac{3\pi}{2}} \to 0\\
-  \end{align*}
-  The LHS is always negative as is the RHS, hence we can introduce absolute value bars, and thus $\abs{y_n - x_n} \to 0$.
+% We aim to show that $f$ uniformly continuous.
+% Consider $f$ on $[0, M + 1] \subseteq [0, \infty]$. Since $f$ continuous, it is uniformly continuous on a closed and bounded interval. Hence, we have that $\exists \delta'>0 \st \forall x,y \in [0, M+1] \st |x - y| < \delta'$, $|f(x) - f(y)| < \epsilon$.
 
-  We have, moreover, \begin{align*}
-    \abs{f(y_n) - f(x_n)} =\abs{\sin(\frac{3\pi}{2} + 2n \pi) - \sin (\frac{\pi}{2} + 2n \pi)}\\
-    = \abs{-1 - 1} = 2,
-  \end{align*}
-  so, taking $\epsilon_0 = 2$, we have that $\abs{f(y_n) - f(x_n)} \geq \epsilon_0 \forall n$, hence, the function is not uniformly continuous.
+% Take now $\delta = \min\{\frac{1}{2}, \delta'\}$, and take $x, y \in [0, \infty)$ such that $|x-y| < \delta$.
 
-  \noindent($\epsilon-\delta$) Let $\epsilon = \frac{1}{2}$. We have to show that $\forall \delta > 0, \exists x, y \st \abs{x-y} < \delta$ but $\abs{f(x) - f(y)} \geq \frac{1}{2}$. Take $x > \frac{\pi}{\delta} \st x^2 = 2n \pi$, and $y = \sqrt{\pi + x^2}$. Then, $x^2 - y^2 = \pi \implies (x-y)(x+y) = \pi \implies x - y = \frac{\pi}{x+y} < $ % TODO: show more clearly.
-  $\abs{\sin(y^2) - \sin(x^2)} = \abs{1 - - 1} = 2 \geq \frac{1}{2}$ and the proof is complete.
-\end{proof}
+% \begin{itemize}
+%   \item If both $x, y \in [0, M+1]$, then $|f(x) - f(y)| < \epsilon$ as discussed above.
+%   \item If one elt (wlog) $x \in (M+1, \infty],$ that is $x > M + 1$, we have that \[
+%   |x - y | < \delta \leq \frac{1}{2} \iff y > M + \frac{1}{2},
+%   \]
+%   hence, both $x$ and $y > M$, and by the definition of $M$, we have that \[
+%   |f(x) - L| < \frac{\epsilon}{2} \quad \text{ and } |f(y) - L| < \frac{\epsilon}{2}.  
+%   \]
+%   Hence, we can write \begin{align*}
+%   |f(x) - f(y)| = |f(x) - L + L - f(y)| \leq |f(x) - L| + |f(y) - L|\\
+%   < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+%   \end{align*}
+% \end{itemize}
+% Hence, regardless of where in the interval $x,y$ are located, we have that for our chosen (FIXED) $\delta$, $|x - y| < \delta \implies |f(x) - f(y)| < \epsilon$, hence, $f$ uniformly continuous on the whole interval.
+% \end{proof}
+% \begin{question}
+%   Prove that $\sin(x^2)$ not uniformly continuous on $\mathbb{R}$.
+% \end{question}
 
-\begin{question}
-  Let $f: \mathbb{R} \to \mathbb{R}$ be a uniformly continuous function. Prove that $\exists A, B\geq 0 \st \forall x,$ \[
-  \abs{f(x)} \leq A\abs{x} + B.  
-  \]
-\end{question}
+% \begin{proof}
+%   (Sequential) Let $(x_n) := \sqrt{2n \pi + \frac{\pi}{2}}$ and $(y_n) := \sqrt{2n \pi + \frac{3\pi}{2}}$. We have that \begin{align*}
+%     y_n - x_n = \sqrt{2n \pi + \frac{3\pi}{2}} - \sqrt{2n \pi + \frac{\pi}{2}}\\
+%     = \frac{(\sqrt{2n \pi + \frac{3\pi}{2}} - \sqrt{2n \pi + \frac{\pi}{2}})(\sqrt{2n \pi + \frac{3\pi}{2}} + \sqrt{2n \pi + \frac{\pi}{2}})}{\sqrt{2n \pi + \frac{3\pi}{2}} + \sqrt{2n \pi + \frac{\pi}{2}}}\\
+%     = \frac{\frac{\pi}{2} - \frac{3\pi}{2} + 2n \pi - 2n \pi}{{\sqrt{2n \pi + \frac{3\pi}{2}} + \sqrt{2n \pi + \frac{\pi}{2}}}}\\
+%     \leq \frac{-\pi}{\frac{\pi}{2} + 4n \pi + \frac{3\pi}{2}} \to 0\\
+%   \end{align*}
+%   The LHS is always negative as is the RHS, hence we can introduce absolute value bars, and thus $\abs{y_n - x_n} \to 0$.
+
+%   We have, moreover, \begin{align*}
+%     \abs{f(y_n) - f(x_n)} =\abs{\sin(\frac{3\pi}{2} + 2n \pi) - \sin (\frac{\pi}{2} + 2n \pi)}\\
+%     = \abs{-1 - 1} = 2,
+%   \end{align*}
+%   so, taking $\epsilon_0 = 2$, we have that $\abs{f(y_n) - f(x_n)} \geq \epsilon_0 \forall n$, hence, the function is not uniformly continuous.
+
+%   \noindent($\epsilon-\delta$) Let $\epsilon = \frac{1}{2}$. We have to show that $\forall \delta > 0, \exists x, y \st \abs{x-y} < \delta$ but $\abs{f(x) - f(y)} \geq \frac{1}{2}$. Take $x > \frac{\pi}{\delta} \st x^2 = 2n \pi$, and $y = \sqrt{\pi + x^2}$. Then, $x^2 - y^2 = \pi \implies (x-y)(x+y) = \pi \implies x - y = \frac{\pi}{x+y} < $ % TODO: show more clearly.
+%   $\abs{\sin(y^2) - \sin(x^2)} = \abs{1 - - 1} = 2 \geq \frac{1}{2}$ and the proof is complete.
+% \end{proof}
+
+% \begin{question}
+%   Let $f: \mathbb{R} \to \mathbb{R}$ be a uniformly continuous function. Prove that $\exists A, B\geq 0 \st \forall x,$ \[
+%   \abs{f(x)} \leq A\abs{x} + B.  
+%   \]
+% \end{question}
 
 
 
