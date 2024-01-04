@@ -1,0 +1,45 @@
+\section{Introduction}
+
+\subsection{Definitions}
+
+\begin{definition}[Diffferential equation]
+    A \emph{diffferential equation} (DE) is an equation with derivatives. \emph{Ordinary} DE's (ODE) will be covered in this course; other types (PDE's, SDE's, DDE's, FDE's, etc.) exist as well but won't be discussed. ODE's only have one independent variable (typically, $y = f(x)$ or $y = f(t)$).
+\end{definition}
+
+\begin{example}[A Trivial Example]
+    $\dv{y}{x}= 6 x$. Integrating both sides:
+    \begin{align*}
+        \int \dv{y}{x} \dd{x}= \int 6 x\dd{x} \implies y(x) = 3x^2 + C.
+    \end{align*}
+\end{example}
+
+\begin{example}[Another One]
+    \[
+    \dv[2]{u}{t} = 0 \implies y = at + b.    
+    \]
+\end{example}
+
+\begin{definition}[Order]
+    The order of a differential equation is defined as the order of the highest derivative in the equation.
+\end{definition}
+
+\subsection{Initival Values}
+\begin{remark}
+    Note the existence of arbitrary constants in the previous examples, indicating infinite solutions. We often desire unique solutions by fixing these coefficients. For first order ODEs, we simply specify a single initial condition (say, some $y(x_0) = \alpha_0$). For higher order ODEs of degree $n$, we can either specify $n-1$ initial conditions for $n-1$ derivatives (say, $y(x_0) = \alpha_0$, $y'(x_0) = \beta_0$), or boundary conditions (say, $y(x_0) = \alpha_0, y(x_1) = \alpha_1$) where values for the solution itself are specified.
+\end{remark}
+
+\begin{example}[A Less Trivial Example]
+    $\dv{y}{x} = y$. We cannot simply integrate both sides as before, as we have no way to know what $\int y \dd{x}$ (the RHS) is equal to. We can fairly easily guess that $y = e^x$ is a solution; its derivative is equal to itself, hence it does indeed solve the equation. This is not the only solution; indeed, given $y = c e^x$, we have \[
+    \dv{y}{x} = c e^x = y = ce^x.    
+    \]
+    Luckily, we were rather limited in how many places constants could appear; this doesn't always hold.
+\end{example}
+
+\subsection{Physical Applications}
+
+\begin{example}[Simple Pendulum]
+    Let $\theta$ be the angle of a pendulum of mass $m$ from vertical and length $l$. Then, we have the equation of motion \[
+    m l \ddot{\theta} = - mg \sin \theta \implies \ddot{\theta} + \frac{g}{l} \sin \theta = 0 \implies \ddot{\theta} + \omega^2 \sin \theta = 0.
+    \]
+    Take $\theta$ small, then, $\sin \theta \approx \theta$. Then, $\ddot{\theta} + \omega^2 \theta = 0$. This is linear simple harmonic motion, and has periodic solutions; how do we know this is a valid solution to the non-linear model?
+\end{example}

@@ -126,3 +126,15 @@
 !*Analysis*2/parts/
 !*Analysis*2/parts/*
 !*Analysis*2/*.sty
+
+
+# ODEs
+!*ODEs/
+!*ODEs/*.pdf
+!*ODEs/*.tex
+!*ODEs/misc
+!*ODEs/misc/*
+!*ODEs/README.md
+!*ODEs/parts/
+!*ODEs/parts/*
+!*ODEs/*.sty
