@@ -104,3 +104,25 @@
 !*NonlinearDynamics/scripts
 !*NonlinearDynamics/scripts/*
 !*NonlinearDynamics/README.md
+
+# Algebra
+!*Algebra*2/
+!*Algebra*2/*.pdf
+!*Algebra*2/*.tex
+!*Algebra*2/misc
+!*Algebra*2/misc/*
+!*Algebra*2/README.md
+!*Algebra*2/parts/
+!*Algebra*2/parts/*
+!*Analysis*2/*.sty
+
+# Analysis
+!*Analysis*2/
+!*Analysis*2/*.pdf
+!*Analysis*2/*.tex
+!*Analysis*2/misc
+!*Analysis*2/misc/*
+!*Analysis*2/README.md
+!*Analysis*2/parts/
+!*Analysis*2/parts/*
+!*Analysis*2/*.sty

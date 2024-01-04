@@ -1,0 +1,146 @@
+\ProvidesPackage{setup}
+
+% ! Provides all preamble
+
+\usepackage[margin=0.15in]{geometry}
+\usepackage[pagestyles]{titlesec}
+\usepackage{libertine}
+\usepackage[]{csquotes}
+
+\usepackage{amsthm}
+\usepackage{amsmath,amssymb}
+\usepackage{mathrsfs}
+\usepackage{xfrac}
+
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{listings}
+
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage{graphicx}
+
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\usepackage[side,ragged,multiple,flushmargin]{footmisc}
+
+\usepackage{xcolor-solarized}
+\usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
+\usepackage{cleveref}
+\usepackage{nameref}
+
+\usepackage{xpatch}
+\usepackage{catchfile}
+\usepackage{marvosym}
+\usepackage{pgffor}
+
+\usepackage{physics}
+
+
+
+% ! title
+\newcommand{\thetitle}{\noindent
+\begin{center}
+    \begin{tabularx}{\textwidth} { 
+        >{\raggedright\arraybackslash}X 
+        >{\raggedleft\arraybackslash}X}
+    \LARGE \pageauthor \\
+    \LARGE \textbf{\pagetitle} & \LARGE \textbf{\pagesubtitle}\\
+    \end{tabularx}\\
+    \rule[2ex]{0.8\textwidth}{1pt}
+\end{center}}
+
+\titleformat{\section}
+{\color{darkgray}\centering\normalfont\Large\bfseries}
+{\color{darkgray}\thesection}{1em}{}
+
+% Proof environment
+\renewcommand*{\qedsymbol}{\(\blacksquare\)}
+\renewcommand*{\proofname}{\underline{Proof}}
+
+% Fix issues with references
+\newcommand{\getenv}[2][]{%
+  \CatchFileEdef{\temp}{"|kpsewhich --var-value #2"}{\endlinechar=-1}%
+  \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
+
+
+% Theorem environments
+\declaretheorem[
+  % thmbox=S,
+  name=Remark,
+  refname={Remark, remark},
+  numberwithin=section
+]{remark}
+
+\mdfdefinestyle{example}{
+  roundcorner=8pt,
+  linecolor=white,
+  leftmargin=10,rightmargin=10,
+  backgroundcolor=solarized-cyan!20,
+  skipabove=5pt, skipbelow=5pt,
+  innertopmargin=2pt, innerbottommargin=5pt,
+  innerleftmargin=8pt, innerrightmargin=8pt
+}
+
+\mdfdefinestyle{general-thm}{
+  roundcorner=8pt,
+  linecolor=white,
+  leftmargin=5,rightmargin=5,
+  backgroundcolor=gray!10,
+  skipabove=10pt, skipbelow=10pt,
+  innertopmargin=2pt, innerbottommargin=5pt,
+  innerleftmargin=8pt, innerrightmargin=8pt
+}
+
+\mdtheorem[style=example]{example}{$\circledast$ \underline{Example}}[section]
+
+\mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
+\mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\hookrightarrow$ \underline{Proposition}}}[section]
+\mdtheorem[style=general-thm]{corollary}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}}[section]
+\mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
+\mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
+\mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
+\mdtheorem[style=general-thm]{question}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Question}}}[section]
+
+% fixes broken references
+\newcommand{\thmautorefname}{Theorem}
+\makeatletter
+\xpatchcmd{\theorem}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+
+\newcommand{\propautorefname}{Proposition}
+\makeatletter
+\xpatchcmd{\proposition}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+
+\newcommand{\axiomautorefname}{Axiom}
+\makeatletter
+\xpatchcmd{\axiom}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+
+\newcommand{\corrautorefname}{Corollary}
+\makeatletter
+\xpatchcmd{\corollary}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+
+\newcommand{\lemmaautorefname}{Lemma}
+\makeatletter
+\xpatchcmd{\lemma}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+\makeatother
+
+
+% makes "quoted" text actually look correct
+\MakeOuterQuote{"}
+
+% page footer
+\newpagestyle{mypage}{%
+    \footrule
+    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
+}
+
+\titleformat{\section}
+{\centering\normalfont\Large\bfseries}
+{\thesection}{1em}{}
