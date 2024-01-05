@@ -1,3 +1,80 @@
-\begin{theorem}
-    some theorem
-\end{theorem}
+\section{Introduction}
+\begin{remark}
+    This course is about vector spaces and linear transformations between them; a vector space involves multiplication by \emph{scalars}, where the scalars come from some field. We recall first examples of fields, then vector spaces, as a motivation, before presenting a formal definition.
+\end{remark}
+
+\subsection{Definitions}
+
+\begin{remark}
+    % TODO
+    Much of this is recall from \href{https://notes.louismeunier.net/Algebra 1/algebra.pdf}{Algebra 1}.
+\end{remark}
+
+\begin{example}[Examples of Fields]
+    \begin{enumerate}
+        \item $\mathbb{Q}$; the field of rational numbers.
+        \item $\mathbb{R}$; the field of real numbers; $\mathbb{Q} \subseteq \mathbb{R}$.
+        \item $\mathbb{C}$; the field of complex numbers; $\mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$.
+        \item $\mathbb{F}_p \equiv \zmod{p} \equiv \{0,1, \dots, p-1\}; the (unique) field of $p$ elements, where $p$ prime.\footnote{where $a +_p b := $ remainder of $\frac{a+b}{p}$, $a \cdot_p b :=$ remainder of $\frac{a\cdot b}{p}$.}$
+        \begin{enumerate}
+            \item $p =2$; $\mathbb{F}_2 \equiv \{0, 1\}$.
+            \item $p = 3$; $\mathbb{F}_3 \equiv \{0, 1, 2\}$.
+            \item $\cdots$
+        \end{enumerate}
+    \end{enumerate}
+\end{example}
+
+\begin{remark}
+Throughout the course, we will denote an abstract field as $\field$.
+\end{remark}
+
+\begin{example}[Examples of Vector Spaces]
+    \begin{enumerate}
+        \item $\mathbb{R}^3 := \{(x, y, z) : x, y, z \in \mathbb{R}\}$. We can add elements in $\mathbb{R}^3$, and multiply them by real scalars.
+        \item  $\mathbb{F}^n := \underbrace{\mathbb{F} \times \mathbb{F} \times \cdots \mathbb{F}}_{n \text{ times}} := \{(a_1, a_2, \dots, a_n) : a_i \in \mathbb{F}\}$, where $n \in \mathbb{N}$\footnotemark; this is a generalization of the previous example, where we took $n = 3$, $\mathbb{F} = \mathbb{R}$. Operations follow identically; addition:
+        \begin{align*}
+            (a_1, a_2, \dots, a_n) + (b_1, b_2, \dots, b_n) := (a_1 + b_1, a_2 + b_2, \dots, a_n + b_n)
+        \end{align*}
+        and, taking a scalar $\lambda \in \mathbb{F}$, multiplication:
+        \[
+            \lambda \cdot (a_1, a_2, \dots, a_n) := (\lambda \cdot a_1, \lambda \cdot a_2, \dots, \lambda \cdot a_n).
+            \]
+        We refer to these elements $(a_1, \cdots, a_n)$ as \emph{vectors} in $\mathbb{F}^n$; the vector for which $a_i = 0 \forall i$ is the \emph{$0$ vector}, and is the additive identity, making $\mathbb{F}^n$ an abelian group under addition, that admits multiplication by scalars from $\mathbb{F}$.
+        \item $C(\mathbb{R}) := \{f : \mathbb{R} \to \mathbb{R} : f \text{ continuous}\}$. Here, we have the constant zero function as our additive identity ($x \mapsto 0 \forall x$), and addition/scalar multiplication of two continuous real functions are continuous.
+        \item $\field[t] := \{a_0 + a_1 t + a_2 t^2 + \cdots + a_n t^n: a_i \in \field \forall i, n \in \mathbb{N}\}$, ie, the set of all polynomials in $t$ with coefficients from $\field$. Here, we can add two polynomials; \[
+            (a_0 + a_1 t + \cdots + a_n t^n) + (b_0 + b_1 t + \cdots + b_m t^m) := \sum_{i=0}^{\max \{n, m\}}(a_i + b_i)t^i,
+        \]
+        (where we "take" undefined $a_i$/$b_i$'s as 0; that is, if $m > n$, then $a_{m - n}, a_{m - n + 1}, \dots, a_m$ are taken to be $0$). Scalar multiplication is defined \[
+        \lambda \cdot (a_0 + a_1 t + a_2 t^2 + \cdots + a_n t^n) := \lambda a_0 + \lambda a_1 t + \lambda a_2 t^2 + \cdots + \lambda a_n t^n.
+        \]
+        Here, the zero polynomial is simply $0$ (that is, $a_i = 0 \forall i$).
+    \end{enumerate}
+\end{example}
+
+\footnotetext{Where we take $0 \in \mathbb{N}$, for sake of consistency. Moreover, by convention, we define $\mathbb{F}^0$ (that is, when $n = 0$) to be $\{0\}$; the trivial vector space.}
+
+\begin{definition}[Vector Space]
+    A \emph{vector space} $V$ \underline{over} a field $\field$ is an \emph{abelian group} with an operation denoted $+$ (or $+_V$) and identity element\footnotemark denoted $0_V$, equipped with \emph{scalar multiplication} for each scalar $\lambda \in \field$ satisfying the following axioms:
+    \begin{enumerate}
+        \item $1 \cdot v = v$ for $1 \in \mathbb{F}, \forall v \in V$.
+        \item $\alpha\cdot(\beta \cdot v) = (\alpha \cdot \beta)v, \forall \alpha, \beta \in \field, v \in V$.
+        \item $(\alpha + \beta) \cdot v = \alpha \cdot v + \beta \cdot v, \forall \alpha, \beta \in \field, v \in V$.
+        \item $\alpha \cdot (u + v) = \alpha \cdot u + \alpha \cdot v, \forall \alpha \in \field, u, v \in V$.
+    \end{enumerate}
+    We refer to elements $v \in V$ as \emph{vectors}.
+\end{definition}
+\footnotetext{The "zero vector".}
+
+\begin{proposition}
+    For a vector space $V$ over a field $\field$, the following holds:
+    \begin{enumerate}
+        \item $0 \cdot v = 0_V, \forall v \in V$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $0\cdot v = (0 + 0) \cdot v \implies 0 \cdot v = 0 \cdot v + 0 \cdot v$
+        % TODO
+    \end{enumerate}
+\end{proof}
