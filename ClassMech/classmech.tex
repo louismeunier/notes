@@ -63,6 +63,13 @@
 ]{corollary}
 
 \declaretheorem[
+  % thmbox=S,
+  name=Remark,
+  refname={Remark, remark},
+  numberwithin=section
+]{remark}
+
+\declaretheorem[
   % name=Exercise, 
   refname={Exercise, exercise},
   numberwithin=section
@@ -612,9 +619,10 @@ Consider a rocket of mass $m$ moving at velocity $\vec{v}$ and expelling fuel of
 
 \begin{example}[Rope falling on a scale]
   % TODO: picture?
-  Consider a rope of mass $m$ that is held above a scale such that part of it is resting on the scale. What does the scale read when the rope is left to fall?\\
+  Consider\footnotemark a rope of mass $m$ that is held above a scale such that part of it is resting on the scale. What does the scale read when the rope is left to fall?\\
   % TODO: finish
 \end{example}
+\footnotetext{\href{https://www.youtube.com/watch?v=OufI0NBIx4w}{See this video}}
 
 \section{Work \& Energy}
 
@@ -680,9 +688,9 @@ Generally, the LHS can't necessarily be integrated but we can make some simplify
   \end{align*}
 \end{example}
 
-\begin{example}[Central Force]
-  $\vec{F} = f(r) \hat{r}$
-\end{example}
+% \begin{example}[Central Force]
+%   $\vec{F} = f(r) \hat{r}$
+% \end{example}
 
 \subsection{Force Fields}
 
@@ -823,12 +831,48 @@ This implies, then, that $\dv{\vb{L}}{t} = 0$ as well, that is, angular momentum
 
 \subsubsection{Torque on Extended Objects}
 % TODO: diagram and stuff
+Consider an arbitrary rigid body and consider an infinitesimal portion of its mass. We can write \begin{align*}
+  \vec{\tau} = \sum_i \vec{\tau_i} = \sum_i \vec{r_i} \times m_i \vec{g}\\
+  \equiv \vec{R} \times M\vec{g},
+\end{align*}
+where $\vec{R} = \frac{1}{M} \sum_{i} m_i \vec{r_i}$ and $M = \sum_i m_i$.
 
 \subsection{Moments of Inertia}
 
+Now suppose said body rotates about the $z$-axis at a constant $\omega$. We can write the angular momentum of the object as \begin{align*}
+  L_z^i = \vec{r_i} m_i \times \vec{v} = r_i m_i v \cos \phi = \rho_i m_i v = \rho_i^2 m_i \omega\\
+  \implies L_z = \left(\sum_i m_i \rho_i^2\right)\omega \equiv I_z \omega,
+\end{align*}
+where we define, more precisely, the moment of inertia of the body about the $z$ axis as \[
+I_z = \sum_i m_i \rho_i^2 = \int \eta \dd{V} (x^2 + y^2),  
+\]
+noting that the final equal defines $\eta$ as the density of the object, $\eta = \frac{\dd{m}}{\dd{V}}$. Note too that this final equation was rewritten explicitly in cartesian coordinates which may not always be the most convenient coordinate system. 
+
+Abstractly, the moment of inertia of a body can be thought of as a rotational analog of mass, or its ability to "resist" rotations by an external torque.
+
+\begin{example}[Moment of Inertia of a Thin Hoop]
+  As with most of these computations, we must rewrite $\dd{V}$ in the integral in appropriate coordinates; cylindrical work best here, and we have \[\dd{V} = \rho \dd{\rho} \dd{\varphi} \dd{z}.\]  
+  Taking the density to be some constant $\eta$, the radius of the hoop to be $R$, the "radial width" to be $\Delta R$, and the thickness to be $t$, we can write \begin{align*}
+    I_z = \int \eta \dd{V} (x^2 + y^2) = \eta \int_R^{R + \Delta R} \dd{\rho} \rho^3 \int_{0}^t \dd{z} \int_{0}^{2\pi} \dd{\varphi}\\
+    = \eta \left[\frac{(R + \Delta R)^4 - R^4}{4}\right]\cdot t \cdot 2 \pi
+  \end{align*}
+ Substituting in $\eta = \frac{M}{V}$, and taking $\Delta R$ and $t$ to be negligible in relation to $R$, this simplifies to \[
+ \boxed{I_z = MR^2}.
+ \]
+\end{example}
+\begin{remark}
+  This general method of find moments of inertia is widely applicable; it can be generalized:
+  \begin{enumerate}
+    \item Write $\dd{V}$ in context-appropriate coordinates.
+    \item Write $(x^2 + y^2)$ (or whatever your notion of "distance" is in your context) in your new coordinates.
+    \item Integrate; if $\eta$ constant, you can substitute and simplify afterwards using $\eta = \frac{M}{V}$. If $\eta$ not-constant, you will have to make sure you also convert it to your chose coordinate system before evaluating.
+  \end{enumerate}
+\end{remark}
 % some examples of calculations, general approachj
 \begin{theorem}[Parallel Axis Theorem]
-  
+  Given the moment of inertia of a body about its center $I_c$ and about, say, the $z$-axis, the moment of inertia of the body about an axis $z'$, such that $z'$ parallel to $z$ and $z'$ is a distance $h$ from $z$, is given by \[
+    I' = I_c + Mh^2.
+  \]
 \end{theorem}
 
 \begin{theorem}[Perpendicular Axis Theorem]
@@ -851,4 +895,11 @@ This implies, then, that $\dv{\vb{L}}{t} = 0$ as well, that is, angular momentum
 The previous sections have all taken a \textbf{Newtonian} approach to mechanics, centered on laws relating forces in a system. This section will "derive" and review a different perspective on mechanics, called \textbf{Lagrangian Mechanics}, centered on the concept of minimization of energies; forces "no longer exist".
 \subsection{Introduction to Calculus of Variations}
 
+
+\section{More on Angular Motion - Generalizations}
+
+\section{Central Forces}
+
+\subsection{Conic Sections}
+\subsection{Kepler's Laws}
 \end{document}
