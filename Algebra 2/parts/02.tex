@@ -1,0 +1,96 @@
+
+\subsection{Creating Spaces from Other Spaces}
+\begin{definition}[Product/Direct Sum of Vector Spaces]
+For vector spaces $U, V$ over the same field $\field$, we define their \emph{product} (or \emph{direct sum}) as the set $$U \times V = \{(u,v):u \in U, v \in V\},$$ with the operations:
+\begin{align*}
+    (u_1, v_1) + (u_2, v_2) &:= (u_1 + u_2, v_1 + v_2)\\
+    \lambda \cdot (u, v)&:= (\lambda \cdot u, \lambda \cdot v)
+\end{align*}
+\end{definition}
+
+\begin{example}[$\field$]
+    $\field^2 = \field \times \field$, where $\field$ is considered as the vector space over $\field$ (itself).
+\end{example}
+\newpage
+\begin{definition}[Subspace]
+    For a vector space $V$ over a field $\field$, a \emph{subspace} of $V$ is a subset $W \subseteq V$ s.t.\begin{enumerate}
+        \item $0_V \in W$\footnotemark
+        \item $u + v \in W \forall u, v \in W$ (closed under addition)
+        \item $\alpha \cdot u \in W \forall u \in W, \alpha \in \field$\footnotemark
+    \end{enumerate}    
+    Then, $W$ is a vector space in its own right.
+\end{definition}
+
+\footnotetext{This is equivalent to requiring that $W \neq \varnothing$; stated this way, axiom 3. would necessitate that $0 \cdot w = 0_V \in W$.}
+
+\footnotetext{Note that these axioms are equivalent to saying that $W$ is a subgroup of $V$ with respect to vector addition; 2. ensures closed under addition, and 3. ensures the existence of additive inverses (as per $-1 \cdot v = -v$).}
+
+\begin{example}[Examples of Subspaces]
+    \begin{enumerate}
+        \item Let $V := \field^n$.
+        \begin{itemize}
+            \item $W:= \{(x_1, x_2, \dots, x_n) \in \field^n:x_1 = 0\} = \{(0, x_2, x_3, \dots, x_n) :x_i \in \field\}$.
+            \item $W:= \{(x_1, x_2, \dots, x_n)\in \field^n : x_1 + 2 \cdot x_2 = 0\}$
+            \begin{proof}
+                Let $x = (x_1, \dots, x_n), y=(y_1, \dots, y_n) \in W$. Then, $x+y = (x_1 + y_1, \dots, x_n + y_n)$, and $x_1 + y_1 + 2 \cdot (x_2 + y_2) = x_1 + 2 \cdot x_2 + y_1 + 2 \cdot y_2 = 0 + 0 = 0 \implies x+ y \in W$. Similar logic follows for axioms 2., 3.
+            \end{proof}
+            \item (More generally) $$
+            W := \{(x_1, \dots, x_n) \in \field^n : \begin{matrix}
+                a_{11} x_1 + \cdots a_{1n} x_n = 0\\
+                a_{21} x_1 + \cdots + a_{2n} x_n = 0\\
+                \ddots\\
+                a_{k1} x_1 + \cdots a_{kn} x_n = 0
+            \end{matrix}            
+                \},
+            $$
+            that is, a linear combination of homogenous "conditions" on each term.
+            \item $W^*:= \{(x_1, \dots, x_n) : x_1 + x_2 = 1\}$ is \emph{not} a subspace; it is not closed under addition, nor under scalar multiplication.
+        \end{itemize}
+        \item Let $\field[t]_n :=  \{a_0 + a_1 t + \cdots + a_n t^n : a_i \in \field\}$. Then, $\field[t]_n$ is a subspace of $\field[t]$, the more general polynomial space. \emph{However}, the set of all polynomials of degree \emph{exactly} $n$ (all axioms fail, in fact) is not a subspace of $\field[t]_n$.
+        \begin{itemize}
+            \item $W:= \{p(t) \in \field[t]_n : p(1)=0 \}$.
+            \item $W:=\{p(t) \in \field[t]_n : p''(t) + 2p(t) -1 = 0\}$.
+        \end{itemize}
+        \item Let $V := C(\mathbb{R})$ be the space of continuous function $\mathbb{R} \to \mathbb{R}$.
+        \begin{itemize}
+            \item $W := \{f \in C(\mathbb{R}) : f(\pi) + 7 f(\sqrt{2}) = 0 \}$.
+            \item $W := C^1(\mathbb{R}) :=$ everywhere differentiable functions.
+            \item $W:= \{ f \in C(\mathbb{R}) : \int_0^1 f \dd{x} = 0\}$.
+        \end{itemize}
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    Let $W_1, W_2$ be subspaces of a vector space $V$ over $\field$. Then, define the following:
+    \begin{enumerate}
+        \item $W_1 + W_2 := \{w_1 + w_2 : w_1 \in W_1, w_2 \in W_2\}$
+        \item $W_1 \cap W_2:= \{w \in V : w \in W_1 \wedge w \in W_2\}$
+    \end{enumerate}
+    These are both subspaces of $V$.
+\end{proposition}
+
+\begin{proof}
+    \begin{enumerate}
+        \item \begin{enumerate}
+            \item $0_V \in W_1$ and $0_V \in W_2 \implies 0_V = 0_V + 0_V \in W_1 + W_2$.
+            \item $(u_1 +u_2) + (v_1 + v_2) = (u_1 + v_1) + (u_2 + v_2) \in W_1 + W_2$.
+            \item $\alpha \cdot (u + v) = \alpha \cdot u + \alpha \cdot v \in W_1 + W_2$
+        \end{enumerate}
+        \item \begin{enumerate}
+            \item $0_V \in W_1$ and $0_V \in W_2 \implies 0_V = 0_V + 0_V \in W_1 \cap W_2$.
+            \item $u, v \in W_1 \cap W_2 \implies u + v \in W_1 \wedge u+v \in W_2 \implies u + v \in W_1 \cap W_2$.
+            \item $\alpha \cdot u \in W_1 \wedge \alpha \cdot u \in W_2 \implies \alpha \cdot u \in W_1 \cap W_2$.
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+
+\subsection{Linear Combinations and Space}
+
+\begin{definition}[Linear Combination]
+    \defvectorspace . For finitely many vectors $v_1, v_2, \dots, v_n$, their \emph{linear combination} is a sum of the form \[
+    \sum_{i=1}^{n} a_i v_i =  a_1 \cdot v_1 + \cdots + a_n \cdot v_n,
+    \]
+    where $a_i \in \field \forall i$.
+
+    A linear combination is called \emph{trivial} if $a_i = 0 \forall i$, that is, all coefficients are $0$.
+\end{definition}

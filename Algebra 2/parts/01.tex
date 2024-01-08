@@ -3,7 +3,7 @@
     This course is about vector spaces and linear transformations between them; a vector space involves multiplication by \emph{scalars}, where the scalars come from some field. We recall first examples of fields, then vector spaces, as a motivation, before presenting a formal definition.
 \end{remark}
 
-\subsection{Definitions}
+\subsection{Vector Spaces}
 
 \begin{remark}
     % TODO
@@ -68,13 +68,19 @@ Throughout the course, we will denote an abstract field as $\field$.
 \begin{proposition}
     For a vector space $V$ over a field $\field$, the following holds:
     \begin{enumerate}
-        \item $0 \cdot v = 0_V, \forall v \in V$.
+        \item $0 \cdot v = 0_V, \forall v \in V$ (where $0:=0_\field$)
+        \item $-1 \cdot v = -v, \forall v \in V$ (where $1:=1_\field$)\footnotemark
+        \item $\alpha \cdot 0_V = 0_V, \forall \alpha \in \field$
     \end{enumerate}
 \end{proposition}
 
+\footnotetext{NB: "additive inverse"}
+
 \begin{proof}
     \begin{enumerate}
-        \item $0 = 0 + 0$ (by definition in $\field$) $\implies 0\cdot v = (0 + 0) \cdot v \overset{\text{axiom 3.}}{\implies} 0 \cdot v = 0 \cdot v + 0 \cdot v \overset{\text{group, inverses exist}}\implies (0 \cdot v) + (0 \cdot v)^{-1} = (0 \cdot v) + (0 \cdot v)^{-1} + 0 \cdot v \implies 0_V = 0 \cdot v$.
-        % TODO
+        \item $0 \cdot v = (0 + 0)\cdot v = 0 \cdot v + 0 \cdot v \implies 0 \cdot v = 0_V$ (by "cancelling" one of the $0 \cdot v$ terms on each side).
+        % \item $0 = 0 + 0$ (by definition in $\field$) $\implies 0\cdot v = (0 + 0) \cdot v \overset{\text{axiom 3.}}{\implies} 0 \cdot v = 0 \cdot v + 0 \cdot v \overset{\text{group, inverses exist}}\implies (0 \cdot v) + (0 \cdot v)^{-1} = (0 \cdot v) + (0 \cdot v)^{-1} + 0 \cdot v \implies 0_V = 0 \cdot v$.
+        \item $v + (-1 \cdot v) = (1 \cdot v + (-1) \cdot v) = (1 - 1)\cdot v = 0 \cdot v = 0_V \implies (-1 \cdot v) = -v$.
+        \item $\alpha \cdot 0_V = \alpha \cdot (0_V + 0_V) = \alpha \cdot 0_V + \alpha \cdot 0_V \implies \alpha \cdot 0_V = 0_V$ (by, again, cancelling a term on each side).
     \end{enumerate}
 \end{proof}
