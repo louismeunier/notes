@@ -1,0 +1,132 @@
+\begin{definition}[Interior, Boundary of a Topological Set]
+Let $X$ be a topological space, $A \subseteq X$ and let $x \in X$. We have the following possibilities
+\begin{enumerate}
+    \item $\exists U$-open : $x \in U \subseteq A$. In this case, we say $x \in $ the \emph{interior} of $A$, denoted \[
+    x \in \interior (A).
+    \]
+    \item $\exists V$-open : $x \in V \subseteq X\setminus A = A^C$. In this case, we write \[
+    x \in \interior (X^C).    
+    \]
+    \item $\forall U$-open : $x \in U$, $U \cap A \neq \varnothing$ AND $U \cap A^C \neq \varnothing$. In this case, we say $x$ is in the \emph{boundary} of $A$, and denote \[
+    x \in \partial A.    
+    \]
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Closure]
+    $x \in \interior (A)$ or $x \in \partial A$ (that is, $x \in \interior (A) \cup \partial A$) $\iff $ every open set $U$ that contains $x$ intersects $A$.\footnotemark Such points are called \emph{limit points} of $A$. The set of all limits points of $A$ is called the \emph{closure} of $A$, denoted \(
+    \overline{A}.
+    \)
+\end{definition}
+
+\footnotetext{"Requires" proof.}
+
+\begin{remark}
+    We have that $$\interior (A) \subseteq A \subseteq \overline{A} = \interior (A) \cup \partial A.$$
+\end{remark}
+
+\begin{proposition}[Properties of $\interior (A)$]
+    $\interior (A)$ is \emph{open}, and it is the largest open set contained in $A$. It is the union of all $U$-open s.t. $U \subseteq A$. Moreover, we have that $$\interior(\interior(A)) = \interior(A).$$
+\end{proposition}
+
+\begin{proposition}[Properties of $\overline{A}$]
+    $\overline{A}$ is \emph{closed}; $\overline{A}$ is the smallest closed set that contains $A$, that is, $\overline{A} = \bigcap B$ where $B$ closed and $A \subseteq B$. We have too that \[
+    \overline{(\overline{A})} = \overline{A}.    
+    \]
+\end{proposition}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item $A$ is open $\iff A = \interior (A)$
+        \item $A$ is closed $\iff A = \overline{A}$
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Basis}
+\begin{definition}[Basis for a Toplogy]
+    Let $\tau$ be a topology on $X$. Let $\mathcal{B} \subseteq \tau$ be a collection of open sets in $X$ such that every open set is a union of open sets in $\mathcal{B}$.
+\end{definition}
+
+\begin{example}[Example Basis]
+    $X = \mathbb{R}$, and $\mathcal{B} = \{\text{all open intervals } (a, b) : - \infty < a < b < + \infty\}$.
+\end{example}
+
+\begin{proposition}\label{prop:basisconsequence}
+    Let $\mathcal{B}$ be a collection of open sets in $X$. Then, $\mathcal{B}$ is a basis $\iff$ \begin{enumerate}
+        \item $\forall x \in X, \exists U$-open $\in \mathcal{B} \st x \in U$.
+        \item If $U_1 \in \mathcal{B}$ and $U_2 \in \mathcal{B}$, and $x \in U_1 \cap U_2$, then $\exists U_3 \in \mathcal{B} \st x \in U_3 \subseteq U_1 \cap U_2$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}
+    Consider $X = \mathbb{R}$. Requirement 1. follows from taking $U = (x - \epsilon, x + \epsilon)$ for any $\epsilon > 0$. For 2., suppose $x \in (a, b) \cap (c, d) =: U_1 \cap U_2$. Let $U_3 = (\max \{a, c\}, \min \{b, d\})$; then, we have that $U_3 \subseteq U_1 \cap U_2$, while clearly $x \in U_3$.
+\end{example}
+
+\begin{proposition}
+    In a metric space, a basis for a topology is a collection of open balls, \[
+    \{B(x, r) : x \in X, r > 0\} = \{\{y \in X : d(x, y) < r\} : x \in X , r > 0\}.
+    \]
+\end{proposition}
+
+\begin{proof}
+    We prove via \cref{prop:basisconsequence}. Property 1. holds clearly; $x\in B(x, \epsilon)$-open $\subseteq \mathcal{B}$.
+
+    For property 2., let $x \in B(y_1, r_1) \cap B(y_2, r_2)$, that is, $d(x, y_1) < r_1$ and $d(x, y_2) < r_2$. Let $$\delta := \min \{r_1 - d(x, y_1), r_2 - d(x, y_2)\}.$$ We claim that $B(x, \delta) \subseteq U_1 \cap U_2$.
+
+    Let $z \in B(x, \delta)$. Then, \[
+    d(z, y_1) \overset{\triangle \neq}{\leq} d(z, x) + d(x, y_1) < \delta + d(x, y_1) \leq r_1 - d(x, y_1) + d(x, y_1) = r_1,   
+    \]
+    hence, as $d(z, y_1) < r_1 \implies z \in B(y_1, r_1) = U_1$. Replacing each occurrence of $y_1, r_1$ with $y_2, r_2$ respectively gives identically that $z \in B(y_2, r_2) = U_2$. Hence, we have that $B(x, \delta) \subseteq U_1 \cap U_2$ and 2. holds.
+\end{proof}
+
+\subsection{Subspaces}
+
+\begin{definition}
+    Let $X$ be a topological space and let $Y \subseteq X$. We define the subspace topology on $Y$:
+    \begin{enumerate}
+        \item Open sets in $Y = \{Y \cap \text{ open sets in } X\}$
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[Consequences of Subspace Topologies]
+    Suppose $\mathcal{B}$ is a basis for a topology in $X$. Then, $\{U \cap Y : U \in \mathcal{B}\}$ forms a basis for the subspace $Y \subseteq X$.
+
+    Suppose $X$ a metric space. Then, $Y$ is also a metric space, with the same distance.
+\end{proposition}
+
+\begin{proposition}
+    Let $Y \subseteq X$- a metric space. Then, the metric space topology for $(Y, d)$ is the same as the subspace topology.
+\end{proposition}
+
+\begin{proof}(Sketch) 
+    A basis for the open sets in $X$ can be written $\bigcup_{\alpha \in I} B(x_\alpha, r_\alpha)$; hence $$Y \cap (\bigcup_{\alpha \in I} B(x_\alpha, r_\alpha)) =  \bigcup_{\alpha\in I} (Y \cap B(x_\alpha, r_\alpha))$$ is an open set topology for $Y$.
+\end{proof}
+
+\begin{lemma}
+    Let $A \subseteq X$-open, $B \subseteq A$; $B$-open in subspace topology for $A$ $\iff$ $B$-open in $X$.
+\end{lemma}
+
+\begin{lemma}
+    Let $Y \subseteq X$, $A\subseteq Y$. Then, $\overline{A}$ in $Y = Y \cap \overline{A}$ in $X$. We can denote this \[
+    \overline{A}_Y = \overline{A}_X  \cap Y.   
+    \]
+\end{lemma}
+
+\subsection{Continuous Functions}
+
+\begin{definition}[Continuous Function]
+    Let $X, Y$ be topological spaces. Let $f: X \to Y$. $f$ is \emph{continuous} $\iff$ $\forall$ open $V \in Y$, $f^{-1}(V)$-open in $X$.
+\end{definition}
+
+
+\begin{proposition}
+    This definition is consistent with the normal $\epsilon$-$\delta$ definition on the real line.
+\end{proposition}
+
+\begin{proof}
+    Let $f: \mathbb{R} \to \mathbb{R}$, continuous; that is, $\forall \epsilon > 0, \forall x \in \mathbb{R} \exists \delta > 0 \st \abs{x_1 - x} < \delta, $ then $\abs{f(x_1) - f(x)} < \epsilon$.
+
+    Let $V \subseteq \mathbb{R}$ open. Let $y \in V$. Then, $\exists \epsilon : (y - \epsilon, y + \epsilon) \subseteq V$. Let $y = f(x)$, hence $y \in f^{-1}(V)$. Now, if $d(x, x_1) < \delta$, we have that $d(f(x_1), f(x)) < \epsilon$ (by continuity of $f$), hence $f(x_1) \in (y - \epsilon, y + \epsilon) \subseteq V$; moreover, $(x - \delta, x + \delta) \subseteq f{-1}(V)$, thus $f^{-1}(V)$ is open as required.
+
+    The inverse of this proof follows identically.
+\end{proof}
