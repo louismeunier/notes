@@ -1,0 +1,66 @@
+\begin{example}[Lorenz Equations]
+    \begin{align*}
+        \dv{x}{t} = \sigma (y - x)\\
+        \dv{y}{t} = rx - y - xz\\
+        \dv{z}{t} = xy - bz
+    \end{align*}
+    These are a famous set of equations originally derived from atmospheric modeling, known for its chaotic behavior for particular parameters. This is a nonlinear system of de's, and beyond the scope of this class (indeed, it is not solvable exactly).
+\end{example}
+
+\subsection{Uniqueness}
+
+Given an ODE of the general form $y^{(n)} = f(t, y, y', \dots, y^{n-1})$, if we wish to determine $y^{(n)}(t_0)$ uniquely, we need to specify the initial conditions \[
+y(t_0), y'(t_0), \dots, y^{(n-1)}(t_0).   
+\]
+Moreover, this not only determines uniqueness of $y^{(n)}(t_0)$, byt the uniqueness of solution $y$ for $t \in I$ for some "interval of validity" $I$.
+
+\begin{definition}[Autonomous/Nonautonomous]
+    An ODE of the form \[
+    y^{(n)} = f(y, y', \dots, y^{(n-1)})
+    \]
+    is called \emph{autonomous}; that is, if it has no explicit dependence on the independent variable. Otherwise, the system is called \emph{nonautonomous}.
+\end{definition}
+
+\begin{definition}[Linear/Nonlinear]
+    Linear ODEs of dimension $n$ have a solution space which is a vector space of dimension $n$. As a result, solutions can be written as a linear combination of $n$ basis solutions (or "fundamental set of solutions"). Solutions to nonlinear ODEs cannot be written this way (except locally).
+
+    Alternatively (but equivalently), if we can write an $n$th order ODE in the form \[a_n(t)y^n(t) + \cdots a_1(t)y'(t) + a_0(t)y(t) = g(t),\]
+    or equivalently, 
+    \[\sum_{i=0}^{n} a_i(t) y^{i}(t) = g(t), \quad \circledast \]
+    where each $a_i(t)$ and $g(t)$ are known functions of $t$, then we say that the ODE is linear. Otherwise, it is nonlinear.
+\end{definition}
+
+\begin{example}
+    The pendulum $$\ddot{\theta} + \omega^2 \sin \theta = 0$$ is autonomous and linear; $$\ddot{\theta} + \omega^2 \sin \theta = 0$$ is autonomous and nonlinear, due to the $\sin \theta$ term (indeed, this is a nonlinear oscillator equation); a damped-forced oscillator $$\ddot{\theta} + k^2 \dot{\theta} + \omega^2 \theta = A \sin (\mu t)$$ is nonautonomous and linear.
+\end{example}
+
+\begin{remark}
+    Note that the following definitions apply only to linear ODEs.
+\end{remark}
+
+\begin{definition}[Homogeneous/Nonhomogeneous]
+    A linear ODE of the form $\circledast$ is \emph{homogeneous} if $g(t) = 0$; otherwise it is \emph{nonhomogeneous}.
+\end{definition}
+
+\begin{definition}[Constant/Variable]
+    A linear ODE of the form $\ast$ is \emph{constant coefficient} if $a_j(t) = $ constant $\forall j$; if at least one $a_j$ not constant, it is \emph{non-constant} or \emph{variable coefficient}.
+\end{definition}
+
+\begin{remark}
+    Note that while we define linearity of ODEs in terms of the form of $y^{(n)} = f(t, y, \dots)$, this more "helpfully" relates to the form of the solution of such an ODE, which is indeed linear.
+\end{remark}
+
+\subsection{Solutions}
+
+Given an $n$ order ODE $y^{(n)} = f(t, y, \dots)$, and assuming $f$ continuous, then for $y(t)$ to be a solution, we need $y$ to be $n$-times differentiable; hence, $y, \dots, y^{(n-1)}$ must all exist and be continuous. Then, $y^{(n)}$, being a continuous function of continuous functions, is, itself, continuous.
+
+\begin{definition}[Solution]
+    The function $y(t) : I \to \mathbb{R}$ is a solution to an ODE on an interval $I \subseteq \mathbb{R}$ if it is $n$-times differentiable on $I$, and satisfies the ODE on this interval.
+
+    Given an well-defined IVP with $n-1$ initial values defined at $t_0$, then $y(t)$ is a solution if $t_0 \in I$, $y$ satisfies the initial values, and $y(t)$ is a solution on the interval.
+\end{definition}
+
+\begin{definition}[Interval of Validity]
+    The largest $I$ on which $y(t): I \to \mathbb{R}$ solves an ODE is called the \emph{interval of validity} of the problem.
+\end{definition}
+
