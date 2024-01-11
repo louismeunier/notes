@@ -1,3 +1,17 @@
+\begin{definition}[Equivalence of Metrics]
+    Suppose we have a metric space $X$ with two distances $d_1, d_2$; will these necessarily admit the same topology?
+
+     A sufficient condition is that, if $\forall x \neq y \in X$, $\exists 1 < C < +\infty$ s.t. $$\frac{1}{C} < \frac{d_1(x, y)}{d_2(x,y)} < C.$$ That is, the distances are equivalent, up to multiplication by a constant.
+
+    Indeed, this condition gives that $d_2 < C d_1$ and $d_2 > \frac{d_1}{C}$; this gives $$B_{d_1}(x, \frac{r}{c}) \subseteq B_{d_2}(x, r) \subseteq B_{d_1}(x, C \cdot r).$$ Hence, $d_1, d_2$ define the same open/closed sets on $X$ thus admitting the same topologies. We write $d_1 \asymp d_2$.
+\end{definition}
+
+\begin{remark}
+    If $d_1 \asymp d_2$ and $d_2\asymp d_3$, then also $d_1 \asymp d_3$. Moreover, clearly, $d_1 \asymp d_1$ and $d_1 \asymp d_2 \implies d_2 \asymp d_1$, hence this is a well-defined equivalence relation.
+
+    Hence, its enough to show that $\forall 1 < p < +\infty$, we have $\norm{x}_p \asymp \norm{x}_\infty$ to show that any $\norm{x}_q$ norm are equivalent for all $q$ on $\mathbb{R}^n$.
+\end{remark}
+
 \begin{definition}[Interior, Boundary of a Topological Set]
 Let $X$ be a topological space, $A \subseteq X$ and let $x \in X$. We have the following possibilities
 \begin{enumerate}

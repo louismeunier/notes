@@ -1,0 +1,119 @@
+\begin{proposition}
+    Suppose $\mathcal{B}$ forms a basis of topology for $Y$. Then, $f: X \to Y$ is continuous if $f^{-1}(U)$ open $\forall U \in B$.
+\end{proposition}
+
+\begin{proof}
+    If $U$-open set in $Y$, then $\exists I$-index set and a collection of open sets $\{A_\alpha\}_{\alpha \in I}, A_\alpha \in \mathcal{B}$, s.t. $U = \cup_{\alpha \in I}A_\alpha$. Then, we have \begin{align*}
+        f^{-1}(U) = f^{-1}(\cup_{\alpha \in I}(A_\alpha)) = \cup_{\alpha \in I}\underbrace{f^{-1}(A_\alpha)}
+    \end{align*}
+    Hence, if each $f^{-1}(A_{\alpha})$ open, then $\cup_{\alpha \in I} f^{-1}(A_{\alpha})$ open; hence it suffices to check if $f^{-1}(U) \forall U$-open in $V$ is open to see if $f$ continuous.
+\end{proof}
+
+\begin{theorem}[Continuity of Composition]
+    If $f: X \to Y$ continuous and $g : Y \to Z$ continuous, then $g \circ f$ continuous as well.
+\end{theorem}
+
+\begin{proof}
+    Let $U$-open in $Z$. Then \begin{align*}
+        (g \circ f)^{-1}(U) = \underbrace{f^{-1}(\underbrace{g^{-1}(U)}_{\text{open in }Y})}_{\text{open in }X}
+    \end{align*}
+\end{proof}
+
+\begin{proposition}
+    If $f: X \to Y$ continuous and $A \subseteq X$, $A$ has subspace topology, then $f|_A : A \to Y$ is also continuous.\footnotemark
+\end{proposition}
+
+\footnotetext{We denote $f|_A$ as the restriction of the domain of $f$ to $A$.}
+
+\begin{proof}
+    Let $U$-open in $Y$. Then \begin{align*}
+        (f|_A)^{-1}(U) = \underbrace{f^{-1}(U)}_{\text{open}}\cap \underbrace{A}_{\text{open}}
+    \end{align*}
+    By the definition of subspace topology, this is an open set and hence $f|_A$ is continuous.
+\end{proof}
+
+\subsection{Product Spaces}
+
+\begin{definition}[Finite Product Spaces]
+    Let $X_1, \dots, X_n$ be topological spaces. We define \[
+    (X_1 \times X_2 \times \cdots \times X_n),    
+    \]
+    and aim to define a \emph{product topology}; a basis of which consists of cylinder sets.
+\end{definition}
+
+\begin{definition}[Cylinder Set]
+    A \emph{cylinder set} has the form $$A_1 \times A_2 \times \cdots \times A_n$$ where each $A_j$-open in $X_j$.
+\end{definition}
+
+\begin{example}
+    Given an open interval $(a_1, b_1), (a_2, b_2) \subset \mathbb{R}$, the set $(a_1, b_1) \times (a_2, b_2) \subset \mathbb{R}^2$ is a basis for the topology on $\mathbb{R}^2$.
+\end{example}
+
+\begin{definition}[Projection]
+    Let $X_1 \times X_2 \times \cdots X_n =: X$. The \emph{projection} $\pi_j X \to X_j$ maps $(x_1, \dots, x_n) \to x_j \in X_j$.
+\end{definition}
+
+\begin{remark}
+    One can show $\pi_j$ continuous.
+\end{remark}
+
+\begin{definition}[Coordinate Function]
+    Given a function $f: Y \to X_1 \times \cdots X_n = (x_1(y), x_2(y), \dots, x_n(y))$. The \emph{coordinate function} is $$f_j = \pi_j \circ f;\quad  f_j = x_j(y).$$
+\end{definition}
+
+\begin{proposition}\label{prop:finitecontinuousproducspace}
+    $f: Y \to X = X_1 \times \cdots \times X_n$ continuous $\iff$ $f_j : Y \to X_j$ continuous.
+\end{proposition}
+
+\begin{proof}
+    Its enough to show that $\forall U \in \mathcal{B}$-basis for $X$-product space, $f^{-1}(U)$-open in $Y$. Take $U = A_1 \times \cdots A_n$-open. Then, we claim that \begin{align*}
+        f^{-1}(U) = f^{-1}(A_1 \times \cdots \times A_n) = f_1^{-1}(A_1) \cap f_2^{-1}(A_2)\cap \cdots \cap f_n^{-1}(A_n). \quad \star
+    \end{align*}
+    If this holds, then as each $f_i$ continuous (being a composition of continuous functions) and each $A_i$ open in $X_i$, then each $f_i^{-1}(A_i)$ open in $Y$ and hence $\star$, being the finite intersection of open sets in $Y$, is itself open in $Y$.
+
+    % TODO
+\end{proof}
+
+\begin{example}[Fourier Transform: Motivation for Infinite Product Toplogies]
+    Let $f \in C([0, 2\pi])$ is real-valued. We write the $n$th Fourier coefficients \begin{align*}
+    \hat{f}(n) &= \frac{1}{2\pi}\int_0^{2\pi} f(x)e^{-in x}\dd{x}\\
+    &=\frac{1}{2\pi}\int_{0}^{2\pi} f(x) \cos(n x) \dd{x} - i \frac{1}{2\pi} \int_{0}^{2\pi} f(x) \sin (n x) \dd{x}.
+    \end{align*}
+    And the Fourier transform of $f$ as the infinite product \[
+    f(x) \mapsto (\dots, \hat{f}{-n}, \hat{f}{-n + 1} \dots \hat{f}(-1), \hat{f}(0), \hat{f}(1), \cdots \hat{f}(n), \dots) \in \prod_{n \in \mathbb{Z}}(\mathbb{C})_n.
+    \]
+    Hence, this is an (countably, as indexed by integers) infinite product space. 
+
+    Now, let $f : \mathbb{R} \to \mathbb{R}$. Suppose $f(x) \to 0$ "fast enough" as $\abs{x} \to \infty$ and $f$ continuous. Then, we can define the Fourier coefficients \begin{align*}
+        \hat{f}(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty}f(x)e^{-itx} \dd{x},
+    \end{align*}
+    where $t \in \mathbb{R}$. We then have the transform \begin{align*}
+        f \mapsto \{\hat{f}(t)\}_{t \in \mathbb{R}}.
+    \end{align*}
+    In this case, our index set is $\mathbb{R}$ is (uncountably) infinite.
+\end{example}
+
+\begin{definition}[Product Topology/Cylinder Sets for $\infty$ Products]
+    Let $X = \prod_{\alpha \in I} X_\alpha$. Then, a basis for $X$ is given by cylinder sets of the form $A = \prod_{\alpha \in I}A_\alpha$ where $A_\alpha$-open in $X_\alpha$, AND $A_\alpha = X_\alpha$ except for finitely many indices $\alpha$.
+
+    That is, there exists a finite set $J = (\alpha_1, \dots, \alpha_k)\subseteq I$, such that we can write $A = \prod_{\alpha \in J}A_\alpha \times \prod_{\alpha \notin J}X_\alpha$ (where $A_\alpha$ open in $X_\alpha$).
+\end{definition}
+
+\begin{proposition}
+    Given $f: Y \to \prod_{\alpha \in I}X_\alpha = X$, then (taking $f_\alpha = \pi_\alpha \circ f$ as before) we have that $f$ is continuous in $X$ $\iff$ $f_\alpha : Y \to X_\alpha$ continuous in $X_\alpha \forall \alpha \in I$.
+\end{proposition}
+
+\begin{remark}
+    Extension of \cref{prop:finitecontinuousproducspace} to infinite product space.
+\end{remark}
+
+\begin{proof}
+    Write $U = \prod_{\alpha \in J}A_\alpha \times \prod_{\alpha \notin J}X_\alpha$. Then, \begin{align*}
+        f^{-1}(U) = \bigcap_{\alpha \in J} f_\alpha^{-1}(A_\alpha)
+    \end{align*}
+    which is open in $Y$, hence $f$ continuous.
+\end{proof}
+
+\begin{remark}
+    The intersection of the entire spaces give no restriction.
+\end{remark}
