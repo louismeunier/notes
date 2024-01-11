@@ -1,0 +1,133 @@
+
+\section{First Order ODEs}
+
+\subsection{Separable ODEs}
+
+\begin{definition}[Separable ODE]
+    An ODE of the form \[y' = P(t)Q(y)\] is called \emph{separable}. We solve them:
+    \begin{align*}
+        \dv{y}{t} = P(t) Q(y)\\
+        \implies \int \frac{1}{Q(y)}  \dd{y} = \int P(t) \dd{t}.
+    \end{align*}
+    Finish by evaluating both sides.
+\end{definition}
+
+\begin{example}
+    \begin{align}
+        \dv{y}{t} &= ty\\
+        &\implies \frac{1}{y}\dd{y} = t \dd{t}\\
+        &\implies \ln \abs{y} = \frac{t^2}{2} + C\\
+        &\implies \abs{y} = Ke^{\frac{t^2}{2}} \quad \text{where } K = e^{C}\\
+        &\implies y= B e^{\frac{t^2}{2}} \quad \text{where } B = \pm K = \pm e^{C}
+    \end{align}
+    Note that we call line (3) an \emph{implicit solution}. In this case, we could easily turn this into an explicit solution by solving for $y(t)$; this won't always be possible.
+
+    Note that it would appear, based on the definition, that $B \neq 0$ (as $e^{\dots} \neq 0$); however, plugging $y = 0$ into (1) shows that this is indeed a solution. It is quite easy to verify that (5) is a valid solution; \[
+    \dv{t}(Be^{\frac{t^2}{2}}) = B te^{\frac{t^2}{2}} = t \cdot y,    
+    \]
+    as desired; this holds $\forall B \in \mathbb{R}$.
+\end{example}
+
+\begin{remark}
+    Is it valid to split the differentials like this? 
+    \begin{align*}
+        \frac{1}{Q(y)}\dv{y}{t} = P(t)\\
+        \implies \int \frac{1}{Q(t)} \dv{y}{t} \dd{t} = \int P(t) \dd{t}
+    \end{align*}
+    Let $g(y) = \frac{1}{Q}(y)$ and $G(y) = \int g(y) \dd{y}$. By the chain rule, $$\dv{t}(G(y(t))) = \dv{y}{t}\cdot \dv{y}G(y(t)) = \dv{y}{t} \cdot g(y(t)) = \dv{y}{t}\cdot \frac{1}{Q(y(t))}.$$ Integrating both sides with respect to time, we have \begin{align*}
+        G(y(t)) = \int \frac{1}{Q(y(t))} \dv{y}{t} \dd{t} = \int P(t)\dd{t} + C\\
+        \implies \int g(y)\dd{y} = \int P(t) \dd{t} + C\\
+        \implies \int \frac{1}{Q(y)} \dd{y} = \int P(t) \dd{t} + C
+    \end{align*}
+    This was our original expression obtaining by "splitting", hence it is indeed "valid".
+\end{remark}
+
+\begin{example}
+    \begin{align*}
+        \dv{y}{x} = \frac{x^2}{1-y^2}\\
+        \implies \int (1 - y^2) \dd{y} = \int x^2 \dd{x}\\
+        \implies y - \frac{y^3}{3} = \frac{x^3}{x} + C\\
+        \implies y - \frac{1}{3}(y^3 + x^3) = C
+    \end{align*}
+
+    Suppose we have the same ODE but now with an IVP $y(0) = 4$. Then, plugging this into our implicit solution:
+    \[
+    4 - \frac{1}{3}(64 + 0) =C \implies C = 4 - \frac{64}{3} = - \frac{52}{3},    
+    \]
+    so our IVP solution is \[
+    y - \frac{1}{3}(y^3 + x^3) = - \frac{52}{3}.    
+    \]
+\end{example}
+
+\subsection{Linear First Order ODEs}
+
+\begin{definition}[Integrating Factor]
+    A linear first order ODE of the form \begin{align*}
+    a_1(t)y'(t) + a_0(t) y(t) = g(t)\\
+    \implies y' + \frac{a_0}{a_1}y = \frac{g}{a_1}\\
+    \implies y' + p(t)y = q(t).
+    \end{align*}
+    To solve, we multiply by some integrating factor $\mu(t)$;
+    \begin{align*}
+        \mu(t)y'(t) + p(t)\mu(t)y(t) = \mu(t)q(t)
+    \end{align*}
+    It would be quite convenient if $p(t)\mu(t) = \mu'(t)$; in this case, we'd have \begin{align*}
+        \mu(t)y' + \mu'(t)y = \mu(t) q(t)\\
+        \dv{t}(\mu(t)y(t)) = \mu(t)q(t)\\
+        \implies \mu(t)y(t) = \int \mu(t)q(t)\dd{t} + C\\
+        \implies y(t) = \frac{1}{\mu(t)} \int \mu(t)q(t) \dd{t} + \frac{C}{\mu(t)}
+    \end{align*}
+    Now, what is $\mu(t)$? We required that \begin{align*}
+        \mu'(t) = p(t)\mu\\
+        \dv{\mu}{t} = p(t)\mu\\
+        \implies \int \frac{\dd{\mu}}{\mu} = \int p(t) \dd{t}
+        \implies \ln \abs{\mu} = \int p(t) \dd{t}\\
+        \implies \mu(t) = Ke^{\int p(t)\dd{t}}
+    \end{align*}
+    However, note in our whole process earlier, we need only one $\mu$; hence, for convenience, we can disregard any constants of integration and simply take \[
+    \boxed{\text{Integrating Factor:} \quad \mu(t) := e^{\int p(t) \dd{t}}}
+    \]
+    Then, our original linear ODE has general solution \[
+    y(t) = Ce^{- \int p(t) \dd{t}} + e^{-\int p(t) \dd{t}} \int e^{\int p(t) \dd{t}} q(t) \dd{t}.
+    \]
+\end{definition}
+
+\begin{example}
+    \begin{align*}
+        ty' + 3y - t^2 &= 0\\
+        y' +  \frac{3}{t}y &= t\\
+        &\implies \mu(t) = e^{\int \frac{3}{t} \dd{t}} = e^{3 \ln \abs{t}} = t^3\\
+        &\implies t^3y'+ 3t^2y = t^4\\
+        &\implies \dv{t}(yt^3) = t^4\\
+        &\implies yt^3 = \int t^4 \dd{t}\\
+        &\implies y = \frac{1}{t^3} \cdot \frac{t^5}{5} + \frac{C}{t^3} = \frac{t^2}{5} + \frac{C}{t^3}
+    \end{align*}
+    Note the division by zero issue when $t = 0$; this is not an issue with the solution method, but indeed with the ODE itself. The ODE breaks down when $t = 0$ for the same reason.
+
+    Thus, this solution is valid for $t \in (-\infty, 0) \cup (0, \infty) =: I_1 \cup I_2$; if we are given an IVP $y(t_0) = y_0$, if $t_0 < 0$, then the interval of validity is $I_1$, and if $t_0 > 0$, the interval of validity is $I_2$.
+\end{example}
+
+\subsection{Exact Equations}
+
+\begin{definition}[Exact Equations]
+    A first order ODE of the form \[
+    M(x, y) \dd{x} + N(x, y) \dd{y} = 0 \iff \dv{y}{x} = - \frac{M(x, y)}{N(x,y)}     
+    \]
+    is said to be \emph{exact} if $$\pdv{y} M(x, y) = \pdv{x} N(x, y) \iff M_y(x,y) = N_x(x, y).$$
+    Suppose we have a solution $f(x, y(x)) = C$. Then, \begin{align*}
+        \dv{x}(f(x, y(x))) = 0\\
+        \implies \pdv{f}{x} + \pdv{f}{y}\dv{y}{x} = 0\\
+        \implies \frac{f_x}{f_y} = -\dv{y}{x}
+    \end{align*}
+    Now, with $f_x(x,y) = M(x, y)$ and $f_y = N(x, y)$, then $M_y(x, y) = f_{xy}(x,y)$ and $N_x = f_{yx}(x,y)$. Assuming $f$ continuous with existing, continuous partial derivatives, then $f_{xy} = f_{yx}$ and hence $M_{y}(x, y) = N_x(x, y)$. Thus, a function $f$ such that $f_x = M$ and $f_y = N$ yields a solution to the ODE.
+\end{definition}
+
+\begin{example}
+    \begin{align*}
+        2xy^2 \dd{x} + 2x^2 y \dd{y} = 0 \equiv M \dd{x} + N \dd{y} = 0\\
+        \implies M_y = 4xy, \quad \implies N_x = 4xy\\
+        f_x = M = 2x y^2 \implies f(x, y) = x^2y^2 + C + F(y)\\
+        f_y = N = 2x^2y\implies f(x, y) = x^2y^2 + C + F(x)\\
+        \implies f(x, y) = x^2y^2 + C
+    \end{align*}
+\end{example}
