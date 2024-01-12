@@ -1,0 +1,97 @@
+\begin{example}
+    \begin{enumerate}
+        \item The empty set $\varnothing$ is linearly independent; there are no non-trivial linear combinations that equal $0_V$ (there are no linear combinations at all).
+        \item For $v \in V$, the set $\{v\}$ is linearly dependent iff $v = 0_V$.
+        \item $S := \{(1,0,-1), (0,1,-1), (1,1,-2)\} := \{v_1, v_2, v_3\}$; $S$ is linearly dependent ($v_1 + v_2 - v_3 = (0,0,0)$).
+        \item $V := \field^3$; $S := \{(1,0,-1), (0,1,-1), (0,0,1)\} = \{v_1, v_2, v_3\}$ is linearly independent.
+        \begin{proof}
+            Suppose
+            \begin{align*}
+                a_1v_1 + a_2 v_2 + a_3 v_3 &= 0_V\\
+                &\implies a_1 = 0 \wedge a_2 = 0 \wedge -a_1 - a_2 + a_3 = 0 \implies a_3 = 0\\
+                &\implies a_1 = a_2 = a_3 = 0
+            \end{align*}
+            Hence only a trivial linear combination is possible.
+        \end{proof}
+        \item $\St_n$ is linearly independent.
+        \begin{proof}
+            \begin{align*}
+                \sum_{i=1}^n a_i e_i = 0_{\field^n} \implies a_i = 0 \forall i
+            \end{align*}
+        \end{proof}
+    \end{enumerate}
+\end{example}
+
+\begin{lemma}
+    \defvectorspace , and $S \subseteq V$ (possibly infinite). \begin{enumerate}
+        \item $S$ is linearly dependent $\iff$ there is a finite subset $S_0 \subseteq S$ that is linearly dependent.
+        \item $S$ is linearly independent $\iff$ all finite subsets of $S$ are linearly independent.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    2. follows from the negation of 1.
+
+    \noindent($\impliedby$) Trivial.
+
+    \noindent($\implies$) Suppose $S$ linearly dependent. Then, $0_V = $ some nontrivial linear combination of vectors $v_1, \dots, v_n$ in $S$. Let $S_0 = \{v_1, \dots, v_n\}$, then, $S_0$ is linearly dependent itself.
+\end{proof}
+
+\subsection{Linear Dependence and Span}
+
+\begin{proposition}\label{prop:dependentprop1}
+    \defvectorspace and $S \subseteq V$.
+    \begin{enumerate}
+        \item $S$ linearly dependent $\iff$ $\exists v \in \Span (S \setminus \{v\})$.
+        \item $S$ linearly independent $\iff$ there is no $v \in \Span (S \setminus \{v\})$.
+    \end{enumerate} 
+\end{proposition}
+
+\begin{proof}
+    2. follows from the negation of 1.
+
+    \noindent($\implies$) Suppose $S$ linearly dependent. Then, $0_V = \sum_{i=1}^n a_i v_i$ for some nontrivial linear combination of distinct vectors $S$. At least one of $a_i \neq 0$; we can assume wlog (reindexing) $a_1 \neq 0$. Then, 
+    \[
+    a_1 v_1 = -\sum_{i=2}^n a_i v_i \implies v_1 = (-a_1^{-1}) \sum_{i=2}^n a_iv_i = \sum_{i=2}^{n} (-a_1^{-1}a_i)v_i,
+    \]
+    hence, $v_1 \in \Span (\{v_2, \dots, v_n\}) \subseteq \Span (S \setminus \{v \})$
+
+    \noindent ($\impliedby$) Suppose $v \in \Span (S \setminus \{v\})$, then $v = a_1 v_1 + \cdots + a_n v_n$, with $v_1, \dots, v_n \in S \setminus \{v\}$, thus \[
+    0_V = a_1 v_1 + \cdots a_n v_n - v,    
+    \]
+    which is not a trivial combination ($-1$ on the $v$; $v$ cannot "merge" with the other vectors), hence $S$ is linearly dependent.
+\end{proof}
+
+\begin{corollary}
+    $S \subseteq V$ is linearly independent $\iff$ $S$ a minimal spanning set of $\Span S$.
+\end{corollary}
+
+\begin{proof}
+    Follows from \cref{prop:dependentprop1}, 2.
+\end{proof}
+
+\begin{definition}[Maximally Independent]
+    \defvectorspace . A set $S \subseteq V$ is called \emph{maximally independent} if $S$ is linearly independent and $\not \exists v \in V \setminus S \st S \cup \{v\}$ is still linearly independent.
+    
+    In other words, there is no proper supset $\tilde{S} \supsetneq S$ that is still independent.
+\end{definition}
+
+\begin{lemma}
+    If $S \subseteq V$ maximally independent, then $S$ is spanning for $V$.
+\end{lemma}
+
+\begin{proof}
+    Let $S \subseteq V$ be maximally independent. Let $v \in V$; supposing $v \notin S$ (in the case that $v \in S$, then $v \in \Span (S)$ trivially). By maximality, $S \cup \{v\}$ is linearly dependent, hence there exists a nontrivial linear combination that equals $0_V$. Since $S$ independent, this combination must include $v$, with a nonzero coefficient. We can write \begin{align*}
+        a v + \sum_{i=1}^{n} a_i v_i = 0_V \quad a \neq 0, v_i \in S\\
+        \implies v = \sum_{i=1}^{n} (-a^{-1}a_i)v_i \in \Span S.
+    \end{align*}
+\end{proof}
+
+\begin{theorem}
+    \defvectorspace and let $S \subseteq V$. TFAE: \begin{enumerate}
+        \item $S$ is a minimal spanning set;
+        \item $S$ is linearly independent and spanning;
+        \item $S$ is a maximally linearly independent set;
+        \item Every vector in $V$ is equal to \emph{unique} linear combination of vectors in $S$.
+    \end{enumerate}
+\end{theorem}
