@@ -1,0 +1,62 @@
+\begin{proof}
+    (1. $\implies$ 2.) Suppose $S$ is spanning for $V$ and is minimal. Then, by \cref{cor:minspanninglin}, we have that $S$ is linearly independent, and is thus both linearly independent and spanning.
+
+    \noindent(2. $\implies$ 3.) Suppose $S$ is linearly independent and spanning. Let $v \in V \setminus S$; $S$ is spanning, hence $v \in \Span S$, that is, there exists a linear combination of vectors in $S$ that is equal to $v$:
+    \[
+    v = a_1 v_1 + \cdots + a_n v_n, a_i \in \field, v_i \in S.    
+    \]
+    Thus, $0_V = a_1 v_1 + \cdots + a_n v_n - v$, thus $S \cup \{v\}$ is linearly dependent, and so $S$ is maximally linearly independent.
+
+    \noindent (3. $\implies$ 1.) Suppose $S$ is maximally linearly independent. By \cref{lemma:maximallyisspanning}, $S$ is spanning, and since $S$ is linearly independent, by \cref{cor:minspanninglin}, $S$ is minimally spanning for $\Span S$.
+
+    \noindent (2. $\implies$ 4.) Suppose $S$ is linearly independent and spans $V$, and let $v \in V$. We have that $v \in \Span S$ and hence is equal to a linear combination of vectors in $S$. This gives existence; we now need to prove uniqueness.
+
+    Suppose there exist two linear combinations that equal $v$,
+    \[
+    v = a_1 v_1 + \cdots + a_n v_n = b_1 u_1 + \cdots + b_m u_m,
+    \]
+    $a_i, b_j \in \field$, $v_i, u_j \in S$. With appropriate reindexing/relabelling and allowing certain scalars to equal $0$, we can assume that the combinations use the same vectors (with potentially different coefficients), that is, \[
+    v = a_1 w_1 + \cdots + a_k w_k = b_1 w_1 + \cdots + a_k w_k.    
+    \]
+    This implies, then, 
+    \[
+    (a_1 - b_1) w_1 + \cdots + (a_k - b_k)w_k = 0_V,    
+    \]
+    and by the assumed linear independent of $S$, each coefficient $(a_i - b_i) = 0 \forall i \implies a_i = b_i \forall i$, hence, these are indeed the same representations, and thus this representation is unique.
+
+    \noindent(4. $\implies$ 2.) Suppose every vector in $V$ admits a unique linear combination of vectors in $S$. Clearly, then, $S$ is spanning. It remains to show $S$ is linearly independent. Suppose \[
+    0_V = a_1 v_1 + \cdots + a_n v_n    
+    \]
+    for $v_i \in S$. But we have that every vector has a unique representation, and we know that $a_i = 0 \forall i$ is a (valid) linear combination that gives $0_V$; hence, this must be the unique combination, $a_i = 0 \forall i$, and the linear combination above is trivial. Hence, $S$ is linearly independent and spanning.
+\end{proof}
+
+\begin{definition}[Basis]
+    If any (hence all) of the above statements hold, we call $S$ a \emph{basis} for $V$.
+
+    In the words of 4., we call the unique linear combination of vectors in $S$ that is equal to $v$ the \emph{unique representation of $v$ in $S$}. Its coefficients are called the \emph{Fourier coefficients of $v$ in $S$.}
+\end{definition}
+
+\begin{example}
+    \begin{enumerate}
+        \item $\St_n = \{e_i : 1 \leq i \leq n\}$ is a basis for $\field^n$.
+        \item In $\field^3$, the set \[
+        \{(1, 0, -1), (0, 1, -1), (0,0,1)\}    
+        \]
+        is a basis; it is linearly independent and spanning.
+        \item For $\field[t]_n$, the standard basis is \[
+        \{1, t, t^2, \dots, t^n\}.
+        \]
+        \item For $\field[t]$, the standard basis is \[
+        S := \{1, t, t^2, \dots\} = \{t^n : n \in \mathbb{N}\}.
+        \]
+        \item Let $\field[\![t]\!]$ denote the space of all formal power series $\sum_{n \in \mathbb{N}} a_n t^n$; polynomials are an example, but with only finite nonzero coefficients. Note that, then, the set $S$ defined above is not a basis for this "extended" set. We \emph{can} in fact find a basis for this set; we need more tools first.
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}
+    Every vector space has a basis.
+\end{theorem}
+
+\begin{remark}
+    This theorem relies on assuming the Axiom of Choice.
+\end{remark}
