@@ -1,0 +1,96 @@
+\subsection{More on Metric Spaces?}
+
+\begin{proposition}
+    Different metrics can define the same topology.
+\end{proposition}
+\begin{example}
+    \begin{enumerate}
+        \item Different $\ell_p$ metrics in $\mathbb{R}^n$ (PSET 1)
+        \item Let $(X, d)$ be a metric space. Then, \[
+        \tilde{d}(x,y) := \frac{d(x,y)}{d(x,y)+1}
+        \]
+        is also a metric (the first two axioms are trivial), and defines the same topology. Note, moreover, that $\tilde{d}(x,y) \leq 1 \forall x, y$; this distance is bounded, and can often be more convenient to work with in particular contexts.
+    \end{enumerate}
+\end{example}
+
+\begin{question}
+    Suppose $(X_k, d_k)$ are metric spaces $\forall k \geq 1$. Then, we can define the product topology $\tau$ on  \[
+        X := \prod_{k=1}^{\infty} X_k.    
+        \]
+        Does the product topology $\tau$ come from a metric? That is, is $\tau$ \emph{metrizable}?
+\end{question}
+
+\begin{remark}
+    There do indeed exist examples of non-metrizable topological spaces; this question is indeed well-founded.
+\end{remark}
+
+\begin{proof}[Answer.]
+    Let $\underline{x}=(x_1, x_2, \dots, x_n, \dots), \underline{y}=(y_1, y_2, \dots, y_n, \dots) \in \prod_{k=1}^\infty$ (where $x_i, y_i \in X_i$) be infinite sequences of elements. Then, for each metric space $X_k$ take the metric $$\tilde{d}_k(x_k, y_k) = \frac{d_k(x_k,y_k)}{1+d_k(x_k,y_k)}$$ (as in the example above). Then, we define \[
+    D(\underline{x}, \underline{y}) = \sum_{k=1}^{\infty} \frac{\tilde{d}_k(x_k, y_k)}{2^k},
+    \]
+    noting that $D(\underline{x}, \underline{y}) \leq \sum_{k=1}^\infty \frac{1}{2^k} = 1$ (by our construction, "normalizing" each metric), hence this is a valid, \emph{converging} metric (which wouldn't otherwise be guaranteed if we didn't normalize the metrics). It remains to show whether this metric omits the same topology as $\tau$. 
+\end{proof}
+
+\subsection{Compactness}
+
+\begin{definition}[Compact]
+        A set $A$ in a topological space is said to be \emph{compact} if every cover has a finite subcover. That is, if \[
+        A \subseteq \bigcup_{\alpha \in I} U_\alpha-\text{open},    
+        \]
+        then $\exists \{\alpha_1, \dots, \alpha_n \in I\}$ such that $A \subseteq \bigcup_{i=1}^n U_{\alpha_i}$.
+\end{definition}
+
+\begin{proposition}\label{prop:closedcompact}
+    A closed interval $[a, b]$ is compact.
+\end{proposition}
+
+\begin{proof}
+    If $a = b$, this is clear. Suppose $a < b$. Then, suppose \[
+    [a, b] \subseteq \bigcup_{\alpha \in I} U_\alpha-\text{open}.    
+    \]
+    Then, it must be that $a \in U_{\alpha_1}$ for some $\alpha_1$; hence, $\exists \epsilon > 0$ $(a - \epsilon, a + \epsilon) \subseteq U_{\alpha_1}$. Let $c = a + \frac{\epsilon}{2}$, then $[a, c] \subseteq U_{\alpha_1}$. Then, $[a,c]$ has a finite subcover; it is covered by the single open set $U_{\alpha_1}$.
+
+    Let, then, $l = $ least upper bound for all $c\leq b \st [a, c]$ has a finite subcover. Then, $l \in [a,b]$ and so $\exists \beta \in I$ such that $l \in U_\beta$. It follows that $\exists \epsilon > 0 \st [l - \epsilon, l] \subseteq U_\beta$. 
+
+    By our definition of $l$, $\exists c_j \st d(l, c_j) < \frac{1}{j} \st [a, c_j]$ is contained in a finite union of $U_\alpha$'s. Let $c_j \in [l-\epsilon, l]$. Then, $[a, c_j] \subseteq \bigcup_{i=1}^{k} U_{\alpha_i}$, and then, the interval $[a, l] \subseteq \bigcup_{i=1}^{k}U_{\alpha_1} \cup U_{\beta}$. 
+    
+    But we can "choose" $U_\beta$ such that $[l, l + \epsilon] \subseteq U_\beta$, and so we'd further have that $[a, l + \epsilon] \subseteq \bigcup_{i=1}^{k}U_{\alpha_1} \cup U_{\beta}$; but we have that $L + \epsilon > l$, and we have a contradiction to $l$ being the least upper bound for which this holds, unless $l = b$ itself. Then, we cannot "increase" further, and hence $l = b$ and so $[a, l] = [a, b] \subseteq$ a finite union of open sets.
+\end{proof}
+
+\begin{remark}
+    A similar proof shows that $[a, b]$ is \emph{connected}; we cannot cover it by two disjoint open sets.
+\end{remark}
+
+\begin{theorem}[On Compactness]\label{thm:compactnessrn}
+    Let $A \subseteq \mathbb{R}^n$. Then, $A$ compact $\iff$ $A$ closed and bounded.
+\end{theorem}
+
+\begin{proposition}\label{prop:productspacecompact}
+    If $X, Y$ are compact topological spaces, then $X \times Y$ is compact.    
+\end{proposition}
+
+\begin{remark}
+    By induction, if $X_1, \dots, X_n$ compact, so is $\prod_{i=1}^{n} X_i$.
+\end{remark}
+
+\begin{proposition}\label{prop:subsetcompact}
+    A closed subset of of a compact topological space is compact in the subspace topology.
+\end{proposition}
+
+\begin{proof}(Of \cref{thm:compactnessrn})
+
+    \noindent($\impliedby$) If $A \subseteq \mathbb{R}^n$ closed and bounded, then $A \subseteq [-R, +R]^n$ for some $R > 0$ (it is contained in some "$n$-cube"). Then, we have that $[-R, R]$ is compact, by \cref{prop:closedcompact}, \cref{prop:productspacecompact}, and \cref{prop:subsetcompact}, $A$ itself compact.
+    
+    \noindent($\implies$) Suppose $A \subseteq \mathbb{R}^n$ is compact. Then, $\bigcup_{x \in A} B(x, \epsilon)$ for some $\epsilon > 0$ is an open cover of $A$. As $A$ compact, there must exist a finite subcover of this cover, $A \subseteq \bigcup_{i = 1}^N B(x_i, r_i)$. Let $R := \max_{i=1}^{N} (\norm{x_i} + r_i)$. Then, $A \subseteq \overline{B(0, R)}$, that is, $A$ is bounded.
+
+    Now, suppose $x$ is a limit point of $A$. Then, any neighborhood of $x$ contains a point in $A$, so $\forall r > 0, B(x, r) \cap A \neq \varnothing$, and so $\overline{B}(x, r)$ also contains a point of $A$ for any $r > 0$. 
+    
+    Now, suppose $x \notin A$ (looking for a contradiction). Then, \[
+    U :=\bigcup_{r > 0} U_r :=  \bigcup_{r > 0} (\mathbb{R}^n \setminus \overline{B(x, r)}) = \mathbb{R}^n \setminus \{x\}
+    \]
+    is an open cover for the set $A$. $A$ being compact implies that $U$ has an finite subcover such that $A \subset U_{r_1} \cup U_{r_2} \cup \dots \cup U_{r_N}$. Let $r_0 = \min_{i=1}^N r_i$. Then, $A \subseteq U_{r_0}$, and $A \cap B(x, r_0) = \varnothing$; but this is a contradiction to the definition of a limit point, hence any limit point $x$ is contained in $A$ and $A$ is thus closed by definition.
+\end{proof}
+
+\begin{proposition}
+    Compact $\implies$ sequentially compact; that is, every sequence in a compact set has a convergent subsequence.
+\end{proposition}
