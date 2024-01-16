@@ -1,0 +1,106 @@
+\begin{theorem}
+    This technique works generally. % TODO update wording
+\end{theorem}
+
+\begin{proof}
+    Given an exact ODE of the form $M(x,y) \dd{x} + N(x, y) \dd{y} = 0$, we need to show that $\exists f(x, y) \st f(x, y) = c$ solves the ODE. Let \[
+    f(x, y) = \int_{x_0}^x M(s, y) \dd{s} + g(y) 
+    \]
+    for some function $g(y)$ to be chosen such that $f_y = N$. But we have \begin{align*}
+    N(x, y) = f_y(x,y) &= \pdv{y} \left[\int_{x_0}^x M(s, y) \dd{s} + g(y)\right]\\
+    &= g'(y) + \pdv{y} \int_{x_0}^x M(s, y) \dd{s}\\
+    &\implies g'(y) = N(x, y) - \pdv{y} \int_{x_0}^x M(s, y) \dd{s}.
+    \end{align*}
+    But the LHS is a function of $y$ only, while the RHS depends explicitly on $x$; hence, this technique will only work if the entire expression is actually independent of $x$. To show this, we take the partial of the RHS with respect to $x$:
+    \begin{align*}
+        \pdv{x}\left[N(x, y) - \pdv{y} \int_{x_0}^x M(s, y) \dd{s}\right] &= N_x(x, y) - \pdv{x}\pdv{y} \int_{x_0}^x M(s, y) \dd{s}\\
+        &=N_x(x, y) - \pdv{y}\left[\pdv{x} \int_{x_0}^x M(s, y) \dd{s} \right]\\
+        &= N_x(x, y) - \pdv{y} \left[M(x, y)\right]\\
+        &= N_x - M_y = 0,
+    \end{align*}
+    as the ODE is exact. Hence, the RHS is indeed a function of $y$ alone. So, integrating both sides with respect to $y$: \begin{align*}
+       g(y) = \int \left[N(x,y) - \pdv{y} \int_{x_0}^x M(s, y) \dd{s}\right] \dd{y},
+    \end{align*}
+    which gives us a $f(x, y)$ of \begin{align*}
+        f(x, y) = \int_{x_0}^{x} M(s, y) \dd{s} + \int \left[N(x,y) - \pdv{y} \int_{x_0}^x M(s, y) \dd{s}\right] \dd{y},\\
+        \implies f(x, y) = \int_{x_0}^x M(s, y) \dd{s} + \int_{y_0}^y N(x, t) \dd{t} - \int_{y_0}^y \int_{x_0}^x M_y(s, t) \dd{s} \dd{t} \quad \star
+    \end{align*}
+    which satisfies $f_x = M$ and $f_y = N$. Then, for $f(x,y) = C$, we have \begin{align*}
+        \pdv{f}{x} + \dv{y}{x}\pdv{f}{y} = M + \dv{y}{x} N = 0 \implies M \dd{x} + N \dd{y} = 0,
+    \end{align*}
+    as desired.
+
+    Note that $\star$ is evaluated over a rectangle $[x_0, x] \times [y_0, y]$, but holds for any connected domain containing $(x_0, y_0)$ and $(x, y)$. 
+
+    Also note that, as described, $g(y)$ is not a function of $x$; hence, we can pick $x$ arbitrarily. Suppose we take $x = x_0$, then \[
+    f(x, y) = \int_{x_0}^x M(s, y) \dd{s} + \int_{y_0}^y N(x_0, t) \dd{t}.
+    \]
+\end{proof}
+
+\begin{remark}
+    We could have taken $g(x)$ and started from $f_y = N$. Then, we would have had the formula \[
+    f(x, y) = \int_{y_0}^y  N(x, t) \dd{t} + \int_{x_0}^x M(s, y_0) \dd{y}.
+    \]
+\end{remark}
+
+\begin{example}
+    \[
+    2xy \dd{x} + (x^2 - 1) \dd{y} = 0.
+    \]
+    We have $M(x, y) = 2xy$ and $N(x, y) = x^2 - 1$, so $M_y = 2x = N_y$ and the ODE is exact; hence, a solution exists of the form $f(x, y) = c$ where $f_x = M, f_y =N$. \begin{align*}
+        f(x, y) = \int M (x, y) \dd{x} = \int 2xy \dd{x} = x^2y + k_1(y)\\
+        f(x, y) = \int N(x, y) \dd{y} = \int (x^2 - 1) \dd{y} = x^2y-y + k_2(x)
+    \end{align*}
+    Hence $k_1(y) = -y$ and $k_2(x) = 0$, so \[
+    f(x, y) = x^2y - y = y(x^2 - 1),
+    \]
+    so solutions to the original ODE are \[
+    y(x^2 - 1) = C \implies y = \frac{C}{x^2 - 1}.    
+    \]
+\end{example}
+
+\subsection{Exact ODEs Via Integrating Factors}
+
+Suppose $$M(x,y)\dd{x} + N(x,y) \dd{y} = 0$$ but $M_y \neq N_x$, that is, the ODE is not exact. Can we find an integrating factor $\mu(x, y)$ s.t. \[
+\left[\mu(x, y) M(x, y)\right]\dd{x} + \left[\mu(x, y) N(x, y)\right]\dd{y} = 0
+\]
+is exact? If so, such a $\mu$ must satisfy \begin{align*}
+    &\pdv{y} \left[\mu(x, y) M(x, y)\right] = \pdv{x} \left[\mu(x, y) N(x, y)\right]\\
+    &\implies \mu_y M + \mu M_y = \mu_x N + \mu N_x\\
+    &\implies N \mu_x - M \mu_y = \left(M_y - N_x\right)\mu \quad \circledast
+\end{align*}
+
+This is not a generally easily soluble PDE; we will consider cases where $\mu$ is a function of only one independent variable, which greatly simplifies the expression; this could be simply $\mu(x), \mu(y), $ or even $\mu(x\cdot y)$.
+
+Suppose $\mu = \mu(x) \implies \mu_y = 0$. Then, $\circledast$ becomes \begin{align*}
+N \mu' = (M_y - N_x) \mu 
+\implies \mu' = \left(\frac{M_y - N_x}{N}\right)\mu.
+\end{align*}
+This is valid, provided the expression $\left(\frac{M_y - N_x}{N}\right)$ is a function solely of $x$. In this case, this becomes a linear first order ODE, with solution \[
+\mu(x) = e^{\int \frac{M_y - N_x}{N} \dd{x}}.
+\]
+OTOH, if $\mu = \mu(y)$, we can similarly derive \[
+\mu(x) = e^{\int \frac{N_x - M_y}{M} \dd{y}},
+\]
+with a similar stipulation on the expression $\left(\frac{N_x - M_y}{M}\right)$ being a function of $y$ solely.
+
+\begin{example}
+    \[
+    xy \dd{x} + (2x^2 + 3y^2 - 20)\dd{y} = 0,    
+    \]
+    with $M(x, y) = xy \implies M_y = x$ and $N(x, y) = 2x^2 + 3y^2 - 20 \implies N_x = 4x$. We have $M_y - N_x = x - 4x = -3x$ (so the ODE is not exact). We write \[
+    \frac{M_y-N_x}{M} = \frac{-3x}{xy} = \frac{-3}{y},    
+    \]
+    which is a function solely of $y$; hence, can find a $\mu(y)$:
+    \[
+    \mu(y) = e^{-\int \frac{M_y - N_x}{M} \dd{y}} = e^{- \int - \frac{3}{y}\dd{y}} = e^{3 \ln y} = y^3,
+    \]
+    noting that we, as before, do not care about any integrating factors; we are seeking a single function that works. Multiplying this into our original ODE:
+    \[
+    \underbrace{xy^4}_{:= \tilde{M}} \dd{x} + \underbrace{(2x^2 + 3y^2 - 20)y^3}_{:= \tilde{N}}\dd{y} = 0.    
+    \]
+    And indeed, we have \begin{align*}
+        \tilde{M}_y = 4xy^3; \quad \tilde{N}_x = 4xy^3 \implies \tilde{M}_y = \tilde{N}_x,
+     \end{align*}
+     as desired.
+\end{example}
