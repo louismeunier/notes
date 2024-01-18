@@ -1,0 +1,96 @@
+\begin{definition}[Connected]
+    A topological space $X$ is \emph{not connected} if $X = U \cup V$ for two open, nonempty, disjoint sets $U, V$. 
+    
+    If this does not hold, $X$ is said to be \emph{connected}.
+
+    A set $A \subseteq X$ is not connected if $A$ is not connected in the subspace topology $\iff A =\subseteq U \cup V$, for $U, V$-open in $X$, $(U \cap A) \neq \varnothing$, $(V \cap A) \neq \varnothing$ and $U \cap V = \varnothing$.
+\end{definition}
+
+\begin{theorem}\label{thm:connectedcontinuousfunction}
+    Let $X$ be a connected topological space. Let $f: X \to Y$ be a continuous. Then, $f(X)$ is also connected.
+\end{theorem}
+
+\begin{proof}
+    Suppose, seeking a contradiction, that $X$ is connected, but $f(X)$ is not. Then, we can write $f(X) \subseteq Y$ as $f(X) \subseteq U \cup V$, such that $U, V$ open in $Y$ and $U \cap V = \varnothing$. Then, \[
+    (U \cap f(X)) \cap (V \cap f(X)) = \varnothing.    
+    \]
+    We also have that $$X \subseteq \underbrace{f^{-1}(U)}_{\text{open in $X, \neq \varnothing$}} \cup \underbrace{f^{-1}(V)}_{\text{open in $X, \neq \varnothing$}}.$$
+    $f^{-1}(U) \cap f^{-1}(V) = \varnothing$ (that is, they are disjoint) by our assumption; this is a contradiction to the connectedness of $X$, as we are able to write it as a subset of two disjoint open sets. Hence, $f(X)$ is indeed connected.
+\end{proof}
+
+\begin{lemma}\label{lemma:connectedinterval}
+    Any interval $(a, b), [a, b], [a, b), \dots, \subseteq \mathbb{R}$ is connected.
+\end{lemma}
+
+\begin{proof}
+    % TODO
+\end{proof}
+
+\begin{theorem}["Intermediate Value Theorem"]
+    Suppose $X$ is connected and $f: X \to \mathbb{R}$ is a continuous function. Then, $f$ takes intermediate values.
+
+    More precisely, let $a = f(x), b = f(y)$ for $x, y \in X$. Assume $a < b$. Then, $\forall a < c < b$, $\exists z \in X \st f(z) = c$.
+\end{theorem}
+
+\begin{proof}
+    Suppose, seeking a contradiction, that $\exists c: a < c < b \st c \notin f(X)$ (that is, there exists an intermediate value that is "not reached" by the function).
+
+    Let $U = (- \infty, c)$ and $V = (c, +\infty)$; note that these are disjoint open sets. Then, we have that \[
+    X = f^{-1}(U) \cup f^{-1}(V),    
+    \]
+    by our assumption of $c \notin f(X)$. But this gives that $X$ is not connected, as the union of two open (by continuity), disjoint, nonempty ($f(x) = a \in U \implies x \in f^{-1}(U)$, and $f(y) = b \in V \implies y \in f^{-1}(V)$) sets, a contradiction.
+\end{proof}
+
+\begin{theorem}\label{thm:compactimage}
+    Suppose $X$ is compact, $Y$-topological space, $f: X \to Y$ is a continuous function. Then, $f(X)$ is also compact.
+\end{theorem}
+
+\begin{proof}
+    Let $\{U_\alpha\}_{\alpha \in I}$ be an open cover of $f(X) \subseteq Y$, that is, $$f(X) \subseteq \bigcup_{\alpha \in I} U_\alpha \implies X \subseteq f^{-1}(\bigcup_{\alpha \in I} U_\alpha) = \bigcup_{\alpha \in I}f^{-1}(U_\alpha) =: \bigcup_{\alpha \in I} V_\alpha -\text{open}.$$
+    Then, this is an open cover of $X$; $X$ is compact, thus there exists a finite subcover, that is, indices $\{\alpha_1, \dots, \alpha_n\} \subseteq I$ such that $X = \bigcup_{i=1}^n V_{\alpha_i}$. Thus, \[
+    f(X) \subseteq \bigcup_{i=1}^{n} U_{\alpha_i},
+    \]
+    which is a finite subcover of $f(X)$. Thus, $f(X)$ is compact.
+\end{proof}
+
+\begin{remark}
+    Recall the "extreme value theorem": let $f: [a, b] \to \mathbb{R}$ a continuous function; then, a minimum and maximum is obtained for $f(x)$ on this interval for values in this interval.
+\end{remark}
+
+\begin{theorem}
+    Let $X$ compact, and $f: X \to \mathbb{R}$ a continuous function. Then, \[
+    \max_{x \in X} f(x) \text{ and } \min_{x \in X} f(x)    
+    \]
+    are both attained.
+\end{theorem}
+
+\begin{proof}
+    $f(X) \subseteq \mathbb{R}$ is compact by \cref{thm:compactimage}, and so by \cref{thm:compactnessrn}, $f(X)$ is closed and bounded. Let, then, $m = \inf f(X)$ and $M = \sup f(X)$; these necessarily exist, since $f(X)$ is bounded. Both $m$ and $M$ are limit points of $f(X)$. But $f(X)$ is closed, and hence contains all of its limit points, and thus $m \in f(X)$ and $M \in f(X)$, and thus $\exists y_m : f(y_m) = m$ and $y_M : f(y_M) = M$.
+\end{proof}
+
+\begin{definition}[Path Connected]
+    A set $A \subseteq X$ is called \emph{path connected} if $\forall x, y \in A$, $\exists f: [a, b] \to X$, continuous, $\st f(a) = x, f(b) = y$ and $f([a, b]) \subseteq A$. 
+    
+    The set $\{f(t) : a \leq t \leq b\}$ is called a \emph{path} from $x$ to $y$.
+\end{definition}
+
+\begin{theorem}[Path connected $\implies$ connected]\label{thm:pathconnectedimpconnected}
+    If $A \subseteq X$ is path connected, then $A$ is connected.
+\end{theorem}
+
+\begin{proof}
+    Suppose, seeking a contradiction, that $A$ is path connected, but not connected. Then, we can write $A \subseteq U \cup V,$ for open, disjoint, nonempty subsets $U, V \subseteq X$. 
+    
+    Let $x \in U \cap A$ and $y \in V \cap A$. Then, $\exists f:[a, b] \to A \st f(a) = x, f(b) =y$, and $f([a, b])\subseteq A$, by the path connectedness of $A$. Then, $$[a, b] \subseteq f^{-1}(A) \subseteq \underbrace{f^{-1}(U \cap A)}_{\text{open}} \cup \underbrace{f^{-1}(V \cap A)}_{\text{open}} =: \underbrace{U_1}_{a \in} \cup \underbrace{U_2}_{b \in},$$ that is, $[a, b]$ is contained in a union of open, nonempty, disjoint sets, contradicting $[a, b]$ the connectedness of $[a, b]$ by \cref{lemma:connectedinterval}. Thus, $A$ is connected.
+\end{proof}
+
+\begin{remark}
+    A counterexample to the opposite side of the implication is the Topologist's sine curve, the set \[
+    \{(x, \sin \left(\frac{1}{x}\right) ): x\in (0, 1] \} \cup \{0\} \times [-1, 1].
+    \]
+    This set is connected in $\mathbb{R}^2$, but is not path connected.
+\end{remark}
+
+\begin{proposition}
+    For open sets in $\mathbb{R}^n$, path connected $\iff$ connected.
+\end{proposition}

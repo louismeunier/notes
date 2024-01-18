@@ -1,4 +1,4 @@
-\subsection{More on Metric Spaces?}
+\subsection{Metrizability}
 
 \begin{proposition}
     Different metrics can define the same topology.
@@ -31,7 +31,7 @@
     noting that $D(\underline{x}, \underline{y}) \leq \sum_{k=1}^\infty \frac{1}{2^k} = 1$ (by our construction, "normalizing" each metric), hence this is a valid, \emph{converging} metric (which wouldn't otherwise be guaranteed if we didn't normalize the metrics). It remains to show whether this metric omits the same topology as $\tau$. 
 \end{proof}
 
-\subsection{Compactness}
+\subsection{Compactness, Connectedness}
 
 \begin{definition}[Compact]
         A set $A$ in a topological space is said to be \emph{compact} if every cover has a finite subcover. That is, if \[
@@ -74,7 +74,7 @@
 \end{remark}
 
 \begin{proposition}\label{prop:subsetcompact}
-    A closed subset of of a compact topological space is compact in the subspace topology.
+    A closed subset of a compact topological space is compact in the subspace topology.
 \end{proposition}
 
 \begin{proof}(Of \cref{thm:compactnessrn})
@@ -92,5 +92,5 @@
 \end{proof}
 
 \begin{proposition}
-    Compact $\implies$ sequentially compact; that is, every sequence in a compact set has a convergent subsequence.
+    Compact $\implies$ sequentially compact; that is, every sequence in a compact set has a convergent subsequence. 
 \end{proposition}
