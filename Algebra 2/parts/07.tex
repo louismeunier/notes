@@ -7,7 +7,7 @@
 \end{remark}
 
 \begin{lemma}[Steinitz Substitution]\label{lemma:steinitz}
-    \defvectorspace . Let $Y \subseteq V$ be a finite, linearly independent set and let $Z \subseteq V$ be a finite spanning set. Then:
+    \defvectorspace . Let $Y \subseteq V$ be a (possibly infinite) linearly independent set and let $Z \subseteq V$ be a finite spanning set. Then:
     \begin{enumerate}
         \item $k:=\abs{Y} \leq \abs{Z} =: n$
         \item There is $Z' \subseteq Z$ of size $n -k$ s.t. $Y \cup Z'$ is still spanning.
@@ -15,6 +15,7 @@
 \end{lemma}
 
 \begin{proof}
+    % TODO: add infinite case.
     We prove by induction on $k$.
 
     $k = 0$ gives that $Y = \varnothing$, and so $Z' = Z$ itself works ($Z' \cup Y = Z$) as a spanning set.
@@ -74,7 +75,7 @@
 \end{corollary}
 
 \begin{proof}
-    We build a maximally independent subset of $W$ as follows; let $S_0 := \varnothing$. If this is maximal for $W$, we are done. Otherwise, $\exists w_0 \in W \st S_1 := S_0 \cup \{w_0\}$ is independent. If $S_1$ is maximal, we are done. Else, $\exists w_2 \in W \st S_2 := S_1 \cup \{w_1\}$ is linearly independent, and so one for at most $n$ steps, since $\dim V = n$, and so by 1. of \cref{cor:corofstein}, every independent set has $\leq n$ elements. This constructs a maximally independent set in $W$, which would then be a basis for $W$, and thus $\dim W \leq \dim V$.
+    Let $B \subseteq W$ be a basis for $W$. Because $B$ is independent, $\abs{B} \leq \dim (V)$ by 1. of \cref{cor:corofstein}, so $\dim (W) = \abs{B} \leq \dim (V)$.
 
-    
+    If $\abs{B} = \dim (V),$ then $B$ is a basis for $V$ again by 1. of \cref{cor:corofstein}, so $W = \Span (B) = V$.
 \end{proof}

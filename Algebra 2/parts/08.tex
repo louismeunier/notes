@@ -1,0 +1,57 @@
+\section{Linear Transformations}
+\subsection{Definitions}
+\begin{definition}[Linear Transformation]
+    Let $V, W$ be vector spaces over a field $\field$. A function $T: V \to W$ is called a \emph{linear transformation} if it preserves the vector space structures, that is, \begin{enumerate}
+        \item $T(v_0 + v_1) = T(v_0) + T(v_1), \forall v_0, v_1 \in V$;
+        \item $T(\alpha \cdot v) = \alpha \cdot T(v), \forall \alpha \in \field, v \in V$;
+        \item $T(0_V) = 0_W$.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    Note that 3. is redundant, implied by 2., but included for emphasis:
+    \[
+    T(0_V) = T(0_\field \cdot 0_V) = 0_\field \cdot T(0_V) = 0_W.    
+    \]
+\end{remark}
+
+\begin{example}[Linear Transformations]
+    \begin{enumerate}
+        \item $T: \field^2 \to \field^2$, $T(a_1, a_2) := (a_1 + 2 a_2, a_1)$.
+        \item Let $\theta \in \mathbb{R}$, and let $T_\theta : \mathbb{R}^2 \to \mathbb{R}^2$ be the rotation by $\theta$. The linearity of this is perhaps most obvious in polar coordinates, ie $v \in \mathbb{R}^2, v = r (\cos \alpha, \sin \alpha)$ for appropriate $r, \alpha$, and $T_\theta(v) = r (\cos (\alpha + \theta), \sin (\alpha + \theta))$.
+        \item $T: \mathbb{R}^2 \to \mathbb{R}^2$, a reflection about the $x$-axis, ie, $T(x, y) = (x, -y)$.
+        \item Projections, $T : \field^n \to \field^n$.
+        \item The transpose on $M_n(\field)$, ie, $T: M_n(\field) \to M_n (\field)$, where $A \mapsto A^t$.
+        \item The derivative on space of polynomials of degree leq $n$, $D : \field[t]_{n+1} \to \field[t]_{n}, p(t) \mapsto p'(t)$.
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}\label{thm:basisdeteremineslineartransformation}
+    Linear transformations are completely determined by their values on a basis. 
+    
+    That is, let $\mathcal{B} := \{v_1, \dots, v_n\}$ be a basis for a vector space $V$ over $\field$. Let $W$ also be a vector space over $\field$ and let $w_1, \dots, w_n \in W$ be arbitrary vectors. Then, there is a unique linear transformation $T : V \to W \st T(v_i) = w_i \forall i = 1, \dots, n$.
+\end{theorem}
+
+\begin{proof}
+    We aim to define $T(v)$ for arbitrary $v \in V$. We can write \[
+    v = a_1 v_1 + \cdots + a_n v_n    
+    \]
+    as the unique representation of $v$ in terms of the basis $\mathcal{B}$. Then, we simply define \[
+        T(v) := a_1 w_1 + \cdots + a_n w_n,
+    \]
+    for our given $w_i$'s. Then, $T(v_i) = 1 \cdot w_i = w_i$, as desired, and $T$ is linear; \begin{enumerate}
+        \item Let $u, v \in V; u := \sum_{n} a_i v_i, v:= \sum_{n} b_i v_i$. Then, \[
+        T(u + v) = T(\sum_{n} a_i v_i+\sum_{n} b_i v_i) = T(\sum (a_i + b_i) v_i)  = (a_i + b_i) \sum_n w_i =  \sum_{n} a_i w_i + \sum_{n} b_i w_i.
+        \]
+        \item Scalar multiplication follows similarly.
+    \end{enumerate}
+
+    To show uniqueness, suppose $T_0, T_1$ are two linear transformations satisfying $T_0(v_i) = w_i = T_1(v_i)$. Let $v \in V$, and write $v = \sum_{n} a_i v_i$. By linearity, \[
+    T_k (v) = T_k(\sum_n a_i v_i) = \sum_n a_i T(v_i) = \sum_n a_i w_i,    
+    \]
+    for $k = 0, 1$, hence, $T_1(v) = T_0(v)$ for arbitrary $v$, hence the transformations are equivalent.
+\end{proof}
+
+\begin{definition}[Some Important Transformations]
+    We denote $T_0: V \to W$ by $T_0(v) := 0_W \forall v \in V$ the \emph{zero transformation}. We denote $I_V : V \to V$, $I_V(v) := v \forall v \in V$, as the \emph{identity transformation}.
+\end{definition}
