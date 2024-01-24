@@ -1,0 +1,90 @@
+\subsection{Isomorphisms, Kernel, Image}
+
+\begin{definition}[Isomorphism]
+Let $V, W$ be vector spaces over $\field$. An \emph{isomorphism} from $V$ to $W$ is a linear transformation $T: V \to W$ (a homomorphism for vector spaces) which admits an inverse $T^{-1}$ that is also linear.
+
+If such an isomorphism exists, we say $V$ and $W$ are \emph{isomorphic}.
+\end{definition}
+
+\begin{proposition}
+    $T: V \to W$ is an isomorphism $\iff$ $T$ is linear and bijective.
+\end{proposition}
+
+\begin{proof}
+    The direction $\implies$ is trivial.
+
+    Suppose $T: V \to W$ is linear and bijective, ie $T^{-1}$ exists. We need to show that $T^{-1}$ is linear. Let $w_1, w_2 \in W, a_1, a_2 \in \field$. Then: 
+    \begin{align*}
+        T^{-1}(a_1 w_1 + a_2 w_2) &= T^{-1}(a_1T(T^{-1}(w_1)) + a_2 T(T^{-1}(w_2)))\\
+        \textit{(by linearity of $T$)}\quad&= T^{-1}(T(a_1T^{-1}(w_1) + a_2T^{-1}(w_2))) \\
+        &= a_1T^{-1}(w_1) + a_2 T^{-1}(w_2).
+    \end{align*}
+\end{proof}
+
+\begin{remark}
+    This proposition holds for all structures that only have operations; it does not for those with relations, such as graphs, orders, etc..
+\end{remark}
+
+\begin{theorem}
+    For $n \in \mathbb{N}$, every $n$-dimensional vector space $V$ over $\field$ is isomorphic to $\field^n$. In particular, all $n$-dim vector spaces over $\field$ are isomorphic.
+\end{theorem}
+% thm:basisdeteremineslineartransformation}
+\begin{proof}
+    Fix a basis $\mathcal{B} := \{v_1, \dots, v_n\}$ for $V$, and let $T: V \to \mathbb{F}^n$ be the unique linear transformation determined by $\mathcal{B}$ with $T(v_i) = e_i$, where $\{e_1, \dots, e_n\}$ is the standard basis for $\field^n$. We show that $T$ is a bijection.
+
+    \noindent(Injective) Suppose $T(x) = T(y), x, y \in V$. Write $x = a_1 v_1 +\dots + a_n v_n, y = b_1 v_1 + \dots + b_n v_n$, the unique representation of $x, y$ in the basis $\mathcal{B}$. We have: \begin{align*}
+        a_1 e_1 + \cdots + a_n e_n = a_1T(v_1) + \cdots + a_n T(v_n) = T(a_1v_1 + \cdots + a_n v_n) = T(x) = T(y) = \cdots = b_1 e_1 + \cdots + b_n e_n,
+    \end{align*}
+    but by the uniqueness of representation in a basis, it follows that each $a_i = b_i$, hence, $x = y$.
+
+    \noindent(Surjective) Let $w \in \field^n$. Then, $w = a_1 e_1 + \cdots + a_n e_n$ (uniquely). But then, \[
+    w = a_1T(v_1) + \cdots + a_nT(v_n) = T(a_1 v_1 + \cdots + a_n v_n),    
+    \]
+    where $a_1 v_1 + \cdots + a_n v_n \in V$, hence $T$ indeed surjective.
+\end{proof}
+\begin{remark}
+    Replacing $\field^n$ with an arbitrary $n$-dim vector space $W$ over $\field$ yields the following.
+\end{remark}
+
+\begin{theorem}[Freeness of Vector Space]
+    Let $W, V$ be vector spaces over $\field$ and let $\beta, \gamma$ be bases for $V, W$ respectively. Every bijection $T : \beta \to \gamma$ can be extended to an isomorphism $\hat{T} : V \to W$.
+
+    In particular, all vector spaces over $\field$ with equinumerous bases are isomorphic.
+\end{theorem}
+
+\begin{remark}
+    The proof follows very similarly to the previous theorem, but extended to arbitrary, possible infinite, spaces.
+\end{remark}
+
+\begin{proof}
+    % TODO
+\end{proof}
+
+\begin{definition}[Image/Kernel]
+    For a linear transformation $T: V \to W$, where $V, W$ are vector spaces over $\field$, we define the \emph{image} \[
+        \im (T)  := T(v),
+    \]
+    and its \emph{kernel} \[
+    \ker (T) = T^{-1}(\{0_W\}).
+    \]
+\end{definition}
+
+\begin{proposition}
+    $\ker (T)$ and $\im T$ are subspaces of $V, W$ resp.
+\end{proposition}
+
+\begin{proof}
+ \noindent($\ker (T)$) Let $v_0, v_1 \in \ker T$ and $a_0, a_1 \in \field$, then \[
+ T(a_0 v_0  + a_1 v_1) = a_0T(v_0) + a_1T(v_1) = 0_W \implies a_0v_0 + a_1v_1 \in \ker T.   
+ \]
+
+\noindent ($\im (T)$) Let $w_0, w_1 \in \im T$, $a_0, a_1 \in \field$. Then $w_i = T(v_i), v_i \in V$, and so \[
+a_0 w_0 + a_1 w_1 = a_0 T(v_0) + a_1T(v_1) = T(a_0 v_0 + a_1 v_1) \implies a_0 w_0 + a_1 w_1 \in \im T.    
+\]
+\end{proof}
+
+\begin{proposition}
+    Let $T: V \to W$ be a linear transformation, where $V, W$ vector spaces over $\field$. Let $\beta$ be a (possibly infinite) basis for $V$. Then, $T (B)$ spans $\im (T)$. 
+    
+    In particular, $T$ is surjective iff $T(\beta)$ spans $W$.
+\end{proposition}
