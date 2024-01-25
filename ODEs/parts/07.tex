@@ -1,0 +1,103 @@
+\subsection{Existence and Uniqueness}
+
+\begin{definition}[Lipschitz Continuity]
+    A function $f(x, y) : \mathbb{R}^2 \to \mathbb{R}$ is said to be \emph{Lipschitz continuous} in $y$ on the rectangle $R = \{(x, y) : x \in [a, b], y \in [c, d]\} = [a, b] \times [c ,d]$ if there exists a constant $L > 0$ s.t. \[
+    \abs{f(x, y_1) - f(x, y_2)}    \leq L \abs{y_1 - y_2}, \quad \forall (x, y_1), (x, y_2) \in R.
+    \]
+    $L$ is called the \emph{Lipschitz constant}.
+\end{definition}
+
+\begin{remark}
+    Note that we define in terms on continuity in $y$; the $x$ variable in each coordinate is kept constant.
+\end{remark}
+
+\begin{lemma}
+    If $f: \mathbb{R}^2 \to \mathbb{R}$ is such that $f(x, y)$ and $\pdv{f}{y}(x, y)$ are both continuous in $x, y$ in the rectangle $R$, then $f$ is Lipschitz in $y$ on $R$.
+\end{lemma}
+
+\begin{remark}
+    This result gives Differentiable $\implies$ Lipschitz Continuous $\implies$ Continuous.
+\end{remark}
+
+\begin{proof}
+    Using FTC, we have \begin{align*}
+    f(x, y_2) = f(x, y_1) + \int_{y_1}^{y_2} f_y(x, y)\dd{y}    \\
+    \implies \abs{f(x, y_2) - f(x, y_1)} = \abs{\int_{y_1}^{y_2} f_y(x, y)} &\leq \int_{y_1}^{y_2} \abs{f_y(x, y)} \dd{y}\\
+    &\leq \abs{y_2 - y_1} \cdot \max_{(x, y) \in R}\abs{f_y(x, y)},
+    \end{align*}
+noting that this maximum exists, and is attained, because $f_y$ is continuous on a compact set. This gives, then, that $f$ is Lipschitz in $y$ with $L = \max_{(x, y) \in \mathbb{R}} \abs{f_y (x, y)}$.
+\end{proof}
+
+\newpage
+\begin{theorem}[Existence and Uniqueness for Scalar First Order IVPs]
+    If $f(t, y), f_y(t, y)$ are continuous in $t$ and $y$ on a rectangle $R = \{(t, y) : t \in [t_0- a, t_0 + a], y \in [y_0 - b, y_0 + b]\} = [t_0 - a, t_0 + a] \times [y_0 - b, y_0 + b]$, then $\exists h \in (0, a] \st$ the IVP $$y' = f(t, y), y(t_0) = y_0$$ has a unique solution, defined for $t \in [t_0 - h, t_0 + h]$. Moreover, this solution satisfies $y(t) \in [y_0 - b, y_0 + b] \forall t \in [t_0 - h, t_0 + h]$.
+\end{theorem}
+
+\begin{remark}
+    A stronger theorem also holds with a weakened condition on $f$ that requires only $f$ Lipschitz. Clearly, $f_y$ continuous $\implies f$ Lipschitz, so we will use this fact to prove the statement, but won't prove it for the only Lipschitz case for sake of conciseness.
+\end{remark}
+
+\begin{proof}
+    Rewrite the IVP as 
+    \begin{align*}
+        y(t) = y(t_0) + \int_{t_0}^t f(s, y(s)) \dd{s}.    
+    \end{align*}
+    We will show this form has a unique solution, using an iteration method (namely, Picard Iteration).
+
+    We will begin by guessing a solution of the IVP, $y_0(t) = y_0, \forall t \in [t_0 - a, t_0 + a]$. This clearly satisfies the initial condition, but not the ODE itself.
+    
+    Now, given $y_{n}(t)$, we define \[
+    y_{n+1}(t) = y(t_0) + \int_{t_0}^t f(s, y_{n}(s)) \dd{s}.    
+    \]
+    If this terminates, that is, $y_{n+1}(t) = y_n(t) \forall t \in [t_0 - a, t_0 + a]$, then $y_n(t)$ solves the IVP.
+
+    We now show that this iteration is both well-defined, and converges to unique solution.
+
+    By construction, $y_0 : [t_0 - a, t_0 + a] \to [y_0 - b, y_0 + b]$, and is continuous. As a bounded function on a bounded interval, it is integrable, and the first step of our step is well-defined.
+
+    Now suppose $y_n(t): [t_0 - a, t_0 + a] \to [y_0 - b, y_0 + b]$ is continuous and integrable. Then, \begin{align*}
+        y_{n+1}(t) = y(t_0) + \int_{t_0}^t f(s, y_n(s)) \dd{s}
+    \end{align*}
+    is continuous as well, as $f$ is continuous and $y_n(s)$ is as well. It is not guaranteed to be restricted to $[y_0 - b, y_0 + b]$, however.
+
+    Since $f$ continuous and attains its maximum on $R$, let \[
+    M := \max_{(t, y) \in R} \abs{f(t, y)} < \infty.
+    \]
+    We have, then, that \begin{align*}
+        y_{n+1}(t) - y(t_0) = \int_{t_0}^{t}f(s, y_n(s)) \dd{s}\\
+        \implies \abs{y_{n+1}(t) - y(t_0)} \leq \abs{t - t_0} M
+    \end{align*}
+    Hence, if we choose $h : Mh \leq b$, and then $y_{n+1}(t) : [t_0 - h, t_0 + h] \to [y_0 - b, y_0 + b]$ and we can iterative inductively, $y_n(t) : [t_0 - h, t_0 +h] \to [y_0 - b, y_0 + b] \forall n$. Here, we take $h = \min \{\frac{b}{M}, a\}$.
+
+    Now, let $I = [t_0 - h, t_0 + h]$, then $y_n(t) : I \to [y_0 - b, y_0 + b]$ for all $n$. Each iterate satisfies $y_n(t_0) = y(t_0) = y_0$; it remains to show that the iteration converges.
+
+    Let $C(I, [y_0 - b, y_0 + b])$ be the space of continuous functions $f: I \to [y_0 - b, y_0 + b]$, noting that $y_n \in C \forall n$. We define a mapping on $C$, $T: C \to C$ by \[
+    v = Tu, v(t) = y_0(t_0) + \int_{t_0}^t f(s, u(s)) \dd{s}.
+    \]
+    Then, $y_{n+1} = T y_n$. We aim to show that this iteration converges uniquely; we will do this by showing $T$ is a contraction mapping.
+
+    For $y \in C$ define the norm $\norm{y}_\infty$ by $\norm{y}_\infty := \max_{t \in I} \abs{y(t)}$. This is a norm;
+    \begin{enumerate}
+        \item $\forall k \in \mathbb{R}, \norm{k y}_\infty = \abs{k} \norm{y}_\infty$.
+        \item $\norm{y}_\infty = 0 \iff \max_{t \in I} \abs{y(t)} = 0 \iff y(t) = 0 \forall t \in I$.
+        \item $\norm{y_1 + y_2}_\infty = \max_{t \in I} \abs{y_1 + y_2} \leq \max_{t \in I}(\abs{y_1} + \abs{y_2}) \leq \max_{t \in I} \abs{y_1} + \max_{t \in I} \abs{y_2} = \norm{y_1}_\infty + \norm{y_2}_\infty$. 
+    \end{enumerate}
+
+    Now let $u, v \in C$. Then, \begin{align*}
+        \norm{Tu - Tv}_\infty &= \max_{t \in I} \abs{Tu(t) - Tv(t)}\\
+        &= \max_{t \in I} \abs{y(t_0) + \int_{t_0}^t f(s, u(s) \dd{s}) - y_0 + \int_{t_0}^t f(s, v(s)) \dd{s}}\\
+        &= \max_{t \in I} \abs{\int_{t_0}^t f(s, u(s)) - f(s, v(s)) \dd{s}}\\
+        &\leq \max_{t \in I} \int_{t_0}^t \abs{f(s, u(s)) - f(s, v(s))} \dd{s}\\
+        & \leq \max_{t \in I} \abs{t - t_0} \cdot \max_{s \in I}\abs{f(s, u(s)) - f(s, v(s))}\\
+        &\leq h L \cdot\max_{s \in I} \abs{u(s) - v(s)}\\
+        &= hL \cdot \norm{u-v}_\infty,
+    \end{align*}
+    hence, we have a contraction mapping if $hL < 1$; if $hL \geq 1$, let $h < \min\{a, \frac{b}{m}, \frac{1}{L}\} > 0$. With such an $h$, $\exists \mu \in (0, 1) : hL \leq \mu < 1$, and $\norm{Tu-Tv}_\infty \leq\mu\norm{u -v}_\infty$, hence, a contraction mapping.
+
+    The contractive mapping theorem, which will not be proven, states that any contraction mapping has a unique fixed point $y = Ty$; moreover, for any $y_0 \in C$, the iteration $y_{n+1} = T y_n$ converges to $y$.
+
+    To see this, suppose $u = Tn, v = Tv$ are two solutions of our IVP. Then, by the contraction quality, \[
+    \norm{u-v}_\infty = \norm{Tu - Tv}_\infty \leq \mu \norm{u-v}_\infty ,   
+    \]
+    a contradiction unless $\norm{u-v}_\infty = 0 \iff u = v$, hence, we have uniqueness of our solution; that is, our IVP has at most one solution. It remains to show that this solution exists.
+\end{proof}
