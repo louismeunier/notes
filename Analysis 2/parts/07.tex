@@ -1,0 +1,140 @@
+\section{\texorpdfstring{$L^p$ Spaces}{Lp Spaces}}
+
+\subsection{Review of \texorpdfstring{$\ell^p$ Norms}{lp Norms}}
+
+\begin{remark}
+    Recall that for $1 \leq p \leq + \infty$, we define for $x = (x_1, \dots, x_n) \in \mathbb{R}^n$ the norm \[
+    \norm{x}_p = (\abs{x_1}^p + \cdots + \abs{x_n}^p)^{\frac{1}{p}}, \quad \norm{x}_{\infty} = \max_{i=1}^{n} \abs{x_i}.
+    \]
+    Similarly, for infinite vector spaces, we had, for $x = (x_1, \dots, x_n, \dots)$, the norm \[
+    \norm{x}_p = \left(\sum_{i=1}^\infty\abs{x_i}^p\right)^{\frac{1}{p}}, \quad \norm{x}_\infty = \sup_{i \geq 1} \abs{x_i}.
+    \]
+    Here, we define \[
+        \ell_p := \{x = (x_1, \dots, x_n) : \norm{x}_p < + \infty\}.
+    \]
+\end{remark}
+
+\subsection{\texorpdfstring{$\ell^p$ Norms}{lp Norms}, Hölder-Minkowski Inequalities}
+
+\begin{definition}[Hölder Conjugates]
+    For $1 \leq p, q \leq + \infty$, we say that $p, q$ are said to be \emph{Hölder conjugates} if \[
+    \frac{1}{p} + \frac{1}{q} = 1.    
+    \]
+\end{definition}
+
+\begin{remark}
+    We refer to this simply as "conjugates" throughout as no other concept of conjugate numbers will be discussed.
+
+    Further, we take by convention $\frac{1}{\infty} = 0$.
+\end{remark}
+
+\begin{proposition}[Hölder's Inequality]\label{prop:holdersinequality}
+    Let $x = (x_1, \dots, x_n), y = (y_1, \dots, y_n) \in \mathbb{R}^n$. Suppose $p, q : 1 \leq p, q \leq + \infty$ are conjugate. Then, \[
+   \langle x, y \rangle_{\mathbb{R}^n} := \abs{\sum_{i=1}^n x_i y_i} \leq \norm{x}_p \cdot \norm{y}_q
+    \]
+\end{proposition}
+
+\begin{example}
+    For the case $p = 1$ or $\infty$ (functionally, the same case): % TODO
+\end{example}
+
+\begin{lemma}\label{lemma:holderslemmainequality}
+    Let $p, q$ be conjugates, and $x, y \geq 0$. Then, \[
+    xy \leq \frac{x^p}{p}+\frac{y^q}{q}.    
+    \]
+\end{lemma}
+
+\begin{remark}
+    If the inequality holds, then, for some $t > 0$, let $\tilde{x} = t^{\frac{1}{p}} \cdot x, \tilde{y} = t^{\frac{1}{q}}y$. Substituting $x$ for $\tilde{x}$ and $y$ for $\tilde y$, we have \begin{align*}
+    &\text{LHS: } \tilde{x}\tilde{y} = t^{\frac{1}{p}}x\cdot t^{\frac{1}{q}}y    = t^{\frac{1}{p}+\frac{1}{q}}\cdot xy = xy\\
+    &\text{RHS: } \cdots = t (\frac{x^p}{p} + \frac{y^q}{q}.)
+    \end{align*}
+    That is, we have \[
+    t\cdot xy \leq t \left(\frac{x^p}{p} + \frac{y^q}{q}\right),
+    \]
+    hence, the inequality is preserved under multiplication by a positive scalar; moreover, the original inequality holds iff this "scaled" version holds. Hence, choosing $t$ such that $\tilde{y} = 1$ (let $t = \left(\frac{1}{y}\right)^q$), it suffices to prove the lemma for $y = 1$.
+\end{remark}
+
+\begin{proof}
+    If $x = 0$ or $y = 0$, then the entire LHS becomes $0$ and we are done; assume $x, y > 0$; by the previous remark, assume wlog $y =1$. Then, we have \begin{align*}
+        x \cdot y \leq \frac{x^p}{p} + \frac{y^q}{q} &\iff x \cdot 1 \leq \frac{x^p}{p} + \frac{1}{q}\\
+         &\iff \frac{x^p}{p} - x + \frac{1}{q} =: f(x) \geq 0.
+    \end{align*}
+    Taking the derivative, we have \begin{align*}
+        f'(x) = \frac{\cancel{p}x^{p-1}}{\cancel{p}} - 1 = x^{p-1} - 1\\
+        p > 1 \implies p - 1 > 0 \implies \begin{cases}
+             f'(x) > 0 & \forall x > 1\\
+             f'(x) = 0 & x = 0\\
+             f'(x) <0 & \forall 0 < x < 1
+        \end{cases}
+    \end{align*}
+    Hence, $x = 1$ is a local minimum of the function, and thus $f(x) \geq f(1) \forall 0 < x \leq 1$. But $f(1) = \frac{1^p}{p} - 1 + \frac{1}{q} = 1 - 1 = 0$, hence $f(x) \geq 0 \forall x \geq 0$, as desired, and the inequality holds.
+\end{proof}
+
+\begin{proof}
+    Assume $\norm{x}_p = \norm{y}_q = 1$. Then, \begin{align*}
+        \abs{\sum_{i=1}^n x_i y_i} &\leq \sum_{i=1}^n\abs{x_i y_i} &\textit{(by triangle inequality)}\\
+        &\leq \sum_{i=1}^{n} \abs{\frac{x_i^p}{p}  + \frac{y_i^q}{q}}  &\textit{(by \cref{lemma:holderslemmainequality})}\\
+        &=  \frac{1}{p} \left(\sum_{i=1}^n \abs{x_i}^p\right) + \frac{1}{q}\left(\sum_{i=1}^n \abs{y_i}^q\right)&\\
+        &= \frac{1}{p}\norm{x}_p^p + \frac{1}{q}\norm{y}_q^q & \textit{(by staring)}\\
+        &= \frac{1}{p}\cdot 1^p + \frac{1}{q} \cdot 1^1 = \frac{1}{p} + \frac{1}{q} = 1 & \textit{(by assumption)}\\
+        &= \norm{x}_p \cdot \norm{y}_q,
+    \end{align*}
+    and the proposition holds, in the special case $\norm{x}_p = \norm{y}_q = 1$.
+
+    If $\norm{x}_p = 0$ or $\norm{y}_q = 0$, then $x_1 = \cdots = x_n = 0$ or $y_1 = \cdots = y_n = 0$, resp, then we'd have ($\norm{x}_p = 0$ case) \[
+        0 \cdot y_1 + \cdots + 0\cdot y_n \leq 0, 
+    \]
+    which clearly holds.
+
+    Assume, then, $\norm{x}_p > 0, \norm{y}_q > 0$. Let $\tilde{x} := \frac{x}{\norm{x}_p}, \tilde{y} := \frac{y}{\norm{y}_q}$. Then, \begin{align*}
+        \norm{\tilde{x}}_p^p = \frac{\left(\sum_{i=1}^n \abs{x_i}^{p}\right)}{\norm{x}_p^p} = \frac{\norm{x}_p^p}{\norm{x}_p^p} = 1 \implies \norm{\tilde{x}}_p = 1.
+    \end{align*}
+    The same case holds for $\tilde{y}$, hence $\norm{\tilde{y}}_q = 1$; that is, we have "rescaled" both vectors. Hence, we can use the case we proved above for when the norms were identically $1$ on $\tilde{x}, \tilde{y}$. We have:
+    \begin{align*}
+        \abs{\sum_{i=1}^n \tilde{x}_i \tilde{y_i}} \leq 1
+    \end{align*}
+    But by definition of $\tilde{x}, \tilde{y}$, we have
+    \begin{align*}
+        \abs{\sum_{i=1}^n \tilde{x}_i \tilde{y_i}} &= \abs{\frac{1}{\norm{x}_p \norm{y}_q} \sum_{i=1}^n x_i y_i} \leq 1 \implies \abs{\sum_{i=1}^{n} x_i y_i} \leq \norm{x}_p \cdot \norm{y}_q,
+    \end{align*}
+    and the proof is complete.
+\end{proof}
+
+\begin{proposition}[Minkowski Inequality]
+    Let $1 \leq p \leq \infty$, $x, y \in \mathbb{R}^n$. Then, \[
+    \norm{x+ y}_p \leq \norm{x}_p + \norm{y}_p.    
+    \]
+\end{proposition}
+\begin{remark}
+    This is just the triangle inequality for $\ell_p$ norms.
+\end{remark}
+
+\begin{proof}
+    The cases $p = 1, \infty$ are left as an exercise. % TODO
+
+    Assume $1 < p < \infty$. Then, \begin{align*}
+        \norm{x +y}_p^p = \sum_{j=1}^n \abs{x_j + y_j}^p &= \sum_{j=1}^{n} \abs{x_j + y_j}\abs{x_j + y_j}^{p-1}\\
+        &\leq \sum_{j=1}^{\infty} \left(\abs{x_j} + \abs{y_j}\right)\cdot \abs{x_j + y_j}^{p-1} \\
+        &= \underbrace{\sum_{j=1}^n \abs{x_j}\cdot \abs{x_j + y_j}^{p-1}}_{:=A} + \overbrace{\sum_{j=1}^n \abs{y_j} \cdot \abs{x_j + y_j}^{p-1}}^{:=B} \quad \circledast
+    \end{align*}
+    Let $\vec{u} = (\abs{x_1}, \cdots, \abs{x_n})$ and $\vec{v} = (\abs{x_1+y_1}^{p-1}, \cdots, \abs{x_n + y_n}^{{p-1}})$, then, $A = \vec{u} \cdot \vec{v} = \langle \vec{u}, \vec{v}\rangle_{\mathbb{R}^n}$. We have \begin{align*}
+        \norm{\vec{u}}_p &= \left(\sum_{i=1}^n (\abs{x_i}^p)\right)^{\frac{1}{p}} = \norm{x}_p\\
+        \norm{\vec{v}}_q &= \left(\sum_{i=1}^{n}\left(\abs{x_i + y_i}^{p-1}\right)^q\right)^{\frac{1}{q}}\\
+        &= \left[\sum_{i=1}^n \left(\abs{x_i + y_i}^{p-1}\right)^{\frac{p}{p-1}}\right]^{\frac{p-1}{p}}\\
+        &= \left[\sum_{i=1}^n \abs{x_i + y_i}^{p}\right]^{\frac{p-1}{p}}\\
+        &= \norm{x+y}_p^{p-1}
+    \end{align*}
+    where the second-to-last line follows from $p, q$ being conjugate, hence $q = \frac{p}{p-1}$. Thus, by \nameref{prop:holdersinequality}, we have that \[
+    A = \langle \vec{u}, \vec{v}\rangle \leq \norm{u}_p \cdot \norm{v}_q = \norm{x}_p \cdot \norm{x+y}^{p-1}_p.    
+    \]
+    By a similar construction, we can show that \[
+    B \leq \norm{y}_p \cdot \norm{x+y}^{p-1}_p.   
+    \]
+    Thus, returning to our original inequality in $\circledast$, we have \begin{align*}
+        \norm{x+y}^{p}_p &\leq A + B \\
+        &\leq \norm{x}_p\cdot \norm{x+y}^{p-1}_p + \norm{y}_p \cdot \norm{x+y}_p^{p-1}\\
+        &\implies \norm{x+y}_p \leq \norm{x}_p + \norm{y}_p,
+    \end{align*}
+    and the proof is complete.
+\end{proof}
