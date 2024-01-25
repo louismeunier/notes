@@ -45,16 +45,53 @@
 \end{proposition}
 
 \begin{proof}
-    If $a = b$, this is clear. Suppose $a < b$. Then, suppose \[
-    [a, b] \subseteq \bigcup_{\alpha \in I} U_\alpha-\text{open}.    
-    \]
-    Then, it must be that $a \in U_{\alpha_1}$ for some $\alpha_1$; hence, $\exists \epsilon > 0$ $(a - \epsilon, a + \epsilon) \subseteq U_{\alpha_1}$. Let $c = a + \frac{\epsilon}{2}$, then $[a, c] \subseteq U_{\alpha_1}$. Then, $[a,c]$ has a finite subcover; it is covered by the single open set $U_{\alpha_1}$.
+    If\footnote{This proof is adapted from that of Theorem 27.1 in Munkre's Topology, an identical theorem but applied to more general ordered topologies.} $a = b$, this is clear. Suppose $a < b$, and let $[a, b] \subseteq \bigcup_{i \in I} U_i =: \mathcal{U}$ be an arbitrary cover. Then, we proceed in the following steps:
+    \begin{enumerate}
+        \item \textbf{Claim:} Given $x \in [a, b], x \neq b$, $\exists y\in [a, b] \st [x, y]$ has a finite subcover.
+        
+        Let $x \in [a, b]$, $x \neq b$. Then, $\exists U_\alpha \in \mathcal{U} : x \in U_\alpha$. Since $U_\alpha$ open, and $x \neq b$, we further have that $\exists c \in [a, b] \st [x, c) \subseteq U_\alpha$. 
 
-    Let, then, $l = $ least upper bound for all $c\leq b \st [a, c]$ has a finite subcover. Then, $l \in [a,b]$ and so $\exists \beta \in I$ such that $l \in U_\beta$. It follows that $\exists \epsilon > 0 \st [l - \epsilon, l] \subseteq U_\beta$. 
+        Now, let $y \in (x, c)$; then, the interval $[x, y] \subseteq [x, c) \subseteq U_\alpha$, that is, $[x, y]$ has a finite subcover.
 
-    By our definition of $l$, $\exists c_j \st d(l, c_j) < \frac{1}{j} \st [a, c_j]$ is contained in a finite union of $U_\alpha$'s. Let $c_j \in [l-\epsilon, l]$. Then, $[a, c_j] \subseteq \bigcup_{i=1}^{k} U_{\alpha_i}$, and then, the interval $[a, l] \subseteq \bigcup_{i=1}^{k}U_{\alpha_1} \cup U_{\beta}$. 
+        \item Define $C := \{y \in [a, b]: y > a, [a, y] \text{ has a finite subcover}\}$. We note that 
+        \begin{itemize}
+            \item $C \neq \varnothing$; taking $x = a$ in Step 1. above, we have that $\exists y \in [a, b]$ such that $[a, y]$ has a finite step cover, so this $y \in C$.
+            \item $C$ bounded; by construction, $\forall y \in C, a < y \leq c$.
+        \end{itemize}
+        Thus, we can validly define $c:= \sup C$, noting that $a < c \leq b$. Ultimately, we wish to prove that $c = b$, completing the proof that $[a, b]$ has a finite subcover.
+
+        \item \textbf{Claim:} $c \in C$.
+ 
+        Let $U_\beta \in \mathcal{U} : c \in U_\beta$. Then, by the openness of $U_\beta$, $\exists d \in [a, b] \st (d, c] \subseteq U_\beta$.
+
+        Supposing $c \notin C$, then $\exists z \in C$ such that $z \in (d, c)$; if one did not exist, then this would imply that $d$ was a smaller upper bound that $c$, a contradiction. Thus, $[z , c] \subseteq (d, c] \subseteq U_\beta$.
+
+        Moreover, we have that, given $z \in C$, $[a, z]$ has a finite subcover; call it $U_z \subseteq \mathcal{U}$. This gives, then: \[
+        [a, c] = [a, z] \cup [z, c]  \subseteq U_z \cup U_\beta.
+        \]
+        But this is a finite subcover of $[a, c]$, contradicting the fact that $c \notin C$. We conclude, then, that $c \in C$ after all.
+
+        \item \textbf{Claim:} $c = b$.
+
+        Suppose not; then, since we have $c \leq b$, then assume $c < b$. Then, applying Step 1. with $x = c$ (which we can do, by our assumption of $c \neq b$!), then we have that $\exists y > c \st [c, y]$ has a finite subcover, call this $U_y \subseteq \mathcal{U}$. 
+        
+        Moreover, we had $c \in C$, hence $[a, c]$ has a finite subcover, call this $U_c \subseteq \mathcal{U}$.
+
+        Then, this gives us that \[
+        [a, y] = [a, c] \cup [c, y] \subseteq U_c \cup U_y,
+        \]
+        that is, $[a, y]$ has a finite subcover, and so $y \in C$. But recall that $y > c$; hence, this a contradiction to $c$ being the least upper bound of $C$. We conclude that $c = b$, and thus $[a, b]$ has a finite subcover, and is thus compact.
+    \end{enumerate}
+    % Then, suppose \[
+    % [a, b] \subseteq \bigcup_{\alpha \in I} U_\alpha-\text{open}.    
+    % \]
+    % Then, it must be that $a \in U_{\alpha_1}$ for some $\alpha_1$; hence, $\exists \epsilon > 0$ $(a - \epsilon, a + \epsilon) \subseteq U_{\alpha_1}$. Let $c = a + \frac{\epsilon}{2}$, then $[a, c] \subseteq U_{\alpha_1}$. Then, $[a,c]$ has a finite subcover; it is covered by the single open set $U_{\alpha_1}$.
+
+    % Let, then, $l = $ least upper bound for all $c\leq b \st [a, c]$ has a finite subcover. Then, $l \in [a,b]$ and so $\exists \beta \in I$ such that $l \in U_\beta$. It follows that $\exists \epsilon > 0 \st [l - \epsilon, l] \subseteq U_\beta$. 
+
+    % By our definition of $l$, $\exists c_j \st d(l, c_j) < \frac{1}{j} \st [a, c_j]$ is contained in a finite union of $U_\alpha$'s. Let $c_j \in [l-\epsilon, l]$. Then, $[a, c_j] \subseteq \bigcup_{i=1}^{k} U_{\alpha_i}$, and then, the interval $[a, l] \subseteq \bigcup_{i=1}^{k}U_{\alpha_1} \cup U_{\beta}$. 
     
-    But we can "choose" $U_\beta$ such that $[l, l + \epsilon] \subseteq U_\beta$, and so we'd further have that $[a, l + \epsilon] \subseteq \bigcup_{i=1}^{k}U_{\alpha_1} \cup U_{\beta}$; but we have that $L + \epsilon > l$, and we have a contradiction to $l$ being the least upper bound for which this holds, unless $l = b$ itself. Then, we cannot "increase" further, and hence $l = b$ and so $[a, l] = [a, b] \subseteq$ a finite union of open sets.
+    % But we can "choose" $U_\beta$ such that $[l, l + \epsilon] \subseteq U_\beta$, and so we'd further have that $[a, l + \epsilon] \subseteq \bigcup_{i=1}^{k}U_{\alpha_1} \cup U_{\beta}$; but we have that $L + \epsilon > l$, and we have a contradiction to $l$ being the least upper bound for which this holds, unless $l = b$ itself. Then, we cannot "increase" further, and hence $l = b$ and so $[a, l] = [a, b] \subseteq$ a finite union of open sets.
 \end{proof}
 
 \begin{remark}
