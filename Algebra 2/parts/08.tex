@@ -41,7 +41,7 @@
     \]
     for our given $w_i$'s. Then, $T(v_i) = 1 \cdot w_i = w_i$, as desired, and $T$ is linear; \begin{enumerate}
         \item Let $u, v \in V; u := \sum_{n} a_i v_i, v:= \sum_{n} b_i v_i$. Then, \[
-        T(u + v) = T(\sum_{n} a_i v_i+\sum_{n} b_i v_i) = T(\sum (a_i + b_i) v_i)  = (a_i + b_i) \sum_n w_i =  \sum_{n} a_i w_i + \sum_{n} b_i w_i.
+        T(u + v) = T(\sum_{n} a_i v_i+\sum_{n} b_i v_i) = T(\sum_n(a_i + b_i) v_i)   =\sum_n (a_i + b_i) w_i =  \sum_{n} a_i w_i + \sum_{n} b_i w_i = T(u) + T(v).
         \]
         \item Scalar multiplication follows similarly.
     \end{enumerate}
