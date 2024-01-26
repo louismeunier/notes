@@ -88,3 +88,10 @@ a_0 w_0 + a_1 w_1 = a_0 T(v_0) + a_1T(v_1) = T(a_0 v_0 + a_1 v_1) \implies a_0 w
     
     In particular, $T$ is surjective iff $T(\beta)$ spans $W$.
 \end{proposition}
+
+\begin{proof}
+    Let $w \in \im(T),$ so $w = T(v)$ for some $v \in V$, where we have $v:= a_1 v_1 + \cdots + a_n v_n, v_i \in \beta$. Then, \[
+    w = T(v) = a_1 T(v_1) + \cdots + a_n T(v_n) \in \Span(\{T(v_1), \dots, T(v_n)\}) \subseteq \Span(T(\beta)).
+    \]
+
+\end{proof}

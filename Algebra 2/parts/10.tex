@@ -1,0 +1,98 @@
+\begin{proposition}
+    Let $T : V \to W$ be a linear transformation, where $V, W$ vector spaces over $\field$. TFAE:
+    \begin{enumerate}
+        \item $T$ is injective.
+        \item $\ker(T)$ is the trivial subspace $\{0_V\}$.
+        \item $T(\beta)$ is independent for each basis $\beta$ for $V$.
+        \item[3'.] $T(\beta)$ is independent for some basis $\beta$ for $V$. 
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (1. $\implies$ 2.) Trivial; only $0_V$ can be mapped to $0_W$.
+
+    \noindent (2. $\implies$ 1.) Suppose $\ker (T) = \{0_V\}$ and let $T(x) = T(y), x, y \in V$. By linearity,
+    \[
+        T(x - y) = T(x) - T(y) = 0_W \implies x - y \in \ker (T) \implies x - y = 0_V \implies x= y.
+    \]
+
+    \noindent (2. $\implies$ 3.) Fix a basis $\beta$ for $V$. To show that $T(\beta)$ linearly independent, take an arbitrary linear combination $a_1w_1 + \cdots + a_n w_n \in T(\beta)$. Suppose $\sum_i a_i w_i = 0_W$. Since $w_i \in T(\beta)$, $w_i = T(v_i), v_i \in \beta$, hence \begin{align*}
+            0_W = a_1 w_1 + \cdots + a_n w_n = a_1 T(v_1) + \cdots + a_n T(v_n) &= T(a_1 v_1 + \cdots + a_n v_n)\\
+            &\implies a_1v_1 + \cdots + a_n v_n \in \ker (T)\\
+            &\implies a_1v_1 + \cdots + a_n v_n = 0_V,
+    \end{align*}
+    but each $v_i$ is linearly independent, hence this must be a trivial linear combination, and thus $a_i = 0 \forall i$.
+
+    \noindent(3) $\implies$ (3') Trivial; stronger statement implies weaker statement.
+
+    \noindent (3')$\implies$ (2) Suppose $T(\beta)$ linearly independent for some basis $\beta$ for $V$. Suppose $T(v) = 0_W, v \in V$. We write \begin{align*}
+        v = a_1 v_1 + \cdots a_n v_n, v_i \in \beta.
+    \end{align*}
+    Then, \begin{align*}
+        0_W = T(v) = T(a_1 v_1 + \cdots + a_n v_n) = a_1 T(v_1) + \cdots + a_n T(v_n),
+    \end{align*}
+    but $\{T(v_i)\} \subseteq T(\beta)$ is linearly independent, hence, this combination must be trivial and each $a_i = 0$, and thus $v = 0_V$ and so $\ker (T) = \{0_V\}$ is trivial. 
+\end{proof}
+
+\begin{definition}[Rank, nullity]
+    Let $V, W$ be vector spaces over $\field$ and $T: V \to W$ be linear. Define \emph{rank} of $T$ as \[
+    \rank(T) := \dim (\Im(T)),
+    \]
+    and \emph{nullity} of $T$ as \[
+    \nullity(T) := \dim(\ker(T)).    
+    \]
+\end{definition}
+
+\begin{theorem}[Rank-Nullity Theorem]
+    Let $V, W$ be vector spaces over $\field$, $\dim (V) < \infty$. Let $T: V \to W$ be a linear transformation. Then, \[
+        \nullity(T) + \rank(T) = \dim(V).    
+    \]
+\end{theorem}
+
+\begin{remark}
+    Intuitively: the nullity is the number of vectors we "collapse"; the rank is what is left. Together, we have the entire space.
+\end{remark}
+
+\begin{remark}
+    This follows directly from the first isomorphism theorem for vector spaces, and the fact that $\dim(V / \ker (T)) = \dim (V) - \dim (\ker (T))$; however, we will prove it without this result below.
+\end{remark}
+
+\begin{proof}
+        Let $\{v_1, \dots, v_k\}$ be a basis for $\ker (T)$, and complete it to a basis $\beta := \{v_1, \dots, v_k, u_1, \dots, u_{n-k}\}$ for $V$,  where $n := \dim (V)$. We need to show that $\dim(\Im(T)) = n-k$.
+
+        Recall that $\{T(v_1), \dots, T(v_k), T(u_1), \dots, T(u_{n-k})\}$ spans $\Im(T)$. But $v_1, \dots, v_k \in \ker (T)$, so $T(v_i) = 0_W \forall i = 1, \dots, k$. Hence, letting $\gamma := \{T(u_1), \dots, T(u_{n-k})\}$ spans $\Im(T)$. It remains to show that $\gamma$ is independent.
+
+        Let $a_1 T(u_1) + \cdots a_{n-k} T(u_{n-k}) = 0_W$; by linearity, \begin{align*}
+            T(a_1 u_1 + \cdots+ a_{n-k} u_{n-k}) &= 0_W\\
+            &\implies a_1 u_1 +\cdots  + a_{n-k} u_{n-k} \in \ker (T)\\
+            &\implies a_1 u_1 + \cdots + a_{n-k}u_{n-k} = b_1 v_1 + \cdots + b_k v_k,
+        \end{align*}
+        but each of these $u_i, v_j \in \beta$, hence, each coefficient must be identically zero as $\beta$ linearly independent, and thus $\dim (\Im(T)) = n -k$. This completes the proof.
+\end{proof}
+
+\begin{corollary}[Pigeonhole Principle for Dimension]
+    Let $T: V \to W$ be a linear transformation. If $T$ injective, then $\dim (W) \geq \dim (V)$.
+\end{corollary}
+
+\begin{proof}
+    If $\dim(V) < \infty$, then $\dim (\Im(T))=\dim (V)$, and we have that $\dim(\Im(T)) \leq \dim (W)$ and conclude $\dim(V) \leq \dim (W)$.
+
+    If $\dim(V) = \infty$, then $\dim(\Im(T)) = \infty$ and $\dim(W) \geq \dim(\Im(T)) = \infty$.
+\end{proof}
+
+\begin{corollary}
+    Let $n \in \mathbb{N}$ and $V, W$ be $n$-dimensional vector spaces over $\field$. For a linear transformation $T : V \to W$, TFAE:
+    \begin{enumerate}
+        \item $T$ injective;
+        \item $T$ surjective;
+        \item $\rank(T) = n$.
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    (2. $\iff$ 3.) Follows from $\rank(T) = \dim(\Im(T)) = n \iff \Im(T) = W$.
+
+    \noindent (1. $\implies$ 3.) We have $\nullity(T) = 0$ so $\rank(T) = \dim(V) = n$.
+
+    \noindent (3. $\implies$ 1.) If $\rank(T) = n$, then $\nullity(T) = 0$.
+\end{proof}
