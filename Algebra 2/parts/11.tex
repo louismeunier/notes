@@ -1,0 +1,127 @@
+\begin{theorem}[First Isomorphism Theorem for Vector Spaces]
+    Let $V, W$ be vector spaces over $\field$. Let $T : V \to W$ be a linear transformation. Then, \[
+    V/\ker(T) \cong \im(T),\]
+    by the isomorphism given by $v + \ker(T) \mapsto T(v)$.
+\end{theorem}
+
+\begin{proof}
+    From group theory, we know that $\hat{T} : V/\ker(T) \to \im (T)$, where $\hat{T}(v + \ker(T)) := T(v)$ is well-defined, and is an isomorphism of abelian groups. We need only to check that $\hat{T}$ is linear, namely, that is respects scalar multiplication. We have \begin{align*}
+        \hat{T}(a \cdot (v + \ker(T))) &= \hat{T}((a \cdot v) + \ker (T))\\
+        &= T(av) = a \cdot T(v)\\
+        &= a \hat{T}(v + \ker(T)),
+    \end{align*}
+    as desired.
+\end{proof}
+
+\subsection{The Space \texorpdfstring{$\Hom(V, W)$}{Hom(V, W)}}
+
+\begin{definition}[Homomorphism Space]
+    For vector spaces $V, W$ over $\field$, let $\Hom(V, W)$ (also denoted $\ell (V, W)$) denote the set of all linear transformations from $V$ to $W$. We can turn this into a vector space over $\field$ as follows:
+    \begin{enumerate}
+        \item \textit{Addition of linear transformations:} for $T_0, T_1 \in \Hom(V, W)$, define \[
+            (T_0 + T_1) : V \to W, \quad v \mapsto T_0(v) + T_1(v).
+        \]
+        $(T_0 + T_1)$ is clearly a linear transformation, as the linear combination of linear transformations $T_0, T_1$.
+        \item \textit{Scalar multiplication of linear transformations:} for $T \in \Hom(V, W)$, $a \in \field$, define \[
+        (a \cdot T) : V \to W, \quad v \mapsto a \cdot T(v),    
+        \]
+        which is again clearly linear in its own right.
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    Endowed with the operations described above, $\Hom(V, W)$ is a vector space over $\field$.
+\end{proposition}
+
+\begin{proof}
+    Follows easily from the definitions.
+\end{proof}
+
+\begin{theorem}[Basis for $\Hom(V, W)$]\label{thm:basisforhom}
+    For vector spaces $V, W$ over $\field$ and bases $\beta, \gamma$ for $V, W$ resp., the following set \[
+    \{T_{v, w} = v \in \beta, w \in \gamma\},
+    \]
+    is a basis for $\Hom(V, W)$, where for each $v \in \beta$ and $w \in \gamma$, $T_{v, w} \in \Hom(V, W)$ defined as the unique linear transformation such that $$T_{v, w} (v') = \begin{cases}
+        w & v' = v\\
+        0_W & v' \neq v \iff \in \beta \setminus \{v\}
+    \end{cases}.$$
+\end{theorem}
+
+\begin{proof}
+    Left as a (homework) exercise.
+\end{proof}
+
+
+
+\begin{corollary}
+    If $V, W$ finite dimensional, then $\dim(\Hom(V, W)) = \dim(V) \cdot \dim(W)$.
+\end{corollary}
+
+\begin{proposition}
+    Let $\beta = \{v_1, \dots, v_n\}$, $\gamma = \{w_1, \dots, w_m\}$ be bases for $V, W$ resp. Then, by \cref{thm:basisforhom}, \[
+        \{T_{v_i, w_j} : i \in \{1, \dots, n\}, j \in \{1, \dots, m\}\}
+    \]
+    is a basis for $\Hom(V, W)$, and it has $n \cdot m$ vectors by construction.
+\end{proposition}
+
+\subsection{Matrix Representation of Linear Transformations}
+
+Consider a linear transformation $T : \field^n \to \field^m$ between finite fields. We know that $T$ is uniquely determined by its value of basis vectors, so fix the standard bases \[
+\beta = \{e_1^{(n)}, \dots, e_n^{(n)}\}=\{v_1, \dots, v_n\},
+\]
+and note that $T$ is determined by $\{T(v_1), \dots, T(v_n)\} \subseteq \field^m$. 
+
+\begin{remark}
+    We denote vectors in $\field^n$ as column vectors, ie $\begin{pmatrix}
+        a_1\\
+        \vdots\\
+        a_n
+    \end{pmatrix} \in \field^n$.
+\end{remark}
+
+Each $T(v_i)$ is a column vector in $\field^m$, and we an put these into a $m \times n$ matrix, namely:
+% TODO add m
+\begin{align*}
+    [T] := \underbrace{\begin{pmatrix}
+        \vdots & & \vdots \\
+        T(v_1) & \cdots & T(v_n) \\
+        \vdots & & \vdots 
+    \end{pmatrix}}_{n} = \begin{pmatrix}
+        a_{11} & \cdots & a_{1n}\\
+        \vdots & \ddots & \vdots\\
+        a_{m1} & \cdots & a_{mn}
+    \end{pmatrix}
+\end{align*}
+
+We call this the \emph{matrix representation} of $T$ in the standard bases. The operation of multiplying an $m \times n$ matrix and a $n \times 1$ vector is precisely defined so that \begin{proposition}
+    $T(v) = [T] \cdot v$ for all $v \in \field^n$.
+\end{proposition}
+
+\begin{proof}
+    Let $v = \begin{pmatrix}
+        x_1\\
+        \vdots\\
+        x_n
+    \end{pmatrix},$ where $v = x_1 v_1 + \cdots + x_n v_n$. Then \begin{align*}
+        T(v) = x_1 T(v_1) + \cdots + x_n T(v_n)\\
+        T(v_i) = \begin{pmatrix}
+            a_{1i}\\
+            \vdots\\
+            a_{mi}
+        \end{pmatrix}
+    \end{align*}
+    so
+    \begin{align*}
+        T(v) = \begin{pmatrix}
+            a_{11} \cdot x_1 + \cdots + a_{1n} \cdot x_n\\
+            \ddots \\
+            a_{m1} \cdot x_1 + \cdots + a_{mn} \cdot x_n
+        \end{pmatrix} = [T]\cdot v  
+    \end{align*}
+\end{proof}
+
+\begin{definition}
+    For a given $m \times n$ matrix $A$ over $\field$, define $L_A : \field^n \to \field^m$ by $L_A (v) := A \cdot v$, where $v$ is viewed as an $n \times 1$ column. It follows from definition that the $L_A$ is linear.
+
+    In other words, every $T \in \Hom(\field^n, \field^m)$ is equal to $L_A$ for some $A$.
+\end{definition}

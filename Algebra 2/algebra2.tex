@@ -31,6 +31,13 @@
 \newgeometry{margin=0.3in, top=0.4in, bottom=0.5in, marginparwidth=1.4in, marginparsep=0.3in, outer=0.2in}
 \parskip=0.6em
 
+% creates references for every section and subsection
+\let\origsection=\section
+\let\origsubsection=\subsection
+
+\renewcommand\section[1]{\origsection{#1}\label{\thesection}}
+\renewcommand\subsection[1]{\origsubsection{#1}\label{\thesubsection}}
+
 % ! import parts here
 \foreach \i in {00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, ..., 99} {%
     \edef\FileName{parts/\i.tex}%
