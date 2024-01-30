@@ -1,0 +1,137 @@
+\begin{example}[Using Picard Iteration]
+    $$y' = 2t(1+y) =: f(t, y), \quad y(0) = 0.$$
+    This ODE is linear and separable, and has solution $y(t) = e^{t^2} - 1$ (solving whichever way you like). We can alternatively solve this using Picard Iteration.
+
+    Let $y_0(t) = 0 \forall t$, noting that the IC is satisfied. We define \[
+    y_{n+1}(t) = \cancelto{0}{y(0)} + \int_{\cancelto{0}{t_0}}^t f(s, y_n(s)) \dd{s},
+    \]
+    where $f(s, y_n(s)) = 2s(1+y(s))$. This gives\begin{align*}
+        y_{n+1}(t) &= \int_0^t 2s (1+y_n(s))\dd{s}.\\
+        &\implies y_{1}(t) = \int_0^t 2s(1+y_0(s))\dd{s} = \int_0^t 2s \dd{s} = t^2\\
+        &\implies y_2(t) = \int_0^t 2s(1+s^2)\dd{s} = t^2 + \frac{1}{2}t^4\\
+        &\implies y_3(t) = \cdots = t^2 + \frac{1}{2!}t^4 + \frac{1}{3!}t^6\\
+        &\cdots \implies y_n(t) = \sum_{k=1}^n \frac{t^{2k}}{k!}\\
+        &\implies \lim_{n\to\infty} y_{n}(t)  = \sum_{k=1}^\infty \frac{(t^{2})^k}{k!} = e^{t^2}-1,
+    \end{align*}
+    the same solution as previously shown.
+\end{example}
+
+\begin{remark}
+    The previous example worked nicely due to $y_n(t)$ always being a simple polynomial with a familiar convergence. This is not always (nor often) the case.
+\end{remark}
+
+\begin{remark}
+    Recall the example $y' = y^{\frac{1}{3}}$ with multiple solutions. In the language of the theorem, $f(t, y) = y^{\frac{1}{3}}$ is continuous, but $f_1(t, y) = \frac{1}{3}y^{-\frac{2}{3}}$ becomes unbounded as $y \to 0$, and the function is thus not Lipschitz in a neighborhood of $y=0$.
+\end{remark}
+
+\begin{remark}
+    Recall that this theorem guarantees solutions in a closed rectangular region; it is possible, under certain conditions, to extend the solution beyond the bounds. But how far?
+\end{remark}
+\begin{example}\label{ex:corrunique}
+    $$y' = y^2, \quad y(0) = 1.$$
+    This has a solution $y(t) = \frac{1}{c-t} = \frac{1}{1-t}$ (with IC). Notice that $y(t) \to +\infty$ as $t \to 1$. By this observation, we have that, if we were to repeat Picard iteration for increasing time $t$, the rectangular domains of our validity of each piecewise solution would be bounded by $1$.
+\end{example}
+
+\begin{corollary}
+    If $f(t, y)$ and $f_y(t, y)$ are continuous for all $t, y \in \mathbb{R},$ then $\exists t_- < t_0 < t_+$ such that the IVP \[
+    y' = f(t, y), \quad y(t_0) = y_0    
+    \]
+    has a unique solution $y(t) \forall t \in (t_-, t_+)$, and moreover, either $t_+ = + \infty$ or $\lim_{t \to t_+} \abs{y(t)} = \infty$, and either $t_- = - \infty$ or $\lim_{t \to t_-} \abs{y(t)} = \infty$.
+\end{corollary}
+
+\begin{remark}
+    Finding $t_-, t_+$ requires the solution. In \cref{ex:corrunique}, $t_- = - \infty$, $t_+ = 1$. Changing the IC will naturally change these values.
+\end{remark}
+
+\begin{theorem}
+    If $p(t), g(t)$ continuous on an open interval $I = (\alpha, \beta)$ and $t_0 \in I$, then the IVP\[
+    y'(t) + p(t) y = g(t), \quad y(t_0) = y_0
+    \]
+    has a unique solution $y(t): I \to \mathbb{R}$.
+\end{theorem}
+
+\begin{remark}
+    In other words, this is a special case of the corollary above for linear ODEs; any "misbehavior" of the solutions would be solely due to discontinuities in the defining ODE.
+\end{remark}
+
+\section{Second Order ODEs}
+
+\subsection{Introduction}
+
+Second Order ODEs are of the form \[
+y'' = f(t, y, y').
+\]
+There is no general technique to solving these; we will be looking at special classes throughout.
+
+Specifically in the case of nonlinear odes, there are two special cases we can solve, \begin{enumerate}
+    \item $f$ does not depend on $y$; ie $y'' = f(t, y')$. A substitution $u=y'$ yields $u' = f(t, u)$, hence this is just a first order ODE, with corresponding $y(t) =k_1 + \int u(t) \dd{t}$.
+    \item $f$ does not depend on $t$; ie $y'' = f(y, y')$. Let $u = y'$, so $u' = y'' = f(y, u)$. Consider $u = u(y(t))$, then, \[
+    \dv{u}{t}= \dv{u}{y}\dv{y}{t} = u \dv{u}{y},
+    \]
+    and so \[
+    u \dv{u}{y} = \dv{u}{t} = f(y, u) \implies \dv{u}{y} = \frac{1}{y} f(y, u),    
+    \]
+    which again yields a first order ODE, in $u = u(y)$.
+\end{enumerate}
+
+\begin{example}[Of Case 2.]
+$$y'' + \omega^2 y = 0 \footnote{This is the equation for a simple harmonic oscillator.}$$
+Rewrite this as $y'' = - \omega^2 y = f(y, y')$, and let $u = y'$, then $\dv{u}{y} = \frac{1}{u} f(y, u) = \frac{1}{u} [- \omega^2 y]$. This is a separable equation:
+\begin{align*}
+    u \dd{u} = - \omega^2 y \dd{y}\\
+    \frac{1}{2}u^2 = - \frac{1}{2}\omega^2 y^2 + c\\
+    \implies u^2 = - \omega^2 y^2 +c'\\
+    \implies u = \pm \sqrt{k^2 - \omega^2 y^2} \implies \dv{y}{t} = \pm \sqrt{k^2 - \omega^2 y^2}
+\end{align*}
+Which is just another separable equation\footnote{Please excuse the sloppy use of constants, it doesn't really matter.}:
+\begin{align*}
+    \pm \int \dd{t} = \frac{1}{\omega} \int \frac{\dd{y}}{\sqrt{\frac{k^2}{\omega^2} - y^2}}\\
+    \implies \frac{1}{\omega} \arcsin(\frac{\omega y}{k}) = \pm t + C\\
+    \implies \frac{\omega y}{k} = \sin(\pm \omega t \pm \omega \tilde{C}) = \pm \sin(\omega t + \omega \tilde{C})\\
+    \implies y(t) = \pm \frac{k}{\omega} \sin(\omega t + \omega \tilde{C})\\
+    \implies y(t) = K \sin(\omega t + C),
+\end{align*}
+which can be rewritten $y(t) = k_1 \sin (\omega t) + k_2 \cos(\omega t)$ with the appropriate substitutions.
+\end{example}
+
+\begin{remark}
+    This is not the easiest way to solve this equation. More generally, this technique can lead to intractable integrals.
+\end{remark}
+
+\begin{example}[Nonlinear Pendulum]
+    $$y'' + \omega^2 \sin y = 0.$$
+    Making the same substitution as before, $u = y'$, we have \begin{align*}
+        \dv{u}{y} = -\frac{1}{u} \omega^2 \sin y\\
+        \int u \dd{u} = \int - \omega^2 \sin y \dd{y}\\
+        \frac{1}{2}u^2 = \omega^2 \cos y + c_1\\
+        \frac{1}{2}(y')^2 = \omega^2 \cos y + c_1\\
+        y' = \pm \sqrt{2c_1 + 2 \omega^2 \cos y}\\
+        \pm \int \dd{t} = \int\frac{\dd{y}}{\sqrt{2c + 2 \omega^2 \cos y}},
+    \end{align*}
+    where the integral on the RHS is some type of elliptic integral.
+\end{example}
+
+\subsection{Linear, Homogeneous}
+
+We will solve a general form \[
+a(t) y'' + b(t) y' + c(t) y = 0 \quad \circledast.    
+\]
+
+\subsubsection{Principle of Superposition}
+\begin{theorem}[Superposition of Solutions to Linear Second Order ODEs]
+    If $y_1(t)$, $y_2(t)$ solve $\circledast$ for $t \in I$-interval, then $y(t) = k_1 y_1(t) + k_2 y_2(t)$, for constants $k_1, k_2$ solves $\circledast$ on $I$ as well. In other words, linear combinations of solutions are themselves solutions.
+\end{theorem}
+
+\begin{remark}
+    This can be extended quite naturally to any linear order of ODE.
+\end{remark}
+
+\begin{proof}
+    This is clear by just plugging into the problem; let $y(t) =  k_1 y_1(t) + k_2 y_2(t)$. Then:
+    \begin{align*}
+        a(t) y''(t) + b(t) y'(t) + c(t) y(t)&= a(t)(k_1y''_1 + k_2 y''_2) + b(t)(k_1y'_1 + k_2 y'_2) + c(t) (k_1y_1 + k_2 y_2)\\
+        &= k_1 (ay''_1+by'_1+cy_1) + k_2(ay''_2 + by'_2 + cy_2)\\
+        &= k_1 \cdot 0 + k_2 \cdot 0 = 0,
+    \end{align*}
+    as desired.
+\end{proof}

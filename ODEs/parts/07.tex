@@ -100,4 +100,16 @@ noting that this maximum exists, and is attained, because $f_y$ is continuous on
     \norm{u-v}_\infty = \norm{Tu - Tv}_\infty \leq \mu \norm{u-v}_\infty ,   
     \]
     a contradiction unless $\norm{u-v}_\infty = 0 \iff u = v$, hence, we have uniqueness of our solution; that is, our IVP has at most one solution. It remains to show that this solution exists.
+
+    Consider a sequence $y_n$, with $y_{n+1} = Ty_n$. Then, \begin{align*}
+        \sum_{i=0}^N\norm{y_{i+1}-y_i}_\infty \leq \mu^N \norm{y_1 - y_0}_\infty,  
+    \end{align*}
+    by the contractive property, thus, \begin{align*}
+        \sum_{i=0}^\infty  \norm{y_{i+1}-y_i} \leq (\sum_{i=0}^\infty \mu^j)\norm{y_1 - y_0}_\infty = \frac{1}{1-\mu} \norm{y_1 - y_0}_\infty = R_0,
+    \end{align*}
+    for some radius (real number) $R_0$. Similarly, looking only at the tail of the series,
+    \[
+    \sum_{j=n}^\infty \norm{y_{j+1}-y_j}_\infty \leq \frac{\mu^n}{1-\mu} \norm{y_1 - y_0}_\infty = \mu^n R_0,
+    \]
+    that is, a "smaller" radius. We could, but won't, show that this sequence is Cauchy, and space $C$ we are working in is complete and hence this sequence converges to some limit in the space; moreover, the limit of this sequence satisfies the IVP by construction. This is beyond the scope of this course.
 \end{proof}
