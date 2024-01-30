@@ -32,7 +32,12 @@
 \parskip=0.6em
 
 
-% \newcommand[1]{\dateedited}{\verbatiminput{|"date -r #1"}}
+% creates references for every section and subsection
+\let\origsection=\section
+\let\origsubsection=\subsection
+
+\renewcommand\section[1]{\origsection{#1}\label{\thesection}}
+\renewcommand\subsection[1]{\origsubsection{#1}\label{\thesubsection}}
 
 
 % ! import parts here

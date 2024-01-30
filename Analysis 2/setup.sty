@@ -137,8 +137,8 @@
 
 % page footer
 \newpagestyle{mypage}{%
-    \footrule
-    \setfoot{\small\textcolor{gray}{§\thesubsection}}{\small\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\small p. \thepage}}
+% \footrule
+\setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
 }
 
 \titleformat{\section}

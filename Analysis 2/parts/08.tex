@@ -1,0 +1,89 @@
+\subsection{An Aside on Complete Metric Spaces}
+\begin{theorem}
+    The sequence of centers of balls with monotonically decreasing radii is a Cauchy sequence in $X$.
+\end{theorem}
+
+\begin{proof}
+    Let $\epsilon > 0$ and let $N : \forall j > N, r_j < \epsilon$. Then, 
+    \begin{align*}
+        d(x_j, x_k) < r_{\min(j, k)} = r_j
+    \end{align*}
+\end{proof}
+
+\begin{definition}[Complete Metric Space]
+    A metric space is complete if every Cauchy sequence converges to a limit in that space.
+\end{definition}
+
+\begin{example}[Examples of Complete Metric Spaces]
+    \begin{enumerate}
+        \item $\mathbb{R}$, $p$-adic integers ($\mathbb{Z}_p$)/rationals($\mathbb{Q}_p$).
+        \item $\ell_p = \{x = (x_i)_{i=1}^\infty : \sum_{i = 1}^\infty \abs{x_i}^p < + \infty\}$, $1 \leq p \leq + \infty$
+        \item $\ell_\infty = \{x = (x_i) : \sup_{i  =1}^\infty \abs{x_i} < + \infty\}$.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    \nameref{prop:holdersinequality} and \nameref{pro:Minkowski} inequalities hold for infinite sequences. that is,
+    \begin{enumerate}
+        \item if $x=(x_i) \in \ell_p$ and $y=(y_i) \in \ell_q$ with $\frac{1}{p} + \frac{1}{q} = 1$, then \[
+    \abs{\sum_{i=1}^\infty x_i y_i} \leq \norm{x_i}_{\ell_p}\norm{y_i}_{\ell_q}.
+    \]
+    \item if $x, y \in \ell_p$, then \[
+        \norm{x + y}_p \leq \norm{x}_p + \norm{y}_p.    
+    \]
+    \end{enumerate}
+\end{proposition}
+
+\begin{remark}
+    2. gives the triangle inequality for the $\norm{x}_p$ norm on $\ell_p$.
+
+    Moreover,
+    \begin{align*}
+        \norm{c \cdot x}_p &= \norm{(c_1x_1, \dots, c_n x_n, \dots)}_p\\
+        &= \left(\sum_{i=1}^\infty \abs{cx_i}^p\right)^\frac{1}{p} = \left(\sum_{i=1}^\infty\abs{c}^p \abs{x_i}^p \right)^\frac{1}{p}\\
+        &= \left(\abs{c}^p\right)^\frac{1}{p}\norm{x}_p = c \cdot \norm{x}_p
+    \end{align*}
+\end{remark}
+\begin{proof}
+    (of 2.) If $x, y \in \ell_p$, we have that $\sum_{i=1}^\infty \abs{x_i}^p < + \infty, \sum_{i=1}^\infty \abs{y_i}^p < + \infty$, so $\exists N > 0 : \sum_{i=N+1}^\infty \abs{x_i}^p < \epsilon, \sum_{i=N+1}^\infty \abs{y_i}^p < \epsilon$. Let $x_i^{(n)} = (x_1, \dots, x_n, 0, 0, \dots)$ be $(x)$ truncated after $n$ (finite) coordinates. This gives \begin{align*}
+        \norm{(x_i+y_i)^{(n)}}_p \leq \norm{x_i^{(n)}}_p + \norm{y_i^{(n)}}_p \leq \norm{x}_p + \norm{y}_p
+    \end{align*}
+    by Minkowski on finite spaces. Taking $n \to \infty$ (ie, "detruncating"), we have $(x + y) \in \ell_p$, and thus $\norm{x+y}_p \leq \norm{x}_p + \norm{y}_p$. 
+
+    1. left as an exercise.
+\end{proof}
+
+\begin{proposition}\label{prop:triangleinequalitylinfnorm}
+    Let $1 \leq p \leq + \infty$, and $\norm{x}_\infty = \sup_{i=1}^\infty \abs{x_i} = A < + \infty, \norm{y}_\infty = \sup_{i=1}^\infty \abs{y_i} = B < + \infty$. Then, the triangle inequality $\norm{x + y}_\infty \leq \norm{x}_\infty + \norm{y}_\infty$ holds.
+\end{proposition}
+\begin{proof}
+    We have \begin{align*}
+        \sup_{i=1}^\infty \abs{x_i + y_i} \leq \sup_{i=1}^\infty \left(\abs{x_i} + \abs{y_i}\right) \leq \sup_{i=1}^\infty \abs{x_i} + \sup_{i=1}^\infty \abs{y_i} = \norm{x}_\infty + \norm{y}_\infty.
+    \end{align*}
+\end{proof}
+\begin{proposition}
+    $\norm{x}_\infty := \sup_{i=1}^\infty \abs{x_i}$ is a well-defined norm on $\ell_\infty$.
+\end{proposition}
+\begin{proof}
+    The triangle inequality is prove in \cref{prop:triangleinequalitylinfnorm}. The remainder of the requirements are left as an exercise.
+\end{proof}
+\begin{proposition}
+    $\ell_p \subseteq \ell_q$ if $p < q$.
+\end{proposition}
+\begin{proof}
+    Let $x \in \ell_p$. If $\sum_{i=1}^\infty \abs{x_i}^p < + \infty,$ then $\exists N : \forall i \geq N, \abs{x_i} \leq 1$. Then, \begin{align*}
+        \sum_{i \geq N}\abs{x_i}^q \leq \sum_{i\geq N} \abs{x_i}^p < \infty\\
+        \implies \sum_{i=1}^\infty \abs{x_i}^q < + \infty \implies x \in \ell_q\\
+        \implies \ell_p \subseteq \ell_q
+    \end{align*}
+\end{proof}
+
+\begin{theorem}[$\ell_p$ complete]
+    The space $\ell_p$ is complete for all $1 \leq p \leq + \infty$. 
+
+    Equivalently, if $(x^1)$, $(x^2), \dots, (x^n)$ is a Cauchy sequence in $\ell^p$, $\exists y \in \ell^p$ s.t. $x^n \to y$ as $n \to \infty$.
+\end{theorem}
+
+\begin{proof}
+    % TODO 
+\end{proof}
