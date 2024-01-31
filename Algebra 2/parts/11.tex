@@ -54,10 +54,10 @@
 
 
 \begin{corollary}
-    If $V, W$ finite dimensional, then $\dim(\Hom(V, W)) = \dim(V) \cdot \dim(W)$.
+        If $V, W$ finite dimensional, then $\dim(\Hom(V, W)) = \dim(V) \cdot \dim(W)$.
 \end{corollary}
 
-\begin{proposition}
+\begin{proposition}\label{prop:construction}
     Let $\beta = \{v_1, \dots, v_n\}$, $\gamma = \{w_1, \dots, w_m\}$ be bases for $V, W$ resp. Then, by \cref{thm:basisforhom}, \[
         \{T_{v_i, w_j} : i \in \{1, \dots, n\}, j \in \{1, \dots, m\}\}
     \]
@@ -79,7 +79,7 @@ and note that $T$ is determined by $\{T(v_1), \dots, T(v_n)\} \subseteq \field^m
     \end{pmatrix} \in \field^n$.
 \end{remark}
 
-Each $T(v_i)$ is a column vector in $\field^m$, and we an put these into a $m \times n$ matrix, namely:
+Each $T(v_i)$ is a column vector in $\field^m$, and we an put these into a $m \times n$ matrix, namely:\footnote{Where $[T]$ denotes a matrix named "$T$".}
 % TODO add m
 \begin{align*}
     [T] := \underbrace{\begin{pmatrix}
@@ -93,7 +93,7 @@ Each $T(v_i)$ is a column vector in $\field^m$, and we an put these into a $m \t
     \end{pmatrix}
 \end{align*}
 
-We call this the \emph{matrix representation} of $T$ in the standard bases. The operation of multiplying an $m \times n$ matrix and a $n \times 1$ vector is precisely defined so that \begin{proposition}
+We call this the \emph{matrix representation} of $T$ in the standard bases. The operation of multiplying an $m \times n$ matrix and a $n \times 1$ vector is precisely defined so that \begin{proposition}\label{prop:tofvequalmatt}
     $T(v) = [T] \cdot v$ for all $v \in \field^n$.
 \end{proposition}
 

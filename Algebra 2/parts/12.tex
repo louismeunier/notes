@@ -1,0 +1,126 @@
+\begin{proposition}\label{prop:isomorphismbetweenhomandmat}
+    The map \begin{align*}
+        \Hom(\field^n, \field^m) &\to M_{m \times n}(\field)\\
+         T &\mapsto [T]
+    \end{align*}
+    is an isomorphism of vector spaces, with inverse \begin{align*}
+        M_{m \times n}(\field) &\to \Hom(\field^n, \field^m)\\
+        A &\mapsto L_A.
+    \end{align*}
+\end{proposition}
+
+\begin{proof}
+    \underline{Linearity:} Let $\beta = \{v_1, \dots, v_n\}$ be the standard basis for $\field^n$. Fix $T_1, T_2 \in \Hom(\field^n, \field^m)$ and $\alpha \in \field$. 
+    \begin{enumerate}
+        \item \begin{align*}
+            [T_1 + T_2] &= \begin{pmatrix}
+         & \vdots & \\
+            \cdots & (T_1+T_2)(v_i) & \cdots\\
+            & \vdots & 
+        \end{pmatrix} = \begin{pmatrix}
+            & \vdots & \\
+               \cdots & T_1(v_i)+T_2(v_i) & \cdots\\
+                & \vdots & 
+           \end{pmatrix}\\ 
+           &= \begin{pmatrix}
+            & \vdots &\\
+            \cdots & T_1(v_i) & \cdots\\
+            & \vdots & 
+           \end{pmatrix} + \begin{pmatrix}
+            & \vdots &\\
+            \cdots & T_2(v_i) & \cdots\\
+            & \vdots & 
+           \end{pmatrix} \\
+           &= [T_1] + [T_2]
+        \end{align*}
+        \item It remains to show that $\alpha \cdot [T] = [\alpha \cdot T]$; the proof follows similarly to 1.
+    \end{enumerate}
+    \underline{Inverse:} We need to show that 1. $A \mapsto L_A \mapsto [L_A]$ is the identity on $M_{m \times n}(\field)$, and conversely, that 2. $T \mapsto [T] \mapsto L_{[T]}$ is the identity on $\Hom(\field^n, \field^m)$.
+    \begin{enumerate}
+        \item We need to show that $[L_A] = A$. The $j$th column of $[L_A]$ is $L_A(v_j) = A \cdot v_j = j$th column of $A =: A^{(j)}$. Hence, the $j$th column of $[L_A]$ is equal to the $j$th column of $A$, and thus they are equal.
+        \item We showed this in \cref{prop:tofvequalmatt}.
+    \end{enumerate}
+\end{proof}
+
+\begin{corollary}
+    $\dim(\Hom(\field^n, \field^m)) = \dim(M_{m\times n}(\field)) = m \cdot n$.
+\end{corollary}
+\begin{remark}
+    This was stated previously in \cref{prop:construction} by constructing an explicit basis. Indeed, this basis is precisely the image of the standard basis for $M_{m \times n}(\field)$ under the map $A \mapsto L_A$.
+\end{remark}
+
+\subsection{General Matrix Representation}
+
+\begin{remark}
+    The previous section was concerned with representing transformations between finite fields $\field^n, \field^m$; this section aims to make the same construction for any finite dimensional $V, W$.
+\end{remark}
+
+\begin{definition}[Coordinate Vector]
+    Let $V$ be a finite dimensional space over $\field$ and let $\beta := \{v_1, \dots, v_n\}$ be a basis for $V$. Let $v \in V$, with (unique) representation $v = a_1 v_1 + \cdots + a_n v_n$. We denote \[
+    [v]_\beta := \begin{pmatrix}
+        a_1\\
+        \vdots\\
+        a_n
+    \end{pmatrix}     \in \field^n
+    \]
+    the \emph{coordinate vector} of $v$ in base $\beta$.
+\end{definition}
+
+\begin{remark}
+    Recall that $V \cong \field^n$ where $\dim(V) = n$, by the unique linear transformation $v_i \mapsto e_i$, where $\{e_1, \dots, e_n\}$ the standard basis for $\field^n$. We denote this transformation $$I_\beta : V \to \field.$$ For an arbitrary $v \in V$, $I_\beta (v)$ maps $v$ to its coordinate vector:
+    \begin{align}
+        I_\beta(v) = I_\beta(a_1v_1  + \cdots + a_n v_n) &= a_1 I_\beta(v_1) + \cdots a_n I_\beta(v_n)\\
+        &= a_1 e_1 + \cdots + a_n e_n = [v]_\beta.
+    \end{align}
+\end{remark}
+
+\begin{proposition}
+The map $$I_\beta : V \to \field^n, \quad v \mapsto [v]_\beta$$ is an isomorphism.
+\end{proposition}
+
+Suppose we are given a linear transformation $T : V \to W$, where $V, W$ finite dimensional spaces over $\field$. Fix $\beta := \{v_1, \dots, v_n\}$ and $\gamma := \{w_1, \dots, w_m\}$ as bases for $V, W$ resp. We can denote $[T(v_i)]_\gamma$ as $T(v_i)$ in base $\gamma$ (in the field $m$), and construct a matrix for $T$:\footnote{Where we denote $[T]_\beta^\gamma$ as the matrix representation of the transform $T: V \to W$, with basis $\beta, \gamma$ for $V, W$ respectively.}
+\begin{align*}
+    [T]_\beta^\gamma := \begin{pmatrix}
+        \vdots & \cdots & \vdots\\
+        [T(v_1)]_\gamma & \ddots & [T(v_n)]_\gamma\\
+        \vdots & \cdots & \vdots
+    \end{pmatrix}
+\end{align*}
+We call this the \emph{matrix representation} of $T$ from $\beta$ to $\gamma$.
+
+\begin{theorem}
+    Let $T: V \to W$, $\beta, \gamma$ as above. \begin{enumerate}
+        \item The following diagram commutes:
+        % https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXGJ1bGxldCBWIl0sWzEsMCwiXFxidWxsZXQgVyJdLFswLDEsIlxcYnVsbGV0IFxcbWF0aGJie0Z9Xm4iXSxbMSwxLCJcXGJ1bGxldCBcXG1hdGhiYntGfV5tIl0sWzAsMSwiVCJdLFswLDIsIklfXFxiZXRhIiwyXSxbMSwzLCJJX1xcZ2FtbWEiXSxbMiwzLCJbVF1fXFxiZXRhXlxcZ2FtbWEiLDJdXQ==
+        \[
+        \begin{tikzcd}
+            {\bullet V} & {\bullet W} \\
+            {\bullet \mathbb{F}^n} & {\bullet \mathbb{F}^m}
+            \arrow[from=1-1, to=1-2, "T"]
+             \arrow["{I_\beta}"', from=1-1, to=2-1]
+            \arrow["{I_\gamma}", from=1-2, to=2-2]
+            \arrow["{L_{[T]_\beta^\gamma}}"', from=2-1, to=2-2]
+        \end{tikzcd}
+        \]
+        
+
+        Namely, $I_\gamma \circ T = L_{[T]_\beta^\gamma} \circ I_\beta$
+        \item The map $\Hom(V, W) \to M_{m\times n}(\field), T \mapsto [T]_\beta^\gamma$ is a vector space isomorphism with inverse begin the map $M_{m \times n}(\field) \to \Hom(V, W), A \mapsto I_\gamma^{-1}\circ L_A \circ I_\beta$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    2. is left as a (homework) exercise; it follows directly from 1.
+
+    Fix $v \in V$. We need to show that $I_\gamma \circ T(v) = L_{[T]_\beta^\gamma} \circ I_\beta(v)$. We have \begin{align*}
+        I_\gamma \circ T(v) = [T(v)]_\beta.
+    \end{align*}
+    OTOH, \[
+    L_{[T]_\beta^\gamma} \circ I_\beta (v) = L_{[T]_\beta^\gamma} ([v]_\beta) = [T]_\beta^\gamma \cdot [v]_\beta.
+    \]
+    Let $v = a_1 v_1 + \cdots + a_n v_n$, so $[v]_\beta = \begin{pmatrix}
+        a_1\\
+        \vdots\\
+        a_n
+    \end{pmatrix}$. Then:
+\end{proof}
