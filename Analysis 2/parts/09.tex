@@ -1,0 +1,108 @@
+\subsection{Contraction Mapping Theorem}
+
+\begin{definition}[Contraction Mapping]
+    Let $(X, d)$ be a metric space. A \emph{contraction mapping} on $X$ is a function $f: X \to X$ for which $\exists$ a constant $0 < c < 1$ such that \[
+    d(f(x), f(y)) \leq c \cdot d(x, y) \quad \forall x, y \in X.    
+    \]
+\end{definition}
+
+\begin{theorem}[Contraction Mapping Theorem]\label{thm:contractionmappingtheorem}
+    Let $(X, d)$ be a complete metric space, and let $f : X \to X$ be a contraction. Then, there exists a unique fixed point $z$ of $f$ such that $f(z) = z$.
+    
+    Moreover, $f^{[n]}(x) := f\circ f\circ\cdots \circ f(x) \to z$ as $n \to \infty$ for any $x \in X$.
+\end{theorem}
+\begin{remark}
+    The "functional construction" of the Cantor set is an example of a contraction mapping, with $f_1(x) = \frac{x}{3}, f_2(x) = \frac{x +2}{3}$. The first has a fixed point of $0$, and the second a fixed point of $1$.
+\end{remark}
+
+\begin{remark}
+    This is a generalization of \href{https://notes.louismeunier.net/Analysis%201/analysis.pdf#page=53}{this proof} done in Analysis I, an equivalent claim over the reals.
+\end{remark}
+\begin{proof}
+    Fix $x \in X$. Consider the sequence $\{x_0, x_1, x_2, \dots, x_n, \dots \} := \{x, f(x), f\circ f(x), \cdots, f^{[n]}(x), \dots\}$ (we call $f^{[n]}$ the \emph{orbit} of $x$ under iterations of $f$). We claim that this is a Cauchy sequence. Let $n \in \mathbb{N}$ arbitrary, then we have, by the property of the contraction mapping,
+    \begin{align*}
+        d(f^{[n+1]}(x) - f^{[n]}(x)) \leq c \cdot d(f^{[n]}(x) - f^{[n-1]}(x)) \leq c^2 d(f^{[n-1]}(x) - f^{[n-2]}(x)).
+    \end{align*}
+    Arguing inductively, it follows that \begin{align*}
+        d(f^{[n+1]}(x) - f^{[n]}(x)) \leq c^n d(f(x), x). \quad \star
+    \end{align*}
+    Let now $m,k \in \mathbb{N}, m, k> 0$. It follows that \begin{align*}
+        d(f^{[m]}, f^{[m+k]}(x) &\leq d(f^{[m]})(x), f^{[m+1]}(x)) + d(f^{[m+1]}(x), f^{[m]}(x)) + \cdots + d(f^{[m+k-1]}(x), f^{m+k}(x))\\
+        &\overset{\star}{\leq} d(x, f(x))[c^m + c^{m+1} + \cdots + c^{m+k-1}]\\
+        &\leq c^md(x, f(x))[1 + c + \cdots + c^k + c^{k+1} + \cdots] = \frac{c^md(x, f(x))}{1-c}
+    \end{align*}
+    Now, given $\epsilon >0$, choose $N$ such that $\frac{c^Nd(x, f(x))}{1-c} < \epsilon$. It follows, then, that $\{f^{[n]}(x)\}_{n \in \mathbb{N}}$ a Cauchy sequence, and thus converges, $f^{[n]}(x) \to z$ as $n \to \infty$ for some $z$.
+
+    We further have to show that $f(z) = z$. It is easy to show that $f$ continuous due to the contraction mapping (it is clearly Lipschitz with constant $c$), and it thus follows that 
+    \begin{align*}
+        \lim_{n\to\infty} f(f^{[n]}(x)) = \lim_{n \to \infty} f^{[n]}(x) \implies f(z) = z,
+    \end{align*}
+    by sequential characterization of continuous functions. 
+
+    Finally, we need to show that this limit is unique. Suppose $\exists y_1 \neq y_2$, ie two fixed points with $f(y_1) = y_1$ and $f(y_2) = y_2$. Then, by the property of the contraction mapping, \begin{align*}
+        d(f(y_1), f(y_2)) \leq c \cdot d(y_1, y_2),
+    \end{align*}
+    but by assumption of being fixed points, \begin{align*}
+        d(f(y_1), f(y_2)) = d(y_1, y_2),
+    \end{align*}
+    implying $d(y_1,y_2) \leq c \cdot d(y_1, y_2)$. This is only possible if $d(y_1, y_2) = 0$, and thus $y_1 = y_2$ and the fixed point is indeed unique.
+\end{proof}
+
+\begin{theorem}[$\ell_p$ complete]
+    The space $\ell_p$ is complete for all $1 \leq p \leq + \infty$. 
+
+    Equivalently, if $(x^1)$, $(x^2), \dots, (x^n)$ is a Cauchy sequence in $\ell^p$, $\exists y \in \ell^p$ s.t. $x^n \to y$ as $n \to \infty$.
+\end{theorem}
+
+\begin{proof}(Sketch)
+    We suppose first $p < +\infty$. Consider an arbitrary number of Cauchy sequences in $\ell_p$: \begin{align*}
+        &x^{(1)} = (x_1^{(1)}, \dots, x_n^{(1)}, \dots) \\
+        &x^{(2)} = (x_1^{(2)}, \dots, x_n^{(2)}, \dots)\\
+        &\vdots \qquad \vdots \qquad \vdots\\
+        &x^{(k)} = (x_1^{(k)}, \dots, x_n^{(k)}, \dots) \in \ell_p
+    \end{align*} We claim that, for any $k \in \mathbb{N}$, the $(x_k^{(n)})_{n \in \mathbb{N}}$ is a Cauchy sequence; note that in this definition we are taking a \emph{fixed-index} (namely, the $k$th) element from different sequences (namely, the $n$th sequence).
+
+    Since $x^{(1)}, x^{(2)}, \dots, x^{(n)}, \dots$ are Cauchy sequences in $\ell^p$, we have for a fixed $\epsilon > 0$, $\exists N \in \mathbb{N} : \forall m, n > N$, $d_p(x^{(m)}, x^{(n)}) < \epsilon$:
+    \begin{align*}
+        d_p(x^{(m)}, x^{(n)})^p = \norm{x^{(m)} - x^{(n)}}_p^p = \sum_{i=1}^\infty \abs{x_i^{(m)} - x_i^{(n)}}^p < \epsilon^p\\
+        \abs{x_k^{(m)} - x_k^{n}}^p \leq \sum_{i=1}^\infty \abs{x_i^{(m)} - x_i^{(n)}}^p  \implies \abs{x_k^{(m)} - x_k^{n}}^p < \epsilon^p \\
+        \implies \abs{x_k^{(m)} - x_{k}^{(n)}} < \epsilon,
+    \end{align*}
+    since we are taking "less of the summands in the second line". It follows, then, that for each $k, \exists z_k : x_k^{(n)} \to z_k$ as $n \to \infty$. Let $z = (z_1, \dots, z_n, \dots)$. We claim that $x^{(n)} \to z \in \ell_p$ as $n \to \infty$. 
+
+    First, we show that $d_p(x^{(n)}, z) \to 0$ as $n \to 0$ (that is, $x^{(n)} \to z$ as $n \to \infty$). Fix $\epsilon >0$, and choose $N \in \mathbb{N}$ for which $d_p(x^{(m)}), x^{(n)} < \epsilon$ $\forall m, n \geq N$ (by Cauchy). Fix $K \in \mathbb{N}, K > 0$.
+    \begin{align*}
+        d_p^p(x^{(n)}, z) = \norm{x^{(n)} - z}_p^p = \sum_{i=1}^\infty \abs{x_i^{(n)} - z_i}^{p}\\
+        \norm{x^{(m)} - x^{(n)}}_p^p < \epsilon^p \implies \sum_{i=1}^K\abs{x_i^{(m)} - x_i^{(n)}}^p \leq \epsilon^p
+    \end{align*}
+    Let $m \to \infty$; then $x_i^{(m)} \to z_i$ (note that $i$ fixed!), and we have \begin{align*}
+        \sum_{i=1}^K\abs{z_i - x_i^{(n)}}^p \leq \epsilon^p.
+    \end{align*}
+    Let $K \to \infty$; then, 
+    \begin{align*}
+        \sum_{i=1}^\infty \abs{z_i - x_i^{(n)}}^p \leq \epsilon^p\implies \norm{z - x}_p \leq \epsilon\implies d_p(z, x^{n}) \leq \epsilon,
+    \end{align*}
+    and thus $x^{n} \to z$ as $n \to \infty$. 
+
+    It remains to show that $z \in \ell_p$, ie $\norm{z}_p < + \infty$. We have:
+    \begin{align*}
+        \norm{z}_p \leq \underbrace{\norm{z - x^{(n)}}_p}_{\to 0} + \norm{x^{(n)}}_p.
+    \end{align*}
+    For sufficiently large $n$, $\norm{z - x^{(n)}} \leq 1$ (for instance); $x^{(n)} \in \ell_p$, hence $\norm{x^{(n)}}_p < + \infty$ (say, $\norm{x^{(n)}}_p \leq M$). Thus:\begin{align*}
+        \norm{z}_p \leq 1 + M < + \infty \implies z \in \ell_p,
+    \end{align*}
+    and the proof is complete.
+\end{proof}
+
+\subsection{Compactness in Metric Spaces}
+\begin{definition}[Totally Bounded]
+    Let $(X,d)$ be a metric space. If for every $\epsilon > 0$, $\exists x_1, \dots, x_n \in X, n = n(\epsilon) : \bigcup_{i=1}^n B(x_1, \epsilon) = X$, we say $X$ is \emph{totally bounded}.
+\end{definition}
+\begin{theorem}
+Let $(X,d)$ be a metric space. TFAE:
+\begin{enumerate}
+    \item $X$ is complete and totally bounded;
+    \item $X$ is compact;
+    \item $X$ is sequentially compact (every sequence has a convergent subsequence).
+\end{enumerate}
+\end{theorem}
