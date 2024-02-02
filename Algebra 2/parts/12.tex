@@ -81,9 +81,9 @@ The map $$I_\beta : V \to \field^n, \quad v \mapsto [v]_\beta$$ is an isomorphis
 Suppose we are given a linear transformation $T : V \to W$, where $V, W$ finite dimensional spaces over $\field$. Fix $\beta := \{v_1, \dots, v_n\}$ and $\gamma := \{w_1, \dots, w_m\}$ as bases for $V, W$ resp. We can denote $[T(v_i)]_\gamma$ as $T(v_i)$ in base $\gamma$ (in the field $m$), and construct a matrix for $T$:\footnote{Where we denote $[T]_\beta^\gamma$ as the matrix representation of the transform $T: V \to W$, with basis $\beta, \gamma$ for $V, W$ respectively.}
 \begin{align*}
     [T]_\beta^\gamma := \begin{pmatrix}
-        \vdots & \cdots & \vdots\\
-        [T(v_1)]_\gamma & \ddots & [T(v_n)]_\gamma\\
-        \vdots & \cdots & \vdots
+        \vert & & \vert\\
+        [T(v_1)]_\gamma & \cdots & [T(v_n)]_\gamma\\
+        \vert& & \vert
     \end{pmatrix}
 \end{align*}
 We call this the \emph{matrix representation} of $T$ from $\beta$ to $\gamma$.
@@ -125,9 +125,9 @@ We call this the \emph{matrix representation} of $T$ from $\beta$ to $\gamma$.
         \vdots\\
         a_n
     \end{pmatrix}$. Recall that $[T]_\beta^\gamma = \begin{pmatrix}
-        \vdots & \cdots & \vdots\\
+        \vert &  & \vert\\
         [T(v_1)]_\gamma & \cdots & [T(v_n)]_\gamma\\
-        \vdots & \cdots & \vdots\\
+        \vert &  & \vert
     \end{pmatrix}$. Thus, we have \begin{align*}
         [T]_\beta^\gamma \cdot [v]_\beta = a_1 [T(v_1)]_\gamma + \cdots + a_n [T(v_n)]_\gamma &= [a_1T(v_1) + \cdots + a_n T(v_n)]_\gamma \quad \textit{(by linearly of } I_\gamma\textit{)}\\
         &= [T(a_1 v_1 + \cdots + a_n v_n)]_\gamma \quad \textit{(by linearity of }T\textit{)}\\

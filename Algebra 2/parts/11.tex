@@ -81,16 +81,22 @@ and note that $T$ is determined by $\{T(v_1), \dots, T(v_n)\} \subseteq \field^m
 
 Each $T(v_i)$ is a column vector in $\field^m$, and we an put these into a $m \times n$ matrix, namely:\footnote{Where $[T]$ denotes a matrix named "$T$".}
 % TODO add m
+
 \begin{align*}
-    [T] := \underbrace{\begin{pmatrix}
-        \vdots & & \vdots \\
+    [T] := \begin{pmatrix}
+        \vert & & \vert \\
         T(v_1) & \cdots & T(v_n) \\
-        \vdots & & \vdots 
-    \end{pmatrix}}_{n} = \begin{pmatrix}
+        \vert & & \vert 
+    \end{pmatrix} = \underbrace{\begin{pmatrix}
         a_{11} & \cdots & a_{1n}\\
         \vdots & \ddots & \vdots\\
         a_{m1} & \cdots & a_{mn}
-    \end{pmatrix}
+    \end{pmatrix}}_{n}
+    % ! hacky but pretty
+    \hspace{-0.6em}
+    \begin{rightcase}
+        \\\\\\
+    \end{rightcase}\text{\scriptsize{$m$}}
 \end{align*}
 
 We call this the \emph{matrix representation} of $T$ in the standard bases. The operation of multiplying an $m \times n$ matrix and a $n \times 1$ vector is precisely defined so that \begin{proposition}\label{prop:tofvequalmatt}

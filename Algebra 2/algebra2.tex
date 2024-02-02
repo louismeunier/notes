@@ -7,6 +7,22 @@
 \import{/users/louismeunier/Documents/templates/}{shortcuts.sty}
 
 
+% ! hacky nonsense to make rightbrace possible
+% https://tex.stackexchange.com/questions/51847/how-do-i-put-a-side-brace-around-several-lines-in-the-align-environment
+\makeatletter
+\newenvironment{rightcase}{%
+  \matrix@check\cases\env@cases
+}{%
+  \endarray\right\}%
+}%
+\def\env@cases{%
+  \let\@ifnextchar\new@ifnextchar
+  \left.
+  \def\arraystretch{1.2}%
+  \array{@{}l@{\,\,}l@{}}%
+}%
+\makeatother
+
 % ! Title page settings
 \newcommand{\pageauthor}{Louis Meunier}
 \newcommand{\pagetitle}{Algebra 2}
