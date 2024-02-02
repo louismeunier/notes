@@ -1,0 +1,109 @@
+\subsection{Composition of Linear Transformations, Matrix Multiplication}
+
+\begin{proposition}
+    Composition is associative; given $T : V \to W, S : W \to U,$ and $R : U \to X$, then \[
+    (R \circ S) \circ T = R \circ (S \circ T).
+    \]
+\end{proposition}
+\begin{proof}
+    Fix $v \in V$. Then \begin{align*}
+        (R \circ S) \circ T(v) = (R\circ S)(T(v)) = R (S(T(v)))
+    \end{align*}
+    OTOH:
+    \begin{align*}
+        R\circ (S\circ T)(v) = R((S\circ T)(v)) = R(S(T(v))).
+    \end{align*}
+\end{proof}
+
+Let $A \in M_{m \times n}(\field)$ and $B \in M_{l \times m}(\field)$. Then, $L_A : \field^n \to \field^m$ and $L_B : \field^m \to \field^l$, and have composition $L_B \circ L_A : \field^n \to \field^l$. We know that $L_B \circ L_A$ is a linear transformation, and thus must be equal to $L_C$ for some matrix $C \in M_{l \times n}(\field)$. Indeed, $C$ is the matrix representation of the transformation $[L_B \circ L_A]$, as proven previously. 
+
+Let $\beta = \{e_1, \dots, e_n\}$ for $\field^n$, then
+\begin{align*}
+    [L_B \circ L_A] = \begin{pmatrix}
+        \vert &  &  \vert \\
+        L_B \circ L_A(e_1) & \cdots & L_B\circ L_A(e_n)\\
+        \vert &  & \vert
+    \end{pmatrix} = \begin{pmatrix}
+        \vert &  & \vert \\
+        B\cdot (A \cdot e_1) & \cdots & B \cdot (A \cdot e_n)\\
+        \vert & & \vert
+    \end{pmatrix}
+\end{align*}
+
+\begin{definition}[Matrix Multiplication]
+    For matrices $A \in M_{m \times n}(\field)$ and $B \in M_{l \times m}(\field)$, define their product $B \cdot A$ to be the matrix \begin{align*}
+        [L_B \circ L_A] =
+        \begin{pmatrix}
+            \vert &  & \vert\\
+            B\cdot (A \cdot e_1) & \cdots & B \cdot (A \cdot e_n)\\
+            \vert & & \vert
+        \end{pmatrix} = \begin{pmatrix}
+            \vert & & \vert\\
+            B \cdot A^{(1)} &\cdots & B \cdot A^{(2)}\\
+            \vert & & \vert
+        \end{pmatrix} = \left(c_{ij}\right)_{1 \leq i \leq l}^{1 \leq j \leq n}
+    \end{align*}
+    where $A^{(j)}$ is the $j$th column of $A$, $c_{ij} := \begin{pmatrix}
+        - & B_{(i)} & - 
+    \end{pmatrix} \cdot \begin{pmatrix}
+        \vert \\
+        A^{(j)}\\
+        \vert
+    \end{pmatrix}$.
+\end{definition}
+
+\begin{proposition}
+    $[L_B \circ L_A] = B \cdot A$, ie $L_B \circ L_A = L_{B \cdot A}$.
+\end{proposition}
+\begin{proof}
+    Follows from our definition.
+\end{proof}
+
+\begin{corollary}
+    Matrix multiplication is association; $C \cdot (B \cdot A) = (C \cdot B) \cdot A$ for $A \in M_{m \times n}(\field), B \in M_{l \times m}(\field), C \in M_{k \times l}(\field)$.
+\end{corollary}
+\begin{proof}
+    $C\cdot (B \cdot A) = [L_C \circ (L_B \circ L_A)] = [(L_C\circ L_B) \circ L_A] = (C \cdot B) \cdot A$.
+\end{proof}
+
+\begin{remark}
+    This is proven by the linear transformation representation of matrices; try proving this \emph{directly} from our definition.
+\end{remark}
+
+\begin{corollary}
+    Let $V, W, U$ be finite-dimensional vector spaces over $\field$, $T : V \to W, S : W \to U$ be linear transformations and $\alpha, \beta, \gamma$ be bases for $V, W, U$ resp. Then, \[
+    [S \circ T]_\alpha^\gamma = [S]_\beta^\gamma \cdot [T]_\alpha^\beta.    
+    \]
+\end{corollary}
+\begin{proof}
+    Follows from the commutativity of the diagrams:
+\[
+ % https://q.uiver.app/#q=WzAsNixbMCwwLCJWIl0sWzEsMCwiVyJdLFsyLDAsIlUiXSxbMCwxLCJcXG1hdGhiYntGfV5uIl0sWzEsMSwiXFxtYXRoYmJ7Rn1ebSJdLFsyLDEsIlxcbWF0aGJie0Z9XmwiXSxbMCwxLCJUIl0sWzEsMiwiUyJdLFsxLDQsIlxcc2ltIiwyXSxbMiw1LCJcXHNpbSIsMl0sWzMsNCwiW1RdX1xcYWxwaGFeXFxiZXRhIiwyXSxbNCw1LCJbU11fXFxiZXRhXlxcZ2FtbWEiLDJdLFswLDMsIlxcc2ltIiwyXV0=    
+\begin{tikzcd}
+        V & W & U \\
+        {\mathbb{F}^n} & {\mathbb{F}^m} & {\mathbb{F}^l}
+        \arrow["T", from=1-1, to=1-2]
+        \arrow["S", from=1-2, to=1-3]
+        \arrow["\wr"', from=1-2, to=2-2]
+        \arrow["\wr"', from=1-3, to=2-3]
+        \arrow["{[T]_\alpha^\beta}"', from=2-1, to=2-2]
+        \arrow["{[S]_\beta^\gamma}"', from=2-2, to=2-3]
+        \arrow["\wr"', from=1-1, to=2-1]
+    \end{tikzcd}
+    \qquad \iff\qquad 
+    % https://q.uiver.app/#q=WzAsNCxbMCwwLCJWIl0sWzEsMCwiVSJdLFswLDEsIlxcbWF0aGJie0Z9Xm4iXSxbMSwxLCJcXG1hdGhiYntGfV5sIl0sWzAsMiwiXFxzaW0iLDJdLFsxLDMsIlxcc2ltIiwyXSxbMCwxLCJUIFxcY2lyYyBTIl0sWzIsMywiW1MgXFxjaXJjIFRdX1xcYWxwaGFeXFxnYW1tYSIsMl1d
+    \begin{tikzcd}
+        V & U \\
+        {\mathbb{F}^n} & {\mathbb{F}^l}
+        \arrow["\wr"', from=1-1, to=2-1]
+        \arrow["\wr"', from=1-2, to=2-2]
+        \arrow["{T \circ S}", from=1-1, to=1-2]
+        \arrow["{[S \circ T]_\alpha^\gamma}"', from=2-1, to=2-2]
+    \end{tikzcd}
+\]    
+    In "words", for $v \in V$,
+    \begin{align*}
+        [S \circ T]_\alpha^\gamma \cdot [v]_\alpha = [(S \circ T)(v)]_\alpha^\gamma = [S(T(v))]_\alpha = [S]_\beta^\gamma \cdot [T(v)]_\beta = [S]_\beta^\gamma \cdot [T]_\alpha^\beta \cdot [v]_\alpha,
+    \end{align*}
+    ie we have shown that $L_{[S \circ T]_\alpha^\gamma} = L_{[S]_\beta^\gamma \cdot [T]_\alpha^\beta}$. Because $A \mapsto L_A$ is an isomorphism, it follows that $[S \circ T]_\alpha^\gamma = [S]_\beta^\gamma \cdot [T]_\alpha^\beta$.
+\end{proof}

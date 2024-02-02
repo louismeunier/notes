@@ -14,22 +14,22 @@
     \begin{enumerate}
         \item \begin{align*}
             [T_1 + T_2] &= \begin{pmatrix}
-         & \vdots & \\
+         & \vert & \\
             \cdots & (T_1+T_2)(v_i) & \cdots\\
-            & \vdots & 
+            & \vert & 
         \end{pmatrix} = \begin{pmatrix}
-            & \vdots & \\
+            & \vert & \\
                \cdots & T_1(v_i)+T_2(v_i) & \cdots\\
-                & \vdots & 
+                & \vert & 
            \end{pmatrix}\\ 
            &= \begin{pmatrix}
-            & \vdots &\\
+            & \vert &\\
             \cdots & T_1(v_i) & \cdots\\
-            & \vdots & 
+            & \vert & 
            \end{pmatrix} + \begin{pmatrix}
-            & \vdots &\\
+            & \vert &\\
             \cdots & T_2(v_i) & \cdots\\
-            & \vdots & 
+            & \vert & 
            \end{pmatrix} \\
            &= [T_1] + [T_2]
         \end{align*}
@@ -49,7 +49,7 @@
     This was stated previously in \cref{prop:construction} by constructing an explicit basis. Indeed, this basis is precisely the image of the standard basis for $M_{m \times n}(\field)$ under the map $A \mapsto L_A$.
 \end{remark}
 
-\subsection{General Matrix Representation}
+\subsection{Matrix Representation of Linear Transformations, General Spaces}
 
 \begin{remark}
     The previous section was concerned with representing transformations between finite fields $\field^n, \field^m$; this section aims to make the same construction for any finite dimensional $V, W$.
@@ -99,12 +99,12 @@ We call this the \emph{matrix representation} of $T$ from $\beta$ to $\gamma$.
             \arrow[from=1-1, to=1-2, "T"]
              \arrow["{I_\beta}"', from=1-1, to=2-1]
             \arrow["{I_\gamma}", from=1-2, to=2-2]
-            \arrow["{L_{[T]_\beta^\gamma}}"', from=2-1, to=2-2]
+            \arrow["{L_{[T]_\beta^\gamma}}"', from=2-1, to=2-2, dashed]
         \end{tikzcd}
         \]
         
 
-        Namely, $I_\gamma \circ T = L_{[T]_\beta^\gamma} \circ I_\beta$
+        Namely, $I_\gamma \circ T = L_{[T]_\beta^\gamma} \circ I_\beta$, or equivalently, given $v \in V$, $[T(v)]_\gamma = [T]_\beta^\gamma \cdot [v]_\beta$.
         \item The map $\Hom(V, W) \to M_{m\times n}(\field), T \mapsto [T]_\beta^\gamma$ is a vector space isomorphism with inverse begin the map $M_{m \times n}(\field) \to \Hom(V, W), A \mapsto I_\gamma^{-1}\circ L_A \circ I_\beta$
     \end{enumerate}
 \end{theorem}
@@ -113,14 +113,36 @@ We call this the \emph{matrix representation} of $T$ from $\beta$ to $\gamma$.
     2. is left as a (homework) exercise; it follows directly from 1.
 
     Fix $v \in V$. We need to show that $I_\gamma \circ T(v) = L_{[T]_\beta^\gamma} \circ I_\beta(v)$. We have \begin{align*}
-        I_\gamma \circ T(v) = [T(v)]_\beta.
+        I_\gamma \circ T(v) = [T(v)]_\gamma.
     \end{align*}
     OTOH, \[
     L_{[T]_\beta^\gamma} \circ I_\beta (v) = L_{[T]_\beta^\gamma} ([v]_\beta) = [T]_\beta^\gamma \cdot [v]_\beta.
     \]
+    We need to show, then, that $[T(v)]_\gamma = [T]_\beta^\gamma \cdot [v]_\beta$.
+
     Let $v = a_1 v_1 + \cdots + a_n v_n$, so $[v]_\beta = \begin{pmatrix}
         a_1\\
         \vdots\\
         a_n
-    \end{pmatrix}$. Then:
+    \end{pmatrix}$. Recall that $[T]_\beta^\gamma = \begin{pmatrix}
+        \vdots & \cdots & \vdots\\
+        [T(v_1)]_\gamma & \cdots & [T(v_n)]_\gamma\\
+        \vdots & \cdots & \vdots\\
+    \end{pmatrix}$. Thus, we have \begin{align*}
+        [T]_\beta^\gamma \cdot [v]_\beta = a_1 [T(v_1)]_\gamma + \cdots + a_n [T(v_n)]_\gamma &= [a_1T(v_1) + \cdots + a_n T(v_n)]_\gamma \quad \textit{(by linearly of } I_\gamma\textit{)}\\
+        &= [T(a_1 v_1 + \cdots + a_n v_n)]_\gamma \quad \textit{(by linearity of }T\textit{)}\\
+        &= [T(v)]_\gamma,
+    \end{align*}
+    which is precisely what we wanted to show.
 \end{proof}
+
+\begin{remark}
+    For $A \in M_{m \times n}(\field)$ and $x = \begin{pmatrix}
+        x_1\\
+        \vdots\\
+        x_n
+    \end{pmatrix} \in \field^n$, we have \[
+    A \cdot x = x_1 \cdot A^{(1)} + x_2 \cdot A^{(2)} + \cdots + x_n \cdot A^{(n)},    
+    \]
+    where $A^{(j)}$ is the $j$th column of $A$; thus $A \cdot x$ is a linear combination of $A$, with coefficients given by the vector $x$; this interpretation can make it easier to make sense of computations.
+\end{remark}
