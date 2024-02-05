@@ -1,0 +1,87 @@
+\subsection{Inverses of Transformations and Matrices}
+
+\begin{remark}
+    Recall that, given a function $f: X \to Y$, a function $g: Y \to X$ is called \begin{enumerate}
+        \item a \emph{left inverse} of $f$ if $g \circ f = \Id_X$;
+        \item a \emph{right inverse} of $f$ if $f \circ g = \Id_X$;
+        \item a (two-sided) \emph{inverse} of $f$ if $g$ both a left and right inverse of $f$.
+    \end{enumerate}
+    If an inverse exists, it is unique; let $g_0, g_1$ be inverse of $f$,then, $g_0 = g_0 \circ (f \circ g_1) = (g_0 \circ f) \circ g_1 = g_1$.
+\end{remark}
+
+\begin{proposition}
+    Let $f: X \to Y$. Then, \begin{enumerate}
+        \item $f$ has a left-inverse $\iff$ $f$ injective;
+        \item $f$ has a right-inverse $\iff$ $f$ surjective;
+        \item $f$ has an inverse $\iff$ $f$ bijective.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    ((a), $\implies$) Suppose $g: Y\to X$ is a left-inverse of $f$ and $f(x_1) = f(x_2)$. Then, $g \circ f(x_1) = g \circ f(x_2) \implies x_1 = x_2$ and so $f$ injective. 
+
+    \noindent((b), $\implies$) Suppose $g: Y \to X$ is a right-inverse of $f$ and let $y \in Y$. Then, $f(g(y)) = y \implies y \in f(X)$.
+
+    The remainder of the cases and directions are left as an exercise.
+\end{proof}
+
+\begin{remark}
+    Proof of $(b), \impliedby$ uses Axiom of Choice.
+\end{remark}
+
+\begin{example}
+    \begin{enumerate}
+        \item The differentiation transform $\delta : \field[t]_{n+1} \to \field[t]_{n}, p(t) \mapsto p'(t)$ has a right inverse, the integration transform, $\iota : \field[t]_{n} \to \field[t]_{n+1}$, $p(t) \mapsto$ antiderivative of $p(t)$; conversely, $\iota$ has left inverse $\delta$; they do not admit inverses.
+        \item Let $f:  \field[\![t]\!] \to \field[\![t]\!]$ be the left-shift map, where $\sum_{n=0}^\infty a_n t^n \mapsto \sum_{n=1}^\infty a_n t^{n-1}$. Then, $g : \field[\![t]\!] \to \field[\![t]\!]$ with $\sum_{n=0}^\infty a_n t^n \mapsto \sum_{n=0}a_n t^{n+1}$, the right-shift map, is a right inverse of $f$, but $f$ has no left inverse (it is not injective).
+    \end{enumerate}
+\end{example}
+
+\begin{remark}
+    The existence of only one-sided inverses existing happens only when in infinite-dimensional vectors spaces, or when the dimension of the domain is not the same as the dimension of the codomain.
+\end{remark}
+
+\begin{corollary}[Of \nameref{thm:ranknullity}]\label{cor:sillyrncor}
+    Let $T : V \to W$ s.t. $\dim(V) = \dim(W) < \infty$. TFAE:
+    \begin{enumerate}
+        \item $T$ has a left-inverse;
+        \item $T$ has a right-inverse;
+        \item $T$ is invertible (has an inverse).
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    We have already that $T$ injective $\iff$ $T$ surjective $\iff$ $T$ bijective.
+\end{proof}
+
+\begin{definition}[Matrix Inverse]
+    We call a $n \times n$ matrix $B$ over $\field$ the \emph{inverse} of an $n \times n$ matrix $A$ over $\field$ if $A \cdot B = B \cdot A = I_n$. We denote $B = A^{-1}$.
+\end{definition}
+
+\begin{proposition}
+    Let $A \in M_n(\field)$. Then, \begin{enumerate}
+        \item $L_A$ is invertible $\iff$ $A$ is invertible, in which case $L_A^{-1} = L_{A^{-1}}$;
+        \item $A$ is invertible $\iff$ it has a left-inverse, ie $B \cdot A = I_n$ $\iff$ it has a right-inverse, ie $A \cdot B = I_n$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $L_A$ invertible $\iff$ $\exists T:\field^n \to \field^n$-linear s.t. $L_A \circ T = T \circ L_A = I_{\field^n}$ $\iff$ $\exists$ a matrix $B \in M_n(\field)$ such that $L_A \circ L_B = L_B \circ L_A = I_{\field^n}$ $\iff$ there is a matrix $B \in M_n(\field) \st L_{AB} = L_{BA} = I_{\field^n}$ $\iff$ there is a $B \in M_{n}(\field) \st A \cdot B = B \cdot A = I_n$.
+        \item Follows directly from \cref{cor:sillyrncor} and part 1.
+    \end{enumerate}
+\end{proof}
+
+\subsubsection{An Application of \nameref{thm:ranknullity}: Invariant Subspaces and Nilpotent Transformations}
+
+\begin{definition}[$T$-Invariant]
+    Let $T : V \to V$ be a linear transformation.\footnotemark We call a subspace $W \subseteq V$ \emph{$T$-invariant} if $T(W) \subseteq W$.
+\end{definition}
+\footnotetext{Because the domain and codomain are the same, we often call $T$ a "linear operator".}
+\begin{example}[Examples of Invariant Subspaces]
+    \begin{enumerate}
+        \item For any $T : V \to V$, $\im(T)$ is $T$-invariant.
+        \item For any $T:V \to V$, $\ker(T)$ is $T$-invariant, since $T(v) = 0_V \in \ker(T) \forall v \in \ker(T)$. Moreover, for any $n \in \mathbb{N}$, the space $\ker(T^n)$ is $T$-invariant.\footnotemark 
+    \end{enumerate}
+\end{example}
+
+\footnotetext{$T^n := T\circ T \circ \cdots \circ T$, $n$ times; $T^0 := I_V$.}
