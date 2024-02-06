@@ -16,6 +16,7 @@
 \usepackage{multicol}
 \usepackage[shortlabels]{enumitem}
 \usepackage{listings}
+\usepackage{tocloft}
 
 \usepackage{setspace}
 \usepackage{cancel}
@@ -41,17 +42,32 @@
 
 
 
+% TODO: updates below
 % ! title
-\newcommand{\thetitle}{\noindent
-\begin{center}
-    \begin{tabularx}{\textwidth} { 
-        >{\raggedright\arraybackslash}X 
-        >{\raggedleft\arraybackslash}X}
-    \LARGE \pageauthor \\
-    \LARGE \textbf{\pagetitle} & \LARGE \textbf{\pagesubtitle}\\
-    \end{tabularx}\\
-    \rule[2ex]{0.8\textwidth}{1pt}
-\end{center}}
+% \newcommand{\thetitle}{\noindent
+% \begin{center}
+%     \begin{tabularx}{\textwidth} { 
+%         >{\raggedright\arraybackslash}X 
+%         >{\raggedleft\arraybackslash}X}
+%     \LARGE \pageauthor \\
+%     \LARGE \textbf{\pagetitle} & \LARGE \textbf{\pagesubtitle}\\
+%     \end{tabularx}\\
+%     \rule[2ex]{0.8\textwidth}{1pt}
+% \end{center}}
+\newcommand{\thetitle}{
+  \noindent
+% \begin{center}
+  \vspace*{5em}\\
+  {\Huge\textbf{\pagesubtitle} - \pagetitle}\\
+  {\small{\pagedescription}}
+  \vspace*{2em}\\
+  % \vspace*{2em}
+ {\small Based on lectures from \pagesemester by \pageprofessor}\\
+ {\small Notes by \pageauthor}
+ \vspace*{5em}
+% \end{center}
+}
+
 
 \titleformat{\section}
 {\color{darkgray}\centering\normalfont\Large\bfseries}
@@ -83,7 +99,8 @@
   backgroundcolor=solarized-cyan!20,
   skipabove=5pt, skipbelow=5pt,
   innertopmargin=2pt, innerbottommargin=5pt,
-  innerleftmargin=8pt, innerrightmargin=8pt
+  innerleftmargin=8pt, innerrightmargin=8pt,
+  nobreak=true
 }
 
 \mdfdefinestyle{general-thm}{
@@ -93,7 +110,16 @@
   backgroundcolor=gray!10,
   skipabove=10pt, skipbelow=10pt,
   innertopmargin=2pt, innerbottommargin=5pt,
-  innerleftmargin=8pt, innerrightmargin=8pt
+  innerleftmargin=8pt, innerrightmargin=8pt,
+  nobreak=true
+}
+
+\mdfdefinestyle{inline-thm}{
+  roundcorner=8pt,
+  linecolor=white,
+  leftmargin=5,rightmargin=5,
+  backgroundcolor=gray!10,
+  nobreak=true
 }
 
 \mdtheorem[style=example]{example}{$\circledast$ \underline{Example}}[section]
@@ -105,6 +131,12 @@
 \mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
 \mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
 \mdtheorem[style=general-thm]{question}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Question}}}[section]
+
+\newmdtheoremenv[roundcorner=8pt,
+linecolor=white,
+leftmargin=5,rightmargin=5,
+backgroundcolor=gray!10,
+nobreak=true]{lemma-inline}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
 
 % fixes broken references
 \newcommand{\thmautorefname}{Theorem}

@@ -1,0 +1,67 @@
+\begin{theorem}
+    Let $(X,d)$ be a metric space. TFAE:
+        \begin{enumerate}
+            \item $X$ is complete and totally bounded;
+            \item $X$ is compact;
+            \item $X$ is sequentially compact (every sequence has a convergent subsequence).
+        \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    (1. $\implies$ 2.) Suppose $X$ complete and totally bounded. Assume towards a contradiction that $X$ not compact, ie there exists an open cover $\{U_\alpha\}_{\alpha \in I}$ of $X$ with no finite subcover. 
+    
+    $X$ being totally bounded gives that it can be covered by finitely many open balls of radius $\frac{1}{2}$. It must be that at least one of these open balls cannot be finitely covered, otherwise we would have a finite subcover. Let $F_1$ be the closure of this ball. $F_1$ closed, with diameter $\diam(F_1)\leq 1$. $X$.
+
+    We also have that $X$ can be covered by finitely many balls of radius $\frac{1}{4}$; again, there must be at least one ball $B_1$ such that $B_1 \cap F_1$ cannot be covered by finitely many open sets from the cover. Let $F_2 = \overline{B_1} \cap F_1$-closed, with $\diam (F_2) \leq \frac{1}{4} + \frac{1}{4} = \frac{1}{2}$.\footnote{$B_1$ has radius $\frac{1}{4}$ and hence diameter $\frac{1}{2}$. The intersection of $B_1$ with a set with a larger diameter must have diameter leq $\frac{1}{2}$}
+
+    Arguing inductively, at some step $n$, $X$ can can be covered by finitely many balls of radius $\frac{1}{2^n}$; at least one of these balls $B$ cannot be covered by a finite subcover hence $B \cap  F_{n-1}$ cannot be covered by finitely many $U_\alpha$'s. Let $F_n = \overline{B} \cap F_{n-1}$ -closed, with $\diam (F_n) \leq \frac{1}{2^{n-1}}$.
+    
+    As such, we have a nested sequence $F_1 \supseteq F_2 \supseteq \cdots \supseteq F_n \supseteq \cdots $ of closed sets, where $\diam (F_{k}) \leq \frac{1}{2^{k-1}} \to 0$ as $k \to \infty$.
+
+    \begin{lemma-inline}[Cantor Intersection Theorem]
+        $\bigcap_{k=1}^\infty F_k\neq \varnothing$.
+    \end{lemma-inline}
+    \begin{proof}(Of Lemma)
+        Let $x_k \in F_k$. Then, $\{x_k\}_{k \in \mathbb{N}}$ is a Cauchy sequence, since $$
+        d(x_n, x_{n+k}) \leq \diam(F_{n}) + \cdots + \diam(F_{n+k}) \leq \frac{1}{2^{n-1}},
+        $$
+        by the nested property, which can be made arbitrarily small for sufficiently large $n, k$. Hence, $x_n \to y \in X$ for some $y$, as $X$ complete. The tail of $x_n$ lies in $F_n$ for all sufficiently large $n$, and as each $F_n$ closed, the limit must lie in $F_n$ for all sufficiently large $n$. We conclude the intersection nonempty.
+    \end{proof}
+
+    This $y$ from the lemma is covered by some $U_{\alpha_0}$-open for some $\alpha_0 \in I$. Being open, $\exists \epsilon > 0 : B(y, \epsilon) \subseteq U_{\alpha_0}$. Let $n : \frac{1}{2^n-1} < \epsilon.$ Then, $y \in F_n$, and as $\diam(F_n) \leq \frac{1}{2^{n-1}}$, we have that $F_n \subseteq B(y, \frac{1}{2^{n-1}}) \subseteq B(y, \epsilon) \subseteq U_{\alpha_0}$. But then, we have that $F_n$ covered by a single open set $U_{\alpha_0}$, a contradiction to our inductive construction of $F_n$. We conclude $X$ compact.
+
+    \noindent (2. $\implies$ 3.) Suppose $X$ compact. Let $\{x_n\}_{n \in \mathbb{N}} \in X$. Let $F_n = \overline{\bigcup_{k\geq n} \{x_k\}}$-closed; we have too that $F_1 \supseteq F_2 \supseteq \cdots \supseteq F_n \supseteq \cdots$.  
+
+    \begin{definition}[Finite Intersection Property]
+        $\mathcal{F}$ has finite intersection property provided any finite subcollection of sets in $\mathcal{F}$ has a non-empty intersection.
+    \end{definition}
+
+    \begin{lemma-inline}[Finite Interesection Formulation of Compactness]
+        $X$-compact $\iff$ every collection $\mathcal{F}$ of closed subsets of $X$ with finite intersection property has non-empty intersection.
+    \end{lemma-inline}
+    \begin{proof}
+    % TODO    
+    \end{proof}
+    
+    This lemma directly gives that $\bigcap_{n=1}^\infty F_n \neq \varnothing$, $\{F_n\}_{n \in \mathbb{N}}$ being a collection of closed subsets with any subset having nonempty intersection (by the nestedness). Let $y \in \cap_{n=1}^\infty F_n$. Take $B(y, \frac{1}{k})$, which thus has nonempty intersection with $\{x_k\}_{k \geq n} \forall n$, ie $\exists n_1 : d(y, x_{n_1}) < 1$ and $\exists n_2 > n_1 : d(y, x_{n_2}) < \frac{1}{2}$. Arguing inductively, $\exists n_j > n_{j-1} : d(y, x_{n_j}) < \frac{1}{j}$ for any given $n_{j-1}$. It follows that $\lim_{j \to \infty} x_{n_j} = y$, and thus $\{x_{n_j}\}$ is a convergent subsequence of $\{x_n\}$ that converges within $X$, and thus $X$ is sequentially compact.
+
+    \noindent(3. $\implies$ 1.) Suppose $X$ sequentially compact. Let $\{x_n\} \in X$ be a Cauchy sequence in $X$, which thus have a convergent subsequence $\{x_{n_k}\} \to y$.
+    \begin{lemma-inline}
+        Let $\{x_n\}$ be a Cauchy sequence in $X$ where $X$ sequentially compact. Then, if $\{x_{n_k}\} \to y$, so does $\{x_n\} \to y$ 
+    \end{lemma-inline}
+    \begin{proof}
+        % TODLO
+    \end{proof}
+    Then, $\{x_n\}_n \to y$ and so $X$ complete. % TODO
+
+    Suppose $X$ not totally bounded, ie $\exists \epsilon > 0 : X$ cannot be covered by a finite union of balls of $B(x_j, \epsilon)$. Let $x_1 \in X$ s.t. $B(x_1, \epsilon) \nsupseteq X$; $\exists x_2 \in X \setminus B(x_1, \epsilon)$, and so $X \nsubseteq B(x_1, \epsilon) \cup B(x_2, \epsilon)$ by assumption. Then, choose $x_3 \in X \setminus (B(x_1, \epsilon) \cup B(x_2, \epsilon))$. Arguing inductively, we have that $\exists x_n \in X \setminus (\bigcup_{i=1}^{n} B(x_i, \epsilon))$, noting that $d(x_n, x_j) \geq \epsilon \forall 1 \leq j \leq n$.
+
+    Consider the sequence $\{x_{j}\}_{j \in \mathbb{N}}$:
+    \begin{lemma-inline}
+        $\{x_{j}\}$ cannot have a convergent subsequence.
+    \end{lemma-inline}
+    \begin{proof}
+        Follows by $d(x_m, x_n) \geq \epsilon \forall m, n$.
+    \end{proof}
+    This contradicts our assumption that $X$ sequentially compact, and we conclude $X$ must be totally bounded.
+\end{proof}
