@@ -16,6 +16,7 @@
 \usepackage{multicol}
 \usepackage[shortlabels]{enumitem}
 \usepackage{listings}
+\usepackage{tocloft}
 
 \usepackage{setspace}
 \usepackage{cancel}
@@ -40,17 +41,31 @@
 \usepackage{physics}
 
 
+% TODO: updates below
 % ! title
-\newcommand{\thetitle}{\noindent
-\begin{center}
-    \begin{tabularx}{\textwidth} { 
-        >{\raggedright\arraybackslash}X 
-        >{\raggedleft\arraybackslash}X}
-    \LARGE \pageauthor \\
-    \LARGE \textbf{\pagetitle} & \LARGE \textbf{\pagesubtitle}\\
-    \end{tabularx}\\
-    \rule[2ex]{0.8\textwidth}{1pt}
-\end{center}}
+% \newcommand{\thetitle}{\noindent
+% \begin{center}
+%     \begin{tabularx}{\textwidth} { 
+%         >{\raggedright\arraybackslash}X 
+%         >{\raggedleft\arraybackslash}X}
+%     \LARGE \pageauthor \\
+%     \LARGE \textbf{\pagetitle} & \LARGE \textbf{\pagesubtitle}\\
+%     \end{tabularx}\\
+%     \rule[2ex]{0.8\textwidth}{1pt}
+% \end{center}}
+\newcommand{\thetitle}{
+  \noindent
+% \begin{center}
+  \vspace*{5em}\\
+  {\Huge\textbf{\pagesubtitle} - \pagetitle}\\
+  {\small{\pagedescription}}
+  \vspace*{2em}\\
+  % \vspace*{2em}
+ {\small Based on lectures from \pagesemester by \pageprofessor}\\
+ {\small Notes by \pageauthor}
+ \vspace*{5em}
+% \end{center}
+}
 
 \titleformat{\section}
 {\color{darkgray}\centering\normalfont\Large\bfseries}
@@ -76,12 +91,14 @@
 
 \mdfdefinestyle{example}{
   roundcorner=8pt,
-  linecolor=white,
-  leftmargin=10,rightmargin=10,
+  linewidth=2pt,
+  linecolor=gray!30,
+  leftmargin=15,rightmargin=15,
   backgroundcolor=solarized-cyan!20,
   skipabove=5pt, skipbelow=5pt,
   innertopmargin=2pt, innerbottommargin=5pt,
-  innerleftmargin=8pt, innerrightmargin=8pt
+  innerleftmargin=8pt, innerrightmargin=8pt,
+  nobreak=true
 }
 
 \mdfdefinestyle{general-thm}{
@@ -91,7 +108,8 @@
   backgroundcolor=gray!10,
   skipabove=10pt, skipbelow=10pt,
   innertopmargin=2pt, innerbottommargin=5pt,
-  innerleftmargin=8pt, innerrightmargin=8pt
+  innerleftmargin=8pt, innerrightmargin=8pt,
+  nobreak=true
 }
 
 \mdtheorem[style=example]{example}{$\circledast$ \underline{Example}}[section]

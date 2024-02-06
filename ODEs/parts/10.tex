@@ -1,0 +1,121 @@
+\subsection{Nonhomogeneous Second Order ODEs}
+
+We consider equations of the form \[
+a(t) y'' + b(t) y' + cy = g(t)   .
+\]
+Let's look for solutions of the form \[
+y(t) = c_1y_1(t) + c_2y_2(t) + y_p(t)    ,
+\]
+where $y_1, y_2$ are linearly independent solutions of the homogenous equation ($g = 0$) and $y_p$ is a particular solution to the ODE. Plugging this into the original equation:
+\begin{align*}
+    ay''+by'+cy &= a(c_1y_1''+c_2y_2''+y_p'')+b(c_1y_1'+c_2y_2'+y_p') + c(c_1y_1+c_2y_2+y_p)\\
+    &= c_1(\cancelto{0}{a y_1'' + by_1' + cy_1}) + c_2(\cancelto{0}{ay_2''+by_2' + c y_2}) + \cancelto{g}{a y_p'' + b y_p' + cy_p}\\
+    &= g,
+\end{align*}
+as desired. Indeed, all solutions are of this form; we will show this later.
+
+\begin{remark}
+    Note that $c_1, c_2$ are arbitrary constants; $y_p$ is not multiplied by a constant, and should not be.
+\end{remark}
+
+\begin{remark}
+    $y_1, y_2$ are called a fundamental set of solutions; $y_c = c_1 y_1 + c_2 y_2$, the general solution to the homogeneous equation, is called the complementary solution of the nonhomogeneous equation. $y = y_c + y_p$ is the general solution of the nonhomogeneous equation.
+\end{remark}
+
+\subsubsection{Linear Operator Notation}
+We denote $C(\mathbb{R})$ to be the space of continuous functions on $\mathbb{R}$. Let $C^p(\mathbb{R})$ be the space of $p$-times differentiable functions on $\mathbb{R}$; ie, $y \in C^{p}(\mathbb{R}) \implies y ^{(j)} \in C(\mathbb{R}), j = 0, 1, \dots, p$. Notice that $C^{p + 1}(\mathbb{R}) \subsetneq C^p(\mathbb{R})$. It follows that $C^{\infty}(\mathbb{R}) \subsetneq \cdots \subsetneq C^{n}(\mathbb{R}) \subsetneq \cdots \subsetneq C(\mathbb{R})$.
+
+Let $D : C^{n}(\mathbb{R}) \to C^{(n-1)}(\mathbb{R})$ be the differentiation operator, ie $Dy = y'$, noting that $Dy$ less differentiable than $y$ unless $y \in C^{\infty}(\mathbb{R})$. Its clear that $D$ is a linear operator.
+
+Now, define the operator $L = a(x)D^2 + b(x)D + c(x)$. Then, $L[y] = a(x)y'' + b(x) y' + c(x)y$; hence, $L[y] = 0$ and $L[y] = g$ are equivalent to our homogeneous and nonhomogeneous equations. It is clearly linear.
+
+
+We explore two methods for finding the particular solution.
+\subsubsection{Finding \texorpdfstring{$y_p$}{Particular Solution}: Method of Undetermined Coefficients}
+
+This method only applies to ODEs with constant coefficients, and only for certain functions $g$.
+
+\begin{example}
+    Consider $g(t) = L[y](t)$. Suppose $g(t) = \mu e^{\gamma t}$. Let's guess that $y_p = Ae^{\gamma t}$. Then:
+\begin{align*}
+    L[y_p] = aA \gamma^2 e^{\gamma t} + bA \gamma e^{\gamma t} + cA e^{\gamma t} = (a \gamma^2 + b \gamma + c) Ae^{\gamma t},
+\end{align*}
+hence, for $L[y_p] = g = \mu e^{\gamma t},$ we need $\mu = A(a \gamma^2 + b \gamma + c) \implies A  = \frac{\mu}{a\gamma^2 + b \gamma + c}$. Provided $a \gamma^2 + b \gamma + c \neq 0 \iff \gamma$ does not solve auxiliary equation, this $A$ as defined will provide $y_p$.
+\end{example}
+
+\begin{remark}
+    This example worked* because differentiating the exponential yields another exponential, which cancel nicely. The same idea can be applied for polynomials and trig functions.
+\end{remark}
+
+\begin{example}[With trig]
+    Suppose $L[y] = y''-y'+y=g(t) = 2 \sin (3 t)$, with auxiliary equation $r^2 - r + 1 = 0 \implies r = \frac{1}{2} \pm i \frac{\sqrt{3}}{2}$. This gives complementary solution \begin{align*}
+        y_c = e^{\frac{t}{2}}\left(k_1 \sin (\frac{\sqrt{3}}{2}t) + k_2 \cos (\frac{\sqrt{3}}{2}t)\right).
+    \end{align*}
+
+    Suppose $y_p = A \sin (3 t)$; this would give \begin{align*}
+        -9A \sin (3t) - 3A \cos (3t)  + A \sin (3t)= 2\sin (3t),
+    \end{align*}
+    which implies $2 = - 8 A$ and $0 = -3 A$, which has no solution. This does not necessarily mean that no $y_p$ exists; at least in this case, we made a wrong guess at the beginning.
+
+    Suppose instead that $y_p = A \sin (3t) + B \cos (3t)$. This gives \begin{align*}
+        -9A \sin (3t) - 9B \cos (3t) - 3A \cos (3t) + 3B \sin (3t) + A \sin (3t) + B \cos (3t) = 2 \sin (3t)\\
+        2\sin(3t) = (-3B - 8A)\sin(3t) + (-8B-3A)\cos (3t)\\
+        \implies 2 = -3B - 8A, \quad 0 = -8B - 3A
+    \end{align*}
+    Solving this equation gives $A = -\frac{16}{73}$ and $B = \frac{6}{73}$. This gives $y_p = \frac{-16}{73} \sin (3t) + \frac{6}{73} \cos (3t)$.
+\end{example}
+
+\begin{example}[With polynomials]
+    Consider $L[y] = y'' + 2y'+y = t^3 = g$. Suppose $y_p = At^3 + Bt^2 + Ct+D$. Then:
+    \begin{align*}
+        L[y_p] = 6At + 2B + 2(3At^2 +2Bt+C) + At^3+Bt^2+Ct+D = t^3\\
+        At^3 + (6A + B)t^2 + (6A + B)t^2 + (6A + 4B+ C)t + (2B+C+D) = t^3\\
+        \implies \begin{matrix}
+            1 = A\\
+            0 = 6A + B\\
+            0 = 6A + 4B + C\\
+            0 = 2B + C + D
+        \end{matrix} \implies \begin{matrix}
+            A = 1\\
+            B = -6\\
+            C = 18\\
+            D = -24
+        \end{matrix},
+    \end{align*}
+    so $y_p = t^3 - 6t^2 + 18t - 24$.
+\end{example}
+
+\begin{example}[Exponential]
+    Take $L[y] = y''-2y'+y=4e^x$ with homogeneous auxiliary $r^2 - 2r + 1 = 0 \implies (r-1)^2 = 0$ so $$
+    y_1 = e^x, \quad y_2 = xe^x.
+    $$
+    If we guessed, $y_p = Ae^x$ then we'd have $L[Ae^x] = A L[e^x] = 0$, so it will not work. The same happens with guessing $Axe^x$. Suppose, then, that $Ax^2 e^x$. Then:
+    \begin{align*}
+        L[Ax^2e^x] = A(x^2 + 4x + 2)e^x - 2A(x^2 + 2x)e^x + Ax^2e^x = 4e^x\\
+        4e^x = 2Ae^x \implies A = 2.
+    \end{align*}
+    $y_p = 2x^2 e^x$, with general solution $y = (k_1 + k_2 + 2x^2)e^x$.
+\end{example}
+
+We now generalize the method:
+
+Let $p(x) = \sum_{j=0}^n a_j x^j$ and $q(x) = \sum_{j=0}^n b_j x^j$ be given polynomials. To solve $L[y](x) = g(x)$ for a constant coefficient ODE, we have the following cases:
+
+\begin{table}[!ht]
+\begin{tabular*}{\linewidth}{c|c}\centering
+    $g(x)$ (given) & $y_{p(x)}$ (guess)\\
+    \hline
+    $p(x)$ &$ x^2 (A_n x^n + \cdots + A_1 x + A_0)$\\
+    $e^{\alpha x} $&  $x^s Ae^{\alpha x}$\\
+    $p(x)e^{\alpha x}$ & $x^2 (A_n x^n + \cdots + A_1 x + A_0)e^{\alpha x}$\\
+    $p(x)e^{\alpha x} \cos \beta x + q(x)e^{\alpha x} \sin \beta x$ &  $x^s e^{\alpha x} \cos (\beta x) \sum_{i=0}^n A_i x^i  + x^s e^{\alpha x} \sin (\beta x) \sum_{j=0}^n B_j x^j$.
+\end{tabular*}
+\end{table}
+
+\begin{itemize}
+    \item $s = 0$ if $\alpha + i \beta$ is not a root of the auxiliary equation.
+    \item $s = $ multiplicity of the root of $\alpha + i \beta$ if it is a root of the equation.
+\end{itemize}
+\begin{remark}
+    First two cases are just special cases of the third; they are all just special cases of the last one.
+\end{remark}

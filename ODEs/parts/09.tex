@@ -1,0 +1,110 @@
+\begin{definition}[Linear Independence of Functions]
+    If $y_1(t), y_2(t)$ are defined $\forall t \in I$ for some interval $I \subseteq \mathbb{R}$, then $y_1(t), y_2(t)$ are \emph{linearly dependent on I} if $\exists k_1, k_2$ constants (not both zero) so that $k_1\cdot y_1(t) + k_2\cdot y_2(t) = 0 \forall t \in I$.
+
+    If the only constants which solve this are $k_1 = k_2 = 0$, then $y_1(t), y_2(t)$ are linearly independent on $I$.
+\end{definition}
+
+\begin{remark}
+    If $y_j(t)$ is the zero function, then take $k_j = 1$ and the other constant zero; ie, the zero function is always linearly dependent.
+\end{remark}
+
+\subsection{Reduction of Order}
+
+Suppose $y_1(t)$ solves the homogeneous ODE $0 = a(t)y'' + b(t)y'+c(t)y$. Let $y(t) = u(t)y_1(t)$ for some unknown $u(t)$, and assume it solves the ODE. Then: \begin{align*}
+    y = u y_1 \implies y' = u'y_1 + u y_1' \implies y'' = u''y_1 + u'y_1' + u' y_1' + uy_1'' = uy_1'' + 2u'y_1'+ u''y_1.
+\end{align*}
+Substituting this into the original ODE:
+\begin{align*}
+    0 =& a(u''y_1+2u'y_1'+uy_1'') + b(u'y_1+uy_1')+c(uy_1')\\
+    &= [ay_1]u''+[2ay_1'+by_1]u'+\underbrace{[ay_1''+by_1'+cy_1]}_{=0}u\\
+\end{align*}
+Let $v = u' \implies v' = u''$, and we have reduced to a first-order ODE \begin{align*}
+    0 = [ay_1]v' + [2ay_1'+by_1]v
+\end{align*}
+which we can solve for $v$, then conclude by integrating $v$ to solve for $u$.
+
+\subsection{Constant Coefficient Linear Homogeneous Second Order ODEs}
+
+We consider the case \[
+ay''+by'+cy=0,    
+\]
+where $a, b, c$ are constants. If $a = 0$, this is simply first order with an exponential solution; so, suppose (guess) that this ODE has solution $y = e^{rt}$ for $a \neq 0$. This gives \begin{align*}
+    a(e^{rt})'' + b(e^{rt})'+c(e^{rt}) = 0\\
+    \implies ar^2e^{rt} + bre^{rt} + ce^{rt} = 0\\
+    \implies ar^2+br+c= 0 \implies r= \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{align*}
+and we thus have just to solve a quadratic equation. We call this the \emph{auxiliary equation} or \emph{characteristic equation} for the ODE.
+
+We thus have three cases to consider:
+\begin{enumerate}
+    \item $b^2 > 4ac$: $r$ has two real roots, giving two real solutions to the original ODE of the form \[
+    y_1(t) = e^{r_+t}, \quad y_2(t) = e^{r_-t},    
+    \]
+    where $r_{\pm} := r= \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. Note that $\frac{y_2}{y_2} = e^{(r_- - r_+)t}$ is non-constant hence these solutions are independent. It follows that we have a general solution \[
+    y(t) = k_1e^{r_+t}+k_2e^{r_-t}    
+    \]
+    for arbitrary constants $k_1, k_2$.
+    \item $b^2 = 4ac$: $r$ has one real (repeated) solution, $r = \frac{-b}{2a}$. This gives only one solution $y_1 = e^{r_1 t}$: we find another by reduction of order. Let $y = uy_1 = ue^{r_1t} = ue^{\frac{-bt}{2a}}$. We have:
+    \begin{align*}
+        0 &= ay'' + by' + cy\\
+        0&= a(u''y_1+2u'y_1'+uy_1'')+b(u'y_1+uy_1')+cuy'\\
+        0&=ay_1u''+(2ay_1'+by_1)u'+(\cancelto{0}{ay_1''+by_1'+cy_1})u\\
+        0&= ae^{r t}u'' + (2a re^{rt} + b e^{rt})u'\\
+        0&= au'' + (2ar + b)u'\\
+        0&= au'' + (- \frac{2ab}{2a} + b)u'\\
+        0&= au''\\
+        0&= u'' \implies u' = k_1 \implies u = k_1t + k_2,
+    \end{align*}
+    and so we have another solution $y = uy_1 = (k_1 t + k_2)e^{r t}$; these constants $k_1, k_2$ are arbitrary (as long as $k_1 \neq 0$, which would just give a linearly dependent solution to the original), so take $k_1 = 1, k_2 = 0$. This gives a general solution
+    \[
+        y(t) = c_1e^{rt} + c_2te^{rt} = (c_1+c_2t)e^{rt},
+    \]
+    which is actually just the "second" solution we found before (and thus this one was indeed the general solution by itself).
+    
+    \item $b^2 < 4ac$: $r$ has two complex conjugate roots $r_\pm = - \frac{b}{2a} \pm \frac{\sqrt{4ac-b^2}}{2a}i := \alpha \pm i \beta$. This gives solutions \[
+    y_+ = e^{(\alpha + i \beta )t}, \quad y_- = e^{(\alpha - i \beta)t}.
+    \]
+    While valid, these complex solutions are not necessarily useful in this form; we can rewrite them using Euler's formula to take only the real parts.
+
+    \begin{align*}
+        y_+ &= e^{(\alpha + i \beta)t} = e^{\alpha t}e^{i \beta t}= e^{\alpha t}[\cos (\beta t) + i \sin (\beta t)]\\
+        y_- &= e^{(\alpha - i \beta )t} = e^{\alpha t}e^{-i \beta t}= e^{\alpha t}[\cos (-\beta t) + i \sin (-\beta t)] = e^{\alpha t}[\cos (\beta t) - i \sin (\beta t)]
+    \end{align*}
+    Let $y_1 = \frac{1}{2}(y_+ + y_-) = e^{\alpha t} \cos(\beta t)$; this is a first, purely real solution to our ODE. To find a second, we could use reduction of order, or just take another linear combination of $y_+, y_-$
+    \begin{align*}
+        y_2 = \frac{1}{2i}[y_+ - y_-] = e^{\alpha t}\sin (\beta t).
+    \end{align*}
+    $y_1, y_2$ are linearly independent, since $\frac{y_2}{y_1} = \tan (\beta t) = 0 \forall t \iff \beta = 0$, which we assumed was not the case (otherwise, we'd be in case 2.).
+    Together, we have a general, purely real solution \[
+    y(t) = e^{\alpha t}(k_1\sin(\beta t) +k_2\cos (\beta t)),    
+    \]
+    where $k_1, k_2$ arbitrary and $r = \alpha \pm i \beta$.
+    % 
+\end{enumerate}
+
+\begin{mdframed}[backgroundcolor=gray!20]
+    \begin{center}
+    Harding once said: that "there is no permanent place in the world for ugly mathematics"; that means that there is a temporary place in the world for ugly mathematics. Make it pretty later.
+    \end{center}
+\end{mdframed}
+
+
+\begin{example}
+    \begin{enumerate}
+        \item $y'' - 3y' + 2y = 0$ 
+        
+        This gives an auxiliary equation $r^2 - 3r + 2 = 0$ with solution $r = \frac{3 \pm \sqrt{9 - 8}}{2} = 2, 1$. These are both positive and real, and we thus have a general solution \[
+        y(t) = k_1 e^{t} + k_2e^{2t}.    
+        \]
+        \item $y''-2y'+y = 0$
+        \begin{align*}
+            r^2 - 2r + 1 = 0 &\implies (r-1)(r-1) = 0 \implies r = 1\\
+            &\implies y(t) = (k_1t+k_2)e^{t}
+        \end{align*}
+        \item $y''+4y'+7y = 0$
+        \begin{align*}
+            r^2 + 4r + 7 = 0 &\implies r = \frac{-4 \pm \sqrt{16-28}}{2}= -2 \pm i \frac{1}{2}\sqrt{12} = -2 \pm i \sqrt{3}\\
+            &\implies y(t) = e^{-2t}(k_1 \sin (\sqrt{3}t) + k_2 \cos (\sqrt{3}t))
+        \end{align*}
+    \end{enumerate}
+\end{example}
