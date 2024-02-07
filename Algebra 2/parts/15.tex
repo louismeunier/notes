@@ -1,0 +1,141 @@
+\begin{proposition}
+    For a linear operator $T : V \to V$, the following hold:
+    \begin{enumerate}
+        \item $V \supseteq \im(T) \supseteq \im(T^2) \supseteq \cdots \supseteq \im(T^n) \supseteq  \cdots$. Moreover, $\im(T^n)$ is $T$-invariant for any $n \in \mathbb{N}$.
+        \item $\{0_V\} \subseteq \ker(T) \subseteq \ker(T^2) \subseteq \cdots \subseteq \ker(T^n) \subseteq \cdots$. Moreover, $\ker(T^n)$ is $T$-invariant for any $n \in \mathbb{N}$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \begin{enumerate}
+        \item If $x \in \im(T^{n+1})$, then $x = T^{n+1}(y) = T^{n}(T(y)) \in \im(T^n)$ for some $y \in V$, hence $\im(T^{n+1}) \subseteq \im(T^{n})$.
+        
+         If $x \in \im(T^n)$, then $x = T^{n}(y)$ so $T(x) = T(T^{n}(y)) = T^{n}(T(y)) \in \im (T^n)$, so $T(\im(T^n)) \subseteq \im(T^n)$.
+
+         \item If $x \in \ker(T^n)$, then $T^{n+1}(x) = T(T^n(x)) = T(0_V) = 0_V$ hence $x \in \ker(T^{n+1})$ so $\ker(T^{n}) \subseteq \ker(T^{n+1})$.
+         
+         Moreover, $T(x) \in \ker(T^n)$ since $T(x) \in \ker (T^{n-1}) \subseteq \ker(T^n)$, since $T^{n-1}(T(x)) = T^{n}(x) = 0_V$ so $T(\ker(T^n)) \subseteq \ker(T^{n})$.
+    \end{enumerate}
+\end{proof}
+
+\begin{example}[More Examples of Invariant Subspaces]
+    Let $T: \mathbb{R}^3 \to \mathbb{R}^3$ by $T(x, y, z) := (2x +y, 3x - y, 7z)$. Then, the $x-y$ plane is $T$-invariant, as is the $z$ axis. Hence, we can decompose $\mathbb{R}^3$ into two $T$-invariant subspaces, namely the $x-y$ plane $\oplus$ $z$-axis.
+\end{example}
+
+\begin{definition}[Nilpotent]
+    In a ring $R$, an element $r \in R$ is called \emph{nilpotent} if $r^n = 0$ for some $n \in \mathbb{N}^+$. 
+    
+    More specifically, a linear transformation $T: V \to V$ is called nilpotent if $T^n = 0$ for some $n \in \mathbb{N}^+$.
+
+    For a matrix $A \in M_n(\field)$, $A$ is called nilpotent if $A^n = 0_n$ for some $n \in \mathbb{N}^+$.
+\end{definition}
+
+\begin{example}[Examples of Nilpotent Transformations]
+    \begin{enumerate}
+        \item Let $V$, $n$-dimensional vector space over $\field$ with basis $\beta := \{v_1, \dots, v_n\}$. Let $T: V \to V$ be the unique linear transformation that "shifts" $\beta$: ie, $T(v_1) := 0_V$, $T(v_2) := v_1$, $\dots, T(v_n)  = v_{n-1}$.
+        \item The differentiation operation, $\delta : \field[t]_n \to \field[t]_n$ is nilpotent, since $\delta^{n+1} = 0$ for any polynomial.
+        \item For any matrix $A \in M_{n}(\field)$, $A$ is nilpotent iff $L_A : \field^n \to \field^n$ is nilpotent.
+        \begin{proof}
+            $L_{A^k} = L_A^k \implies A^k = 0 \iff L_{A^k}= 0 \iff L_{A}^k = 0$
+        \end{proof}
+        \item $n \times n$ matrices that are strictly upper triangular are nilpotent. For instance, for $3 \times 3$, we need to show
+        \begin{align*}
+            \begin{pmatrix}
+                0 & \ast &\ast\\
+                0 & 0 & \ast\\
+                0 & 0 & 0
+            \end{pmatrix}^3 = 0 \iff \begin{pmatrix}
+                0 & \ast &\ast\\
+                0 & 0 & \ast\\
+                0 & 0 & 0
+            \end{pmatrix}^3\cdot \begin{pmatrix}
+                \star\\
+                \star\\
+                \star
+            \end{pmatrix} = 0
+        \end{align*}
+        We have:
+        \begin{align*}
+            \begin{pmatrix}
+                0 & \ast &\ast\\
+                0 & 0 & \ast\\
+                0 & 0 & 0
+            \end{pmatrix}^2 \begin{pmatrix}
+                0 & \ast &\ast\\
+                0 & 0 & \ast\\
+                0 & 0 & 0
+            \end{pmatrix}\begin{pmatrix}
+                \star\\
+                \star\\
+                \star
+            \end{pmatrix} = \begin{pmatrix}
+                0 & \ast &\ast\\
+                0 & 0 & \ast\\
+                0 & 0 & 0
+            \end{pmatrix}^2 \begin{pmatrix}
+                \star \\
+                \star\\
+                0
+            \end{pmatrix}
+            = \begin{pmatrix}
+                0 & \ast &\ast\\
+                0 & 0 & \ast\\
+                0 & 0 & 0
+            \end{pmatrix}\begin{pmatrix}
+                0 & \ast &\ast\\
+                0 & 0 & \ast\\
+                0 & 0 & 0
+            \end{pmatrix}\begin{pmatrix}
+                \star \\
+                \star\\
+                0
+            \end{pmatrix}
+            &= \begin{pmatrix}
+                0 & \ast &\ast\\
+                0 & 0 & \ast\\
+                0 & 0 & 0
+            \end{pmatrix} \begin{pmatrix}
+                \star\\
+                0\\
+                0
+            \end{pmatrix}\\
+            = \begin{pmatrix}
+                0 \\
+                0\\
+                0
+            \end{pmatrix}.
+        \end{align*}
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    If $V$ is $n$-dimension $T :V \to V$ is linear nilpotent, then $T^n = 0$.
+\end{proposition}
+\begin{proof}
+    Left as a (homework) exercise.
+\end{proof}
+
+\begin{definition}[Domain Restriction]
+    For a function $f: X \to Y$ and $A \subseteq X$, we define the \emph{restriction} of $f$ to $A$ as the function $f\vert_A : A \to Y$ given by $a \mapsto f(a)$.
+\end{definition}
+
+\begin{theorem}[Fitting's Theorem]\label{thm:fittingstheorem}
+    For finite dimensional vector space $V$ over $\field$ and a linear transformation $T: V \to V$, there is a decomposition \[
+    V = U \oplus W    
+    \]
+    as a direct sum of $T$-invariant subspaces $U, W$ such that $T\vert_U : U \to U$ is nilpotent and $T\vert_W : W \to W$ is an isomorphism.
+\end{theorem}
+
+\begin{proof}
+    Recall that $\im(T) \supseteq \cdots \supseteq \im(T^n)$ and $\ker(T) \subseteq \cdots \subseteq \ker(T^n)$. Both of these become constant eventually, ie the inequalities become strict equalities, hence $\exists N \in \mathbb{N}^+$ such that $\forall k \in \mathbb{N}$, $\im(T^{N+k}) = \im(T^N)$ and $\ker(T^{N+k}) = \ker(T^{N})$.
+
+    Let $U := \ker(T^N)$ and $W := \im(T^N)$. These are clearly $T$-invariant. 
+
+    $T^N(\ker(T^N)) = \{0_V\}$, and $T(\im(T^N)) = \im(T^{N+1}) =\im(T^N) = W$ and thus $T\vert_W : W \to W$ is surjective and hence $T\vert_W$ must be injective and thus an isomorphism.
+
+    It remains to show that $V = U \oplus W$.
+
+    \underline{Claim:} $U \cap W = \{0_V\}$; If $v \in U \cap W, T^N(v) = 0_V$ but $T\vert_W$ an isomorphism so $T^N(v) = 0 \iff v = 0_V$, hence $U \cap W = \{0_V\}$.
+
+    Thus, we have $\dim(U + W) = \dim(U) + \dim(W) - \dim(U \cap W) = \dim(U) + \dim(W) = \dim(V)$; moreover, it must be that $U + W = V$.
+\end{proof}
