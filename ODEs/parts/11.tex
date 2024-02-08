@@ -1,0 +1,154 @@
+\begin{remark}
+    Linear combinations of the $g$'s above can also be solved, ie if $L[y] = g_1 + g_2$, take $y_p = y_{p1} + y_{p2}$ where $y_{pi}$ matches the "proper guess" for $g_i$.
+\end{remark}
+\begin{remark}
+    The method fails if $a, b, c$ not constants, or if $g$ not of the required form.
+\end{remark}
+
+\begin{example}
+    \begin{enumerate}
+        \item Consider $y'' + y' - 2y = 3e^{2x}$. We have \[
+    r^2 + r - 2 = 0 \implies (r-1)(r+2) = 0 \implies y_1 = e^{x}, y_2 = e^{-2x}    
+    \]
+    for the homogeneous equations. Let $y_p = Ae^{2x}$, since $e^{2x}$ does solve the equation.
+    \item $y'' = 1-x^2$. $r^2 = 0 \implies y_1 = 1, y_2 = x$. Guess $g(x) = p(x)e^{\alpha x} \cos (\beta x)$ for $\alpha = 0, \beta = 0$, $p(x) = 1-x^2$. Guessing $y_p = Ax^2 + Bx +C$ won't work; instead, guess $x^2(Ax^2 + Bx + C)$. Forgetting the $x^2$ would yield an unsolvable equation.
+    \item $y''+4y=3\cos x$. $r^2 + 4 = 0 \implies r = \pm 2 i$ so $y_1 = \cos 2x, y_2 = \sin 2x$. Guess $y_p = A \cos x + B \sin x$. We don't need the $\sin$, since it won't appear in the ODE; this isn't a problem anyways, as this way we'll just find that $B =0$.
+    \end{enumerate}
+\end{example}
+
+\subsection{Variation of Parameters}
+
+This method works for non-constant coefficient ODEs, and (in principle) any $g$. To use it, we need first to know a fundamental set of solutions $y_1, y_2$ of the homogeneous equation.
+
+Consider the nonhomogeneous equation \[
+L[y](x) = g(x) = a(x)y''+b(x)y'+c(x)y. \quad \circledast
+\]
+Suppose $L[y_1] = L[y_2] = 0$, so $y_c = k_1 y_1 + k_2 y_2$ solves the homogeneous equation (constants $k_i$). Replace these $k_i$'s with unknown functions, $u_i(x)$, and assume that $y_p(x) = u_1(x)y_1(x) + u_2(x)y_2(x)$ solves the ODE. 
+
+We have
+\begin{align*}
+    y_p' &= [u_1'y_1+u_2'y_2]+[y_1u_1'+y_2u_2']\\
+    y_p''&=[u_1'y_1+u_2'y_2]'+[u_1'y_1'+u_2'y_2'+u_1y_1''+u_2y_2'']
+\end{align*}
+Substituting this into $\circledast$, we have that \begin{align*}
+    g = L[y_p] &= a(x)([u_1'y_1+u_2'y_2]')+a(x)[u_1'y_1'+u_2'y_2'+u_1y_1''+u_2y_2'']\\
+    & \qquad + b(x)[u_1'y_1+u_2'y_2]+b(x)[u_1y_1'+u_2y_2']\\
+    & \qquad + c(x)[u_1y_1+u_2y_2]\\
+    &=\cancelto{0}{u_1[ay_1''+by_1'+cy_1]}+\cancelto{0}{u_2[ay_2''+by_2'+cy_2]} \qquad \text{(solve ODE by assumption)}\\
+    & \qquad +a[u_1'y_1+u_2'y_2]'+a[u_1'y_1'+u_2'y_2']+b[u_1'y_1+u_2'y_2]. 
+\end{align*}
+But this is a single equation "trying" to define two unknown functions $u_1, u_2$; it is undetermined. We introduce an extra constraint to make it solvable. Let us state, for convenience, $u_1'(x)y_1(x)+u_2'(x)y_2(x)= 0 \forall x$, implying $[u_1'y_1+u_2'y_2]' = 0 \forall x$.\footnote{This is a "trust me for now" instance.}
+This assumption yields $g = a[u_1'y_1'+u_2'y_2']$, so we write
+\begin{align*}
+   f(x):=\frac{g}{a} = u_1'y_1'+u_2'y_2'\\
+   0 = u_1'y_1 + u_2'y_2,
+\end{align*}
+a system of two differential equations for $u_1, u_2$. We can solve these:
+\begin{align*}
+    \begin{pmatrix}
+        y_1 & y_2\\
+        y_1' & y_2'
+    \end{pmatrix}\begin{pmatrix}
+        u_1'\\
+        u_2'
+    \end{pmatrix} &= \begin{pmatrix}
+        0\\
+        f(x)
+    \end{pmatrix}\\
+    \implies \begin{pmatrix}
+        u_1'\\
+        u_2'
+    \end{pmatrix} &= \begin{pmatrix}
+        y_1 & y_2\\
+        y_1' & y_2'
+    \end{pmatrix}^{-1} \begin{pmatrix}
+        0\\
+        f(x)
+    \end{pmatrix}\\
+    &= \frac{1}{y_1y_2'-y_1'y_2} \begin{pmatrix}
+        y_2' & - y_2\\
+        -y_1' & y_1
+    \end{pmatrix} \begin{pmatrix}
+        0\\
+        f
+    \end{pmatrix}.
+\end{align*}
+This can be problematic if $y_1y_2' - y_1'y_2 = 0$; define $W(y_1, y_2)(x):= y_1y_2' - y_1'y_2$. Then, assuming $W(y_1, y_2)(x) \neq 0$, we have \begin{align*}
+    u_1'(x) = \frac{-y_2(x)f(x)}{W(y_1, y_2)(x)} & \quad u_2'(x) = \frac{y_1(x)f(x)}{W(y_1, y_2)(x)},
+\end{align*}
+which we can then integrate to find $u_1, u_2$ appropriately. We call $W(y_1, y_2)(x)$ the \emph{Wronskian} of $y_1, y_2$ wrt $x$. 
+
+Note that, if $y_1, y_2$ are linearly dependent with $y_2 = cy_1$, then $W(y_1, y_2)(x) = y_1(cy_1') - y_1'(cy_1) = 0$; that is, a necessary condition for $W(y_1, y_2) \neq 0$ is for $y_1, y_2$ to be linearly independent; it is not sufficient. However, we'll only use $W$ when $y_1, y_2$ both solve the same ODE; in this case, it can be shown that $W(y_1, y_2)(x) \neq 0 \iff y_1, y_2$ are linearly independent\footnote{Abel's Identity}.
+
+\begin{example}
+    $4y'' + 36 y = \frac{1}{\sin (3x)} \implies y'' + 9 y = \frac{1}{4 \sin (3x)} = \frac{1}{4} \csc (3x)$.
+
+    Solving the homogeneous equation: $r^2 + 9 =0 \implies r = \pm 3i$. This gives us $y_1 = \cos (3x) , y_2 = \sin(3x)$. Let $y_p = u_1 \cos (3x) + u_2 \sin(3x)$. 
+    We have $W(y_1, y_2) = (\cos 3x)3 \cos (3x) + (3\sin(3x))(\sin (3x)) = 3$, yielding \begin{align*}
+        u_1' = \frac{-y_2f}{W(y_1, y_2)(x)} = \frac{-\sin(3x)\frac{1}{4\sin(3x)}}{3} = - \frac{1}{12} &\implies u_1 = -\frac{x}{12}\\
+        u_2' = \frac{\cos(3x) \frac{1}{4\sin (3x)}}{3} = \frac{1}{36}\left(\frac{3 \cos (3x)}{\sin (3x)}\right) = \frac{1}{36}{\frac{h'}{h}} &\implies u_1 = \frac{1}{36} \ln(\abs{\sin 3x})
+    \end{align*}
+    We have \begin{align*}
+        y_p = - \frac{x}{12} \cos(3x) + \frac{1}{36} \left(\ln |\sin 3x|\right) \sin (3x),
+    \end{align*}
+    with a general solution \begin{align*}
+        y(x) = \left(k_1 - \frac{x}{12}\right) \cos(3x) + \sin (3x)\left(k_2 + \frac{1}{36} \ln \abs{\sin (3x)}\right).
+    \end{align*}
+\end{example}
+
+\section{\texorpdfstring{$N$}{N}th Order ODEs}
+\subsection{A Little Theory}
+
+Consider a nonlinear $n$th order IVP, \begin{align*}
+    y^{(n)}(x) = f(x, y(x), y'(x), \dots, y^{(n-1)}(x))\quad (i)\\
+    y(x_0) = \alpha_1, \dots, y^{(n-1)}(x_0) = \alpha_n \quad (ii),
+\end{align*}
+noting that this is sufficient to specify a unique solution.
+\begin{theorem}
+    If $f(x, y_1, y_2, \dots, y_n)$ and $\pdv{f}{y_j}$ are continuous on the box $R = \{(x, y_1, \dots, y_n) : \abs{x - x_0} \leq a, \abs{y_i - \alpha_i} \leq b, i = 1, \dots, n\}$, then the initial value problem $(i)$, $(ii)$ has a unique solution $y(x)$ for $x \in [x_0 - h, x+0 + h]$ for some $h \in (0, a]$, with solution satisfying $\abs{y(x)-\alpha_1} \leq b \forall x \in [x_0 - h, x_0 +h]$.
+\end{theorem}
+\begin{remark}
+    The proof is very similar to the case $n = 1$; the key step is to rewrite the $n$th order ODE as a system of first order ODEs.
+
+    Let $u_1 = y, u_2 = y', \dots, u_n = y^{(n-1)}$, and define $\underline{u}(t) = \begin{pmatrix}
+        u_1(t)\\
+        \vdots \\
+        u_n(t)
+    \end{pmatrix}$. The ODE, then, can be written \begin{align*}
+        \underline{u}'(t) = \begin{pmatrix}
+            u_1'(t)\\
+            \vdots\\
+            u_n'(t)
+        \end{pmatrix} = \begin{pmatrix}
+            y'\\
+            \vdots \\
+            y^{(n)}
+        \end{pmatrix}
+            = \begin{pmatrix}
+            u_2\\
+            \vdots\\
+            u_n
+        \end{pmatrix} =: \underline{F}(x, \underline{u}),
+    \end{align*}
+    "vectorally".
+\end{remark}
+
+\subsection{Linear \texorpdfstring{$n$}{n}th Order ODEs}
+
+We consider \begin{align*}
+    y^{(n)} + \sum_{i=1}^n p_i(x)y^{(n-1)} = g(x) =: L[y],
+\end{align*}
+with ICs\[
+y(x_0) = \alpha_1, \dots, y^{(n-1)}(x_0)\alpha_n.    
+\]
+We would like to show that the general solution is as before with second order ODEs, ie \[
+y(x) = \sum_{j=1}^n k_j y_j + y_p,    
+\]
+where $y_p$ is a particular solution of $L[y] = g$, and $y_1, \dots, y_n$ a fundamental set of solutions (of $L[y] = 0$, eg). We want to show "both directions" of this equality; this form defines solutions, and any solution is of this form. This implies, then, that the solution space has exactly dimension $n$.
+
+\begin{lemma}
+    Let $\varphi(x)$ be any solution of the homogeneous ODE $L[y](x) = 0$ on $I$. Let $u(x) \geq 0$ be defined by $(u(x))^2 = \varphi(x)^2 + \varphi'(x)^2 + \cdots + \varphi^{(n-1)}(x)^2$. Then, $\forall x\in I$, \[
+    u(x_0)e^{-k\abs{x - x_0}} \leq u(x) \leq u(x_0)e^{k\abs{x-x_0}},
+    \]
+    where $k = 1 + \sum_{i=1}^n \beta_i$, $\beta = \max_{x \in I}\abs{p_i(x)}$.
+\end{lemma}

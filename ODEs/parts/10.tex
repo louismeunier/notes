@@ -101,15 +101,16 @@ We now generalize the method:
 
 Let $p(x) = \sum_{j=0}^n a_j x^j$ and $q(x) = \sum_{j=0}^n b_j x^j$ be given polynomials. To solve $L[y](x) = g(x)$ for a constant coefficient ODE, we have the following cases:
 
-\begin{table}[!ht]
-\begin{tabular*}{\linewidth}{c|c}\centering
+\begin{table}[!ht]\centering
+\begin{tabularx}{\textwidth}{>{\centering\arraybackslash}X | >{\centering\arraybackslash}X }\centering
+
     $g(x)$ (given) & $y_{p(x)}$ (guess)\\
     \hline
-    $p(x)$ &$ x^2 (A_n x^n + \cdots + A_1 x + A_0)$\\
+    $p(x)$ &$x^2 (A_n x^n + \cdots + A_1 x + A_0)$\\
     $e^{\alpha x} $&  $x^s Ae^{\alpha x}$\\
     $p(x)e^{\alpha x}$ & $x^2 (A_n x^n + \cdots + A_1 x + A_0)e^{\alpha x}$\\
     $p(x)e^{\alpha x} \cos \beta x + q(x)e^{\alpha x} \sin \beta x$ &  $x^s e^{\alpha x} \cos (\beta x) \sum_{i=0}^n A_i x^i  + x^s e^{\alpha x} \sin (\beta x) \sum_{j=0}^n B_j x^j$.
-\end{tabular*}
+\end{tabularx}
 \end{table}
 
 \begin{itemize}
