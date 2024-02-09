@@ -19,16 +19,18 @@
 \end{proof}
 
 \begin{example}[More Examples of Invariant Subspaces]
-    Let $T: \mathbb{R}^3 \to \mathbb{R}^3$ by $T(x, y, z) := (2x +y, 3x - y, 7z)$. Then, the $x-y$ plane is $T$-invariant, as is the $z$ axis. Hence, we can decompose $\mathbb{R}^3$ into two $T$-invariant subspaces, namely the $x-y$ plane $\oplus$ $z$-axis.
+    Let $T: \mathbb{R}^3 \to \mathbb{R}^3$ by $T(x, y, z) := (2x +y, 3x - y, 7z)$. Then, the $x-y$ plane, $\{(x, y, z) \in \mathbb{R}^3: z = 0\}$ is $T$-invariant, as is the $z$ axis, $\{(x, y, z)\in\mathbb{R}^3: x = y = 0\}$. Hence, we can decompose $\mathbb{R}^3$ into two $T$-invariant subspaces, namely $x-y$ plane $\oplus$ $z$-axis.
 \end{example}
 
 \begin{definition}[Nilpotent]
     In a ring $R$, an element $r \in R$ is called \emph{nilpotent} if $r^n = 0$ for some $n \in \mathbb{N}^+$. 
     
-    More specifically, a linear transformation $T: V \to V$ is called nilpotent if $T^n = 0$ for some $n \in \mathbb{N}^+$.
+    A linear transformation $T: V \to V$ is called nilpotent if $T^n = 0$ for some $n \in \mathbb{N}^+$.\footnotemark
 
     For a matrix $A \in M_n(\field)$, $A$ is called nilpotent if $A^n = 0_n$ for some $n \in \mathbb{N}^+$.
 \end{definition}
+
+\footnotetext{One can verify that all linear transformations $T : V \to V$ from a vector space to itself form a ring with $(\circ, +)$, ie composition and ("standard") addition of transformations. The same holds for linear operators defined over an abelian group (where the same $+$ operation is endowed by the ring).}
 
 \begin{example}[Examples of Nilpotent Transformations]
     \begin{enumerate}
@@ -38,7 +40,7 @@
         \begin{proof}
             $L_{A^k} = L_A^k \implies A^k = 0 \iff L_{A^k}= 0 \iff L_{A}^k = 0$
         \end{proof}
-        \item $n \times n$ matrices that are strictly upper triangular are nilpotent. For instance, for $3 \times 3$, we need to show
+        \item $n \times n$ matrices that are strictly upper triangular\footnotemark are nilpotent. For instance, for $3 \times 3$, we need to show\footnotemark
         \begin{align*}
             \begin{pmatrix}
                 0 & \ast &\ast\\
@@ -68,7 +70,7 @@
                 \star\\
                 \star\\
                 \star
-            \end{pmatrix} = \begin{pmatrix}
+            \end{pmatrix} &= \begin{pmatrix}
                 0 & \ast &\ast\\
                 0 & 0 & \ast\\
                 0 & 0 & 0
@@ -76,8 +78,8 @@
                 \star \\
                 \star\\
                 0
-            \end{pmatrix}
-            = \begin{pmatrix}
+            \end{pmatrix}\\
+            &= \begin{pmatrix}
                 0 & \ast &\ast\\
                 0 & 0 & \ast\\
                 0 & 0 & 0
@@ -89,7 +91,7 @@
                 \star \\
                 \star\\
                 0
-            \end{pmatrix}
+            \end{pmatrix}\\
             &= \begin{pmatrix}
                 0 & \ast &\ast\\
                 0 & 0 & \ast\\
@@ -99,7 +101,7 @@
                 0\\
                 0
             \end{pmatrix}\\
-            = \begin{pmatrix}
+            &= \begin{pmatrix}
                 0 \\
                 0\\
                 0
@@ -107,9 +109,10 @@
         \end{align*}
     \end{enumerate}
 \end{example}
-
+\footnotetext{ie zeros everywhere except cells strictly above diagonal.}
+\footnotetext{Where we denote arbitrary elements $\star$; different $\star$s are not necessarily equal.}
 \begin{proposition}
-    If $V$ is $n$-dimension $T :V \to V$ is linear nilpotent, then $T^n = 0$.
+    If $V$ is $n$-dimensional and $T :V \to V$ is a linear nilpotent transformation, then $T^n = 0$.
 \end{proposition}
 \begin{proof}
     Left as a (homework) exercise.
@@ -119,7 +122,18 @@
     For a function $f: X \to Y$ and $A \subseteq X$, we define the \emph{restriction} of $f$ to $A$ as the function $f\vert_A : A \to Y$ given by $a \mapsto f(a)$.
 \end{definition}
 
-\begin{theorem}[Fitting's Theorem]\label{thm:fittingstheorem}
+\begin{definition}[Direct Sum]
+    Let $V$ be a vector space over $\field$, and let $W_0, W_1 \subseteq V$ be subspaces of $V$. If \begin{enumerate}
+        \item $W_0 \cap W_1 = \{0_V\}$ (the subspaces are \emph{linearly independent}), and 
+        \item $W_0 + W_1 = \{w_0 + w_1 : w_0 \in W_0, w_1 \in W_1\} = V$,
+    \end{enumerate}
+    we write \(
+    V = W_0 \oplus W_1,    
+    \)
+    and say $V$ is the \emph{direct sum} if $W_0, W_1$.
+\end{definition}
+
+\begin{theorem}[Fitting's Lemma]\label{thm:fittingstheorem}
     For finite dimensional vector space $V$ over $\field$ and a linear transformation $T: V \to V$, there is a decomposition \[
     V = U \oplus W    
     \]
@@ -133,9 +147,7 @@
 
     $T^N(\ker(T^N)) = \{0_V\}$, and $T(\im(T^N)) = \im(T^{N+1}) =\im(T^N) = W$ and thus $T\vert_W : W \to W$ is surjective and hence $T\vert_W$ must be injective and thus an isomorphism.
 
-    It remains to show that $V = U \oplus W$.
+    It remains to show that $V = U \oplus W$. If $v \in U \cap W, T^N(v) = 0_V$ but $T\vert_W$ an isomorphism so $T^N(v) = 0 \iff v = 0_V$, hence $U \cap W = \{0_V\}$.
 
-    \underline{Claim:} $U \cap W = \{0_V\}$; If $v \in U \cap W, T^N(v) = 0_V$ but $T\vert_W$ an isomorphism so $T^N(v) = 0 \iff v = 0_V$, hence $U \cap W = \{0_V\}$.
-
-    Thus, we have $\dim(U + W) = \dim(U) + \dim(W) - \dim(U \cap W) = \dim(U) + \dim(W) = \dim(V)$; moreover, it must be that $U + W = V$.
+    Thus, we have $\dim(U + W) = \dim(U) + \dim(W) - \dim(U \cap W) = \dim(U) + \dim(W) = \dim(V)$; moreover, it must be that $U + W = V$.\footnote{It is precisely here that we use finiteness of $V$.}
 \end{proof}

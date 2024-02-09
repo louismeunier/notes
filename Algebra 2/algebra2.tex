@@ -9,25 +9,31 @@
 
 % ! hacky nonsense to make rightbrace possible
 % https://tex.stackexchange.com/questions/51847/how-do-i-put-a-side-brace-around-several-lines-in-the-align-environment
-\makeatletter
-\newenvironment{rightcase}{%
-  \matrix@check\cases\env@cases
-}{%
-  \endarray\right\}%
-}%
-\def\env@cases{%
-  \let\@ifnextchar\new@ifnextchar
-  \left.
-  \def\arraystretch{1.2}%
-  \array{@{}l@{\,\,}l@{}}%
-}%
-\makeatother
+% \makeatletter
+% \newenvironment{rightcase}{%
+%   \matrix@check\cases\env@cases
+% }{%
+%   \endarray\right\}%
+% }%
+% \def\env@cases{%
+%   \let\@ifnextchar\new@ifnextchar
+%   \left.
+%   \def\arraystretch{1.2}%
+%   \array{@{}l@{\,\,}l@{}}%
+% }%
+% \makeatother
+\newcommand{\EmBrace}[3][]{%
+    \begin{tikzpicture}[overlay,remember picture]%
+        \draw [decoration={brace,amplitude=0.5em},decorate,ultra thick, #1] (#2) -- (#3);
+    \end{tikzpicture}%
+    }%
+
 
 % ! Title page settings
 \newcommand{\pageauthor}{Louis Meunier}
 \newcommand{\pagetitle}{Algebra 2}
 \newcommand{\pagesubtitle}{MATH251}
-\newcommand{\pagedescription}{Vector spaces, linear (in)dependence, span, bases; linear transformations, kernel, image, isomorphisms.}
+\newcommand{\pagedescription}{Vector spaces, linear (in)dependence, span, bases; linear transformations, kernel, image, isomorphisms, nilpotent operators.}
 \newcommand{\pagesemester}{Winter, 2024 }
 \newcommand{\pageprofessor}{Prof. Anush Tserunyan}
 

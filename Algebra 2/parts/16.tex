@@ -1,0 +1,72 @@
+\subsection{Dual Spaces}
+
+\begin{definition}[Dual Space]
+For a vector space $V$ over a field $\field$, linear transformations from $V \to \field$ (where we view $\field$ as a one-dimensional vector space over $\field$) are called \emph{linear functionals}. The space of linear functionals (namely, $\Hom(V, \field)$) is denoted $V^\ast$, and called the \emph{dual space} of $V$.
+\end{definition}
+
+\begin{proposition}
+    If $V$ is finite dimensional, $\dim(V^\ast) = \dim(V)$.\footnotemark
+\end{proposition}
+\footnotetext{This does \emph{not} hold for infinite dimensional spaces.}
+\begin{proof}
+    For finite dimensional $V$, we know that $\dim(\Hom(V, \field)) = \dim(V) \cdot \dim(\field) = \dim(V)$, hence $\dim(V^*) = \dim(V)$. In the same notation with which we proved this originally in \cref{prop:construction}; fix a basis $\beta := \{v_1, \dots, v_n\}$ for $V$ and the standard basis $\gamma := \{1\}$ for $\field$, and defined $\beta^\ast := \{f_1, \dots, f_n\}$, where $f_i := T_{v_i, 1} : V \to \field$ maps $v_i \mapsto 1$ and every other basis vector to $0_\field$.
+\end{proof}
+
+\begin{remark}
+The basis $\beta^\ast$ for $V^\ast$ is called the \emph{dual basis}. Explicitly, we have:
+\end{remark}
+
+\begin{corollary}
+    Let $V$ be a finite dimensional vector space over $\field$ and let $\beta := \{v_1, \dots, v_n\}$ be a basis for $V$. Then,\[
+    \beta^\ast := \{f_1, \dots, f_n\}    
+    \]
+    is a basis for $V^\ast$. Moreover, for each linear functional $f \in V^\ast$, \[    
+    f = \sum_{i=1}^n f(v_i)\cdot f_i.
+    \]
+\end{corollary}
+
+\begin{proof}
+    \underline{Linear indepedence:} let $a_1 f_1 + \cdots + a_n f_n = 0_{V^\ast}=: 0$. Then,
+    \[
+    (a_1f_1 + \cdots + a_n f_n)(v_i) = a_if_i(v_i) = a_i \cdot 1 = a_i \implies a_i = 0,    
+    \]
+    hence $\beta^\ast$ indeed linearly independent.
+
+    \underline{Spanning:} let $f \in V^\ast$. We claim that $f = \sum_{i = 1}^n f(v_i) f_i$. It suffices to show these two sides are equal on the basis vectors, as linear transformations are determined by their effect on basis vectors. We have:
+    \begin{align*}
+       \left( \sum_{i=1}^n f(v_i) f_i\right)(v_j) = \sum_{i=1}^n f(v_i) f_i(v_j) = \sum_{i=1}^n f(v_i) \cdot \delta_{ij} = f(v_j),
+    \end{align*}
+    as desired.\footnote{Where $\delta_{ij} := \begin{cases}
+        1 & i = j\\
+        0 & i \neq j
+    \end{cases}$ is the Kronecker delta.}
+\end{proof}
+
+\begin{example}
+    \begin{enumerate}
+    \item Let $V := \field^n$ and $\beta := \{v_1, \dots, v_n\}$ be a basis for $\field^n$, viewed as column vectors, and let $\beta^\ast := \{f_1, \dots, f_n\}$ be the dual basis for $V^\ast$. Recall that $f_i : \field^n \to \field$, hence $f_i := L_{A_i}$ for some matrix $A_i \in M_{1 \times n}(\field) :=$ space of $1 \times n$ row vectors. Hence, $A_i = e_i^t$.
+    \item Consider $V^{\ast \ast}$, the dual of the dual. If $V$ is finite-dimensional, then as $\dim(V)= \dim(V^\ast)$, we have $\dim(V) = \dim(V^\ast) = \dim(V^{\ast \ast})$, ie, they are (abstractly) isomorphic.
+    
+    We have that $T : V \to V^\ast, v_i \mapsto f_i$ is an isomorphism; we define an explicit isomorphism to $V^{\ast \ast}$ below.
+\end{enumerate}
+\end{example}
+
+\begin{definition}
+Let $V$ be an arbitrary vector space over $\field$. For each $x \in V$, define $\hat x\in V^{\ast \ast}$ by $\hat x : V^\ast \to \field$, where $\hat{x}(f) := f(x)$.
+\end{definition}
+
+\begin{remark}
+    Note that $\hat{x}$ is linear.
+\end{remark}
+
+\begin{theorem}
+    The map $x \mapsto \hat{x} : V \to V^{\ast \ast}$ is a linear injection. In particular, if $V$ is finite dimensional, it is an isomorphism.
+\end{theorem}
+
+\begin{proof}
+    Let $x \in V$ and suppose $\hat{x} = 0_{V^{\ast \ast}}$. Let $\beta$ be a basis for $V$ and $\beta^\ast$ its dual basis. Let $x = a_1 v_1 + \cdots + a_n v_n$ for $v_i \in \beta, a_i \in \field$. Let $f_i$ such that $f_i(v_j) = \delta_{ij} v_j$. Then, \begin{align*}
+        \hat{x}f_i = f_i (x) = f_i(a_1 v_1 + \cdots a_n v_n) = a_i = 0,
+    \end{align*}
+    hence, $a_i = 0 \forall i$. Hence, $x = 0$, and thus $\hat{x}$ has a trivial kernel and is thus injective.
+\end{proof}
+
