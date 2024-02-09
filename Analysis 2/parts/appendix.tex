@@ -1,0 +1,107 @@
+\newpage
+\section{Appendix}
+
+\subsection{Notes from Tutorials}
+
+\begin{theorem}
+    Let $(X,d)$ be a compact metric space.\footnotemark  Let $C(X) := \{ f : X \to \mathbb{R} : f \text{ continuous}\}$ be a vector space. Take the uniform norm $\norm{f} := \sup_{x \in X} \abs{f(x)}$ on $C(x)$. Then, $(C(x), \norm{\bullet})$ is complete.\footnotemark
+\end{theorem}
+
+\footnotetext{In this proof, the compactness is necessary for the norm to be well-defined.}
+
+\footnotetext{In this way, this becomes a Banach Space: a complete, normed vector space.}
+
+\begin{proof}
+    Denote the "canonical norm" $\rho(f, g) := \norm{f - g}$.
+
+    Let $(f_n) \in C(X)$ be a Cauchy sequence. Then, $\forall \epsilon > 0, \exists N \in \mathbb{N} : \forall m, n \geq N, \rho(f_n, f_m) < \epsilon$.
+    
+    Fix $x \in X$, noting that \[
+    \abs{f_n(x) - f_m(x)} \leq \sup_{y\in X} \abs{f_n(y) - f_m(y)} = \rho(f_n, f_m) < \epsilon. \quad \ast^1
+    \]
+    Define, for this fixed $x$, a sequence \emph{in $\mathbb{R}$} $\{f_n(x)\}_{n \in \mathbb{N}}$. By $\ast^1$, we have that this sequence is Cauchy in $\mathbb{R}$, but as $\mathbb{R}$ complete, $f_n(x)$ hence converges, to some limit we call $f(x) := \lim_{n\to \infty} f_n(x)$. Note that $x$ is still fixed at this point; these are but real numbers we are working with here.
+
+    Now, as $x$ was completely arbitrary, we can repeat this process for all of $X$, and define a function $f : X \to \mathbb{R}$ where $f(x) := \lim_{n \to \infty} f_n(x)$.
+
+    For a fixed $x$, we have that $f_m(x) \to f(x)$ as $m \to \infty$. This implies:
+    \begin{align*}
+        0 \leq \lim_{m \to \infty} \abs{f_n(x) - f_m(x)}& \leq \lim_{m \to \infty} \epsilon = \epsilon\\
+        &\implies \abs{f_n(x) - f(x)} \leq \epsilon \forall n \geq N\\
+        &\implies \rho(f_n, f) = \sup_{x \in X}\abs{f_n(x) - f(x)} \leq \epsilon \implies f_n \to f
+    \end{align*}
+    It remains to show that $f \in C(X)$. Let $c \in X$ and $\epsilon > 0$, and the corresponding $N \in \mathbb{N} : \rho(f_n, f) < \frac{\epsilon}{3} \forall n \geq N$. By construction, $f_N \in C(X)$, and is thus continuous at $c$. This gives that $\exists \delta > 0 : \abs{f_N(x) - f_N(c)} < \frac{\epsilon}{3}$ whenever $d(x, c) < \delta$. \footnote{Be careful here, there are three different metrics going on; $\rho$ from the vector space, $d$ from the underlying metric space, and $\abs{\cdots}$ from $\mathbb{R}$.}
+
+    Hence, if $d(x, c) < \delta$, we have \begin{align*}
+        \abs{f(x) - f(c)} \leq \abs{f(x) - f_N(x)} + \abs{f_N(x) - f_N(c)} + \abs{f_N(c) - f(c)}\\
+        \leq \rho(f, f_N) + \frac{\epsilon}{3} + \frac{\epsilon}{3}\\
+        < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon,
+    \end{align*}
+   hence $f$ continuous at $c$, which was completely arbitrary, and thus $f \in C(X)$.
+\end{proof}
+
+\begin{theorem}
+    Let $(X,d)$-complete. Let $\{F_n\}$ be a decreasing family of non-empty closed sets with $\lim_{n \to \infty} \diam(F_n) = 0$. Then, $\exists z:$ $\bigcap_{n \in \mathbb{N}} F_n = \{z\}$.
+\end{theorem}
+
+\begin{theorem}
+    Let $(X, d)$-complete, and $f : X \to X$ an "expanding map", such that $d(x, y) \leq d(f(x), f(y)) \forall x, y \in X$. Then, $f$ is a surjective isometry, ie, $f(X) = X$ and $d(f(x), f(y)) = d(x, y) \forall x, y \in X$.
+\end{theorem}
+
+\begin{lemma}
+    Differentiable $\implies$ Continuous.
+\end{lemma}
+
+\begin{proof}
+    Let $f: I \to \mathbb{R}$, and $c \in I$ arbitrary. Notice that $\forall x \neq c \in I$, $f(x) - f(c) = (x-c) \frac{f(x)-f(c)}{x-c}$. Hence, \begin{align*}
+        \lim_{ x \to c} (f(x) - f(c)) &= \lim_{ x \to c}(x-c) \frac{f(x)-f(c)}{x-c}\\
+        &= \lim_{x \to c} (x- c) \cdot \lim_{x \to c} \frac{f(x) - f(c)}{x-c}\\
+        &= 0 \cdot f'(x) = 0\\
+        &\implies \lim_{x \to c} f(x) = f(c),
+    \end{align*}
+    hence $f$ continuous, noting that the splitting of the limits is valid as both are defined.
+\end{proof}
+
+\begin{example}
+    Let $f: \mathbb{R} \to \mathbb{R}, f(x) := \begin{cases}
+        x^2 & x \in \mathbb{Q}\\
+        0 & x \notin \mathbb{Q}
+    \end{cases}$
+
+    \noindent\underline{Claim:} $f$ discontinuous at all $x \neq 0$.
+
+    \begin{proof}
+        Let $x \neq 0 \in \mathbb{R}$. By density of $\mathbb{Q} \subseteq \mathbb{R}$, there exist sequences $(r_n) \in \mathbb{Q}$ s.t. $r_n \to x$ and $(z_n) \in \mathbb{R} \setminus \mathbb{Q}$ s.t. $z_n \to x$. Then:\begin{align*}
+            \lim_{n \to \infty} f(r_n) = \lim r_n^2 = x^2\\
+            \lim_{n \to \infty} f(z_n) = \lim 0,
+        \end{align*}
+        hence $f$ discontinuous by the sequential criterion at $x \neq 0$.
+    \end{proof}
+    
+    \noindent\underline{Claim:} $f'(0) = 0$. 
+    \begin{proof}
+        Let $\epsilon > 0$ and $\delta = \epsilon$. Notice that $f(x) \leq x^2 \forall x$. Then, we have that $\forall \abs{x} < \delta$, \begin{align*}
+            \abs{\frac{f(x) - f(0)}{x-0} - 0} &= \abs{\frac{f(x)}{x}} \\
+            &\leq \abs{\frac{x^2}{x}} = \abs{x} < \delta = \epsilon 
+        \end{align*}
+    \end{proof}
+\end{example}
+
+\begin{definition}
+    Let $f: I \to \mathbb{R}$. A point $c \in I$ is a local max (resp min) if $\exists \delta > 0 \st f(x) \leq f(c)$ (resp $f(x) \geq f(c)$) $\forall x \in (c - \delta, c + \delta) \cap I$.
+\end{definition}
+
+\begin{lemma}
+    Let $f : I \to \mathbb{R}$ be differentiable at $c \in I^\circ$. If $c$ a local extrema of $f$, then $f'(c) = 0$.
+\end{lemma}
+\begin{proof}
+    Assume wlog that $c$ a local max; if a local min, take $\tilde f :=-f$ and continue.
+
+    Since $I^\circ$ open, $\exists \delta_1 > 0 : (c- \delta_1, c + \delta_1) \subseteq I^\circ \subseteq I$. We also have that $\exists \delta_2 > 0 : f(x) \leq f(c) \forall x \in (c - \delta_2, c + \delta_2) \cap I$, by $c$ an extrema.
+
+    Let $\delta := \min \{\delta_1, \delta_2\}$. Then, we have both $(c - \delta, c + \delta) \subseteq I$ and $f(x) \leq f(c) \forall x \in (c - \delta, c + \delta)$. 
+    
+    Since $f'(c)$ exists, $\lim_{x \to c^+} \frac{f(x) - f(c)}{x-c} = \lim_{x \to c^-} \frac{f(x) - f(c)}{x - c}$. But we have from the property of being a maximum that \begin{align*}
+        \lim_{x \to c^+} \frac{f(x) - f(c)}{x-c} \geq 0, \qquad \lim_{x \to c^-} \frac{f(x) - f(c)}{x - c}\leq 0,
+    \end{align*}
+    hence, as these two limits must agree, they must equal $0$ and thus $f'(c) = 0$.
+\end{proof}
