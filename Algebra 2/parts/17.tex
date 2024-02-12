@@ -1,0 +1,86 @@
+\begin{remark}
+Notice that to get an isomorphism $V \cong V^\ast$, we fixed a basis for $V$ to define it. However, for $V \cong V^{\ast\ast}$, we had a canonical isomorphism independent of choice of basis. Writing $S \subseteq V$, $\hat S := \{\hat{x} : x \in S\} \subseteq V^{\ast\ast}$, our theorem says that $\hat{V} = V^{\ast \ast}$ for finite-dimensional $V$.
+\end{remark}
+
+\begin{definition}[Annihilator]
+    Let $V$ be a vector space over $\field$ and $S \subseteq V$. We call \[
+    S^\perp := \{f \in V^\ast : f\vert_S = 0\}  = \{
+        f \in V^\ast : f(u) = 0 \forall u \in S
+    \}
+    \]
+    the \emph{annihilator} of $S$.
+\end{definition}
+
+\begin{proposition}
+    Let $V$ be a vector space over $\field$ and $S \subseteq V$.
+    \begin{enumerate}
+        \item $S^\perp$ is a subspace of $V^\ast$\footnotemark
+        \item $S_1 \subseteq S_2 \subseteq V \implies S_1^\perp \supseteq S_2^\perp$
+        \item $S^\perp = (\Span(S))^\perp$
+    \end{enumerate}
+\end{proposition}
+\footnotetext{Even if $S$ is not a subspace itself.}
+\begin{proof}
+    \begin{enumerate}
+        \item If $f_1, f_2 \in S^\perp, a \in \field$, then $\forall u \in S$, \[
+        (af_1 +f_2)(u) = af_1(u) + f_2(u) = a\cdot 0 + 0,    
+        \]
+        so $af_1 + f_2 \in S^\perp$.
+        \item Clear.
+        \item If $f \in V^\ast$ takes all vectors in $S$ to $0$, then it does the same for zeros.
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}
+    If $V$ is finite dimensional and $U \subseteq V$ a subspace, then $(U^\perp)^\perp = \hat{U}$.
+\end{proposition}
+
+\begin{proof}
+    We know that $V^{\ast \ast} = \hat{V}$, so we fix $\hat{x} \in \hat{V}$ and show that \begin{align*}
+        \hat{x} \in (U^\perp)^\perp \iff \hat{x} \in \hat {U} \iff x \in U.
+    \end{align*}
+We have 
+    \begin{align*}
+        \hat{x} \in (U^\perp)^\perp :\iff \forall f \in U^\perp, \hat{x}(f) = f(x) = 0
+    \end{align*}
+    hence if $x \in U$, then $\hat{x} \in (U^\perp)^\perp$, so $\hat{U} \subseteq (U^\perp)^\perp$.
+
+    Conversely, let $\hat{x} \in (U^\perp)^\perp$. Then, $\forall f \in U^\perp$, $f(x) = 0$.
+    
+    Suppose towards a contradiction that $x \notin U$. We aim to define $f \in U^\perp \st f(x) = 1$, obtaining a contradiction. Let $\{u_1, \dots, u_k\}$ be a basis for $U$, noting that $\{u_1, \dots, u_k, x\}$ still linearly independent by assumption of $x \notin U = \Span(\{u_1, \dots, u_k\})$. Thus, we can extend this to a basis $\beta = \{u_1, \dots, u_k, x, v_1, \dots, v_m\}$ for $V$. Define $f :V \to \field \in V^\ast$ as the unique linear transformation such that $f(u_i) = f(v_j) = 0$ and $f(x) = 1$. Then, $f \in U^\perp$ by definition, and $f(x) = 1$ by definition. This is a contradiction that $x \notin U$.
+\end{proof}
+
+\begin{corollary}
+    For a finite dimensional $V$ and subspace $U \subseteq V$,
+    \[
+    U = \{x \in V : \forall f \in U^\perp, f(x) = 0\}.
+    \]
+\end{corollary}
+
+\begin{definition}[Dual/Transpose of $T$]
+    Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. We define the \emph{dual}/\emph{transpose} of $T$ is the map $T^\ast : W^\ast \to V^\ast$, given by $g \mapsto g\circ T$. Ie, $T^\ast(g)(v) := g \circ T^\ast(v) = g(T(v))$.
+\end{definition}
+
+\begin{proposition}
+    Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. \begin{enumerate}
+        \item $T^\ast$ is linear.
+        \item $\ker(T^\ast) = (\im(T))^\perp$.
+        \item $\im(T^\ast) \subseteq (\ker(T))^\perp$ and is equal if $V, W$ are finite dimensional.
+        \item If $V,W$ are finite dimensional and $\beta, \gamma$ are bases resp., then \begin{align*}
+            [T^\ast]_{\gamma^\ast}^{\beta^\ast} = ([T]_\beta^\gamma)^t.
+        \end{align*}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $T^\ast(ag_1 + g_2) = (ag_1 + g_2)\circ T = a \cdot g_1 \circ T + g_2 \circ T = a \cdot T^{\ast}(g_1) + T^\ast(g_2), \forall g_1, g_2 \in W^\ast, a \in \field$.
+        \item For $g \in W^\ast$, \begin{align*}
+            g \in \ker(T^\ast) :\iff T^\ast(g) = 0_{V^\ast} &\iff T^\ast(g)(v) = 0 \forall v \in V\\
+            &\iff g(T(v)) = 0 \forall v \in V\\
+            &\iff g(w) = 0 \forall w \in \im(T)\\
+            &\iff g \in (\im(T))^\perp
+        \end{align*}
+        \item Fix $f = T^\ast(g) \in \im(T^\ast)$, $g \in W^\ast$, and $u \in \ker(T)$, noting that $f(u) = T^\ast(g)(u) = g(T(u)) = g(0_W) = 0$ so $f \in (\ker(T))^\perp$.
+    \end{enumerate}
+\end{proof}
