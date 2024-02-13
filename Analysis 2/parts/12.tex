@@ -1,0 +1,86 @@
+\section{Derivatives}
+\subsection{Introduction}
+
+\begin{definition}[Differentiable]
+    We say $f(x)$ differentiable at $c$ if $\exists \lim_{x \to c} \frac{f(x) - f(c)}{x-c}$. If so, we denote the limit $f'(c)$.
+\end{definition}
+
+\begin{remark}
+    For $x$ close to $c$, then $f(x) \approx f(c) + f'(c)(x-c)$; this is a linear approximation of $f$ at $c$.
+\end{remark}
+
+\begin{example}[Weierstrass]
+    $f(x) = \sum_{n=1}^\infty \frac{\cos(3^n)x}{2^n}$ is continuous in $\mathbb{R}$, but nowhere differentiable.
+\end{example}
+\begin{definition}
+    The derivative, $\dd{x}$, is a linear map $C^([a, b]) \to C^0([a, b])$.
+\end{definition}
+
+\subsection{Chain Rule}
+\begin{remark}
+    See \href{https://notes.louismeunier.net/Analysis%201/analysis.pdf#page=96}{Analysis I notes} as well.
+\end{remark}
+\begin{theorem}[Caratheodory's Theorem]\label{thm:Caratheodory}
+    Let $f: I \to \mathbb{R}$, $c \in I$. $f$ is differentiable at $x = c$ iff $\exists \varphi(x) : I \to \mathbb{R} \st \varphi$ continuous at $c$ and $f(x) - f(c) = \varphi(x)(x - c)$.
+\end{theorem}
+
+\begin{proof}
+    If $f'(c)$ exists, let \[
+    \varphi(x) = \begin{cases}
+        \frac{f(x) - f(c)}{x-c} & x \neq c\\
+        f'(c) & x = c.
+    \end{cases},    
+    \]
+    which is well defined. Moreover, for $x \neq c$, $\varphi(x)(x - c) = \frac{f(x)-f(c)}{x-c}(x-c) = f(x)-f(c)$ as desired; the case for $x = c$ is clear. Continuity at $c$:
+    \[
+    \lim_{x \to c} \varphi(x) = \lim_{x \ to c} \frac{f(x) - f(c)}{x - c} = f'(c) = \varphi(c).    
+    \]
+
+    Conversely, suppose such a $\varphi$ exists. Then, by continuity, \begin{align*}
+        \exists \varphi(c) = \lim_{x \to c} \varphi(x) = \lim_{x \to c}\frac{f(x)-f(c)}{x - c}
+    \end{align*}
+    which gives directly that $f$ differentiable at $c$.
+\end{proof}
+
+\begin{theorem}[Chain Rule]
+    Let $f : J \to \mathbb{R}, g : I \to \mathbb{R}$, $f(J) \subseteq I$. If $f(x)$ differentiable at $c$ and $g(y)$ is differentiable at $y = f(c)$, then $g \circ f(x)$ is also differentiable at $c$, and \[
+    (g\circ f)'(c) = g'(f(c))f'(c).    
+    \]
+\end{theorem}
+
+\begin{proof}
+    Using \nameref{thm:Caratheodory}, $\exists \varphi : f(x) - f(c) = \varphi(x)(x-c)$ with $\varphi(c) = f'(c)$. Let $d = f(c)$, then similarly $\exists \psi :g(y)-g(d) = \psi(y)(y-d)$ with $\psi(d) = g'(d)$, with $\varphi, \psi$ continuous at $c, d$ resp. Then, \begin{align*}
+        g(f(x))-g(f(c)) = \psi(f(x))(f(x)-f(c))=(\psi\circ f)(x)\cdot(\phi(x)(x-c))
+    \end{align*}
+    $\psi \circ f$ is continuous at $c$, as a composition of continuous functions ($\psi, \phi$ continuous by construction, $f$ differentiable and thus continuous). It follows, then, that \begin{align*}
+        \lim_{x \to c} \frac{g(f(x)) - g(f(c))}{x - c} = \lim_{x \to c} (\psi\circ f)(x)\cdot\varphi(x) = \psi(f(c))\varphi(c) = g'(f(c))\cdot f'(c),
+    \end{align*}
+    by construction.
+\end{proof}
+
+\subsection{Critical Points}
+
+\begin{definition}
+    $f: I \to \mathbb{R}$ has a max/min $c$ if $\exists J \subseteq I : x \in J \st \max_{x \in J} f(x) /\min_{x \in J}f(x)= f(c)$.
+\end{definition}
+
+\begin{theorem}[Rolle's]\label{thm:rolles}
+    Let $f:[a,b]\to \mathbb{R}$ continuous. Suppose $f'(x)$ exists for all $x \in (a,b)$ and $f(a) = f(b) = 0$. Then, $\exists c \in (a, b) : f'(c) = 0$.
+\end{theorem}
+\begin{remark}
+    A "complex-version" of Rolle's:
+\end{remark}
+
+\begin{theorem}[Gauss-Lucas]
+   Let $P(z)$ be a complex-valued polynomial. Then, the roots of $P'(z)$ lie inside the convex hull of roots of $P(z)$, where a convex hull is the smallest polygon with vertices at the roots of $P(z)$.
+\end{theorem}
+\begin{definition}
+    Consider $P(z) = z^{n} - 1$ for some $n \in \mathbb{N}$. If $z$ a root, we can show that $(\abs{z})^n = 1$, hence all roots lie on the unit circle in the complex plane at multiples of the same angle. This gives us a regular $n$-gon in the complex plane. We then have that $P'(z) = nz^{n-1}$, with has root $z = 0$, which clearly lies within the $n$-gon hull.
+\end{definition}
+
+\begin{theorem}[Mean Value]\label{thm:meanvalue}
+    Let $f$ be continuous on $[a,b]$ and differentiable on $(a, b)$. Then, $\exists c \in (a, b) \st f(b) - f(a)=f'(c)(b-a)$.
+\end{theorem}
+\begin{proof}
+    Let $\varphi(x) = f(x) - f(a) = \frac{f(b)-f(a)}{(b-a)}(x-a)$, where $\varphi(a) = 0 = \varphi(b)$. By Rolle's theorem, $\exists c \in (a, b) : \varphi'(c) = 0 = f'(c) - \frac{f(b)-f(a)}{(b-a)}$, as desired.
+\end{proof}

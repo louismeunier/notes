@@ -105,3 +105,33 @@
     \end{align*}
     hence, as these two limits must agree, they must equal $0$ and thus $f'(c) = 0$.
 \end{proof}
+
+\subsection{Miscellaneous}
+
+\begin{example}[Rudin, Chapter 7: Differentiability]
+    \begin{enumerate}
+        \item Let $f$ be defined $\forall x \in \mathbb{R}$, and suppose that $\abs{f(x) - f(y)} \leq (x - y)^2, \forall x, y \in \mathbb{R}$. Prove that $f$ is constant.\footnotemark
+        \begin{proof}
+            Let $x > y \in \mathbb{R}$. Then, as $\abs{x - y} = x - y$, we have \begin{align*}
+                \abs{f(x) - f(y)} \leq (x - y)^2 &\implies \abs{\frac{f(x) - f(y)}{x - y}} \leq x - y = \abs{x - y} \to 0 \text{ as } y \to x\\
+                &\implies \abs{\frac{f(x) - f(y)}{x - y}} \to 0
+            \end{align*}
+            This implies, then, that $f'(x)$ is defined $\forall x \in \mathbb{R}$, and moreover, that $f'(x) = 0 \forall x \in \mathbb{R}$. We conclude, then, that $f(x)$ constant $\forall x \in \mathbb{R}$.
+        \end{proof}
+    
+        \item Suppose $f'(x) > 0$ in $(a, b)$. Prove that $f$ is strictly increasing in $(a, b)$, and let $g$ be its inverse function. Prove that $g$ is differentiable, and that \[
+        g'(f(x)) = \frac{1}{f'(x)}   \quad (a < x < b).
+        \]
+        \begin{proof}
+            Fix $x > y \in (a, b)$. Then, by the mean value theorem, $\exists z \in (x, y) : f'(z) = \frac{f(x) - f(y)}{x - y}$. Since $f'(z) > 0$, it follows that \begin{align*}
+                \frac{f(x) - f(y)}{x - y} > 0 \implies f(x) - f(y) > x - y > 0 \implies f(x) > f(y),
+            \end{align*}
+            hence, $f$ increasing, as $x > y$ arbitrary.
+
+            Let now $g := f^{-1}$.
+            % TODO
+        \end{proof}
+    \end{enumerate}
+\end{example}
+
+\footnotetext{Note that this means that $f$ \emph{Hölder continuous} with constant $\alpha = 2$. Indeed, Hölder continuous functions with $\alpha > 1$ are always constant by a similar proof. For $0 < \alpha \leq 1$, we have the inclusion continuously differentiable $\implies$ Lipschitz $\implies$ $\alpha-$Hölder $\implies$ uniformly continuous $\implies$ continuous.}

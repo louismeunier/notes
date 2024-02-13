@@ -3,8 +3,8 @@
 % ! Provides all preamble
 
 \usepackage[margin=0.15in]{geometry}
-\usepackage[pagestyles]{titlesec}
-\usepackage{libertine}
+\usepackage[pagestyles, sc]{titlesec}
+
 % \usepackage{libertineMono}
 \usepackage[]{csquotes}
 
@@ -12,7 +12,9 @@
 \usepackage{amsmath,amssymb}
 \usepackage{mathrsfs}
 \usepackage{xfrac}
-
+% \usepackage{libertine}
+\usepackage{newpxtext}
+\usepackage{newpxmath}
 \usepackage{tabularx}
 \usepackage{multicol}
 \usepackage[shortlabels]{enumitem}
@@ -30,7 +32,8 @@
 \usepackage[ragged,multiple,flushmargin]{footmisc}
 
 \usepackage{xcolor-solarized}
-\usepackage[colorlinks=true, linkcolor=darkgray]{hyperref}
+% \usepackage[colorlinks=true, linkcolor=darkgray]
+\usepackage[colorlinks, allcolors=solarized-cyan, linkcolor=darkgray]{hyperref}
 \usepackage{cleveref}
 \usepackage{nameref}
 
@@ -70,9 +73,9 @@
 }
 
 
-\titleformat{\section}
-{\color{darkgray}\centering\normalfont\Large\bfseries}
-{\color{darkgray}\thesection}{1em}{}
+% \titleformat{\section}
+% {\color{darkgray}\centering\normalfont\Large\bfseries}
+% {\color{darkgray}\thesection}{1em}{}
 
 % Proof environment
 \renewcommand*{\qedsymbol}{\(\blacksquare\)}
@@ -172,9 +175,11 @@ nobreak=true]{lemma-inline}{\textcolor{solarized-orange}{$\hookrightarrow$ \unde
 % page footer
 \newpagestyle{mypage}{%
 % \footrule
-\setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
+\setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{\scshape\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
 }
 
 \titleformat{\section}
-{\centering\normalfont\Large\bfseries}
+{\Large\bfseries\scshape}
 {\thesection}{1em}{}
+
+\renewcommand{\contentsname}{\bfseries\scshape\Large Contents}
