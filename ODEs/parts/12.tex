@@ -1,0 +1,108 @@
+\begin{proposition}
+    Let $I \subseteq \mathbb{R}$, $x_0 \in I$ and let $p_i(x)$, $i = 1, \dots, n$ and $g(x)$ be continuous on $I$. Then, the IVP\[
+    L[y](x) = g(x) \quad y^{(j)}(x_0) = \alpha_{j+1}, j = 0, \dots, n - 1
+    \]
+    has at most one solution $y(x)$ defined on $I$.
+\end{proposition}
+\begin{proof}
+    Let $y_1, y_2$ be two such solutions and let $\varphi(x) = y_1(x) - y_2(x)$. Then, \[
+        L[\varphi] = L[y_1 - y_2] = L[y_1] - L[y_2] = g(x) - g(x) = 0 \forall x \in I,
+    \]
+    so $L[\varphi] = 0 \forall x \in I$. Moreover, $\varphi(x_0) = y_1(x_0) - y_2(x_0) = \alpha_1 - \alpha_1 = 0$ (with similar computations for the other ICs wrt derivatives of $\varphi$). Let $u(x) = \varphi(x)^2 + \varphi'(x)^2 + \cdots + (\varphi^{(n-1)}(x))^2$. Then, $\varphi(x_0) = 0$, so by the previous lemma $u(x) = 0 \forall x\in I$, and thus $y_1(x) = y_2(x) \forall x \in I$, and thus there is at most one solution of the IVP.
+\end{proof}
+
+\subsection{Linear Homogeneous \texorpdfstring{$N$th}{Nth} Order ODES}
+
+Consider $L[y] = y^{(n)} + \sum_{j=1}^n p_j(x)y^{(nj)} = 0$; in this section, we aim to find the exact dimension of the solution space of $L$.
+
+\begin{theorem}[Principle of Superposition]
+    If $y_1, \dots, y_m$ are solutions of $L[y] = 0$ for some $I \subseteq \mathbb{R}$ then $y(t) = \sum_j^m k_j y_j(t)$ is also a solution for arbitrary constants $k_j$.
+\end{theorem}
+
+\begin{definition}[Fundamental Set of Solutions]
+    A set of $n$ functions $\{y_i(x) : L[y_i] = 0, i = 1, \dots, n\}$ on an interval $I \subseteq \mathbb{R}$ is called a \emph{fundamental set of solutions}if $y_1, \dots, y_n$ are linearly independent on $I$.
+\end{definition}
+
+This necessitates the need to test for linear independence of solutions, which is far harder in $\mathbb{R}^n, n \geq 3$ than $n = 2$.
+
+\begin{definition}[Wronskian]
+    We define \[
+    W(y_1, \dots, y_n)(x) := \left|\begin{matrix}
+        y_1(x) & \cdots & y_n(x)\\
+        y_1'(x) & \cdots & y_n'(x)\\
+        \vdots & \cdots & \vdots \\
+        y_1^{(n-1)}(x) & \cdots & y_n^{(n-1)}(x)
+    \end{matrix}\right|.    
+    \]
+\end{definition}
+
+\begin{theorem}
+    Let $y_1, \dots, y_n \in C^{n-1}(I)$. If $W(y_1, \dots, y_n)(x_0) \neq 0$ for some $x_0 \in I$, then $y_1, \dots, y_n$ are linearly independent on $I$. Consequently, if $y_1, \dots, y_n$ are linearly dependent on $I$, then $W(y_1, \dots, y_n)(x) = 0 \forall x \in I$.
+\end{theorem}
+
+\begin{remark}
+    This does not mean that $W(y_1, \dots, y_n)(x) = 0$ implies the functions are linearly dependent; it does not hold iff.
+\end{remark}
+
+\begin{proof}
+    We show the contrapositive. Assume $y_1, \dots, y_n$ are linearly dependent on $I$. Then, $\exists k_i, i = 1, \dots, n$, not all zero, such that $\sum_{j=1}^n k_j y_j(x)  0 \forall x \in I$, assuming wlog that $k_n \neq 0$. Then \begin{align*}
+        y_n(x) &= -\frac{k_1}{k_n}y_1(x) - \frac{k_2}{k_n}y_2(x) - \cdots - \frac{k_{n-1}}{k_n} y_{n-1}(x)\\
+        &\implies y_n'(x) = -\frac{k_1}{k_n}y_1'(x) - \cdots  \frac{k_{n-1}}{k_n} y_{n-1}'(x)\\
+        &\vdots\\
+        &\implies y_n^{(n-1)}(x) = -\frac{k_1}{k_n}y_1^{(n-1)}(x) - \cdots - \frac{k_{n-1}}{k_n}y_{n-1}^{(n-1)}(x)\\
+        &\implies \begin{pmatrix}
+            y_n(x) \\
+            \vdots\\
+            y_n^{(n-1)}(x)
+        \end{pmatrix} =  -\frac{k_1}{k_n} \begin{pmatrix}
+            y_1(x)\\
+            \vdots\\
+            y_1^{(n-1)}(x)
+        \end{pmatrix} - \cdots - \frac{k_{n-1}}{k_n} \begin{pmatrix}
+            y_{n-1}(x)\\
+            \vdots \\
+            y_{n-1}^{(n-1)}(x)
+        \end{pmatrix},
+    \end{align*}
+    but each of these column vectors are just rows of the Wronskian (times constants), and we thus have that the Wronskian has linearly dependent columns, ie is singular, ie has zero determinant, as we aimed to show.
+\end{proof}
+
+
+\begin{example}
+    Let $y_1(x) = x^2$ and $y_2(x) = \begin{cases}
+        x^2 & x \geq 0\\
+        -x^2 & x < 0
+    \end{cases}$, where both are continuously differentiable on $\mathbb{R}$, but $y_2''(x)$ is discontinuous at $x = 0$.
+
+    \begin{align*}
+        W(y_1, y_2)(x) = \begin{cases}
+            \left|\begin{matrix}
+                x^2 & x^2\\
+                2x & 2x
+            \end{matrix}\right| = 0 & \forall x \geq 0\\
+            \left|\begin{matrix}
+                x^2 & - x^2\\
+                2x & -2x
+            \end{matrix}\right| = 0 & \forall x < 0 
+        \end{cases} = 0 \forall x.
+    \end{align*}
+    Notice too that for $I = [0, \infty), y_1 = y_2$ and are thus linearly dependent. However, $y_1, y_2$ are linearly independent on $\mathbb{R}$. Clearly, our choice of interval changes the dependence/independence of our functions, and moreover, this is an example of functions with Wronskian 0 but are not linearly dependent. 
+\end{example}
+
+This example seems to show that the use of the Wronksian to determine independence of solutions is not reliable; however, we are not particularly interested in this in general, rather, we are concerned with solutions to an $n$th order ODE. In the previous example, $y_2$ was not twice continuously differentiable, and so wouldn't even solve a second order ODE.
+
+\begin{theorem}[Abel's]\label{thm:abels}
+    Let $y_1, \dots, y_n$ be solutions of the $n$th order homogeneous ODE $L[y] = 0$ on $I$ with continuous $p_{j}(x)$ on $I$. Then, \begin{align*}
+        W(x) := W(y_1, \dots, y_n)(x)
+    \end{align*}
+    satisfies the ODE \[
+    W'(x) + p_1(x)W(x) = 0 \quad \forall x \in I,    
+    \]
+    and hence \[
+    W(x) = Ce^{- \int p_1(x) \dd{x}}.    
+    \]
+    Moreover, either \begin{enumerate}
+        \item $c = 0$, and $W(y_1, \dots, y_n)(x) = 0 \forall x \in I$ and $y_1, \dots, y_n$ are linearly dependent on $I$.
+        \item c $\neq 0$, and $W(y_1, \dots, y_n)(x) \neq 0 \forall x \in I$ and $y_1, \dots, y_n$ are linearly independent on $I$, forming a fundamental set of solutions.
+    \end{enumerate}
+\end{theorem}
