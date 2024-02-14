@@ -1,0 +1,28 @@
+\begin{theorem}
+    Let $V$ be a finite-dimensional vector space over $\field$ and $U \subseteq V$ be a subspace. \begin{enumerate}
+        \item $\dim(U^\perp) = \dim(V) - \dim(U)$. In fact, if $\{v_1, \dots, v_k\}$ is a basis for $U$ and $\beta := \{v_1, \dots, v_k, v_{k+1} \dots, v_n\}$ is a basis for $V$ with the dual basis $\beta^\ast = \{f_1, \dots, f_n\}$, then $\{f_{k+1}, \dots, f_n\}$ is a basis for $U^\perp$.
+        \item $(V/U)^\ast \cong U^\perp$ by the map $f \mapsto f_U$, where $f_U:V \to \field$ given by $f_U(v) := f(v + U)$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Left as a (homework) exercise.
+\end{proof}
+
+\begin{corollary}[of \cref{prop:propertiesoftranspose}]
+    Let $V, W$ be vector spaces over $\field$ and $T: V \to W$ be a linear transformation.
+    \begin{enumerate}
+        \item $T^t$ injective $\iff$ $T$ surjective.
+        \item If $V, W$ finite dimensional, then $T^t$ surjective $\iff$ $T$ injective.
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $T^t$ injective $\iff \ker(T^t) = \{0_{W^\ast}\} \iff \im(T)^\perp = \{0_{W^\ast}\}\implies^{\circledast}\im(T) = W \iff T$ surjective. Conversely, if $\im(T) = W \implies (\im(T))^t = \{0_{W^\ast}\}$ (and the rest follows identically).
+        \item $\im(T^t) = \ker(T)^\perp \implies \im(T^\perp) = V^\ast \iff \ker(T) = \{0_V\}$, following similar logic to above.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    Part 4. of \cref{prop:propertiesoftranspose} establishes a dependency between the columns and rows of a matrix; precisely:
+\end{remark}

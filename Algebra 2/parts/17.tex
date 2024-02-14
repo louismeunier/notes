@@ -27,7 +27,7 @@ Notice that to get an isomorphism $V \cong V^\ast$, we fixed a basis for $V$ to 
         \]
         so $af_1 + f_2 \in S^\perp$.
         \item Clear.
-        \item If $f \in V^\ast$ takes all vectors in $S$ to $0$, then it does the same for zeros.
+        \item If $f \in V^\ast$ takes all vectors in $S$ to $0$, then it does the same for linear combinations.
     \end{enumerate}
 \end{proof}
 
@@ -58,29 +58,62 @@ We have
 \end{corollary}
 
 \begin{definition}[Dual/Transpose of $T$]
-    Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. We define the \emph{dual}/\emph{transpose} of $T$ is the map $T^\ast : W^\ast \to V^\ast$, given by $g \mapsto g\circ T$. Ie, $T^\ast(g)(v) := g \circ T^\ast(v) = g(T(v))$.
+    Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. We define the \emph{dual}/\emph{transpose} of $T$ is the map $T^t : W^\ast \to V^\ast$, given by $g \mapsto g\circ T$. Ie, $T^t(g)(v) := g \circ T(v) = g(T(v))$.
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{prop:propertiesoftranspose}
     Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. \begin{enumerate}
-        \item $T^\ast$ is linear.
-        \item $\ker(T^\ast) = (\im(T))^\perp$.
-        \item $\im(T^\ast) \subseteq (\ker(T))^\perp$ and is equal if $V, W$ are finite dimensional.
+        \item $T^t$ is linear.
+        \item $\ker(T^t) = (\im(T))^\perp$.
+        \item $\im(T^t) \subseteq (\ker(T))^\perp$ and is equal if $V, W$ are finite dimensional.
         \item If $V,W$ are finite dimensional and $\beta, \gamma$ are bases resp., then \begin{align*}
-            [T^\ast]_{\gamma^\ast}^{\beta^\ast} = ([T]_\beta^\gamma)^t.
+            [T^t]_{\gamma^\ast}^{\beta^\ast} = ([T]_\beta^\gamma)^t.
         \end{align*}
     \end{enumerate}
 \end{proposition}
 
 \begin{proof}
     \begin{enumerate}
-        \item $T^\ast(ag_1 + g_2) = (ag_1 + g_2)\circ T = a \cdot g_1 \circ T + g_2 \circ T = a \cdot T^{\ast}(g_1) + T^\ast(g_2), \forall g_1, g_2 \in W^\ast, a \in \field$.
+        \item $T^t(ag_1 + g_2) = (ag_1 + g_2)\circ T = a \cdot g_1 \circ T + g_2 \circ T = a \cdot T^{t}(g_1) + T^\ast(g_2), \forall g_1, g_2 \in W^\ast, a \in \field$.
         \item For $g \in W^\ast$, \begin{align*}
-            g \in \ker(T^\ast) :\iff T^\ast(g) = 0_{V^\ast} &\iff T^\ast(g)(v) = 0 \forall v \in V\\
+            g \in \ker(T^\ast) :\iff T^t(g) = 0_{V^\ast} &\iff T^t(g)(v) = 0 \forall v \in V\\
             &\iff g(T(v)) = 0 \forall v \in V\\
             &\iff g(w) = 0 \forall w \in \im(T)\\
             &\iff g \in (\im(T))^\perp
         \end{align*}
-        \item Fix $f = T^\ast(g) \in \im(T^\ast)$, $g \in W^\ast$, and $u \in \ker(T)$, noting that $f(u) = T^\ast(g)(u) = g(T(u)) = g(0_W) = 0$ so $f \in (\ker(T))^\perp$.
+        \item Fix $f = T^t(g) \in \im(T^t)$, $g \in W^\ast$, and $u \in \ker(T)$, noting that $f(u) = T^t(g)(u) = g(T(u)) = g(0_W) = 0$ so $f \in (\ker(T))^\perp$.
+        
+        Suppose now $V, W$ are finite dimensional; we've shown an inclusion, so it suffices now to show that $\dim(\Im(T^t)) = \dim(\ker(T))^\perp$. We have:
+        \begin{align*}
+            \dim(\im(T^t)) &= \dim(W^\ast) - \dim(\ker(T^t)) \\
+            &= \dim(W) - \dim(\im(T)^\perp) \\
+            &= \dim(W) - \dim(W) + \dim(\im(T))\\ 
+            &= \dim(\im(T))
+        \end{align*}
+        OTOH:
+        \begin{align*}
+            \dim(\ker(T)^\perp) = \dim(V) - \dim(\ker(T)) = \dim(\im(T)),
+        \end{align*}
+        and thus $\dim(\im(T^t)) = \dim(\ker(T))^\perp$ (remarking that the first equality follows from 1. of the following theorem, and 2. from the dimension theorem).
+
+        \item Let $\beta :=\{v_1, \dots, v_n\}, \gamma := \{w_1, \dots, w_m\}$ be finite bases for $V, W$ resp. Recall that $$A := [T]_\beta^\gamma := \begin{pmatrix}
+            \vert & & \vert\\
+            [T(v_1)]_\gamma & \cdots & [T(v_n)]_\gamma\\
+            \vert & & \vert
+        \end{pmatrix},$$
+        ie $A^{(j)} = [T(v_j)]_\gamma$ hence $T(v_j) = \sum_{k=1}^m A_{kj} w_k$.
+
+        Similarly, write $\gamma^\ast := \{g_1, \dots, g_m\}$ and $\beta:= \{f_1, \dots, f_n\}$, then $$B := [T^t]_{\gamma^\ast}^{\beta^\ast} := \begin{pmatrix}
+            \vert & & \vert\\
+            [T^t(g_1)]_{\beta^\ast} & \cdots & [T^t(g_m)]_{\beta^\ast}\\ 
+            \vert & & \vert
+        \end{pmatrix},$$
+        so $T^t(g_i) = \sum_{\ell=1}^{n} B_{\ell i} f_\ell= \sum_{\ell=1}^n T^t(g_i)(v_\ell)f_\ell$, so $B_{\ell i} = T^t(g_i)(v_\ell)$. To complete the proof, we must show that $A_{ij} = B_{ji}$ for all $i,j$:
+        \begin{align*}
+            B_{ji} = T^t(g_i)(v_j) = g_i(T(v_j)) = g_i(\sum_{k=1}^m A_{kj} w_k) = \sum_{k=1}^m A_{kj} g_i(w_k) = A_{ij},
+        \end{align*}
+        where the last equality $g_i(w_k) = \delta_{ik}$, by construction.
     \end{enumerate}
 \end{proof}
+
+
