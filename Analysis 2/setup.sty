@@ -3,7 +3,7 @@
 % ! Provides all preamble
 
 \usepackage[margin=0.15in]{geometry}
-\usepackage[pagestyles, sc]{titlesec}
+\usepackage[pagestyles]{titlesec}
 
 % \usepackage{libertineMono}
 \usepackage[]{csquotes}
@@ -175,7 +175,7 @@ nobreak=true]{lemma-inline}{\textcolor{solarized-orange}{$\hookrightarrow$ \unde
 % page footer
 \newpagestyle{mypage}{%
 % \footrule
-\setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{\scshape\sectiontitle: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
+\setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{{\scshape\sectiontitle}: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
 }
 
 \titleformat{\section}

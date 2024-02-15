@@ -1,0 +1,46 @@
+\subsection{Aside: Continued Fractions}
+
+
+We have that, for any $x \in \mathbb{R}, x = \floor{x} + \{x\},$ with $\{x\} \in (0, 1)$; $\floor{x}$ and $\{x\}$ are the integral and fractional parts of $x$ respectively.
+
+% We define the \emph{Gauss Map} as  \[
+% G(x) ={\frac{1}{x} \mod 1   }
+% \]
+% to construct a continued fraction representation of a given real.
+
+Fix $x \in \mathbb{R}$, assuming $x \neq 0$.
+
+Let $x_1 := \frac{1}{\{x\}}$. We can write $$x = \floor{x} + \frac{1}{x_1}.$$ If $\{x_1\} \neq 0$, let $x_2 := \frac{1}{\{x_1\}}$ and write \[
+    x = \floor{x} + \frac{1}{\floor{x_1} + \frac{1}{x_2}}.
+    \]
+Continuing in this manner, this process stops if $\{x_i\} = 0$ for some $i$; 
+if $x \in \mathbb{Q}$, this process will stop, else, it will continue infinitely. For instance, the Golden Ratio $x = \frac{\sqrt{5} \pm 1}{2}$ has continued fraction expansion \[
+x = \frac{1}{1 + \frac{1}{1+\frac{1}{1  + \cdots}}}.    
+\]
+
+More succinctly, we can denote $a_0 := \floor{x}$ and $a_i = \floor{x_i}, i \geq 1$, and write \[
+x = a_0 + \frac{1}{a_1 + \frac{1}{a_2 + \frac{1}{a_3 + \ddots}}}.
+\]
+We notate, accordingly, $x := (a_1, a_2, a_3, \dots)$; in this case, the Golden Ratio can be notated $(1, 1,1, \dots)$.
+% TODO http://math.uchicago.edu/~may/REU2022/REUPapers/Mukherjee.pdf
+
+We denote $\frac{p_n}{q_n}$ as the $n$th continued fraction of a given $x$. It turns out that this is the best possible rational approximation for $x \notin \mathbb{Q}$.
+
+\subsection{Back To Derivatives}
+
+\begin{theorem}
+    $f: I \to \mathbb{R}$, differentiable. $f$ is increasing (resp decreasing) iff $f'(x) \geq 0 \forall x \in I$ (resp $f'(x) \leq 0 \forall x \in I$).
+\end{theorem}
+\begin{proposition}
+    Let $f$ continuous on $I = [a, b]$. Let $ a< c < b$ and suppose $f$ differentiable on $(a, c)$ and $(c, b)$. Suppose $f'(x) \geq 0$ on $(c - \delta, c)$ and $f'(x) \leq 0$ on $(c, c + \delta)$ for some $\delta > 0$. Then, $f$ has local max at $x = c$.
+\end{proposition}
+\begin{lemma}
+    Let $I\subseteq \mathbb{R}$, and assume $f : I \to \mathbb{R}$ is differentiable at $x = c \in I$. \begin{enumerate}
+        \item If $f'(c) > 0$, then $\exists \delta > 0 : f(x) > f(c) \forall x \in I, x \in (c , c + \delta)$.
+        \item (Reverse statement for $f'(c) < 0$)
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}[Darboux]
+    Suppose $f$ differentiable on $I:=[a, b]$ and $f'(a) < k < f'(b)$. Then, $\exists c \in (a, b)$ such that $f'(c) = k$.
+\end{theorem}

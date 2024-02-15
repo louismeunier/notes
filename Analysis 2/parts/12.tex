@@ -21,8 +21,10 @@
     See \href{https://notes.louismeunier.net/Analysis%201/analysis.pdf#page=96}{Analysis I notes} as well.
 \end{remark}
 \begin{theorem}[Caratheodory's Theorem]\label{thm:Caratheodory}
-    Let $f: I \to \mathbb{R}$, $c \in I$. $f$ is differentiable at $x = c$ iff $\exists \varphi(x) : I \to \mathbb{R} \st \varphi$ continuous at $c$ and $f(x) - f(c) = \varphi(x)(x - c)$.
+    Let $f: I \to \mathbb{R}$, $c \in I$. $f$ is differentiable at $x = c$ iff $\exists \varphi(x) : I \to \mathbb{R} \st \varphi$ continuous at $c$ and $f(x) - f(c) = \varphi(x)(x - c)$.\footnotemark
 \end{theorem}
+
+\footnotetext{If not stated otherwise, sets named $I$ or $J$ are intervals.}
 
 \begin{proof}
     If $f'(c)$ exists, let \[
@@ -33,7 +35,7 @@
     \]
     which is well defined. Moreover, for $x \neq c$, $\varphi(x)(x - c) = \frac{f(x)-f(c)}{x-c}(x-c) = f(x)-f(c)$ as desired; the case for $x = c$ is clear. Continuity at $c$:
     \[
-    \lim_{x \to c} \varphi(x) = \lim_{x \ to c} \frac{f(x) - f(c)}{x - c} = f'(c) = \varphi(c).    
+    \lim_{x \to c} \varphi(x) = \lim_{x \to c} \frac{f(x) - f(c)}{x - c} = f'(c) = \varphi(c).    
     \]
 
     Conversely, suppose such a $\varphi$ exists. Then, by continuity, \begin{align*}
