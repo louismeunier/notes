@@ -1,0 +1,202 @@
+\begin{proof}
+We show first that $W$ satisfies the required ODE.
+
+Consider first the $n=2$ case. We have, $\forall x \in I$\begin{align*}
+    0 = L[y_1] = y_1'' + p_1(x)y_1' + p_2(x)y_1\\
+    0 = L[y_2] = y_2'' + p_1(x)y_2' + p_2(x)y_2
+ \end{align*}
+Consider:
+\begin{align*}
+    y_2(y_1''+p_1y_1'+p_2y_1)-y_1(y_2''+p_1y_2'+p_2y_2) = 0\\
+    \implies y_1y_2''-y_2y_1''+p_1(y_1y_2'-y_2y_1')=0 \quad \ast^1
+\end{align*}
+But recall that $W = \left|\begin{matrix}
+    y_1 & y_2\\
+    y_1' & y_2'
+\end{matrix}\right| = y_1 y_2'-y_1'y_2$, hence \[
+W'(x) = y_1y_2''+y_1'y_2'-y_1'y_2'-y_1''y_2 = y_1y_2''-y_1''y_2,    
+\]
+and thus, as this matches the left-hand terms of $\ast^1$, $W'(x) + p_1 W(x) = 0$ as desired. 
+
+For general $n$, \begin{align*}
+    W(y_1, \dots, y_n)(x) &= \left|\begin{matrix}
+        y_1(x) & \cdots & y_n(x)\\
+        \vdots & \ddots & \vdots\\
+        y_1^{(n-1)}(x) & \cdots &y_n^{(n-1)}(x)
+    \end{matrix}\right|\\
+    W'(x) &= \underbrace{\left|\begin{matrix}
+        y_1' & \cdots & y_n'\\
+        y_1' & \cdots & y_n'\\
+        y_1'' & \cdots & y_n''\\
+        \vdots & \ddots & \vdots \\
+        y_1^{(n-1)} & \cdots & y_n^{(n-1)}
+    \end{matrix}\right| +  \left|\begin{matrix}
+        y_1 & \cdots & y_n\\
+        y_1'' & \cdots & y_n''\\
+        y_1'' & \cdots & y_n''\\
+        \vdots & \ddots & \vdots \\
+        y_1^{(n-1)} & \cdots & y_n^{(n-1)}
+    \end{matrix}\right| + \cdots + \left|\begin{matrix}
+        y_1 & \cdots & y_n\\
+        y_1' & \cdots & y_n'\\
+        \vdots & \ddots & \vdots \\
+        y_1^{(n-1)} & \cdots & y_n^{(n-1)}\\
+        y_1^{(n-1)} & \cdots & y_n^{(n-1)}
+    \end{matrix}\right|}_{=0 \text{; have a repeated row}} +\left|
+        \begin{matrix}
+        y_1 & \cdots & y_n\\
+        y_1' & \cdots & y_n'\\
+        \vdots & \ddots & \vdots \\
+        y_1^{(n-1)} & \cdots & y_n^{n-1}\\
+        y_1^{(n)} & \cdots & y_n^{(n)}
+    \end{matrix}\right|  \quad \ast^2
+\end{align*}
+But we have that $y_j^{(n)} = -p_1y_j^{(n-1)} - p_2y_j^{(n-2)} - \cdots - p_n y_j, j = 1, \dots, n$, so we can substitute this into $\ast^2$. This will simplify:
+\begin{align*}
+    W' &= - p_1 \left| \begin{matrix}
+        y_1 & \cdots &  y_n\\
+        \vdots & \ddots & \vdots \\
+        y_1^{(n-2)} & \cdots & y_n^{(n-2)}\\
+        y_1^{(n-1)} & \cdots & y_n^{(n-1)}
+    \end{matrix}\right|\underbrace{-p_2 \left|\begin{matrix}
+        y_1 & \cdots &  y_n\\
+        \vdots & \ddots & \vdots \\
+        y_1^{(n-2)} & \cdots & y_n^{(n-2)}\\
+        y_1^{(n-2)} & \cdots & y_n^{(n-2)}
+    \end{matrix}\right| - \cdots - p_n\left|\begin{matrix}
+        y_1 & \cdots &  y_n\\
+        \vdots & \ddots & \vdots \\
+        y_1^{(n-2)} & \cdots & y_n^{(n-2)}\\
+        y_1 & \cdots & y_n
+    \end{matrix}\right|}_{=0}\\
+    &= -p_1 W,
+\end{align*}
+as required.
+
+In the case $c \neq 0$, case 2., then $W(x) \neq 0 \forall x \in I$, and we've already shown that $y_1, \dots, y_n$ are linearly independent on $I$.
+
+If $c = 0$, case 2., and $W(x) = 0 \forall x \in I$, then it remains to show that $y_1, \dots, y_n$ are linearly dependent.
+
+Let $\varphi(x) = \sum_{j=1}^{n} c_j y_j(x)$, with $c_j$ such that $\varphi$ solves the IVP; ie \[
+L[\varphi] = 0; \quad \varphi(x_0) = \cdots = \varphi^{(n-1)}(x_0) = 0.
+\]
+We must have:
+\begin{align*}
+    \begin{pmatrix}
+        0\\
+        \vdots \\
+        0
+    \end{pmatrix} = \begin{pmatrix}
+        \varphi(x_0)\\
+        \vdots\\
+        \varphi^{(n-1)}(x_0)
+    \end{pmatrix} = \underbrace{\begin{pmatrix}
+        y_1(x_0) & y_2(x_0) & \cdots & y_n(x_0)\\
+        \vdots & \ddots & \ddots & \vdots \\
+        y_1^{(n-1)}(x_0) & \cdots & \cdots & y_n^{(n-1)}(x_0)
+    \end{pmatrix}}_{:=A} \begin{pmatrix}
+        c_1\\
+        \vdots\\
+        c_n
+    \end{pmatrix}
+\end{align*} 
+Since $W(x) = 0 \forall x \in I$, $W(x_0)= 0 $ and thus this matrix $A$ has determinant $0$, is singular, and has a non-trivial kernel.
+
+Let $(c_1, \dots, c_n)^T \in \ker(A)$, not equal to the zero vector; then, these $c_j$ make $\varphi$ satisfy the IVP as desired:
+\begin{align*}
+    L[\varphi] =\sum_{j=1}^n c_j L[y_j] = 0,
+\end{align*}
+as $y_j$ solutions and $c_j$ chosen appropriately to satisfy IVP. 
+
+We clearly have, as well, that $y(x) = 0$ will solve the IVP; but by uniqueness, it must be that \begin{align*}
+    0 = y(x) &= \varphi(x) \forall x \in I\\
+    &\implies 0 = \sum_{j=1}^n c_j y_j(x),
+\end{align*}
+but by construction the $c_j$s are not all zero, hence, $y_1, \dots, y_n$ must be linearly dependent.
+\end{proof}
+
+\begin{corollary}
+    If $L[y_j] = 0 \forall x \in I, j= 1, \dots, n$, where $p_j$ are continuous for all $x \in I$, and let $Y := \{y_j : 1 \leq j \leq 1\}$. TFAE:
+    \begin{enumerate}
+        \item $Y$ form a fundamental set of solutions on $I$;
+        \item $Y$ are linearly independent on $I$;
+        \item $W(Y)(x_0) \neq 0$ for some $x_0 \in I$;
+        \item $W(Y)(x) \neq 0 \forall x \in I$.
+    \end{enumerate}
+\end{corollary}
+
+\begin{theorem}
+    Let $y_1, \dots, y_n$ be a fundamental set of solutions for $L[y] = 0$ on $I$, where $p_j(x)$-continuous on $I$.
+    \begin{enumerate}
+        \item The IVP $$L[y] = 0, \quad y(x_0) = \alpha_1, \dots, y^{(n-1)}(x_0) = \alpha_n$$ has a unique solution $y(x)$ for $x \in I$, which can be written as \[
+        y(x) = \sum_{j=1}^{n}c_j y_j(x), \quad \dagger    
+        \]
+        for a unique choice of the constants $c_1, \dots, c_n$.
+        \item Every solution $y(x)$ of the ODE $L[y] = 0$ defined on $I$ can be written in the form $\dagger$ for some choice of the parameters $c_1, \dots, c_n$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    This theorem does not guarantee existence of the fundamental set of solutions for an arbitrary $L[y] = 0$.
+
+    Part 2. shows that the fundamental set of solutions span the whole solution space: the space of solutions is exactly $n$-dimensional.
+\end{remark}
+
+\begin{proof}
+    To prove 1., let $y(x)$ as defined by $\dagger$. Then, $L[y] = 0$ trivially satisfies the ODE, by superposition, so it remains to show that there is a unique choice of $(c_j)$ such that the IVP is satisfied. We need:
+    \begin{align*}
+        \begin{pmatrix}
+        \alpha_1\\
+        \vdots\\
+        \alpha_n
+    \end{pmatrix} =\begin{pmatrix}
+        y(x_0)\\
+        \vdots \\
+        y^{(n-1)}(x_0)
+    \end{pmatrix} = \underbrace{\begin{pmatrix}
+        y_1(x_0) & y_2(x_0) & \cdots & y_n(x_0)\\
+        \vdots & \ddots & \ddots & \vdots\\
+        y_1^{(n-1)}(x_0) & y_2^{(n-1)}(x_0) & \cdots & y_n^{(n-1)}(x_0)
+    \end{pmatrix}}_{:=A}\begin{pmatrix}
+        c_1\\
+        \vdots\\
+        c_n
+    \end{pmatrix}
+    \end{align*}
+    But now, $\det{A} = W(y_1, \dots, y_n)(x_0) \neq 0$, hence $A$ invertible, and we have \begin{align*}
+        \begin{pmatrix}
+            c_1\\
+            \vdots\\
+            c_n
+        \end{pmatrix} = A^{-1} \begin{pmatrix}
+            \alpha_1\\
+            \vdots\\
+            \alpha_n
+        \end{pmatrix}.
+    \end{align*}
+    Since $A^{-1}$ is unique, then so are the $(c_j)$'s.
+
+    To prove 2., note that any $y(x)$ defined by $\dagger$ satisfies $L[y] = 0 \forall x \in I$ for any choice of $c_j$ by superposition. To show that there are no other forms of solutions, suppose $\varphi(x)$ is a solution that cannot be written as such.
+
+    Suppose $L[\varphi](x) = 0 \forall x \in I$. For $\varphi$, let $x_0\in I$ and find $y(x)$ that satisfies the IVP \[
+    L[y] = 0, \quad y(x_0) = \varphi(x_0), \cdots, y^{(n-1)}(x_0) = \varphi^{(n-1)}(x_0).
+    \]
+    By 1. this IVP has a unique solution of the form $\dagger$, and with the same IC as $\varphi$, we have thus that $\varphi = y$, a contradiction.
+\end{proof}
+
+\subsection{Nonhomogeneous \texorpdfstring{$N$}{N}th Order Linear ODEs}
+
+Consider $L[y] = g$. If $y_1, \dots, y_n$ a fundamental set of solutions of $L[y] = 0$ and $L[y_p] = g$, then \[
+y (x) = y_p(x) + \sum_{j=1}^n c_j y_j(x)    
+\]
+will satisfy the original $L[y] = g$. We need to show that we can construct such an $y_p$.
+
+We will use variation of parameters to find $y_p$. Suppose $y_p(x) = \sum_{j=1}^n u_j(x) y_j(x)$ for TBD $u_j(x)$, and suppose $L[y_p] = g$. This gives\begin{align*}
+    y_p'(x) = \sum_{j}u_j(x)y_j'(x) + \sum_{j}u_j'(x)y_j(x).
+\end{align*}
+
+To simplify, we'll assume that $\sum_{j} u_j'y_j = 0 \forall x \in I$, so
+\begin{align*}
+    y_p''(x) = \sum_{j}u_jy_j''+\sum_ju_j'y_j',
+\end{align*}
+and assume, similarly, $\sum_ju_j'y_j' = 0 \forall x$, remarking that at each of these steps we introduce a new constraint, and as such we will eventually have $n - 1$ constraints to solve for.
