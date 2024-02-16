@@ -1,0 +1,73 @@
+\subsubsection{Application to Matrix Rank}
+
+\begin{definition}[Matrix Rank/C-Rank,R-Rank]
+    For a matrix $A \in M_{m\times n} (\field)$, we define \[
+    \rank(A) := \rank(L_A)    
+    \]
+    and the \emph{column rank} of \[
+    \crank(A) := \text{size of maximal indep. subset of columns } \{A^{(1)}, \dots, A^{(n)}\}
+    \]
+    and \emph{row rank} of \[
+    \rrank(A) := \text{size of maximal indep. subset of rows } \{A_{(1)}, \dots, A_{(m)}\}.
+    \]
+\end{definition}
+
+\begin{remark}
+    Notice that $\rank(A) = \crank(A)$.
+\end{remark}
+
+\begin{corollary}
+    \[
+    \rank(A) = \rank(A^t) = \rrank(A)
+    \]
+\end{corollary}
+
+% TODO
+\begin{proof}
+    We know already that $\rank(A^t) = \crank(A^t) = \rrank(A)$, as remarked previously, hence we need only to show that $\rank(A^t) = \rank(A)$. But $A = [L_A]$ and $A^t = [L_{A^t}] = [L_A]^t = [L_A^t]$. Thus, $\rank(A) = \rank(L_A) = \rank(L_A^t) = \rank(A^t)$.
+\end{proof}
+
+\begin{corollary}
+    $$\rank(A) = \crank(A) = \rrank(A), \quad \forall A \in M_{m \times n}(\field)$$
+\end{corollary}
+
+\subsection{Systems of Linear Equations}
+
+We can write a system of $m$ equations of $n$ unknowns $x_i$
+\begin{align*}
+    \begin{cases}
+        a_{11}x_1 + \cdots + a_{1n}x_n = b_1\\
+        \qquad \ddots \qquad \ddots \qquad \ddots \\
+        a_{m1}x_1 + \cdots + a_{mn}x_n = b_m
+    \end{cases}
+\end{align*}
+succinctly as a matrix equation \[
+A \cdot \vec{x} = \vec{b},    
+\]
+where $A := (a_{ij}) \in M_{m \times n}(\field)$, $\vec{x} = \begin{pmatrix}
+    x_1\\
+    \vdots\\
+    x_n
+\end{pmatrix}$, and $\vec{b} := \begin{pmatrix}
+    b_1\\
+    \vdots\\
+    b_m
+\end{pmatrix} \in \field^m$. Hence, $\vec{x}$ solves $A \vec{x} = \vec{b} \iff L_{A}(\vec{x}) = \vec{b} \iff \vec{x} \in L_{A}^{-1}(\vec{b})$. In other words, a solution exists iff $\vec{b} \in \im(L_A) = \Span(A^{(1)}, \dots, A^{(n)})$. In particular, when $\vec{b} = \vec{0}$, a solution always exists, $\vec{x} = \vec{0}$. We call $A \cdot \vec{x} = \vec{0}$ the \emph{homogeneous system of equations} of $A$. 
+
+It follows that $A \cdot \vec{x} = \vec{0}$ has nonzero solutions $\iff \ker(L_A)$ non-trivial. Moreover, if $A \cdot \vec{x} = \vec{b}$ and $A \cdot \vec{y} = \vec{0}$, then $A\cdot (\vec{x} + \vec{y}) = \vec{b}$ as well by linearity.
+
+\begin{proposition}
+    For $A \in M_{m \times n}(\field)$ and $b \in \im(L_A)$ the set of solutions to $A\vec{x} = \vec{b}$ is precisely the coset $\vec{v} + \ker(L_A)$ where $\vec{v} \in \field^n$ is a particular solution to $A \vec{x} = \vec{b}$; $A \vec{v} = \vec{b}$.
+\end{proposition}
+
+\begin{proof}
+    $\vec{v} + $ an element of $\ker(L_A)$ is a solution to $A \vec{x} = \vec{b}$. Conversely, if $\vec{v}, \vec{w}$ are solutions to $A \vec{x} = \vec{b}$, then $A \cdot (\vec{v} - \vec{w}) = \vec{b} - \vec{b} = \vec{0}$ so $\vec{v} - \vec{w} \in \ker(L_A)$, thus $\vec{w} = \vec{v} + (\vec{v} - \vec{w}) \in \vec{v} + \ker(L_{A})$.
+\end{proof}
+
+\begin{corollary}
+    If $m < n$ and $A \in M_{m \times n}(\field)$, then there is always a nonzero solution to the homogeneous equation $A \vec{x} = \vec{0}$
+\end{corollary}
+
+\begin{proof}
+    $\nullity{(L_A)} = n - \rank(L_A) = n - \dim(\im(L_A)) \geq n - m > 0$ hence $\ker(L_A)$ nontrivial.
+\end{proof}
