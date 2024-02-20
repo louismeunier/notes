@@ -70,7 +70,7 @@
     \end{align*}
     since we are taking "less of the summands in the second line". It follows, then, that for each $k, \exists z_k : x_k^{(n)} \to z_k$ as $n \to \infty$. Let $z = (z_1, \dots, z_n, \dots)$. We claim that $x^{(n)} \to z \in \ell_p$ as $n \to \infty$. 
 
-    First, we show that $d_p(x^{(n)}, z) \to 0$ as $n \to 0$ (that is, $x^{(n)} \to z$ as $n \to \infty$). Fix $\epsilon >0$, and choose $N \in \mathbb{N}$ for which $d_p(x^{(m)}), x^{(n)} < \epsilon$ $\forall m, n \geq N$ (by Cauchy). Fix $K \in \mathbb{N}, K > 0$.
+    First, we show that $d_p(x^{(n)}, z) \to 0$ as $n \to 0$ (that is, $x^{(n)} \to z$ as $n \to \infty$). Fix $\epsilon >0$, and choose $N \in \mathbb{N}$ for which $d_p(x^{(m)}, x^{(n)} )< \epsilon$ $\forall m, n \geq N$ (by Cauchy). Fix $K \in \mathbb{N}, K > 0$.
     \begin{align*}
         d_p^p(x^{(n)}, z) = \norm{x^{(n)} - z}_p^p = \sum_{i=1}^\infty \abs{x_i^{(n)} - z_i}^{p}\\
         \norm{x^{(m)} - x^{(n)}}_p^p < \epsilon^p \implies \sum_{i=1}^K\abs{x_i^{(m)} - x_i^{(n)}}^p \leq \epsilon^p

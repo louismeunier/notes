@@ -1,0 +1,168 @@
+\begin{theorem}\label{thm:inhomon}
+    Let $y_1, \dots, y_n$ be a fundamental set of solutions of $L[y] = 0$ for $x \in I$ where $p_j$ continuous on $I$. Suppose $g(x)$ continuous on $I$. Then \begin{enumerate}
+        \item The IVP $L[y] = g$, $y(x_0) = \alpha_1, \dots, y^{(n-1)}(x_0) = \alpha_n$ has a unique solution $y(x)$ for $x \in I$.
+        \item Every solution of the ODE $L[y] = g$ can be written in the form \[
+        y(x) = y_p(x) + \sum_{j=1}^n c_j y_j(x) \qquad \ddagger    
+        \]
+        where $y_p$ a particular solution satisfying $L[y_p] = g$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    We show 2. first. Suppose $y_{p_1}$ solves $L[y_{p_1}] = g$ (which exists by 1.). Then, $y_{p_1}(x)$ is of the form $\ddagger$ with $c_j = 0$ and $y_p = y_{p_1}$. Let $y_{p_2}$ be a different solution of $L[y_{p_2}] = g$. Let $Y = y_{p_2} - y_{p_1}$. Then, \begin{align*}
+        L[Y] = L[y_{p_2}] - L[y_{p_1}] = g - g = 0 \forall x \in I,
+    \end{align*}
+    hence $Y(x)$ solves the corresponding homogeneous problem $L[Y] = 0$, and so by the previous theorem, can be written in the form $Y = \sum_{j=1}^n c_j y_j(x)$ for appropriate choice of $c_j$'s. Thus, \begin{align*}
+        y_{p_2}(x) = Y(x)+y_{p_1}(x) = \sum_{j=1}^n c_j y_j(x) + y_{p_1}(x),
+    \end{align*}
+    as required.
+
+    We proceed to 1. We've already shown that this IVP has at most one solutions, so it suffices to find that there is exactly one. We will do so by variation of parameters. Suppose $y_p = \sum_{j=1}^n u_j(x) y_j(x)$ where $y_p$ solves $L[y_p] = g$. Then, \begin{align*}
+        y_{p}' = \sum_{j=1}^n u_j y'_j + \sum_{j=1}^n u_j' y_j,
+    \end{align*}
+    and assume that $\sum_{j=1}^n u_j' y_j = 0 \forall x \in I$, hence \begin{align*}
+        y''_p = \sum u_j'y_j' + \sum u_j y_j''.
+    \end{align*}
+    Let us assume too that $\sum u_j'y_j' = 0 \forall x \in I$. We can continue in this manner, differentiating $n-1$ times, yielding \[
+    y_p^{(j)}     = \sum_{i=1}^n u_i y_i^{(j)}, \quad j = 0, \dots, n - 1,
+    \]
+    and assuming appropriately $\sum u_i' y_i^{(j-1)} = 0$, for $j = 1, \dots, n - 1$. Finally, differentiating once more, we have \[
+    y_p^(n) = \sum u_i y_i^{(n)} + \sum u_i' y_i^{(n-1)},    
+    \]
+    this time, \emph{not} assuming that the last term vanishes. Plugging into $L$, then we have \begin{align*}
+    g = L[y_p] &= y_p^{(n)} + \sum_{j=1}^n p_j y_p^{(n-j)}\\
+    &= \sum u_i y_i^{(n)} + \sum u_i' y_i^{(n-1)} + \sum_{j=1}^n p_j(x) \sum_{i=1}^n u_i y_i^{(n-j)}\\
+    &= \sum u_i'y_i^{(n-1)} + \sum_{i} u_i \underbrace{\left[y_i^{(n)} + \sum_j p_j y_i^{(n-j)}\right]}_{= 0, \text{ for each }i, \text{ solving } L[y_i] = 0}\\
+    &\implies g = \sum_i u_i' y_i^{(n-1)}.
+    \end{align*}
+    This, along with our $n - 1$ constraints, gives us $n$ equations  defining the $u_i'(x)$, giving us the linear system:
+    \begin{align*}
+        \begin{pmatrix}
+            y_1 & y_2 & \cdots & y_n\\
+            y_1' & y_2' & \cdots & y_n'\\
+            \vdots & \ddots & \ddots & \vdots \\
+            y_1^{(n-2)} & y_2^{(n-2)} & \cdots & y_n^{(n-2)}\\
+            y_1^{(n-1)} & y_2^{(n-1)} & \cdots & y_n^{(n-1)}
+        \end{pmatrix} \cdot \begin{pmatrix}
+            u_1'\\
+            u_2'\\
+            \vdots\\
+            u_n'
+        \end{pmatrix} = \begin{pmatrix}
+            0\\
+            \vdots\\
+            0\\
+            g(x)
+        \end{pmatrix},
+    \end{align*}
+    where the first $n-1$ rows of the matrix follow from the constrains we imposed on $u_i'$, the last follows from the previous line when we plugged in our $y_p$ into $L[y_p] = g$. But this is just the Wronskian matrix, and $W(y_1, \dots, y_n)(x) \neq 0 \forall x \in I$ by \nameref{thm:abels} since $y_i$'s form a fundamental set of solutions by assumption, thus, the matrix is invertible and we can therefore solve for $u_i'$s:
+    \begin{align*}
+        \begin{pmatrix}
+            u_1'\\
+            u_2'\\
+            \vdots\\
+            u_n'
+        \end{pmatrix} = \begin{pmatrix}
+            y_1 & y_2 & \cdots & y_n\\
+            y_1' & y_2' & \cdots & y_n'\\
+            \vdots & \ddots & \ddots & \vdots \\
+            y_1^{(n-2)} & y_2^{(n-2)} & \cdots & y_n^{(n-2)}\\
+            y_1^{(n-1)} & y_2^{(n-1)} & \cdots & y_n^{(n-1)}
+        \end{pmatrix}^{-1}\begin{pmatrix}
+            0\\
+            \vdots\\
+            0\\
+            g(x)
+        \end{pmatrix} =: \begin{pmatrix}
+            f_1(x)\\
+            \vdots \\
+            f_n(x)
+        \end{pmatrix},
+    \end{align*}
+    hence, $u_j'(x) = f_j(x)$ for some $f_j$ as defined, and thus \[
+    u_j(x) = \int_{x_0}^x f_j(s) \dd{s},
+    \]
+    and so our particular solution is \[
+    y_p(x) = \sum_i y_i \int_{x_0}^x f_i(s) \dd{s}.
+    \]
+    This is a solution to the ODE; it remains to show that the IVP can be solved by a unique choice of the $c_j$'s. This is similar to the homogeneous case; left as a (homework) exercise.
+\end{proof}
+
+\begin{theorem}[Cramer's Rule]
+    Let $A \in M_{n}(\mathbb{R})$ be invertible and $x, b$ $n \times 1$ column vectors. Then for any $b \in \mathbb{R}^n$, $Ax = b$ has a unique solution $x \in \mathbb{R}^n$ given by \[
+    x_i = \frac{\det A_i}{\det A}, \quad i = 1, \dots, n,
+    \]
+    where $A_i$ is the matrix obtained by replacing the $i$th column of $A$ by the vector $b$.
+\end{theorem}
+
+\begin{theorem}[Variation of Parameters]
+    Let $y_1, \dots, y_n$ be a fundamental set of solutions of $L[y] = 0$, let $W(x) = W(y_1, 
+    \dots, y_n)(x)$, let $W_i(x)$ be the determinant of the matrix obtained by replacing the $i$th column of $W$ by $\begin{pmatrix}
+        0\\
+        \vdots\\
+        g
+    \end{pmatrix}$, and let $u_i = \int_{x_0}^x \frac{W_i(s)}{W(s)} \dd{s}$, then \[
+    y_p = \sum_{i=1}^n u_i(x) y_i(x).
+    \]
+\end{theorem}
+\begin{proof}
+    This follows from the work we showed in the proof of \cref{thm:inhomon} part 2. and Cramer's Rule.
+\end{proof}
+
+{\tiny
+\begin{example}
+    Find the general solution of $y''' + y' = \tan x$. We first find a fundamental set of solutions to \[
+    y''' + y' = 0.    
+    \]
+    Suppose $y = e^{rx}$, giving \begin{align*}
+        0 = r^3 + r = r(r^2 + 1) \implies r =0, \pm i,
+    \end{align*}
+    giving us solutions \[
+    y_1(x) = 1, \quad y_2(x) = \cos x, \quad y_3(x) = \sin x.
+    \]
+    To verify linear independence:
+    \begin{align*}
+        W(x) = \left|\begin{matrix}
+            1 & \cos x & \sin x\\
+            0 & - \sin x & \cos x\\
+            0 & - \cos x & - \sin x
+        \end{matrix}\right| = \sin^2(x) + \cos^2(x) = 1.
+    \end{align*}
+
+    To solve $L[y] = \tan x$, we have\begin{align*}
+        W_1(x) &= \left|\begin{matrix}
+            0 & \cos x & \sin x\\
+            0 & - \sin x & \cos x\\
+            \tan x & -\cos x & - \sin x
+        \end{matrix}\right| =  \cos^2 x \tan x + \sin^2x \tan x = \tan x\\
+        W_2(x) &= \left|\begin{matrix}
+            1 & 0 & \sin x\\
+            0 & 0 & \cos x\\
+            0 & \tan x& - \sin x
+        \end{matrix}\right| = - \cos x \tan x = - \sin x\\
+        W_3(x) &= \left|\begin{matrix}
+            1 & \cos x & 0\\
+            0 & - \sin x & 0\\
+            0 & - \cos x & \tan x
+        \end{matrix}\right| = - \sin x \tan x = \frac{- \sin^2x}{\cos x}
+    \end{align*}
+    Then, this gives \begin{align*}
+        u_1 &= \int \frac{W_1}{W} \dd{x} = \int \tan x \dd{x} = - \ln \abs{\cos x}\\
+        u_2 &= \int \frac{W_2}{W} \dd{x} = \int - \sin x \dd{x} = \cos x\\
+        u_3 &= \int \frac{W_3}{W} \dd{x} = \int \frac{- \sin^2 x}{\cos x} \dd{x} = \int \frac{\cos^2 x - 1}{\cos x} =\sin x - \ln \abs{\tan x + \sec x}
+    \end{align*}
+    and so \begin{align*}
+        y_p &= \sum_{j=1}^{3} u_j y_j = - \ln \abs{\cos x} + \cos x \cdot \cos x + (\sin x - \ln \abs{ \tan x + \sec x}) \cdot \sin x\\
+        &= 1 - \ln \abs{\cos x} - (\ln \abs{ \tan x + \sec x})\sin x,
+    \end{align*}
+    giving us a general solution $$
+    y = y_c + y_p = c_1 + c_2 \cos x + c_3 \sin x + 1 - \ln \abs{ \cos x} - \sin x \ln \abs{ \tan x + \sec x},
+    $$
+    which can be simplified by absorbing the $1$ into the constant $c_1$, and simplifying appropriately:
+    \begin{align*}
+        y = \tilde c_1 + c_2 \cos x + \sin x (c_3 - \ln \abs{\tan x + \sec x})-\ln \abs{\cos x}
+    \end{align*} 
+\end{example}}
+
+\subsection{Fundamental Set of Solutions}
+

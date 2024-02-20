@@ -1,0 +1,46 @@
+\subsection{L'Hopital's Rules}
+
+\begin{proposition}
+    Suppose $f(x), g(x) : [a, b] \to \mathbb{R}$ with $f(a) = g(a) = 0$, and $g(x) \neq 0 \forall a < x < b$. Suppose $f, g$ are differentiable at $x=a$ and $g'(a) \neq 0$. Then, $\lim_{x \to a^+} \frac{f(x)}{g(x)}$ exists, and moreover, it is equal to $f'(a){g'(x)}$.
+\end{proposition}
+
+\begin{proof}
+    \begin{align*}
+        \lim_{x \to a^+} (\frac{f(x) - f(a)}{x-a}) / (\frac{g(x) - g(a)}{x-a}) = \lim_{x \to a^+} \frac{f(x)}{x-a} \frac{x-a}{g(x)} = \lim_{x \to a^+} \frac{f(x)}{g(x)},
+    \end{align*}
+    but the original line is simply $\frac{f'(a)}{g'(a)}$.
+\end{proof}
+
+\begin{example}
+    $\lim_{x \to 0} \frac{\sin x}{x} = \frac{\cos(0)}{1} = 1.$
+\end{example}
+
+\begin{theorem}[Cauchy Mean Value]
+    Let $f(x), g(x) : [a, b] \to \mathbb{R}$ where $f, g$ continuous on $[a, b]$ and differentiable on $(a, b)$. Assuming $g'(x) \neq 0, \forall x \in (a,b)$, then $\exists c \in (a, b)$ such that \[
+    \frac{f(b) - f(a)}{g(b) - g(a)} = \frac{f'(c)}{g'(c)}    .
+    \]
+\end{theorem}
+
+\begin{proposition}[More General L'Hopital]
+    let $-\infty \leq a < b \leq + \infty$ and $f, g$ differentiable on $(a,b)$. Suppose $\lim_{x \to a^+}f(x) = 0 = \lim_{x \to a^+} g(x)$. \begin{enumerate}
+        \item If $\exists L := \lim_{x \to a^+} \frac{f'(x)}{g'(x)}$ where $L$ some real number, then $\lim_{x \to a^+} \frac{f(x)}{g(x)} = L$ as well.
+        \item If $\exists L := \lim_{x \to a^+} \frac{f'(x)}{g'(x)}$ where $L = + \infty$ or $-\infty$, then $\lim_{x \to a^+} \frac{f(x)}{g(x)} = L$ as well.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    Let $- \infty \leq a < b \leq + \infty$, $f, g$ differentiable on $(a,b)$ and $g'(x) \neq 0 \forall x \in (a, b)$. Suppose $\lim_{x \to a^+}g (x) = \pm \infty$.
+    \begin{enumerate}
+        \item If $\lim_{x \to a^+} \frac{f'(x)}{g'(x)}=: L$ exists and is some finite real number, then $\lim_{x \to a^+} \frac{f(x)}{g(x)} = L$ as well.
+        \item If $\lim_{x \to a^+} \frac{f'(x)}{g'(x)}=: L$ exists and is $\pm \infty$, then $\lim_{x \to a^+} \frac{f(x)}{g(x)} = L$ as well.
+    \end{enumerate}
+\end{proposition}
+
+\subsection{Taylor's Theorem}
+
+\begin{theorem}[Taylor's Theorem]
+    Let $I = [a, b] \subseteq \mathbb{R}, f : I \to \mathbb{R}, f \in C^n(I)$ and suppose $f^{(n+1)}(x)$ exists on $(a, b)$. Let $x_0 \in [a, b]$. Then, for any $x \in [a, b], \exists c$ between $x$, $x_0$ such that \[
+        f(x) = f(x_0) + f'(x_0)(x-x_0) + \frac{f'(x_0)}{2}(x-x_0)^2 + \cdots + \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1}
+    \]
+    
+\end{theorem}
