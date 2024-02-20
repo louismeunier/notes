@@ -1,0 +1,76 @@
+\begin{corollary}
+    For $A \in M_{m \times n}(\field)$,
+    \begin{enumerate}
+        \item $\ker(L_A) = \{0_{\field^n}\} \iff A \vec{x} = \vec{b}$ has at most one solution, for each $\vec{b} \in \field^m$.
+        \item If $n = m$, $A$ is invertible $\iff$ $A \vec{x} = \vec{b}$ has exactly one solution for each $\vec{b} \in \field^m$.
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    1. follows from \cref{prop:kernelcoset}. 2. follows from 1.
+\end{proof}
+
+We would like to determine whether $A \vec{x} = \vec{b}$ has a solution (equivalently, if $\vec{b} \in \im(L_A)$), and to solve it, determining a particular solution, and $\ker{L_A}$.
+
+\subsection{Elementary Row/Column Operations, Matrices}
+
+\begin{definition}[Elementary Row (Column) Operations]
+    Let $A \in M_{m \times n}(\field)$. An \emph{elementary row (column) operation} is one of the following operations applied to $A$:
+    \begin{enumerate}
+        \item Interchanging any two rows (columns) of $A$;
+        \item Multiplying a row (column) by a nonzero scalar from $\field$;
+        \item Adding a scalar multiple of one row (column) to another.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    All of these operations are (clearly) invertible. Moreover, each of these operations can be seen as linear transformations $M_{m \times n}(\field) \to M_{m \times n}(\field)$, and can thus be represented as $(m \cdot n) \times (m \cdot n)$ matrices.
+\end{remark}
+
+\begin{definition}[Elementary Matrix]
+    A matrix $E \in M_{n}(\field)$ is called \emph{elementary} if it is obtained from $I_n$ by an elementary row/column operation.
+\end{definition}
+
+\begin{example}
+    \begin{enumerate}
+        \item $\begin{pmatrix}
+            1 & 0 & 0\\
+            0 & 0 & 1\\
+            0 & 1 & 0
+        \end{pmatrix}$ is obtained from $I_3$ by operation 1.; indeed, either swapping the last two rows or columns yields the same result.
+        \item $\begin{pmatrix}
+            1 & 0 & 0\\
+            0 & 1 & 0\\
+            0 & 0 & 3
+        \end{pmatrix}$ is obtained from $I_3$ by operation 2.; again, either the row or column view yields the same.
+        \item $\begin{pmatrix}
+            1 & 0 & 0\\
+            2 & 1 & 0\\
+            0 & 0 & 1
+        \end{pmatrix}$ is obtained from $I_3$ by operation 3.; again, either viewed as adding 2 times the second column to the first or 2 times the first row to the second.
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}
+    Each elementary matrix can be obtained either by a row or column operation of the same kind.
+\end{theorem}
+\begin{proof}
+    Clear by example.
+\end{proof}
+
+\begin{theorem}
+For matrices $A, B \in M_{m \times n}(\field)$, if $B$ is obtained from $A$ by an elementary row (column) operation of type (i), then $B = E \cdot A$ ($B = A \cdot E$) for the elementary matrix $E \in M_{m}(\field)$ ($M_n(\field)$) obtained from the identity matrix by the same operation as in obtaining $B$ from $A$.
+
+Conversely, if $E$ is an elementary matrix then $E \cdot A$ ($A \cdot E$) is obtained from $A$ by applying the same elementary operations as in obtaining $E$ from the identity matrix.
+\end{theorem}
+
+% \begin{remark}
+%     Elementary operations are rank-preserving.
+% \end{remark}
+
+\begin{proposition}
+    Elementary matrices are invertible, and the inverse is also an elementary matrix of the same type.
+\end{proposition}
+\begin{proof}
+    This follows from the fact that each elementary operation is invertible, and as each elementary operation can be representing as an elementary matrix, the result is clear.
+\end{proof}
