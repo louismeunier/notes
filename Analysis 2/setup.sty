@@ -87,6 +87,11 @@
   \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
 
 
+  \makeatletter
+  \define@key{thmdef}{mdthm}[{}]{%
+  \thmt@trytwice{\def\thmt@theoremdefiner{\mdtheorem[#1]}}{}}
+  \makeatother
+
 % Theorem environments
 \declaretheorem[
   % thmbox=S,
@@ -126,15 +131,25 @@
   nobreak=true
 }
 
+
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}, numberwithin=section]{theorem}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}, numberwithin=section]{corollary}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-magenta}{$\hookrightarrow$ \underline{Proposition}}, numberwithin=section]{proposition}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}, numberwithin=section]{lemma}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}, numberwithin=section]{axiom}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}, numberwithin=section]{definition}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Question}}, numberwithin=section]{question}
+
 \mdtheorem[style=example]{example}{$\circledast$ \underline{Example}}[section]
 
-\mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
-\mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\hookrightarrow$ \underline{Proposition}}}[section]
-\mdtheorem[style=general-thm]{corollary}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}}[section]
-\mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
-\mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
-\mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
-\mdtheorem[style=general-thm]{question}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Question}}}[section]
+
+% \mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
+% \mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\hookrightarrow$ \underline{Proposition}}}[section]
+% \mdtheorem[style=general-thm]{corollary}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}}[section]
+% \mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
+% \mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
+% \mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
+% \mdtheorem[style=general-thm]{question}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Question}}}[section]
 
 \newmdtheoremenv[roundcorner=8pt,
 linecolor=white,
@@ -143,30 +158,30 @@ backgroundcolor=gray!10,
 nobreak=true]{lemma-inline}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
 
 % fixes broken references
-\newcommand{\thmautorefname}{Theorem}
-\makeatletter
-\xpatchcmd{\theorem}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
-\makeatother
+% \newcommand{\thmautorefname}{Theorem}
+% \makeatletter
+% \xpatchcmd{\theorem}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+% \makeatother
 
-\newcommand{\propautorefname}{Proposition}
-\makeatletter
-\xpatchcmd{\proposition}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
-\makeatother
+% \newcommand{\propautorefname}{Proposition}
+% \makeatletter
+% \xpatchcmd{\proposition}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+% \makeatother
 
-\newcommand{\axiomautorefname}{Axiom}
-\makeatletter
-\xpatchcmd{\axiom}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
-\makeatother
+% \newcommand{\axiomautorefname}{Axiom}
+% \makeatletter
+% \xpatchcmd{\axiom}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+% \makeatother
 
-\newcommand{\corrautorefname}{Corollary}
-\makeatletter
-\xpatchcmd{\corollary}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
-\makeatother
+% \newcommand{\corrautorefname}{Corollary}
+% \makeatletter
+% \xpatchcmd{\corollary}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+% \makeatother
 
-\newcommand{\lemmaautorefname}{Lemma}
-\makeatletter
-\xpatchcmd{\lemma}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
-\makeatother
+% \newcommand{\lemmaautorefname}{Lemma}
+% \makeatletter
+% \xpatchcmd{\lemma}{\refstepcounter}{\NR@gettitle{#1}\refstepcounter}{}{}
+% \makeatother
 
 
 % makes "quoted" text actually look correct
