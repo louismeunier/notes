@@ -1,0 +1,99 @@
+\begin{proposition}\label{prop:invertiblerankperserving}
+    \begin{enumerate}
+        \item If $A \in M_{m \times n}(\field)$, $P \in \GL_m(\field)$\footnotemark, and $Q \in \GL_n(\field)$, then $\rank (P \cdot A) = \rank(A) = \rank(A \cdot Q)$
+        \item More generally, if $T : V \to W$ is a linear transformation, where $V, W$ finite dimensional, and $S : W \to W$ and $R : V \to V$ are linear and invertible, then $\rank(S \circ T) = \rank(T) = \rank(T \circ R)$.
+    \end{enumerate}
+\end{proposition}
+\footnotetext{Denoting the space of invertible $m \times m$ matrices.}
+
+\begin{proof}
+    1. follows directly from part 2., being a special case where $T = L_A, S = L_P, R = L_Q$.
+
+    We have that $\rank(T) = \dim(\im(T))$, and as $S$ an isomorphism, $S\vert_{\im(T)}$ is injective and thus $S(\im(T)) \cong \im(T)$, by $S$, so in particular, $\rank(S \circ T) = \dim(S(\im(T))) = \rank(\im(T)) = \rank(T)$.
+
+    For the other equality, we have that $\im(T \circ R) = T(R(V)) = T(V) = \im(T)$ so $\rank(T) = \dim(\im(T)) = \dim(\im(T \circ R)) = \rank(T \circ R)$.
+\end{proof}
+
+\begin{corollary}
+    Elementary row/column operations (equivalently, multiplication by elementary matrices) are rank-preserving; if $B$ obtained from $A$ by a row/column operation, then $\rank(B) = \rank(A)$.
+\end{corollary}
+
+\begin{proof}
+    Elementary operations correspond to multiplication by elementary matrices as we have shown previously, which are further invertible by \cref{prop:elementaryinvertible}, which hence do not change the rank by \cref{prop:invertiblerankperserving}.
+\end{proof}
+
+\begin{theorem}\label{thm:blockformable}
+    Every matrix $A \in M_{n}(\field)$ can be transformed into a matrix $B$ of the form \[
+    \begin{pmatrix}
+        \begin{bmatrix}
+           &I_r &
+        \end{bmatrix} & \begin{bmatrix}
+            & 0 & 
+        \end{bmatrix}\\
+        \begin{bmatrix}
+            & 0 &
+        \end{bmatrix} & \begin{bmatrix}
+            & 0 &
+        \end{bmatrix}
+    \end{pmatrix}, 
+    \]
+    where the top right and bottom left $[0]$'s are $n - r \times r$, the bottom $[0]$ is $n - r \times n - r$, using row, column operations. In particular, $r = \rank(A)$.
+\end{theorem}
+\begin{proof}
+    We prove by induction on $n$. 
+    
+    \underline{Base:} If $n = 0$, $A = ()$ and we are done.
+
+    \underline{Inductive Step:} Suppose $n \geq 1$ and the statement holds for $n - 1$. If $A$ is all zeros, we are done. Else, $A$ has some nonzero entry, and by swapping two rows and columns such that the entry is in the top left ($a_11$) of the matrix, and then multiplying by $a_11^{-1}$ such that it is equal to 1, \[
+    \begin{pmatrix}
+        1 & \star & \cdots & \star\\
+        \star & \ddots & & \\
+        \vdots & & \ddots &\\
+        \star & & & \ddots
+    \end{pmatrix}.
+    \]
+    We can then use row (resp. column) operations such that each cell below (resp. to the right of) the top left $1$ is equal to $0$ by subtracting $\star \cdot $ row (resp. column) one from each,
+    \[
+        \begin{pmatrix}
+            1 & 0 & \cdots & 0\\
+            0 & \ddots & & \\
+            \vdots & & \ddots &\\
+            0 & & & \ddots
+        \end{pmatrix}.
+        \]
+        Applying induction the the $n - 1 \times n - 1$ matrix we have left over in the bottom right block, we can transform this block into the desired form by row/column operations, not affecting $A$ itself. This gives us the desired form of $A$.
+\end{proof}
+
+\begin{corollary}\label{cor:invertibleproducts}
+    For each $A \in M_n(\field)$, there are invertible matrices $P, Q \in \GL_n(\field)$ such that \[
+    B := P \cdot A \cdot Q    
+    \]
+    is of the form in \cref{thm:blockformable}. Moreover, $P$ and $Q$ are products of elementary matrices.
+\end{corollary}
+
+\begin{proof}
+    Follows from row/column operations corresponding to left/right multiplication by elementary matrices.
+\end{proof}
+
+\begin{corollary}
+    Every invertible matrix $A \in \GL_n(\field)$ is a product of elementary matrices.
+\end{corollary}
+\begin{proof}
+    Let $A \in \GL_n(\field)$, so $\rank(A) = n$. Then, by \cref{cor:invertibleproducts}, there exists matrices $P, Q \in \GL_n(\field)$ such that $P A Q = I_n$ hence $A = P^{-1}Q^{-1}$. $P,Q$ are themselves products of elementary matrices and thus their inverses are, hence $A$ itself is a product of elementary matrices.
+\end{proof}
+
+\begin{corollary}
+    $\rank(A) = \rank(A^t) \forall A \in M_n(\field)$.
+\end{corollary}
+
+\begin{remark}
+    We've already proven this, but we present an alternative approach.
+\end{remark}
+
+\begin{proof}
+    There are $P, Q \in \GL_n(\field)$ such that $B = PAQ$ of the desired diagonal form where $r = \rank(A)$. Then, $B^t = Q^t A^t P^t$, and thus $\rank(B^t) = \rank(A^t)$. But $B^t = B$ so $\rank(B^t) = \rank(B) = \rank(A)$ and thus $\rank(A) = \rank(A^t)$ as desired.
+\end{proof}
+
+\begin{corollary}
+    Transpose of an invertible matrix is invertible.
+\end{corollary}

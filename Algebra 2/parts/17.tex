@@ -58,7 +58,7 @@ We have
 \end{corollary}
 
 \begin{definition}[Dual/Transpose of $T$]
-    Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. We define the \emph{dual}/\emph{transpose} of $T$ is the map $T^t : W^\ast \to V^\ast$, given by $g \mapsto g\circ T$. Ie, $T^t(g)(v) := g \circ T(v) = g(T(v))$.
+    Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. We define the \emph{dual}/\emph{transpose} of $T$ as the map $T^t : W^\ast \to V^\ast$, given by $g \mapsto g\circ T$. Ie, $T^t(g)(v) := g \circ T(v) = g(T(v))$.
 \end{definition}
 
 \begin{proposition}\label{prop:propertiesoftranspose}
@@ -103,7 +103,7 @@ We have
         \end{pmatrix},$$
         ie $A^{(j)} = [T(v_j)]_\gamma$ hence $T(v_j) = \sum_{k=1}^m A_{kj} w_k$.
 
-        Similarly, write $\gamma^\ast := \{g_1, \dots, g_m\}$ and $\beta:= \{f_1, \dots, f_n\}$, then $$B := [T^t]_{\gamma^\ast}^{\beta^\ast} := \begin{pmatrix}
+        Similarly, write $\gamma^\ast := \{g_1, \dots, g_m\}$ and $\beta^\ast:= \{f_1, \dots, f_n\}$, then $$B := [T^t]_{\gamma^\ast}^{\beta^\ast} := \begin{pmatrix}
             \vert & & \vert\\
             [T^t(g_1)]_{\beta^\ast} & \cdots & [T^t(g_m)]_{\beta^\ast}\\ 
             \vert & & \vert
