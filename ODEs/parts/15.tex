@@ -1,0 +1,100 @@
+\begin{theorem}
+    Let $L[y] := \sum_{j=0}^n a_jy^{(j)}$ where $a_j$ are real constants with $a_n \neq 0$. Let $$
+    \sum_{j=0}^n a_j r^j = 0\qquad \textbf{(A)}
+    $$
+    be the corresponding auxiliary equation, supposing it has roots $r_j$ of multiplicity $s_j$. Then, the linear homogeneous $L[y] = 0$ has a fundamental set of solutions defined on $\mathbb{R}$ composed of \[
+        x^ke^{r_j x},\qquad k = 0, \dots, s_j - 1, r_j \in \mathbb{R} \text{ of mult. } s_j
+    \]
+    and \[
+    x^k e^{\alpha_j x}\cos (\beta_j x),\quad x^k e^{\alpha_j x}\sin (\beta_j x), \qquad k = 0, 1, \dots, s_j - 1, \text{ where } r_j = \alpha_j \pm \beta_j \text{ of mult. } s_j.
+    \]
+\end{theorem}
+\begin{proof}
+    We won't prove this, but is just a generalization of the same idea for second-order equations. Difficulties in the proof arise when proving linear independence.
+\end{proof}
+
+\begin{remark}
+    Combined with the previous theorem, we thus have that all solutions of $L[y] = 0$ can be written in the form $y = \sum_{j=1}^n c_j y_j(x)$.
+\end{remark}
+
+\subsection{Non-Constant Coefficient Linear ODEs}
+\begin{theorem}
+    Let $L[y] = y^{(n)} + \sum_{j=1}^n p_j(x)y^{(n-j)}(x)$, where each $p_j(x)$ continuous on some $I \subseteq \mathbb{R}$, and let $x_0 \in I$. Let $y_i(x)$ solve the IVP \[
+    L[y_i](x) = 0 \qquad  y_i^{(i-1)}(x_0) = 1, \, y_i^{(j)}(x_0), j = 0, \dots, n -1, j \neq i - 1.
+    \]
+    Then, $\{y_i : i = 1, \dots, n\}$ form a fundamental set of solutions for $L[y] = 0$ on $I$.
+\end{theorem}
+
+\begin{proof}
+    Each of these IVPs has a unique solution $y_i(x)$ on $I$ by Picard's Theorem. Now, \begin{align*}
+        W(y_1, \dots, y_n)(x_0) = \left|\begin{matrix}
+            1 & 0 & \dots & 0\\
+            0 & 1 & \dots & \vdots \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & 0 & 1
+        \end{matrix}\right|  = 1
+    \end{align*}
+    so $y_i$ are indeed linearly independent, by Abel's Theorem, on $I$.
+\end{proof}
+
+\begin{example}
+    Consider the IVP \[
+    L[y]:=y^{(4)} + y'' - 2y = \cos x, \quad y(0) = 1, y^{(i)}(0) = 0,\quad  i = 1, 2, 3.    
+    \]
+    We first find $L[y_c] = 0$. We have auxiliary \[
+    r^4 + r^2 - 2 = 0 \implies (r^2 - 1)(r^2 + 2)  = 0 \implies r = \pm 1, \pm i\sqrt{2}
+    \]
+    and thus \begin{align*}
+        y_1 = e^x, \quad y_2 = e^{-x}, \quad y_3 = \cos \sqrt{2} x, \quad y_4 = \sin \sqrt{2} x.
+    \end{align*}
+    We seek now a particular solution, guessing \begin{align*}
+        y_p = A \cos x \implies L[y_p] = A \cos x - A \cos x - 2A \cos x = \cos x \implies A = - \frac{1}{2}
+    \end{align*}
+    and thus $y_p = - \frac{1}{2} \cos x$, giving general solution \begin{align*}
+        y(x) = k_1e^x + k_2e^{-x} + k_3 \cos (\sqrt{2}x) + k_4 \sin (\sqrt{2} x) - \frac{1}{2} \cos (x).
+    \end{align*}
+    Solving the IVP, we find \begin{align*}
+        1 &= y(0) = k_1 + k_2 + k_3 - \frac{1}{2}\qquad \text{(i)}\\
+        y'(x) &=k_1e^x - k_2e^{-x} - \sqrt{2}k_3 \sin(\sqrt{2}x) + \sqrt{2}k_4\cos (\sqrt{2} x) + \frac{1}{2}\sin(x)\\
+        &\implies y'(0)= 0  = k_1 - k_2 + \sqrt{2}k_4 \qquad \text{(ii)}\\
+        y''(x) &= k_1 e^{x} + k_2e^{-x} - 2k_3 \cos (\sqrt{2}x) - 2k_4 \sin(\sqrt{2}x) + \frac{1}{2} \cos (x)\\
+        &\implies y''(0) = 0 = k_1 + k_2 - 2k_3 + \frac{1}{2} \qquad \text{(iii)}\\
+        &y'''(x) = k_1e^x - k_2e^{-x} + 2 \sqrt{2}k_3 \sin( \sqrt{2}x) - 2 \sqrt{2}k_4 \cos(\sqrt{2} x) - \frac{1}{2}\sin(x)\\
+        &\implies y'''(0) = 0 = k_1 - k_2 - 2 \sqrt{2}k_4 \qquad \text{(iv)}
+    \end{align*}
+    \begin{align*}
+        \text{(i)} - \text{(iii)} &\implies 1 = 3k_3 - 1 \implies k_3 = \frac{2}{3}\\
+        \text{(ii)} - \text{(iv)} &\implies 0 = (\sqrt{2} + 2 \sqrt{2})k_4 \implies k_4 = 0\\
+        \text{(iii)} + \text{(iv)} &\implies 0 = 2k_1 - 2k_3 + \frac{1}{2} - 2 \sqrt{2}k_4 \implies k_1 =  \frac{5}{12}\\
+        \text{(i)} &\implies 1 = \frac{5}{12} + k_2 + \frac{2}{3} - \frac{1}{2} \implies k_2 = \frac{5}{12}
+    \end{align*}
+    So our IVP solution is \[
+    y(x) = \frac{5}{12}(e^{x}+e^{-x})+ \frac{2}{3}\cos(\sqrt{2}x) - \frac{1}{2} \cos(x).
+    \]
+\end{example}
+
+\section{Series Solutions}
+
+\subsection{Review of Power Series}
+
+% We seek solutions of the form $y(x) = \sum_{n = 0}^\infty a_n(x-x_0)^n$ for ODEs of the form $P(x)y'' + Q(x) y' + R(x)y = g(x)$.
+\begin{definition}[Convergence]
+    A power series $\sum_{n=0}^\infty a_n(x-x_0)^n$ converges at a point $x_0$ if $\lim_{m \to \infty} \sum_{n=0}^m a_n (x-x_0)^n$ exists for that $x$. The series is absolutely convergent at $x_0$ if $\sum_{n=0}^m \abs{a_n}\abs{x - x_0}^n$ exists as $m \to \infty$.
+
+    The radius of convergence of a series is the minimal $\rho \geq 0$ such that the series is absolutely convergent for $x$ such that $\abs{x - x_0} < \rho$ and divergent for $\abs{x - x_0} > \rho$.
+\end{definition}
+\begin{remark}
+    Absolutely convergent $\implies$ convergent.
+\end{remark}
+
+\begin{definition}[Real Analytic]
+    A function $f: I \to \mathbb{R}$ is (real) analytic at $x_0 \in I$ if $\exists \rho > 0 \st \forall x \in I : \abs{x - x_0} < \rho$ we have \[
+    f(x) = \sum_{n=0}^{\infty}    a_n(x-x_0)^n
+    \]
+    with power series having radius of convergence (at least) $\rho$.
+\end{definition}
+\begin{remark}
+    When $f$ real analytic, it is continuous and has derivatives of all orders for $\abs{x - x_0} < \rho$, and these derivatives can be found by differentiating the power series. Indeed, we have \[
+    f^{(m)}(x) = \sum_{n=0}^\infty n (n-1) \cdots (n-m+1)a_n(x-x_0)^{n-m} = \sum_{n=m}^\infty n (n-1) \cdots (n-m+1)a_n(x-x_0)^{n-m}.    
+    \]
+\end{remark}
