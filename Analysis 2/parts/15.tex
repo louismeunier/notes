@@ -1,0 +1,25 @@
+\begin{theorem}[Relative Extrema\footnotemark]
+    Let $I \subseteq \mathbb{R}$ be an open interval, $x_0 \in I$, and $n \geq 2$. Suppose $f', f'', \dots, f^{(n)}$ are continuous in a neighborhood of $x_0$, and $f'(x_0) = f''(x_0) = \cdots = f^{(n-1)}(x_0) = 0$ and $f^{(n)}(x_0) \neq 0$. Then:
+    \begin{enumerate}
+        \item if $n$ is even and $f^{(n)}(x_0) > 0$, then $f$ has a local minimum at $x_0$;
+        \item if $n$ is even and $f^{(n)}(x_0) < 0$, then $f$ has a local maximum at $x_0$;
+        \item if $n$ is odd, then $f$ has neither a local minimum nor maximum at $x_0$.
+    \end{enumerate}
+\end{theorem}
+
+\footnotetext{Bartle-Sherbert, Theorem 6.4.4}
+
+\begin{proof}
+    If $n := 2m$-even and $f^{(2m)}(x_0) > 0$, then $f^{(n)}(c) > 0$ so $f(x) - f(x_0) = f^{(2m)}(c)(x-x_0) > 0$.
+    % etc
+\end{proof}
+
+\subsection{Convex Sets}
+
+\begin{definition}[Convex Set]
+    $A \subseteq V$-vector space over $\mathbb{R}$ is \emph{convex} if for any $x,y \in A$ and any $0 \leq t \leq 1$, $t \cdot x + (1 - t)\cdot y \in A$.
+\end{definition}
+
+\begin{definition}[Convex Function]
+    Let $f : I \to \mathbb{R}$. $f$ is \emph{convex} if $\forall x_1, x_2 \in I$ and $0 \leq t \leq 1$, $$f((1-t)x_1 + tx_2) \leq (1-t)f(x_1) + tf(x_2).$$
+\end{definition}
