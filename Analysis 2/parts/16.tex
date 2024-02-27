@@ -1,0 +1,72 @@
+\section{Riemann Integral}
+
+\subsection{Introduction}
+\begin{definition}[Partitions]
+    A \emph{partition} is a division of an interval $(a, b)$, denoted \[
+    \mathcal{P} = \{a = x_0, x_1, \dots, x_{n-1}, x_n = b\}    .
+    \]
+    We define $\diam (\mathcal{P})  := \max_{n} \abs{x_{i} - x_{i-1}}$.
+
+    A \emph{marked partition}, denoted $\dot{\mathcal{P}}$, is one in which, for each interval we choose some $t_i \in (x_i, x_{i+1}]$.
+\end{definition}
+
+\begin{definition}[Riemann Sum]
+    We denote \[
+    S(f,\dot{\mathcal{P}}) = \sum_{i=1}^n f(t_i)(x_{i}-x_{i-1}).
+    \]
+\end{definition}
+
+\begin{definition}[Riemann Integrable]
+    A function $f$ is \emph{Riemann Integrable} if $[a, b]$ if $S(f, \dot{\mathcal{P}}) \to L$ as $\diam(\dot{\mathcal{P}}) \to 0$ for any choice of $t_i \in [x_i, x_{i+1}]$.
+
+    That is, $\forall \epsilon > 0, \exists \delta : $ if $\diam(\mathcal{P}) < \delta$, then for any choice of $t_i \in [x_i, x_{i+1}]$ we have $\abs{L - S(f, \dot{\mathcal{P}})} < \epsilon$.
+\end{definition}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item If $L$ exists, it is unique.
+        \item The integral is linear in $f(x)$; if $\int_a^b f(x)\dd{x}$ and $\int_a^b g(x) \dd{x}$ exist, then $\int_a^b (c_1 f+ c_2 g)\dd{x} = c_1\int_a^b f \dd{x} + c_2 \int_a^b g \dd{x}$.
+        \item If $f \leq g$ are Riemann integrable on $[a, b]$, then $\int_a^b f(x) \dd{x} \leq \int_a^b g(x) \dd{x}$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    If $f(x)$ integrable on $[a, b]$, the $f(x)$ is bounded on $[a, b]$.
+\end{proposition}
+
+\begin{proof}
+    Suppose $\int_a^b f$ exists. Let $\epsilon > 0$, and $\delta$ such that if $\diam (\dot{\mathcal{P}}) < \delta$ then $\abs{L - S(f, \dot{\mathcal{P}})}$. Let $\epsilon = 1$. Then, $S(f, \dot{\mathcal{P}}) \leq \abs{L} + 1$.
+
+    Let $Q = \{a = x_0, \dots, x_n = b\}$ be a partition of $[a, b]$ such that $\diam (Q) < \delta$. Suppose towards a contradiction that $f$ is not bounded on $[a, b]$. Then, $f$ is unbounded on at least one interval $[x_i, x_{i+1}]$, say, on $[x_k, x_{k+1}]$. Let $t_i = x_i$ for $i \neq k$ and choose $t_k \in [x_k, x_{k+1}]$ such that $\abs{f(t_k)}(x_{k+1} - x_k) > \abs{L} + 1 + \abs{\sum_{i \neq k} f(t_i)(x_{i+1} - x_i)}$ (which we can do by assumption of $f$ being unbounded).
+
+    By assumption, $\abs{S(f, \dot{Q})} \leq \abs{L} + 1$, but we have that \begin{align*}
+        S(f, \dot{Q}) = \underbrace{\sum_{i \neq k} f(t_i)(x_{i+1} - x_{i})}_{:=N} + \abs{f(t_k)}(x_{k+1}-x_k) > 2N + \abs{L} + 1,
+    \end{align*}
+    contradiction.
+\end{proof}
+
+\subsection{Cauchy Criterion}
+
+\begin{proposition}[Cauchy Criterion for Integrability]
+    $f \in \mathcal{R}[a, b] \iff \forall \epsilon > 0, \exists \delta > 0 : $ if $\dot{P}$ and $\dot{Q}$ are tagged partitions of $[a, b] \st \diam{\dot{P}} < \delta$ and $\diam{\dot{Q}} < \delta$, then $\abs{S(f, \dot{P}) - S(f, \dot{Q})} < \epsilon$.\footnotemark
+\end{proposition}
+\footnotetext{Note that $\mathcal{R}[a, b]$ is the set of all real-valued functions integrable on the interval $[a, b]$.}
+
+\subsection{Squeeze Theorem}
+
+\begin{theorem}
+    Let $f:[a, b] \to \mathbb{R}$. Then $\int_a^b f$ exists $\iff \forall \epsilon > 0, \exists \alpha_\epsilon(x), \omega_\epsilon(x) \in \mathcal{R}[a, b]$, $\alpha_\epsilon \leq f \leq \omega_\epsilon$, and \[
+    \int_a^b (\omega_\epsilon - \alpha_\epsilon) < \epsilon    
+    \]
+\end{theorem}
+\begin{proof}
+    If $f \in \mathcal{R}[a, b]$ then take $\alpha_\epsilon = f = \omega_\epsilon$. 
+    
+    Conversely, let $\epsilon > 0$. Since $\alpha_\epsilon, \omega_\epsilon \in \mathcal{R}[a, b]$, then, $\exists \delta > 0$ such that for any tagged partition with $\dim \dot{P} < \delta$, then $\abs{S(\alpha_\epsilon, \dot{P}) - \int_a^b \alpha_\epsilon} < \epsilon$ and $\abs{S(\omega_\epsilon, \dot{P}) - \int_a^b \omega_\epsilon} < \epsilon$, thus \[
+    \int_a^b \alpha_\epsilon - \epsilon < S(\alpha_\epsilon, \dot{P}) \leq S(f, \dot{P})\leq S(\omega_\epsilon, \dot{P}) < \int_a^b \omega_\epsilon + \epsilon.    
+    \]
+    Let $\dot{Q}$ be any other tagged partition with $\diam \dot{Q} < \delta$; then, the same inequality holds ie $\int_a^b \alpha_\epsilon - \epsilon < S(f, \dot{Q}) < \int_a^b \omega_\epsilon + \epsilon$. Subtracting one from the other, we see that \begin{align*}
+        \abs{S(f, \dot{P}) - S(f, \dot{Q})} < \int_a^b \omega_\epsilon - \int_a^b \alpha_\epsilon + 2 \epsilon < 3 \epsilon,
+    \end{align*}
+    and thus $f \in \mathcal{R}[a,b]$ by Cauchy Criterion.
+\end{proof}
