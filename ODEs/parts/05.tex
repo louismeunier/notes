@@ -1,1 +1,37 @@
 % TODO: substitution techniques
+\subsection{Substitutions}
+
+\begin{definition}[Homogeneous]
+    A function $f(x,y)$ is said to be homogeneous of degree $d$ if $f(tx, ty) = t^df(x,y)$.
+\end{definition}
+% \begin{remark}
+    Many ODEs can benefit from appropriate substitutions to make the proceeding solution method for clear. We present by example the following three types of substitutions, though naturally many other exist:
+    \begin{enumerate}
+        \item Homogeneous Equations, $M(x, y) \dd{x} + N(x, y)\dd{y} = 0$ where $M, N$ homogeneous to the same degree.
+        \item Bernoulli Equations, $y' + f(x)y + g(x)y^n$.
+        \item $y' = f(Ax + By + C)$.
+    \end{enumerate}
+% \end{remark}
+
+\begin{example}[1. Homogeneous Equations]
+    Consider \[
+    (x^2 + y^2)\dd{x} + (x^2 - xy)\dd{y} = 0    , \qquad x \neq 0
+    \]
+    Dividing both sides by $x^2$, the correct substitution becomes obvious:
+    \begin{align*}
+        (x +(\frac{y}{x})^2) \dd{x} + (1 - \frac{y}{x})\dd{y}= 0\\
+        u := \frac{y}{x} \implies y' = xu' + u\\
+        \implies (1 + u^2) = (u - 1)y' = (u -1)(u + x u')\\
+         \implies xu' =  \frac{1 + u^2}{u-1}-u = \frac{u+1}{u-1},
+    \end{align*}
+    which is just linear in $u$.
+\end{example}
+
+\begin{example}[2. Bernoulli Equations]
+    Generally, let $v(x) = y^{1-n}$ to make the equation linear and solve. For instance, consider \[
+    x y' + y = x^2 y^2.
+    \]
+\end{example}
+\begin{example}[3. $f(Ax + By + C)$]
+    Let $u = Ax + By + C$.
+\end{example}
