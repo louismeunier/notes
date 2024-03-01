@@ -1,0 +1,102 @@
+\begin{example}
+    \begin{align*}
+        \begin{matrix}
+            3x_1 + &2x_2 + &3x_3 - &2 x_4 &= 1\\
+            x_1 + &x_2 + &x_3& &= 3\\
+            x_1 + &2x_2 + &x_3 - &x_4 &= 2
+        \end{matrix} 
+        \quad \rightsquigarrow \quad A := \begin{pmatrix}
+            3 & 2 & 3 & -2\\
+            1 & 1 & 1 & 0\\
+            1 & 2 & 1 & -1
+        \end{pmatrix}, \vec{b} := \begin{pmatrix}
+            1\\
+            3\\
+            2
+        \end{pmatrix},
+    \end{align*}
+    so we have agumented matrix \begin{align*}
+        (A \vert b) = \begin{pmatrix}
+            3 & 2 & 3 & -2 & \vert &1 \\
+            1 & 1 & 1 & 0 &\vert &3\\
+            1 & 2 & 1 & -1 & \vert& 2
+        \end{pmatrix} \quad \overset{\text{Gaussian Elimination}}{\rightsquigarrow} \quad \begin{pmatrix}
+            1 & 0 & 1 & 0 & \vert &1\\
+            0 & 1 & 0 & 0 & \vert & 2\\
+            0 & 0 & 0 & 1 & \vert &3
+        \end{pmatrix},
+    \end{align*}
+    so $r := \rank (A) = 3$ and $\nullity(L_A) = 4 - 3 = 1$, so we expect a solution as a particular solution plus an ideal (the kernel). Rewriting, we see that \begin{align*}
+        \begin{matrix}
+            x_1  & & &+x_3 &= 1\\
+            & x_2 & & &= 2\\
+            & & & x_4 &= 3
+        \end{matrix} \quad &\implies \quad \begin{pmatrix}
+            x_1\\
+            x_2\\
+            x_3\\
+            x_4
+        \end{pmatrix} = \begin{pmatrix}
+            1 - t_1\\
+            2\\
+            t_1\\
+            3
+        \end{pmatrix} = \begin{pmatrix}
+            1\\
+            2\\
+            0\\
+            3
+        \end{pmatrix} + t_1\begin{pmatrix}
+            -1\\
+            0\\
+            1\\
+            0
+        \end{pmatrix},
+    \end{align*}
+    where $t_1 \in \field$ arbitrary. Moreover, since setting $t_1 = 0$ gives that $\vec{v} := (1, 2, 0, 3)^t$ a solution, then $t_1 (-1, 0, 1, 0)^t$ is a solution to the homogeneous system $A \vec{x} = \vec{0}$, ie, $\vec{u} := (-1, 0, 1, 0)^t$ is a basis for the kernel of $\ker(L_A)$.
+\end{example}
+
+\begin{theorem}
+    For any system $A \vec{x} = \vec{b}$, using Gaussian elimination we obtain another system $A_1 \vec{x}=\vec{b_1}$ where $(A_1 \vert \vec{b_1})$ is the reduced echelon form of $(A \vert \vec{b})$. Then:
+    \begin{enumerate}
+        \item $A \vec{x} = \vec{b}$ has a solution $\iff \rank(A_1 \vert \vec{b_1}) = \rank(A_1) = \sharp $ of non-zero rows of $A_1$.
+        \item If a solution exists, then, denoting $r := \rank(A)$ and $n := \sharp$ columns of $A$, we have the general solution to $A \vec{x} = \vec{b}$ of the form $$\vec{v} + t_1 \vec{u}_1 + \cdots + t_{n-r} \vec{u}_{n-r}$$ where $\vec{v} \in \field^n$ and $\{\vec{u}_1, \dots, \vec{u}_{n-r}\}$ a basis for $\ker(L_A) = $ space of solutions to $A \vec{x} = \vec{0}$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    We will only prove 1.
+
+    Recall that $A \vec{x} = \vec{b}$ has a solution $\iff \vec{b} \in \im(L_A) = \Span(\text{columns of } A) \iff  \Span(\text{columns of } A) = \Span(\text{columns of } (A \vert b)) \iff \rank(A) = \rank((A \vert b))$.
+\end{proof}
+
+\begin{corollary}
+    The system $A \vec{x} = \vec{b}$ has a solution $\iff$ in the reduced echelon form $(A_1\vert \vec{b}_1)$ of the augmented matrix, we do not have a pivot in the last column.
+\end{corollary}
+
+\begin{lemma}\label{lemma:elementarypreservationofdependence}
+    Let $B \in M_{m \times n}(\field)$ be obtained from $A \in M_{m \times n}(\field)$ via a row operation. Then, for all $a_1, \dots, a_n \in \field$, $$a_1 A^{(1)} + \cdots + a_n A^{(n)} = \vec{0} \iff a_1 B^{(1)} + \cdots + a_n B^{(n)} = \vec{0}.$$
+    In particular, columns in $A$ are linearly (in)dependent iff the corresponding columns in $B$ are linearly (in)dependent.
+\end{lemma}
+\begin{proof}
+    Left as a (homework) exercise.
+\end{proof}
+
+\begin{lemma}
+    Let $B$ be the reduced row echelon form of $A \in M_{m \times n}(\field)$. Then:
+    \begin{enumerate}
+        \item $\sharp$ non-zero rows of $B= \rank(B) = \rank(A) =: r$.
+        \item For each $i = 1, \dots, r$, denote by $j_i$ the pivot of the $i$th row. Then, $B^{(j_i)} = e_i \in \field^m$. In particular, $\{B^{(j_1)}, \dots, B^{(j_r)}\}$ is linearly independent.
+        \item Each column of $B$ without a pivot is in the span of the previous columns.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+   Follows from the definition of rref.
+\end{proof}
+
+\begin{corollary}
+    The rref of a matrix is unique.
+\end{corollary}
+\begin{proof}
+    Left as a (homework) exercise.
+\end{proof}
