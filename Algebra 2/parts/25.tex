@@ -1,0 +1,127 @@
+\begin{proposition}\label{prop:alternatingmultilinearpermutations}
+    Let $\delta : M_n{(\field)} \to \field$ be an alternating multilinear form. Then, for each matrix $A := (a_{ij}) \in M_n(\field)$, we have \[
+    \delta(A)     = \sum_{ \pi \in S_n}a_{1 \pi(1)}a_{2 \pi(2)}\cdots a_{n\pi(n)} \delta(\pi I),
+    \]
+    where \[
+    \pi I_n := \begin{pmatrix}
+        - & e_{\pi(1)} & -\\
+        & \vdots & \\
+        - & e_{\pi(n)} & -
+    \end{pmatrix}.
+    \]
+\end{proposition}
+\begin{proof}
+    Left as a (homework) exercise.
+\end{proof}
+\begin{remark}
+    Since $\delta$ alternating, we can use row swaps to bring any $\pi I_n$ to $I_n$, thus $\delta(\pi I_n) = \pm \delta(I_n)$; $\pm$ depends on the number of row swaps needed, ie, the parity of the given permutation $\pi$.
+\end{remark}
+
+\begin{definition}[Parity]
+    For a permutation $\pi \in S_n$, we let $\sharp \pi := $ number of inversions $ = $ number of pairs $i, j\in \{1, \dots, n\}$ such that $i < j$ but $\pi(i) > \pi(j)$. We say $\pi$ \emph{even} (resp. \emph{odd}) if $\sharp\pi$ \emph{even} (resp. \emph{odd}), and define $\text{sgn}(\pi) := (-1)^{\sharp \pi}$ the \emph{sign} of $\pi$.
+\end{definition}
+
+\begin{proposition}
+    $\text{sgn} : S_n \to (\{1, -1\}, \cdot)$ is a group homomorphism, that is $-1$ of transpositions. In particular, \begin{enumerate}
+        \item $\text{sgn}(\pi^{-1}) = \text{sgn}(\pi)$
+        \item If $\pi$ a product of $k$ transpositions, $\tau_1 \cdot \tau_2 \cdots \tau_k$, then $k = \sharp \pi \mod 2$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    See Goren, Lemma 4.2.1. 
+    
+    For (a), we have that $\text{sgn}(\pi^{-1}) = \text{sgn}(\pi)^{-1} = \text{sng}(\pi)$.
+
+    For (b), $\text{sgn}(\pi) = \text{sgn}(\tau_1 \cdots \tau_k) = \text{sgn}(\tau_1) \cdots \text{sgn}(\tau_k) = (-1)^k$ so $(-1)^{\sharp \pi} = (-1)^k$ and thus $k = \sharp \pi \mod 2$.
+\end{proof}
+
+\begin{corollary}[Of \cref{prop:alternatingmultilinearpermutations}]\label{cor:detuniqueness}
+    For any alternating multilinear form $\delta : M_n(\field) \to \field$ and $A := (a_{ij}) \in M_{n}(\field)$, \[
+    \delta(A)= \sum_{\pi \in S_n} a_{1 \pi(1)} \cdots a_{n \pi(n)} \cdot \text{sgn}(\pi) \cdot \delta(I_n).
+    \]
+    In particular, $\delta$ is uniquely determined by its value on $I_n$.
+\end{corollary}
+\begin{proof}
+    By \cref{prop:alternatingmultilinearpermutations}, $\delta(A) = \sum_{\pi \in S_n} a_{1 \pi(1)} \cdots a_{n \pi(n)}  \delta(\pi I_n),$ so we need only to show that $\delta(\pi I_n) = \text{sgn}(\pi) \cdot \delta(I_n)$. Writing $\pi^ = \tau_1 \cdots \tau_k$ as transpositions, we know that $(-1)^k = \text{sgn}(\pi)$ and each row swap corresponding to a $\tau_i$ changes the sign of $\delta$. Applying each $\tau_i$ row swaps to $I_n$, we obtain $\pi I_n$ and thus $\delta(\pi I_n) = (-1)^k \cdot \delta(I_n) = \text{sgn}(\pi) \cdot \delta(I_n)$.
+\end{proof}
+
+\begin{theorem}[Characterization of the Determinant]\label{thm:determinant}
+    There is a \emph{unique} normalized (ie is $1$ on $I_n$) alternating multilinear form; we call such a form the \emph{determinant} and denote $\det$; namely, \[
+    \det(A):= \sum_{\pi \in S_n}  \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)}.
+    \]
+\end{theorem}
+\begin{proof}
+    Uniqueness follows from \cref{cor:detuniqueness}. It remains to show that the given definition for $\det$ is a normalized, alternating, multilinear form.
+    
+    \underline{Normalized:} $\det(I_n) = \sum_{ \pi \in S_n} \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)} =(-1)^0 \cdot  1 \cdots 1 = 1$, since each summand will be zero for any permutation other than the identity.
+
+    \underline{Multilinear:} A linear combination of $n$-linear forms is itself an $n$-linear form, so it suffices to prove that for a fixed $\pi \in S_n$, $\delta_\pi : M_n(\field) \to \field$ given by $\delta_\pi (A) := a_{1 \pi(1)} \cdots a_{n \pi (n)}$ is $n$-linear, which should be clear as a product of matrix entries.
+
+    \underline{Alternating:} Suppose $A$ has two equal rows, wlog $A_{(1)}, A_{(2)}$. We partition $S_n$ into the disjoint union of even and odd permutations, denoting $A_n$ the even permutations. Note that $S_n \setminus A_n = A_n \cdot (12)$, ie the coset of the transposition $(12)$ of the subgroup $A_n$. Thus, $A_n \to A_n \cdot (12)$ via $\pi \mapsto \pi' := \pi \cdot (12)$ is a bijection, and our partition has two equal parts. Thus, we can rewrite $\det$ as \begin{align*}
+        \det(A) &=\sum_{\pi \in S_n}  \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)} \\
+        &= \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} + \sum_{\pi \in A_n} \underbrace{\text{sgn}(\pi')}_{=- \text{sgn}(\pi)} \underbrace{a_{1 \pi'(1)}}_{a_{1 \pi(2)}}\cdots \underbrace{a_{n\pi'(n)}}_{= a_{n \pi(n)}}\\
+        &= \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} - \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} = 0,
+    \end{align*}
+    where the last line follows from $a_{1 \pi(2)} = a_{2 \pi(2)}$ and conversely $a_{2 \pi(1)} = a_{1 \pi(1)}$ by assumption, and thus the two partitioned summands are equal, of opposite sign.
+\end{proof}
+
+\subsubsection{Properties of the Determinant}
+
+\begin{lemma}\label{lemma:elementarymatricesdelta}
+Let $\delta : M_n(\field) \to \field$ be an alternating multilinear form. Then, for $A \in M_n(\field)$ and an elementary matrix $E$, if $E$ is of type 
+\begin{enumerate}
+    \item 1, then $\delta(E \cdot A) = - \delta(A)$;
+    \item 2, representing multiplying by a scalar $c \in \field$, then $\delta(E \cdot A) = c \delta(A)$;
+    \item 3, then $\delta(E \cdot A) = \delta(A)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    1. is a restatement of the alternating property, \cref{prop:deltaalternatingswapping}, 2. is the definition of multilinearity.
+
+    For 3., suppose $E$ adds $c \cdot $ row $i$ to row $j$, and suppose wlog $i = 1, j = 2$. Then, \[
+    \delta(E \cdot A) = \delta(A_{(1)}, A_{(2)} + c \cdot A_{(1)}, A_{(3)}, \dots, A_{(n)})  = \delta(A) + c \cdot \delta(A_{(1)}, A_{(1)}, A_{(3)}, \dots, A_{(n)}) = \delta(A),
+    \]
+    by definition of $\delta$ being alternating.
+\end{proof}
+
+\begin{theorem}\label{thm:determinantinvertibility}
+For $A \in M_n(\field)$, $\det(A) = 0$ iff $A$ noninvertible.
+\end{theorem}
+
+\begin{proof}
+    Let $E_1, \dots, E_k$ be elementary matrices such that $A' := E_1 \cdots E_k \cdot A$ is in rref, remaring that then $\det(A') = c \cdot \det(A)$ for some $c \in \field$, $c \neq 0$, by \cref{lemma:elementarymatricesdelta}. We also have that $\rank(A) = \rank(A')$, and $\rank(A') < n \iff A'$ has a zero row. 
+
+    ($\impliedby$) if $A'$ has a zero row, then by multilinearity, $\det(A') = 0$ and thus $\det(A) = 0$ as well.
+
+    ($\implies$) if $A'$ has no zero row, then $A' = I_n$ and thus $\det(A') = 1$, and $\det(A) = c^{-1} \cdot 1 \neq 0$.
+\end{proof}
+
+\begin{theorem}
+    The determinant respects products, $\det(A \cdot B) = \det(A) \cdot \det(B)$, for all $A, B \in M_n(\field)$.
+\end{theorem}
+\begin{proof}
+    Suppose first $A$ noninvertible, so $\rank(A) < n$ and $\det(A)  = 0$. Then \[
+    \rank(A \cdot B) = \rank(L_{AB}) = \rank(L_A \circ L_B) \leq \rank(L_A) = \rank(A) < n,
+    \]
+    so $A \cdot B$ also noninvertible and $\det(A \cdot B) = 0$. Hence, $\det(A) \cdot \det(B) = 0 \cdot \det(B) = 0 = \det(A \cdot B)$.
+
+    Suppose now $A$ invertible. Then, writing $A = E_1 \cdots E_k$ as a product of elementary matrices; it suffices to show, by induction, for a single $E$. By \cref{lemma:elementarymatricesdelta}, $\det(A) = \det(E \cdot I) = c$ for some non-zero constant $c \in \field$, so $\det(A) \cdot \det(B) = c \cdot \det(B)$. On the other hand, $\det(A \cdot B) = \det(E \cdot B) = c \cdot \det(B)$, also by \cref{lemma:elementarymatricesdelta}.
+\end{proof}
+\begin{corollary}
+    $\det(A^{-1}) = \det(A)^{-1}, \forall A \in \GL_n(\field)$.
+\end{corollary}
+\begin{proof}
+    $1 = \det(I_n) = \det(A \cdot A^{-1}) = \det(A) \cdot (A^{-1}) \implies \det(A^{-1}) = \det(A)^{-1}$.
+\end{proof}
+\begin{corollary}
+    $\det(A^t) = \det(A) \forall A \in M_n(\field)$.
+\end{corollary}
+\begin{proof}
+    If $A$ noninvertible, then $\rank(A^t) = \rank(A) < n$ so both are noninvertible, and thus $\det(A^t) = \det(A) = 0$.
+
+    If $A$ invertible, writing $A = E_{1} \cdots E_k$, we have $A^t = E_k^t \cdots E_1^t$. For each $i = 1, \dots, k$, $E_i^t$ is an elementary matrix of the same type, with the same constant if of type 2, and thus $\det(E_i) = \det(E_i^t)$, and so \begin{align*}
+        \det(A^t) = \det(E_k^t) \cdots \det(E_1^t) = \det(E_1) \cdots \det(E_k) = \det(A).
+    \end{align*}
+\end{proof}

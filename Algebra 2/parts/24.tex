@@ -1,0 +1,156 @@
+% \begin{center}
+%     \begin{tikzpicture}
+%     \pic[
+%     braid/.cd,
+%     every strand/.style={ultra thick},
+%     strand 1/.style={solarized-magenta},
+%     strand 2/.style={solarized-green},
+%     strand 3/.style={solarized-blue},
+%     ] {braid={s_1 s_2^{-1} s_1 s_2^{-1} s_1 s_2^{-1}}};
+%     \end{tikzpicture}
+% \end{center}
+% % https://mirror.quantum5.ca/CTAN/graphics/pgf/contrib/braids/braids.pdf
+
+\subsection{Determinant}
+
+The determinant, denoted $\det(A)$, of a square matrix $A \in M_n(\field)$ is a scalar from $\field$, meant to equal $0$ iff $A$ is not invertible.
+
+\begin{proposition}
+    $A \in M_{n}(\field)$ is invertible $\iff$ the columns of $A$  are linearly independent $\iff$ the rows of $A$  are linearly independent $\iff$ $\rank(A) = n$
+\end{proposition}
+\begin{proof}
+    $A$ invertible $\iff$ $L_A$ invertible $\iff$ $L_A$ bijection $\iff$ $L_A$ surjection $\iff$ $\rank(L_A) = \rank(A) = n$
+\end{proof}
+
+\begin{example}
+    Let $A \in M_3(\R)$, $A = \begin{pmatrix}
+       - & v_1 & -\\
+       - & v_2 & -\\
+       - & v_3 & -
+    \end{pmatrix}$. If $\{v_1, v_2, v_3\}$ linear dependent, then $\dim(\Span(v_1, v_2, v_3)) \leq 2$, which happens iff the parallelepiped formed with sides $v_1, v_2, v_3$ is contained in a plane (is "flat"), iff the parallelepiped is a parallelogram, ie, has 0 volume. As such, we can make the notion of volume dependent on the orientation of $v_1, v_2, v_3$ such that permuting $v_1, v_2, v_3$ changes the sign of the volume. This gives us the idea of an "oriented volume", which we can define as our determinant. This has a clear meaning in $\R$, but it remains to show how we can generalize this to arbitrary fields, where such a "volume" does not have a concrete meaning.
+\end{example}
+
+We now aim to derive a general formula for the determinant of a matrix over an arbitrary field by observing several key characteristics of our parallelepiped constructed above, and using these to define a unique determinant formula with geometric motivations.
+
+\begin{center}
+\textbf{Observation 1}\\
+\textit{Scaling a vector in a parallelepiped scales the volume of the parallelepiped by the same scalar.}
+\end{center}
+
+\begin{definition}[multiinear form]
+    A function $\delta: M_n(\field) \to \field$ is called (row) multilinear, or $n$-linear, if it is linear in every row, i.e. for each $i = 1, \dots, n$, \[
+    \delta \begin{pmatrix}
+        - &v_1& -\\
+        & \vdots & \\
+        - & v_{i-1} & -\\
+        - & c \cdot\vec{x} + \vec{y}&-\\
+        - & v_{i+1} & -\\
+        & \vdots & \\
+        - & v_n & -
+    \end{pmatrix}  =  c \cdot \delta \begin{pmatrix}
+            - &v_1& -\\
+            & \vdots & \\
+            - & v_{i-1} & -\\
+            - & \vec{x} &-\\
+            - & v_{i+1} & -\\
+            & \vdots & \\
+            - & v_n & -
+        \end{pmatrix} + \delta \begin{pmatrix}
+            - &v_1& -\\
+            & \vdots & \\
+            - & v_{i-1} & -\\
+            - & \vec{y} &-\\
+            - & v_{i+1} & -\\
+            & \vdots & \\
+            - & v_n & -
+        \end{pmatrix}.
+    \]
+\end{definition}
+
+\begin{example}
+    \begin{enumerate}
+        \item $\delta(A) := a_{11}\cdot a_{22}\cdot \dots \cdot a_{nn}$ is $n$-linear.
+        \item Fix $j \in \{1, \dots, n\}$. The function $\delta_j(A) := a_{1j}\cdot a_{2j} \cdot \dots \cdot a_{nj}$ is $n$-linear.
+        \item[$^\ast 3.$] However, $\tr(A) := \sum_{i=1}^n a_{ii}$ is \emph{not} $n$-linear; scalar multiplication fails.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    For an $n$-linear form $\delta : M_n(\field) \to \field$, if $A \in M_n(\field)$ has zero row, then $\delta(A) = 0$.
+\end{proposition}
+
+\begin{proof}
+    $\delta(A) = \delta\left( \begin{pmatrix}
+        \vec{0}\\
+        \vdots
+    \end{pmatrix}\right) = \delta\left(\begin{pmatrix}
+        \vec{0}\\
+        \vdots
+    \end{pmatrix}+\begin{pmatrix}
+        \vec{0}\\
+        \vdots
+    \end{pmatrix}\right) = \delta\left(\begin{pmatrix}
+        \vec{0}\\
+        \vdots
+    \end{pmatrix}\right) + \delta\left(\begin{pmatrix}
+        \vec{0}\\
+        \vdots
+    \end{pmatrix}\right) = \delta(A) + \delta (A) \implies \delta(A) = 0$.
+\end{proof}
+
+
+\begin{center}
+    \textbf{Observation 2}\\
+    \textit{If two sides of the parallelepiped are equal, then the volume is 0 (the shape is "flat").}
+\end{center}
+
+% TODO swap definition and proposition
+\begin{definition}[Alternating]
+    A $n$-linear form $\delta : M_n(\field) \to \field$ is called \emph{alternating} if $\delta(A) = 0$ for any matrix $A$ whose two equal rows.
+\end{definition}
+
+\begin{proposition}\label{prop:deltaalternatingswapping}
+    Let $\delta : M_n(\field) \to \field$ be an alternating $n$-linear form. Then, if $B$ is obtained from $A$ by swapping two rows, then $\delta(B) = - \delta(A)$.
+\end{proposition}
+
+\begin{proof}
+    It suffices to show that swapping two consecutive rows changes the sign of the result. Suppose $B$ is obtained from $A$ by swapping rows 1 and 2, namely
+    \[
+    B = \begin{pmatrix}
+        - & A_{(2)} & - \\
+        - & A_{(1)} & - \\
+        & \vdots & 
+    \end{pmatrix}.  
+    \]
+    Then, \[
+    \delta \begin{pmatrix}
+        - & A_{(1)} + A_{(2)} & -\\
+        - & A_{(1)}+ A_{(2)} & -\\
+        & \vdots & 
+    \end{pmatrix}   = 0,  
+    \]
+    since its first two rows are equal; OTOH,
+    \[
+        \delta \begin{pmatrix}
+            - & A_{(1)} + A_{(2)} & -\\
+            - & A_{(1)}+ A_{(2)} & -\\
+            & \vdots & 
+        \end{pmatrix}   = \delta(A) + \delta(B),    
+    \]
+    so $\delta(B) = - \delta(A)$.
+\end{proof}
+
+\begin{proposition}
+    A multilinear form $\delta : M_n(\field) \to \field$ is alternating $\iff$ $\delta(A) = 0$ for every matrix $A$ with two equal consecutive rows.
+\end{proposition}
+
+\begin{proof}
+    Left as a (homework) exercise.
+\end{proof}
+
+
+
+\begin{center}
+    \textbf{Observation 3}\\
+    \textit{If $v_i = e_i$ for $i = 1, \dots, n$, ie, our parallelepiped is the unit cube, then the volume, aptly, equals 1; it is "normalized".}
+\end{center}

@@ -1,0 +1,56 @@
+\section{Diagonalization of Linear Operators}
+
+\subsection{Introduction}
+
+This section will be concerned with decomposing a linear operator $T : V \to V$ for a finite dimensional $V$ into a direct sum of simpler linear operators.
+
+The simplest linear operator we could consider is multiplication by a fixed scalar; ideally, then, we would like to be able, for any operator $T : V \to V$, to decompose $V = V_1 \oplus V_2 \oplus \cdots \oplus V_k$ of $T$-invariant subspaces such that $T|_{V_{i}}$ is just multiplication by some scalar $\lambda_i$.
+
+
+\begin{definition}[Linearly Independent Subspaces]
+    For subspaces $V_1, V_2, \dots, V_k \subseteq V$, we say that $\{V_1, \dots, V_k\}$ is \emph{linearly independent} if $$V_i \cap \sum_{j \neq i} V_j = \{0_V\},$$ then, we call $V_1 + V_2 + \cdots + V_k$ a \emph{direct sum} and denote $V_1 \oplus V_2 \oplus \cdots \oplus V_k$.
+\end{definition}
+
+\begin{definition}[Diagonalization]
+    Call a linear operator $T : V\to V$ \emph{diagonalizable} if it admits a \emph{diagonalization}, ie \[
+    V = V_1 \oplus V_2 \oplus \cdots \oplus V_k,    
+    \]
+    where each $V_i$ is a subspace of $V$, such that $T\vert_{V_i}$ is just multiplication by a fixed scalar $\lambda_i \in \field$.
+\end{definition}
+
+\begin{example}
+    \begin{enumerate}
+        \item If $A$ a diagonal matrix, $A = \begin{pmatrix}
+            \lambda_1 & 0 & \cdots\\
+            0 & \ddots & 0\\
+            \cdots & 0 & \lambda_n
+        \end{pmatrix}$, then $L_A$ is diagonalizable; take $V_i := \Span(\{e_i\})$, then $\field^n = V_1 \oplus \cdots \oplus V_n$.
+        \item If $A$ not diagonal, but is similar to a diagonal matrix $D$ as above ie $\exists Q \in \GL_n(\field)\st A = Q D Q^{-1}$. Then, as any invertible matrix $Q = [I_n]_\alpha^\beta$ is a change of basis matrix, denoting $\beta := \{v_1, \dots, v_n\}$, then letting $V_i := \Span (\{v_i\})$ gives the appropriate decomposition such that $L_A \vert_{V_i} = $ mult. by $\lambda_i$. We generalize this below.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}\label{prop:diagonaliffbasis}
+    Let $V$, $\dim(V) < \infty$. A linear operator $T : V \to V$ is diagonalizable iff there is a basis $\beta$ for $V$ such that $[T]_\beta^\beta$ is diagonal.
+\end{proposition}
+
+\begin{proof}
+    ($\implies$) Suppose $V = V_1 \oplus \cdots \oplus V_k$ such that $T\vert_{V_i} = $ mult. by $\lambda_i$. Let $\beta_i$ be a basis for $V_i$, then, $\beta := \cup_{i=1}^k \beta_i$ is a basis for $V$. Then, for each $v \in \beta$, $v \in \beta_i$ for some $i$ and so $T(v) = \lambda_i \cdot v$ and thus $[T(v)]_\beta = \begin{pmatrix}
+        0 \\
+        \vdots\\
+        \lambda_i\\
+        \vdots\\
+        0
+    \end{pmatrix}$, and so \[
+    [T]_\beta = \begin{pmatrix}
+        \lambda_1&  & \\
+        & \ddots & \\
+        & & \lambda_n
+    \end{pmatrix}.
+    \]
+
+    ($\impliedby$) Suppose $\beta := \{v_1, \dots, v_n\}$ a basis such that $[T]_\beta$ is diagonal. Then, taking $V_i := \Span (\{v_i\})$, $[T(v_i)] = \lambda_i \cdot e_i = \lambda_i \cdot [v_i]_\beta = [\lambda_i v_i]_\beta$. $v \mapsto [v]_\beta$ injective, and thus $T v_i = \lambda_i v_i$.
+\end{proof}
+
+\begin{definition}[Eigenvalue/eigenvector]
+    For a linear operator $T : V \to V$ and $\lambda \in \field$, $\lambda$ is called an \emph{eigenvalue} of $T$ if there is a non-zero vector $v \in V$ such that $T(v) = \lambda \cdot v$. Then, $v$ is called an \emph{eigenvector}.
+\end{definition}
