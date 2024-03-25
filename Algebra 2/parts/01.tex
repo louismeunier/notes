@@ -14,7 +14,7 @@
         \item $\mathbb{Q}$; the field of rational numbers.
         \item $\mathbb{R}$; the field of real numbers; $\mathbb{Q} \subseteq \mathbb{R}$.
         \item $\mathbb{C}$; the field of complex numbers; $\mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$.
-        \item $\mathbb{F}_p \equiv \zmod{p} \equiv \{0,1, \dots, p-1\}; the (unique) field of $p$ elements, where $p$ prime.\footnote{where $a +_p b := $ remainder of $\frac{a+b}{p}$, $a \cdot_p b :=$ remainder of $\frac{a\cdot b}{p}$.}$
+        \item $\mathbb{F}_p \equiv \zmod{p} \equiv \{0,1, \dots, p-1\}; the (unique) field of $p$ elements, where $p$ prime.\footnote{where $a +_p b \defeq $ remainder of $\frac{a+b}{p}$, $a \cdot_p b \defeq$ remainder of $\frac{a\cdot b}{p}$.}$
         \begin{enumerate}
             \item $p =2$; $\mathbb{F}_2 \equiv \{0, 1\}$.
             \item $p = 3$; $\mathbb{F}_3 \equiv \{0, 1, 2\}$.
@@ -29,22 +29,22 @@ Throughout the course, we will denote an abstract field as $\field$.
 
 \begin{example}[Examples of Vector Spaces]
     \begin{enumerate}
-        \item $\mathbb{R}^3 := \{(x, y, z) : x, y, z \in \mathbb{R}\}$. We can add elements in $\mathbb{R}^3$, and multiply them by real scalars.
-        \item  $\mathbb{F}^n := \underbrace{\mathbb{F} \times \mathbb{F} \times \cdots \mathbb{F}}_{n \text{ times}} := \{(a_1, a_2, \dots, a_n) : a_i \in \mathbb{F}\}$, where $n \in \mathbb{N}$\footnotemark; this is a generalization of the previous example, where we took $n = 3$, $\mathbb{F} = \mathbb{R}$. Operations follow identically; addition:
+        \item $\mathbb{R}^3 \defeq \{(x, y, z) : x, y, z \in \mathbb{R}\}$. We can add elements in $\mathbb{R}^3$, and multiply them by real scalars.
+        \item  $\mathbb{F}^n \defeq \underbrace{\mathbb{F} \times \mathbb{F} \times \cdots \mathbb{F}}_{n \text{ times}} \defeq \{(a_1, a_2, \dots, a_n) : a_i \in \mathbb{F}\}$, where $n \in \mathbb{N}$\footnotemark; this is a generalization of the previous example, where we took $n = 3$, $\mathbb{F} = \mathbb{R}$. Operations follow identically; addition:
         \begin{align*}
-            (a_1, a_2, \dots, a_n) + (b_1, b_2, \dots, b_n) := (a_1 + b_1, a_2 + b_2, \dots, a_n + b_n)
+            (a_1, a_2, \dots, a_n) + (b_1, b_2, \dots, b_n) \defeq (a_1 + b_1, a_2 + b_2, \dots, a_n + b_n)
         \end{align*}
         and, taking a scalar $\lambda \in \mathbb{F}$, multiplication:
         \[
-            \lambda \cdot (a_1, a_2, \dots, a_n) := (\lambda \cdot a_1, \lambda \cdot a_2, \dots, \lambda \cdot a_n).
+            \lambda \cdot (a_1, a_2, \dots, a_n) \defeq (\lambda \cdot a_1, \lambda \cdot a_2, \dots, \lambda \cdot a_n).
             \]
         We refer to these elements $(a_1, \cdots, a_n)$ as \emph{vectors} in $\mathbb{F}^n$; the vector for which $a_i = 0 \forall i$ is the \emph{$0$ vector}, and is the additive identity, making $\mathbb{F}^n$ an abelian group under addition, that admits multiplication by scalars from $\mathbb{F}$.
-        \item $C(\mathbb{R}) := \{f : \mathbb{R} \to \mathbb{R} : f \text{ continuous}\}$. Here, we have the constant zero function as our additive identity ($x \mapsto 0 \forall x$), and addition/scalar multiplication of two continuous real functions are continuous.
-        \item $\field[t] := \{a_0 + a_1 t + a_2 t^2 + \cdots + a_n t^n: a_i \in \field \forall i, n \in \mathbb{N}\}$, ie, the set of all polynomials in $t$ with coefficients from $\field$. Here, we can add two polynomials; \[
-            (a_0 + a_1 t + \cdots + a_n t^n) + (b_0 + b_1 t + \cdots + b_m t^m) := \sum_{i=0}^{\max \{n, m\}}(a_i + b_i)t^i,
+        \item $C(\mathbb{R}) \defeq \{f : \mathbb{R} \to \mathbb{R} : f \text{ continuous}\}$. Here, we have the constant zero function as our additive identity ($x \mapsto 0 \forall x$), and addition/scalar multiplication of two continuous real functions are continuous.
+        \item $\field[t] \defeq \{a_0 + a_1 t + a_2 t^2 + \cdots + a_n t^n: a_i \in \field \forall i, n \in \mathbb{N}\}$, ie, the set of all polynomials in $t$ with coefficients from $\field$. Here, we can add two polynomials; \[
+            (a_0 + a_1 t + \cdots + a_n t^n) + (b_0 + b_1 t + \cdots + b_m t^m) \defeq \sum_{i=0}^{\max \{n, m\}}(a_i + b_i)t^i,
         \]
         (where we "take" undefined $a_i$/$b_i$'s as 0; that is, if $m > n$, then $a_{m - n}, a_{m - n + 1}, \dots, a_m$ are taken to be $0$). Scalar multiplication is defined \[
-        \lambda \cdot (a_0 + a_1 t + a_2 t^2 + \cdots + a_n t^n) := \lambda a_0 + \lambda a_1 t + \lambda a_2 t^2 + \cdots + \lambda a_n t^n.
+        \lambda \cdot (a_0 + a_1 t + a_2 t^2 + \cdots + a_n t^n) \defeq \lambda a_0 + \lambda a_1 t + \lambda a_2 t^2 + \cdots + \lambda a_n t^n.
         \]
         Here, the zero polynomial is simply $0$ (that is, $a_i = 0 \forall i$).
     \end{enumerate}
@@ -67,8 +67,8 @@ Throughout the course, we will denote an abstract field as $\field$.
 \begin{proposition}
     For a vector space $V$ over a field $\field$, the following holds:
     \begin{enumerate}
-        \item $0 \cdot v = 0_V, \forall v \in V$ (where $0:=0_\field$)
-        \item $-1 \cdot v = -v, \forall v \in V$ (where $1:=1_\field$)\footnotemark
+        \item $0 \cdot v = 0_V, \forall v \in V$ (where $0\defeq0_\field$)
+        \item $-1 \cdot v = -v, \forall v \in V$ (where $1\defeq1_\field$)\footnotemark
         \item $\alpha \cdot 0_V = 0_V, \forall \alpha \in \field$
     \end{enumerate}
 \end{proposition}

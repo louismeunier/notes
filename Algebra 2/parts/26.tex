@@ -24,8 +24,8 @@ The simplest linear operator we could consider is multiplication by a fixed scal
             \lambda_1 & 0 & \cdots\\
             0 & \ddots & 0\\
             \cdots & 0 & \lambda_n
-        \end{pmatrix}$, then $L_A$ is diagonalizable; take $V_i := \Span(\{e_i\})$, then $\field^n = V_1 \oplus \cdots \oplus V_n$.
-        \item If $A$ not diagonal, but is similar to a diagonal matrix $D$ as above ie $\exists Q \in \GL_n(\field)\st A = Q D Q^{-1}$. Then, as any invertible matrix $Q = [I_n]_\alpha^\beta$ is a change of basis matrix, denoting $\beta := \{v_1, \dots, v_n\}$, then letting $V_i := \Span (\{v_i\})$ gives the appropriate decomposition such that $L_A \vert_{V_i} = $ mult. by $\lambda_i$. We generalize this below.
+        \end{pmatrix}$, then $L_A$ is diagonalizable; take $V_i \defeq \Span(\{e_i\})$, then $\field^n = V_1 \oplus \cdots \oplus V_n$.
+        \item If $A$ not diagonal, but is similar to a diagonal matrix $D$ as above ie $\exists Q \in \GL_n(\field)\st A = Q D Q^{-1}$. Then, as any invertible matrix $Q = [I_n]_\alpha^\beta$ is a change of basis matrix, denoting $\beta \defeq \{v_1, \dots, v_n\}$, then letting $V_i \defeq \Span (\{v_i\})$ gives the appropriate decomposition such that $L_A \vert_{V_i} = $ mult. by $\lambda_i$. We generalize this below.
     \end{enumerate}
 \end{example}
 
@@ -34,7 +34,7 @@ The simplest linear operator we could consider is multiplication by a fixed scal
 \end{proposition}
 
 \begin{proof}
-    ($\implies$) Suppose $V = V_1 \oplus \cdots \oplus V_k$ such that $T\vert_{V_i} = $ mult. by $\lambda_i$. Let $\beta_i$ be a basis for $V_i$, then, $\beta := \cup_{i=1}^k \beta_i$ is a basis for $V$. Then, for each $v \in \beta$, $v \in \beta_i$ for some $i$ and so $T(v) = \lambda_i \cdot v$ and thus $[T(v)]_\beta = \begin{pmatrix}
+    ($\implies$) Suppose $V = V_1 \oplus \cdots \oplus V_k$ such that $T\vert_{V_i} = $ mult. by $\lambda_i$. Let $\beta_i$ be a basis for $V_i$, then, $\beta \defeq \cup_{i=1}^k \beta_i$ is a basis for $V$. Then, for each $v \in \beta$, $v \in \beta_i$ for some $i$ and so $T(v) = \lambda_i \cdot v$ and thus $[T(v)]_\beta = \begin{pmatrix}
         0 \\
         \vdots\\
         \lambda_i\\
@@ -48,9 +48,9 @@ The simplest linear operator we could consider is multiplication by a fixed scal
     \end{pmatrix}.
     \]
 
-    ($\impliedby$) Suppose $\beta := \{v_1, \dots, v_n\}$ a basis such that $[T]_\beta$ is diagonal. Then, taking $V_i := \Span (\{v_i\})$, $[T(v_i)] = \lambda_i \cdot e_i = \lambda_i \cdot [v_i]_\beta = [\lambda_i v_i]_\beta$. $v \mapsto [v]_\beta$ injective, and thus $T v_i = \lambda_i v_i$.
+    ($\impliedby$) Suppose $\beta \defeq \{v_1, \dots, v_n\}$ a basis such that $[T]_\beta$ is diagonal. Then, taking $V_i \defeq \Span (\{v_i\})$, $[T(v_i)] = \lambda_i \cdot e_i = \lambda_i \cdot [v_i]_\beta = [\lambda_i v_i]_\beta$. $v \mapsto [v]_\beta$ injective, and thus $T v_i = \lambda_i v_i$.
 \end{proof}
-
+\subsection{Eigenvalues/vectors/spaces}
 \begin{definition}[Eigenvalue/eigenvector]
     For a linear operator $T : V \to V$ and $\lambda \in \field$, $\lambda$ is called an \emph{eigenvalue} of $T$ if there is a non-zero vector $v \in V$ such that $T(v) = \lambda \cdot v$. Then, $v$ is called an \emph{eigenvector}.
 \end{definition}

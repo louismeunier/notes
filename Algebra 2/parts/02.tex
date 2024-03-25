@@ -3,8 +3,8 @@
 \begin{definition}[Product/Direct Sum of Vector Spaces]
 For vector spaces $U, V$ over the same field $\field$, we define their \emph{product} (or \emph{direct sum}) as the set $$U \times V = \{(u,v):u \in U, v \in V\},$$ with the operations:
 \begin{align*}
-    (u_1, v_1) + (u_2, v_2) &:= (u_1 + u_2, v_1 + v_2)\\
-    \lambda \cdot (u, v)&:= (\lambda \cdot u, \lambda \cdot v)
+    (u_1, v_1) + (u_2, v_2) &\defeq (u_1 + u_2, v_1 + v_2)\\
+    \lambda \cdot (u, v)&\defeq (\lambda \cdot u, \lambda \cdot v)
 \end{align*}
 \end{definition}
 
@@ -27,15 +27,15 @@ For vector spaces $U, V$ over the same field $\field$, we define their \emph{pro
 
 \begin{example}[Examples of Subspaces]
     \begin{enumerate}
-        \item Let $V := \field^n$.
+        \item Let $V \defeq \field^n$.
         \begin{itemize}
-            \item $W:= \{(x_1, x_2, \dots, x_n) \in \field^n:x_1 = 0\} = \{(0, x_2, x_3, \dots, x_n) :x_i \in \field\}$.
-            \item $W:= \{(x_1, x_2, \dots, x_n)\in \field^n : x_1 + 2 \cdot x_2 = 0\}$
+            \item $W\defeq \{(x_1, x_2, \dots, x_n) \in \field^n:x_1 = 0\} = \{(0, x_2, x_3, \dots, x_n) :x_i \in \field\}$.
+            \item $W\defeq \{(x_1, x_2, \dots, x_n)\in \field^n : x_1 + 2 \cdot x_2 = 0\}$
             \begin{proof}
                 Let $x = (x_1, \dots, x_n), y=(y_1, \dots, y_n) \in W$. Then, $x+y = (x_1 + y_1, \dots, x_n + y_n)$, and $x_1 + y_1 + 2 \cdot (x_2 + y_2) = x_1 + 2 \cdot x_2 + y_1 + 2 \cdot y_2 = 0 + 0 = 0 \implies x+ y \in W$. Similar logic follows for axioms 2., 3.
             \end{proof}
             \item (More generally) $$
-            W := \{(x_1, \dots, x_n) \in \field^n : \begin{matrix}
+            W \defeq \{(x_1, \dots, x_n) \in \field^n : \begin{matrix}
                 a_{11} x_1 + \cdots a_{1n} x_n = 0\\
                 a_{21} x_1 + \cdots + a_{2n} x_n = 0\\
                 \ddots\\
@@ -44,18 +44,18 @@ For vector spaces $U, V$ over the same field $\field$, we define their \emph{pro
                 \},
             $$
             that is, a linear combination of homogenous "conditions" on each term.
-            \item $W^*:= \{(x_1, \dots, x_n) : x_1 + x_2 = 1\}$ is \emph{not} a subspace; it is not closed under addition, nor under scalar multiplication.
+            \item $W^*\defeq \{(x_1, \dots, x_n) : x_1 + x_2 = 1\}$ is \emph{not} a subspace; it is not closed under addition, nor under scalar multiplication.
         \end{itemize}
-        \item Let $\field[t]_n :=  \{a_0 + a_1 t + \cdots + a_n t^n : a_i \in \field\}$. Then, $\field[t]_n$ is a subspace of $\field[t]$, the more general polynomial space. \emph{However}, the set of all polynomials of degree \emph{exactly} $n$ (all axioms fail, in fact) is not a subspace of $\field[t]_n$.
+        \item Let $\field[t]_n \defeq  \{a_0 + a_1 t + \cdots + a_n t^n : a_i \in \field\}$. Then, $\field[t]_n$ is a subspace of $\field[t]$, the more general polynomial space. \emph{However}, the set of all polynomials of degree \emph{exactly} $n$ (all axioms fail, in fact) is not a subspace of $\field[t]_n$.
         \begin{itemize}
-            \item $W:= \{p(t) \in \field[t]_n : p(1)=0 \}$.
-            \item $W:=\{p(t) \in \field[t]_n : p''(t) + p'(t) + 2p(t)= 0\}$.
+            \item $W\defeq \{p(t) \in \field[t]_n : p(1)=0 \}$.
+            \item $W\defeq\{p(t) \in \field[t]_n : p''(t) + p'(t) + 2p(t)= 0\}$.
         \end{itemize}
-        \item Let $V := C(\mathbb{R})$ be the space of continuous function $\mathbb{R} \to \mathbb{R}$.
+        \item Let $V \defeq C(\mathbb{R})$ be the space of continuous function $\mathbb{R} \to \mathbb{R}$.
         \begin{itemize}
-            \item $W := \{f \in C(\mathbb{R}) : f(\pi) + 7 f(\sqrt{2}) = 0 \}$.
-            \item $W := C^1(\mathbb{R}) :=$ everywhere differentiable functions.
-            \item $W:= \{ f \in C(\mathbb{R}) : \int_0^1 f \dd{x} = 0\}$.
+            \item $W \defeq \{f \in C(\mathbb{R}) : f(\pi) + 7 f(\sqrt{2}) = 0 \}$.
+            \item $W \defeq C^1(\mathbb{R}) \defeq$ everywhere differentiable functions.
+            \item $W\defeq \{ f \in C(\mathbb{R}) : \int_0^1 f \dd{x} = 0\}$.
         \end{itemize}
     \end{enumerate}
 \end{example}
@@ -63,8 +63,8 @@ For vector spaces $U, V$ over the same field $\field$, we define their \emph{pro
 \begin{proposition}
     Let $W_1, W_2$ be subspaces of a vector space $V$ over $\field$. Then, define the following:
     \begin{enumerate}
-        \item $W_1 + W_2 := \{w_1 + w_2 : w_1 \in W_1, w_2 \in W_2\}$
-        \item $W_1 \cap W_2:= \{w \in V : w \in W_1 \wedge w \in W_2\}$
+        \item $W_1 + W_2 \defeq \{w_1 + w_2 : w_1 \in W_1, w_2 \in W_2\}$
+        \item $W_1 \cap W_2\defeq \{w \in V : w \in W_1 \wedge w \in W_2\}$
     \end{enumerate}
     These are both subspaces of $V$.
 \end{proposition}
@@ -94,5 +94,5 @@ For vector spaces $U, V$ over the same field $\field$, we define their \emph{pro
 
     A linear combination is called \emph{trivial} if $a_i = 0 \forall i$, that is, all coefficients are $0$.
 
-    If $n = 0$ (ie, we are "summing up" 0 vectors), we define the sum as the zero vector; $\sum_{i=1}^{0} a_i v_i := 0_V$.
+    If $n = 0$ (ie, we are "summing up" 0 vectors), we define the sum as the zero vector; $\sum_{i=1}^{0} a_i v_i \defeq 0_V$.
 \end{definition}

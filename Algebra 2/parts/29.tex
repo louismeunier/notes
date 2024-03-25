@@ -1,0 +1,106 @@
+\begin{theorem}
+    Let $V, n \defeq \dim(V)$. A linear operator $T : V \to V$ is diagonalizable iff the sum of the geometric multiplicities of all of the eigenvalues $\lambda_1, \dots, \lambda_k$ equals $n$, ie iff \[
+        \sum_{i=1}^k m_g(\lambda_i) = n.
+    \]
+\end{theorem}
+
+\begin{proof}
+    Recall that $T$ diagonalizable iff $\exists$ a basis consisting of eigenvectors. 
+
+    ($\implies$) If $\beta \defeq \{v_1, \dots, v_n\}$ a basis for $V$ of eigenvectors, then each $v_i \in \eig_T(\lambda_j)$  for some $j$, so $\beta\subseteq \cup_{i=1}^k \eig_T(\lambda_i)$ and $\beta \cap \eig_T(\lambda_i)$ is linearly independent, hence $|\beta \cap \eig_T(\lambda_i)| \leq m_g(\lambda_i)$. Thus, $n = \abs{\beta} = \sum_{i=1}^k \abs{\beta \cap \eig_T(\lambda_i)} \leq \sum_{i=1}^k m_g(\lambda_i)$. By the previous corollary, it follows that $\sum_{i=1}^k m_g(\lambda_i) = n$.
+
+    ($\impliedby$) Suppose $\sum_{i=1}^k m_g(\lambda_i) = n$ and let $\beta_i$ a basis for $\eig_T(\lambda_i)$. By the linear independence of the eigenspaces, $\beta \defeq \cup_{i=1}^k \beta_i$ still linearly independent and, having $n$ elements, is a basis for $V$ consisting of eigenvectors by construction.
+\end{proof}
+
+\begin{example}
+    Let $D : \field[t]_2 \to \field[t]_2$ by $p(t) \mapsto p'(t)$. To find eigenvalues of $D$, we fix the basis $\alpha \defeq \{1, t, t^2\}$ for $D$ and find the corresponding matrix representation
+    \begin{align*}
+        [D]_\alpha = \begin{pmatrix}
+            \vert & \vert & \vert\\
+            [D(1)]_\alpha & [D(t)]_\alpha & [D(t^2)]_\alpha \\
+            \vert & \vert & \vert
+        \end{pmatrix} = \begin{pmatrix}
+            \vert & \vert & \vert\\
+            [0]_\alpha & [1]_\alpha & [2t]_\alpha\\
+            \vert & \vert & \vert
+        \end{pmatrix} = \begin{pmatrix}
+            0 & 1 & 0 \\
+            0 & 0 & 2\\
+            0 & 0 & 0
+        \end{pmatrix}.
+    \end{align*}
+    Thus, \begin{align*}
+        p_D(t) = - \det([D]_\alpha - tI_3) = - \begin{pmatrix}
+            -t & 1 & 0\\
+            0 & -t & 2 \\
+            0 & 0 & -t
+        \end{pmatrix} = t^3,
+    \end{align*}
+    hence, the only eigenvalue is $\lambda = 0$, with corresponding $\eig_D(0) = \ker(D - 0 \cdot I) = \ker(D)$, so $m_g(0) = \dim(\ker(D)) = 3 - \rank(D) = 3 - \rank([D]_\alpha) = 1$. Moreover, $D$ is not diagonalizable.
+\end{example}
+
+\begin{definition}[Algebraic Multiplicity]
+    For $V, \dim(V) < \infty$, and a linear operator $T : V \to V$ and an eigenvalue $\lambda$ of $T$, we define the \emph{algebraic multiplicity} of $\lambda$ to be the multiplicity of $\lambda$ as the root of $p_T(t)$, ie the largest $k \geq 1$ such that $(t - \lambda)^k \mid p_T(t)$. We denote this by \[
+    m_a(\lambda).    
+    \]
+\end{definition}
+
+
+\begin{lemma}\label{lemma:charpolynomialdiv}
+ Let $V$, $\dim(V) < \infty$ and $T : V \to V$ be linear. For each $T$-invariant subspace $W \subseteq V$, let $T_W \defeq T\vert_W : W \to W$. Then, $$p_{T_W}(t)\mid p_T(t).$$
+\end{lemma}
+
+\begin{proof}
+    Let $\alpha \defeq \{v_1, \dots, v_k\}$ be a basis for $W$ and extend it to a basis $\beta \defeq \alpha \cup \{v_{k+1}, \dots, v_n\}$ for $V$. Leting $A \defeq [T_W]_\alpha$, we see that \begin{align*}
+        [T]_\beta &= \begin{pmatrix}
+            \vert & & \vert & \vert & & \vert\\
+            [T(v_1)]_\beta & \cdots & [T(v_k)]_\beta & [T(v_{k+1})]_\beta & \cdots  & [T(v_n)]_\beta\\
+            \vert & & \vert & \vert & & \vert
+        \end{pmatrix}\\
+        &= \begin{pmatrix}
+             & & &  &\star  & &\\
+             & A &  & & & \star &  \\
+             & & &  & \star &   & \\
+             & \vb{0} &  & &  &\star &  \\
+             &  & &  &  \star & &
+        \end{pmatrix},
+    \end{align*}
+    where $\vb{0}$ is a $n -k \times k$ matrix of zeros. Hence, \begin{align*}
+        p_T(t) = -\det([T]_\beta - tI_n) = - \det(\cdots) = -\det(A - t I_k) \cdot \det(B - t I_{n-k}) = -p_{T_W}(t) \det(B - t I_{n-k}),
+    \end{align*}
+    and the proof is complete.
+\end{proof}
+
+\begin{proposition}
+    Let $V, \dim(V) < \infty$, and $T : V\to V$. For each eigenvalue $\lambda$ of $T$, $m_g(\lambda) \leq m_a(\lambda)$.
+\end{proposition}
+
+\begin{proof}
+    Let $W \defeq \eig_T(\lambda)$, which is $T$-invariant, so by \cref{lemma:charpolynomialdiv}, $p_T(t) = p_{T_W}(t) \cdot q(t)$ for some $q(t) \in \field[t]$. But, fixing any basis $\alpha \defeq \{v_1, \dots, v_k\}$ for $W$, we have that $T_W(v_i) = T(v_i) = \lambda v_i$ so $[T(v_i)]_\alpha = \lambda e_i \in \field^k$ hence $[T_W]_\alpha$ is just a $k \times k$ diagonal matrix with $\lambda$ entries. Thus, $p_{T_W}(t) = \det(tI_k - [T_W]_\alpha) = (t-\lambda)^k$, and so $p_T(t) = (t-\lambda)^k \cdot q(t)$ and thus $m_a(\lambda) \geq k = \dim(W) = m_g(\lambda)$.
+\end{proof}
+
+\begin{definition}[Splits]
+    A polynomial $p(t) \in \field[t]$ \emph{splits} over $\field$ if $p(t) = a \cdot (t - r_1) \cdots (t - r_n)$ for some $a \in \field$, $r_1, \dots, r_n \in \field$.
+\end{definition}
+
+\begin{remark}
+    If $\field$ is algebraically closed, then every polymomial over $\field$ splits over $\field$.
+\end{remark}
+
+\begin{remark}
+    For an eigenvalue $\lambda$ of $T : V \to V$, where $V$ is $n$-dimensional, $p_T(t)$ splits iff $\sum_{i=1}^k m_a(\lambda_i) = n$.
+\end{remark}
+
+\begin{theorem}[Main Criterion of Diagonalizability]
+    Let $V, \dim(V) < \infty$, $T : V \to V$ linear. Then $T$ diagonalizable iff $p_T(t)$ splits and $m_g(\lambda) = m_a(\lambda)$ for each eigenvalue $\lambda$ of $T$.
+\end{theorem}
+
+\begin{proof}
+    Let $\lambda_1, \dots, \lambda_k$ be the distinct eigenvalues of $T$. Then, \begin{align*}
+        T \text{ diagonalizable} &\iff \sum_{i=1}^k m_g(\lambda_i) = n \defeq \dim(V)
+    \end{align*}
+    since $m_g(\lambda_i) \leq m_a(\lambda_i)$ and $\sum_{i=1}^k m_a(\lambda_i) \leq n$, we have that \begin{align*}
+        n = \sum_{i=1}^k m_g(\lambda_i) \iff m_g(\lambda_i) = m_a(\lambda_i), \quad i = 1, \dots, k, \text{ and } \sum_{i=1}^k m_{a}(\lambda_i) = n,
+    \end{align*}
+    but this last statement is equivalent to saying that $p_T(t)$ splits.
+\end{proof}

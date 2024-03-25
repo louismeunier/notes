@@ -30,7 +30,7 @@ If such an isomorphism exists, we say $V$ and $W$ are \emph{isomorphic}.
 \end{theorem}
 % thm:basisdeteremineslineartransformation}
 \begin{proof}
-    Fix a basis $\mathcal{B} := \{v_1, \dots, v_n\}$ for $V$, and let $T: V \to \mathbb{F}^n$ be the unique linear transformation determined by $\mathcal{B}$ with $T(v_i) = e_i$, where $\{e_1, \dots, e_n\}$ is the standard basis for $\field^n$. We show that $T$ is a bijection.
+    Fix a basis $\mathcal{B} \defeq \{v_1, \dots, v_n\}$ for $V$, and let $T: V \to \mathbb{F}^n$ be the unique linear transformation determined by $\mathcal{B}$ with $T(v_i) = e_i$, where $\{e_1, \dots, e_n\}$ is the standard basis for $\field^n$. We show that $T$ is a bijection.
 
     \noindent(Injective) Suppose $T(x) = T(y), x, y \in V$. Write $x = a_1 v_1 +\dots + a_n v_n, y = b_1 v_1 + \dots + b_n v_n$, the unique representation of $x, y$ in the basis $\mathcal{B}$. We have: \begin{align*}
         a_1 e_1 + \cdots + a_n e_n = a_1T(v_1) + \cdots + a_n T(v_n) = T(a_1v_1 + \cdots + a_n v_n) = T(x) = T(y) = \cdots = b_1 e_1 + \cdots + b_n e_n,
@@ -62,7 +62,7 @@ If such an isomorphism exists, we say $V$ and $W$ are \emph{isomorphic}.
 
 \begin{definition}[Image/Kernel]
     For a linear transformation $T: V \to W$, where $V, W$ are vector spaces over $\field$, we define the \emph{image} \[
-        \im (T)  := T(V),
+        \im (T)  \defeq T(V),
     \]
     and its \emph{kernel} \[
     \ker (T) = T^{-1}(\{0_W\}).
@@ -90,7 +90,7 @@ a_0 w_0 + a_1 w_1 = a_0 T(v_0) + a_1T(v_1) = T(a_0 v_0 + a_1 v_1) \implies a_0 w
 \end{proposition}
 
 \begin{proof}
-    Let $w \in \im(T),$ so $w = T(v)$ for some $v \in V$, where we have $v:= a_1 v_1 + \cdots + a_n v_n, v_i \in \beta$. Then, \[
+    Let $w \in \im(T),$ so $w = T(v)$ for some $v \in V$, where we have $v\defeq a_1 v_1 + \cdots + a_n v_n, v_i \in \beta$. Then, \[
     w = T(v) = a_1 T(v_1) + \cdots + a_n T(v_n) \in \Span(\{T(v_1), \dots, T(v_n)\}) \subseteq \Span(T(\beta)).
     \]
 

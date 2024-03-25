@@ -1,0 +1,93 @@
+\section{Inner Product Spaces}
+
+\subsection{Introduction}
+
+For this section, $\field$ will always be either $\R$ or $\C$.
+
+\begin{definition}[Inner Product]
+    Let $V$ be a vector space over $\field$. An \emph{inner product} on $V$ is a function \begin{align*}
+        V \times V  \to V, \qquad (u, v) \mapsto \langle u, v\rangle,
+    \end{align*}
+    satisfying, for all $u, v,w \in V$ and $\alpha \in \field$, 
+    \begin{enumerate}
+        \item Linear in the first coordinate:
+        \begin{enumerate}
+            \item $\iprod{u + v, w} = \iprod{u,w} + \iprod{v + w}$
+            \item $\iprod{\alpha u, v} = \alpha \cdot \iprod{u, v}$
+        \end{enumerate}
+        \item Skew-symmetric:
+        \begin{enumerate}
+            \item $\iprod{u, v} = \overline{\iprod{v, u}}$
+        \end{enumerate}
+        \item $\iprod{u, u} \geq 0$, and equal to $0$ iff $u = 0_V$.
+    \end{enumerate}
+    $V$ together with $\iprod{.,.}$ is called an \emph{inner product space}.
+\end{definition}
+
+\begin{remark}
+ Note that the third requirement is well-defined; that is, it follows from 2. that $\iprod{u,u} \in \R$, so it makes sense to require it to be geq 0 (if it was complex, this would be meaningless).
+\end{remark}
+
+\begin{definition}
+    Let $\iprod{.,.}$ be an inner product on $V$. The \emph{norm} associated to this inner product is defined \[
+    \norm{v} \defeq \sqrt{\iprod{v,v}}, \quad v \in V.
+    \]
+    We call $v \in V$ a \emph{unit vector} if $\norm{v} = 1$. For $v \in V, v \neq 0$, we call $\norm{v}^{-1} \cdot v$ the \emph{normalization of $v$}.
+\end{definition}
+
+\begin{remark}
+    \emph{Never} work with a norm directly; working with the square of the norm is far easier.
+\end{remark}
+
+\begin{proposition}
+    Let $V$ be an inner product space. For each $u, v, w \in V$ and $\alpha \in \field$,
+    \begin{enumerate}
+        \item Conjugate linearity in the second coordinate holds:
+        \begin{enumerate}
+            \item $\iprod{u, v + w} = \iprod{u, v} + \iprod{u, w}$
+            \item $\iprod{u, \alpha v} = \overline{\alpha} \iprod{u, v}$
+        \end{enumerate}
+        \item $\norm{\alpha\cdot  v} = \abs{\alpha} \cdot \norm{v}$
+        \item $\norm{v, 0_V} = 0 = \norm{0_V, v}$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    1.(a), (b) follow from skew-symmetry.
+
+    For 2., we have $\norm{\alpha v}^2 = \iprod{\alpha v, \alpha v} = \alpha \cdot \overline{\alpha} \iprod{v, v} = \abs{\alpha}^2 \cdot \norm{v}^2$.
+
+    For 3., follows from $\iprod{0_V, v} + \iprod{0_V, v} = \iprod{0_V, v}$.
+\end{proof}
+
+\begin{example}
+    \begin{enumerate}
+   \item For $V \defeq \field^n$, the standard inner product is the "dot product"; for $\vec{x} \defeq (x_1, \dots, x_n), \vec{y} \defeq (y_1, \dots, y_n)$, \begin{align*}
+            \iprod{\vec{x}, \vec{y}} \defeq \vec{x} \cdot \vec{y} \defeq \sum_{i=1}^n x_i \overline{y_i},
+        \end{align*}
+        which gives \begin{align*}
+            \norm{\vec{x}} = \sqrt{\sum_{i=1}^n \abs{x_i}^2},
+        \end{align*}
+        that is, the standard Euclidean norm.
+        \begin{proposition}
+            For $\field \defeq \R$ and $\vec{x}, \vec{y} \in \R^n$, $\vec{x} \cdot \vec{y} = \norm{\vec{x}} \norm{\vec{y}} \cos \alpha$, where $\alpha$ the angle from $\vec{x}$ to $\vec{y}$.
+        \end{proposition}
+        \item If $\iprod{.,.}$ an inner product on $V$ and $r$ a positive real, then $\iprod{.,.}_r \defeq r \cdot \iprod{.,.}$ is also an inner product.
+        \item Let $V \defeq C[0,1]$. Define for $f, g \in V$, \[
+        \iprod{f, g}    \defeq \int_0^1 f(t) \cdot \overline{g(t)} \dd{t}.
+        \]
+        \item Let $V \defeq \field[t]_n$. For $f(t) \defeq a_0 + a_1 t + \cdots + a_n t^n, g(t) \defeq b_0 + b_1 t + \cdots + b_n t^n$, define \begin{align*}
+            \iprod{f, g}_1 \defeq \sum_{i=0}^n a_i \overline{b_i},
+        \end{align*}
+        and \begin{align*}
+            \iprod{f, g}_2 \defeq \int_0^1 f(t) \overline{g(t)} \dd{t}.
+        \end{align*}
+        These are both inner products.
+        \item For $A \in M_{n \times m}(\field)$, let $A^\ast \defeq \overline{A}^t$ the \emph{conjugate transpose of} $A$.\footnotemark  For $V \defeq M_n(\field)$ and $A, B \in V$, define \[
+        \iprod{A, B} \defeq \tr(B^\ast \cdot A).
+        \]
+        It is left as a (homework) exercise to verify that this is a well-defined inner product.
+    \end{enumerate}
+\end{example}
+
+\footnotetext{Where $\overline{A} \defeq (\overline{a_{ij}})$.}
+

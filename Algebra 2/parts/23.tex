@@ -5,11 +5,11 @@
             x_1 + &x_2 + &x_3& &= 3\\
             x_1 + &2x_2 + &x_3 - &x_4 &= 2
         \end{matrix} 
-        \quad \rightsquigarrow \quad A := \begin{pmatrix}
+        \quad \rightsquigarrow \quad A \defeq \begin{pmatrix}
             3 & 2 & 3 & -2\\
             1 & 1 & 1 & 0\\
             1 & 2 & 1 & -1
-        \end{pmatrix}, \vec{b} := \begin{pmatrix}
+        \end{pmatrix}, \vec{b} \defeq \begin{pmatrix}
             1\\
             3\\
             2
@@ -26,7 +26,7 @@
             0 & 0 & 0 & 1 & \vert &3
         \end{pmatrix},
     \end{align*}
-    so $r := \rank (A) = 3$ and $\nullity(L_A) = 4 - 3 = 1$, so we expect a solution as a particular solution plus an ideal (the kernel). Rewriting, we see that \begin{align*}
+    so $r \defeq \rank (A) = 3$ and $\nullity(L_A) = 4 - 3 = 1$, so we expect a solution as a particular solution plus an ideal (the kernel). Rewriting, we see that \begin{align*}
         \begin{matrix}
             x_1  & & &+x_3 &= 1\\
             & x_2 & & &= 2\\
@@ -53,14 +53,14 @@
             0
         \end{pmatrix},
     \end{align*}
-    where $t_1 \in \field$ arbitrary. Moreover, since setting $t_1 = 0$ gives that $\vec{v} := (1, 2, 0, 3)^t$ a solution, then $t_1 (-1, 0, 1, 0)^t$ is a solution to the homogeneous system $A \vec{x} = \vec{0}$, ie, $\vec{u} := (-1, 0, 1, 0)^t$ is a basis for the kernel of $\ker(L_A)$.
+    where $t_1 \in \field$ arbitrary. Moreover, since setting $t_1 = 0$ gives that $\vec{v} \defeq (1, 2, 0, 3)^t$ a solution, then $t_1 (-1, 0, 1, 0)^t$ is a solution to the homogeneous system $A \vec{x} = \vec{0}$, ie, $\vec{u} \defeq (-1, 0, 1, 0)^t$ is a basis for the kernel of $\ker(L_A)$.
 \end{example}
 
 \begin{theorem}
     For any system $A \vec{x} = \vec{b}$, using Gaussian elimination we obtain another system $A_1 \vec{x}=\vec{b_1}$ where $(A_1 \vert \vec{b_1})$ is the reduced echelon form of $(A \vert \vec{b})$. Then:
     \begin{enumerate}
         \item $A \vec{x} = \vec{b}$ has a solution $\iff \rank(A_1 \vert \vec{b_1}) = \rank(A_1) = \sharp $ of non-zero rows of $A_1$.
-        \item If a solution exists, then, denoting $r := \rank(A)$ and $n := \sharp$ columns of $A$, we have the general solution to $A \vec{x} = \vec{b}$ of the form $$\vec{v} + t_1 \vec{u}_1 + \cdots + t_{n-r} \vec{u}_{n-r}$$ where $\vec{v} \in \field^n$ and $\{\vec{u}_1, \dots, \vec{u}_{n-r}\}$ a basis for $\ker(L_A) = $ space of solutions to $A \vec{x} = \vec{0}$.
+        \item If a solution exists, then, denoting $r \defeq \rank(A)$ and $n \defeq \sharp$ columns of $A$, we have the general solution to $A \vec{x} = \vec{b}$ of the form $$\vec{v} + t_1 \vec{u}_1 + \cdots + t_{n-r} \vec{u}_{n-r}$$ where $\vec{v} \in \field^n$ and $\{\vec{u}_1, \dots, \vec{u}_{n-r}\}$ a basis for $\ker(L_A) = $ space of solutions to $A \vec{x} = \vec{0}$.
     \end{enumerate}
 \end{theorem}
 

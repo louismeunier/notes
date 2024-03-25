@@ -5,15 +5,15 @@
 
 \begin{definition}[Span]
     For a subset $S \subseteq V$, we define its \emph{span} as \[
-    \Span(S):= \text{ set of all linear combinations of } S := \{a_1 v_1 + \cdots a_n v_n : a_i \in \field, v_i \in S\}.    
+    \Span(S)\defeq \text{ set of all linear combinations of } S \defeq \{a_1 v_1 + \cdots a_n v_n : a_i \in \field, v_i \in S\}.    
     \]
     By convention, we set $\Span(\varnothing) = \{0_V\}$.
 \end{definition}
 \begin{example}
-    Let $S := \{(1, 0, -1), (0, 1, -1), (1, 1, -2)\} \subseteq \mathbb{R}^3$. Then, \[
+    Let $S \defeq \{(1, 0, -1), (0, 1, -1), (1, 1, -2)\} \subseteq \mathbb{R}^3$. Then, \[
     0_{\mathbb{R}^3} =(0,0,0) = 1 \cdot (1, 0, -1) + 1 \cdot (0, 1, -1) + -1 \cdot (1, 1, -2).
     \]
-    We claim, moreover, that $\Span (S) = U := \{(x, y, z) \in \mathbb{R}^3 : x+y+z = 0\}$ (a plane through the origin).
+    We claim, moreover, that $\Span (S) = U \defeq \{(x, y, z) \in \mathbb{R}^3 : x+y+z = 0\}$ (a plane through the origin).
     \begin{proof}
         Note that $S \subseteq U$, hence $S \subseteq \Span{S} \subseteq U$. OTOH, if $(x, y, z) \in U, $ we have $z = - x - y$, and so \[
         (x, y, z) = (x, y, -x - y) = x\cdot (1, 0, -1) + y \cdot (0, 1, -1) \in \Span (S)    
@@ -63,8 +63,8 @@
 \end{remark}
 
 \begin{example}
-    For $\field^n$ as a vector space over $\field$, the \emph{standard spanning set} $$\St_n := \{\underbrace{(1, \dots, 0)}_{:=e_1}, \underbrace{(0, 1, 0, \dots, 0)}_{:=e_2}, \dots, \underbrace{(0, \dots, 1)}_{e_n}\}.$$
-    Given any $x := (x_1, \dots, x_n) \in \field^n$, we can write \[
+    For $\field^n$ as a vector space over $\field$, the \emph{standard spanning set} $$\St_n \defeq \{\underbrace{(1, \dots, 0)}_{\defeq e_1}, \underbrace{(0, 1, 0, \dots, 0)}_{\defeq e_2}, \dots, \underbrace{(0, \dots, 1)}_{e_n}\}.$$
+    Given any $x \defeq (x_1, \dots, x_n) \in \field^n$, we can write \[
         x = x_1 \cdot e_1 + \cdots x_n \cdot e_n.
     \]
     This is clearly minimal; removing any $e_i$ would then result in a $0$ in the $i$th "coordinate" of a vector, hence $\St \setminus\{e_i\}$ would span only vectors whose $i$th coordinate is $0$.

@@ -1,12 +1,12 @@
 \begin{theorem}
     Let $V$ be a finite-dimensional vector space over $\field$ and $U \subseteq V$ be a subspace. \begin{enumerate}
-        \item $\dim(U^\perp) = \dim(V) - \dim(U)$. In fact, if $\{v_1, \dots, v_k\}$ is a basis for $U$ and $\beta := \{v_1, \dots, v_k, v_{k+1} \dots, v_n\}$ is a basis for $V$ with the dual basis $\beta^\ast = \{f_1, \dots, f_n\}$, then $\{f_{k+1}, \dots, f_n\}$ is a basis for $U^\perp$.
-        \item $(V/U)^\ast \cong U^\perp$ by the map $f \mapsto f_U$, where $f_U:V \to \field$ given by $f_U(v) := f(v + U)$.
+        \item $\dim(U^\perp) = \dim(V) - \dim(U)$. In fact, if $\{v_1, \dots, v_k\}$ is a basis for $U$ and $\beta \defeq \{v_1, \dots, v_k, v_{k+1} \dots, v_n\}$ is a basis for $V$ with the dual basis $\beta^\ast = \{f_1, \dots, f_n\}$, then $\{f_{k+1}, \dots, f_n\}$ is a basis for $U^\perp$.
+        \item $(V/U)^\ast \cong U^\perp$ by the map $f \mapsto f_U$, where $f_U:V \to \field$ given by $f_U(v) \defeq f(v + U)$.
     \end{enumerate}
 \end{theorem}
 \begin{proof}
     Left as a (homework) exercise.
-    % $\dim(V^\ast) = \dim(U^\ast) + \dim(U^\perp)$. Fix a basis $\alpha := \{v_1, \dots, v_k\}$ and complete it to a basis $\beta := \alpha \cup \{v_{k+1}, \dots, v_{n}\}$. Then, $\beta^\ast$ is a basis for $V^\ast$ and $\alpha^\ast$ is basis for $U^\ast$.
+    % $\dim(V^\ast) = \dim(U^\ast) + \dim(U^\perp)$. Fix a basis $\alpha \defeq \{v_1, \dots, v_k\}$ and complete it to a basis $\beta \defeq \alpha \cup \{v_{k+1}, \dots, v_{n}\}$. Then, $\beta^\ast$ is a basis for $V^\ast$ and $\alpha^\ast$ is basis for $U^\ast$.
 
     % $T:V \to U^\ast$
 

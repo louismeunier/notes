@@ -36,10 +36,10 @@
 
 \begin{definition}[Rank, nullity]
     Let $V, W$ be vector spaces over $\field$ and $T: V \to W$ be linear. Define \emph{rank} of $T$ as \[
-    \rank(T) := \dim (\Im(T)),
+    \rank(T) \defeq \dim (\Im(T)),
     \]
     and \emph{nullity} of $T$ as \[
-    \nullity(T) := \dim(\ker(T)).    
+    \nullity(T) \defeq \dim(\ker(T)).    
     \]
 \end{definition}
 
@@ -58,9 +58,9 @@
 \end{remark}
 
 \begin{proof}
-        Let $\{v_1, \dots, v_k\}$ be a basis for $\ker (T)$, and complete it to a basis $\beta := \{v_1, \dots, v_k, u_1, \dots, u_{n-k}\}$ for $V$,  where $n := \dim (V)$. We need to show that $\dim(\Im(T)) = n-k$.
+        Let $\{v_1, \dots, v_k\}$ be a basis for $\ker (T)$, and complete it to a basis $\beta \defeq \{v_1, \dots, v_k, u_1, \dots, u_{n-k}\}$ for $V$,  where $n \defeq \dim (V)$. We need to show that $\dim(\Im(T)) = n-k$.
 
-        Recall that $\{T(v_1), \dots, T(v_k), T(u_1), \dots, T(u_{n-k})\}$ spans $\Im(T)$. But $v_1, \dots, v_k \in \ker (T)$, so $T(v_i) = 0_W \forall i = 1, \dots, k$. Hence, letting $\gamma := \{T(u_1), \dots, T(u_{n-k})\}$ spans $\Im(T)$. It remains to show that $\gamma$ is independent.
+        Recall that $\{T(v_1), \dots, T(v_k), T(u_1), \dots, T(u_{n-k})\}$ spans $\Im(T)$. But $v_1, \dots, v_k \in \ker (T)$, so $T(v_i) = 0_W \forall i = 1, \dots, k$. Hence, letting $\gamma \defeq \{T(u_1), \dots, T(u_{n-k})\}$ spans $\Im(T)$. It remains to show that $\gamma$ is independent.
 
         Let $a_1 T(u_1) + \cdots a_{n-k} T(u_{n-k}) = 0_W$; by linearity, \begin{align*}
             T(a_1 u_1 + \cdots+ a_{n-k} u_{n-k}) &= 0_W\\

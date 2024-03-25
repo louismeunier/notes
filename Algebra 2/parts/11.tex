@@ -5,7 +5,7 @@
 \end{theorem}
 
 \begin{proof}
-    From group theory, we know that $\hat{T} : V/\ker(T) \to \im (T)$, where $\hat{T}(v + \ker(T)) := T(v)$ is well-defined, and is an isomorphism of abelian groups. We need only to check that $\hat{T}$ is linear, namely, that is respects scalar multiplication. We have \begin{align*}
+    From group theory, we know that $\hat{T} : V/\ker(T) \to \im (T)$, where $\hat{T}(v + \ker(T)) \defeq T(v)$ is well-defined, and is an isomorphism of abelian groups. We need only to check that $\hat{T}$ is linear, namely, that is respects scalar multiplication. We have \begin{align*}
         \hat{T}(a \cdot (v + \ker(T))) &= \hat{T}((a \cdot v) + \ker (T))\\
         &= T(av) = a \cdot T(v)\\
         &= a \hat{T}(v + \ker(T)),
@@ -82,7 +82,7 @@ and note that $T$ is determined by $\{T(v_1), \dots, T(v_n)\} \subseteq \field^m
 Each $T(v_i)$ is a column vector in $\field^m$, and we an put these into a $m \times n$ matrix, namely:\footnote{Where $[T]$ denotes a matrix named "$T$".}
 
 \begin{align*}
-    [T] := \begin{pmatrix}
+    [T] \defeq \begin{pmatrix}
         \vert & & \vert \\
         T(v_1) & \cdots & T(v_n) \\
         \vert & & \vert 
@@ -126,7 +126,7 @@ We call this the \emph{matrix representation} of $T$ in the standard bases. The 
 \end{proof}
 
 \begin{definition}
-    For a given $m \times n$ matrix $A$ over $\field$, define $L_A : \field^n \to \field^m$ by $L_A (v) := A \cdot v$, where $v$ is viewed as an $n \times 1$ column. It follows from definition that the $L_A$ is linear.
+    For a given $m \times n$ matrix $A$ over $\field$, define $L_A : \field^n \to \field^m$ by $L_A (v) \defeq A \cdot v$, where $v$ is viewed as an $n \times 1$ column. It follows from definition that the $L_A$ is linear.
 
     In other words, every $T \in \Hom(\field^n, \field^m)$ is equal to $L_A$ for some $A$.
 \end{definition}

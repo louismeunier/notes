@@ -1,9 +1,9 @@
 \begin{proposition}\label{prop:alternatingmultilinearpermutations}
-    Let $\delta : M_n{(\field)} \to \field$ be an alternating multilinear form. Then, for each matrix $A := (a_{ij}) \in M_n(\field)$, we have \[
+    Let $\delta : M_n{(\field)} \to \field$ be an alternating multilinear form. Then, for each matrix $A \defeq (a_{ij}) \in M_n(\field)$, we have \[
     \delta(A)     = \sum_{ \pi \in S_n}a_{1 \pi(1)}a_{2 \pi(2)}\cdots a_{n\pi(n)} \delta(\pi I),
     \]
     where \[
-    \pi I_n := \begin{pmatrix}
+    \pi I_n \defeq \begin{pmatrix}
         - & e_{\pi(1)} & -\\
         & \vdots & \\
         - & e_{\pi(n)} & -
@@ -18,7 +18,7 @@
 \end{remark}
 
 \begin{definition}[Parity]
-    For a permutation $\pi \in S_n$, we let $\sharp \pi := $ number of inversions $ = $ number of pairs $i, j\in \{1, \dots, n\}$ such that $i < j$ but $\pi(i) > \pi(j)$. We say $\pi$ \emph{even} (resp. \emph{odd}) if $\sharp\pi$ \emph{even} (resp. \emph{odd}), and define $\text{sgn}(\pi) := (-1)^{\sharp \pi}$ the \emph{sign} of $\pi$.
+    For a permutation $\pi \in S_n$, we let $\sharp \pi \defeq $ number of inversions $ = $ number of pairs $i, j\in \{1, \dots, n\}$ such that $i < j$ but $\pi(i) > \pi(j)$. We say $\pi$ \emph{even} (resp. \emph{odd}) if $\sharp\pi$ \emph{even} (resp. \emph{odd}), and define $\text{sgn}(\pi) \defeq (-1)^{\sharp \pi}$ the \emph{sign} of $\pi$.
 \end{definition}
 
 \begin{proposition}
@@ -37,7 +37,7 @@
 \end{proof}
 
 \begin{corollary}[Of \cref{prop:alternatingmultilinearpermutations}]\label{cor:detuniqueness}
-    For any alternating multilinear form $\delta : M_n(\field) \to \field$ and $A := (a_{ij}) \in M_{n}(\field)$, \[
+    For any alternating multilinear form $\delta : M_n(\field) \to \field$ and $A \defeq (a_{ij}) \in M_{n}(\field)$, \[
     \delta(A)= \sum_{\pi \in S_n} a_{1 \pi(1)} \cdots a_{n \pi(n)} \cdot \text{sgn}(\pi) \cdot \delta(I_n).
     \]
     In particular, $\delta$ is uniquely determined by its value on $I_n$.
@@ -48,7 +48,7 @@
 
 \begin{theorem}[Characterization of the Determinant]\label{thm:determinant}
     There is a \emph{unique} normalized (ie is $1$ on $I_n$) alternating multilinear form; we call such a form the \emph{determinant} and denote $\det$; namely, \[
-    \det(A):= \sum_{\pi \in S_n}  \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)}.
+    \det(A)\defeq \sum_{\pi \in S_n}  \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)}.
     \]
 \end{theorem}
 \begin{proof}
@@ -56,9 +56,9 @@
     
     \underline{Normalized:} $\det(I_n) = \sum_{ \pi \in S_n} \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)} =(-1)^0 \cdot  1 \cdots 1 = 1$, since each summand will be zero for any permutation other than the identity.
 
-    \underline{Multilinear:} A linear combination of $n$-linear forms is itself an $n$-linear form, so it suffices to prove that for a fixed $\pi \in S_n$, $\delta_\pi : M_n(\field) \to \field$ given by $\delta_\pi (A) := a_{1 \pi(1)} \cdots a_{n \pi (n)}$ is $n$-linear, which should be clear as a product of matrix entries.
+    \underline{Multilinear:} A linear combination of $n$-linear forms is itself an $n$-linear form, so it suffices to prove that for a fixed $\pi \in S_n$, $\delta_\pi : M_n(\field) \to \field$ given by $\delta_\pi (A) \defeq a_{1 \pi(1)} \cdots a_{n \pi (n)}$ is $n$-linear, which should be clear as a product of matrix entries.
 
-    \underline{Alternating:} Suppose $A$ has two equal rows, wlog $A_{(1)}, A_{(2)}$. We partition $S_n$ into the disjoint union of even and odd permutations, denoting $A_n$ the even permutations. Note that $S_n \setminus A_n = A_n \cdot (12)$, ie the coset of the transposition $(12)$ of the subgroup $A_n$. Thus, $A_n \to A_n \cdot (12)$ via $\pi \mapsto \pi' := \pi \cdot (12)$ is a bijection, and our partition has two equal parts. Thus, we can rewrite $\det$ as \begin{align*}
+    \underline{Alternating:} Suppose $A$ has two equal rows, wlog $A_{(1)}, A_{(2)}$. We partition $S_n$ into the disjoint union of even and odd permutations, denoting $A_n$ the even permutations. Note that $S_n \setminus A_n = A_n \cdot (12)$, ie the coset of the transposition $(12)$ of the subgroup $A_n$. Thus, $A_n \to A_n \cdot (12)$ via $\pi \mapsto \pi' \defeq \pi \cdot (12)$ is a bijection, and our partition has two equal parts. Thus, we can rewrite $\det$ as \begin{align*}
         \det(A) &=\sum_{\pi \in S_n}  \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)} \\
         &= \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} + \sum_{\pi \in A_n} \underbrace{\text{sgn}(\pi')}_{=- \text{sgn}(\pi)} \underbrace{a_{1 \pi'(1)}}_{a_{1 \pi(2)}}\cdots \underbrace{a_{n\pi'(n)}}_{= a_{n \pi(n)}}\\
         &= \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} - \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} = 0,
@@ -91,7 +91,7 @@ For $A \in M_n(\field)$, $\det(A) = 0$ iff $A$ noninvertible.
 \end{theorem}
 
 \begin{proof}
-    Let $E_1, \dots, E_k$ be elementary matrices such that $A' := E_1 \cdots E_k \cdot A$ is in rref, remaring that then $\det(A') = c \cdot \det(A)$ for some $c \in \field$, $c \neq 0$, by \cref{lemma:elementarymatricesdelta}. We also have that $\rank(A) = \rank(A')$, and $\rank(A') < n \iff A'$ has a zero row. 
+    Let $E_1, \dots, E_k$ be elementary matrices such that $A' \defeq E_1 \cdots E_k \cdot A$ is in rref, remaring that then $\det(A') = c \cdot \det(A)$ for some $c \in \field$, $c \neq 0$, by \cref{lemma:elementarymatricesdelta}. We also have that $\rank(A) = \rank(A')$, and $\rank(A') < n \iff A'$ has a zero row. 
 
     ($\impliedby$) if $A'$ has a zero row, then by multilinearity, $\det(A') = 0$ and thus $\det(A) = 0$ as well.
 

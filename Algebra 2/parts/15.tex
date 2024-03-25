@@ -19,7 +19,7 @@
 \end{proof}
 
 \begin{example}[More Examples of Invariant Subspaces]
-    Let $T: \mathbb{R}^3 \to \mathbb{R}^3$ by $T(x, y, z) := (2x +y, 3x - y, 7z)$. Then, the $x-y$ plane, $\{(x, y, z) \in \mathbb{R}^3: z = 0\}$ is $T$-invariant, as is the $z$ axis, $\{(x, y, z)\in\mathbb{R}^3: x = y = 0\}$. Hence, we can decompose $\mathbb{R}^3$ into two $T$-invariant subspaces, namely $x-y$ plane $\oplus$ $z$-axis.
+    Let $T: \mathbb{R}^3 \to \mathbb{R}^3$ by $T(x, y, z) \defeq (2x +y, 3x - y, 7z)$. Then, the $x-y$ plane, $\{(x, y, z) \in \mathbb{R}^3: z = 0\}$ is $T$-invariant, as is the $z$ axis, $\{(x, y, z)\in\mathbb{R}^3: x = y = 0\}$. Hence, we can decompose $\mathbb{R}^3$ into two $T$-invariant subspaces, namely $x-y$ plane $\oplus$ $z$-axis.
 \end{example}
 
 \begin{definition}[Nilpotent]
@@ -34,7 +34,7 @@
 
 \begin{example}[Examples of Nilpotent Transformations]
     \begin{enumerate}
-        \item Let $V$, $n$-dimensional vector space over $\field$ with basis $\beta := \{v_1, \dots, v_n\}$. Let $T: V \to V$ be the unique linear transformation that "shifts" $\beta$: ie, $T(v_1) := 0_V$, $T(v_2) := v_1$, $\dots, T(v_n)  = v_{n-1}$.
+        \item Let $V$, $n$-dimensional vector space over $\field$ with basis $\beta \defeq \{v_1, \dots, v_n\}$. Let $T: V \to V$ be the unique linear transformation that "shifts" $\beta$: ie, $T(v_1) \defeq 0_V$, $T(v_2) \defeq v_1$, $\dots, T(v_n)  = v_{n-1}$.
         \item The differentiation operation, $\delta : \field[t]_n \to \field[t]_n$ is nilpotent, since $\delta^{n+1} = 0$ for any polynomial.
         \item For any matrix $A \in M_{n}(\field)$, $A$ is nilpotent iff $L_A : \field^n \to \field^n$ is nilpotent.
         \begin{proof}
@@ -143,7 +143,7 @@
 \begin{proof}
     Recall that $\im(T) \supseteq \cdots \supseteq \im(T^n)$ and $\ker(T) \subseteq \cdots \subseteq \ker(T^n)$. Both of these become constant eventually, ie the inequalities become strict equalities, hence $\exists N \in \mathbb{N}^+$ such that $\forall k \in \mathbb{N}$, $\im(T^{N+k}) = \im(T^N)$ and $\ker(T^{N+k}) = \ker(T^{N})$.
 
-    Let $U := \ker(T^N)$ and $W := \im(T^N)$. These are clearly $T$-invariant. 
+    Let $U \defeq \ker(T^N)$ and $W \defeq \im(T^N)$. These are clearly $T$-invariant. 
 
     $T^N(\ker(T^N)) = \{0_V\}$, and $T(\im(T^N)) = \im(T^{N+1}) =\im(T^N) = W$ and thus $T\vert_W : W \to W$ is surjective and hence $T\vert_W$ must be injective and thus an isomorphism.
 

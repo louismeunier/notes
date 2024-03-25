@@ -1,0 +1,104 @@
+\begin{corollary}
+    For $A \in M_n(\field)$, $\lambda \in \field$ an eigenvalue of $A$ (that is, if $L_A$) $\iff$ $\det(\lambda I - A) = 0$.
+\end{corollary}
+
+\begin{proof}
+    Follows from the previous proposition by noting that $[\lambda I_{\field^n} - L_A]$ in the standard basis of $\field^n$ is just $\lambda I_n - A$.
+\end{proof}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item For $A \in M_n(\field)$, the function $t \mapsto \det(tI_n - A)$ is a polynomial in $t$ of the form \[
+        p_A(t) \defeq t^n - \tr(A)t^{n-1} + \cdots + (-1)^n \det(A)
+        \]
+        and is called the \emph{characteristic polynomial} of $A$.
+        \item For a $n$-dim $V$ and $T : V \to V$, the function $t \mapsto \det(t I_V - T)$ is a polynomial of the form \[
+            p_T(t) \defeq t^n - \tr(T)t^{n-1} + \cdots + (-1)^n \det(T).
+        \]
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    1. a homework exercise; 2. follows immediately.
+\end{proof}
+Hence, this proposition gives that the eigenvalues of $A$ are precisely the roots of $p_A(t)$.
+
+\begin{corollary}
+    $T : V \to V$ has at most $n$ distinct eigenvalues.
+\end{corollary}
+\begin{example}
+    Let $A \defeq \begin{pmatrix}
+        3 & 1 & 0\\
+        0 & 3& 4\\
+        0 & 0 & 4
+    \end{pmatrix}$. Then \begin{align*}
+        - p_A(t) = \det(A - t I_n) = \det \begin{pmatrix}
+            3 - t & 1 & 0 \\
+            0 & 3- t & 4\\
+            0 & 0 & 4 - t
+        \end{pmatrix} = (3 - t)^2(4 - t),
+    \end{align*}
+    with roots $t = 3, 4$ and thus $A$ has two eigenvalues $\lambda_1 \defeq 3$ mult. 2 and $\lambda_2 \defeq 4$. Then:
+    \begin{align*}
+        \eig_A(\lambda_1) =  \ker(3 I - L_A) = \{\vec{x} \in \field^3 : (A - 3 I)\vec{x} = 0\},
+    \end{align*}
+    hence, $\vec{x} \in \eig_A(\lambda_1)$ are the solutions to the homogeneous system $(A - 3I)\vec{x} = 0$:
+    \begin{align*}
+        \begin{pmatrix}
+            0 & 1 & 0 \\
+            0 & 0 & 4\\
+            0 & 0 & 1
+        \end{pmatrix} \cdot \begin{pmatrix}
+            x_1\\
+            x_2\\
+            x_3
+        \end{pmatrix} = \begin{pmatrix}
+            0\\
+            0\\
+            0
+        \end{pmatrix} \iff \begin{cases}
+            x_2 = 0 \\
+            x_3 = 0
+        \end{cases} \iff \vec{x} = a e_1, a \in \field,
+    \end{align*}
+    so $\eig_A(3) = \Span(\{e_1\})$.
+    A similar computation gives $\eig_A(\lambda)(2) = \Span(\{(1,1, \frac{1}{4})\})$.
+
+    We have hence found two $1$-dimensional eigenspaces; $A$ is thus not diagonalizable.
+\end{example}
+
+\begin{proposition}\label{prop:linearlyindependenteigenvalues}
+    Let $\lambda_1, \dots, \lambda_k$ be distinct eigenvalues of $T : V \to V$ on $V$ $n$-dim. Then if $v_i$ an eigenvector of $T$ corresponding to $\lambda_i$, then $\{v_1, \dots, v_k\}$ is linearly independent. In particular, $k \leq n$.
+\end{proposition}
+\begin{proof}
+    By induction on $k$. If $k = 1$ then $\{v_1\}$ is linear independent because $v_1 \neq 0_V$. Suppose the proposition holds for $k$. Let $\lambda_1, \dots, \lambda_{k+1}$ be distinct eigenvalues with corresponding $\{v_1, \dots, v_{k+1}\}$ eigenvectors. Let $$\encircle{1} \qquad a_1 v_1 + \cdots + a_{k+1} v_{k+1} = 0_V.$$
+    Taking $T(\encircle{1})$, we have \[
+    \encircle{2} \qquad \lambda_1 a_1 v_1 +    \cdots + \lambda_{k+1} a_{k+1} v_{k+1} = 0_V.
+    \]
+    Then, $\encircle{2} - \lambda_{k+1} \cdot \encircle{1}$ yields \begin{align*}
+        (\lambda_1 - \lambda_{k+1})a_1v_1 + \cdots + (\lambda_k - \lambda_{k+1})a_kv_k = 0_V,
+    \end{align*}
+    but $v_1, \dots, v_k$ linearly independent by assumption, so $(\lambda_i - \lambda_{k+1})a_i = 0$ for $i = 1, \dots, k$. The $\lambda_i$'s distinct, hence it must be that $a_i = 0$ for $i = 1, \dots, k$, and so $\encircle{1}$ gives that $a_{k+1} v_{k+1} = 0_V$. But $v_{k+1}$ an eigenvalue, so this is only possible if $a_{k+1} = 0$ and the proof is complete.
+\end{proof}
+
+\begin{corollary}
+    For distinct eigenvalues $\lambda_1, \dots, \lambda_k$ of $T : V \to V$, $\dim(V) < \infty$, the corresponding eigenspaces $\eig_{T}(\lambda_i)$ are linearly independent.
+\end{corollary}
+
+\begin{proof}
+    This follows directly \cref{prop:linearlyindependenteigenvalues}.
+\end{proof}
+
+\begin{definition}[Geometric Multiplicity]
+    For eigenvalue $\lambda$ of $T : V \to V$, denote by $m_g(\lambda) \defeq \dim(\eig_{T}(\lambda))$ and call it the \emph{geometric multiplicity} of $\lambda$.
+\end{definition}
+
+\begin{corollary}
+    For $T : V \to V$ with distinct eigenvalues $\lambda_1, \dots, \lambda_k$, \[
+    \sum_{i=1}^k m_g(\lambda_i)     \leq n.
+    \]
+\end{corollary}
+
+\begin{proof}
+    $\sum_{i=1}^k m_g(\lambda_i) = \dim(\bigoplus_{i=1}^k \eig_{T}(\lambda_i)) \leq n$.
+\end{proof}

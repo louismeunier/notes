@@ -2,13 +2,13 @@
 
 \begin{definition}[Matrix Rank/C-Rank,R-Rank]
     For a matrix $A \in M_{m\times n} (\field)$, we define \[
-    \rank(A) := \rank(L_A)    
+    \rank(A) \defeq \rank(L_A)    
     \]
     and the \emph{column rank} of \[
-    \crank(A) := \text{size of maximal indep. subset of columns } \{A^{(1)}, \dots, A^{(n)}\}
+    \crank(A) \defeq \text{size of maximal indep. subset of columns } \{A^{(1)}, \dots, A^{(n)}\}
     \]
     and \emph{row rank} of \[
-    \rrank(A) := \text{size of maximal indep. subset of rows } \{A_{(1)}, \dots, A_{(m)}\}.
+    \rrank(A) \defeq \text{size of maximal indep. subset of rows } \{A_{(1)}, \dots, A_{(m)}\}.
     \]
 \end{definition}
 
@@ -44,11 +44,11 @@ We can write a system of $m$ equations of $n$ unknowns $x_i$
 succinctly as a matrix equation \[
 A \cdot \vec{x} = \vec{b},    
 \]
-where $A := (a_{ij}) \in M_{m \times n}(\field)$, $\vec{x} = \begin{pmatrix}
+where $A \defeq (a_{ij}) \in M_{m \times n}(\field)$, $\vec{x} = \begin{pmatrix}
     x_1\\
     \vdots\\
     x_n
-\end{pmatrix}$, and $\vec{b} := \begin{pmatrix}
+\end{pmatrix}$, and $\vec{b} \defeq \begin{pmatrix}
     b_1\\
     \vdots\\
     b_m

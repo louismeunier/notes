@@ -1,10 +1,10 @@
 \begin{remark}
-Notice that to get an isomorphism $V \cong V^\ast$, we fixed a basis for $V$ to define it. However, for $V \cong V^{\ast\ast}$, we had a canonical isomorphism independent of choice of basis. Writing $S \subseteq V$, $\hat S := \{\hat{x} : x \in S\} \subseteq V^{\ast\ast}$, our theorem says that $\hat{V} = V^{\ast \ast}$ for finite-dimensional $V$.
+Notice that to get an isomorphism $V \cong V^\ast$, we fixed a basis for $V$ to define it. However, for $V \cong V^{\ast\ast}$, we had a canonical isomorphism independent of choice of basis. Writing $S \subseteq V$, $\hat S \defeq \{\hat{x} : x \in S\} \subseteq V^{\ast\ast}$, our theorem says that $\hat{V} = V^{\ast \ast}$ for finite-dimensional $V$.
 \end{remark}
 
 \begin{definition}[Annihilator]
     Let $V$ be a vector space over $\field$ and $S \subseteq V$. We call \[
-    S^\perp := \{f \in V^\ast : f\vert_S = 0\}  = \{
+    S^\perp \defeq \{f \in V^\ast : f\vert_S = 0\}  = \{
         f \in V^\ast : f(u) = 0 \forall u \in S
     \}
     \]
@@ -58,7 +58,7 @@ We have
 \end{corollary}
 
 \begin{definition}[Dual/Transpose of $T$]
-    Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. We define the \emph{dual}/\emph{transpose} of $T$ as the map $T^t : W^\ast \to V^\ast$, given by $g \mapsto g\circ T$. Ie, $T^t(g)(v) := g \circ T(v) = g(T(v))$.
+    Let $V, W$ be vector spaces over a field $\field$ and $T : V \to W$. We define the \emph{dual}/\emph{transpose} of $T$ as the map $T^t : W^\ast \to V^\ast$, given by $g \mapsto g\circ T$. Ie, $T^t(g)(v) \defeq g \circ T(v) = g(T(v))$.
 \end{definition}
 
 \begin{proposition}\label{prop:propertiesoftranspose}
@@ -96,14 +96,14 @@ We have
         \end{align*}
         and thus $\dim(\im(T^t)) = \dim(\ker(T))^\perp$ (remarking that the first equality follows from 1. of the following theorem, and 2. from the dimension theorem).
 
-        \item Let $\beta :=\{v_1, \dots, v_n\}, \gamma := \{w_1, \dots, w_m\}$ be finite bases for $V, W$ resp. Recall that $$A := [T]_\beta^\gamma := \begin{pmatrix}
+        \item Let $\beta \defeq\{v_1, \dots, v_n\}, \gamma \defeq \{w_1, \dots, w_m\}$ be finite bases for $V, W$ resp. Recall that $$A \defeq [T]_\beta^\gamma \defeq \begin{pmatrix}
             \vert & & \vert\\
             [T(v_1)]_\gamma & \cdots & [T(v_n)]_\gamma\\
             \vert & & \vert
         \end{pmatrix},$$
         ie $A^{(j)} = [T(v_j)]_\gamma$ hence $T(v_j) = \sum_{k=1}^m A_{kj} w_k$.
 
-        Similarly, write $\gamma^\ast := \{g_1, \dots, g_m\}$ and $\beta^\ast:= \{f_1, \dots, f_n\}$, then $$B := [T^t]_{\gamma^\ast}^{\beta^\ast} := \begin{pmatrix}
+        Similarly, write $\gamma^\ast \defeq \{g_1, \dots, g_m\}$ and $\beta^\ast\defeq \{f_1, \dots, f_n\}$, then $$B \defeq [T^t]_{\gamma^\ast}^{\beta^\ast} \defeq \begin{pmatrix}
             \vert & & \vert\\
             [T^t(g_1)]_{\beta^\ast} & \cdots & [T^t(g_m)]_{\beta^\ast}\\ 
             \vert & & \vert

@@ -9,7 +9,7 @@
 \begin{lemma}[Steinitz Substitution]\label{lemma:steinitz}
     \defvectorspace . Let $Y \subseteq V$ be a (possibly infinite) linearly independent set and let $Z \subseteq V$ be a finite spanning set. Then:
     \begin{enumerate}
-        \item $k:=\abs{Y} \leq \abs{Z} =: n$
+        \item $k\defeq\abs{Y} \leq \abs{Z} =: n$
         \item There is $Z' \subseteq Z$ of size $n -k$ s.t. $Y \cup Z'$ is still spanning.
     \end{enumerate}
 \end{lemma}
@@ -22,9 +22,9 @@
     $k = 0$ gives that $Y = \varnothing$, and so $Z' = Z$ itself works ($Z' \cup Y = Z$) as a spanning set.
 
     Suppose the statement holds for some $k \geq 0$. Let $Y$ be an independent set such that $\abs{Y} = k + 1$, ie \[
-    Y := \{y_1, y_2, \dots, y_k, y_{k+1}\}, \quad y \in V.
+    Y \defeq \{y_1, y_2, \dots, y_k, y_{k+1}\}, \quad y \in V.
     \]
-    By our inductive assumption, we can consider $Y' := \{y_1, \dots, y_k\} \subseteq Y$ of size $k$, to obtain a set \[
+    By our inductive assumption, we can consider $Y' \defeq \{y_1, \dots, y_k\} \subseteq Y$ of size $k$, to obtain a set \[
     Z' = \{z_1, z_2, \dots, z_{n-k}\} \subseteq Z, \st Y' \cup Z' = \{y_1, \dots, y_k, z_1, \dots, z_{n-k}\}
     \]
     is spanning. As this is spanning, we can write $y_{k+1}$ as a linear combination of vectors in $Y' \cup Z'$, ie \[
@@ -35,7 +35,7 @@
     Assume, wlog, $b_{n-k} \neq 0$. Then, we can write \[
     z_{n-k} = b_{n-k}^{-1}y_{k+1}-b_{n-k}^{-1}a_1y_{1}-\cdots - b_{n-k}^{-1}a_ky_k - b_{n-k}^{-1}b_1 z_1 - \dots - b_{n-k}^{-1}b_{n-k-1}z_{n-k-1},    
     \]
-    and hence $$z_{n-k} \in \Span \{y_1, \dots, y_{k+1}, z_1, \dots, z_{n-k-1}\} = \Span \left(\underbrace{\{y_1, \dots, y_{k+1}\}}_{Y} \cup \underbrace{\{z_1, \dots, z_{n-k-1}\}}_{:= Z''} \right).$$
+    and hence $$z_{n-k} \in \Span \{y_1, \dots, y_{k+1}, z_1, \dots, z_{n-k-1}\} = \Span \left(\underbrace{\{y_1, \dots, y_{k+1}\}}_{Y} \cup \underbrace{\{z_1, \dots, z_{n-k-1}\}}_{\defeq Z''} \right).$$
     We had that $Y' \cup Z'$ was spanning, and $(Y' \cup Z') \setminus (Y \cup Z'') = \{z_{n-k}\} \subseteq \Span (Y \cup Z'')$, and we thus have that $Y \cup Z''$ is also spanning.
 \end{proof}
 
@@ -44,7 +44,7 @@
 \end{corollary}
 
 \begin{proof}
-    Let $Y, Z$ be two finite bases for $V$. Then, $Y$ is independent and $Z$ is spanning, so by \nameref{lemma:steinitz}, $\abs{Y} \leq \abs{Z}$. OTOH, $Z$ is independent, and $Y$ is spanning, so by \nameref{lemma:steinitz}, $\abs{Z} \leq \abs{Y}$, and we conclude that $\abs{Y} = \abs{Z}$. Let $n := \abs{Y}$.
+    Let $Y, Z$ be two finite bases for $V$. Then, $Y$ is independent and $Z$ is spanning, so by \nameref{lemma:steinitz}, $\abs{Y} \leq \abs{Z}$. OTOH, $Z$ is independent, and $Y$ is spanning, so by \nameref{lemma:steinitz}, $\abs{Z} \leq \abs{Y}$, and we conclude that $\abs{Y} = \abs{Z}$. Let $n \defeq \abs{Y}$.
 
     It remains to show that there exist no infinite bases for $V$; it suffices to show that there is no independent set of size $n+1$. To this end, let $I \subseteq V$ such that $\abs{I} = n+1$ be an independent set. $Y$ is still spanning, hence, by the substitution lemma, $n + 1 \leq n$, a contradiction. Hence, $I$ as defined cannot exist and so any basis of $V$ must be of size $n$.
 \end{proof}
@@ -54,7 +54,7 @@
 \end{definition}
 
 \begin{corollary}[of \nameref{lemma:steinitz}]\label{cor:corofstein}
-    Let $V$ be a finite dimensional vector space over $\field$ and denote $n := \dim (V)$. Then: 
+    Let $V$ be a finite dimensional vector space over $\field$ and denote $n \defeq \dim (V)$. Then: 
     \begin{enumerate}
         \item Every linearly independent subset $I \subseteq V$ has size $\leq n$;
         \item Every spanning set $S \subseteq V$ for $V$ has size $\geq n$;

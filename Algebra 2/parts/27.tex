@@ -11,9 +11,9 @@
     (1. $\iff$ 2.) \cref{prop:diagonaliffbasis}.
 
 
-    (2. $\implies$ 3.) Suppose $\beta :=\{v_1, \dots, v_n\}$ a basis such that $[T]_\beta$ a diagonal matrix with entries $\lambda_i$. Then, $[T(v_j)]_\beta = \lambda_j e_j$ so $T(v_j) = \lambda_j v_j$ and thus $v_j$ an eigenvector.
+    (2. $\implies$ 3.) Suppose $\beta \defeq\{v_1, \dots, v_n\}$ a basis such that $[T]_\beta$ a diagonal matrix with entries $\lambda_i$. Then, $[T(v_j)]_\beta = \lambda_j e_j$ so $T(v_j) = \lambda_j v_j$ and thus $v_j$ an eigenvector.
 
-    (3. $\implies$ 2.) Let $\beta :=\{v_1, \dots, v_n\}$ a basis of eigenvectors such that $T(v_j) = \lambda_j v_j$ for some $\lambda_j \in \field$. Then \[
+    (3. $\implies$ 2.) Let $\beta \defeq\{v_1, \dots, v_n\}$ a basis of eigenvectors such that $T(v_j) = \lambda_j v_j$ for some $\lambda_j \in \field$. Then \[
     [T]_\beta = \begin{pmatrix}
         \vert & \vert & & \vert\\
         [T(v_1)]_\beta & [T(v_2)]_\beta & \cdots & [T(v_n)]_\beta \\
@@ -28,11 +28,11 @@
 \end{proposition}
 
 \begin{proof}
-    $A$ diagonalizable $\iff$ there is a basis $\beta$ for $\field^n$ such that $[L_A]_\beta$ diagonal. Then, letting $\alpha$ be the standard basis, we have that $A = [L_A]_\alpha = [I]_\beta^\alpha \cdot [L_A]_\beta \cdot [I]_\alpha^\beta = [I]_\beta^\alpha \cdot [L_A]_\beta \cdot ([I]_\beta^\alpha)^{-1}$ so $[L_A]_\beta = ([I]_\beta^\alpha)^{-1} \cdot A \cdot [I]_\beta^\alpha$. Letting $Q := [I]_\beta^\alpha$, we get $Q^{-1}A Q$ diagonal. The columns of $Q$ are exactly the vectors in $\beta$, and thus eigenvectors.
+    $A$ diagonalizable $\iff$ there is a basis $\beta$ for $\field^n$ such that $[L_A]_\beta$ diagonal. Then, letting $\alpha$ be the standard basis, we have that $A = [L_A]_\alpha = [I]_\beta^\alpha \cdot [L_A]_\beta \cdot [I]_\alpha^\beta = [I]_\beta^\alpha \cdot [L_A]_\beta \cdot ([I]_\beta^\alpha)^{-1}$ so $[L_A]_\beta = ([I]_\beta^\alpha)^{-1} \cdot A \cdot [I]_\beta^\alpha$. Letting $Q \defeq [I]_\beta^\alpha$, we get $Q^{-1}A Q$ diagonal. The columns of $Q$ are exactly the vectors in $\beta$, and thus eigenvectors.
 \end{proof}
 
 \begin{definition}[Eigenspace]
-    For an eigenvalue $\lambda$ of $T : V \to V$, let $\eig_V(\lambda) := \{v \in V : Tv = \lambda v\}$, called the \emph{eigenspace} of $T$ corresponding to $\lambda$.
+    For an eigenvalue $\lambda$ of $T : V \to V$, let $\eig_V(\lambda) \defeq \{v \in V : Tv = \lambda v\}$, called the \emph{eigenspace} of $T$ corresponding to $\lambda$.
 \end{definition}
 
 \begin{proposition}
@@ -48,7 +48,7 @@ Diagonalizability is a conjugate-invariant property; if $A \sim B$ and $A$ diago
 \end{proposition}
 
 \begin{definition}
-    Let $V$, $\dim(V) = n$. and $T: V \to V$ a linear operator. Define $\tr$ (resp. $\det$) of $T$ as $\tr(T) := \tr([T]_\beta)$ ($\det(T) : \det([T]_\beta)$) for some/any basis $\beta$ for $V$.
+    Let $V$, $\dim(V) = n$. and $T: V \to V$ a linear operator. Define $\tr$ (resp. $\det$) of $T$ as $\tr(T) \defeq \tr([T]_\beta)$ ($\det(T) : \det([T]_\beta)$) for some/any basis $\beta$ for $V$.
 \end{definition}
 
 \begin{remark}
@@ -66,10 +66,12 @@ Diagonalizability is a conjugate-invariant property; if $A \sim B$ and $A$ diago
     Let $T : V \to V$, $\dim(V) < \infty$.
     \begin{enumerate}
         \item $v \in V$ an eigenvector of $T$ with eigenvalue $\lambda$ $\iff v \in \ker(\lambda I - T)$.
-        \item $\lambda \in \field$ an eigenvalue $\iff$ $\lambda I - T$ non-invertible $\iff$ $\det(T) \neq 0$.
+        \item $\lambda \in \field$ an eigenvalue $\iff$ $\lambda I - T$ non-invertible $\iff$ $\det(\lambda I - T) = 0$.
     \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-    
+    1. $T(v) = \lambda v \iff \lambda v - T(v) = 0 \iff (\lambda I_V - T)(v) = 0 \iff v \in \ker(\lambda I_V - T)$.
+
+2. follows from 1. by the dimension theorem.
 \end{proof}

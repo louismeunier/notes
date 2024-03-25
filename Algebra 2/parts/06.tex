@@ -1,11 +1,11 @@
 \begin{proof}[Proof (Attempt)](Of \cref{thm:vectorspacebases})
     We will try to "inductively" build a maximally independent set, as follows:
     
-    Begin with an empty set $S_0 := \varnothing$, and iteratively add more vectors to it. Let $v_0 \in V$ be a non-zero vector, and let $S_1 := \{v_0\}$.
+    Begin with an empty set $S_0 \defeq \varnothing$, and iteratively add more vectors to it. Let $v_0 \in V$ be a non-zero vector, and let $S_1 \defeq \{v_0\}$.
 
-    If $S_1$ is maximal, then we are done. Otherwise, there exists a new vector $v_1 \in V \setminus S_1 \st S_2 := \{v_0, v_1\}$ is still independent.
+    If $S_1$ is maximal, then we are done. Otherwise, there exists a new vector $v_1 \in V \setminus S_1 \st S_2 \defeq \{v_0, v_1\}$ is still independent.
 
-    If $S_2$ is maximal, then we are done. Otherwise, there exists a new vector $v_2 \in V \setminus S_2 \st S_3 := \{v_0, v_1, v_2\}$ is still independent.
+    If $S_2$ is maximal, then we are done. Otherwise, there exists a new vector $v_2 \in V \setminus S_2 \st S_3 \defeq \{v_0, v_1, v_2\}$ is still independent.
 
     Continue in this manner; this would take arbitrarily many finite, or even infinite, steps; we would need some "choice function" that would "allow" us to choose any particular $i$th vector $v_i$. 
     
@@ -33,11 +33,11 @@
 \end{definition}
 
 \begin{example}[Of The Previous Definitions]
-    Let $X := \mathbb{N}, I := \{\varnothing, \{0\}, \{1, 2\}, \{1, 2, 3\}\} \subseteq \pset{\mathbb{N}}$.
+    Let $X \defeq \mathbb{N}, I \defeq \{\varnothing, \{0\}, \{1, 2\}, \{1, 2, 3\}\} \subseteq \pset{\mathbb{N}}$.
 
     The maximal elements of $I$ would be $\{0\}$ and $\{1, 2, 3\}$.
 
-    Chains would include $\mathcal{C}_0 := \{\varnothing, \{1, 2 \}, \{1,2,3\}\}, \mathcal{C}_1 := \{\varnothing, \{0\}\}, \mathcal{C}_2 := \{\varnothing\}$ (or any set containing a single element).
+    Chains would include $\mathcal{C}_0 \defeq \{\varnothing, \{1, 2 \}, \{1,2,3\}\}, \mathcal{C}_1 \defeq \{\varnothing, \{0\}\}, \mathcal{C}_2 \defeq \{\varnothing\}$ (or any set containing a single element).
 
     The sets $\{0, 1, 2, 3\}$ and $\{0, 1, 2, 3, 4, 5\}$ are upper bounds for $I$, while neither is an element of $I$. The set $\{1, 2, 3\}$ is an upper bound for $\mathcal{C}_0$. A chain $\{\varnothing, \{0\}, \{0,1\}, \{0,1,2\}, \dots\}$ has an upper bound of $\mathbb{N}$.
 \end{example}
@@ -55,7 +55,7 @@
 
     Let $I$ be the collection of all linearly independent subsets of $V$. $I$ is nonempty; $\varnothing \in I$, as is $\{v\} \in I$ for any nonzero $v \in V$. To apply Zorn's, we need to show that every chain $\mathcal{C}$ if sets in $I$ has an upper bound in $I$; that is, every linearly independent set has an upper bound that itself is linearly independent.
 
-    Let $\mathcal{C}$ be a chain in $I$. Let $S := \bigcup \mathcal{C}$ be the union of all sets in $\mathcal{C}$. To show $S$ is linearly independent, it suffices to show that every finite subset $\{v_1, \dots, v_n\} \subseteq S$ is linearly independent. Let $S_i \in \mathcal{C}$ be s.t. $v_i \in S_i$ for each $i$. Because $\mathcal{C}$ a chain, for each $i,j$ we have either $S_i \subseteq S_j$ or $S_j \subseteq S_i$, and so we can order $S_1, \dots, S_n$ in increasing order w.r.t $\subseteq$. This implies, then, there is a maximal $S_{i_0} \st S_{i_0} \supseteq S_i \forall i \in \{1, \dots, n\}$. Moreover, we have that $\{v_1, \dots, v_n\} \in S_{i_0}$, and that $S_{i_0}$ is linearly independent and thus $\{v_1, v_2, \dots, v_n\}$ is also linearly independent. 
+    Let $\mathcal{C}$ be a chain in $I$. Let $S \defeq \bigcup \mathcal{C}$ be the union of all sets in $\mathcal{C}$. To show $S$ is linearly independent, it suffices to show that every finite subset $\{v_1, \dots, v_n\} \subseteq S$ is linearly independent. Let $S_i \in \mathcal{C}$ be s.t. $v_i \in S_i$ for each $i$. Because $\mathcal{C}$ a chain, for each $i,j$ we have either $S_i \subseteq S_j$ or $S_j \subseteq S_i$, and so we can order $S_1, \dots, S_n$ in increasing order w.r.t $\subseteq$. This implies, then, there is a maximal $S_{i_0} \st S_{i_0} \supseteq S_i \forall i \in \{1, \dots, n\}$. Moreover, we have that $\{v_1, \dots, v_n\} \in S_{i_0}$, and that $S_{i_0}$ is linearly independent and thus $\{v_1, v_2, \dots, v_n\}$ is also linearly independent. 
 
     Thus, as we can apply Zorn's Lemma, we conclude that $I$ has a maximal element, ie, there is a maximal independent set, and thus a $V$ indeed has a basis.
 \end{proof}
