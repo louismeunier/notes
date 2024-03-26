@@ -135,3 +135,97 @@
 \end{example}
 
 \footnotetext{Note that this means that $f$ \emph{Hölder continuous} with constant $\alpha = 2$. Indeed, Hölder continuous functions with $\alpha > 1$ are always constant by a similar proof. For $0 < \alpha \leq 1$, we have the inclusion continuously differentiable $\implies$ Lipschitz $\implies$ $\alpha-$Hölder $\implies$ uniformly continuous $\implies$ continuous.}
+
+\subsection{Class Midterm Solutions}
+
+\begin{question}
+    Let $X$ be a topological space, and let $f, g : X \to \R$ be two continuous functions. Show that the set $\{x \in X : f(x) > g(x)\}$ is an open subset of $X$.
+
+    \begin{proof}
+        Let $A \defeq \{x \in X : f(x) > g(x)\}$. Letting $\varphi(x) \defeq f(x) - g(x) = (f-g)(x)$, then remark that $A \equiv \{x \in X : \varphi(x) > 0\}$, and since differences of continuous functions are continuous, $\varphi$ continuous. Letting $B \defeq (0, \infty) \subseteq \mathbb{R}$, then, we have that $A = \varphi^{-1}(B)$. But $B$ an open set, and the inverse images of open sets by continuous functions are open, hence $A$ open.
+    \end{proof}
+\end{question}
+
+
+\begin{question}
+\begin{enumerate}[label=(\alph*)]
+    \item List three equivalent properties (definitions) of compact sets in metric spaces; you don't need to prove anything.
+    \item Is the unit ball\footnotemark in the space $\ell^2$ of infinite sequences compact? Prove or disprove. You may use any of the properties from (a).
+\end{enumerate}
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item Every open cover admits a finite subcover $\iff$ sequentially compact $\iff$ complete and totally bounded.
+        \item Denote the closed unit ball centered at $(0, 0, \dots)$ in $\ell^2$, $B \defeq \{x \in \ell^2 : d_2^2(0, x) = \sum_{i=1}^\infty\abs{x_i} \leq 1 \}$. Consider the sequence of "unit sequences" \[
+            \{e^n\}_{n \in \mathbb{N}} \in B, \qquad e^n_i  \defeq \delta_{in}.
+        \]
+        Then, for any $i \neq j$, $d_2(e^{n}, e^m) = \sqrt{2} > 1$. It follows that, although $e^n \in B$ for any $n$, there cannot exist a subsequence of $x^n$ that converges within $B$ (verify why this is!). Thus, $B$ cannot be sequentially compact and thus not compact.
+    \end{enumerate}
+\end{proof}
+\end{question}
+\footnotetext{Jakobson said in class this is supposed to be a closed ball.}
+
+\begin{question}
+    \begin{enumerate}[label=(\alph*)]
+        \item Define a complete metric space.
+        \item State (without proof) the contraction mapping theorem.
+        \item Let $f : (0, 1) \to (0, 1)$ be defined by $f(x) = x/2$. Is $f$ a contraction?
+        \item Does $f$ have a fixed point in the open interval $I = (0, 1)$? Does that contradict the contraction mapping theorem?
+    \end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item A complete metric space is a metric space in which every Cauchy sequence converges within that space.
+        \item Let $(X, d)$ be a complete metric space, and let $f : X \to X$ be a contraction mapping, ie for any $x, y \in X$, $d(f(x),f(y)) \leq c \cdot d(x, y)$ for some $c \in (0, 1)$. Then, the contraction mapping states that $f$ has a unique fixed point $z \in X$, ie $f(z) = z$ and $\lim_{n\to \infty} f^{(n)}(x) = z$ for any $x$.
+        \item For any $x, y \in (0, 1)$, we have \[
+        d(f(x), f(y)) = \abs{f(x) - f(y)} = \abs{\frac{x-y}{2}} = \frac{1}{2} \abs{x - y} = c \cdot d(x, y),
+        \]
+        so $f$ indeed a contraction mapping with $c \defeq \frac{1}{2}$.
+        \item We have that for any $x \in I$, $f^{(n)}(x) = \frac{x}{2^n}$ so $x$ a fixed point iff $\frac{x}{2^n} = \frac{x}{2^{n-1}}$ for some $n$, which is only possible if $x = 0$, but $0 \notin I$, so indeed $f$ has no fixed point in $I$. This is not a contradiction to the contraction mapping theorem since $I \defeq (0, 1)$ not complete (indeed, $\frac{1}{n} \in I \forall n$ but $\frac{1}{n} \to 0 \notin I$).
+    \end{enumerate}
+\end{proof}
+
+\end{question}
+
+\begin{question}
+    Let $x = (x_1, x_2, \dots)$ and $y = (y_1, y_2, \dots)$ be infinite real sequences satisfying $\norm{x}_2 \leq 2$ and $\norm{y}_2 \leq 3$, where $\norm{\cdots}_2$ the $\ell^2$ norm.
+    \begin{enumerate}[label=(\alph*)]
+        \item State Holder's inequality and Minkowski inequality for sequences.
+        \item Give an upper bound for $x \cdot y = \sum_{i} x_i y_i$, and for $\norm{x + y}$.
+    \end{enumerate}
+    \begin{proof}
+        \begin{enumerate}[label=(\alph*)]
+            \item Holder's inequality: for $p, q$ Holder conjugates and $x \in \ell^p, y \in \ell^q$ we have \[
+           \abs{ \sum_{i=1} x_i y_i} \leq \norm{x}_p \norm{y}_q.
+            \]
+            Minkowski inequality: for $x, y \in \ell^p$, \[
+            \norm{x + y}_p \leq \norm{x}_p + \norm{y}_p.    
+            \]
+            \item For $x, y$ as given; by Holders, $x \cdot y \leq \norm{x}_p \norm{y}_q = 2 \cdot 3 = 6$, and by Minkowski's, $\norm{x + y} \leq \norm{x} + \norm{y} = 2 + 3 = 5$, so $6, 5$ are upper bounds for $x \cdot y$, $\norm{x + y}$ respectively.
+        \end{enumerate}
+    \end{proof}
+\end{question}
+
+
+\begin{question}
+    \begin{enumerate}[label=(\alph*)]
+        \item State (without proof) Taylor's theorem.
+        \item Let $f \in C^4([0, 2])$, and let $f'(1) = f''(1) = f'''(1) = 0$ while $f^{(4)}(1) = 2$. Use (a) to show that $f(x)$ has a local extremum at $x = 1$, and determine its type.
+    \end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $I \defeq [a, b] \subseteq \R$ and let $f : I \to \R$ such that $f \in C^n(I)$, and $f^{(n+1)}(x)$ exists on $(a, b)$. Then, for $x_0 \in [a, b]$, there exists some $c \in (\min(x, x_0), \max(x, x_0))$ such that \[
+        f(x) = f(x_0) + f'(x_0)(x-x_0) + \cdots + \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1}.
+        \]
+        \item By Taylor's, for any $x \in [0, 2]$, there exists some $c$ between $x$ and $1$ such that \begin{align*}
+            f(x) &= f(1)+\underbrace{f'(1)(\cdots) + f''(1)(\cdots) + f'''(1)(\cdots) }_{=0}+ \frac{f^{(4)}(c)}{4!}(x-1)^4\\
+            &=f(1) + \frac{f^{(4)}(c)}{4!}(x-1)^4 \\
+            &\implies f(x) - f(1) \geq \frac{f^{(4)}(c)}{4!}(x-1)^4 \forall x \in [0, 2]
+        \end{align*}
+        By continuity of $f^{(4)}$, there exists some neighborhood $V$ of $x_0 = 1$ such that $f^{(4)}(c)$ has the same sign of $f^{(4)}(1)$. So, for any $x \in V$, $\frac{f^{(4)}(c)}{4!} \geq 0$, since $\frac{f^{(4)(1)}}{4!} = \frac{2}{4!} \geq 0$. Thus, since $(x-1)^4 \geq 0$, we have that for such $x$ in $V$, \[
+        f(x) - f(1)     \geq  0 \implies f(x) \geq f(1).
+        \]
+        Hence, we have a neighborhood of $1$ such that for all $x$ in the neighborhood $f(x) \geq f(1)$. It follows that $1$ a local minimum of $f$.
+    \end{enumerate}
+\end{proof}
+\end{question}
