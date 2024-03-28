@@ -1,1 +1,17 @@
-% TODO
+\begin{lemma}[BS-7.2.4]
+    Let $J \subseteq [a, b]$ an invterval with endpoints $c < d$. If $$\varphi_J(x) := \begin{cases}
+        1 & x \in J\\
+        0 & x \notin J
+    \end{cases}.$$ Then, $\varphi_J \in \mathcal{R}[a, b]$ and $\int_a^b \varphi_J = d- c$.
+\end{lemma}
+
+\begin{theorem}
+    Let $\varphi : [a, b] \to \R, \varphi \in \mathcal{R}[a,b]$; that is, step functions are integrable.
+\end{theorem}
+
+\begin{theorem}
+    $f$ continuous on $[a, b]$ implies $f \in \mathcal{R}[a, b]$.
+\end{theorem}
+\begin{proof}(Sketch)
+    $f$ uniform continuous; use this to construct step functions that "bound" $f$ from above and below. Apply the squeeze theorem.
+\end{proof}

@@ -1,0 +1,103 @@
+\subsection{Upper and Lower Riemann Sums}
+
+\begin{definition}[Upper/Lower Riemann Sums]
+    For a partition $P$, \begin{itemize}
+        \item $\overline{S}(f, P) \defeq \sum_{i=1}^n (\sup_{t \in [x_{i-1}, x_i]} f(t))\cdot (x_i - x_{i-1})$
+        \item  $\underline{S}(f, P) \defeq \sum_{i=1}^n (\inf_{t \in [x_{i-1}, x_i]} f(t))\cdot (x_i - x_{i-1})$
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    For any tagged partition $\dot{P}$, \[
+    \underline{S}(f, P) \leq S(f, \dot{P}) \leq \overline{S}(f, P).
+    \]
+    Moreover, $f \in \mathcal{R}[a, b]$ if $\forall \epsilon > 0, \exists \delta > 0 \st \diam(P) < \delta \implies \abs{\overline{S}(f, P) - \underline{S}(f, P)} < \epsilon$.
+\end{proposition}
+
+\begin{proof}(Sketch)
+    Remark that this is a similar idea to saying that $\inf = \sup \implies $ limit exists.
+\end{proof}
+
+\begin{proposition}
+    Let $P_1, P_2$ be partitions of $[a, b]$, and let $P_3$ be the \emph{common refinement} of $P_1, P_2$. Then \[
+        \underline{S}(f, P_i) \leq \underline{S}(f, P_3) \leq \overline{S}(f, P_3) \leq \overline{S}(f, P_i), \quad i = 1, 2,
+    \]
+    that is, the finer refinement always gives a better approximation.
+\end{proposition}
+
+\subsection{Indefinite Integral}
+
+\begin{definition}
+    For $f \in \mathcal{R}[a, b]$ and any $z \in [a, b]$, define \[
+    F(z) \defeq \int_a^z f(x) \dd{x}.    
+    \]
+\end{definition}
+
+\begin{theorem}
+   $ F(z)$ continuous on $[a, b]$.
+\end{theorem}
+\begin{proof}
+    $f \in \mathcal{R}[a, b] \implies f$ bounded $\implies \exists M \st \abs{f(x)} \leq M \forall x \in [a, b]$, so (assuming $z < w$), \[
+    \abs{F(z) - F(w)} = \abs{\int_a^z f(x) \dd{x} - \int_a^w f(x) \dd{x}}    = \abs{\int_z^w f(x) \dd{x}} \leq M \cdot \abs{z - w},
+    \]
+    so taking $w \to z$, $\abs{F(z) - F(w)} \to 0$.
+\end{proof}
+
+\begin{theorem}[Another Fundamental Theorem of Calculus]
+    Let $f \in \mathcal{R}[a, b], f$-continuous at $c \in [a, b]$. Then $F(z)$ differentiable at $c$ and $F'(c) = f(c)$.
+\end{theorem}
+\begin{corollary}
+    If $f(x)$ continuous on $[a, b]$ $F'(x) = f(x) \forall x \in [a, b]$.
+\end{corollary}
+
+\begin{theorem}[Substitution/Change of Variables]
+Let $J \defeq [\alpha, \beta]$, $\varphi : J \to \R$, $\varphi \in C^1([a, b])$. Suppose $\varphi(J) \subseteq I \subseteq \mathbb{R}$, and let $f : I \to \mathbb{R}$ be continuous on $I$. Then, \[
+\int_{\varphi(\alpha)}^{\varphi(\beta)}    f(x) \dd{x} = \int_\alpha^\beta f(\varphi(t))\cdot \varphi'(t) \dd{t}.
+\]
+\end{theorem}
+\begin{proof}
+    Left as a (homework) exercise; make use of the chain rule!
+\end{proof}
+
+\begin{example}
+    Compute $\int_1^4 \frac{\sin(\sqrt{t})}{\sqrt{t}} \dd{t}$ using the previous theorem.
+\end{example}
+
+\subsection{Lebesgue Integrability Criterion}
+
+\begin{definition}[Lebesgue Measure 0]
+    $A \subseteq \R$ has \emph{Lebesgue measure} 0 iff $\forall \epsilon > 0$, $A$ can be covered by a countable union of intervals $J_k \defeq [a_k, b_k]$ such that $\sum_{k=1}^\infty\abs{J_k} \leq \epsilon$. We also call such an $A$ a null set.
+
+    For some set $S \subseteq \R$ and statement $P$, we say "$P$ holds for almost every $x \in S$" if $\{x \in S : P \text{ false }\}$ has Lebesgue measure 0.
+\end{definition}
+
+\begin{example}
+    \begin{enumerate}
+        \item Any countable set is a null set.
+        \item The Cantor set is a null set.
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}[Lebesgue Integrability Criterion]
+    Let $f : [a, b] \to \R$ be a bounded function. Then \begin{align*}
+    f \in \mathcal{R}[a, b] &\iff f-\text{continuous for almost every } x \in [a, b]\\
+    &\iff \{z \in [a, b] : f \text{ discontinuous}\} \text{ has Lebesgue measure 0}.
+    \end{align*}
+\end{theorem}
+
+\begin{remark}
+    The proof is rather involved, but is in the appendix of Bartle. Its important to remark that this is a necessary and sufficient condition.
+\end{remark}
+
+\begin{example}
+    \begin{enumerate}
+        \item Let $f :[0, 1] \to \R, f(x) \defeq \begin{cases}
+            1 & x \in \mathbb{Q}\\
+            0 & x \notin \mathbb{Q}
+        \end{cases}$. $f$ discontinuous everywhere, so $f \notin \mathcal{R}[a, b]$.
+        \item Let $f(x) \defeq \begin{cases}
+            \frac{1}{b} & x = \frac{a}{b} \in \mathbb{Q} \st (a, b) = 1\\
+            0 & x \notin \mathbb{Q}
+        \end{cases}$. One can show that $f$ continuous on $x \in \R\setminus \mathbb{Q}$ and only discontinuous on $\mathbb{Q}$. But this is a countable set so certainly has Lebesgue measure 0 and so $f \in \mathcal{R}[0, 1]$.
+    \end{enumerate}
+\end{example}

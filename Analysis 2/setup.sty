@@ -186,12 +186,14 @@ nobreak=true]{lemma-inline}{\textcolor{solarized-orange}{$\hookrightarrow$ \unde
 
 % makes "quoted" text actually look correct
 \MakeOuterQuote{"}
-
+% TODO
 % page footer
 \newpagestyle{mypage}{%
 % \footrule
-\setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{{\scshape\sectiontitle}: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
+  \setfoot{\scriptsize\thesubsection\quad {\scshape\sectiontitle}: \textbf{\subsectiontitle}}{}{\scriptsize \thepage}
 }
+% \setfoot{\scriptsize\textcolor{gray}{\thesubsection} \scriptsize\textcolor{gray}{\textit{{\scshape\sectiontitle}: \textbf{\subsectiontitle}}}}{}{\textcolor{gray}{\scriptsize \thepage}}
+% }
 
 \titleformat{\section}
 {\Large\bfseries\scshape}

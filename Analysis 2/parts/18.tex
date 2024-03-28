@@ -1,10 +1,61 @@
-\begin{lemma}[BS-7.2.4]
-    Let $J \subseteq [a, b]$ an invterval with endpoints $c < d$. If $$\varphi_J(x) := \begin{cases}
-        1 & x \in J\\
-        0 & x \notin J
-    \end{cases}.$$ Then, $\varphi_J \in \mathcal{R}[a, b]$ and $\int_a^b \varphi_J = d- c$.
-\end{lemma}
-
-\begin{theorem}
-    Let $\varphi : [a, b] \to \R, \varphi \in \mathcal{R}[a,b]$; that is, step functions are integrable.
+\begin{theorem}[BS-7.2.7]
+    Monotone functions on $[a, b]$ are integrable.
 \end{theorem}
+
+\begin{proof}
+    We show only for increasing. Let $f: [a, b] \to \R$ be monotone increasing. If $f$ constant, then it is a step function and we are done.
+
+    Otherwise, $f(b) - f(a) > 0$. Let $\epsilon > 0$ and $q \in \N$ such that $h \defeq \frac{f(b)-f(a)}{q} < \frac{\epsilon}{b-a}$, effectively subdividing the $y$-axis into $q$ equal-sized parts. Then, let \[
+    y_i \defeq f(a) + i h, \quad 0 \leq i \leq q,    
+    \]
+    and take $$A_k \defeq f^{-1}([y_{k+1}, y_k)) = \begin{cases}
+        \varnothing\\
+        \{x\}\\
+        I_i
+    \end{cases}.$$
+    We disregard each $A_k : A_k = \varnothing$, and adjoin the isolated points $\{x\}$ to the $I_i$'s, and hence have a partition $\cup_k A_k = [a, b]$. Letting $\alpha(x) = y_{k-1}$ and $\omega(x) = y_k$ for $x \in A_k$, then $\alpha(x) \leq f(x) \leq \omega(x) \forall x \in [a, b]$ (effectively, we are created a "series of squeezes"). Then, \[
+    \int_{a}^b \omega(x) - \alpha(x) \dd{x} = \sum_{k=1}^q (y_k - y_{k-1})(x_k-x_{k-1}) = h (b-a) < \epsilon,
+    \]
+    and the proof is completed by applying the squeeze theorem.
+\end{proof}
+
+\begin{theorem}[Additivity; BS-7.2.8]
+    Let $f : [a, b] \to \R$ and $a < c < b$. Then,  $f \in \mathcal{R}[a, b]$ $\iff f \in \mathcal{R}[a, c]$ and $f \in \mathcal{R}[c, b]$. Moreover, $\int_a^b f(x) \dd{x} = \int_a^c f(x) \dd{x} + \int_c^b f(x) \dd{x}$.
+\end{theorem}
+
+\begin{proof}
+    See book. Remark that this holds for finite summations of integrals as such by induction.
+\end{proof}
+
+\subsection{Fundamental Theorem of Calculus}
+
+\begin{definition}
+    Call $F(x)$ a \emph{primitive} of $f(x)$ if $F$ differential and $F'(x) = f(x)$.
+\end{definition}
+
+\begin{theorem}[Fundamental Theorem of Calculus]
+    Let $F, f : [a, b] \to \R$ and $E \subseteq [a, b]$ a finite set \st
+    \begin{enumerate}
+        \item $F$ continuous on $[a, b]$
+        \item $F'(x) = f(x) \forall x \in [a, b]\setminus E$; ie they agree for all but finitely many points
+        \item $f \in \mathcal{R}[a, b]$
+    \end{enumerate}
+    Then, $\int_a^b f(x) = F(b) - F(a)$.
+\end{theorem}
+\begin{proof}(Sketch)
+    Remark first that it suffices to prove for $E \defeq \{a, b\}$; using additivity, we can subdivide any other such $E$ into such subsets of $1$ or $2$ elements.
+
+    Fix $\epsilon > 0$ and take $\delta > 0$ such that for any $\dot{P}$ of $[a, b]$ \st $\diam \dot{P} < \delta$, $\abs{S(f, \dot{P}) - \int_a^b f(x)} < \epsilon$. Applying the mean value theorem to $F$ on each $[x_{i-1}, x_i]$ of $\dot{P}$:
+    \begin{align*}
+        F(x_i) - F(x_{i-1}) &= F'(u_i)(x_i - x_{i-1}), \quad u_i \in [x_{i-1}, x_i] \\
+        &= f(u_i)(x_i-x_{i-1})
+    \end{align*}
+    Hence, summing over each of these, \begin{align*}
+        F(x_1) - \cancelto{F(a)}{F(x_0)} + F(x_2) - F(x_1) + \cdots + \cancelto{F(b)}{F(x_{n})} - F(x_{n-1}) = f(u_1)(x_1 - a) + \cdots + f(u_n)(x_n - x_{n-1})\\
+        \implies F(b) - F(a) = \sum_{i=1}^n f(u_i) (x_i - x_{i+1}) =: S(f, \dot{P_1})
+    \end{align*}
+    by construction, $\diam(\dot{P_1}) < \delta$ since the only change we have made from $\dot{P}$ is the tags, hence $\abs{S(f, \dot{P_1}) - \int_a^b f(x)} < \epsilon$. Thus, \begin{align*}
+        \abs{S(f, \dot{P_1}) - \int_a^b f(x)} = \abs{F(b) - F(a) - \int_a^b f(x)} < \epsilon\\
+        \implies F(b) - F(a) = \int_a^b f(x) \quad \text{as }\epsilon \to 0.
+    \end{align*}
+\end{proof}

@@ -1,0 +1,86 @@
+\begin{theorem}[Composition]
+    $f \in \mathcal{R}[a, b], f([a, b]) \subseteq [c, d]$, $\varphi : [c, d] \to \mathbb{R}$ continuous, then $\varphi \circ f \in \mathcal{R}[a, b]$.
+\end{theorem}
+\begin{proof}
+    \[
+    \{x \st \varphi \circ f \text{ discontinuous at }x \}    \subseteq \{x : f \text{ discontinuous at } x\}
+    \]
+    since $\varphi$ continuous. The RHS has Lebesgue measure $0$, and thus so does the LHS, hence the proof.
+\end{proof}
+
+\begin{theorem}[Product Theorem]
+    $f, g \in \mathcal{R}[a, b] \implies f \cdot g \in \mathcal{R}[a, b]$.
+\end{theorem}
+\begin{proof}
+    $f \cdot g = \frac{1}{4} \left[(f + g)^2 - (f - g)^2\right]$. $f \pm g \in \mathcal{R}[a, b]$  and so so is $(f \pm g)^2$ by taking $\varphi(x) \defeq x^2$ as in the previous theorem. It follows that $f \cdot g \in \mathcal{R}[a, b]$.
+\end{proof}
+
+\subsection{Integration by Parts}
+\begin{theorem}
+    Let $F, G$ be differentiable on $[a, b]$, with $f \defeq F', g \defeq G'$. Suppose $f, g \in \mathcal{R}[a, b]$, then \[
+    \int_a^b f(x) G(x) \dd{x} = F(x)G(x)\vert_{a}^b - \int_a^b F(x) g(x) \dd{x} .
+    \]
+\end{theorem}
+\begin{proof}
+    Remark that $(FG)' = F'G + FG' = fG + Fg$, so on the one hand \begin{align*}
+        \int_{a}^b (FG)'\dd{x} = \int_a^b (fG + Fg) \dd{x} = \int_a^b fG \dd{x} + \int_{a}^b Fg \dd{x},
+    \end{align*}
+    but on the other hand, by the fundamental theorem of calculus,
+    \begin{align*}
+        \int_a^b (FG)' \dd{x} = [F\cdot G](a) - [F\cdot G](b) = F(x)G(x)\vert_a^b,
+    \end{align*}
+    and so \begin{align*}
+        F(x)G(x)\vert_a^b = \int_a^b fG \dd{x} + \int_{a}^b Fg \dd{x}\\
+        \implies \int_a^b f(x) G(x) \dd{x} = F(x)G(x) \vert_a^b - \int_a^b F(x) g(x) \dd{x},
+    \end{align*}
+    and hence the result.
+\end{proof}
+
+\begin{theorem}[Taylor's Theorem, Remainder's Version]
+    Suppose $f', f'', \dots, F^{(n)}$ exist on $[a, b]$ and $f^{(n+1)} \in \mathcal{R}[a, b]$.\footnotemark Then, \[
+    f(b) = f(a) + \frac{f'(a)}{1!} (b - a) + \frac{f''(a)}{2!} + \cdots + \frac{f^(n)(a)}{n!} (b - a)^n + R_n,
+    \]
+    with $R_n \defeq \frac{1}{n!} \int_a^b f^{(n+1)}(t) (b-t)^n \dd{t}$.
+\end{theorem}
+\begin{proof}
+    See Bartle; makes use of integration by parts.
+\end{proof}
+
+\footnotetext{Remark that this is a weaker condition than continuity as was used in our previous statement of Taylor's theorem.}
+
+\section{Function Sequences, Series}
+\subsection{Pointwise and Uniform Convergence}
+
+\begin{definition}[Pointwise vs Uniform Convergence]
+    We say a sequence of functions $f_n \to f$ \emph{pointwise} on a set $E$ if $\forall x \in E$, $f_n(x) \to f(x)$ as $n \to \infty$.
+
+    On the other hand, $f_n \to f$ \emph{uniformly} of $E$ if $\forall \epsilon > 0, \exists N \in \mathbb{N}$ such that $\forall n \geq N$ and $x \in E$, $\abs{f_n(x) - f(x)} < \epsilon$. 
+\end{definition}
+
+\begin{remark}
+    Notice that uniformly implies pointwise convergence.
+\end{remark}
+
+\begin{example}
+    Let $f_n \defeq \begin{cases}
+        2n x & 0 \leq x \leq \frac{1}{2n}\\
+        0 & x > \frac{1}{2n}
+    \end{cases}$. Show that $f_n \to 0$ pointwise but not uniformly (hint: $f_n(\frac{1}{2_n}) = 1 \forall n$).
+\end{example}
+
+\begin{theorem}
+    Suppose $\lim_{n \to \infty} f_n$ continuous on $[a, b]$ where each $f_n$ also continuous on $[a, b]$. Then, the space of function $C([a, b])$ equipped with the sup norm is complete.
+\end{theorem}
+
+\begin{proof}
+    Proven in tutorials.
+\end{proof}
+
+\begin{theorem}[Interchange of Limits]
+    Let $J \subseteq \R$ be a bounded interval such that $\exists x_0 \in J : f_n(x_0) \to f(x_0)$. Suppose $f_n'(x) \to g(x)$ uniformly $\forall x \in J$. Then, $\exists f : f_n(x) \to f(x)$ uniformly on $J$, $f(x)$ differentiable on $J$, and $f'(x) = g(x) \forall x \in J$.
+\end{theorem}
+
+\begin{proof}
+    This is a rather painful proof; one needs to make use of the "multiple epsilons" from each given continuity/convergence/differentiability statement.
+\end{proof}
+

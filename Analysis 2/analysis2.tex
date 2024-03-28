@@ -31,10 +31,7 @@
 % TODO
 \renewcommand\section[1]{\origsection{#1}\label{\thesection}}
 \renewcommand\subsection[1]{\origsubsection{#1}\label{\thesubsection}}
-\newcommand*{\defeq}{\mathrel{\vcenter{\baselineskip0.5ex \lineskiplimit0pt
-                     \hbox{\scriptsize.}\hbox{\scriptsize.}}}%
-                     =}
-                     
+
 % ! import parts here
 \foreach \i in {00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, ..., 99} {%
     \edef\FileName{parts/\i.tex}%
@@ -50,6 +47,6 @@
 \input{parts/appendix.tex}
 \newpage
 % \renewcommand{\listtheoremname}{\section{List of Theorems, etc}}
-\setstretch{1.5}
-\listoftheorems[ignore={remark}, title={\section{List of Theorems}}, swapnumber]
+% \setstretch{1.5}
+% \listoftheorems[ignore={remark}, title={\section{List of Theorems}}, swapnumber]
 \end{document}

@@ -1,0 +1,21 @@
+\subsection{Series}
+
+\begin{definition}[Absolute Convergence]
+    Let $\{x_j\} \in X$ where $X$ a normed vector space (say, $\R$). We say \[
+    \sum_{j=1}^\infty x_j \text{ converges absolutely} \iff \sum_{j=1}^\infty \norm{x_j} < + \infty.    
+    \]
+\end{definition}
+\begin{theorem}
+    Any rearrangement of absolutely convergent series given the same sum.
+\end{theorem}
+
+\begin{definition}[Conditional Convergence]
+    $\sum_{j=1}^\infty \vec{x}^{(j)}$ conditionally convergent if $\sum_{j=1}^\infty x^{(j)}$ converges (ie each component converges) but $\sum_{j=1}^\infty \norm{\vec{x}^{(j)}} = \infty$.
+\end{definition}
+
+\begin{theorem}
+    If $\sum_{i=1}^\infty a_i \in \R$ conditionally convergent, you can change the order of summation such that $\forall x \in \R$, $\exists \sigma$-permutation such that $\sum_{i=1}^\infty a_{\pi(i)} = x$.
+\end{theorem}
+\begin{proof}(Sketch)
+    Separate $a_i$ into positive, negative parts. Since conditionally convergent, $\sum_{a_j > 0} a_j = +\infty$ and $\sum_{a_j < 0} a_j = - \infty$. Add positive $a_i$'s until the partial sum $\geq x$, then add negative $a_i$'s until the partial sum $\leq x$, and repeat. The final rearrangement will converge as desired.
+\end{proof}
