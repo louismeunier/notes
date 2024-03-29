@@ -1,0 +1,60 @@
+\subsection{Analytic Coefficients}
+We consider now series solutions to \[
+L[y] = P(x)y'' + Q(x)y' + R(x) y = y'' + p(x)y' + q(x)y = 0
+\]
+where $P, Q, R$ analytic but not necessarily polynomials. Similar theory holds; a power series solution $y(x)$ will have radius of convergence at least as large as that of $p$ and $q$. We proceed by instructive example.
+\begin{example}
+    $x_0 = 0, L[y] = y'' - e^x y$. Here, $q(x) = -e^{x} = \sum_{n=0}^\infty \frac{x^n}{n!}$ with infinite radius of convergence. $p(x) = 0$ also has infinite radius of convergence, hence we should find that our solution will as well. Letting $y(x) = \sum_{n=0}^\infty a_n x^n$, we compute as before.
+    \begin{align*}
+        L[y] = \sum_{n=0}^\infty (n+2)(n+1)a_{n+2}x^n - \sum_{n=0}^\infty\left[\sum_{j=0}^\infty [\frac{a_{n-j}}{j!}]x^n\right]
+    \end{align*}
+    Computation of the corresponding $a_n$ follows very similarly to previous examples; the only difficulty is the fact that now $a_n$ will rely on all $a_n$'s less than it. Namely, one should find \begin{align*}
+        a_{n+2} = \frac{1}{(n+2)(n+1)} \sum_{j=0}^n \frac{a_{n-j}}{j!}
+    \end{align*}
+\end{example}
+
+\subsection{Nonhomogeneous Series Solutions}
+
+We consider the case \begin{align*}
+    L[y] \defeq y'' + p(x) y' + q(x) y = g(x).
+\end{align*}
+Writing $L[y]  = \sum_{n=0}^\infty c_n (x - x_0)^n$ where $c_n$ dependent on $a_m$ for $m \leq n$ and $g(x) = \sum_{n=0}^\infty g_n (x-x_0)^n$, we have that \[
+L[y] = g(x)  \iff c_n = g_n \forall n \geq 0. 
+\]
+So, we generally have a very similar method, only now we have to deal with a non-zero equivalence on the RHS.
+
+\begin{example}
+    $y'' - xy = \frac{1}{6}x^3$; remark that any series solution will have infinite radius of convergence about $x_0 = 0$. We have \begin{align*}
+    \sum_{n=0}^\infty (n+2)(n+1)a_{n+2} x^{n} - \sum_{n=1}^\infty   a_{n-1}x^n = \frac{1}{6}x^3\\
+    \implies 2a_2 + \sum_{n=1}^\infty [(n+2)(n+1)a_{n+2} - a_{n-1}]x^n = \frac{1}{6}x^{3}.
+    \end{align*}
+    We proceed by matching powers of $x$ on the left, right hand sides.
+
+    \begin{align*}
+        x^0]\quad & 2a_2 = 0 \implies a_2 = 0\\
+        x^1]\quad& 3 \cdot 2 \cdot a_3 - a_0 = 0 \implies a_3 = \frac{a_0}{3 \cdot 2}\\
+        x^2]\quad & 4 \cdot 3 \cdot a_4 - a_1 = 0 \implies a_4 = \frac{a_1}{4 \cdot 3}\\
+        x^3]\quad & 5 \cdot 4 \cdot a_5 - a_2 = \frac{1}{6} \implies a_5 = \frac{1}{5!}\\
+        n \geq 4]\quad & a_{n+2}(n+2)(n+1) - a_{n-1} = 0 \implies a_{n+2} = \frac{a_{n-1}}{(n+1)(n+1)}
+    \end{align*}
+One can show that for $n \geq 0$, \begin{align*}
+    a_{3n} &= \frac{(3n-1)(3n-4)(\cdots)(7)(4)a_0}{(3n)!}\\
+    a_{3n+1} &= \frac{(3n-1)(3n-4)(\cdots)(8)(5)(2)a_1}{(3n+1)!}\\
+    a_{3n+2} &= \frac{3^{n-1}n!}{(3n+2)!},
+\end{align*}
+remarking in particular that $a_{3n+2}$ has no reliance on $a_0$ or $a_1$, and indeed serve as the coefficients of our particular solution. We find \begin{align*}
+    y(x) &= \sum_{n=0}^\infty a_{3n} x^{3n} + \sum_{n=0}^\infty a_{3n+1}x^{3n+1} + \sum_{n=0}^\infty a_{3n+2} x^{3n+2}\\
+    &= a_0 y_1(x) + a_1 y_2(x) + y_p(x).
+\end{align*}
+\end{example}
+
+\subsection{Singular Points}
+
+What about finding solutions about non-ordinary points? We now need to be more careful.
+
+\begin{definition}[Regular Singular Point]
+    A "not too singular point". If $L[y] = P(x)y'' + Q(x)y' + R(x)y$, then $x_0$ a regular singular point if it is a singular point of $L[y] = 0$, and also \[
+    (x-x_0) \frac{Q(x)}{P(x)}    \qquad (x-x_0)^2 \frac{R(x)}{P(x)}
+    \]
+    are both analytic at $x_0$. In particular, if $P, Q, R$ polynomials, $x_0$ a singular point iff $P(x_0) = 0$, and regular iff $\lim_{x \to x_0} (x-x_0) \frac{Q(x)}{P(x)}$, $\lim_{x \to x_0} (x-x_0)^2 \frac{R(x)}{P(x)}$ are both finite.
+\end{definition}

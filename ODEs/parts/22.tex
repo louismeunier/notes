@@ -1,0 +1,107 @@
+\section{Laplace Transforms}
+
+\subsection{Definitions}
+
+\begin{definition}[Laplace Transform]
+    Let $f : [0, \infty) \to \R$. The \emph{Laplace transform} of $f$, denote $F(s)$ or $\mathsf{L}\{f(t)\}$, is defined by \[
+    \laplace{f(T)} \defeq \int_0^\infty f(t) \dd{t}.
+    \]
+\end{definition}
+
+\begin{definition}[Piecewise Continuous]
+    A function $f$ is \emph{piecewise continuous} (pw cont) for $t \in [\alpha, \beta]$ if $[\alpha, \beta]$ can be partitioned by a finite number of points \[
+    \alpha =: t_0 < t_1 < \cdots < t_n \defeq \beta    
+    \]
+    such that \begin{enumerate}[label=(\roman*)]
+        \item $f$ continuous on each $(t_j, t_{j+1})$,
+        \item for $t \in (t_j, t_{j+1})$, $\lim_{t \to t_j} f(t)$ and $\lim_{t \to t_{j+1}} f(t)$ both exist, are finite.
+    \end{enumerate}
+    In particular, $\lim_{t \to t_j^+} f(t)$ does not necessarily have to equal $\lim_{t \to t_j^-} f(t)$.
+
+    We say $f$ pw cont on $[\alpha, \infty)$ if pw cont on $[\alpha, \beta], \forall \beta \in (\alpha, \infty)$.
+\end{definition}
+
+\begin{definition}[Exponential Order]
+    We say a function $f(t)$ of \emph{exponential order $a$} (only specifying $a$ if relevant) if $\exists$ constants $a, K, T$ such that \[
+    \abs{f(t)    } \leq K e^{at},  \forall t \geq T.
+    \]
+\end{definition}
+
+\begin{theorem}
+    Suppose $f(t)$ pw cont on $[0, \infty)$ and $f$ has exponential order $a$. Then, $\laplace{f(t)}$ exists for $s > a$.
+\end{theorem}
+
+\begin{proof}
+    Remark that to show that $\lim_{\beta \to \infty} \int_0^\beta g(t) \dd{t}$ exists, it suffices to show that $\lim_{\beta \to \infty} \int_0^\beta \abs{g(t)} \dd{t}$ exists and is finite.
+    
+    We have that, for some $M > T$ in the definition of exponential order, \begin{align*}
+        F(s) = \int_0^\infty e^{-st}f(t) \dd{t} = \underbrace{\int_0^M e^{-st} f(t) \dd{t}}_{\text{finite, since $f$ pw cont thus bounded}} + \int_M^\infty e^{-st} f(t) \dd{t}
+    \end{align*}
+    So, we need to show the RHS converges. Since $M > T$, we have that \begin{align*}
+        \int_M^\infty e^{-st} \abs{f(t)} \dd{t} &\leq K \cdot \int_M^\infty e^{-st}e^{-at}\dd{t}\\
+        &= K \int_M^\infty e^{(a-s)t} \dd{t}\\
+        &= K \frac{e^{(a-s)M}}{s - a} < \infty,
+    \end{align*}
+    where the final line assumes that $s > a$.
+\end{proof}
+
+\begin{example}
+    \begin{align*}
+        \laplace{e^{at}} = \int_0^\infty e^{-st} e^{at} \dd{t} = \left[\frac{e^{(a-s)t}}{a-s}\right]_0^\infty = \frac{1}{s - a},
+    \end{align*}
+    valid for $s > a$. Remark that taking $a = 0$ gives us that $\laplace{1} = \frac{1}{s}$, again assuming that $s > 0$.
+\end{example}
+
+\begin{proposition}
+    $\laplace{\cdots}$ linear.
+\end{proposition}
+\begin{proof}
+    Indeed, we have for $\alpha, \beta \in R$ and $f, g$ pw cont functions, \begin{align*}
+        \laplace{\alpha f(t) + \beta g(t)} &= \int_0^\infty e^{-st} [\alpha f(t) + \beta g(t)] \dd{t}\\
+        &= \alpha \int_0^\infty e^{-st} f(t) \dd{T} + \beta\int_0^\infty e^{-st} g(t) \dd{t}\\
+        &= \alpha \laplace{f(t)} + \beta \laplace{g(t)}
+    \end{align*}
+\end{proof}
+
+\begin{remark}
+    This gives, moreover, that $\laplace{K} = K \laplace{1} = \frac{K}{s}$ as before.
+\end{remark}
+
+\begin{example}
+    First, remark that $e^{t^2}$ and $\tan t$ do not have Laplace transforms; the first is not of exponential order, and the second is unbounded at its discontinuities and thus not pw cont (indeed, it is also, as a result, not of exponential order).
+
+    Next, we compute some basic examples.
+    \begin{itemize}
+        \item $$\laplace{t} = \int_0^\infty te^{-st} \dd{t} = \left[\frac{te^{-st}}{-s}\right]_0^\infty - \int_0^\infty e^{-st}{-s} \dd{t} = \frac{1}{s} \int_0^\infty e^{-st} \dd{t} = \frac{1}{s} \laplace{1} = \frac{1}{s^2}.$$ Remark too that for any $\epsilon > 0$, $t < e^{\epsilon t}$ for sufficiently large $t$; we say $t$ not only of exponential order, but of "exponential order 0".
+        \item \begin{align*}
+            \laplace{\cos(\omega t)} &= \int_{0}^\infty e^{-st} \cos(\omega t) \dd{t} = \left[\frac{1}{s}e^{-st} \cos (\omega t)\right]_0^\infty - \frac{\omega}{s} \int_0^\infty e^{-st} \sin(\omega t) \dd{t}\\
+            &= \frac{1}{s} - \frac{\omega}{s} \left[\left[\sin(\omega t) \frac{e^{-st}}{-s}\right]_0^\infty  + \frac{\omega}{s} \int_0^\infty e^{-st} \cos (\omega t) \dd{t}\right]\\
+            &\implies \laplace{\cos \omega t} = \frac{1}{s} - \frac{\omega^2}{s^2} \laplace{\cos (\omega t)} \implies \laplace{\cos (\omega t)} = \frac{s}{s^2 + \omega^2}.
+        \end{align*}
+        A similar computation gives $\laplace{\sin (\omega t)} = \frac{\omega}{s^2 + \omega^2}$.
+    \end{itemize}
+\end{example}
+
+\begin{theorem}[First Translation theorem]
+    If $\laplace{f(t)} = F(s)$, $k \in \R$, then \[
+    \laplace{e^{kt} f(t)}     = F(s - k).
+    \]
+\end{theorem}
+\begin{proof}
+    \[\laplace{e^{kt} f(t)} = \int_0^\infty e^{-st} e^{kt} f(t) \dd{t} = \int_0^\infty e^{-(s-k)t} f(t) \dd{t} = F(s - k).\]
+\end{proof}
+
+\begin{remark}
+    We often denote $F(s - a) = \laplace{f(t)}_{s \to s - a}$
+\end{remark}
+\begin{example}
+    $\laplace{e^{at} \cos (\omega t)} = \laplace{\cos(\omega t)}_{s \to s - a} = \frac{s}{s^2 + \omega^2}\vert_{s \to s - a} = \frac{s - a}{(s-a)^2 + \omega^2}$
+\end{example}
+
+\subsection{Solving Constant Coefficient Linear ODE IVP's}
+
+\begin{theorem}\label{thm:laplacelinearconstantcoef}
+    Suppose $f, f', \dots, f^{(n-1)}$ continuous on $[0, \infty)$ and $f^{(n)}$ pw cont on $[0, \infty)$ and all are of exponential order $a$. Then, $\laplace{f^{(n)}(t)}$ exists for $s > a$, and \[
+    \laplace{f^{(n)}(t)} = s^n \laplace{f(t)}     - \sum_{k=0}^{n-1} s^{n-1-k} f^{(k)}(0).
+    \]
+\end{theorem}

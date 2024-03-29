@@ -1,0 +1,139 @@
+\begin{proof}
+    For $n = 1$, suppose $f'(t)$ has discontinuities at $t_1, \dots, t_{n - 1}$ on $[0, A]$ for some $A > 0$; let $t_0 \defeq 0, t_n \defeq A$. Then \begin{align*}
+        \int_0^A e^{-st} f'(t) \dd{t} &= \sum_{j=0}^{m-1} \int_{t_j}^{t_{j+1}} e^{-st} \cdot f'(t) \dd{t}\\
+        \text{(integrate by parts)}\qquad &= \sum_{j=0}^{m-1} \left[\left[e^{-st} f(t)\right]_{t_j}^{t_{j+1}} + s \int_{t_j}^{t_{j+1}} e^{-st} f(t) \dd{t}\right]\\
+        &= \sum_{j=0}^{m-1}\left[e^{-st} f(t)\right]_{t_j}^{t_{j+1}} + s \cdot \sum_{j=0}^{m-1} \int_{t_j}^{t_{j+1}} e^{-st} f(t)\dd{t}\\
+        \text{(both terms telescope$^\ast$)} \qquad &= e^{-sA} f(A) - f(0) + s \int_0^{A} e^{-st} f(t) \dd{t}\\
+    \end{align*}
+    Remark in $\ast$, we use that $f$ continuous on each $(t_{j}, t_{j+1})$, hence additivity applies.
+
+    Hence, for sufficiently large $A$, $f$ being of exponential order gives us that $$\abs{e^{-sA} f(A)}\leq e^{-sA} \cdot K e^{aA} = Ke^{-A(s-a)},$$
+    which $\to 0$ as $A \to \infty$, since $s > a$. Hence, taking $A \to \infty$, we find that the LHS of our original equation $\to \laplace{f'(t)}$, and thus $\laplace{f'(t)} \to f(0) + s \int_0^{\infty} e^{-st} f(t) \dd{t} = s \laplace{f(t)} - f(0)$ as $A \to \infty$. Hence, we have the desired form for $n = 1$.
+
+    For $n = 2$, we can simply use that $f''(t) = \dv{t}(f'(t))$, namely \begin{align*}
+        \laplace{f''(t)} &= s \laplace{f'(t)} - f'(0) \qquad \text{(by $n = 1$ case applied to $f'(t)$)}\\
+        &= s [s \laplace{f(t)} - f(0)] - f'(0) \qquad \text{(by $n = 1$ case applied to $f(t)$)}\\
+        &= s^2 \laplace{f(t)} - sf'(0) - f(0),
+    \end{align*}
+    the desired form for $n = 2$; we explicitly computed these two cases as they are the ones we will encounter most frequently in application.
+
+    For the general case, we proceed by induction. We already proved the base case $n = 1$, so suppose the case for some $1, 2, \dots, $ up to some $n \in \mathbb{N}$, ie $\laplace{f^{(n)(t)}} = s^{n} \laplace{f(t)} - \sum_{k=0}^{n-1}s^{n-1-k}f^{(k)}(0)$. Then, we have that (under appropriate assumptions of exponential order, continuity, etc of $f^{(n+1)}$) \begin{align*}
+        \laplace{f^{(n+1)}(t)} &= s \laplace{f^{n}(t)} - f^{n}(0) \qquad \text{(by assumption, base case )}\\
+        &= s \left[s^n\laplace{f(t)} - \sum_{k=0}^{n-1} s^{n-1-k}f^{(k)}(0)\right] - f^{(n)}(0) \qquad \text{(by assumption, $n$ case)}\\
+        &= s^{n+1} \laplace{f(t)} - s \sum_{k=0}^{n-1} s^{n-1 - k} f^{(k)}(0) - f^{(n)}(0)\\
+        &= s^{n+1} \laplace{f(t)} - \sum_{k=0}^{(n+1)-1} s^{(n+1)-1  k} f^{(k)}(0)
+    \end{align*}
+    as desired; the inductive step is complete and thus the claim holds in general.
+\end{proof}
+
+This theorem, combined with the linearity of $\laplace{\dots}$, allows us to convert linear, constant coefficient ODES to algebraic expressions, encoding initial values into the problem directly. To see this, consider the $n$th order, constant coefficient, linear IVP \[
+L[y] \defeq \sum_{k=0}^n a_ky^{(k)}, \qquad y(0) = \alpha_1, y'(0) = \alpha_2, \cdots y^{(n-1)}(0) = \alpha_n,
+\]
+where $a_k$ constants with $a_n \neq 0$. We venture to solve $L[y] = f(t)$. Letting $F(s) \defeq \laplace{f(t)}, Y(s) \defeq \laplace{y(t)}$, then applying $\laplace{\dots}$ to both sides of our ODE, we find \begin{align*}
+    F(s) = \laplace{f(t)} = \laplace{L[y](t)} &= \laplace{\sum_{k=0}^n a_k y^{(k)}}\\
+    &= \sum_{k=0}^n a_k \laplace{y^{(k)}} \qquad \text{(linearity)}\\
+    &= \sum_{k=0}^n a_n \left[s^{k}Y(s) - \sum_{j=0}^{k-1} s^{k-1-j} y^{(j)}(0)\right] \qquad \text{(by \cref{thm:laplacelinearconstantcoef})}\\
+    &= \underbrace{\left[\sum_{k=0}^n a_k s^k\right]}_{\defeq P(s)} Y(s) -\underbrace{\sum_{k=0}^n a_k \sum_{j=0}^{k-1} s^{k-1-j} y^{(j)}(0)}_{\defeq Q(s)}\\
+    &\implies F(s) = P(s) Y(s) + Q(s)\\
+    & \implies Y(s) = \frac{F(s)}{P(s)} + \frac{Q(s)}{P(s)}
+\end{align*}
+
+Remark that $P(s)$ is a known (based on the ODE) polynomial in $s$ of degree $n$, and moreover, is precisely the characteristic equation that we found when solving linear ODEs previously. $Q(s)$ on the other hand is a polynomial in $s$ of degree $n - 1$, defined by the ICs of the problem.
+
+This gives a clear method to find $Y(s)$, that is, the Laplace transform of our solution; hence, we need to somehow invert this to find $y(t)$, ie $y(t) = \ilaplace{Y(s)}$.
+
+Complex analysis gives us that the inverse Laplace is given by the Bronwich Integral formula
+\[
+f(t) = \ilaplace{F(s)}  = \frac{1}{2\pi i} \int_{a - i \infty}^{a + i \infty} F(s)  e^{st} \dd{s}.
+\]
+We won't use this in practice, but rather make use of algebraic simplifications to bring our solution to a form recognizable as the Laplace transform of a (linear combination) of "elementary" functions. To do so, we first need the following proposition.
+
+\begin{proposition}
+    $\ilaplace{F(s)}$ is linear.
+\end{proposition}
+
+\begin{proof}
+    Recall that $\laplace{\dots}$ linear, so \begin{align*}
+    \laplace{\alpha f(t) + \beta g(t)}     &= \alpha F(s) + \beta G(s) \\
+    &\implies \ilaplace{\alpha F(s) + \beta G(s)} = \alpha f(t) + \beta g(t) = \alpha \ilaplace{F(s)} + \beta \cdot \ilaplace{G(s)}.
+    \end{align*}
+\end{proof}
+
+\begin{example}[Computing $\ilaplace{\dots}$]
+    Consider $F(s) = \frac{2s + 1}{s^2+4} = 2(\frac{s}{s^2+4}) + \frac{1}{2}(\frac{2}{s^2 + 4})$. Then, one can observe that \begin{align*}
+        \ilaplace{F(s)} &= 2 \ilaplace{\frac{s}{s^2 + 4}} + \frac{1}{2} \ilaplace{\frac{2}{s^2 + 4}}\\
+        &= 2 \cos (2t) + \frac{1}{2} \sin(2t).
+    \end{align*}
+    In essence, computing inverse Laplace is an exercise in algebraic manipulation and purposeful staring.
+\end{example}
+
+\begin{example}[Solving Second Order Linear ODE]
+    We consider \[
+    y'' -3 y' + 2y = e^{-4t}, \qquad y(0) = 1, y'(0) = 5.
+    \]
+    Taking $\laplace{\dots}$ of both sides:
+    \begin{align*}
+        \laplace{y''} -3 \laplace{y'} + 2 \laplace{y} &= \laplace{e^{-4t}}\\
+        &\implies [s^2 Y(s) - s y(0) - y'(0)] - 3 [s Y(s) - y(0)] + 2Y(s) = \frac{1}{s + 4}\\
+        &\implies (s^2 - 3s +2)Y(s) - s - 5 + 3 = \frac{1}{s + 4}\\
+        &\implies Y(s) = \frac{1}{s^2 - 3 + 2} [\frac{1}{s + 4} + s + 2]\\
+        &\implies Y(s) = \frac{1}{(s - 1)(s-2)(s+4)} + \frac{s + 2}{(s-1)(s-2)}
+    \end{align*}
+    After applying "classical partial fractions theory", one finds \begin{align*}
+        y(t) = \ilaplace{Y(t)} &= - \frac{16}{5} \ilaplace{\frac{1}{s - 1}} + \frac{25}{6} \ilaplace{\frac{1}{s -2}} + \frac{1}{30} \ilaplace{\frac{1}{s + 4}}\\
+        &= - \frac{16}{5}e^t + \frac{25}{6}e^{2t} + \frac{1}{30}e^{-4t}.
+    \end{align*}
+\end{example}
+\begin{remark}
+    Many questions such as this end up with some kind of partial fractions to work out; as such, don't bother simplifying excessively to find a common denominator or anything like that.
+\end{remark}
+
+\begin{remark}
+    We already know how to solve these problems; but one particular advantage of this method is the encoding of the ICs. In the typical characteristic method technique, we needed to differentiate our entire solution in order ot set the appropriate constants. Here, we never differentiated (explicitly).
+\end{remark}
+
+\begin{example}[First Order]
+    Consider $y' + y = \sin t, y(0) = 1$. Taking the Laplace of both sides, we find \begin{align*}
+        s Y(s) - y(0) + Y(s) = \frac{1}{s^2 + 1}\\
+        \implies Y(s) = \frac{1}{s+1} + \frac{1}{(s^2 + 1)(s + 1)},
+    \end{align*}
+    and after partial fractioning, \begin{align*}
+        Y(s)&= \frac{1}{s+1} + \frac{1/2}{s+1} - \frac{1}{2}\left(\frac{s - 1}{s^2 + 1}\right) = \frac{3/2}{s + 1} - \frac{1}{2}\left(\frac{s}{s^2+1}\right) + \frac{1}{2}\left(\frac{1}{s^2+1}\right)\\
+        &\implies y(t) = \frac{3}{2} \ilaplace{\frac{1}{s + 1}} - \frac{1}{2} \ilaplace{\frac{s}{s^2 + 1}} + \frac{1}{2} \ilaplace{\frac{1}{s^2 + 1}}\\
+        &\implies y(t)= \frac{3}{2}e^{-t} - \frac{1}{2} \cos t + \frac{1}{2} \sin t
+    \end{align*}
+\end{example}
+
+\subsection{Discontinuous Functions}
+
+\begin{definition}[Unit Step Function]
+    The function given by \[
+    \unit{t - a} \defeq \begin{cases}
+        0 & t < a\\
+        1 & t \geq a
+    \end{cases}    
+    \]
+\end{definition}
+
+\begin{theorem}[Second Translation Theorem]
+    If $F(s)  = \laplace{f(t)}$, then for $a > 0$, \[
+    \laplace{\unit{t - a} f(t - a)}     = e^{-as} F(s).
+    \]
+\end{theorem}
+
+\begin{proof}
+    \begin{align*}
+        \laplace{\unit{t - a} f(t - a)} &= \int_0^a e^{-st} \underbrace{\unit{t - a}}_{=0} f(t - a) \dd{t} + \int_a^\infty e^{-st} \overbrace{\unit{t - a}}^{=1} f(t - a) \dd{t}\\
+        &= \int_a^ \infty e^{-st} f(t - a) \dd{t} \qquad (w \defeq t - a)\\
+        &= \int_0^\infty e^{-(a + w)s} f(w) \dd{w} \\
+        &= e^{-as} \int_0^\infty e^{-w s} f(w) \dd{w} = e^{-as} F(s)
+    \end{align*}
+\end{proof}
+
+\begin{corollary}
+    $\laplace{\unit{t - a}} = \frac{e^{-as}}{s}$.
+\end{corollary}
+
+\begin{proof}
+    $\laplace{\unit(t - a) \cdot 1} \overset{\ast}{=} e^{-as} \laplace{1} = \frac{e^{-as}}{s}$, where we use the previous theorem at $\ast$.
+\end{proof}

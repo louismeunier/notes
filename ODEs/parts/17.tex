@@ -1,0 +1,114 @@
+\begin{remark}
+    No lecture, in-class midterm.
+\end{remark}
+% \begin{proposition}
+%     Let $f(x) = \sum_{n =0}^\infty a_n (x-x_0)^n$ and $g(x) = \sum_{n=0}^\infty b_n(x-x_0)^n$.
+%     \begin{enumerate}
+%         \item $f(x) = g(x) \forall x \st \abs{x - x_0} < \rho$ iff $a_n = b_n \forall n$.
+%         \item $f(x) \pm g(x) = \sum_{n=0}^\infty (a_n \pm b_n)(x-x_0)^n$. The resulting power series has radius of convergence at least as large as the minimum of the radii of convergence of $f, g$.
+%         \item $f(x)g(x) = [\sum_{i=0}^\infty a_i (x-x_0)^i][\sum_{j=0}^\infty b_j (x-x_0)^j] = \sum_{n=0} c_n(x-x_0)^n$ where $c_n = \sum_{j=0}^n a_j b_{n-j}$. This power series also has radius of convergence as least as large of the minimum of $f, g$.
+%         \item We can divide power series (essentially long division of polynomials, but with infinite degrees) and can result in smaller radius of convergence, but won't.
+%     \end{enumerate}
+% \end{proposition}
+
+% \begin{proposition}
+%     If $\lim_{n \to \infty} \abs{\frac{a_n}{a_{n+1}}}$ exists then $\rho = \lim_{n \to \infty} \abs{\frac{a_n}{a_{n+1}}}$.
+% \end{proposition}
+% \begin{proof}
+% We have by the ratio test that $\sum_{n=0}^\infty a_n(x-x_0)^n$ converges if \begin{align*}
+%     \lim_{n \to \infty} \abs{\frac{a_{n+1}(x-x_0)^{n+1}}{a_n(x-x_0)^n}} < 1 &\iff \lim_{n \to \infty} \abs{\frac{a_{n+1}(x-x_0)}{a_n}}\\
+%     &\iff \abs{x - x_0}\lim_{n \to \infty} \abs{\frac{a_{n+1}}{a_n}} < 1\\
+%     &\iff \abs{x - x_0} < \frac{1}{\lim_{n \to \infty }\abs{\frac{a_{n+1}}{a_n}}} = \lim_{n \to \infty} \abs{\frac{a_n}{a_{n+1}}}
+% \end{align*}
+% \end{proof}
+
+% \begin{example}
+%     \begin{align*}
+%         e^x &= \sum_{n=0}^\infty \frac{x^n}{n!} \implies e^{x - x_0} = \sum_{n=0}^\infty \frac{(x-x_0)^n}{n!}\\
+%         \cos(x) &= \sum_{n=0}^\infty \frac{(-1)^nx^{2n}}{(2n)!}\\
+%         \sin(x) &= \sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{(2n+1)!}
+%     \end{align*}
+%     These all have $\rho = + \infty$.
+%     \begin{align*}
+%         \frac{1}{1-x} = \sum_{n = 0}^\infty x^n
+%     \end{align*}
+%     This series converges for $\rho < 1$ since \[
+%     \lim_{n \to \infty}  \abs{\frac{a_{n}}{a_{n+1}}} = 1.
+%     \]
+% \end{example}
+% \begin{remark}
+% In the case that $\lim_{n \to \infty} \abs{\frac{a_n}{a_{n+1}}}$ does not exist, then the root test gives that \[
+% \rho = \frac{1}{\limsup_{n \to \infty} \abs{a_n}^{1/n}}.
+% \]
+% \end{remark}
+
+% \begin{proposition}
+%     If $P(x), Q(x)$ are polynomials, then $\frac{Q(x)}{P(x)}$ is analytic at $x_0$ if $P(x_0) \neq 0$. When analytic, the radius of convergence from $x_0$ is the distance from $x_0$ to the nearest zero of $P(x)$ in the complex plane.
+% \end{proposition}
+% \begin{example}
+%     $\frac{Q(x)}{P(x)} = \frac{1}{1 + x^2}$. In the complex plane, $P(x)$ has roots at $x = \pm i$, and so $\rho = \sqrt{1 + x_0^2}$.
+% \end{example}
+
+% \subsection{Series Solutions near Ordinary Points}
+
+% \begin{definition}[Ordinary Point]
+%     Let $L[y] = P(x)'' + Q(x)y' + R(x)y$ and $p(x) = \frac{Q(x)}{P(x)}, q(x) = \frac{R(x)}{P(x)}$. $x_0$ is an \emph{ordinary point} of $L[y] = 0$ if $p, q$ are both analytic at $x_0$; otherwise, $x_0$ is a \emph{singular point}.
+% \end{definition}
+
+% \begin{theorem}
+%     If $x_0$ an ordinary point for $L[y]=0$ then the general solution can be written as \[
+%     y(x) = \sum_{n=0}^\infty a_n(x-x_0)^n = a_0y_1(x) + a_1 y_2(x),
+%     \]
+%     where $a_0, a_1$ arbitrary and the other $a_i$'s are uniquely determined by choice of $a_0, a_1$. The functions $y_1, y_2$ will be two power series, analytic at $x_0$, and form a fundamental set of solutions with $W(y_1, y_2)(x_0) = 1$. The radius of convergence of $y_1, y_2$ and $y$ is at least as large as the smaller of the radii of $p, q$.
+% \end{theorem}
+
+% \begin{example}
+%     Consider $(1 + x^2)y'' - 4xy' + 6y = 0$, with $p(x) = \frac{-4x}{1+x^2}, q(x) = \frac{6}{1+x^2}$; these are analytic $\forall x \in \mathbb{R}$, so we can expand about any $x_0 \in \R$. For convenience, take $x_0 = 0$. The radius of convergence of $y(x) = \sum_{n=0}^\infty a_n (x-x_0)^n$ will then be $\rho = 1$. Then:
+%     \begin{align*}
+%         y(x) &= \sum_{n=0}^\infty a_n x^n\\
+%         y'(x) &= \sum_{n=0}^\infty (n + 1)a_{n+1}x^n = \sum_{n=0}^\infty n a_nx^{n-1}\\
+%         y''(x) &= \sum_{n=0}^\infty (n + 2)(n+1)a_{n+2}x^n = \sum_{n=0}^\infty n(n-1)a_nx^{n-2}
+%     \end{align*}
+%     So \begin{align*}
+%         0 &= (1 + x^2)y'' - 4xy' + 6y = y'' + x^2 y'' - 4xy' + 6y\\ 
+%         &= \sum_{n=0}^\infty (n + 2)(n+1)a_{n+2}x^n + x^2\sum_{n=0}^\infty n(n-1)a_nx^{n-2} - 4x\sum_{n=0}^\infty n a_nx^{n-1} + 6\sum_{n=0}^\infty a_n x^n\\
+%         &= \sum_{n=0}^\infty \left[(n + 2)(n+1)a_{n+2} + n(n-1)a_n - 4n a_n + 6 a_n\right]x^n,
+%     \end{align*}
+%     so, $\forall n \geq 0$, we need \begin{align*}
+%         (n+2)(n+1)a_{n+2} + n(n-1)a_n - 4na_n + 6a_n &= 0\\
+%         (n+2)(n+1)a_{n+2} + (n-2)(n-3)a_n &= 0 \\
+%         \implies a_{n+2} = \frac{-(n-2)(n-3)}{(n+2)(n+1)}a_n\\
+%         n = 0 &\implies a_2 = a_2 = -3 a_0\\
+%         n = 1 &\implies a_3 = -\frac{a_1}{3}\\
+%         n = 2 &\implies a_4 = 0\\
+%         n = 3 &\implies a_5 = 0\\
+%         &\implies a_{n} = 0 \forall n \geq 4,
+%     \end{align*}
+%     so $$y(x) = a_0 + a_1x + a_2x^2 + a_3 x^3 = a_0 + a_1x -3a_0 x^2 - \frac{a_1}{3}x^3 = a_0(1 - 3x^2) + a_1(x - \frac{x^3}{3}) =: a_0 y_1 + a_1 y_2.$$ 
+%     Remark that \begin{align*}
+%         W(y_1, y_2)(0) = \left|\begin{matrix}
+%             1 & 0 \\
+%             0 & 1
+%         \end{matrix}\right| = 1.
+%     \end{align*}
+% \end{example}
+% \begin{example}
+%     Consider $y'' - xy' - x^2y = 0$, $p(x) = -x, q(x) = -x^2$ which are both analytic on all $\R$. Let $x_0 = 0$, so 
+%     \begin{align*}
+%         y &= \sum_{n=0}^\infty a_nx^n \implies x^2 y = \sum_{n=0}^\infty a_n x^{n+2} = \sum_{n = 2}^\infty a_{n-2}x^n\\
+%         y' &= \sum_{n=0}^\infty na_nx^{n-1} \implies xy' = \sum_{n=0}^\infty n a_nx^n\\
+%         y'' &= \sum_{n = 0}^\infty n(n-1)a_nx^{n-2} = \sum_{n=0}^\infty (n+2)(n+1)a_{n+2}x^{n}\\
+%         0 &= y'' - xy' - x^2y = \sum_{n=0}^\infty (n+2)(n+1)a_{n+2}x^{n} -\sum_{n=0}^\infty n a_nx^n - \sum_{n = 2}^\infty a_{n+2}x^n\\
+%         0 &= 2a_2 + 3 \cdot 2 \cdot a_3 \cdot x - a_1 x + \sum_{n=2}^\infty [(n+2)(n+1)a_{n+2}-na_n-a_{n-2}]x^n
+%     \end{align*}
+%     Matching powers of $x^n$ yields
+%     \begin{align*}
+%         n=0] & \qquad a_2 = 0\\
+%         n=1] & \qquad a_3 = \frac{a_1}{6}\\
+%         n \geq 2] & \qquad (n+2)(n+1)a_{n+2}  na_{n} - a_{n-2} = 0 \implies a_{n+2} = \frac{na_n + a_{n-2}}{(n+2)(n+1)}
+%     \end{align*}
+%     From here, you can find as many terms of $a_n$ as you really want. The important thing to notice is that if $n$ odd, $a_n$ will only depend on $a_1$, and if $n$ even, $a_n$ will only depend on $a_0$. This gives a final form \[
+%     y(x) = a_0 y_1(x) + a_1 y_2(x),    
+%     \]
+%     where $y_1, y_2$ power series involving only event, odd terms resp. Remark too that $W(y_1, y_2)(0) = 1$ (why?).
+% \end{example}

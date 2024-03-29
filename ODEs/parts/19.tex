@@ -1,0 +1,70 @@
+\subsection{Frobenius's Method}
+We consider $L[y] = P(x) y'' + Q(x) y' + R(x) y = 0$. Let $x_0$ be a regular singular point, and multiply both sides by $\frac{(x-x_0)^2}{P(x)}$:
+\[
+(x-x_0)^2 y'' + (x-x_0)\underbrace{\left[(x-x_0) \frac{Q(x)}{P(x)}\right]}_{\defeq p(x)}y + \underbrace{\left[(x-x_0)^2\right]}_{\defeq q(x)} y = 0
+\]
+
+Recall that, by definition of a regular singular point, we have that $p, q$ analytic at $x_0$ and so can be represented as a local power series. We will seek a solution of the form \begin{align*}
+    y(x) = \abs{x - x_0}^r \sum_{n=0}^\infty a_n (x - x_0)^n,
+\end{align*}
+for some $r \in R$ with $a_0 \neq 0$. For convenience, and wlog (by linearity, scaling appropriately) we take $a_0 = 1$ by convention. Also for simplicity, we often assume that $x > 0$ so we do not have to work with the absolute value. 
+
+% TODO
+After tedious computation, one can find that an appropriate such $r$ must satisfy the \emph{indicial equation} \[
+F(r) = r(r-1) + r p_0 + q_0   =0    
+\]
+where $p_0, q_0$ the $x^0$ coefficients of $p(x), q(x)$ resp.
+
+From here, we can either 1) solve to find $r$ (for which we need to do no more work than stare at $p, q$), plug in $y(x) = \sum_{n=0}^\infty a_n (x-x_0)^{n+r}$ with appropriate $r$ into our ODE and solve for $a_n$, or 2) derive a general formula. 
+
+% TODO
+
+We find the general formula to be \[
+a_n = \frac{-1}{F(n+r)}\cdot \sum_{k=0}^{n-1} a_k\left[ (k+r)p_{n-k} + q_{n-k}\right], \quad \forall n \geq 1.
+\]
+\begin{remark}
+    This is a "worst case" general form, where $a_n$ depends on $a_{n-1}, \dots, a_1$; we will generally find in examples that much simplification occurs.
+\end{remark}
+
+\begin{remark}
+    Remark that if $F(r) = 0$ has 2 real roots $r_1 < r_2$, we'll be dividing by $F(n + r_2), n = 1, 2, \dots$; but $F(r_2) = 0 \implies F(n + r_2) \neq 0 \forall n \geq 1$, so there is no division by zero problem. But this does give that if $r_2 - r_1 = N \in \mathbb{N}$, then the formula will break (division by zero) at $a_N$. Similarly, if $F(r) = 0$ has repeated roots, $r_1 = r_2$, we can only derive one formula this way.
+\end{remark}
+
+\begin{example}
+    $0 = L[y] = 4xy'' + 2y' + 2y$.
+    % TODO
+\end{example}
+
+
+\begin{theorem}[Frobenius]
+    Let $L[y] = (x-x_0)^2 y'' + (x-x_0)p(x)y' + q(x)y = 0$ where $x_0$ a regular singular point, $p, q$ both analytic at $x_0$, with $p(x) = \sum_{n=0}^\infty p_n(x-x_0)^n, q(x) = \sum_{n=0}^\infty q_n(x-x_0)^n$, with $\rho \defeq $ min of the radii of convergence of $p, q$. Let $r_1, r_2$ be the roots of \[
+    0 = F(r) = r(r-1) + p_0 r + q_0,    
+    \]
+    where $r_1 \geq r_2$ if both real. Then, there exists a solution of the form \begin{align*}
+        y_1(x) = \abs{x-x_0}^{r_1} \left[1 + \sum_{n=1}^\infty a_n (r_1) (x - x_0)^n\right],
+    \end{align*}
+    with $a_n(r_1)$ s.t. $a_0 = 1, a_n = - \frac{1}{F(n + r)} \sum_{k=0}^{n-1} a_k(r) \left[(k+r)p_{n-k}+q_{n-k}\right]$, $n \geq 1$, with $r = r_1$. We define a second solution as follows:
+    \begin{enumerate}[label=(\roman*)]
+        \item ($r_1 - r_2 \neq 0$ and $r_1 - r_2 \notin \mathbb{Z}$) \[
+        y_2(x) = \abs{x - x_0}^{r_2} \left[1 + \sum_{n=1}^\infty a_n(r_2)(x-x_0)^n\right]    
+        \]
+        \item ($r_1 = r_2$)
+        \[
+        y_2(x) = y_1(x) \cdot \ln \abs{x - x_0} + \abs{x - x_0}^{r_1} \cdot \sum_{n=1}^\infty b_n (x-x_0)^n,    
+        \]
+        where $b_n \defeq a_n'(r_1), n \geq 1$.
+        \item ($r_1 - r_2 =: N\in \mathbb{N}$)
+        \[
+        y_2(x) = a y_1(x) \ln \abs{x - x_0} + \abs{x - x_0}^{r_2} \cdot \left[1 + \sum_{n=1}^\infty c_n (x - x_0)^n\right]    ,
+        \]
+        where $a \defeq \lim_{r \to r_2} (r - r_2) a_N(r)$ (possible zero) and $$c_n \defeq \dv{r}[(r-r_2)a_n(r)]\vert_{r = r_2} = \begin{cases}
+            a_n(r_2) & a_n \text{ well-defined}\\
+            \text{something else} & \text{ otherwise}
+        \end{cases}.$$
+    \end{enumerate}
+    In each case, each series converges absolutely for $\abs{x - x_0} < \rho$, and $y_1, y_2$ define a fundamental set of solutions for $x \in (x_0 - \rho, x)$ and $x \in (x_0, x_0 + \rho)$.
+\end{theorem}
+
+\begin{remark}
+    In practice, for cases (ii), (iii), it may be easier to manually find $b_n$, $c_n$ rather than that the derivative of a recursive sequence.
+\end{remark}
