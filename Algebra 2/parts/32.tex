@@ -1,0 +1,105 @@
+\subsection{Projections and Cauchy-Schwartz}
+
+\begin{definition}[Orthogonal]
+    Let $V$ be an inner product space. Call $u, v \in V$ \emph{orthogonal}, and write $u \perp v$, if $\iprod{u,v} = 0$.
+\end{definition}
+\begin{example}
+    In $\R^3$ equipped with the dot product, $(1, 0, -1) \perp (1, 0, 1)$.
+\end{example}
+
+\begin{theorem}[Pythagorean Theorem]
+    For an inner product space $V$ and $u, v \in V$, if $u \perp v$ then \[
+    \norm{u}^2 + \norm{v}^2 = \norm{u + v}^2.    
+    \]
+    In particular, $\norm{u}, \norm{v} \leq \norm{u + v}$.
+\end{theorem}
+\begin{proof}
+    \[
+    \norm{u + v}^2 = \iprod{u + v, u + v} = \iprod{u, u} + \overset{=0}{\iprod{u, v}} + \overset{=0}{\iprod{v, u}} + \iprod{v, v} = \norm{u}^2 + \norm{v}^2.
+    \]
+\end{proof}
+\newcommand{\proj}{\text{proj}}
+\begin{definition}
+    For vectors $u, v$ in an inner product space $V$, if $u$ is a unit vector, then put \[
+    \proj_u(v) \defeq \iprod{v, u}\cdot u.     
+    \]
+\end{definition}
+
+\begin{proposition}
+    Let $V$ be an inner product space and $u \in V$ a unit vector. For each $v \in V$, $v - \proj_u(v) \perp u$. In particular, $v = \proj_u(v) + w$ where $w \defeq v - \proj_u(v) \perp \proj_u(v)$.
+\end{proposition}
+
+\begin{proof}
+    \[
+    \iprod{v - \proj_u(v), u} = \iprod{v, u} - \iprod{\proj_u(v), u} = \iprod{v, u} - \iprod{v, u} \cdot \iprod{u, u}     = \iprod{v, u} - \iprod{v, u} = 0.
+    \]
+\end{proof}
+\begin{corollary}
+    Let $V$ be an inner product space and $u \in V$ a unit vector. For each $v \in V$, $\norm{\proj_u(v)} \leq \norm{v}$.
+\end{corollary}
+
+\begin{proof}
+    $\proj_u(v) \perp w \defeq v - \proj_u(v)$, hence $\norm{\proj_u(v)} \leq \norm{\proj_u(v) + w} = \norm{v}$ by the Pythagorean theorem.
+\end{proof}
+
+\begin{theorem}
+    Let $V$ be an inner product space and $x, y \in V$. \begin{enumerate}[label=(\alph*)]
+        \item (Cauchy-Banyakovski-Schwartz inequality) $\abs{\iprod{x, y}} \leq \norm{x}\cdot \norm{y}$.
+        \item (Triangle inequality) $\norm{x + y} \leq \norm{x} + \norm{y}$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item If $\norm{y} = 0$ then $y = 0_V$ and $0 \leq 0$ and we are done. Suppose $\norm{y} \neq 0$ and divide both sides by $\norm{y}$:
+        \[
+        \iprod{x, \norm{y}^{-1}\cdot y} \leq \norm{x},
+        \]
+        ie, we need to prove $\abs{\iprod{x, y}} \leq \norm{x}$, where $u$ a unit. But \[
+        \abs{\iprod{x, u}} = \norm{\iprod{x, u} \cdot u} = \norm{\proj_u(x)} \leq \norm{x}
+        \]
+        by the previous corollary.
+
+        \item We equivalently prove $\norm{x + y}^2 \leq (\norm{x} + \norm{y})^2$. We have: \begin{align*}
+            \norm{x +y }^2 &= \iprod{x + y, x + y} = \iprod{x, x} + \iprod{x, y} + \iprod{y, x} + \iprod{y, y}\\
+            &\leq \norm{x}^2 + \norm{y}^2 + 2 \abs{\iprod{x, y}}\\
+            &\overset{\text{(by CBS)}}\leq \norm{x}^2 + \norm{y}^2 + 2 \norm{x} \norm{y} = (\norm{x} + \norm{y})^2.
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    \begin{enumerate}
+        \item For $\field^n$, CS claims that $\abs{\sum_{i=1}^n x_i y_i} \leq \sqrt{\sum_{i=1}^n \abs{x_i}^2} \sqrt{\sum_{i=1}^n \abs{y_i}^2}$, but $\iprod{x, y} = \norm{x} \norm{y} \cos{\alpha}$, so this simply follow from $\abs{\cos \alpha} \leq 1.$
+        \item For $f, g \in C[0, 1]$, $\int_0^1 f(t) g(t) \dd{t} \leq \sqrt{\int_0^1 \abs{f(t)}^2 \dd{t}} \sqrt{\int_0^1 \abs{g(t)}^2 \dd{t}}$.
+    \end{enumerate}
+\end{example}
+
+From the triangle inequality, it is natural to define $d :V \times V \to [0, \infty)$ $d(u, v) \defeq \norm{u - v}$ as the "distance" between vectors $u, v$; indeed, one can show that such a $d$ defines a metric on $V$.
+
+\begin{proposition}[The Parallelogram Law]
+    For an inner product space $V$ and $u, v \in V$, \begin{enumerate}[label=(\alph*)]
+        \item $2 \norm{u}^2 + 2 \norm{v}^2 = \norm{u + v}^2  + \norm{v - u}^2$.
+        \item $\Re \iprod{u, v} = \frac{1}{2} \left(\norm{u}^2 + \norm{v}^2 - \norm{v - u}^2\right)$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Let as a (homework) exercise.
+\end{proof}
+
+\subsection{Orthogonality and Orthonormal Bases}
+
+\begin{definition}[Orthogonal/Orthonormal]
+    Call a set $S \subseteq V$ \emph{orthogonal} (resp. \emph{orthonormal}) if the vectors in $S$ are pair-wise orthogonal to each (resp. in addition, they are unit).
+\end{definition}
+
+\begin{proposition}
+    Orthonormal sets of nonzero vectors are linearly independent.
+\end{proposition}
+\begin{proof}
+    Suppose $a_1 v_1 + \cdots + a_n v_n = 0_V$, $v_1, \dots, v_n$ orthogonal. Then \begin{align*}
+        \iprod{a_1 v_1 + \cdots + a_n v_n, v_i} = \iprod{0_V, v_i} = 0\\
+        \implies \sum_{j=1}^n a_j \iprod{v_j, v_i} = a_i \underbrace{\iprod{v_i, v_i}}_{\neq 0},
+    \end{align*}
+    hence $a_i$'s identically zero.
+\end{proof}
