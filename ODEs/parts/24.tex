@@ -1,0 +1,85 @@
+\begin{example}
+    $y' + y = f(t) \defeq \begin{cases}
+        0 & 0 \leq t < \pi\\
+        3 \cos t & t \geq \pi
+    \end{cases}$, $y(0) = 2$. We can rewrite $f(t) = \unit{t-\pi}g(t-\pi) = 3\unit{t - \pi}\cos(t)$, remarking that $g(t) = 3\cos(t+\pi)=-3\cos (t)$, and so using the translation theorem we have \begin{align*}
+        sY(s)-y(0)+Y(s)=(s+1)Y(s)-2 = 3\laplace{\unit{t - \pi}\cos(t)} = -3 \frac{s}{s^2+1}e^{-\pi s}\\
+        \implies Y(s) = \frac{2}{s+1} - 3e^{-\pi s} \frac{s}{(s^2+1)(s+1)}.
+    \end{align*}
+    Now, we proceed as normal, ignore the exponential for now. We find that \[
+    \frac{s}{(s^2+1)(s+1)}     = \frac{-1/2}{s+1}+\frac{1}{2} \frac{s}{s^2+1}+\frac{1}{2}\frac{1}{s^2+1},
+    \]
+    and so, applying the translation theorem in reverse, \begin{align*}
+        y(t) = 2 e^{-t} -3 \ilaplace{e^{-\pi s}\left[\frac{-1/2}{s+1}+\frac{1}{2} \frac{s}{s^2+1}+\frac{1}{2}\frac{1}{s^2+1}\right]}\\
+        = 2e^{-t} + \frac{3}{2} \unit{t - \pi}\left[e^{-(t-\pi)}+ \cos (t) + \sin (t)\right].
+    \end{align*}
+    Remark that, as the ODE was discontinuous at $t = \pi$ with a jump of $\abs{\lim_{t \to \pi^+} f(t) - \lim_{t \to \pi^-} f(t)} = 3$; we can show (1) $y(t)$ is continuous and (2) $y'(t)$ is discontinuous at precisely $t = \pi$ with the same jump; this occurs generally.
+\end{example}
+
+\subsection{Derivatives of Transforms}
+
+\begin{proposition}
+    $\laplace{t^n f(t)} = (-1)^n \dv[n]{s} \laplace{f(t)}$.
+\end{proposition}
+
+\begin{proof}
+    Follows from easy induction.
+\end{proof}
+
+\begin{example}
+    Show that the Laplace transform of the Euler equation $at^2 y'' + bty'+cy=0$ is itself an Euler equation.
+\end{example}
+
+
+\subsection{Transforms of Integrals}
+
+\begin{definition}[Convolution]
+    $(f \ast g)(t) \defeq \int_0^t f(\tau)g(t - \tau) \dd{\tau}$.
+\end{definition}
+
+\begin{example}
+    \begin{align*}
+        e^{t} \ast \sin t &= \int_0^t e^{\tau} \sin(t - \tau) \dd{\tau}\\
+        &= \cdots - \sin t+ e^t - \cos t - e^t \ast \sin t\\
+        &\implies e^t \ast \sin t = \frac{1}{2}[e^t - \sin t - \cos t].
+    \end{align*}
+\end{example}
+
+\begin{theorem}[Convolution Theorem]
+    If $f, g$ pw-cont on $[0, \infty)$ and are of exponential order, then \[
+    \laplace{f \ast g} = \laplace{f(t)}\laplace{g(t)}     = F(s)G(s).
+    \]
+\end{theorem}
+
+\begin{proof}
+    We should but won't show that the Laplace of $f,g$ existing implies that the Laplace of their convolution exists, but won't.
+
+    \begin{align*}
+        \laplace{f \ast g} &= \int_0^\infty \int_0^t f(\tau) g(t - \tau) e^{-st} \dd{t}\\
+        &= \int_0^\infty \int_\tau^\infty f(\tau) g(t - \tau)e^{-st} \dd{t}\dd{\tau}\\
+        &= \int_{0}^\infty f(\tau) e^{-s\tau} \int_\tau^\infty g(t - \tau)e^{-s(t - \tau)} \dd{t} \dd{\tau}\\
+        (w \defeq t - \tau)\qquad &= \int_0^\infty f(\tau)e^{-s\tau} \dd{\tau}\int_0^\infty g(w) e^{-sw} \dd{w}\\
+        &= \laplace{f}\laplace{g}
+     \end{align*}
+\end{proof}
+
+\begin{corollary}
+    $\ilaplace{F(s)G(s)} = f\ast g$.
+\end{corollary}
+
+\begin{proposition}
+    For $f, g, h$ functions and $\alpha, \beta$ scalars, \begin{enumerate}[label=(\roman*)]
+        \item $(f \ast g)(t) = (g \ast f)(t)$
+        \item $((\alpha f \ast \beta g) \ast h)(t) = \alpha(f \ast h)(t) + \beta(g \ast h)(t)$
+        \item $0 \ast g = 0$
+        \item $(\text{Id} \ast g)(t) \neq g(t)$
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}
+    Show that $\laplace{\sqrt{t}} = \frac{\sqrt{\pi}}{2 s^{3/2}}$.
+\end{example}
+
+\begin{example}
+Show that $\ilaplace{\frac{s}{(s^2+1)(s+3)}}$ without using partial fractions.
+\end{example}
