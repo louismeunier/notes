@@ -18,7 +18,7 @@
     \norm{u + v}^2 = \iprod{u + v, u + v} = \iprod{u, u} + \overset{=0}{\iprod{u, v}} + \overset{=0}{\iprod{v, u}} + \iprod{v, v} = \norm{u}^2 + \norm{v}^2.
     \]
 \end{proof}
-\newcommand{\proj}{\text{proj}}
+
 \begin{definition}
     For vectors $u, v$ in an inner product space $V$, if $u$ is a unit vector, then put \[
     \proj_u(v) \defeq \iprod{v, u}\cdot u.     
@@ -93,7 +93,7 @@ From the triangle inequality, it is natural to define $d :V \times V \to [0, \in
     Call a set $S \subseteq V$ \emph{orthogonal} (resp. \emph{orthonormal}) if the vectors in $S$ are pair-wise orthogonal to each (resp. in addition, they are unit).
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{prop:orthonormallinindep}
     Orthonormal sets of nonzero vectors are linearly independent.
 \end{proposition}
 \begin{proof}

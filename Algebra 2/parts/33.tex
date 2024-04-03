@@ -1,0 +1,112 @@
+\begin{definition}[Orthonormal Basis]
+    Let $V$ be an inner product space over $\field$. An \emph{orthonormal basis} $\beta$ for $V$ is a basis that is orthonormal.
+\end{definition}
+
+\begin{example}[Of Orthognormal Bases]
+\begin{enumerate}[label=(\alph*)]
+    \item For $\field^n$, the standard basis is orthonormal with respect to the dot product; $\iprod{e_i, e_j} = \delta_{ij}$.
+    \item For $\field^4$ with the dot product, $\alpha \defeq \{(1, 0, 1, 0)^t, (1, 0, -1, 0)^t, (0, 1, 0, 1)^t, (0, 1, 0, -1)^t\}$ is an orthogonal basis; remark that to show this we need only to show that each vector is orthogonal by \cref{prop:orthonormallinindep}. We can turn this into an ortho\emph{normal} basis by normalizing each vector:
+    \[\norm{(1,0,1,0)}^2 = 1 + 0 + 1 + 0 = 2 \implies \norm{(1,0,1,0)} = \sqrt{2},\]
+    and indeed each vector has norm $\sqrt{2}$, so \[
+    \beta \defeq \{\frac{1}{\sqrt{2}} \cdot v : v \in \alpha\}    
+    \]
+    now an orthonormal basis.
+\end{enumerate}    
+\end{example}
+
+
+\begin{proposition}[Benefits of Orthonormal Bases]
+Let $\beta \defeq \{u_1, u_2, \dots, u_n\}$ be an orthonormal basis for $V$. Then: \begin{enumerate}[label=(\alph*)]
+    \item For every $v \in V$, the coordinates of $v$ in $\beta$ are just $\iprod{v, u_i}$ ie \begin{align*}
+    v &= \iprod{v, u_1}\cdot u_1  + \iprod{v, u_2}\cdot u_2 + \cdots + \iprod{v, u_n} \cdot u_n\\
+        &= \proj_{u_1}(v) + \proj_{u_2}(v) + \cdots + \proj_{u_n}(v).
+    \end{align*}
+    In this case, the coefficients $\iprod{v, u_i}$ are called the \emph{Fourier coefficients} of $v$ in $\beta$.
+    \item For any linear operator $T : V \to V$, $[T]_\beta = (\iprod{Tu_j, u_i})_{i,j}$, ie \[
+    [T]_\beta = \begin{pmatrix}
+        \iprod{Tu_1, u_1} & \iprod{Tu_2, u_1} &\cdots &  \iprod{Tu_n, u_1}\\
+        \iprod{Tu_1, u_2} & \iprod{Tu_2, u_2} &\cdots &  \iprod{Tu_n, u_2}\\
+        \vdots & \vdots & \ddots & \vdots\\
+        \iprod{Tu_1, u_n} & \iprod{Tu_2, u_n} &\cdots &  \iprod{Tu_n, u_n}\\
+    \end{pmatrix}.   
+    \]
+    In particular, remark that $\iprod{Tu_j, u_i}$ is the $(ij)$th element.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $v = a_1 u_1 + \cdots + a_n v_n$ be the unique representation of $v$ in $\beta$. Taking the inner product with $u_i$ on both sides, then, we get \[
+            \iprod{v, u_i} = \sum_{j=1}^n a_j \iprod{u_j, u_i} = \sum_{j=1}^n a_j \delta_{ji} = a_i.
+        \]
+        \item The $j$th column of $[T]_\beta$ is $[Tu_j]_\beta = (\iprod{Tu_j, u_1}, \iprod{Tu_j, u_2}, \dots, \iprod{Tu_j, u_n})^t$, by part (a).
+    \end{enumerate}
+\end{proof}
+
+
+Clearly, orthonormal bases are quite convenient; but does one always exist? More precisely, does every inner product space admit an orthonormal basis? We will show that the finite dimensional ones always do.
+
+\begin{definition}[Orthogonality to a Set]
+    For a set $S \subseteq V$ and $v \in V$, we say that $v$ is \emph{orthogonal to $S$} and write $v \perp S$ if $v$ is orthogonal to all vectors in $S$.
+\end{definition}
+
+\begin{proposition}
+    $v \perp V \iff v = 0_V$
+\end{proposition}
+
+\begin{proof}
+    Let as a homework exercise.
+\end{proof}
+
+\begin{lemma}\label{lemma:orthonormalsetproj}
+    Suppose $\alpha \defeq \{u_1, \dots, u_k\}$ is an orthonormal set. For each $v \in V$, the vector $$\proj_\alpha(v) \defeq \sum_{i=1}^k \proj_{u_i}(v) = \sum_{i=1}^k \iprod{v, u_i} u_i$$ has the property that $v \proj_\alpha(v) \perp \alpha$, in particular, $v = \proj_\alpha(v) \perp \proj_\alpha(v)$.
+
+    Thus, $v = \proj_\alpha(v) + \orth_\alpha(v)$ where $\orth_\alpha(v) \defeq v - \proj_\alpha$, where $\proj_\alpha(v) \perp \orth_\alpha(v)$.
+\end{lemma}
+
+\begin{proof}
+    We need to show that $v - \proj_\alpha(v) \perp u_j$ for each $j = 1, \dots, k$. Fix $j$, then \begin{align*}
+        \iprod{v - \proj_\alpha(v), u_j} &= \iprod{v -u_j} - \iprod{\proj_\alpha, u_i}\\
+        &= \iprod{v, u_j} - \sum_{i=1}^k\iprod{v, u_i} \underbrace{\iprod{u_i, u_j}}_{=\delta_{ij}} \\
+        &= \iprod{v, u_j} - \iprod{v, u_j} = 0.
+    \end{align*}
+\end{proof}
+
+\subsection{Gram-Schmidt Algorithm}
+We describe now a process to
+\[
+\underset{\text{independent set}}{\{v_1, v_2, \dots, v_k\}} \rightsquigarrow \underset{\text{orthonormal set}}{\{u_1, u_2, \dots, u_k\}}
+\]
+
+with the property that for all $\ell = 1, \dots, k$, $\Span( \{v_1, \dots, v_\ell\}) = \Span (\{u_1, \dots, u_\ell\})$.
+
+The $\ell$th step of the process takes 
+\[
+    \{\underbrace{u_1, \dots, u_{\ell-1},}_{\text{orthonormal}} v_\ell\}    \rightsquigarrow \underbrace{\{u_1, \dots, u_{\ell-1}, u_\ell\}}_{\substack{\text{orthonormal}\\ \Span(\{u_1, \dots, u_{\ell-1}, v_\ell\}) = \Span(\{u_1, \dots, u_{\ell-1}, u_\ell\})}}.
+\]
+
+Concretely, we replace $v_\ell$ with $$v_\ell' \defeq \orth_{\{u_1, \dots, u_{\ell-1}\}}(v_\ell) \equiv v_\ell - \proj_{\{u_1, \dots, u_{\ell - 1}\}}(v_{\ell}) \equiv v_{\ell} - \sum_{i=1}^{\ell - 1} \iprod{v_\ell, u_i} u_i.$$
+
+By \cref{lemma:orthonormalsetproj}, this is indeed orthogonal to the preceding vectors; we need simply now to normalize it, namely $u_\ell \defeq \norm{v_\ell}^{-1} \cdot v_\ell'$.
+
+\begin{example}
+    $v_1 \defeq (1, 0, 1, 0), v_2 \defeq (1, 1, 1, 1), v_3 \defeq (0, 1, 2, 1)$.
+
+    First we take $u_1 \defeq \norm{v_1}^{-1}v_1 = \frac{1}{\sqrt{2}}(1, 0, 1, 0)$.
+    
+    Then $v_2' = v_2 - \iprod{v_2, u_1} u_1 = v_2 - \frac{1}{\sqrt{2}}(1+1)\frac{1}{\sqrt{2}}(1,0,1,0) = (1,1,1,1) - (1,0,1,0) = (0,1,0,1)$. Normalizing, $u_2 \defeq \frac{1}{\sqrt{2}}(0,1,0,1)$.
+
+    Finally, $v_3' = v_3 - \iprod{v_3, u_1}u_1 - \iprod{v_3, u_2}u_2 = (-1, 0, 1, 0)$, and so $u_3 \defeq \frac{1}{\sqrt{2}}(-1, 0, 1, 0)$, giving us a final orthonormal set \[
+    \{
+    \frac{1}{\sqrt{2}}(1,0,1,0), \frac{1}{\sqrt{2}}(0,1,0,1), \frac{1}{\sqrt{2}}(-1,0,1,0).
+    \}    
+    \]
+\end{example}
+
+\begin{corollary}
+    Every finite dimensional inner product space admits an orthonormal basis.
+\end{corollary}
+
+\begin{proof}
+    Feed any basis to the process above.
+\end{proof}
