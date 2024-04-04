@@ -1,0 +1,86 @@
+\subsection{Dirac Delta Function}
+
+\begin{definition}[Dirac Delta]
+    Denote $\delta(t - t_0) \defeq \begin{cases}
+        0 & t \neq t_0\\
+        \text{ unbounded} & t = t_0
+    \end{cases}$,
+    in such a way that for any $\epsilon > 0$, $\int_{t_0-\epsilon}^{t_0 + \epsilon} \delta(t - t_0) f(t) \dd{t} = \int_{-\infty}^\infty f(t) \delta(t - t_0) \dd{t} = f(t_0)$. Ie, $\delta(t-t_0)$ "picks out" the function's value at $t_0$.
+
+    In particular, letting $f(t) \equiv 1$, we see that \begin{align*}
+        \int_0^t \delta(s - t_0) \dd{s} = \begin{cases}
+            0 & t < t_0\\
+            1 & t > t_0
+        \end{cases}.
+    \end{align*}
+\end{definition}
+
+\begin{remark}
+    This is not a very rigorous definition. Sorry.
+\end{remark}
+
+\begin{theorem}
+    For $t_0 > 0$, $\laplace{\delta(t - t_0)} = e^{-st_0}$.
+\end{theorem}
+\begin{proof}
+    $\laplace{\delta(t - t_0)} = \int_0^\infty e^{-st} \delta(t - t_0) \dd{t} = e^{-s t_0}$.
+\end{proof}
+
+\begin{corollary}
+    $\laplace{\delta(t)} = 1$
+\end{corollary}
+
+\subsection{Convolutions, Green's Function}
+
+Recall that we can write $L[y] = \sum_{k=0}^n a_k y^{(k)}(t) = f(t)$ (with IVPs) as $P(s) Y(s) - Q(s) = F(s)$, where $P(s) = \sum_{k=0}^n a_k s^k$, $Y(s) = \laplace{y(t)}$, $F(s) = \laplace{f(t)}$, and $Q(s)$ of degree $n - 1$ and dependent on the ICs. Letting $G(s) \defeq \frac{1}{P(s)}$, then, we can rewrite this as \[
+y(t) = \ilaplace{F(s)G(s)} + \ilaplace{\frac{Q(s)}{P(s)}}    .
+\]
+$\deg(Q) < \deg(P)$ so we can find the RHS of this using typical partial fractions techniques, and we can solve the LHS using the convolution theorem, namely $\ilaplace{F(s)G(s)} = (f \ast g)(t)$.
+
+\begin{definition}[Green's function]
+    The function $g(t)$ that solves $L[g(t)] = \delta(t)$ with IC $g(0) = g'(0) = \cdots = g^{(n-1)}(0)$ is called the \emph{Green's function} of $L$.
+\end{definition}
+
+\begin{theorem}
+    Let $g(t)$ be the Green's function of $L$. Then, $L[g(t)] = G(s) = \frac{1}{P(s)}$.
+\end{theorem}
+
+\begin{proof}
+    $L[g] = \delta(t) \implies P(s)G(s) - Q(s) = 1 \implies P(s)G(s) = 1$.
+\end{proof}
+
+\begin{example}
+    Find an expression for $y(t)$ with respect to a convolution integral and $Q(s)/P(s)$ for the ODE\[
+    y'' + \omega^2 y = f(t), 
+    \]
+    for arbitrary $y(0) =\alpha_0, y'(0) = \alpha_1$, and then when $\alpha_0 = \alpha_1 = 0$.
+\end{example}
+
+\subsection{Transforms of Periodic Functions}
+
+\begin{definition}[Periodic function]
+    We say a function $f(t)$ is periodic of period $T$ if $f(t) = f(t + T)$ for some minimal $T > 0$ for all $t > 0$.
+\end{definition}
+\begin{remark}
+    This definition excludes the constant function as a periodic (why?).
+\end{remark}
+
+\begin{theorem}
+    Let $f$-periodic of period $T$ and pw-cont on $[0, \infty)$. Then, \[
+    \laplace{f(t)}     = \frac{1}{1 - e^{-sT}}\int_0^T e^{-st} f(t)\dd{t}.
+    \]
+\end{theorem}
+
+\begin{proof}
+    Straightforward computation (hint: split up the integral in $\laplace{f(t)}$ into two integrals with $T$ as the upper, lower limits resp.).
+\end{proof}
+
+\begin{example}
+    Find the Laplace transform of $f(t) \defeq \sum_{n=0}^\infty (-1)^n \unit{t - n}$ (remarking that $f$ periodic with $T = 2$) using the previous theorem. Then find it using the linearity of $f$.
+\end{example}
+
+\begin{example}
+    Solve $y'' + y' + y = f(t) = \delta(t - 1) + \unit{t - 2}e^{-(t-2)}$.
+
+    (Warning: cursed).
+\end{example}
