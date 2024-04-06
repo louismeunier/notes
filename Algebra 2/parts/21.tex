@@ -42,9 +42,9 @@
 \begin{proof}
     We prove by induction on $n$. 
     
-    \underline{Base:} If $n = 0$, $A = ()$ and we are done.
+    \myuline{Base:} If $n = 0$, $A = ()$ and we are done.
 
-    \underline{Inductive Step:} Suppose $n \geq 1$ and the statement holds for $n - 1$. If $A$ is all zeros, we are done. Else, $A$ has some nonzero entry, and by swapping two rows and columns such that the entry is in the top left ($a_11$) of the matrix, and then multiplying by $a_11^{-1}$ such that it is equal to 1, \[
+    \myuline{Inductive Step:} Suppose $n \geq 1$ and the statement holds for $n - 1$. If $A$ is all zeros, we are done. Else, $A$ has some nonzero entry, and by swapping two rows and columns such that the entry is in the top left ($a_11$) of the matrix, and then multiplying by $a_11^{-1}$ such that it is equal to 1, \[
     \begin{pmatrix}
         1 & \star & \cdots & \star\\
         \star & \ddots & & \\

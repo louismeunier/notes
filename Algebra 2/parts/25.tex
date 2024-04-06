@@ -54,11 +54,11 @@
 \begin{proof}
     Uniqueness follows from \cref{cor:detuniqueness}. It remains to show that the given definition for $\det$ is a normalized, alternating, multilinear form.
     
-    \underline{Normalized:} $\det(I_n) = \sum_{ \pi \in S_n} \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)} =(-1)^0 \cdot  1 \cdots 1 = 1$, since each summand will be zero for any permutation other than the identity.
+    \myuline{Normalized:} $\det(I_n) = \sum_{ \pi \in S_n} \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)} =(-1)^0 \cdot  1 \cdots 1 = 1$, since each summand will be zero for any permutation other than the identity.
 
-    \underline{Multilinear:} A linear combination of $n$-linear forms is itself an $n$-linear form, so it suffices to prove that for a fixed $\pi \in S_n$, $\delta_\pi : M_n(\field) \to \field$ given by $\delta_\pi (A) \defeq a_{1 \pi(1)} \cdots a_{n \pi (n)}$ is $n$-linear, which should be clear as a product of matrix entries.
+    \myuline{Multilinear:} A linear combination of $n$-linear forms is itself an $n$-linear form, so it suffices to prove that for a fixed $\pi \in S_n$, $\delta_\pi : M_n(\field) \to \field$ given by $\delta_\pi (A) \defeq a_{1 \pi(1)} \cdots a_{n \pi (n)}$ is $n$-linear, which should be clear as a product of matrix entries.
 
-    \underline{Alternating:} Suppose $A$ has two equal rows, wlog $A_{(1)}, A_{(2)}$. We partition $S_n$ into the disjoint union of even and odd permutations, denoting $A_n$ the even permutations. Note that $S_n \setminus A_n = A_n \cdot (12)$, ie the coset of the transposition $(12)$ of the subgroup $A_n$. Thus, $A_n \to A_n \cdot (12)$ via $\pi \mapsto \pi' \defeq \pi \cdot (12)$ is a bijection, and our partition has two equal parts. Thus, we can rewrite $\det$ as \begin{align*}
+    \myuline{Alternating:} Suppose $A$ has two equal rows, wlog $A_{(1)}, A_{(2)}$. We partition $S_n$ into the disjoint union of even and odd permutations, denoting $A_n$ the even permutations. Note that $S_n \setminus A_n = A_n \cdot (12)$, ie the coset of the transposition $(12)$ of the subgroup $A_n$. Thus, $A_n \to A_n \cdot (12)$ via $\pi \mapsto \pi' \defeq \pi \cdot (12)$ is a bijection, and our partition has two equal parts. Thus, we can rewrite $\det$ as \begin{align*}
         \det(A) &=\sum_{\pi \in S_n}  \text{sgn}(\pi) \cdot a_{1 \pi(1)} \cdots a_{n \pi(n)} \\
         &= \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} + \sum_{\pi \in A_n} \underbrace{\text{sgn}(\pi')}_{=- \text{sgn}(\pi)} \underbrace{a_{1 \pi'(1)}}_{a_{1 \pi(2)}}\cdots \underbrace{a_{n\pi'(n)}}_{= a_{n \pi(n)}}\\
         &= \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} - \sum_{\pi \in A_n} \text{sgn}(\pi) a_{1 \pi(1)} \cdots a_{n\pi(n)} = 0,

@@ -133,15 +133,15 @@
   nobreak=true
 }
 
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}, numberwithin=section]{theorem}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}, numberwithin=section]{corollary}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-magenta}{$\hookrightarrow$ \underline{Proposition}}, numberwithin=section]{proposition}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}, numberwithin=section]{lemma}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}, numberwithin=section]{axiom}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}, numberwithin=section]{definition}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Question}}, numberwithin=section]{question}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-red}{$\hookrightarrow$ {Theorem}}, numberwithin=section]{theorem}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ {Corollary}}, numberwithin=section]{corollary}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-magenta}{$\hookrightarrow$ {Proposition}}, numberwithin=section]{proposition}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ {Lemma}}, numberwithin=section]{lemma}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ {Axiom}}, numberwithin=section]{axiom}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ {Definition}}, numberwithin=section]{definition}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ {Question}}, numberwithin=section]{question}
 
-\mdtheorem[style=example]{example}{$\circledast$ \underline{Example}}[section]
+\mdtheorem[style=example]{example}{$\circledast$ {Example}}[section]
 
 % \mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
 % \mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\hookrightarrow$ \underline{Proposition}}}[section]
@@ -190,8 +190,12 @@
 % page footer
 \newpagestyle{mypage}{%
 % \footrule
-\setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{{\scshape\sectiontitle}: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
+  \setfoot{\scriptsize\thesubsection\quad {\scshape\sectiontitle}: \textbf{\subsectiontitle}}{}{\scriptsize \thepage}
 }
+% \newpagestyle{mypage}{%
+% % \footrule
+% \setfoot{\scriptsize\textcolor{gray}{§\ref{\thesubsection}}}{\scriptsize\textcolor{gray}{\textit{{\scshape\sectiontitle}: \textbf{\subsectiontitle}}}}{\textcolor{gray}{\scriptsize p. \thepage}}
+% }
 
 \titleformat{\section}
 {\Large\bfseries\scshape}

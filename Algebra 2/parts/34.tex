@@ -1,0 +1,91 @@
+\subsection{Orthogonal Complements and Orthogonal Projections}
+
+\begin{definition}[Orthogonal Complement]
+    Let $V$ be an inner product set. For a set $S \subseteq V$, its \emph{orthogonal complement} is the subspace \[S^\perp \defeq \{v \in V : v \perp S \}.\]
+\end{definition}
+
+\begin{proposition}
+    $S^\perp$ indeed a subspace as in the definition (even if $S$ is not).
+\end{proposition}
+
+\begin{proof}
+    Let $v, w \in S^\perp$, $a \in \field$. Then for each $s \in S$, $\iprod{v + aw, s} = \iprod{v, s} + a \cdot \iprod{w, s} = 0 + a \cdot 0$, hence $v + a w \in S^\perp$.
+\end{proof}
+
+\begin{remark}
+    We previously used $S^\perp$ to denote the annihilator of $S$, with $S^\perp \subseteq V^\ast$, ie the linear functionals that are $0$ on $S$, while now we are talking about $S^\perp \subseteq V$ as the set of vectors orthogonal to $S$; this is slightly abusive notation. We shall see why to follow (indeed, we have a natural bijection between the two, which we shall show).
+\end{remark}
+
+\begin{theorem}
+    Let $V$ be an inner product space and let $W \subseteq V$ be a finite dimensional subspace.
+    \begin{enumerate}[label=(\alph*)]
+        \item For each $v \in V$, there is a unique decomposition $v = w + w_\perp$ such that $w \in W$ and $w_\perp \in W^\perp$. We call such a $w$ the \emph{orthogonal projection} of $v$ onto $W$, and denote it $\proj_W(v)$.
+        \item $V = W \oplus W^\perp$. In particular, if $\dim(V) < \infty$, then $$\dim(W^\perp) = \dim(V) - \dim(W).$$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item \myuline{Existence:} Let $\alpha \defeq \{w_1, w_2, \dots, w_k\}$ be an orthonormal basis for $W$, which exists since $\dim(W) < \infty$ (\cref{cor:finiteorthonormalbasis}). Let $w \defeq \proj_\alpha(v)$, then, $w_\perp \defeq v - w$ is orthogonal to $\alpha$ by \cref{lemma:orthonormalsetproj}, hence orthogonal to the span $\Span(\alpha) = W$.
+        
+        \myuline{Uniqueness:} Suppose there exist two such decompositions, $w + w_\perp = v = w' + w_\perp'$. Note that since $v - w$ and $v - w'$ are both orthogonal to $W$, so is their difference, ie $v -w,  v - w' \in W^\perp \implies (v- w) - (v - w')  = w' - w\in W^\perp$, being a subspace. But $w - w' \in W$ as well, and is also orthogonal to $0$, so it must be that $w - w' = 0_V$ and thus $w = w'$.
+        
+        \item By (a), $V = W + W^\perp$. It remains to show that $W \cap W^\perp \{0_V\}$; but for $w \in W$, $w \in W$ and $w \in W^\perp$ simultaneously only if $w = 0_V$.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    If $\alpha, \beta$ two different orthonormal bases for a finite dimensional subspace $W$, then $\proj_\alpha(v) = \proj_\beta(v)$ for all $v \in V$, because $\proj_W(v)$ is unique.
+\end{remark}
+
+\begin{theorem}
+    For any finite dimensional subspace $W \subseteq V$ and for each $v \in V$, the orthogonal projection $\proj_W(v)$ is the unique closest vector to $V$ in $W$.
+\end{theorem}
+
+\begin{proof}
+    Left as a (homework) exercise.
+\end{proof}
+
+\begin{proposition}
+    Let $W \subseteq V$ be a finite dimensional subspace. Then \begin{enumerate}[label=(\alph*)]
+        \item $\proj_W: V \to V$ a linear operator.
+        \item A linear operator $T : V \to V$ is a projection (onto $\im(T)$) operator iff $\ker(T) = \im(T)^\perp$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Let as a (homework) exercise.
+\end{proof}
+
+\begin{corollary}
+    Let $W \subseteq V$ be a finite dimensional subspace. Then $(W^\perp)^\perp = W$.
+\end{corollary}
+
+\begin{proof}
+    By definition $W \subseteq (W^\perp)^\perp$; we show the converse. Let $v \in (W^\perp)^\perp$. Then, $v= w + w_\perp$ for some vectors $w \in W$ and $w_\perp \in W^\perp$. We know $\iprod{v, w_\perp} = 0$, so \begin{align*}
+    \norm{v}^2 &= \iprod{v, v}     = \iprod{v, w + w_\perp} = \iprod{v, w} + \iprod{v, w_\perp} \\
+    &= \iprod{v, w} = \iprod{v, w_\perp} = \iprod{w + w_\perp, w_\perp} = \iprod{w, w} = \norm{w}^2.
+    \end{align*}
+    On the other hand, $\norm{v}^2 = \norm{w}^2 + \norm{w_\perp}^2$, so it must be that $\norm{w_\perp}^2 = 0$ hence $w_\perp = 0_V$ and thus $v = w \in W$ and the proof is complete.
+\end{proof}
+
+\subsection{Riesz Representation and Adjoint}
+
+Let $V$ be an inner product space. For each $w \in V$, we can define a linear functional $f_w \in V^\ast$ as follows: $f_w(v) \defeq \iprod{v, w}$. It turns out that for a finite dimensional $V$, every linear functional is of this form.
+
+\begin{theorem}[Riesz Representation Theorem]
+    Let $V$ be a finite dimensional inner product space. Then, for each $f \in V^\ast$, there is a unique $w \in V$ such that $f = f_w$, ie $f(v) = \iprod{v, w}$ for all $v \in V$. 
+
+    On other words, the map $V \to V^\ast, w \mapsto f_w$ is a linear isomorphism.
+\end{theorem}
+
+\begin{proof}
+    \myuline{Existence:} fix $f \in V^\ast$ and let $\beta \defeq \{v_1, \dots, v_n\}$ be an orthonormal basis for $V$. Then, for each $v\in V$, $v = \iprod{v, v_1} v_1 + \cdots + \iprod{v, v_n} v_n$ hence \begin{align*}
+        f(v) &= \iprod{v, v_1} f(v_1) + \cdots + \iprod{v, v_n}f(v_n)\\
+        &= \iprod{v, \overline{f(v_1)}v_1} + \cdots + \iprod{v, \overline{f(v_n)}v_n}\\
+        &= \iprod{v, \overline{f(v_1)}v_1 + \cdots + \overline{f(v_n)}v_n},
+    \end{align*}
+    hence, taking $w \defeq \overline{f(v_1)}v_1 + \cdots + \overline{f(v_n)}v_n$ gives us existence.
+    
+    \myuline{Uniqueness:} Suppose $f_{w_1} = f = f_{w_2}$ so $f_{w_1 - w_2} = f_{w_1} - f_{w_2} = 0_{V^\ast}$ ie $\forall v \in V$, $\iprod{v, w_1 - w_2} = f_{w_1 - w_2} = 0$. Hence, $w_1 - w_2 = 0 \implies w_1 = w_2$ and uniqueness holds.
+\end{proof}

@@ -26,13 +26,13 @@ The basis $\beta^\ast$ for $V^\ast$ is called the \emph{dual basis}. Explicitly,
 \end{corollary}
 
 \begin{proof}
-    \underline{Linear indepedence:} let $a_1 f_1 + \cdots + a_n f_n = 0_{V^\ast}=: 0$. Then,
+    \myuline{Linear indepedence:} let $a_1 f_1 + \cdots + a_n f_n = 0_{V^\ast}=: 0$. Then,
     \[
     (a_1f_1 + \cdots + a_n f_n)(v_i) = a_if_i(v_i) = a_i \cdot 1 = a_i \implies a_i = 0,    
     \]
     hence $\beta^\ast$ indeed linearly independent.
 
-    \underline{Spanning:} let $f \in V^\ast$. We claim that $f = \sum_{i = 1}^n f(v_i) f_i$. It suffices to show these two sides are equal on the basis vectors, as linear transformations are determined by their effect on basis vectors. We have:
+    \myuline{Spanning:} let $f \in V^\ast$. We claim that $f = \sum_{i = 1}^n f(v_i) f_i$. It suffices to show these two sides are equal on the basis vectors, as linear transformations are determined by their effect on basis vectors. We have:
     \begin{align*}
        \left( \sum_{i=1}^n f(v_i) f_i\right)(v_j) = \sum_{i=1}^n f(v_i) f_i(v_j) = \sum_{i=1}^n f(v_i) \cdot \delta_{ij} = f(v_j),
     \end{align*}

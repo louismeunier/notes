@@ -39,11 +39,17 @@
 \DeclareMathOperator{\orth}{orth}
 \begin{document}
 
+% \renewcommand{\myuline}[1]{\myuline}
+
+
 % \setstretch{2.25}
 \thetitle
 
 \setstretch{1.3}
-{\scshape\tableofcontents}\newpage
+{\scshape\tableofcontents}
+
+% \setstretch{1.}
+% \pagestyle{mypage}
 
 \newpage
 \pagestyle{mypage}
@@ -70,11 +76,7 @@
     }
   }
 
-% \renewcommand{\listtheoremname}{\section{List of Theorems, etc}}
-
-
-\newpage
-\setstretch{1.5}
-\pagestyle{mypage}
-\listoftheorems[ignore={remark}, title={\section{List of Theorems}}, swapnumber]
+% \newpage
+% \pagestyle{plain}
+% \listoftheorems[ignore={remark}, title={\section{List of Theorems}}, swapnumber]
 \end{document}
