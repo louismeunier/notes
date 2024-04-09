@@ -44,6 +44,20 @@
 
 \usepackage{physics}
 
+\usepackage{contour}
+\usepackage[normalem, normalbf]{ulem}
+
+
+% https://alexwlchan.net/2017/latex-underlines/
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
+
 
 
 % TODO: updates below
@@ -79,7 +93,7 @@
 
 % Proof environment
 \renewcommand*{\qedsymbol}{\(\blacksquare\)}
-\renewcommand*{\proofname}{\underline{Proof}}
+\renewcommand*{\proofname}{\myuline{Proof}}
 
 % Fix issues with references
 \newcommand{\getenv}[2][]{%
@@ -132,30 +146,30 @@
 }
 
 
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}, numberwithin=section]{theorem}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}, numberwithin=section]{corollary}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-magenta}{$\hookrightarrow$ \underline{Proposition}}, numberwithin=section]{proposition}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}, numberwithin=section]{lemma}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}, numberwithin=section]{axiom}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}, numberwithin=section]{definition}
-\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Question}}, numberwithin=section]{question}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-red}{$\hookrightarrow$ {Theorem}}, numberwithin=section]{theorem}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ {Corollary}}, numberwithin=section]{corollary}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-magenta}{$\hookrightarrow${Proposition}}, numberwithin=section]{proposition}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ {Lemma}}, numberwithin=section]{lemma}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-orange}{$\hookrightarrow$ {Axiom}}, numberwithin=section]{axiom}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ {Definition}}, numberwithin=section]{definition}
+\declaretheorem[mdthm={style=general-thm}, title=\textcolor{solarized-blue}{$\hookrightarrow$ {Question}}, numberwithin=section]{question}
 
-\mdtheorem[style=example]{example}{$\circledast$ \underline{Example}}[section]
+\mdtheorem[style=example]{example}{$\circledast$ {Example}}[section]
 
 
-% \mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \underline{Theorem}}}[section]
-% \mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\hookrightarrow$ \underline{Proposition}}}[section]
-% \mdtheorem[style=general-thm]{corollary}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Corollary}}}[section]
-% \mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
-% \mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Axiom}}}[section]
-% \mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Definition}}}[section]
-% \mdtheorem[style=general-thm]{question}{\textcolor{solarized-blue}{$\hookrightarrow$ \underline{Question}}}[section]
+% \mdtheorem[style=general-thm]{theorem}{\textcolor{solarized-red}{$\hookrightarrow$ \myuline{Theorem}}}[section]
+% \mdtheorem[style=general-thm]{proposition}{\textcolor{solarized-magenta}{$\hookrightarrow$ \myuline{Proposition}}}[section]
+% \mdtheorem[style=general-thm]{corollary}{\textcolor{solarized-orange}{$\hookrightarrow$ \myuline{Corollary}}}[section]
+% \mdtheorem[style=general-thm]{lemma}{\textcolor{solarized-orange}{$\hookrightarrow$ \myuline{Lemma}}}[section]
+% \mdtheorem[style=general-thm]{axiom}{\textcolor{solarized-orange}{$\hookrightarrow$ \myuline{Axiom}}}[section]
+% \mdtheorem[style=general-thm]{definition}{\textcolor{solarized-blue}{$\hookrightarrow$ \myuline{Definition}}}[section]
+% \mdtheorem[style=general-thm]{question}{\textcolor{solarized-blue}{$\hookrightarrow$ \myuline{Question}}}[section]
 
 \newmdtheoremenv[roundcorner=8pt,
 linecolor=white,
 leftmargin=5,rightmargin=5,
 backgroundcolor=gray!10,
-nobreak=true]{lemma-inline}{\textcolor{solarized-orange}{$\hookrightarrow$ \underline{Lemma}}}[section]
+nobreak=true]{lemma-inline}{\textcolor{solarized-orange}{$\hookrightarrow$ {Lemma}}}[section]
 
 % fixes broken references
 % \newcommand{\thmautorefname}{Theorem}

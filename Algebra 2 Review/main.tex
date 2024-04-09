@@ -112,6 +112,8 @@ $\field$ denotes an arbitrary field; in \cref{sec:6} we will restrict $\field$ t
 
 $M_{m \times n}(\field) \defeq \{m \times n \text{ matrices with entries in }\field \}$; if $m = n$ we denote $M_n(\field)$. $\GL_n(\field) \defeq \{A \in M_n(\field) : A \text{ invertible }\} \subseteq M_n(\field)$.
 
+Important (purely subjectively) results are highlighted with \textcolor{red}{$\star$} for their use in proofs and other results.
+
 \section{Vector Spaces, Linear Relations}
 
 
@@ -413,7 +415,7 @@ $T : V \to V$ nilpotent if $T^n = 0$ for some $n \in \mathbb{N}$.
   For $S \subseteq V$, put $\hat{S} \defeq \{\hat{x} : x \in S\}$.
 \end{defn}
 
-\begin{thm}
+\begin{thm}[\textcolor{red}{$\star$}]
   $x \mapsto \hat{x}$, $V \mapsto V^{\ast \ast}$ a linear injection, and in particular, an isomorphism if $V$ finite dimensional.
 
   Moreover, $V^{\ast \ast} = \hat{V}$.
@@ -509,7 +511,7 @@ For any two bases $\alpha, \beta$ for $V$, there exists a $Q \in \GL_n(\field)$ 
 Conversely, for any $Q \in \GL_n(\field)$, there exists bases $\alpha, \beta$ for $V$ such that $Q = [I]_\alpha^\beta$.
 \end{prop}
 
-\begin{cor}
+\begin{cor}[\textcolor{red}{$\star$}]
   Elementary matrices preserve rank.
 \end{cor}
 
@@ -634,7 +636,7 @@ If all pivots are $1$, then we say that $B$ is in reduced row echelon form (rref
   Moreover, $\delta$ uniquely determined by its value on $I_n$.
 \end{cor}
 
-\begin{defn}[Determinant]
+\begin{defn}[\textcolor{red}{$\star$} Determinant]
   Let $\delta : M_n(\field) \to \field$ be the unique normalized ($\delta(I_n) = 1$) alternating multilinear form, ie $\det(A) \defeq \sum_{ \pi \in S_n} \text{sgn}(\pi) A_{1 \pi(1)} \cdots A_{n \pi(n)}$.
 \end{defn}
 
@@ -708,7 +710,7 @@ If all pivots are $1$, then we say that $B$ is in reduced row echelon form (rref
   This is well-defined; $[T]_\alpha, [T]_\beta$ are conjugate for any two bases $\alpha, \beta$.
 \end{remark}
 
-\begin{prop}
+\begin{prop}[\textcolor{red}{$\star$}]
   $T$ diagonalizable $\iff$ there exists a basis $\beta$ for $V$ such that $[T]_\beta^\beta$ $\iff$ there is a basis for $V$ consisting of eigenvectors for $T$
 \end{prop}
 
@@ -779,7 +781,7 @@ If all pivots are $1$, then we say that $B$ is in reduced row echelon form (rref
   For (2), write down $[T_W]_\beta$ where $\beta$ as in part (1).
 \end{proof}
 
-\begin{thm}[Cayley-Hamilton]
+\begin{thm}[\textcolor{red}{$\star$} Cayley-Hamilton]
   $T$ satisfies its own characteristic polynomial, namely $p_T(T) \equiv 0$.
 \end{thm}
 

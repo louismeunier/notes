@@ -1,0 +1,51 @@
+\begin{lemma}[Abel's]
+    Let $x_n, y_n$, $s_0 = 0, s_k = y_1 + \cdots + y_k$. Then, for $m \geq k + 1$, \[
+    \sum_{k=n+1}^m x_k y_k = (x_m s_m - x_{n+1}s_n)     + \sum_{k=n+1}^{m-1} (x_k - x_{k+1})s_k
+    \]
+\end{lemma}
+\begin{theorem}[Dirichlet's Test]
+    Suppose $x_n$ decreasing and $\lim_{n \to \infty} x_n = 0$. If $s_n \defeq y_1+ \cdots +y_n$ bounded, then $\sum_{n=1}^\infty x_n y_n$ converges.
+\end{theorem}
+
+\begin{proof}
+    Fix $B > 0$ such that $\abs{s_n} \leq B$. $x_n$ decreasing so $x_{k} - x_{k+1} \geq 0$. By Abel's lemma, \begin{align*}
+        \abs{\sum_{k=n+1}^m x_{k} y_k} &\leq \abs{x_m s_m - x_{n+1} s_n} + \abs{\sum_{k=n+1}^{m-1} s_k(x_k - x_{k+1})}\\
+        &\leq x_m B + x_{n+1}B + \underbrace{\sum_{k=n+1}^{m-1} (x_{k} - x_{k+1})B}_{\text{telescopes}}\\
+        &= 2 x_{n+1} B \underset{n \to \infty}{\to} 0.
+    \end{align*}
+\end{proof}
+
+\begin{remark}
+    What is red and commutes? An abelian grape!
+\end{remark}
+
+
+\begin{example}[Improving Convergence]
+    $y_j = (-1)^{j+1}$ does not converge, but $\abs{s_n} \leq 1$, so taking $x_n = \frac{1}{n}$ gives $\sum_n x_n y_n$ finite.
+
+    This is an example of "improving convergence", ie making a nearly-convergent series convergence. Another example is by taking successive arithmetic means of a given sequence; ie let $a_1 = y_1, a_2 = \frac{y_1 + y_2}{2}, \dots, a_n = \frac{\sum_{i=1}^n y_i}{n}$. Then, in this case again $y_n = (-1)^{n+1}$, which does not converge, has $a_n \to 0$. 
+
+    Moreover, if $y_n \to A$, then $a_n \to A$ as well (converse does not hold in general, as above).
+\end{example}
+
+\begin{theorem}[Abel's Test]
+    Let $x_n$-convergent and monotone, and suppose $\sum_{n} y_n$ converges. Then $\sum_n x_n y_n$ also converges.
+\end{theorem}
+
+\subsection{Series of Functions}
+\begin{definition}[Convergence]
+    We say a series of functions $\sum_n f_n(x)$ absolutely convergent on $E$ if for $x \in E$, $\sum_n \abs{f_n(x)}$ converges for all $x \in E$.
+
+    We say the convergence $\sum_n f_n(x) \to g(x)$ is uniform if the convergence is uniform for any $x \in E$; that is, $\forall \epsilon > 0, \exists N \in \mathbb{N}$ such that $\forall n \geq N$ and $x \in E$, $\abs{g(x) - \sum_n f_n(x)} < \epsilon$.
+\end{definition}
+
+\begin{proposition}
+    Suppose for $f_n : E \defeq [a, b] \to \R$, $\sum_n f_n(x) \to g(x)$ uniform for $x \in E$, and $f_n \in \mathcal{R}[a, b]$. Then \[
+    \int_a^b g(x) \dd{x} = \sum_{n=1}^\infty \int_a^b f_n(x) \dd{x}.    
+    \]
+    That is, the integral of the limit is equal to the limit of the integral.
+\end{proposition}
+
+\begin{proposition}
+    Let $f_n :[ a, b] \to \R$ where $f_n' \exists$ on $[a, b]$. Suppose $\sum_n f_n(x)$ converges for some $x \in [a, b]$ and $\sum_n f_n'(x)$ converges uniformly on $[a, b]$. Then there exists some $g : [a, b] \to \R$ such that $\sum_n f_n \to g$ uniformly on $[a, b]$, $g$ differentiable on $[a, b]$, and $g'(x) = \sum_n f_n'(x)$. That is, the derivative of the limit equals the limit of the derivatives.
+\end{proposition}

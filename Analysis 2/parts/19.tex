@@ -3,15 +3,15 @@
 \begin{definition}[Upper/Lower Riemann Sums]
     For a partition $P$, \begin{itemize}
         \item $\overline{S}(f, P) \defeq \sum_{i=1}^n (\sup_{t \in [x_{i-1}, x_i]} f(t))\cdot (x_i - x_{i-1})$
-        \item  $\underline{S}(f, P) \defeq \sum_{i=1}^n (\inf_{t \in [x_{i-1}, x_i]} f(t))\cdot (x_i - x_{i-1})$
+        \item  $\myuline{S}(f, P) \defeq \sum_{i=1}^n (\inf_{t \in [x_{i-1}, x_i]} f(t))\cdot (x_i - x_{i-1})$
     \end{itemize}
 \end{definition}
 
 \begin{proposition}
     For any tagged partition $\dot{P}$, \[
-    \underline{S}(f, P) \leq S(f, \dot{P}) \leq \overline{S}(f, P).
+    \myuline{S}(f, P) \leq S(f, \dot{P}) \leq \overline{S}(f, P).
     \]
-    Moreover, $f \in \mathcal{R}[a, b]$ if $\forall \epsilon > 0, \exists \delta > 0 \st \diam(P) < \delta \implies \abs{\overline{S}(f, P) - \underline{S}(f, P)} < \epsilon$.
+    Moreover, $f \in \mathcal{R}[a, b]$ if $\forall \epsilon > 0, \exists \delta > 0 \st \diam(P) < \delta \implies \abs{\overline{S}(f, P) - \myuline{S}(f, P)} < \epsilon$.
 \end{proposition}
 
 \begin{proof}(Sketch)
@@ -20,7 +20,7 @@
 
 \begin{proposition}
     Let $P_1, P_2$ be partitions of $[a, b]$, and let $P_3$ be the \emph{common refinement} of $P_1, P_2$. Then \[
-        \underline{S}(f, P_i) \leq \underline{S}(f, P_3) \leq \overline{S}(f, P_3) \leq \overline{S}(f, P_i), \quad i = 1, 2,
+        \myuline{S}(f, P_i) \leq \myuline{S}(f, P_3) \leq \overline{S}(f, P_3) \leq \overline{S}(f, P_i), \quad i = 1, 2,
     \]
     that is, the finer refinement always gives a better approximation.
 \end{proposition}

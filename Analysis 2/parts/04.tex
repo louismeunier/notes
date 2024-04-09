@@ -25,10 +25,10 @@
 \end{remark}
 
 \begin{proof}[Answer.]
-    Let $\underline{x}=(x_1, x_2, \dots, x_n, \dots), \underline{y}=(y_1, y_2, \dots, y_n, \dots) \in \prod_{k=1}^\infty$ (where $x_i, y_i \in X_i$) be infinite sequences of elements. Then, for each metric space $X_k$ take the metric $$\tilde{d}_k(x_k, y_k) = \frac{d_k(x_k,y_k)}{1+d_k(x_k,y_k)}$$ (as in the example above). Then, we define \[
-    D(\underline{x}, \underline{y}) = \sum_{k=1}^{\infty} \frac{\tilde{d}_k(x_k, y_k)}{2^k},
+    Let $\myuline{x}=(x_1, x_2, \dots, x_n, \dots), \myuline{y}=(y_1, y_2, \dots, y_n, \dots) \in \prod_{k=1}^\infty$ (where $x_i, y_i \in X_i$) be infinite sequences of elements. Then, for each metric space $X_k$ take the metric $$\tilde{d}_k(x_k, y_k) = \frac{d_k(x_k,y_k)}{1+d_k(x_k,y_k)}$$ (as in the example above). Then, we define \[
+    D(\myuline{x}, \myuline{y}) = \sum_{k=1}^{\infty} \frac{\tilde{d}_k(x_k, y_k)}{2^k},
     \]
-    noting that $D(\underline{x}, \underline{y}) \leq \sum_{k=1}^\infty \frac{1}{2^k} = 1$ (by our construction, "normalizing" each metric), hence this is a valid, \emph{converging} metric (which wouldn't otherwise be guaranteed if we didn't normalize the metrics). It remains to show whether this metric omits the same topology as $\tau$. 
+    noting that $D(\myuline{x}, \myuline{y}) \leq \sum_{k=1}^\infty \frac{1}{2^k} = 1$ (by our construction, "normalizing" each metric), hence this is a valid, \emph{converging} metric (which wouldn't otherwise be guaranteed if we didn't normalize the metrics). It remains to show whether this metric omits the same topology as $\tau$. 
 \end{proof}
 
 \subsection{Compactness, Connectedness}

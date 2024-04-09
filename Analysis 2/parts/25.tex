@@ -1,0 +1,44 @@
+\begin{theorem}[Cauchy Criterion]
+    $f_n(x) : D \subseteq \R \to \R$ converges uniformly on $D$ iff $\forall \epsilon >0 \exists N \st \forall m,n \geq N$, $\sum_{i=n+1}^m f_i(x) < \epsilon \forall x\in D$.
+\end{theorem}
+
+\begin{proposition}[Weierstrass M-Test]
+    If $\abs{f_n(x)} \leq M_n$ $\forall x \in D \subseteq \R$ and $\sum_{n} M_n < + \infty$, then $\sum_{n} f_n(x)$ converges uniformly on $D$.
+\end{proposition}
+
+\begin{proof}
+    Suffices to look at the tail: $\sum_{j=n+1}^m \abs{f_n(x)} \leq \sum_{j=n+1}^m M_j$.
+\end{proof}
+
+\subsection{Power Series}
+
+\begin{definition}[Power Series]
+    A function, series of the form \[
+    f(x) = \sum_{n=0}^\infty a_n (x - c)^n    \qquad \circledast
+    \]
+    is said to be a power series centered at $c \in \R$.
+\end{definition}
+
+\begin{definition}[Radius of Convergence]
+    For $a_n$ as in $\circledast$, let $\rho \defeq \limsup_{n \to \infty} \sqrt[n]{\abs{a_n}}$. Then, $R \defeq \frac{1}{\rho}$ the radius of convergence of $f$ (taking $R = 0$ if $\rho = \infty$, $R = \infty$ if $\rho = 0$).
+\end{definition}
+
+\begin{theorem}[Cauchy-Hadamard]
+    Let $R$ be the radius of convergence of $\circledast$. Then, $
+    \sum_n a_n (x - c)^n $ converges if $\abs{x - c} < R,$    and diverges if $\abs{x - c} > R$. If precisely equal, either case could happen (and needs to be treated individually).
+\end{theorem}
+
+\begin{proof}
+    Directly apply the root test; assume $c = 0$. Then $\abs{a_n x^n}^{1/n} = \abs{a_n}^{1/n} \abs{x}$. If $\abs{x} < \rho$, then $\limsup \abs{a_n}^{1/n} \abs{x} < \rho \frac{1}{\rho}= 1$ so $\forall \epsilon > 0$, $\exists N \st \forall n \geq N$, $\abs{a_n}^{1/n}\abs{x} < 1 - \epsilon \implies \abs{a_n} \abs{x}^n < (1 - \epsilon)^n$. It follows that $\sum_{j \geq N} \abs{a_n x^n}< \sum_{j \geq N} (1 - \epsilon)^j$. But this RHS is a geometric series with $r < 1$ so thus converges. The converse follows similarly (well, backwards).
+\end{proof}
+\begin{example}
+    \begin{enumerate}
+        \item $1 + x + x^2 + \cdots$ converges absolutely for $\abs{x} < 1$.
+        \item $1 + x + \frac{x^2}{2} + \frac{x^3}{3} + \cdots$ converges for $-1 \leq x < 1$.
+        \item $\sum_n \frac{x^n}{n^k}$ with $k \geq 2$ converges for $-1 \leq x \leq 1$ (check the $x = 1$ case by comparison test, then the $x = -1$ test follows by alternating series test.)
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}
+    Let $J$ be a closed and bounded interval strictly contained in the interval of convergence of $\circledast$. Then $f(x)$ converges uniformly in $J$.
+\end{theorem}
