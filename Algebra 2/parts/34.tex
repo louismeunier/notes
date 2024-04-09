@@ -73,7 +73,7 @@
 
 Let $V$ be an inner product space. For each $w \in V$, we can define a linear functional $f_w \in V^\ast$ as follows: $f_w(v) \defeq \iprod{v, w}$. It turns out that for a finite dimensional $V$, every linear functional is of this form.
 
-\begin{theorem}[Riesz Representation Theorem]
+\begin{theorem}[Riesz Representation Theorem]\label{thm:riesz}
     Let $V$ be a finite dimensional inner product space. Then, for each $f \in V^\ast$, there is a unique $w \in V$ such that $f = f_w$, ie $f(v) = \iprod{v, w}$ for all $v \in V$. 
 
     On other words, the map $V \to V^\ast, w \mapsto f_w$ is a linear isomorphism.
@@ -88,4 +88,6 @@ Let $V$ be an inner product space. For each $w \in V$, we can define a linear fu
     hence, taking $w \defeq \overline{f(v_1)}v_1 + \cdots + \overline{f(v_n)}v_n$ gives us existence.
     
     \myuline{Uniqueness:} Suppose $f_{w_1} = f = f_{w_2}$ so $f_{w_1 - w_2} = f_{w_1} - f_{w_2} = 0_{V^\ast}$ ie $\forall v \in V$, $\iprod{v, w_1 - w_2} = f_{w_1 - w_2} = 0$. Hence, $w_1 - w_2 = 0 \implies w_1 = w_2$ and uniqueness holds.
+
+    As such, existence gives us injectivity and uniqueness gives us surjectivity of $w \mapsto f_w$.
 \end{proof}

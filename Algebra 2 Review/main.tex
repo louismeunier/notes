@@ -1,0 +1,787 @@
+\documentclass[12pt, oneside]{article}
+\usepackage[margin=1in, includefoot]{geometry}
+\usepackage[pagestyles]{titlesec}
+\usepackage[]{csquotes}
+
+\usepackage{amsthm}
+\usepackage{amsmath,amssymb}
+\usepackage{mathrsfs}
+\usepackage{xfrac}
+
+% \usepackage{libertine}
+\usepackage{newpxtext}
+\usepackage{newpxmath}
+
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{listings}
+\usepackage{tocloft}
+
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage{graphicx}
+
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\usepackage[ragged,multiple,flushmargin]{footmisc}
+
+\usepackage{xcolor-solarized}
+\usepackage[hidelinks,colorlinks=true,allcolors=solarized-blue]{hyperref}
+\usepackage{cleveref}
+\usepackage{nameref}
+
+\usepackage{physics}
+
+\usepackage{tikz}
+\usepackage{quiver}
+
+\usepackage{contour}
+\usepackage[normalem, normalbf]{ulem}
+
+\usepackage{import}
+\import{/users/louismeunier/Documents/templates/}{shortcuts.sty}
+
+
+% https://alexwlchan.net/2017/latex-underlines/
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+\newcommand{\pageauthor}{Louis Meunier}
+\newcommand{\pagetitle}{Algebra 2}
+\newcommand{\pagesubtitle}{MATH251}
+\newcommand{\pagedescription}{Summary of Results}
+\newcommand{\pagesemester}{Winter, 2024 }
+\newcommand{\pageprofessor}{Prof. Anush Tserunyan}
+
+\newcommand{\thetitle}{
+  \noindent
+% \begin{center}
+  \vspace*{5em}\\
+  {\Large\textbf{\pagesubtitle} - \pagetitle}\\
+  {\small{\pagedescription}}
+  \vspace*{2em}\\
+  {\small \pagesemester\\
+  Notes by \pageauthor}\\
+  {\small \href{https://notes.louismeunier.net/Algebra 2/algebra2.pdf}{Complete notes}}
+  % \vspace*{2em}
+% \end{center}
+}
+\renewcommand{\contentsname}{}
+
+\titleformat{\section}
+{\centering\bfseries\scshape}
+{\thesection}{1em}{}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollary}
+\newtheorem{prop}{Proposition}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\orth}{orth}
+
+\let\origsection=\section
+\let\origsubsection=\subsection
+
+\renewcommand\section[1]{\origsection{#1}\label{sec:\thesection}}
+\renewcommand\subsection[1]{\origsubsection{#1}\label{\thesubsection}}
+
+\begin{document}
+\thetitle
+% \begin{center}
+\tableofcontents
+\setstretch{1.5}
+% \end{center}
+
+\section{Notation}
+
+$\field$ denotes an arbitrary field; in \cref{sec:6} we will restrict $\field$ to either $\R$ or $\C$. Upper case $U, V, W$ will typically denote vector spaces, lower case Greek letters $\alpha, \beta, \gamma$ bases, and lower case $a, b, c$ scalars from $\field$. A subscript (eg $I_V$, $0_\field$) denote "where" an element comes from (eg identity on $V$, zero on $\field$), but will often be omitted.
+
+$M_{m \times n}(\field) \defeq \{m \times n \text{ matrices with entries in }\field \}$; if $m = n$ we denote $M_n(\field)$. $\GL_n(\field) \defeq \{A \in M_n(\field) : A \text{ invertible }\} \subseteq M_n(\field)$.
+
+\section{Vector Spaces, Linear Relations}
+
+
+\begin{defn}[Vector Space]
+  A vector space $V$ defined over a field $\field$ is an abelian group with respect to an addition operation $+$ with identity element $0 \equiv 0_V$, and with an additional scalar multiplication from the field such that for $u, v \in V$ and $a, b\in \field$, \begin{enumerate}
+    \item $1 \cdot v = v$; $1 \in \field$ (identity)
+    \item $a \cdot (b \cdot v) = (\alpha \cdot \beta)v$ (associativity of multiplication)
+    \item $(a+b)v = a v + b v$ (distribution of scalar addition over scalar multiplication)
+    \item $a (u + v) = a u + av$ (distribution of scalar multiplication over vector addition)
+  \end{enumerate}
+\end{defn}
+
+\textbf{To follow, unless otherwise specified, take $V$ to be an arbitrary vector space.}
+
+\begin{prop}
+  $0_\field \cdot v = 0_V$; $-1 \cdot v = -v$; $a\cdot 0_V = 0_V$, $a\in \field$.
+\end{prop}
+
+\begin{defn}[Subspace]
+  $W \subseteq V$, such that $W$ nonempty and $W$ closed under vector addition and scalar multiplication.
+\end{defn}
+
+% \begin{prop}
+%   $W_1 \cap W_2$ and $W_1 + W_2$ are subspaces for any $W_1, W_2$ subspaces of $V$.
+% \end{prop}
+
+\begin{defn}[Linear Combination, Span, Spanning Sets]
+  A linear combination of vectors $v_i \in S$ for some set $S \subseteq V$ is a summation $a_1 v_1 + \cdots + a_n v_n$ for scalars $a_i \in \field$.
+
+  Define $\Span(\{v_1, \dots, v_n\}) \defeq \{a_1 v_1 + \cdots + a_n v_n : a_i \in \field\}$.
+
+  We say a set $S$ spans $V$ if $\Span(S) = V$; we say $S$ minimally spanning if $\not\exists v \in S : S\setminus \{v\}$ spanning. 
+\end{defn}
+
+\begin{prop}
+  For any set $S \subseteq V$, $\Span(S)$ is a subspace, and moreover the smallest subspace containing $S$ (ie, any other subspace containing $S$ must also contain $\Span(S)$).
+\end{prop}
+
+\begin{proof}[Sketch]
+  Use the linearity definition of $\Span(S)$ on any other subspace containing $S$.
+\end{proof}
+
+\begin{defn}[Linear Independence]
+  A set $S \subseteq V$ is linearly independent if there is no nontrivial linear combinations equal to $0_V$; conversely, $S$ is linearly dependent if such a linear combination exists. Symbolically, letting $S \defeq \{v_1, \dots, v_n\}$ \[
+  S\text{ linearly independent } \iff (\sum_i a_i v_i = 0 \iff a_i \equiv 0)\]\[
+  S \text{ linearly dependent } \iff \exists a_i's, \text{ not all zero }\st \sum_i a_i v_i = 0
+  \]
+\end{defn}
+
+\begin{remark}
+Recall the $a_i$'s from a field, so they have inverses unless equal to zero. A common proof technique is to assume one is nonzero, hence has an inverse, and derive a contradiction.  
+\end{remark}
+
+\begin{defn}[Maximal Independence]
+  A set $S$ maximally independent if it is independent, and $\not \exists v \in V \st S \cup \{v\}$ still independent.
+\end{defn}
+
+% \begin{lemma}
+%   $S$ maximally independent $\implies$ $S$ spanning.
+% \end{lemma}
+\begin{thm}
+  For $S \subseteq V$, $S$ minimally spanning $\iff$ $S$ linearly independent and spanning $\iff$ $S$ maximally linearly independent $\iff$ every $v \in V$ equals a \emph{unique} linear combination of vectors in $S$.
+\end{thm}
+
+\begin{defn}[Basis]
+  If any (hence all) of the above requirements holds, we say $S$ a basis for $V$.
+\end{defn}
+
+\begin{lemma}[Steinitz Substitution]
+  Let $Y \subseteq V$ be independent and $Z \subseteq V$ (finite) spanning. Then $\abs{Y} \leq \abs{Z}$ and $\exists Z' \subseteq Z : \abs{Z'} =\abs{Z} - \abs{Y}$, and $Y \cup Z'$ still spanning.
+\end{lemma}
+\begin{thm}
+  If $V$ admits a finite basis, any two bases are equinumerous.
+  
+  In such a case, we define $\dim(V) \defeq  \abs{\beta}$ for any basis $\beta$ for $V$, and put $\dim(V) = \infty$ if $V$ does not admit a finite basis.
+\end{thm}
+\begin{proof}[Sketch]
+  Immediate corollary of Steinitz Substitution.
+\end{proof}
+
+\begin{cor}[\textcolor{red}{$\star$}]
+  For $V$ finite dimensional, any independent set $I$ can be completed to a basis $\beta$ for $V$ such that $I \subseteq \beta$.
+\end{cor}
+
+\begin{remark}
+  Other than the general definitions and equivalent notions of a basis, this corollary is certainly the most important from this section, and is used extensively in proofs to follow.
+\end{remark}
+
+\section{Linear Transformations}
+\begin{center}
+\textbf{Throughout this section, assume $V, W$ are vector spaces and $T, S$ linear transformations unless specified otherwise.}
+\end{center}
+\begin{defn}[Linear Transformation]
+  A function $T : V \to W$ is a linear transformation if it respects the vector space structures, namely $T(a v_1 + v_2) =a T(v_1) + T(v_2)$ for any $a\in \field$, $v_1, v_2 \in V$.
+
+  We let $I_V : V \to V, v \mapsto v$ be the identity transformation. We sometimes call a transformation from a vector space to itself a linear operator.
+\end{defn}
+
+\begin{prop}
+  $T(0) =0$
+\end{prop}
+
+\begin{thm}[\textcolor{red}{$\star$}]
+  Linear transformations are completely determined by their effects on a basis; if $T_0(v_i) = T_1(v_i)$ for every $v_i \in \beta$ for a basis $\beta$ of $V$, then $T_0 \equiv T_1$.
+\end{thm}
+
+\begin{proof}[Sketch]
+  Define a transformation as mapping $v \defeq a_1 v_1 + \cdots + a_n v_n \mapsto a_1 w_1 + \cdots + a_n w_n$ for arbitrary $w_i \in W$. Show that this is linear, and uniquely determined.
+\end{proof}
+
+\begin{defn}[Isomorphism]
+  An isomorphism of vector spaces $V, W$ is a linear transformation $T : V\to W$ that admits a linear inverse $T^{-1}$. We write $V \cong W$ in this case.
+\end{defn}
+\begin{prop}
+  $T$ isomorphism $\iff$ $T$ linear and bijection.
+\end{prop}
+
+\begin{thm}[\textcolor{red}{$\star$}]
+  If $\dim(V) = n$, $V \cong \field^n$. Moreover, every $n$-dimensional vector spaces are isomorphic.
+\end{thm}
+
+\begin{proof}[Sketch]
+  Define a transformation that maps $v_i \mapsto e_i$ where $v_i$ basis vectors for $V$ and $e_i$ basis vectors for $\field^n$. Show that this is a linear bijection.
+\end{proof}
+
+\begin{defn}[Kernel, Image]
+  For $T : V \to W$, and put \begin{align*}
+  \ker(T) \defeq \{v \in V : T(v) = 0\} = T^{-1}\{0\}  \subseteq V\\
+  \im(T)  \defeq \{T(v) : v \in V\} = T(V) \subseteq W
+  \end{align*}
+\end{defn}
+\begin{prop}
+  $\ker (T), \im(T)$ subspaces of $V$, $W$ resp; hence, put $\nullity(T) \defeq \dim(\ker(T)), \rank(T) \defeq \dim(\im(T))$.
+\end{prop}
+
+\begin{prop}
+  For $T : V \to W$ and $\beta$ a basis for $V$, $T(\beta)$ spans $\im(W)$; hence, $T(\beta)$ spans $W$ $\iff$ $T$ surjective.
+\end{prop}
+\begin{prop}[\textcolor{red}{$\star$}]
+  Let $T : V \to W$; $T$ injective $\iff$ $\ker(T) = \{0\}$ (or, "is trivial") $\iff$ $T(\beta)$ independent for any $\beta$-basis for $V$ $\iff$ $T(\beta)$ independent for some $\beta$-basis for $V$.
+\end{prop}
+\begin{remark}
+  The second criterion in particular gives a usually quicker way to check injectivity.
+\end{remark}
+
+\begin{thm}[\textcolor{red}{$\star$} Dimension Theorem]
+  For $\dim(V) < \infty$, $\nullity (T) + \rank(T) = \dim(V)$
+\end{thm}
+\begin{proof}[Sketch]
+  Direct proof follows by constructing a basis for $\ker(T)$, completing it to a basis for $V$, taking $T(\beta)$ and noticing the number of redundant vectors.
+
+  Alternatively, the first isomorphism theorem gives that $V/\ker(T) \cong \im(T)$ and thus $\dim(V/\ker(T)) = \dim(V) - \dim(\ker(T)) = \dim(\im(T))$ where the second equality needs some proof.
+\end{proof}
+
+\begin{cor}
+Let $\dim(V) = \dim(W) = n$. Then $T : V \to W$ injective $\iff$ surjective $\iff$ $\rank(T) = n$.
+\end{cor}
+
+\begin{thm}[First Isomorphism Theorem]
+  $V/\ker(t) \cong \im(T)$
+\end{thm}
+
+\begin{defn}[Homomorphism Space]
+  Put $\Hom(V, W) \defeq \{T : V \to W\}$ for $T$ linear. This is a vector space under the natural operations endowed by the linearity of the transforms themselves, ie $(aT_1 + T_2)(v) \defeq a \cdot T_1(v) + T_2(v)$.
+\end{defn}
+
+\begin{thm}
+  Let $\beta$, $\gamma$ be bases for $V, W$ resp. Then $\{T_{v, w} : v \in \beta, w \in \gamma\}$ where $$T_{v, w}(v') = \begin{cases}
+    w & v' = v\\
+    0 & v' \neq v
+  \end{cases}$$ a basis for $\Hom(V, W).$
+\end{thm}
+
+\begin{cor}\label{cor:dimhomhom}
+  $\dim(\Hom(V, W)) = \dim(V)\cdot \dim(W)$
+\end{cor}
+\begin{proof}[Sketch]
+  A counting game.
+\end{proof}
+
+% TODO top
+% \begin{defn}
+%   Denote the space of $m \times n$ ($m$ rows, $n$ columns) matrices with entries in $\field$ as $M_{m \times n}(\field)$.
+% \end{defn}
+
+\begin{center}\textbf{For any discussion of linear transformations represented with matrices, assume $V, W$ finite dimensional.}\end{center}
+
+\begin{defn}[\textcolor{red}{$\star$} Matrix representation of a linear operator]
+  Let $\dim(V) = n, \dim(W) = m$. For a basis $\beta \defeq \{v_1, \dots, v_n\}$ of $V$ and $\gamma \defeq \{w_1, \dots, w_m\}$ and $T : V \to W$, put \[
+   [T]_\beta^\gamma \defeq  \begin{pmatrix}
+    \vert & & \vert\\
+    [T(v_1)]_\gamma & \cdots & [T(v_n)]_\gamma \\
+    \vert & & \vert
+   \end{pmatrix} \in M_{m \times n}(\field),
+  \]
+
+  where, if $T(v_i) = a_1 w_1 + \cdots + a_m w_m$, we put $[T(v_i)]_\gamma = \begin{pmatrix}
+    a_1\\
+    \vdots\\
+    a_n
+  \end{pmatrix}$. We call this the coordinate vector of $T(v_i)$ in base $\gamma$.
+\end{defn}
+
+\begin{prop}
+  Let $n = \dim(V)$ and let $I_\beta : V \to \field^n$, $v \mapsto [v]_\beta$. This is an isomorphism.
+\end{prop}
+
+\begin{thm}[\textcolor{red}{$\star$}]
+  Let $T : V \to W$, $\beta, \gamma$ bases for $V, W$ respectively. The following diagram commutes:
+  \[
+    \begin{tikzcd}
+      {\bullet V} & {\bullet W} \\
+      {\bullet \mathbb{F}^n} & {\bullet \mathbb{F}^m}
+      \arrow[from=1-1, to=1-2, "T"]
+      \arrow["{I_\beta}"', from=1-1, to=2-1]
+      \arrow["{I_\gamma}", from=1-2, to=2-2]
+      \arrow["{L_{[T]_\beta^\gamma}}"', from=2-1, to=2-2, dashed]
+  \end{tikzcd}
+    \]
+    ie $I_\gamma \circ T = L_{[T]_\beta^\gamma} \circ I_\beta$, where $L_A(v) \defeq A \cdot v$.
+    
+    Moreover, $\Hom(V, W) \to M_{m \times n}(\field), T \mapsto [T]_\beta^\gamma$ an isomorphism.
+\end{thm}
+
+\begin{remark}
+  This theorem is quite powerful (and has a pretty diagram): any $m \times n$ matrix corresponds to a linear transformation between $n$- and $m$-dimensional spaces, and conversely, any such linear transformation can be represented as a matrix. It also allows us to "be a little clever" with our definitions of matrix operations.
+\end{remark}
+
+\begin{defn}
+  For $A \in M_{m \times n}, B \in M_{\ell \times m}(\field)$, define $B \cdot A \defeq [L_B \circ L_A]$.
+\end{defn}
+\begin{cor}
+  Matrix multiplication associative.
+\end{cor}
+\begin{proof}[Sketch]
+  Indeed, as function composition is.
+\end{proof}
+
+\begin{cor}
+  For $T : V\to W$, $S : W \to U$ and bases $\alpha, \beta, \gamma$ for $V, W , U$ resp., $[S \circ T]_\alpha^\gamma = [S]_\beta^\gamma \cdot [T]_\alpha^\beta$
+\end{cor}
+
+\begin{cor}
+  For $A \in M_n(\field)$, $L_A$ invertible $\iff$ $A$ invertible in which case $L_A^{-1} = L_{A^{-1}}$.
+\end{cor}
+
+
+\begin{defn}[$T$-invariant subspace]
+  Let $T : V \to V$; $W \subseteq V$ $T$-invariant if $T (W) \subseteq W$.
+\end{defn}
+
+\begin{prop}\label{prop:tinvariantchain}
+$\im(T^n)$ $T$-invariant for any $n \in \mathbb{N}$ ie $V \supseteq \im(T) \supseteq \im(T^2) \supseteq \cdots \supseteq \im(T^n) \supseteq \cdots$. 
+
+Similarly, $\ker(T^n)$ $T$-invariant for any $n \in \mathbb{N}$, ie $\{0\} \subseteq \ker(T) \subseteq \ker(T^2) \subseteq \cdots \subseteq \ker(T^n) \subseteq \cdots$.
+\end{prop}
+
+\begin{defn}[Nilpotent]
+$T : V \to V$ nilpotent if $T^n = 0$ for some $n \in \mathbb{N}$.
+\end{defn}
+\begin{prop}
+  If $T : V \to V$ nilpotent, $T^{\dim(V)} = 0$.
+\end{prop}
+
+\begin{proof}[Sketch]
+  Nilpotent $\implies \exists k : T^k = 0$. If $k \leq \dim(V)$ this is clear. If $k > \dim(V)$, use \cref{prop:tinvariantchain}.
+\end{proof}
+
+\begin{defn}[Direct Sum]
+  For $W_0, W_1 \subseteq V$, we write $V = W_0 \oplus W_1$ if $W_0 \cap W_1 = \{0_V\}$ and $V = W_0 + W_1$, and say $V$ the direct sum of $W_0, W_1$.
+\end{defn}
+
+\begin{thm}[Fitting's Lemma]
+  For $V$ finite dimensional and a linear transformation $T : V \to V$, we can decompose $V = U \oplus W$ such that $U, W$ $T$-invariant, $T_U $ nilpotent and $T_W$ an isomorphism.
+\end{thm}
+\begin{proof}[Sketch]
+  Using \cref{prop:tinvariantchain} and the finite dimensions, remark that $\exists N$ such that $W \defeq \im(T^N) = \im(T^{N+1})$ and $U \defeq \ker(T^{N}) = \ker(T^{N+1})$. Proceed.
+\end{proof}
+
+\begin{defn}[Dual Space]
+  Let $V^\ast \defeq \Hom(V, \field)$.
+\end{defn}
+\begin{prop}
+  For $V$ finite dimensional, $\dim(V^\ast) = \dim(V)$; moreover $V^\ast \cong V$.
+\end{prop}
+\begin{proof}[Sketch]
+  Follows directly from the more general \cref{cor:dimhomhom}, or, more instructively, by considering the dual basis:
+\end{proof}
+\begin{prop}
+  Let $V$ finite dimensional. For a basis $\beta \defeq \{v_1, \dots, v_n\}$ for $V$, the dual basis $\beta^\ast \defeq \{f_1, \dots, f_n\}$, where $f_i(v_j) \defeq \delta_{ij} \defeq \begin{cases}
+    1 & i = j\\
+    0 & i \neq j
+  \end{cases}$ a basis for $V^\ast$.
+\end{prop}
+
+\begin{defn}
+  For each $x \in V$, define $\hat{x} \in V^{\ast \ast}$ by $\hat{x} : V^\ast \to \field$, $\hat{x}(f) \defeq f(x)$.
+
+  For $S \subseteq V$, put $\hat{S} \defeq \{\hat{x} : x \in S\}$.
+\end{defn}
+
+\begin{thm}
+  $x \mapsto \hat{x}$, $V \mapsto V^{\ast \ast}$ a linear injection, and in particular, an isomorphism if $V$ finite dimensional.
+
+  Moreover, $V^{\ast \ast} = \hat{V}$.
+\end{thm}
+
+\begin{proof}[Sketch]
+  Isomorphism also follows directly from $V^{\ast \ast} \cong V^{\ast}$ (being the dual of the dual) and $\cong$ being an equivalence relation.
+\end{proof}
+
+\begin{defn}[Annihilator]
+  For $S \subseteq V$ a set, $S^\perp \defeq \{f \in V^\ast : f\vert_S = 0\}$.
+\end{defn}
+
+\begin{prop}
+  $S^\perp$ a subspace of $V^\ast$, $S_1 \subseteq S_2 \subseteq V \implies S_1^\perp \supseteq S_2^\perp$.
+\end{prop}
+
+\begin{thm}
+  If $V$ finite dimensional and $U \subseteq V$ a subspace, $(U^\perp)^\perp = \hat{U}$.
+\end{thm}
+
+\begin{defn}[Transpose]
+  For $T : V \to W$, define $T^t : W^\ast \to V^\ast$, $g \mapsto g \circ T$, ie $T^t(g)(v) = g(T(v))$.
+\end{defn}
+\begin{prop}
+  (1) $T^t$ linear, (2) $\ker(T^t) = (\im(T))^\perp$, (3) $\im(T^t) = (\ker(T))^\perp$, and (4) if $V, W$ finite and $\beta, \gamma$ bases resp, then $([T]_\beta^\gamma)^t = [T^t]_{\gamma^\ast}^{\beta^\ast}$, where $A^t$ represents the typical matrix transpose.
+\end{prop}
+
+\begin{proof}[Sketch]
+Remark that (1), (2), (3) hold for infinite dimensional spaces; (2) is fairly clear, but the converse direction of (3) is a little tricky. (4) is just a pain notationally.
+\end{proof}
+
+\begin{thm}
+  Let $V$ finite dimensional and $U \subseteq V$ a subspace. Then (1) $\dim(U^\perp) = \dim(V) - \dim(U)$ and (2) $(V/U)^\ast \cong U^\perp$ by the map $f \mapsto f_U, f_U : V \to \field, v \mapsto f(v + U)$.
+\end{thm}
+
+\begin{proof}[Sketch]
+  For (1), construct a basis for $U$, complete it, then take the basis and "stare".
+\end{proof}
+
+\begin{cor}
+$T^t$ injective $\iff$ $T$ surjective; if $V, W$ finite dimensional, $T^t$ surjective $\iff T$ injective.   
+\end{cor}
+
+\begin{defn}[Matrix Rank, C-Rank, R-Rank]
+  For $A \in M_{m \times n}(\field)$, define $\rank(A) \defeq \rank(L_A)$, $\crank(A) \defeq $ size of maximally independent subset of columns $\{A^{(1)}, \dots, A^{(n)}\}$, and $\rrank(A) \defeq$ the same definition but for rows.
+\end{defn}
+
+\begin{prop}
+  $\rank(A) = \crank(A) = \rrank(A)$
+\end{prop}
+
+\begin{proof}[Sketch]
+  First equality should be clear; second follows either from remarking that $\rank(A) = \rank(A^t) = \rrank(A)$, or by using tools of the next section.
+\end{proof}
+
+\section{Elementary Matrices; Determinant}
+
+\begin{prop}
+  For $A \in M_{m \times n}(\field), b \in \im(L_A)$, the set of solutions to $A \vec{x} = \vec{b}$ is precisely the \emph{coset} $\vec{v} + \ker(L_A)$ where $\vec{v} \in \field^n$ such that $A \vec{v} = \vec{b}$.
+\end{prop}
+
+\begin{prop}
+  If $m < n$ and $A \in M_{m \times n}(\field)$, there is always a nontrivial solution to $A \vec{x} = \vec{0}$.
+\end{prop}
+
+\begin{defn}[Elementary Row/Column Operations]
+  For $A \in M_{m \times n}(\field)$, an elementary row (column) operation is one of \begin{enumerate}
+    \item interchanging two rows (columns) of $A$
+    \item multiplying a row (column) by a nonzero scalar
+    \item adding a scalar multiple of one row (column) to another.
+  \end{enumerate}
+  Remark each operation is invertible.
+\end{defn}
+
+\begin{defn}[Elementary Matrix]
+  An elementary matrix $E \in M_{n}(\field)$ is one obtained from $I_n$ by a elementary row/column operation.
+\end{defn}
+
+\begin{prop}\label{prop:elementaryinvertible}
+  Elementary matrices are invertible.
+\end{prop}
+
+\begin{prop}\label{prop:rankpreserve}
+  Let $T : V \to W, S : W \to W$ and $R : \to V$ where $V, W$ finite dimensional, and $S, R$ invertible. Then $\rank(S \circ T) = \rank(T) = \rank(T \circ R)$.
+
+  In the language of matrices, if $A \in M_{m \times n}(\field), P \in \GL_m(\field), Q \in \GL_n(\field)$, then $\rank(PA) = \rank(A) = \rank(A Q)$.
+\end{prop}
+
+\begin{prop}
+For any two bases $\alpha, \beta$ for $V$, there exists a $Q \in \GL_n(\field)$ such that $[T]_\alpha Q = Q[T]_\beta$.
+
+Conversely, for any $Q \in \GL_n(\field)$, there exists bases $\alpha, \beta$ for $V$ such that $Q = [I]_\alpha^\beta$.
+\end{prop}
+
+\begin{cor}
+  Elementary matrices preserve rank.
+\end{cor}
+
+\begin{proof}[Sketch]
+  Elementary matrices are invertible by \cref{prop:elementaryinvertible}, so directly apply \cref{prop:rankpreserve}.
+\end{proof}
+
+\begin{thm}[Diagonal Matrix Form]
+  Every matrix $A \in M_{n}(\field)$ can be transformed into a matrix \[
+    \begin{bmatrix}
+      I_{r} & \mathbf{0}_{r \times (n-r)} \\
+      \mathbf{0}_{(n-r) \times (r)} & \mathbf{0}_{(n-r) \times (n-r)}
+  \end{bmatrix}  
+  \]
+  via row, column operations. Moreover, $\rank(A) = r$.
+\end{thm}
+
+\begin{proof}[Sketch]
+  By induction. Not very enlightening proof.
+\end{proof}
+
+\begin{cor}
+    For each $A \in M_{n}(\field)$, there exist $P, Q \in \GL_n(\field)$ such that $B \defeq P AQ$ of the form above.
+\end{cor}
+
+\begin{cor}
+  Every invertible matrix a product of elementary matrices.
+\end{cor}
+
+
+
+
+\begin{defn}[(r)ref]
+  A matrix is said to be in row echelon form (ref) if 
+  \begin{enumerate}
+    \item All zero rows are at the bottom, ie each nonzero row is above each zero row;
+    \item The first nonzero entry (called a pivot) of each row is the only nonzero entry in its column;
+    \item The pivot of each row appears to the right of the pivot of the previous row.
+\end{enumerate}
+If all pivots are $1$, then we say that $B$ is in reduced row echelon form (rref).
+\end{defn}
+
+\begin{thm}
+  There exist a sequence of row operations 1., 3., to bring any matrix to ref; there exists a sequence of row operations of type 2. to bring a ref matrix to rref. We call such operations "Gaussian elimination".
+\end{thm}
+
+\begin{thm}
+  Applying Gaussian elimination to the augmented matrix $(A \vert b) \to (\tilde{A} \vert \tilde{b})$ in rref, then $A x = b$ has a solution $\iff \rank(\tilde{A} \vert \tilde{b}) = \rank(\tilde{A}) = \sharp$ non-zero rows of $\tilde{A}$.
+\end{thm}
+
+\begin{cor}
+  $A x = b \iff $ if $(A \vert b)$ in ref, there is no pivot in the last column.
+\end{cor}
+
+\begin{lemma}
+  Let $B$ be the rref of $A \in M_{m \times n}(\field)$. Then, (1) $\sharp$ non-zero rows of $B$ $ = \rank(B) = \rank(A) =: r$, (2) for each $i = 1, \dots, r$, denoting $j_i$ the pivot of the $i$th row, then $B^{(j_i)} = e_i \in \field^m$; moreover, $\{B^{(j_1)}, \dots, B^{(j_r)}\}$ linearly independent, and (3) each column of $B$ without a pivot is in the span of the previous columns.
+\end{lemma}
+
+\begin{cor}
+  The rref of a matrix is unique.
+\end{cor}
+
+\begin{remark}
+  See \href{https://notes.louismeunier.net/Algebra 2/algebra2.pdf#page=52}{here} for a "thorough" derivation of the determinant. It won't be repeated here.
+\end{remark}
+
+\begin{defn}[Multilinear]
+  We say a function $\delta : M_n(\field) \to \field$ is multilinear if it is linear in every row ie \[
+  \delta\begin{pmatrix}
+    \vec{v_1}\\
+    \vdots\\
+    c \vec{x} + \vec{y}\\
+    \vdots\\
+    \vec{v_n}
+  \end{pmatrix}   = c \cdot \delta\begin{pmatrix}
+    \vec{v_1}\\
+    \vdots\\
+    c \vec{x}\\
+    \vdots\\
+    \vec{v_n}
+  \end{pmatrix} + \delta\begin{pmatrix}
+    \vec{v_1}\\
+    \vdots\\
+    \vec{y}\\
+    \vdots\\
+    \vec{v_n}
+  \end{pmatrix} 
+  \]
+\end{defn}
+
+\begin{prop}
+  For $\delta : M_n(\field)
+\to \field$, if $A$ has a zero row, then $\delta(A) = 0$.
+\end{prop}
+
+\begin{defn}[Alternating]
+  A multilinear form $\delta : M_n(\field) \to \field$ called alternating if $\delta(A) = 0$ for any matrix $A$ with two equal rows.
+\end{defn}
+
+\begin{prop}
+  Let $\delta : M_n(\field) \to \field$ be alternating and multilinear; then if $B$ obtained from $A$ by swapping two rows $\delta(B) = - \delta(A)$. 
+\end{prop}
+
+\begin{prop}
+  A multilinear $\delta : M_n(\field) \to \field$ is alternating iff $\delta(A) = 0$ for every matrix $A$ with two equal consecutive rows.
+\end{prop}
+
+\begin{prop}
+  If $\delta : M_n(\field) \to \field$ be an alternating multilinear form. Then for $A \in M_n(\field)$, \[\delta(A) =\sum_{\pi \in S_n} A_{1\pi(1)} A_{2 \pi(2)} \cdots A_{n \pi(n)} \delta(\pi I),\]
+  where $\pi I_n \defeq \begin{pmatrix}
+    - & e_{\pi(1)} & -\\
+        & \vdots & \\
+        - & e_{\pi(n)} & -
+  \end{pmatrix}$.
+\end{prop}
+\begin{defn}[sgn]
+  Denote $\text{sgn}(\pi) \defeq (-1)^{\sharp \pi}$ where $\sharp \pi \defeq$ parity of $\pi \equiv$ number of inversions by $\pi$.
+\end{defn}
+
+\begin{cor}
+  If $\delta : M_n(\field) \to \field$ be an alternative multilinear form. Then for $A \in M_n(\field)$, \[ \delta(A) = \sum_{\pi \in S_n} \text{sgn}(\pi)A_{1\pi(1)} A_{2 \pi(2)} \cdots A_{n \pi(n)} \delta(I).\]
+  Moreover, $\delta$ uniquely determined by its value on $I_n$.
+\end{cor}
+
+\begin{defn}[Determinant]
+  Let $\delta : M_n(\field) \to \field$ be the unique normalized ($\delta(I_n) = 1$) alternating multilinear form, ie $\det(A) \defeq \sum_{ \pi \in S_n} \text{sgn}(\pi) A_{1 \pi(1)} \cdots A_{n \pi(n)}$.
+\end{defn}
+
+\begin{lemma}\label{lemma:detonelementary}
+  Let $\delta : M_n(\field) \to \field$ be an alternating multilinear form. Then for any $A \in M_n(\field)$ and an elementary matrix $E$, then $\delta(EA) = c \cdot \delta(A)$ for some non-zero scalar $c$.
+
+  In particular, if $E$ swaps 2 rows, then $c = -1$; if $E$ multiplies a row by a scalar $c$, $c = c$; if $E$ adds a scalar multiple of one row to another, $c = 1$.
+\end{lemma}
+
+\begin{thm}
+  For $A \in M_n(\field)$, $\det(A) = 0 \iff A$ noninvertible.
+\end{thm}
+
+\begin{proof}[Sketch]
+  Follows from \cref{lemma:detonelementary} by writing $A' = E_1 \cdots E_k A$ where $A'$ in rref and applying $\det$.
+\end{proof}
+
+\begin{thm}
+  $\det(AB) = \det(A)\det(B)$ for any $A, B \in M_n(\field)$.
+\end{thm}
+
+\begin{proof}[Sketch]
+  Consider two cases, where $A$ either invertible or not. In the former, write $A$ as a product of elementary matrices and apply \cref{lemma:detonelementary}.
+\end{proof}
+\begin{cor}
+  $\det(A^{-1}) = (\det(A))^{-1}$ for any $A \in \GL_n(\field)$.
+\end{cor}
+
+\begin{cor}
+  $\det(A^t) = \det(A)$ for any $A \in M_n(\field)$.
+\end{cor}
+
+\section{Diagonalization}
+\begin{center}
+\textbf{Motivation to keep in mind: linear transformations are icky. How can we represent them more simply on particular subspaces? Namely, scalar multiplication is the simplest linear transformation (verify that is indeed linear) - can we pick subspaces such that $T$ becomes scalar multiplication on these subspaces?}
+\end{center}
+
+\begin{defn}[Linearly Independent Subspaces]
+  For $V_1, \dots, V_k \subseteq V$, we say $\{V_1, \dots, V_k\}$ linearly independent if $V_i \cap \sum_{j \neq i} V_j = \{0_V\}$ and call $V_1 \oplus \cdots \oplus V_k$ a direct sum.
+\end{defn}
+
+\begin{defn}[Diagnolizable]
+  We say $T : V \to V$ is diagnolizable if there exists $V_i$'s such that $V = \bigoplus_{i=1}^k V_i$ and $T\vert_{V_i}$ is multiplication by a fixed scalar $\lambda_i \in \field$.
+\end{defn}
+
+\begin{defn}[Eigenvalue/vector]
+  For a linear operator $T : V \to V$ and $\lambda \in \field$, we call $\lambda$ an eigenvalue if there exists a nonzero vector $v$ such that $T(v) = \lambda v$; we call such a $v$ an eigenvector.
+\end{defn}
+
+\begin{remark}
+  $v$ must be nonzero! This is important for proofs to go forward.
+\end{remark}
+
+\begin{defn}[Eigenspace]
+  For an eigenvalue $\lambda$ of $T : V \to V$, let $\eig_V(\lambda) \defeq \{v \in V : Tv = \lambda v\}$ be the eigenspace of $T$ corresponding to $\lambda$.
+\end{defn}
+
+\begin{prop}
+  $\eig_V(\lambda)$ a subspace of $V$.
+\end{prop}
+
+\begin{prop}
+  Trace and determinant are conjugation-invariant; ie for $A, B \in M_n(\field)$, if there exists $Q \in \GL_n(\field)$ such that $AQ = QB$, $\tr(A) =\tr(B)$ and $\det(A) = \det(B)$.
+\end{prop}
+
+\begin{defn}[Trace, Determinant of Transformation]
+  For $T : V \to V$ where $V$ finite dimensional, put $\tr(T) \defeq \tr(T) \defeq \tr([T]_\beta)$ and $\det(T) \defeq \det([T]_\beta)$ for some/any basis for $V$.
+\end{defn}
+
+\begin{remark}
+  This is well-defined; $[T]_\alpha, [T]_\beta$ are conjugate for any two bases $\alpha, \beta$.
+\end{remark}
+
+\begin{prop}
+  $T$ diagonalizable $\iff$ there exists a basis $\beta$ for $V$ such that $[T]_\beta^\beta$ $\iff$ there is a basis for $V$ consisting of eigenvectors for $T$
+\end{prop}
+
+\begin{prop}
+  $A$ diagonalizable iff $\exists Q \in \GL_n(\field)$ such that $Q^{-1}A Q$ diagonal, with the columns of $Q$ eigenvectors  of $A$.
+\end{prop}
+
+\begin{prop}
+  (1) $v \in V$ an eigenvector of $T$ with eigenvalue $\lambda \iff \in \ker(\lambda I - T)$, (2) $\lambda \in \field$ an eigenvalue $\iff$ $\lambda I - T$ not invertible $\iff$ $\det(\lambda I - T) = 0$.
+\end{prop}
+
+\begin{defn}[Characteristic polynomial]
+  For $T : V \to V$, put $p_T(t) = \det(tI_V - T)$. For $A \in M_n(\field)$, put $p_A(t) \defeq \det(tI_n - A)$.
+\end{defn}
+
+\begin{prop}[\textcolor{red}{$\star$}]
+  $p_T(t) = t^n - \tr(T)t^{n-1} + \cdots + (-1)^n \det(T)$, ie $p_T$ a polynomial of degree $n$ and $\cdots$ some polynomials of degree $n-2$.
+\end{prop}
+
+\begin{cor}
+  $T : V \to V$ has at most $n$ distinct eigenvalues.
+\end{cor}
+
+\begin{prop}
+  For eigenvalues $\lambda_1, \dots, \lambda_k$ and corresponding eigenvectors $v_1, \dots, v_k$, $\{v_1, \dots, v_k\}$ linearly independent. Moreover, the eigenspaces $\eig_T(\lambda_i)$ are linearly independent.
+\end{prop}
+
+\begin{defn}[Geometric, Algebraic Multiplicity]
+  For an eigenvalue $\lambda$ of $T : V \to V$, put \[
+  m_g(\lambda) \defeq \dim(\eig_T(\lambda)) 
+  \]
+  and call it the geometric multiplicity of $\lambda$, and \[
+  m_a(\lambda) \defeq \max \{k \geq 1 : (t - \lambda)^k \vert p_T(t)\}
+  \]
+  and call it the algebraic multiplicity of $T$.
+\end{defn}
+
+\begin{prop}
+  If $T : V \to V$ has eigenvalues $\lambda_1, \dots, \lambda_k$, $\sum_{i=1}^k m_g(\lambda_i) \leq n$; moreover, $\sum_{i=1}^k m_g(\lambda_i) = n \iff T$ diagonalizable.
+\end{prop}
+
+\begin{prop}
+  $m_g(\lambda) \leq m_a(\lambda)$ for any $\lambda$.
+\end{prop}
+
+\begin{proof}[Sketch]
+  To prove this, you need to use the fact that the characteristic polynomial of $T$ restricted to any $T$-invariant subspace of $V$ divides the characteristic polynomial of $T$.
+\end{proof}
+\begin{defn}
+  A polynomial $p(t) \in \field[t]$ splits over $\field$ if $p(t) = a (t-r_1)\cdots(t-r_n)$ for some $a \in \field, r_i \in \field$.
+\end{defn}
+\begin{remark}
+  For an eigenvalue $\lambda$ of $T : V \to V$, $\sum_{i=1}^k m_a(\lambda_i) = n$
+\end{remark}
+\begin{thm}[\textcolor{red}{$\star$} Main Criterion of Diagonalizability]
+  $T$ diagonalizable iff $p_T(t)$ splits and $m_g(\lambda) = m_a(\lambda)$ for each eigenvalue $\lambda$ of $T$.
+\end{thm}
+
+\begin{defn}[$T$-cyclic subspace]
+  For $T : V \to V$ and any $v \in V$, the $T$-cyclic subspace generated by $v$ is the space $\Span(\{T^n(v) : v \in \mathbb{N}\})$.
+\end{defn}
+
+\begin{lemma}
+  For $V$ finite dimensional, let $v \in V$ and $W \defeq$ $T$-cyclic subspace generated by $v$. Then (1) $\{v, T(v), \dots, T^{k-1}(v)\}$ is a basis for $W$ where $k \defeq \dim(W)$ and (2) if $T^{k}(v) = a_0 v + a_1 T(v) + \cdots + a_{k-1}T^{k-1}(v)$, then $p_{T_W}(t) = t^k - a_{k-1}t^{k-1} - \cdots - a_1 t - a_0$.
+\end{lemma}
+
+\begin{proof}[Sketch]
+  For (2), write down $[T_W]_\beta$ where $\beta$ as in part (1).
+\end{proof}
+
+\begin{thm}[Cayley-Hamilton]
+  $T$ satisfies its own characteristic polynomial, namely $p_T(T) \equiv 0$.
+\end{thm}
+
+\section{Inner Product Spaces}
+\end{document}

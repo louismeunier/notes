@@ -1,0 +1,68 @@
+\begin{theorem}[Adjoint]
+    Let $V$ be finite dimensional, $T : V \to V$. There exists a unique linear operator $T^\ast : V \to V$ called the \emph{adjoint} of $T$ such that for all two vectors $v, w \in V$, \[
+    \iprod{T(v), w} = \iprod{v, T^\ast(w)}.
+    \]
+\end{theorem}
+
+\begin{remark}
+    Because this is an implicit definition, we must always work with this definition; there's no real way to work with $T^\ast$ directly
+\end{remark}
+
+\begin{proof}
+    For a fixed $w \in V$, define $\tilde{f}_w \in V^\ast$ by $\tilde{f}_w(v) \defeq \iprod{Tv, w}$, which is indeed a linear functional on $V$ (to check). By \cref{thm:riesz}, there is a unique element $\tilde{w} \in V$ such that $\tilde{f}_w = f_{\tilde{w}}$, ie $\tilde{f}_w(v) = \iprod{Tv, w} = \iprod{v, \tilde{w}} = f_{\tilde{w}}$ for any $v \in V$. Setting $T^\ast(w) \defeq \tilde{w}$, we find that $T^\ast$ fulfills the required definition; we need only to check $T^\ast$ linear.
+
+    Let $w_1, w_2 \in V, a \in \field$, then $T^\ast(aw_1 + w_2)$ the unique vector $u \in V$ such that $\iprod{Tv, aw_1 + w_2} = \iprod{v, T^\ast(a_1 w_1 + w_2)}$, so it suffices to check that $aT^\ast w_1 + T^\ast w_2$ also satisfies this (by uniqueness). Indeed, \begin{align*}
+        \iprod{Tv, aw_1 + w_2} = \overline{a} \iprod{Tv, w_1} + \iprod{Tv w_2} = \overline{a} \iprod{v, T^\ast w_1} + \iprod{v, T^\ast w_2} = \iprod{v, aT^\ast w_1 + T^\ast w_2},
+    \end{align*}
+    and so this must equal $\iprod{v, T^\ast (aw_1 + w_2)}$ by uniqueness.
+\end{proof}
+
+\begin{proposition}[Matrix Representation of Adjoint]
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $T : V \to V$ be a linear operator on a finite dimensional $V$ and let $\beta$ be an \emph{orthonormal} basis for $V$. Then \[
+        [T^\ast]_\beta = [T]_\beta^\ast,    
+        \]
+        where, for $A \in M_n(\field)$, $A^\ast$ denotes its conjugate transpose/adjoint of $A$, for clear reasons.
+    \item For any $A \in M_n(\field)$, the adjoint of $L_A : \field^n to \field^n$ is $L_{A^\ast}$ ie $L_A^\ast = L_{A^\ast}$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item Recall that the $(ij)$th entry of $[T^\ast]_\beta$ with $\beta \defeq \{v_1, \dots, v_n\}$ is $\iprod{T^\ast v_j, v_i}$, which equals $\overline{\iprod{v_i, T^\ast(v_j)}} = \overline{\iprod{Tv_i, v_j}} = \overline{(ji)\text{th entry of $[T]_\beta$}}$, hence $[T^\ast]_\beta = \overline{[T]_\beta^t} = [T]_\beta^\ast$.
+
+        \item This is a special case of (a) with $\beta$ being the standard basis, ie $v_i = e_i$. We have $[L_A^\ast]_\beta$ is the matrix $B$ such that $L_A^\ast = L_B$, and by (a) $B = [L_A]_\beta^\ast = A^\ast$.
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[Adjoint versus Other Operations]
+    Let $T : V \to V$ on $V$ with $V$ finite dimensional. Then: \begin{enumerate}[label=(\alph*)]
+        \item $T \mapsto T^\ast : \Hom(V, V) \to \Hom(V, V)$ is conjugate linear.
+        \item $(T_1 \circ T_2)^\ast = T_2^\ast \circ T_1^\ast$.
+        \item $I_V^\ast = I_V$.
+        \item $(T^\ast)^\ast = T$.
+        \item If $T$ invertible, so is $T^\ast$ and $(T^\ast)^{-1} = (T^{-1})^\ast$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    We prove (a), the rest are left as (homework) exercises. For any $v, w \in V$, \begin{align*}
+        \iprod{(T_1 + T_2)(v), w} = \iprod{T_1 v, w} + \iprod{T_2 v, w} = \iprod{v, T_1^\ast w} + \iprod{v, T_2^\ast w} = \iprod{v, T_1^\ast w + T_2^\ast w} = \iprod{v, (T_1^\ast + T_2^\ast)w}.
+    \end{align*}
+    Similarly, for $a \in \field$, we have for all $v, w \in V$, \begin{align*}
+        \iprod{aT(v), w} = a \iprod{Tv, w} = \iprod{v, \overline{a} T^\ast w} = \iprod{v, (\overline{a}T^\ast) w}.
+    \end{align*}
+\end{proof}
+
+\begin{proposition}[Kernel and Image of Adjoint]
+    Let $T : V \to V$, $V$ finite dimensional. Then \begin{enumerate}[label=(\alph*)]
+        \item $\im(T^\ast)^\perp = \ker(T)$;
+        \item $\ker(T^\ast) = \im(T)^\perp$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    % TODO
+\end{proof}
+
+% TODO
+

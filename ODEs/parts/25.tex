@@ -79,8 +79,28 @@ $\deg(Q) < \deg(P)$ so we can find the RHS of this using typical partial fractio
     Find the Laplace transform of $f(t) \defeq \sum_{n=0}^\infty (-1)^n \unit{t - n}$ (remarking that $f$ periodic with $T = 2$) using the previous theorem. Then find it using the linearity of $f$.
 \end{example}
 
-\begin{example}
-    Solve $y'' + y' + y = f(t) = \delta(t - 1) + \unit{t - 2}e^{-(t-2)}$.
+\begin{example}[Cursed]
+   We consider $y'' + y' + y = f(t) = \delta(t - 1) + \unit{t - 2}e^{-(t-2)}$ with $y(0) = 0$, $y'(0) = 1$. Taking the Laplace of both sides \begin{align*}
+    s^2Y(s) - s y(0) - y'(0) +& sY(s) - y(0) + Y(s) = e^{-s} + e^{-2s}\laplace{e^{-t}}\\
+    &\implies Y(s)(s^2 + s + 1) - 1 = e^{-s}+e^{-2s}(\frac{1}{s+1})\\
+    &\implies Y(s) = \frac{1}{s^2 + s + 1} + e^{-s} \frac{1}{s^2 + s + 1} + e^{-2s} \frac{1}{(s^2+s+1)(s+1)}
+   \end{align*}
+   Unlike other examples, $s^2 + s + 1$ not reducible (over $\R$) so we have some difficulties. Completing the square, we find $s^2 + s + 1 = (s + \frac{1}{2})^2 + \frac{3}{4}$, and so \[\frac{1}{s^2 + s + 1} = \frac{1}{(s + \frac{1}{2})^2 + \frac{3}{4}}, \qquad \frac{1}{(s^2 + s + 1)(s + 1)} = \frac{1}{((s+\frac{1}{2})^2 + \frac{3}{4})(s + 1)}.\]
 
-    (Warning: cursed).
+   Using partial fractions on the second expression, \begin{align*}
+    \frac{1}{(s^2+s+1)(s+1)} = \frac{As + B}{s^2+s+1} + \frac{C}{s+1}&\\
+    \implies 1 = (As + B)(s + 1) + C(s^2 + s + 1)&\\
+    s = -1]& \quad 1 = C\\
+    s^2]& \quad 0 = A + C \implies A = -1\\
+    s^0]& \quad 1 = B + C \implies B = 0\\
+   \end{align*}
+   Bring all the "simplifications" together, we have \begin{align*}
+    Y(s) = \frac{1}{(s + \frac{1}{2})^2 + \frac{3}{4}} + e^{-s}[\frac{1}{(s+\frac{1}{2})^2 + \frac{3}{4}}] + e^{-2s}[\frac{-s}{(s + \frac{1}{2})^2 + \frac{3}{4}} + \frac{1}{s+1}]
+   \end{align*}
+   For the first term, we need to use the first translation theorem, and for the other two we need to use both the first and second theorems.
+   \begin{align*}
+    \frac{1}{(s+1/2)^2 + 3/4} = \frac{2}{\sqrt{3}}(\frac{\sqrt{3}/2}{(s + 1/2)^2 + 3/4}) &\overset{\ilaplace{\dots}}{\rightsquigarrow} \frac{2}{\sqrt{3}}e^{-1/2 t} \sin(\frac{\sqrt{3}}{2}t)\\
+    e^{-s}[\frac{1}{(s+1/2)^2 + 3/4}]  &\overset{\ilaplace{\dots}}{\rightsquigarrow} \unit{t - 1}\ilaplace{\frac{2}{\sqrt{3}}(\frac{\sqrt{3}/2}{(s + 1/2)^2 + 3/4})}_{t \mapsto t -1} \\
+    &\overset{\ilaplace{\dots}}{\rightsquigarrow} \unit{t - 1}\frac{2}{\sqrt{3}}e^{-1/2 (t-1)} \sin(\frac{\sqrt{3}}{2}(t-1))\\
+   \end{align*}
 \end{example}

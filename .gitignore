@@ -138,3 +138,14 @@
 !*ODEs/parts/
 !*ODEs/parts/*
 !*ODEs/*.sty
+
+# Algebra review
+!*Algebra*2*Review/
+!*Algebra*2*Review/*.pdf
+!*Algebra*2*Review/*.tex
+!*Algebra*2*Review/misc
+!*Algebra*2*Review/misc/*
+!*Algebra*2*Review/README.md
+!*Algebra*2*Review/parts/
+!*Algebra*2*Review/parts/*
+!*Algebra*2*Review/*.sty
