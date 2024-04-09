@@ -1,0 +1,577 @@
+\documentclass[12pt, oneside]{article}
+\usepackage[margin=1in, includefoot]{geometry}
+\usepackage[pagestyles]{titlesec}
+\usepackage[]{csquotes}
+
+\usepackage{amsthm}
+\usepackage{amsmath,amssymb}
+\usepackage{mathrsfs}
+\usepackage{xfrac}
+
+% \usepackage{libertine}
+\usepackage{newpxtext}
+\usepackage{newpxmath}
+
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{listings}
+\usepackage{tocloft}
+
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage{graphicx}
+
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\usepackage[ragged,multiple,flushmargin]{footmisc}
+
+\usepackage{xcolor-solarized}
+\usepackage[hidelinks,colorlinks=true,allcolors=solarized-blue]{hyperref}
+\usepackage{cleveref}
+\usepackage{nameref}
+
+\usepackage{physics}
+
+\usepackage{tikz}
+
+\usepackage{contour}
+\usepackage[normalem, normalbf]{ulem}
+
+\usepackage{import}
+\import{/users/louismeunier/Documents/templates/}{shortcuts.sty}
+\newcommand{\laplace}[1]{\mathcal{L}\{#1\}}
+\newcommand{\ilaplace}[1]{\mathcal{L}^{-1}\{#1\}}
+\newcommand{\unit}[1]{\mathcal{U}(#1)}
+
+% https://alexwlchan.net/2017/latex-underlines/
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+\newcommand{\pageauthor}{Louis Meunier}
+\newcommand{\pagetitle}{ODEs}
+\newcommand{\pagesubtitle}{MATH325}
+\newcommand{\pagedescription}{Summary of Results}
+\newcommand{\pagesemester}{Winter, 2024 }
+\newcommand{\pageprofessor}{Prof. Antony Humphries}
+
+\newcommand{\thetitle}{
+  \noindent
+% \begin{center}
+  \vspace*{5em}\\
+  {\Large\textbf{\pagesubtitle} - \pagetitle}\\
+  {\small{\pagedescription}}
+  \vspace*{2em}\\
+  {\small \pagesemester\\
+  Notes by \pageauthor}\\
+  {\small \href{https://notes.louismeunier.net/ODEs/odes.pdf}{Complete notes}}
+  % \vspace*{2em}
+% \end{center}
+}
+\renewcommand{\contentsname}{}
+
+\titleformat{\section}
+{\centering\bfseries\scshape}
+{\thesection}{1em}{}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollary}
+\newtheorem{prop}{Proposition}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\orth}{orth}
+
+\let\origsection=\section
+\let\origsubsection=\subsection
+
+\renewcommand\section[1]{\origsection{#1}\label{sec:\thesection}}
+\renewcommand\subsection[1]{\origsubsection{#1}\label{\thesubsection}}
+
+\begin{document}
+\thetitle
+% \begin{center}
+\tableofcontents
+\setstretch{1.5}
+% \end{center}
+
+\section{Notation and Terminology}
+\begin{defn}[Order]
+  The order of a differential equation is the order of the highest derivative in the equation.
+\end{defn}
+
+\begin{defn}[Autonomous/Nonautonomous, Linear/Nonlinear, Homogeneous/Nonhomogeneous, Constant/Variable]
+  \begin{align*}
+    y^{(n)}(x) = \underbrace{f(y, y', \dots, y^{(n-1)})}_{\text{no } x} \quad &- \quad \text{autonomous}\\
+    y^{(n)}(x) =f(\mathbf{x}, y, y', \dots, y^{(n-1)})\quad &-\quad \text{nonautonomous}
+  \end{align*}
+  \begin{align*}
+    \circledast \defeq \sum_{i=0}^n a_i(t) y^{i}(t)=g(t)\quad &-\quad \text{linear}\\
+    \cdots \text{ otherwise } \cdots \quad &-\quad \text{nonlinear}\\
+    \circledast \text{ with } g(t) \equiv 0 \quad &-\quad \text{homogeneous}\\
+    \circledast \text{ with } g(t) \nequiv 0 \quad &-\quad \text{nonhomogeneous}\\
+    \circledast \text{ with } a_i's \text{ constant} \quad &-\quad \text{constant}\\
+    \circledast \text{ with } a_i's \text{ variable} \quad &-\quad \text{variable}\\
+  \end{align*}
+  Equivalently, linear equations can be defined by having their solution space defining a vector space.
+\end{defn}
+
+\begin{defn}[Solution]
+  A function $y : I \to \mathbb{R}$, $I \subseteq \R$ is said to be a solution to an $n$th order ODE if it it is $n$-times differentiable on $I$ and satisfies the ODE on that interval.
+\end{defn}
+
+\begin{defn}[Interval of Validity]
+  The interval of validity of a solution to an ODE $I \subseteq \mathbb{R}$ is the largest interval for which $y(t)$ solves the ODE.
+\end{defn}
+
+We will use $L[y](x)$ linear operator as shorthand for differential equations.
+
+\section{First Order}
+
+\textbf{Remark that this is the only section where we will truly concern ourselves with both linear \emph{and} nonlinear equations.}
+\begin{prop}[Separable]
+An ODE of the form \[
+y' = P(t)Q(y)  
+\]  
+is said to be separable, and has general solution by integrating \[
+ \int \frac{1}{Q} \dd{t} = \int P(t) \dd{t}.  
+\]
+\end{prop}
+
+\begin{prop}[Linear First Order]
+  An ODE of the form \[
+  a_1(t)y'(t) + a_0(t)y(t) = g(t) \rightsquigarrow y'(t) + p(t)y(t) = q(t)  
+  \]
+  is called linear, and with "integrating factor" $\mu(t) \defeq e^{\int p(t) \dd{t}}$ can be written \[
+  \dd{t}(\mu(t) y(T)) = \mu(t) q(t),
+  \]
+  with general solution found by integrating both sides and solving for $y$.
+\end{prop}
+
+\begin{prop}[Exact]
+  An ODE of the form \[
+  M(x, y) \dd{x} + N(x, y) \dd{y} = 0  
+  \]
+  is said to be exact, if $M_y= N_x$. If so, it has general solution $F(x,y) = C$ where $F_x = M, F_y= N$, and $C$ an arbitrary constant.
+\end{prop}
+
+\begin{prop}["Exactable"]
+For equations "almost" exact, one may find a $\mu = \mu(x, y)$ such that \[
+\pdv{x} (\mu M) = \pdv{y}(\mu N),
+\]
+in which case the new ODE $\mu M \dd{x} + \mu N \dd{y} = 0$ is now exact. 
+\end{prop}
+\begin{remark}
+  Simplifying by assuming $\mu_x = 0$ or $\mu_y = 0$ can help immensely.
+\end{remark}
+
+\begin{prop}[Bernoulli]
+  An ODE of the form \[
+  y' + f(x)y + g(x)y^n = 0  
+  \]
+  are called Bernoulli, and can be transformed into a linear equation by the substitution $u = y^{1 - n}$.
+\end{prop}
+
+\begin{prop}[Other Substitutions]
+  \begin{itemize}
+    \item Homogeneous equations can be transformed into separable equations by substitution $u \defeq \frac{y}{x}$
+    \item Equations of the form $y' = F(ay + bx + c)$ can be solved via $u \defeq ay + bx + c$.
+  \end{itemize}
+\end{prop}
+
+\begin{remark}
+  Other substitution methods exist, of course; these three are the more common.
+\end{remark}
+
+\begin{thm}[\textcolor{red}{$\star$} Existence, Uniqueness]
+  If $f(t, y), f_y(t, y)$ continuous in $t, y$ on a rectangle $R = [t_0 - a, t_0 + a] \times [y_0 - b, y_0 + b]$, then $\exists h \in (0, a]$ such that the IVP \[
+  y' = f(t, y), \quad y(t_0) = y_0  
+  \]
+  has a unique solution defined for $t \in [t_0 - h, t_0 + h]$, with $y(t) \in [y_0 - b, y_0 + b] \forall t \in [t_0 - h, t_0 + h]$.
+\end{thm}
+
+\begin{remark}
+While the details of the proof are not too vital (?), the requirements for the theorem to hold (namely, continuity) are. In particular, recall that in the proof, we take $h < \min \{a, \frac{1}{L}, \frac{b}{M}\}$, where $a, b$ defined by the box, $L$ the Lipschitz constant of $f$, and $M$ the upper bound of $f$ on the box. 
+\end{remark}
+
+\begin{defn}[Picard Iteration]
+  For the IVP $y' = f(t, y), y(0) = y_0$, define a sequence $y_n(t)$ as follows; $y_0(t) \defeq y_0 \forall t$, and \[
+  y_{n+1}(t)  \defeq y(t_0) + \int_{t_0}^t f(s, y_{n}(s)) \dd{s}, \quad \forall n \geq 1.
+  \]
+\end{defn}
+\begin{remark}
+  Denoting $T : C(I) \to C(I), y_{n} \mapsto y(t_0) + \int_{t_0}^t f(s, y_{n}(s)) \dd{s}$, then $y$ solves the IVP iff $Ty = y$. Indeed, to see the motivation for Picard iteration directly, integrate both sides of the IVP.
+\end{remark}
+\section{Second Order}
+\textbf{Equations in this section will be of the general form $y'' = f(t, y, y')$.}
+\begin{prop}[Special Cases]
+  \begin{itemize}
+    \item If $y'' = f(t, y')$, letting $u = y'$ yields a first-order $u' = f(t, u)$, which can be solved with techniques from the previous section, then the solution $u$ can be integrated to find $y$.
+    \item If $y'' = f(y, y')$, letting $u = y'$ yields $u' = f(y, u)$; by the chain rule $\dv{u}{t} = u \dv{u}{y}$, so we have again a first order ODE, this time with $u = u(y)$.
+  \end{itemize}
+\end{prop}
+
+\begin{prop}[Superposition]
+  If $y_1, \dots, y_n$ solve $L[y](t) = 0$ on some interval $I$, so does $\sum_{i=1}^n a_i y_i(t)$ for arbitrary constants $a_i$.
+\end{prop}
+
+\begin{prop}[\textcolor{red}{$\star$} Reduction of Order]
+  Given a solution $y_1(t)$ to $a(t) y'' + b(t) y' + c(t) y = 0$, then taking $y(t) = u(t) y_1(t)$, we can then reduce the equation to a first-order ODE of the form $0 = [ay_1]v' + [2ay_1' + by_1]v$, where $v = u'$, which we can then solve for $v$, hence $u$, then $y$ a new solution.
+\end{prop}
+
+\begin{prop}[\textcolor{red}{$\star$} Constant Coefficient]
+  For an equation of the form \[
+  ay'' + by' + cy = 0,  
+  \]
+  where $a, b, c$ constants, we have the corresponding characteristic/auxiliary equation \[
+  ar^2 + br + c = 0,  
+  \]
+  with roots $r_1, r_2$, and solutions \begin{itemize}
+    \item $r_1 \neq r_2 \in \mathbb{R} \implies y_1 = e^{r_1 t}, y_2 = e^{r_2 t}$
+    \item $r \defeq r_1 = r_2 \implies y_1 = te^{r t}, y_2 = e^{rt}$.
+    \item $\alpha + \beta i \defeq r_1 = \overline{r_2} \in \mathbb{C} \implies y_1 = e^{\alpha t} \cos (\beta t), y_2 = e^{\alpha t} \sin (\beta t)$.
+  \end{itemize}
+\end{prop}
+
+\begin{defn}[Particular Solution]
+A solution $y_p$ of an ODE is said to be a a particular solution if it it solves $L[y] = g(t) \neq 0$.
+\end{defn}
+
+\begin{prop}[Undetermined Coefficients]
+  For $L[y] = ay''+by'+cy = g(t)$, then if $g(t)$ of the following form (left), guessing $y_p$ (right) will yield a particular solution after solving for the constants (by plugging into $L[y]$):
+  \begin{table}[!ht]\centering
+    \begin{tabularx}{\textwidth}{>{\centering\arraybackslash}X | >{\centering\arraybackslash}X }\centering
+    
+        $g(x)$ (given) & $y_{p(x)}$ (guess)\\
+        \hline
+        $p(x)$ &$x^s (A_n x^n + \cdots + A_1 x + A_0)$\\
+        $e^{\alpha x} $&  $x^s Ae^{\alpha x}$\\
+        $p(x)e^{\alpha x}$ & $x^s (A_n x^n + \cdots + A_1 x + A_0)e^{\alpha x}$\\
+        $p(x)e^{\alpha x} \cos \beta x + q(x)e^{\alpha x} \sin \beta x$ &  $x^s e^{\alpha x} \cos (\beta x) \sum_{i=0}^n A_i x^i  + x^s e^{\alpha x} \sin (\beta x) \sum_{j=0}^n B_j x^j$.
+    \end{tabularx}
+    \end{table}
+    where $s$ the multiplicity of the root $\alpha + i \beta$ if it is a root of the auxiliary equation, and $0$ otherwise.
+\end{prop}
+
+\begin{remark}
+  Only works for constant coefficient!
+\end{remark}
+
+\begin{prop}[\textcolor{red}{$\star$} Variation of Parameters]
+  Let $L[y](x) = a(x) y'' + b(x) y' + c(x) y = g(x)$. Given a fundamental set of solutions $y_1, y_2$, then guessing a particular solution $y_p = u_1(x)y_1(x) + u_2(x) y_2(x)$, then after appropriate mathematical silliness, $u_1, u_2$ satisfy \[
+u_1' =   \frac{-y_2(x)\frac{g(x)}{a(x)}}{W(y_1, y_2)(x)}, \quad u_2' = \frac{y_1(x) \frac{g(x)}{a(x)}}{W(y_1, y_2)(x)},
+  \]
+  where $W(y_1, y_2) = y_1 y_2' - y_2 y_1'$, such that $y_p$ solves the ODE.
+\end{prop}
+
+\begin{prop}
+  Both of these previous methods can be extended to higher-order linear ODEs, with variation of parameters being rather hellish. Remark that variation of parameters works for non-constant coefficient linear equations.  
+\end{prop}
+
+\section{\texorpdfstring{$N$}{N}th Order}
+
+\textbf{We consider $n$th order ODEs of the form $L[y]=y^{(n)} + \sum_{i}^n p_i(x) y^{(n-1)}(x) = g(x)$; $L[y]$ refers to this form unless otherwise noted. This section will mostly be the heaviest theory-wise, and will also cover results applicable, naturally, to $2$nd order ODEs.}
+
+\begin{prop}[Uniquess and Existence]
+  Let $I \subseteq \mathbb{R}$, $x_0 \in I$ and let $p_i(x)$, $i = 1, \dots, n$ and $g(x)$ be continuous on $I$. Then, the IVP\[
+    L[y](x) = g(x) \quad y^{(j)}(x_0) = \alpha_{j+1}, j = 0, \dots, n - 1
+    \]
+    has at most one solution $y(x)$ defined on $I$.
+\end{prop}
+
+\begin{defn}[Fundamental Set of Solutions]
+  A set of functions $\{y_i : L[y_i] = 0, i = 1, \dots, n\}$ on some interval $I$ is called a fundamental set of solutions if $y_1, \dots, y_n$ are linearly independent on $I$.
+\end{defn}
+
+\begin{remark}
+  $I$ may change such that $y_i$ are no longer independent!
+\end{remark}
+
+\begin{defn}[Wronskian]
+  Put \[
+  W(y_1, \dots, y_n )(x) \defeq \left|\begin{matrix}
+    y_1(x) & \cdots & y_n(x)\\
+    y_1'(x) & \cdots & y_n'(x)\\
+    \vdots & \cdots & \vdots \\
+    y_1^{(n-1)}(x) & \cdots & y_n^{(n-1)}(x)
+\end{matrix}\right|.    
+  \]
+\end{defn}
+
+\begin{prop}
+  If $W(y_1, \dots, y_n)(x_0) \neq 0$ for some $x_0 \in I$ then $y_1, \dots, y_n$ are linearly independent on $I$. If $y_1, \dots, y_n$ are linearly dependent on $I$, then $W(y_1, \dots, y_n)(x) = 0 \forall x \in I$.
+\end{prop}
+
+\begin{remark}
+  Very important: this statement does NOT hold iff; more precisely, $W(y_1, \dots, y_n)(x) = 0 \forall x \in I$ does NOT imply $y_1, \dots, y_n$ linearly dependent on $I$; consider for instance \[
+    y_1 = x^2, \quad y_2 = \begin{cases}
+      x^2 & x \geq 0\\
+      -x^2 & x \leq 0
+    \end{cases},  
+    \]
+    which has Wronskian $0$ everywhere but are clearly not linearly independent on $I$.
+
+    In order to "have the converse hold", we must have that the $y_1, \dots, y_n$ solve a particular ODE (to make precise to follow).
+\end{remark}
+
+\begin{thm}[\textcolor{red}{$\star$} Abel's]
+  Let $y_1, \dots, y_n$ solve $L[y] = 0$ where $p_j(x)$'s continuous, all on some $I$. Then \[
+  W'(x) + p_1(x) W(x) = 0 \forall x \in I.  
+  \] 
+  Moreover, this being a linear equation, we have that \[
+  W(x) = Ce^{- \int p_1(x) \dd{x}}.
+  \]
+  As a consequence, either \begin{itemize}
+    \item $C = 0$ so $W \equiv 0$ and $y_1, \dots, y_n$ linearly dependent on $I$;
+    \item $C \neq 0$ so $W \neq 0 \forall x \in I$ and $y_1, \dots, y_n$ linearly independent on $I$ and so form a fundamental set of solutions.
+  \end{itemize}
+\end{thm}
+
+\begin{remark}
+Remark the continuity of the $p_j$'s- this is crucial. One can construct counter examples in the case that $p_j$'s not continuous on $I$.
+
+The second ("as a consequence") part of the theorem follows directly from the exponential function being a strictly positive function. Verbally, either the Wronskian is nowhere 0, or, if 0 at a single point, is identically 0. Again, to emphasize, this holds in this case as we are now working with a set of solutions. More precisely:
+\end{remark}
+
+\begin{cor}
+With the same assumptions as in Abel's Theorem, TFAE: \begin{enumerate}
+  \item $y_1, \dots, y_n$ form a fundamental set of solutions on $I$;
+  \item $y_1, \dots, y_n$ are linearly independent on $I$;
+  \item $W(y_1, \dots, y_n)(x_0) \neq 0$ \textbf{for some} $x_0 \in I$;
+  \item $W(y_1, \dots, y_n)(x) \neq 0$ \textbf{for all} $x \in I$.
+\end{enumerate}
+\end{cor}
+
+\begin{remark}
+  The converse, naturally, holds as well ($W = 0$ for some point iff $W \equiv 0$).
+\end{remark}
+
+\begin{thm}
+  If $y_1, \dots, y_n$ a fundamental set of solutions for $L[y] = 0$ on $I$ with continuous $p_j(x)$ on $I$, then the IVP $L[y] = 0, y(x_0) = \alpha_1, \dots, y^{(n-1)}(x_0) = \alpha_n$ has a unique solution of the form $\sum_{i=1}^n c_j y_j(x)$ for unique constants $c_j$.
+
+  Similarly, for $L[y] = g$ with the same IVP conditions, any solution can be written in the form $y_p(x) + \sum_{j=1}^n c_j y_j(x)$ where $L[y_p] = g$ and $c_j$ unique constants.
+\end{thm}
+
+\begin{proof}[Sketch]
+  To show the form being unique, construct a system of $n$ linear equations in the $n$ unknowns $c_1, \dots, c_n$ in terms of the equations and $\alpha_i$'s. In matrix form, you should find the matrix that the Wonskian is the determinant of appear, and since the Wronskian nonzero by assumption of a fundamental set of solutions, you can invert, which simultaneously gives existence and uniqueness as per uniqueness of inverses.
+\end{proof}
+
+\begin{prop}[Higher-Order Variation of Parameters]
+  Given $y_1, \dots, y_n$ a fundamental set of solutions to $L[y] = 0$, let $W_i(x)$ be the determinant of the matrix obtained by replacing the $i$th column of $W$ with $\begin{pmatrix}
+    0 \\
+    \vdots\\
+    g
+  \end{pmatrix}$. Then, taking $u_i \defeq \int_{x_0}^x \frac{W_i(s)}{W(s)} \dd{s}$, then \[
+  y_p = \sum_{i=1}^n u_i(x) y_i(x)  
+  \]
+  a particular solution to $L[y] = g$.
+\end{prop}
+
+\section{Series}
+\textbf{We again only consider linear equations, but now have the tools to work with non-constant coefficient equations more generally. As a motivation, series solutions can be thought of as approximating ugly solutions arbitrarily well via polynomials (which hopefully converge?).}
+
+\begin{prop}
+  Let $f(x) \defeq \sum_{n=0}^\infty a_n(x -x_0)^n, g(x) \defeq \sum_{n=0}^\infty b_n ( x - x_0) ^n$ and $\rho_f, \rho_g$ the radii of converge of $f, g$ resp. The radius of converge of $f \pm g$ and $f \cdot g$ is at least as large as $\min \{\rho_f, \rho_g\}$.
+\end{prop}
+
+\begin{remark}
+  We won't worry about dividing power series, but this can result in a smaller radius of convergence than either $\rho_f, \rho_g$.
+\end{remark}
+
+\begin{prop}[Important Power Series to Remember]
+  \[
+  e^x = \sum_{n=0}^\infty \frac{x^n}{n!}, \quad \sin(x) = \sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{(2n+1)!}, \quad \cos(x) = \sum_{n=0}^\infty \frac{(-1)^n x^{2n}}{(2n)!}.
+  \]
+  These each have infinite radius of convergence. 
+
+  Any polymomial $f(x) = a_0 + a_1 x + \cdots + a_N x^N$ has power series $\sum_{n=0}^\infty \tilde{a}_n x^n$, where $\tilde{a}_n \defeq \begin{cases}
+    a_n & n \leq N\\
+    0 & n > N
+  \end{cases}$, and also has infinite radius of convergence.
+\end{prop}
+
+\begin{defn}[Analytic]
+  We say $P : I \to \R$ analytic at $x_0 \in I$ if there exist a power series representation of $P$ centered at $x_0$ with nonzero radius of convergence.
+\end{defn}
+
+\begin{prop}
+  If $P(x), Q(x)$ polynomials, $\frac{Q(x)}{P(x)}$ analytic at $x_0$ if $P(x_0) \neq 0$; when analytic, the radius of convergence from $x_0$ is the distance from $x_0$ to the nearest zero of $P(x)$ in the complex plane.
+\end{prop}
+
+\begin{defn}[Ordinary, Singular]
+  Let $L[y] = P(x) y''  + Q(x) y' + R(x) y$ and $p(x) \defeq \frac{Q}{P}, q(x) \defeq \frac{R}{P}$. We say $x_0$ an ordinary point of $L[y] = 0$ if both $p, q$ are analytic at $x_0$. Else, we call $x_0$ a singular point. Moreover, if $P, Q, R$ polynomials, then if $P(x_0) \neq 0$, $x_0$ an ordinary point, and if $P(x_0) = 0$ , $x_0$ a singular point.
+
+  For singular points, if \[
+  (x - x_0) p(x), \quad (x - x_0)^2 q(x)
+  \]
+  are both analytic at $x_0$, then we say $x_0$ a regular singular point, and irregular if either is not analytic at $x_0$. In particular, if $P, Q, R$ polynomials, $x_0$ a regular singular point iff $x_0$ a singular point and the limits of both of these expressions as $x \to x_0$ are finite.
+\end{defn}
+
+\begin{prop}[\textcolor{red}{$\star$} General Method for Ordinary Points, Homogeneous]
+  Let $y(x) = \sum_{n=0}^\infty a_n (x - x_0)^n$. Plugging into $L[y] = 0$, one can find a recursive definition for $a_n, n \geq 2$, with $a_1, a_0$ arbitrary (determined by IC's), which can be written as $y(x) = a_0 y_1(x) + a_1 y_2(x)$ where $y_1, y_2$ analytic at $x_0$, have radius of convergence at least as large as the minimum of $p, q$, form a fundamental set of solutions, and have Wronksian $1$.
+\end{prop}
+
+\begin{remark}
+  Series are best learned by doing examples.
+
+  In the case where $p, q$ are not polynomials, we have a bit more work to do; you need to represent both as power series, then multiply the power series together...
+\end{remark}
+
+\begin{prop}[General Method, Nonhomogeneous]
+  For $L[y] = g(x), g(x)$ analytic, a remarkably similar process follows, by representing $g(x)$ as a power series and again equation like powers of $x$. In this case, we'll find a general solution of the form \[
+  a_0 y_1 + a_1 y_2 + y_p,  
+  \]
+  where $y_1, y_2, y_p$ analytic (usually we end up with power series in solutions) and $y_p$ has no reliance on $a_0, a_1$ and satisfies $L[y_p] = g$.
+\end{prop}
+
+\begin{thm}[Regular Singular Points - Frobenius's Method]
+  If $x_0$ a regular singular point of $L[y] = 0$, seek a solution of the form $y(x) = \abs{x - x_0}^r \sum_{n=0}^\infty a_n (x - x_0)^n$ (it suffices to assume $x - x_0 > 0$ for sake of removing the absolute value bars). This results in the indicial equation \[
+  F(r) = r(r - 1) + rp_0 + r_0 = 0,  
+  \]
+  where $p_0 = \lim_{x \to x_0} (x - x_0)p(x), q_0 = \lim_{x \to x_0} (x-x_0)^2 q(x)$. Let $r_1\geq r_2$ be the two real roots of $F$ (we won't consider the complex case). Then, we have one solution of the form \[
+  y_1 = \abs{x -x_0}^{r_1}\sum_{n=0}^\infty a_n(r_1)(x - x_0)^n,  
+  \] where $a_1 = 1$, and a second of the form \begin{itemize}
+    \item $(r_1 - r_2 \neq 0$ and $r_1 - r_2 \notin \mathbb{Z}), y_2 =  \abs{x -x_0}^{r_2}\sum_{n=0}^\infty a_n(r_2)(x - x_0)^n$
+    \item $(r_1 = r_2), y_2 = y_1(x) \ln \abs{x - x_0} + \abs{x - x_0}^{r_1} \sum_{n=1}^\infty b_n (x - x_0)^n$, where $b_n$ TBD
+    \item $(r_1 - r_2 = N \in \mathbb{N}), y_2 = a y_1(x) \ln \abs{x - x_0} + \abs{x - x_0}^{r_2}\sum_{n=0}^\infty c_n ( x - x_0)^n$, where $a = \lim_{r \to r_2} (r - r_2) a_N(r)$ and $c_n$ some series depending on $a_n(r_2)$.
+  \end{itemize}
+\end{thm}
+
+\begin{remark}
+  You will probably only have to deal with the first and maybe second cases.
+\end{remark}
+
+\begin{remark}
+We won't concern ourselves with irregular singular points.  
+\end{remark}
+
+\section{Laplace Transformations}
+
+\textbf{Remark that most equations treated in this section can be treated with previous techniques; only equations with constant coefficients are treated.}
+
+\begin{defn}[Laplace Transform]
+  For $f : [0, \infty) \to \R$, we denote \[
+  F(s) = \laplace{f(t)}   \defeq \int_{0}^\infty e^{-st} f(t) \dd{t}.
+  \]
+\end{defn}
+\begin{remark}
+  Practically, you won't have to apply the definition directly too often and will be given a table of common transforms. It can be helpful for certain proofs, of course.
+\end{remark}
+\begin{defn}[Exponential Order]
+  A function $f(t)$ is said to be of exponential order $a$ if $\exists a, K, T$-constants such that $\abs{f(t)} \leq Ke^{at} \forall t \geq T$.
+\end{defn}
+
+\begin{thm}
+If $f$ piecewise continuous on $[0, \infty)$ and has exponential order $a$, then $\laplace{f(t)}$ exists for $s > a$.
+\end{thm}
+\begin{proof}[Sketch]
+Subdivide the interval of integration so that you are integrating over time larger thatn $T$, and apply the exponential order condition. 
+\end{proof}
+
+\begin{prop}
+  $\laplace{\dots}$ linear.
+\end{prop}
+
+\begin{thm}[\textcolor{red}{$\star$} First Translation Theorem]
+  $\laplace{e^{kt} f(t)} = F(s - k) \equiv \laplace{f(t)}_{s \to s- k}$
+\end{thm}
+
+\begin{thm}[\textcolor{red}{$\star$}]
+  If $f, \dots, f^{(n-1)}$ continuous on $[0, \infty)$ and $f^{(n)}$ piecewise continuous on $[0, \infty)$ and all are of exponential order $a$, then for $s > a$ \[
+  \laplace{f^{(n)}(t)} = s^{n} F(s) - \sum_{k=0}^{n-1} s^{n-1-k}f^{k}(0).
+  \]
+\end{thm}
+
+\begin{remark}
+This is the crucial theorem to apply Laplace transforms to solving IVPs. We remark the $n = 1, 2$ cases as these will be the most often used:
+\begin{align*}
+  \laplace{y''(t)} &= s^2 Y(s) - sy(0) - y'(0)\\
+  \laplace{y'(t)} &= sY(s) - y(0)
+\end{align*}
+\end{remark}
+\begin{cor}
+  Given $L[y] = \sum_{k=0}^n a_k y^{(k)} = f(t)$, $y(0) = \alpha_1, \dots, y^{(n-1)}(0) = \alpha_n$, we have \[
+  Y(s) = \frac{F(s)}{P(s)}  + \frac{Q(s)}{P(s)} = G(s) + \frac{Q(s)}{P(s)},
+  \]
+  where $F(s) = \laplace{f(t)}$, $P(s) = a_ns^n + \cdots + a_1 s + a_0$ the characteristic equation, and $Q(s)$ some polynomial in $s$ of degree leq $n - 1$.
+\end{cor}
+
+\begin{remark}
+  $\deg(P) > \deg(Q)$ gives us that we can rewrite this term in terms of simpler expressions using partial fractions to find the inverse Laplace transform.
+\end{remark}
+
+\begin{defn}[Unit Step Function]
+  Put $\unit{t - a} \defeq \begin{cases}
+    0 & t < a\\
+    1 & t \geq a
+  \end{cases}$.
+\end{defn}
+\begin{thm}[\textcolor{red}{$\star$} Second Translation Theorem]
+For $a > 0$, $\laplace{\unit{t - a} f(t - a)} = e^{-as} F(s)$.
+\end{thm}
+\begin{cor}
+  $\laplace{\unit{t - a}} = \frac{e^{-as}}{s}$.
+\end{cor}
+
+\begin{prop}
+  $\laplace{t^n f(t)} = (-1)^n \dv[n]{s} \laplace{f(t)}$.
+\end{prop}
+
+\begin{defn}[Convolution]
+  Put $(f \ast g)(t) \defeq \int_0^t f(\tau) g(t - \tau) \dd{\tau}$.
+\end{defn}
+
+\begin{thm}[Convolution Theorem]
+  If $f, g$ piecewise continuous on $[0, \infty)$ and of exponential order, \[
+  \laplace{f \ast g} = \laplace{f}\laplace{g}.  
+  \]
+  In particular, \[
+  \ilaplace{F(s)G(s)} = f \ast g.  
+  \]
+\end{thm}
+
+\begin{defn}[Dirac Delta]
+  Let $\delta(t - t_0)$ be such that $\int_{-\infty}^\infty f(t) \delta(t - t_0) \dd{t} = f(t_0)$. In particular, \[
+  \int_0^t \delta(s - t_0) \dd{s} = \begin{cases}
+    0 & t < t_0\\
+    1 & t > t_0
+  \end{cases}  .
+  \]
+\end{defn}
+
+\begin{remark}
+  It is possible to be more rigorous in our definition of $\delta$, but beyond this scope of this course.
+\end{remark}
+
+\begin{thm}
+  For $t_0 > 0$, $\laplace{\delta(t - t_0)} = e^{-st_0}$.
+\end{thm}
+
+\begin{cor}
+  $\laplace{\delta(t)} = 1$.
+\end{cor}
+\begin{defn}[Green's Function]
+  $g(t)$ such that $L[g(t)] = \delta(t)$ with IC $g(0) = g'(0) = \cdots=  g^{(n-1)}(0)$.
+\end{defn}
+\begin{thm}
+  $\laplace{g(t)} = \frac{1}{P(s)}$.
+\end{thm}
+
+\begin{thm}
+  Let $f$ be periodic with period $T$ and piecewise continuous on $[0, \infty)$. Then \[
+  \laplace{f(t)}   = \frac{1}{1 - e^{-sT}}\int_0^T e^{-st} f(t) \dd{t}.
+  \]
+\end{thm}
+\end{document}
