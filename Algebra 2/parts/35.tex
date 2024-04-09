@@ -61,8 +61,12 @@
     \end{enumerate}
 \end{proposition}
 \begin{proof}
-    % TODO
+    \begin{enumerate}[label=(\alph*)]
+        \item For each $v \in V$, \begin{align*}
+            v \in \im(T^\ast)^\perp &\iff \forall u \in \im(T^\ast), \iprod{v, u} = 0 \iff \forall w \in V, \iprod{v, T^\ast w} = 0\\
+            &\iff \forall w \in V, \iprod{Tv, w} = 0 \iff Tv = 0_V \iff v \in \ker(T)
+        \end{align*}
+        \item Apply (a) to $T^\ast$, ie $\im(T^{\ast \ast})^\perp = \ker(T^\ast)$, but $T^{\ast \ast} = T$ and the proof is complete.
+    \end{enumerate}
 \end{proof}
-
-% TODO
 
