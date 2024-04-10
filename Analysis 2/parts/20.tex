@@ -37,8 +37,8 @@
 \end{proof}
 
 \begin{theorem}[Taylor's Theorem, Remainder's Version]
-    Suppose $f', f'', \dots, F^{(n)}$ exist on $[a, b]$ and $f^{(n+1)} \in \mathcal{R}[a, b]$.\footnotemark Then, \[
-    f(b) = f(a) + \frac{f'(a)}{1!} (b - a) + \frac{f''(a)}{2!} + \cdots + \frac{f^(n)(a)}{n!} (b - a)^n + R_n,
+    Suppose $f', f'', \dots, f^{(n)}$ exist on $[a, b]$ and $f^{(n+1)} \in \mathcal{R}[a, b]$.\footnotemark Then, \[
+    f(b) = f(a) + \frac{f'(a)}{1!} (b - a) + \frac{f''(a)}{2!} + \cdots + \frac{f^{(n)}(a)}{n!} (b - a)^n + R_n,
     \]
     with $R_n \defeq \frac{1}{n!} \int_a^b f^{(n+1)}(t) (b-t)^n \dd{t}$.
 \end{theorem}
@@ -54,7 +54,7 @@
 \begin{definition}[Pointwise vs Uniform Convergence]
     We say a sequence of functions $f_n \to f$ \emph{pointwise} on a set $E$ if $\forall x \in E$, $f_n(x) \to f(x)$ as $n \to \infty$.
 
-    On the other hand, $f_n \to f$ \emph{uniformly} of $E$ if $\forall \epsilon > 0, \exists N \in \mathbb{N}$ such that $\forall n \geq N$ and $x \in E$, $\abs{f_n(x) - f(x)} < \epsilon$. 
+    On the other hand, $f_n \to f$ \emph{uniformly} on $E$ if $\forall \epsilon > 0, \exists N \in \mathbb{N}$ such that $\forall n \geq N$ and $x \in E$, $\abs{f_n(x) - f(x)} < \epsilon$. 
 \end{definition}
 
 \begin{remark}
@@ -69,7 +69,8 @@
 \end{example}
 
 \begin{theorem}
-    Suppose $\lim_{n \to \infty} f_n$ continuous on $[a, b]$ where each $f_n$ also continuous on $[a, b]$. Then, the space of function $C([a, b])$ equipped with the sup norm is complete.
+    % Suppose $\lim_{n \to \infty} f_n$ continuous on $[a, b]$ where each $f_n$ also continuous on $[a, b]$. Then, t
+    The space of functions $C([a, b])$ equipped with the sup norm is complete.
 \end{theorem}
 
 \begin{proof}

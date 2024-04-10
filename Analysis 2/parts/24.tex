@@ -1,8 +1,8 @@
-\begin{lemma}[Abel's]
-    Let $x_n, y_n$, $s_0 = 0, s_k = y_1 + \cdots + y_k$. Then, for $m \geq k + 1$, \[
-    \sum_{k=n+1}^m x_k y_k = (x_m s_m - x_{n+1}s_n)     + \sum_{k=n+1}^{m-1} (x_k - x_{k+1})s_k
-    \]
-\end{lemma}
+% \begin{lemma}[Abel's]
+%     Let $x_n, y_n$, $s_0 = 0, s_k = y_1 + \cdots + y_k$. Then, for $m \geq k + 1$, \[
+%     \sum_{k=n+1}^m x_k y_k = (x_m s_m - x_{n+1}s_n)     + \sum_{k=n+1}^{m-1} (x_k - x_{k+1})s_k
+%     \]
+% \end{lemma}
 \begin{theorem}[Dirichlet's Test]
     Suppose $x_n$ decreasing and $\lim_{n \to \infty} x_n = 0$. If $s_n \defeq y_1+ \cdots +y_n$ bounded, then $\sum_{n=1}^\infty x_n y_n$ converges.
 \end{theorem}
@@ -34,7 +34,7 @@
 
 \subsection{Series of Functions}
 \begin{definition}[Convergence]
-    We say a series of functions $\sum_n f_n(x)$ absolutely convergent on $E$ if for $x \in E$, $\sum_n \abs{f_n(x)}$ converges for all $x \in E$.
+    We say a series of functions $\sum_n f_n(x)$ absolutely convergent on $E$ if $\sum_n \abs{f_n(x)}$ converges for all $x \in E$.
 
     We say the convergence $\sum_n f_n(x) \to g(x)$ is uniform if the convergence is uniform for any $x \in E$; that is, $\forall \epsilon > 0, \exists N \in \mathbb{N}$ such that $\forall n \geq N$ and $x \in E$, $\abs{g(x) - \sum_n f_n(x)} < \epsilon$.
 \end{definition}

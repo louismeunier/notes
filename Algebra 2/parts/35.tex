@@ -62,6 +62,8 @@
 \end{proposition}
 \begin{proof}
     \begin{enumerate}[label=(\alph*)]
+        Remark that because $\dim(V) < \infty, \im(T^\ast) = \ker(T)^\perp \iff \im(T^\ast)^\perp = \ker(T)$.
+
         \item For each $v \in V$, \begin{align*}
             v \in \im(T^\ast)^\perp &\iff \forall u \in \im(T^\ast), \iprod{v, u} = 0 \iff \forall w \in V, \iprod{v, T^\ast w} = 0\\
             &\iff \forall w \in V, \iprod{Tv, w} = 0 \iff Tv = 0_V \iff v \in \ker(T)
@@ -70,3 +72,10 @@
     \end{enumerate}
 \end{proof}
 
+\begin{corollary}
+    Let $T : V \to V$ on $V$ $n$-dimensional inner product space. Then $\rank(T) = \rank(T^\ast)$ and $\nullity(T)=\nullity(T^\ast)$.
+\end{corollary}
+
+\begin{proof}
+    $\rank(T^\ast) = \dim(\im(T^\ast)) = \dim(\ker(T)^\perp) = n - \nullity(T) = \rank(T)$ and it follows by the dimension theorem that $\nullity(T^\ast) = n - \rank(T^\ast) = n - \rank(T) = \nullity(T)$.
+\end{proof}

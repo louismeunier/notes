@@ -1,0 +1,88 @@
+\begin{corollary}\label{cor:eigenvaluesofadjoint}
+    Let $T : V \to V$, $V$ finite dimensional. For $\lambda \in \field$, $\lambda$ an eigenvalue iff $\overline{\lambda}$ an eigenvalue of $T^\ast$.
+\end{corollary}
+
+\begin{remark}
+    But the corresponding eigenvectors may be different in general.
+\end{remark}
+
+\begin{proof}
+    $\lambda$ an eigenvalue of $T$ $\iff$ $\nullity(T - \lambda I_V) > 0$ $\iff$ $\nullity((T - \lambda I_V)^\ast) = \nullity(T^\ast - \overline{\lambda} I_V) > 0$ $\iff$ $\overline{\lambda}$ an eigenvalue of $T^\ast$.
+\end{proof}
+
+\begin{lemma}[Schur's Lemma (Orthonormal Version)]
+    Let $T : V \to V$ on $V$ finite dimensional and suppose that $p_T(t)$ splits. Then there is an orthonormal basis $\beta$ for $V$ such that $[T]_\beta$ upper triangular.
+\end{lemma}
+
+\begin{proof}
+    Because $p_T(t)$ splits, $T$, hence by \cref{cor:eigenvaluesofadjoint} also $T^\ast$, has eigenvalues. We prove by induction on $n \defeq \dim(V)$. For $n = 1$, matrix is upper triangular so we are done.
+    
+    Suppose $n \geq 2$ and the statement holds for $n - 1$. Let $\lambda$ be an eigenvalue and $v_n$ a corresponding normal (wlog by normalizing it) eigenvector for $T^\ast$, ie $T^\ast(v_n) = \lambda v_n$. Let $W \defeq \Span(\{v_n\})$. Then, $W^\perp$ is $T$-invariant: indeed, if $v \perp W$, then $v \perp v_n$ ie $\iprod{v, v_n} =0$, then $\iprod{Tv, v_n} = \iprod{v, T^\ast (v_n)} = \iprod{v, \lambda v_n} = \overline{\lambda} \iprod{v, v_n} = 0$ so $Tv \perp W$. 
+    
+    Now, $\dim(W^\perp) = n - \dim(W) = n - 1$ and $T_{W^\perp} : W^\perp \to W^\perp$, so by induction applied to $T_{W^\perp}$, there is an orthonormal basis $\alpha \defeq \{v_1, \dots, v_{n-1}\}$ of $W^\perp$ such that $[T_{W^\perp}]_\alpha$ is upper triangular. Then, $\beta \defeq \alpha \cup \{v_n\} = \{v_1, \dots, v_{n - 1}, v_{n}\}$ is an orthonormal basis for $V$, and \begin{align*}
+        [T]_\beta = \begin{pmatrix}
+            \vert  & & \vert & \vert \\
+            [T(v_1)]_\beta & \cdots & [T(v_{n-1})]_\beta & [T(v_{n})]_\beta \\
+            \vert  & & \vert & \vert 
+        \end{pmatrix} &= \begin{pmatrix}
+            \vert  & & \vert & \vert \\
+            [T_{W^\perp}(v_1)]_\alpha & \cdots & [T_{W^\perp}(v_{n-1})]_\alpha & [T(v_{n})]_\beta \\
+            \vert  & & \vert & \vert \\
+            0 & & 0 & \vert
+        \end{pmatrix}\\
+\text{(by induction assumption)} \qquad &= \begin{pmatrix}
+    \star & \star & \star & \cdots  & \star \\
+    0 & \star & \ddots &  \cdots & \star\\
+    0 & 0&\ddots  & \ddots & \star\\
+    0 & 0 & \ddots  & \star& \star\\
+    0 & 0 & \cdots & 0 & \star
+\end{pmatrix},
+    \end{align*}
+    which is upper triangular.
+\end{proof}
+
+\begin{remark}
+    If $T, T^\ast$ had precisely the same eigenvectors, then using precisely the same proof, we could get that $[T]_\beta$ diagonal, since then $T v_n = \overline{\lambda} v_n$. This would happen, for instance, if $T = T^\ast$, but this condition can be relaxed:
+\end{remark}
+
+\begin{definition}[Normality]
+    $T : V \to V$ is called \begin{itemize}
+        \item \emph{normal} if $T$ and $T^\ast$ commute, ie $T \circ T^\ast = T^\ast \circ T$;
+        \item \emph{self-adjoint} if $T = T^\ast$.
+    \end{itemize}
+\end{definition}
+
+\begin{example}
+    \begin{enumerate}[label=(\alph*)]
+        \item Orthogonal projections are self-adjoint. 
+        
+        Let $W \subseteq V$ a subspace and $P$ the orthogonal projection onto $W$. Fix $u, v \in V$. Then $u = P(u) + u', v = P(v) + v'$, $u', v' \in W^\perp$. Then \begin{align*}
+            \iprod{Pu, v} = \iprod{Pu, Pu + v'} &= \iprod{Pu, Pv} + \underbrace{\iprod{Pu, v'}}_{= 0}= \iprod{Pu, Pv},
+        \end{align*}
+        and similarly, \[\iprod{u, Pv} = \iprod{Pu + u', Pv} = \iprod{Pu, Pv} + \iprod{u', Pv} = \iprod{Pu, Pv},\]
+        hence $\iprod{Pu, v} = \iprod{u, Pv}$.
+        \item If $P : V \to V$ an orthogonal projection and $\lambda \in \C\setminus \R$ then $(\lambda P)^\ast = \overline{\lambda} P \neq \lambda P$ so $\lambda P$ not self-adjoint, but it is still normal; \[
+        (\lambda P) (\lambda P)^\ast = (\lambda P)(\overline{\lambda} P) = (\lambda^2)(P^2) = (\overline{\lambda} P)(\lambda P) = (\lambda P)^\ast (\lambda P).
+        \]
+        \item Let $V = W_1 \oplus W_2 \oplus \cdots \oplus W_k$, where $W_i \vert W_j, i \neq j$. Then for any $\lambda_1, \lambda_2, \dots, \lambda_k \in \field$, the operator $T \defeq \lambda_1 \proj_{W_1} + \cdots + \lambda_k \proj_{W_k}$ is normal.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}[Properties of Normal Operators]
+    Let $T : V \to V$ be a normal linear operator on $V$ finite dimensional. \begin{enumerate}[label=(\alph*)]
+        \item $\norm{Tv} = \norm{T^\ast v}$ for all $v \in V$.
+        \item $T - a I_V$ (or more generally $p(T)$ for any polynomial $p(t)$, ie the powers of $T$ are normal) is normal.
+        \item For all $v \in V$, $v$ an eigenvector of $T$ corresponding to eigenvalue $\lambda$ $\iff$ $v$ an eigenvector of $T^\ast$ corresponding to $\overline{\lambda}$.
+        \item For distinct eigenvectors $\lambda_1 \neq \lambda_2$, $\eig_T(\lambda_1) \perp \eig_T(\lambda_2)$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    $\overset{!}{=}$ indicates use of the normality assumption.
+    \begin{enumerate}[label=(\alph*)]
+        \item $\norm{Tv}^2 = \iprod{Tv, Tv} = \iprod{v, T^\ast T v} \overset{!}{=} \iprod{v, T T^\ast v} = \iprod{v, T^{\ast \ast} T^{\ast} v} = \iprod{T^\ast v, T^\ast v} = \norm{T^\ast v}^2$.
+        \item $(T - aI_V)(T^\ast - \overline{a} I_V) = T T^\ast - a T^\ast - \overline{a} T - a \overline{a}I_V \overset{!}{=} T^\ast T - aT^\ast - \overline{a}T - a \overline{a} I_V = (T^\ast - \overline{a} I_V)(T - a \overline{I_V})$. Similar proof follows for general polynomials.
+        \item $v$ an eigenvector of $T$ corresponding to $\lambda$ $\iff$ $(T - \lambda I_V)(v) = 0 \iff \norm{(T-\lambda I_V)(v)} = 0 \overset{\text{! by (a)}}{\iff} \norm{(T^\ast - \overline{\lambda} I_V)(v)} =0 \iff v$ an eigenvector of $T^\ast$ corresponding to $\overline{\lambda}$.
+        \item Let $v_1 \in \eig_T(\lambda_1)$, $v_2 \in \eig_T(\lambda_2)$. Then $\lambda_1 \iprod{v_1, v_2} = \iprod{\lambda_1 v_1, v_2} = \iprod{Tv_1, v_2} \overset{!}{=} \iprod{v_1, T^\ast v_2} = \iprod{v_1, \overline{\lambda_2} v_2} = \lambda_2 \iprod{v_1, v_2}$ so $(\lambda_1 - \lambda_2)(\iprod{v_1, v_2}) = 0$, but $\lambda_1, \lambda_2$ assumed distinct hence $\iprod{v_1, v_2} = 0$ and $v_1 \perp v_2$.
+    \end{enumerate}
+\end{proof}

@@ -44,6 +44,7 @@
 \import{/users/louismeunier/Documents/templates/}{shortcuts.sty}
 
 
+\newcommand*{\important}{\textcolor{red}{$\star$} }
 % https://alexwlchan.net/2017/latex-underlines/
 \renewcommand{\ULdepth}{1.8pt}
 \contourlength{0.8pt}
@@ -166,7 +167,13 @@
   We say two metrics on $X$ are equivalent if they admit the same topology; a sufficient condition is that, $\forall x \neq y \in X$, $\exists 1 < C < \infty$ such that $\frac{1}{C} < \frac{d_1(x,y)}{d_2(x,y)}< C$, then $d_1, d_2$ equivalent, where $C$ independent of $x,y$.
 \end{defn}
 
-\begin{defn}[Interior, Boundary, Closure]
+
+\begin{figure*}[!ht]
+  \centering
+  \includegraphics*[width=0.7\textwidth]{topoanatomy.png}
+\end{figure*}
+
+\begin{defn}[\important Interior, Boundary, Closure]
   Let $X$-topological space, $A \subseteq X$, $x \in X$. \begin{itemize}
     \item If $\exists U$-open \st $x \in U \subseteq A$, then we write $x \in \interior(A)$, the interior of $A$.
     \item If $\exists V$-open \st $x \in V \subseteq A^C$, then $x \in \interior(A^C)$.
@@ -209,7 +216,7 @@
   For a subset $Y \subseteq X$-topological space, we define the subspace topology on $Y$ as $\tau_Y \defeq \{Y \cap U : U \in \tau\}$.
 \end{defn}
 
-\begin{defn}[Continuous]
+\begin{defn}[\important Continuous]
   For $X, Y$-topological spaces, a function $f : X \to Y$ is continuous iff $\forall V$-open in $Y$, $f^{-1}(V)$-open in $X$.
 \end{defn}
 
@@ -365,14 +372,315 @@
 \section{Differentiation}
 \begin{defn}[Differentiable]
   $f(x)$ differentiable at $c$ if $\lim_{x \to c} \frac{f(x) -f(c)}{x - c}$ exists, and if so we denote the limit $f'(c)$.
+
+  Alternatively, one can view differentiation as a linear map between spaces of differentiable functions.
 \end{defn}
 
 \begin{thm}
   Differentiable $\implies$ continuous.
 \end{thm}
+\begin{proof}
+  Short enough to write the full proof; $\lim_{x \to c} (f(x) - f(c)) = \lim_{x\to c} (x - c) \frac{f(x) - f(c)}{x-c} = 0 \cdot f'(c) = 0$.
+\end{proof}
+
+\begin{thm}[Caratheodory's]
+  For $f : I \to \R, c \in I$, $f$ differentiable at $c$ iff $\exists \varphi : I \to \R : \varphi$ continuous at $c$, $f(x) - f(c) = \varphi(x) (x-c)$.
+\end{thm}
+
+\begin{proof}[Sketch]
+  Its worth recalling the definition of $\varphi$ for the forward implication, $$\varphi(x) \defeq \begin{cases}
+    \frac{f(x) - f(c)}{x - c} & x \neq c\\
+    f'(c) & x = c
+  \end{cases}.$$ The converse follows by taking limits.
+\end{proof}
+
+\begin{remark}
+  While not a particularly enlightening result, used in proofs of the chain rule, etc.
+\end{remark}
+
+\begin{thm}[Chain Rule]
+  Let $f : J \to \R, g : I \to R \st f(J) \subseteq I$. If $f(x)$ differentiable at $c$ and $g(y)$ at $f(c)$, $g \circ f$ differentiable at $c$ with $(g \circ f)'(c) = g'(f(c))\cdot f'(c)$.
+\end{thm}
+\begin{proof}[Sketch]
+  Apply Caratheodory's to $f$ at $c$ and $g$ at $f(c)$, and compose.
+\end{proof}
+
+\begin{thm}[Rolle's]
+  Let $f : [a, b] \to \R$ continuous. If $f'(x)$ exists on $(a, b)$ and $f(a) = f(b) = 0$, $\exists c \in (a, b) : f'(c) = 0$.
+\end{thm}
+  
+\begin{proof}[Sketch]
+  If constant function, done. Else, assuming function positive, it obtains a maximum, and thus its derivative 0 at this point.
+\end{proof}
+
+\begin{thm}[\textcolor{red}{$\star$} Mean Value]
+  Let $f$ continuous on $[a, b]$ and differentiable on $(a, b)$. Then, $\exists c \in (a, b)$ such that $f(b) - f(a) = f'(c) (b - a)$.
+\end{thm}
+\begin{proof}[Sketch]
+  Let $\phi(x) \defeq f(x) - f(a) - \frac{f(b) - f(a)}{(b-a)}(x-a)$. Then $\phi(a) = \phi(b) = 0$ so applying Rolle's $\exists c \in (a, b) : \varphi'(c) = 0 = f'(x) - \frac{f(b) - f(a)}{b-a}$. The proof is done after rearranging.
+\end{proof}
+
+\begin{prop}[L'Hopital's]
+  If $f, g : [a, b] \to \R$ with $f(a) = g(a) = 0$, $g(x)\neq 0$ on $a < x < b$, $f, g$ differentiable at $x = 0$ with $g'(a) \neq 0$, then $\lim_{x \to a^+} \frac{f(x)}{g(x)}$ exists and is equal to $\frac{f'(a)}{g'(a)}$.
+\end{prop}
+\begin{remark}
+  Other versions exist, but this is certainly one of them.
+\end{remark}
+
+\begin{thm}[\textcolor{red}{$\star$} Taylor's]
+  Let $f \in C^{n}([a, b])$ such that $f^{(n+1)}(x)$ exists on $(a, b)$. Let $x_0 \in [a, b]$, then, for any $x \in [a, b]$, $\exists c $ between $x, x_0$ such that \[
+  f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{f''(x_0)}{2!}(x-x_0)^2 + \cdots + \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n + \frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1}.
+  \]
+\end{thm}
+
+\begin{cor}
+  Let $x_0 \in [a, b]$. With the same assumptions as Taylor's (but in a neighborhood of $x_0$), with $f'(x_0) = f''(x_0) = \cdots = f^{(n-1)}(x_0) = 0$ and $f^{(n)}(x_0) \neq 0$, then \begin{itemize}
+    \item $n$ even; then $f$ has a local minimum at $x_0$ if $f^{(n)}(x_0) > 0$ and a local max if $f^{(n)}(x_0) < 0$.
+    \item $n$ odd; neither. 
+  \end{itemize}
+\end{cor}
+
 \section{Integration}
+
+\textbf{Its all just rectangles.}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\RR}{\mathcal{R}}
+
+\begin{defn}[Riemann Integration]
+  Consider an interval $(a, b)$. We call a subdivision $\PP \defeq \{a = x_0, x_1, \dots, x_{n-1}, x_n = b\}$ a partition, and $\dot{\PP}$ a marked partition if in addition we are given a point $t_i \in (x_i, x_{i+1}]$ for each interval in $\dot{\PP}$.
+
+  We put $\diam(\PP) \defeq \max_{i=1}^n \abs{x_i - x_{i-1}}$.
+
+  We define the Riemann sum $S(f, \dot{\PP}) \defeq \sum_{i=1}^n f(t_i) (x_i - x_{i-1})$, and say that $f$ Riemann integrable on $[a, b]$ if $S(f, \dot{\PP}) \to L$ as $\diam(\dot{\PP}) \to 0$ for any choice of tag $t_i$, and write $f \in \RR([a, b])$
+
+  More precisely, if $\forall \epsilon > 0$, $\exists \delta > 0 : \diam(\PP) < \delta$, then for any $t_i \in [x_i, x_{i+1}]$, $\abs{L - S(f, \dot{\PP})} < \epsilon$. We then say the (Riemann) integral of $f$ over $[a, b]$ is $L$ and write $\int_a^b f(x) \dd{x} = L$.
+\end{defn}
+
+\begin{prop}
+  Riemann integrals are unique, linear in $f(x)$, and respect inequalities (if $f \leq g$ on $[a, b]$, $\int_a^b f(x) \dd{x} \leq \int_a^b g(x) \dd{x}$ if both in $\RR([a, b])$)
+\end{prop}
+
+\begin{prop}[\textcolor{red}{$\star$}]
+  $f \in \RR[a, b] \implies f$ bounded on $[a, b]$
+\end{prop}
+
+\begin{prop}[\important Cauchy Criterion for Integrability]
+  $f \in \mathcal{R}[a, b] \iff \forall \epsilon > 0, \exists \delta > 0 : $ if $\dot{P}$ and $\dot{Q}$ are tagged partitions of $[a, b] \st \diam{\dot{P}} < \delta$ and $\diam{\dot{Q}} < \delta$, then $\abs{S(f, \dot{P}) - S(f, \dot{Q})} < \epsilon$
+\end{prop}
+
+\begin{remark}
+  Ala Cauchy Sequence.
+\end{remark}
+
+\begin{thm}[Squeeze Theorem]
+  $f \in \RR[a, b] \iff \forall \epsilon > 0, \exists \alpha_\epsilon, \omega_\epsilon \in \RR[a,b] : \alpha_\epsilon \leq f \leq \omega_\epsilon$ and $\int_a^b (\omega_\epsilon - \alpha_\epsilon) < \epsilon$.
+\end{thm}
+
+\begin{lemma}
+  Let $J \defeq [c, d] \subseteq [a, b]$ and $\varphi_J(x) \defeq \begin{cases}
+    1 & x \in J\\
+    0 & x \notin J
+  \end{cases}$ be the indicator function of $J$. Then $\varphi_J \in \RR[a, b]$ and $\int_a^b \varphi_J = d- c$.
+\end{lemma}
+
+\begin{remark}
+  Helpful for "approximations"; follows by linearity, induction that step functions (ie sums of indicator functions times constants) are integrable.
+\end{remark}
+
+\begin{thm}[\textcolor{red}{$\star$} Continuous]
+  $f$ continuous on $[a, b] \implies f \in \RR[a, b]$
+\end{thm}
+
+\begin{proof}[Sketch]
+  Continuity on a closed interval gives uniform continuity and so a "universal $\delta$"; then, for any partition, take the $x$ such that $f$ attains its minimum and maximum, and define a $\alpha_\epsilon$, $\omega_\epsilon$ as the sum of indicator functions taking the minimum, maximum of $f$ respectively on each partition. Then apply the previous theorem and the squeeze theorem.
+\end{proof}
+
+\begin{thm}[Additivity]
+  $f \in \RR[a, b] \iff f \in \RR[a, c]$ and $f \in \RR[c, b]$, and $\int_a^b f(x) \dd{x} = \int_a^c f(x) \dd{x} + \int_c^b f(x) \dd{x}$.
+\end{thm}
+
+\begin{thm}[\textcolor{red}{$\star$} Fundamental Theorem of Calculus]
+  Let $F, f : [a, b] \to \R$ and $E \subseteq [a, b]$ a finite set, such that $F$ continuous on $[a, b], F'(x) = f(x) \forall x \in [a, b] \setminus E$, $f \in \RR[a, b]$. Then $\int_a^b f(x) = F(b) - F(a)$. We call $F$ the "primitive" of $f$.
+\end{thm}
+
+\begin{thm}
+  For $f \in \RR[a, b]$ and any $z \in [a, b]$, put $F(z) \defeq \int_a^z f(x) \dd{X}$. Then, $F$ continuous on $[a, b]$.
+\end{thm}
+
+\begin{thm}[\textcolor{red}{$\star$} Fundamental Theorem of Calculus p2]
+  For $f \in \RR[a, b]$ continuous at $c$, then $F(z)$ differentiable at $c$ and $F'(c) = f(c)$.
+\end{thm}
+
+% \begin{thm}[Change of Variables]
+%   For $[]$
+% \end{thm}
+
+\begin{defn}[Lebesgue Measure]
+  We say a set $A \subseteq \R$ has Lebesgue measure $0$ iff $\forall \epsilon > 0$, $A$ can be covered by a union of intervals $J_k$ such that $\sum_k \abs{J_k} \leq \epsilon$. We then call $A$ a "null set".
+
+  In particular, any countable set is a null set.
+\end{defn}
+
+\begin{thm}[\textcolor{red}{$\star$} Lebesgue Integrability Criterion]
+  Let $f : [a, b] \to \R$ be bounded. Then $f \in \RR[a,b] \iff$ the set of discontinuities of $f$ has Lebesgue measure 0.
+\end{thm}
+
+\begin{remark}
+  In particular, remark that continuity a stronger requirement than integrability.
+\end{remark}
+
+\begin{thm}[Composition]
+  If $f \in \RR[a, b]$, $\varphi : [c, d] \to \R$ continuous and $f([a, b]) \subseteq [c, d]$, then $\varphi \circ f \in \RR[a, b]$.
+\end{thm}
+
+\begin{thm}[Integration by Parts]
+  If $F, G$ differentiable $[a, b]$ with $f \defeq F', g \defeq G'$, and $f, g \in \RR[a, b]$, then \[
+  \int_a^b f(x) G(x) \dd{x} = F(x) G(x)\eval_{a}^b - \int_a^b F(x) g(x) \dd{x}.
+  \]
+\end{thm}
+
+\begin{proof}[Sketch]
+  Uses additivity and the fundamental theorem of calculus.
+\end{proof}
+
+\begin{thm}[Taylor's Theorem, Remainder's Version]
+  Suppose $f', f'', \dots, f^{(n)}$ exist on $[a, b]$ and $f^{(n+1)} \in \RR[a, b]$. Then \[
+  f(b) = f(a) + \frac{f'(a)}{1!}(b-a) + \frac{f''(a)}{2!}(b-a)^2 + \cdots + \frac{f^{(n)}(a)}{n!}(b-a)^n + R_n,
+  \]
+  where $R_n \defeq \frac{1}{n!} \int_a^b f^{(n+1)}(t) (b - t)^{n} \dd{t}$.
+\end{thm}
 
 \section{Sequences of Functions}
 
+\textbf{A good motivation to keep in mind with the "types" of function-sequence convergence is to answer the question: when can we exchange limits of derivatives of functions and derivatives of limits of functions? What about integrals? What about summations (see next section)? Ie, when does $\lim_{n \to \infty} f_n'(x) = \dv{x}\lim_{n \to \infty} f_n(x)$, etc.}
+
+\begin{defn}[Pointwise, Uniform Convergence]
+We say $f_n \to f$ pointwise on $E$ if $\forall x \in E$, $f_n(x) \to f(x)$ as $n \to \infty$.
+
+We say $f_n \to f$ uniformly on $E$ if $\forall \epsilon > 0, \exists N \in \mathbb{N}$ such that $\forall n \geq N, x \in E$, $\abs{f_n(x) - f(x)} < \epsilon$.
+\end{defn}
+
+\begin{remark}
+Pointwise doesn't care about the "rate of convergence"; as long as each point converges eventually, we're good. Uniform convergence needs all points to converge "at the same rate" (so to speak).
+
+A good example to keep in mind is $f_n \defeq \begin{cases}
+  2nx & 0 \leq x \leq \frac{1}{2n}\\
+  0 & x > \frac{1}{2n}
+\end{cases}$ on $[0, 1]$, which converges pointwise to $0$ but not uniformly.
+\end{remark}
+\begin{prop}
+  Uniform $\implies$ pointwise convergence.
+\end{prop}
+
+\begin{thm}
+  The metric space of continuous functions $C([a, b])$ complete with respect to $d_\infty(f, g) \defeq \sup_{x \in [a, b]}\abs{f(x) - g(x)}$.
+\end{thm}
+
+\begin{thm}[\textcolor{red}{$\star$} Interchange of Limits]
+  Let $J \subseteq \R$ be a bounded interval such that $\exists x_0 \in J : f_n(x_0) \to f(x_0)$. Suppose $f_n'(x) \to g(x)$ uniformly on $J$. Then, $\exists f : f_n (x) \to f(x)$ uniformly on $J$, $f(x)$ differentiable on $J$, and moreover $f_n'(x) = g(x) \forall x \in J$.
+\end{thm}
+
+\begin{thm}[\textcolor{red}{$\star$} Interchange of Integrals]
+  Let  $f_n \in \RR[a, b], f_n \to f$ uniformly on $[a, b]$. Then $f \in \RR[a, b]$ and $\int_a^b f_n(x) \dd{x} \to \int_a^b f(x) \dd{x}$
+\end{thm}
+\begin{thm}[Bounded Convergence]
+  Let $f_n \in \RR[a, b], f_n \to f \in \RR[a, b]$ (not necessarily uniform). Suppose $\exists B > 0 \st \abs{f_n(x)} \leq B \forall x \in [a, b]$ and $\forall n \in \mathbb{N}$, then $\int_a^b f_n \to \int_a^b f$ as $n \to \infty$.
+\end{thm}
+\begin{remark}
+  This provides a weaker condition, but equivalent result as the previous theorem, although remark now that we need the limit function itself to be in $\RR[a, b]$, which was a result, not a necessity, of the previous theorem. In general, uniform continuity very strong, but leads to helpful results.
+\end{remark}
+
+\begin{thm}[Dimi's]
+  If $f_n \in C([a, b])$, $f_n(x)$ monotone (as a sequence), and $f_n \to f \in C([a, b])$, then $f_n \to f$ uniformly.
+\end{thm}
+
 \section{Infinite Series}
+
+\begin{defn}[Covergence of Series]
+  Let $\{x_j\} \in X$-normed vector space over $\R$. We say $\sum_{j=1}^\infty x_j$ converges absolutely iff $\sum_{j=1}^\infty \norm{x_j} < + \infty$. In particular, if $X = \R$, then $\norm{\cdot} = \abs{\cdot }$.
+
+  We say $\sum_{j=1}^\infty x_j$ converges conditionally if $\sum_{j=1}^\infty x_j < +\infty$, but $\sum_{j=1}^\infty \norm{x_j} = +\infty$.
+\end{defn}
+
+\begin{prop}
+  Any rearrangement of an absolutely convergent series gives the same sum. Conversely, the order of summation of a conditionally convergent summation can be rearranged such as to equal any real number.
+\end{prop}
+
+
+\begin{prop}[Absolute Convergence Tests]
+  \begin{itemize}
+    \item \textbf{Comparison Test:} let $x_n, y_n$ be nonzero real sequences and $r \defeq \lim \abs{\frac{x_n}{y_n}}$. If such a limit exists, then if
+    \begin{enumerate}[label=(\alph*)]
+      \item $r \neq 0$, $\sum_n x_n$ absolutely convergent $\iff$ $\sum_n y_n$ absolutely convergent.
+      \item $r = 0$, $\sum_n {y_n}$ absoltuely convergent $\implies \sum_n x_n$ absolteuly convergent.
+    \end{enumerate}
+    \item \textbf{Root Test:} if $\exists r < 1 \st \abs{x_n}^{1/n} \leq r \forall n \geq K$-sufficiently large, then $\sum_{n=K}^\infty \abs{x_n}$ converges. Conversely, if$\abs{x_n}^{1/n} \geq 1$ for $n \geq K$-sufficiently large, $\sum_n x_n$ diverges.
+    \item \textbf{Ratio Test:} if $x_n \neq 0$ and $\exists 0 < r < 1  \st \abs{\frac{x_{n+1}}{x_n}} \leq r$ for $n \geq K$ sufficiently large, $\sum_n x_n$ absolutely convergent. Conversely, if $\abs{\frac{x_{n+1}}{x_n}} \geq 1$ for $n \geq K$ sufficiently large, then $\sum_n x_n$ diverges.
+    \item \textbf{Integral Test:} if $f(x) \geq 0$ non-increasing/non-decreasing function of $x \geq 1$, $\sum_{k=1}^\infty f(k)$ converges iff $\lim_{k \to \infty} \int_1^k f(x) \dd{x}$ finite.
+    \item[$\ast$] \textbf{Raube's Test:} let $x_n \neq 0$. \begin{enumerate}[label=(\alph*)]
+      \item If $\exists a > 1 \st \abs{\frac{x_{n+1}}{x_n}} \leq 1 - \frac{1}{n} \forall n \geq K$-sufficiently large, then $\sum_{n} x_n$ converges absolutely.
+      \item If $\exists a \leq 1 \st \abs{\frac{x_{n+1}}{x_n}} \geq 1 - \frac{1}{n} \forall n \geq K$-sufficiently large, $\sum_{n} x_n$ does not converge absolutely.
+    \end{enumerate}
+  \end{itemize}
+\end{prop}
+\begin{remark}
+  Proofs of these tests aren't really important (Dima-speaking), but knowing the conditions in which they apply is.
+\end{remark}
+\begin{prop}[Tests for Non-Absolute Convergence]
+  \begin{itemize}
+    \item \textbf{Alternating Series:} if $x > 0, x_{n+1} \leq x_n$ such that $\lim_{n \to \infty} x_n = 0$, then $\sum_{n} (-1)^n x_n$ converges.
+    \item \textbf{Dirichlet's Test:} if $x_n$ decreasing with limit $0$, and the partial sum $s_n \defeq y_1 + \cdots + y_n$ is bounded, then $\sum_{n} x_n y_n$ converges.
+    \item \textbf{Abel's Test:} let $x_n$ convergent and monotone, and suppose $\sum_{n} y_n$ converges. Then $\sum_n x_n y_n$ also converges.
+  \end{itemize}
+\end{prop}
+
+\begin{defn}[Convergence of Series of Functions]
+  We say a series $\sum_n f_n(x)$ converges absolutely to some $g(x)$ on $E$ if $\sum_n \abs{f_n(x)}$ converges for all $x \in E$.
+
+  We say that the convergence is uniform if it is uniform for any $x \in E$, ie $\forall \epsilon > 0 \exists N \in \mathbb{N} \st \forall n \geq N, x \in E, \abs{g(x)- \sum_n f_n(x)} < \epsilon$.
+\end{defn}
+
+\begin{prop}[Interchanging Integrals and Summations]
+  Suppose for $f_n : [a, b] \to \R$, $\sum_n f_n(x) \to g(x)$ uniformly and $f_n \in \RR[a, b]$. Then $\int_a^b g(x) = \sum_{n=1}^\infty \int_a^b f_n(x) \dd{x}$.
+\end{prop}
+
+\begin{prop}[Interchanging Derivatives and Summations]
+  Let $f_n : [a, b] \to \R, f_n' \exists$, $\sum_{n}f(x)$ converges for some $[a, b]$ and $\sum_n f_n'(x)$ converges uniformly. Then, there exists some $g: [a, b] \to \R$ such that $\sum_n f_n \to g$ uniformly, $g$ differentiable, and $g'(x) = \sum_n f_n'(x)$, all on $[a, b]$.
+\end{prop}
+
+\begin{thm}[Cauchy Criterion of Series]
+  $f_n(x) : D \to \R$ converges uniformly on $D$ iff $\forall \epsilon > 0, \exists N \st \forall m,n \geq N, \sum_{i=n+1}^m f_i(x) < \epsilon \forall x \in D$.
+\end{thm}
+
+\begin{prop}[Weierstrass M-Test]
+  If $\abs{f_n(x)} \leq M_n \forall x \in D \subseteq \R$ and $\sum_n M_n < + \infty$, then $\sum_n f_n(x)$ converges uniformly on $D$.
+\end{prop}
+
+% \begin{remark}
+%   Other than straight application of definitions, this is really our only test
+% \end{remark}
+
+\begin{defn}[Power Series]
+  A function of the form $f(x) \defeq \sum_{n=0}^\infty a_n (x-c)^n$ is said to be a power series centered at $c$.
+
+  Put $\rho \defeq \limsup_{n \to \infty} \sqrt[n]{\abs{a_n}}$, and put \[
+  R \defeq \begin{cases}
+    \frac{1}{\rho} & 0 < \rho < + \infty\\
+    0 & \rho = +\infty\\
+    \infty & \rho = 0
+  \end{cases}.
+  \]
+  We call $R$ the radius of convergence of $f$.
+\end{defn}
+
+\begin{thm}[\important Cauchy-Hadamard]
+  Let $R$ be the radius of converges of $f$. Then, $f(x)$ converges if $\abs{x - c} < R$, and diverges if $\abs{x -c} > R$.
+\end{thm}
+\begin{proof}[Sketch]
+  Apply the root test to the definition of $R$.
+\end{proof}
+
+\begin{remark}
+  If $\abs{x - c} = R$, the theorem is inconclusive, and we need to manually check.
+\end{remark}
 \end{document}
