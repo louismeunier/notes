@@ -160,3 +160,9 @@
 !*ODEs*Review/parts/
 !*ODEs*Review/parts/*
 !*ODEs*Review/*.sty
+
+# ODEs review
+!*Analysis*2*Review
+!*Analysis*2*Review/*.pdf
+!*Analysis*2*Review/*.tex
+!*Analysis*2*Review/*.sty

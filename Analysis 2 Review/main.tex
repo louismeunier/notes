@@ -1,0 +1,378 @@
+\documentclass[12pt, oneside]{article}
+\usepackage[margin=1in, includefoot]{geometry}
+\usepackage[pagestyles]{titlesec}
+\usepackage[]{csquotes}
+
+\usepackage{amsthm}
+\usepackage{amsmath,amssymb}
+\usepackage{mathrsfs}
+\usepackage{xfrac}
+
+% \usepackage{libertine}
+\usepackage{newpxtext}
+\usepackage{newpxmath}
+
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{listings}
+\usepackage{tocloft}
+
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage{graphicx}
+
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\usepackage[ragged,multiple,flushmargin]{footmisc}
+
+\usepackage{xcolor-solarized}
+\usepackage[hidelinks,colorlinks=true,allcolors=solarized-blue]{hyperref}
+\usepackage{cleveref}
+\usepackage{nameref}
+
+\usepackage{physics}
+
+\usepackage{tikz}
+
+\usepackage{contour}
+\usepackage[normalem, normalbf]{ulem}
+
+\usepackage{import}
+\import{/users/louismeunier/Documents/templates/}{shortcuts.sty}
+
+
+% https://alexwlchan.net/2017/latex-underlines/
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+\newcommand{\pageauthor}{Louis Meunier}
+\newcommand{\pagetitle}{Honours Analysis 2}
+\newcommand{\pagesubtitle}{MATH255}
+\newcommand{\pagedescription}{Summary of Results}
+\newcommand{\pagesemester}{Winter, 2024 }
+\newcommand{\pageprofessor}{Prof. Dmitry Jakobson}
+
+\newcommand{\thetitle}{
+  \noindent
+% \begin{center}
+  \vspace*{5em}\\
+  {\Large\textbf{\pagesubtitle} - \pagetitle}\\
+  {\small{\pagedescription}}
+  \vspace*{2em}\\
+  {\small \pagesemester\\
+  Notes by \pageauthor}\\
+  {\small \href{https://notes.louismeunier.net/Analysis 2/analysis2.pdf}{Complete notes}}
+  % \vspace*{2em}
+% \end{center}
+}
+\renewcommand{\contentsname}{}
+
+\titleformat{\section}
+{\centering\bfseries\scshape}
+{\thesection}{1em}{}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollary}
+\newtheorem{prop}{Proposition}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\orth}{orth}
+
+\let\origsection=\section
+\let\origsubsection=\subsection
+
+\renewcommand\section[1]{\origsection{#1}\label{sec:\thesection}}
+\renewcommand\subsection[1]{\origsubsection{#1}\label{\thesubsection}}
+
+\begin{document}
+\thetitle
+% \begin{center}
+\tableofcontents
+\setstretch{1.5}
+% \end{center}
+
+\section{Point-Set Topology}
+
+\textbf{Topology is about abstracting openness. It can typically suffice to consider open, closed sets in $\R$ for intuition, but is obviously not all-general.}
+
+\begin{defn}[Metric Space]
+  A space $X$ equipped with a function $d : X \times X \to [0, \infty)$ is called a metric space and $d$ a metric or distance if \begin{itemize}
+    \item $d(x, y) = d(y, x) \geq 0$
+    \item $d(x, y) = 0 \iff x = y$
+    \item $d(x, y) + d(y, z) \geq d(x, z)$
+  \end{itemize}
+  for any $x, y, z \in X$.
+\end{defn}
+
+\begin{defn}[Normed Vector Space]
+  A function $\norm{\cdot} : X \to \R$ defined on a vector space $X$ over $\R$ is a norm if \begin{itemize}
+    \item $\norm{x} \geq 0$
+    \item $\norm{x} = 0 \iff x = 0$
+    \item $\norm{c \cdot x} = \abs{c} \norm{x}$
+    \item $\norm{x + y} \leq \norm{x} + \norm{y}$,
+  \end{itemize}
+  for any $x, y \in X, c \in \R$.
+\end{defn}
+
+\begin{remark}
+  We can naturally extend this to arbitary fields, but seeing as this is a course in Real Analysis, we won't.
+\end{remark}
+
+\begin{prop}
+  For a normed vector space $(X, \norm{\cdot})$, $d(x, y) \defeq \norm{x - y}$ is a metric on $X$. We call such a metric the one "induced" by the norm.
+\end{prop}
+
+\begin{defn}[Topological Set]
+  A set $X$ is a topological set if we have a collection $\tau$ of subsets of $X$, called open sets, such that \begin{itemize}
+    \item $\varnothing \in \tau, X \in \tau$
+    \item For $A_\alpha \in \tau$ for $\alpha$ in any $I$ (potentially infinite), $\bigcup_{\alpha \in I} A_\alpha \in \tau$
+    \item For $A_\alpha \in \tau$ for $\alpha \in J$ where \emph{J finite}, then $\bigcap_{\alpha \in J} A_\alpha \in \tau$
+  \end{itemize}
+  ie, arbitrary unions of open sets are open, and finite intersections of open sets are open.
+\end{defn}
+
+\begin{remark}
+  Keep $\R$ in mind when initially working with these definitions; for instance, the set $A_n \defeq (0, \frac{1}{n})$ open in $\R$ for any $n \in \mathbb{N}$, but $\bigcap_{n \in \mathbb{N}} A_n = \{0\}$ which is closed.
+\end{remark}
+
+\begin{remark}
+  Complemented each of these requirements gives similar definitions for closed sets of $X$.
+\end{remark}
+
+\begin{defn}[Topology on a Metric Space]
+  A subset $A \subseteq X$ open iff $\forall x \in A, \exists r = r(x) \in \R,$ where $r(x) > 0$, such that $B(x, r(x)) \defeq \{y \in x : d(x, y) < r(x)\} \subseteq A$. We call such a $B$ an open ball, and $\overline{B}$ a closed ball with the same definition replacing the strict inequality with $\leq$.
+\end{defn}
+
+\begin{remark}
+  While many of the spaces we look at our metric spaces that induce a topology as such, \textbf{not all topological spaces are metric spaces}. Indeed, "metrizability" (ie, equipping a topological space $X$ with a metric that respects the open sets) is not a trivial activity.
+\end{remark}
+
+
+\begin{defn}[Equivalence of Metrics]
+  We say two metrics on $X$ are equivalent if they admit the same topology; a sufficient condition is that, $\forall x \neq y \in X$, $\exists 1 < C < \infty$ such that $\frac{1}{C} < \frac{d_1(x,y)}{d_2(x,y)}< C$, then $d_1, d_2$ equivalent, where $C$ independent of $x,y$.
+\end{defn}
+
+\begin{defn}[Interior, Boundary, Closure]
+  Let $X$-topological space, $A \subseteq X$, $x \in X$. \begin{itemize}
+    \item If $\exists U$-open \st $x \in U \subseteq A$, then we write $x \in \interior(A)$, the interior of $A$.
+    \item If $\exists V$-open \st $x \in V \subseteq A^C$, then $x \in \interior(A^C)$.
+    \item If $\forall U$-open \st $x \in U, U \cap A \neq \varnothing$ and $U \cap A^C \neq \varnothing$, then $x \in \partial A$, the boundary of $A$.
+  \end{itemize}
+  We put $\overline{A} \defeq \interior(A) \cup \partial A$, the closure of $A$. Equivalently, $x \in \overline{A} \iff$ for every open set $U : x \in U$, $U \cap A \neq \varnothing$. We call $x \in \overline{A}$ the limit points of $A$.
+\end{defn}
+
+\begin{remark}
+  The limit point interpretation of the closure can be more intuitive; the points that we can get "arbitrary close to" are the closure. For instance, $\overline{(a, b)} = [a, b] \subseteq \R$ with the standard topology. 
+\end{remark}
+
+\begin{prop}
+  Let $A \subseteq X$-topological space. Then, $\interior(A)$ is open, the largest open set contained in $A$, the union of all open sets contained in $A$, and $\interior(\interior(A)) = \interior(A)$. Also, $\overline{A}$ closed, the smallest closed set that contains $A$, $\overline{A}$ the intersection of all closed sets that $A$ is contained in, and $\overline{\overline{A}} = \overline{A}$.
+\end{prop}
+
+\begin{cor}
+  $A$ open $\iff A = \interior(A)$ and $A$ closed $\iff A = \overline{A}$
+\end{cor}
+
+\begin{remark}
+  Remark that these are not exclusive, nor indeed the only possibilities.
+\end{remark}
+
+\begin{defn}[Basis]
+  A basis for a topology $X$ with open sets $\tau$ is a collection $B \subseteq \tau$ such that every $U\in \tau$ a union of sets in $B$.
+\end{defn}
+
+\begin{remark}
+  Don't think about bases for vector spaces in this regard - there is no "minimality" requirement.
+
+  Keep in mind $\{(a, b) : -\infty < a < b < \infty\}$, a basis of topology on $\R$.
+\end{remark}
+
+\begin{prop}
+  For a metric space $(X, d)$, $\{B(x, r) : x \in X, r > 0\}$ a basis of topology.
+\end{prop}
+
+\begin{defn}[Subspace Topology]
+  For a subset $Y \subseteq X$-topological space, we define the subspace topology on $Y$ as $\tau_Y \defeq \{Y \cap U : U \in \tau\}$.
+\end{defn}
+
+\begin{defn}[Continuous]
+  For $X, Y$-topological spaces, a function $f : X \to Y$ is continuous iff $\forall V$-open in $Y$, $f^{-1}(V)$-open in $X$.
+\end{defn}
+
+\begin{remark}
+  One can verify that this is consistent with the $\epsilon-\delta$ definition of continuity for functions on $\R$.
+\end{remark}
+
+\begin{thm}[Continuity of Composition]
+  If $f : X \to Y$, $g : Y \to Z$ continuous, $g \circ f$ continuous.
+\end{thm}
+\begin{remark}
+  Note how much easier this is to prove via toplogical spaces than the $\epsilon-\delta$ definition.
+\end{remark}
+
+% \begin{prop}
+%   For $f : X \to Y$ continuous and $A \subseteq X$ equipped with the subspace topology, $f_A$ also continuous.
+% \end{prop}
+
+\begin{defn}[Product Space]
+  For an index set $I$ and $X_\alpha, \alpha \in I$, we define $\prod_{\alpha \in I} X_\alpha$ as a product space; $I$ may be finite or infinite.
+\end{defn}
+
+\begin{prop}
+  A basis for the product space is given by cyliders of the form $A = \prod_{\alpha \in J} A_\alpha \times \prod{\alpha \notin J} X_\alpha$ for $A_\alpha$-open in $X_\alpha$, where $J \subseteq I$-finite.
+\end{prop}
+
+\begin{defn}[Compact]
+  A set $A \subseteq X$ is compact if every cover has a finite subcover, that is \[
+  A \subseteq \bigcup_{\alpha \in I} U_\alpha \text{-open} \implies \exists \{\alpha_1, \dots, \alpha_n\}   \subseteq I \st A \subseteq \bigcup_{i=1}^n U_{\alpha_i}.
+  \]
+\end{defn}
+
+\begin{prop}
+  Closed intervals $[a, b]$ compact in $\R$.
+\end{prop}
+
+\begin{prop}
+  $A \subseteq \R^n$ compact $\iff $ closed and bounded.
+\end{prop}
+
+\begin{defn}[Connected]
+  $X$ is said to not be connected if $X = U \cup V$ for $U, V$ open, nonempty, disjoint. If $X$ cannot be written as such, $X$ is said to be connected.
+\end{defn}
+
+\begin{thm}
+  If $X$ connected and $f : X \to Y$, then $f(X)$ connected in $Y$.
+\end{thm}
+
+\begin{prop}
+  Intervals in $\R$ are connected.
+\end{prop}
+
+\begin{thm}[Intermediate Value Theorem]
+  If $X$ connected, $f : X \to \R$ continuous, then $f$ takes intermediate value; if $a = f(x), b = f(y)$ for $x, y \in X$ with $a < b$, then for any $a < c < b$ $\exists z \in X \st f(z) = c$.
+\end{thm}
+
+\begin{thm}
+  For $X$ compact, $f : X \to Y$ continuous, $f(X)$ compact in $Y$.
+\end{thm}
+
+\begin{prop}
+  For $X$ compact and $f: X \to \R$, $f$ attains both max and min on $X$.
+\end{prop}
+
+\begin{defn}[Path Connected]
+  A set $A \subseteq X$ is path connected if for any $x, y \in A, \exists f : [a, b] \to X$ continuous such that $f(a) = x, f(b) = y f([a, b]) \subseteq A$.
+\end{defn}
+
+\begin{thm}
+  Path connected $\implies$ connected.
+
+  For open sets in $\R^n$, the converse holds too.
+\end{thm}
+
+\begin{defn}[Connected Component, Path Component]
+  For $x \in X$, the connected component of $x$ is the largest connected subset of $X$ containing $x$ and the path component of $x$ is the largest path connected subset of $X$ containing $x$.
+\end{defn}
+
+\section{Metric Spaces}
+
+\textbf{We discuss mostly the metric on $\ell_p$ space and notions of completeness, as well as some topological results specific to metric spaces, namely compactness.}
+
+\begin{defn}[$\ell_p$]
+  For $x = (x_1, \dots, x_n) \in \R^n$ and $1 \leq p \leq + \infty$, we define \[
+  \norm{x}_p \defeq \left(\sum_{i=1}^n \abs{x_i}^p\right)^{\frac{1}{p}}, \quad \norm{x}_\infty \defeq \max_{i=1}^n \abs{x_i},
+  \]
+  and similarly, for sequences $x = (x_1, \dots, x_n, \dots)$, \[
+  \norm{x}_p \defeq   \left(\sum_{i=1}^\infty \abs{x_i}^p\right)^{\frac{1}{p}}, \quad \norm{x}_\infty \defeq \sup_{i=1}^\infty \abs{x_i},
+  \]
+  and define $\ell_p \defeq \{x : \norm{x}_p < +\infty\}$. It can be shown that these are well-defined norms on their respective spaces.
+\end{defn}
+
+\begin{thm}[Holder, Minkowski's Inequalities]
+  For $x = (x_1, \dots, x_n), y = (y_1, \dots, y_n)$ and $p, q$ such that $\frac{1}{p} + \frac{1}{q} = 1$, then \[
+  \text{Holder's:} \qquad \iprod{x, y} = \abs{\sum_{i=1}^n x_i y_i} \leq \norm{x}_p \norm{y}_q  
+  \]
+  and \[
+  \text{Minkowski's:} \qquad \norm{x + y}_p \leq \norm{x}_p + \norm{y}_p .
+  \]
+  The identical inequalities hold for infinite sequences.
+\end{thm}
+
+\begin{defn}[Completeness]
+  We say a metric space is complete if every Cauchy sequence converges to a limit point in the space.
+\end{defn}
+\begin{prop}
+  For $\{x_n\}_{n \in \mathbb{N}}$, $\ell_p$ complete for any $1 \leq p \leq +\infty$.
+\end{prop}
+
+\begin{prop}
+  If $p < q$, $\ell_p \subseteq \ell_q$.
+\end{prop}
+
+\begin{defn}[Contraction Mapping]
+  For a metric space $(X, d)$, a function $f : X \to X$ is a contraction mapping if there exists $0 < c < 1$ such that \[
+  d(f(x), f(y)) \leq c \cdot d(x,y)  
+  \]
+  for any $x, y \in X$.
+\end{defn}
+
+\begin{thm}
+  Let $(X, d)$ be a complete metric space, $f : X \to X$ a contraction. Then, there exist a unique fixed point $z$ of $f$ such that $f(z) = z$; ie $\lim_{n \to \infty} f^{n}(x) = \lim_{n \to \infty} f\circ f \circ \cdots \circ f(x) = z$ for any $x \in X$.
+\end{thm}
+
+\begin{thm}
+  $\ell_p$ complete.
+\end{thm}
+\begin{remark}
+  It can be kind of funky to work with sequences in $\ell_p$, since the elements of $\ell_p$ themselves sequences so we have "sequences of sequences".  
+\end{remark}
+
+\begin{defn}[Totally bounded]
+  A metric space $X$ is said to be totally bounded if $\forall \epsilon > 0 \exists x_1, \dots, x_n \in X, n = n(\epsilon)$ such that $\bigcup_{i=1}^n B(x_i, \epsilon) = X$.
+\end{defn}
+
+\begin{defn}[Sequentially compact]
+  A metric space $X$ is said to be sequentially compact if every sequence has a convergent subsequence.
+\end{defn}
+
+\begin{thm}[\textcolor{red}{$\star$} Equivalent Notions of Compactness in Metric Spaces]
+  Let $(X, d)$ a metric space. TFAE: \begin{itemize}
+    \item $X$ compact
+    \item $X$ complete and totally bounded
+    \item $X$ sequentially compact
+  \end{itemize}
+\end{thm}
+
+\begin{remark}
+  This is for a metric space, not a general topological space! Hopefully this is clear because some of the requirements necessitate a distance.
+\end{remark}
+
+
+\section{Differentiation}
+\begin{defn}[Differentiable]
+  $f(x)$ differentiable at $c$ if $\lim_{x \to c} \frac{f(x) -f(c)}{x - c}$ exists, and if so we denote the limit $f'(c)$.
+\end{defn}
+
+\begin{thm}
+  Differentiable $\implies$ continuous.
+\end{thm}
+\section{Integration}
+
+\section{Sequences of Functions}
+
+\section{Infinite Series}
+\end{document}
