@@ -49,7 +49,7 @@
 \begin{proposition}
     Let $W \subseteq V$ be a finite dimensional subspace. Then \begin{enumerate}[label=(\alph*)]
         \item $\proj_W: V \to V$ a linear operator.
-        \item A linear operator $T : V \to V$ is a projection (onto $\im(T)$) operator iff $\ker(T) = \im(T)^\perp$.
+        \item A linear operator $T : V \to V$ is a projection (onto $\im(T)$) operator iff $T^2 = T$ and $\ker(T) = \im(T)^\perp$.
     \end{enumerate}
 \end{proposition}
 
@@ -76,7 +76,7 @@ Let $V$ be an inner product space. For each $w \in V$, we can define a linear fu
 \begin{theorem}[Riesz Representation Theorem]\label{thm:riesz}
     Let $V$ be a finite dimensional inner product space. Then, for each $f \in V^\ast$, there is a unique $w \in V$ such that $f = f_w$, ie $f(v) = \iprod{v, w}$ for all $v \in V$. 
 
-    On other words, the map $V \to V^\ast, w \mapsto f_w$ is a linear isomorphism.
+    In other words, the map $V \to V^\ast, w \mapsto f_w$ is a linear isomorphism.
 \end{theorem}
 
 \begin{proof}

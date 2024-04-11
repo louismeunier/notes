@@ -112,6 +112,8 @@ $\field$ denotes an arbitrary field; in \cref{sec:6} we will restrict $\field$ t
 
 $M_{m \times n}(\field) \defeq \{m \times n \text{ matrices with entries in }\field \}$; if $m = n$ we denote $M_n(\field)$. $\GL_n(\field) \defeq \{A \in M_n(\field) : A \text{ invertible }\} \subseteq M_n(\field)$.
 
+$\field[t]_n \defeq \{a_0 + a_1 t + \cdots + a_n t^n : a_i \in \field\}$.
+
 Important (purely subjectively) results are highlighted with \textcolor{red}{$\star$} for their use in proofs and other results.
 
 \section{Vector Spaces, Linear Relations}
@@ -786,4 +788,146 @@ If all pivots are $1$, then we say that $B$ is in reduced row echelon form (rref
 \end{thm}
 
 \section{Inner Product Spaces}
+\textbf{All vector spaces in this section should be assumed to be inner product spaces, and all fields $\field \in \{\C, \R\}$.}
+\begin{defn}[Inner Product]
+  A function $\iprod{.,.} : V \times V \to \field$ is called an inner product if for $u,v, w \in V$, $\alpha \in \field$, \begin{itemize}
+    \item $\iprod{v + w, u} = \iprod{v, u} + \iprod{w, u}$
+    \item $\iprod{\alpha u, v} = \alpha \iprod{u,v}$
+    \item $\iprod{u, v} = \overline{\iprod{v, u}}$
+    \item $\iprod{u, u} \geq 0$ and $\iprod{u, u} = 0 \iff u = 0$.
+  \end{itemize}
+  We call $V$ equipped with such a function an inner product space.
+  Given an inner product, we can define an associated norm $\norm{v} \defeq \sqrt{\iprod{v, v}}, v \in V$, and call vectors $u$ such that $\norm{u}$ unit; any vector can be "normalized" to a unit by $\tilde{v} \defeq \norm{v}^{-1}\cdot v$.
+\end{defn}
+
+\begin{remark}
+  Requirement 3 also gives us that $\iprod{u, u}$ always real.
+\end{remark}
+
+\begin{prop}[Properties of Inner Products]
+  For $u, v, w \in V$, $\alpha \in \field$, $\iprod{u, v + w} = \iprod{u, v} + \iprod{u, w}$, $\iprod{u, \alpha v} = \overline{\alpha}\iprod{u, v}$, $\norm{\alpha v} = \abs{\alpha} \norm{v}$, and $\iprod{v, 0_V} = \iprod{0_V, v} = 0$.
+\end{prop}
+
+\begin{defn}[Orthogonal]
+  $u, v \in V$ orthogonal if $\iprod{u,v} = 0$; we write $u \perp v$.
+
+  We say a set $S \subseteq V$ orthogonal if vectors in $S$ are pair-wise orthogonal, and if in addition each are units, we say $S$ orthonormal.
+
+  We say a set $S \subseteq V$ orthogonal to a vector $v \in V$ if $v \perp s \forall s \in S$.
+\end{defn}
+\begin{thm}[Pythagorean]
+  If $u \perp v$, then $\norm{u}^2 + \norm{v}^2 = \norm{u+v}^2$; in particular $\norm{u}, \norm{v} \leq \norm{u + v}$.
+\end{thm}
+\begin{defn}
+  For $u$ a unit, put $\proj_u(v) \defeq \iprod{v, u} \cdot u$.
+\end{defn}
+\begin{prop}
+  For any $v \in V, u$-unit, $v - \proj_u(v) \perp u$.
+\end{prop}
+\begin{prop}
+  For any $x, y \in V$, $\abs{\iprod{x, y}} \leq \norm{x}\norm{y}$ and $\norm{x + y} \leq \norm{x} + \norm{y}$.
+\end{prop}
+
+\begin{prop}
+  Sets of orthonormal vectors are linearly independent. In particular, if $\dim(V) = n$ and $\beta \defeq \{u_1, \dots, u_n\}$ an orthonormal set, $\beta$ forms a basis for $V$, and for any $v \in \beta$, \[
+  v = \iprod{v, u_1}u_1 + \cdots + \iprod{v, u_n} u_n = \proj_{u_1}(v) + \cdots + \proj_{u_n}(v).
+  \]
+\end{prop}
+\begin{prop}
+  $v \perp V \iff v = 0_V$.
+\end{prop}
+\begin{thm}[Gram-Schmidt]
+  Every finite-dimensional vector space has an orthonormal basis.
+
+  One can be constructed "inductively" by starting with a basis $\beta \defeq \{v_1, \dots, v_n\}$ for $V$. \begin{itemize}
+    \item (Base) set $u_1 \defeq \norm{v_1}^{-1} v_1$; put $\alpha \defeq \{u_1\}$.
+    \item (Step) given $\alpha \defeq \{u_1, \dots, u_{k-1}\}$ a set of orthonormal vectors, set \[
+    \tilde{u}_{k} \defeq v_{k} - \proj_{\alpha}(v_k) = v_k - \sum_{i=1}^{k-1} \iprod{v_k, u_i} u_i.
+    \]
+    and normalize $u_k \defeq \norm{\tilde{u}_k}^{-1} \cdot u_k$, and let $\alpha \defeq \alpha \cup \{u_k\}$.
+    \item Repeat (Step) until $k = n$.
+  \end{itemize}
+\end{thm}
+
+\begin{defn}[Orthogonal Complement]
+  For $S \subseteq V$, put $S^\perp \defeq \{v \in V : v \perp S\}$. Remark that $S^\perp$ a subspace regardless if $S$ is.
+\end{defn}
+
+\begin{thm}
+  Let $W \subseteq V$ be a finite dimensional subspace.
+  \begin{enumerate}[label=(\alph*)]
+    \item For $v \in V$, there exists a unique decomposition $v = w + w_\perp$ such that $w \in W, w_\perp \in W^\perp$. We put $\proj_W(v) \defeq w$.
+    \item $V = W \oplus W^\perp$.
+  \end{enumerate}
+\end{thm}
+\begin{cor}
+  If $\alpha \neq \beta$ two different orthonormal bases for $W$, $\proj_\alpha(v) = \proj_\beta(v) \forall v \in V$.
+\end{cor}
+
+\begin{thm}
+  Putting $d(x, y) \defeq \norm{x - y}, x, y\in V$ and letting $W \subseteq V$-finite subspace, then $d(v, \proj_W(v)) \leq d(v, w)$ for any $w \in W$, that is, $\proj_W(v)$ is the closest vector to $V$ in $W$; it is also unique.
+\end{thm}
+
+\begin{cor}
+  For $W \subseteq V$-finite subspace, $(W^\perp)^\perp = W$.
+\end{cor}
+
+\textbf{For the remainder of the notes, assume $V$ finite dimensional.}
+
+\begin{thm}[Riesz Representation]
+  For $V$-finite dimensional, then for every $f \in V^\ast$ there exists a unique $w \in V$ such that $f = f_w$ where $f_w(v) \defeq \iprod{v, w}, v \in V$. Ie, $w \mapsto f_w$ a linear isomorphism between $V \mapsto V^\ast$.
+\end{thm}
+\begin{remark}
+  Its helpful to recall what exactly $w$ looks like; namely, if $\{u_1, \dots, u_n\}$ an orthonormal basis for $V$, then $w = \overline{f(u_1)}u_1 + \cdots + \overline{f(u_n)}u_n$.
+\end{remark}
+
+\begin{thm}[Adjoint]
+  Let $T:V\to V $, then, there exists a unique $T^\ast : V \to V$ called the adjoint of $T$ such that $\iprod{Tv, w} = \iprod{v, T^\ast w}$ for any $v, w \in V$.
+\end{thm}
+\begin{remark}
+  This proof relies heavily on Riesz.
+\end{remark}
+
+\begin{prop}
+  For $T : V \to V$ and $\beta$ orthonormal basis for $V$, $[T^\ast]_\beta = [T]_\beta^\ast$  (where $A^\ast \defeq \overline{A^t}$ for $A \in M_n(\field)$).
+\end{prop}
+
+\begin{prop}[Adjoint Properties]
+  \begin{enumerate}[label=(\alph*)]
+    \item $T \mapsto T^\ast : \hom(V, V) \to \hom(V, V)$ conjugate linear.
+    \item $(T_1 \circ T_2)^\ast = T_2^\ast \circ T_1^\ast$.
+    \item $I_V^\ast = I_V$.
+    \item $(T^\ast)^\ast = T$.
+    \item $T$ invertible $\implies T^\ast$ invertible with $(T^\ast)^{-1} = (T^{-1})^\ast$.
+  \end{enumerate}
+\end{prop}
+
+\begin{prop}[Kernel, Image of Adjoint]
+  $\im(T^\ast)^\perp = \ker(T)$ and $\ker(T^\ast) = \im(T)^\perp$. Thus, $\rank(T) = \rank(T^\ast), \nullity(T) =\nullity(T^\ast)$.
+\end{prop}
+
+\begin{remark}
+  To prove the second equality, apply the first to $T^{\ast\ast}$.
+\end{remark}
+\begin{cor}
+  $\lambda$ an eigenvalue of $T$ iff $\overline{\lambda}$ an eigenvalue of $T^\ast$.
+\end{cor}
+\begin{lemma}[Schur's]
+  Let $T : V \to V$ such that $p_T(t)$ splits. Then there is an orthonormal basis $\beta$ for $V$ such that $[T]_\beta$ upper triangular.
+\end{lemma}
+
+\begin{defn}[Normality]
+  We call $T : V \to V$ normal if $T \circ T^\ast = T^\ast \circ T$ ($T,T^\ast$ commute) and self-adjoint $T = T^\ast$.
+
+  Remark self-adjoint $\implies$ normal, but not the converse; discussion of normal operators applies to self-adjoint.
+\end{defn}
+
+\begin{prop}[Properties of Normal Operators]
+For $T : V\to V$, \begin{enumerate}[label=(\alph*)]
+  \item $\norm{Tv} = \norm{T^\ast v}$.
+  \item $T - aI_V$ is normal; moreover $p(T)$ for any polynomial $p$ normal.
+  \item $v$ an eigenvector of $T$ corresponding to an eigenvalue $\lambda$ iff $v$ an eigenvector of $T^\ast$ corresponding to $\overline{\lambda}$.
+  \item For distinct $\lambda_1 \neq \lambda_2$ eigenvalues $\eig_T(\lambda_1) \perp \eig_T(\lambda_2)$.
+\end{enumerate}
+\end{prop}
 \end{document}
