@@ -10,7 +10,7 @@
     $\lambda$ an eigenvalue of $T$ $\iff$ $\nullity(T - \lambda I_V) > 0$ $\iff$ $\nullity((T - \lambda I_V)^\ast) = \nullity(T^\ast - \overline{\lambda} I_V) > 0$ $\iff$ $\overline{\lambda}$ an eigenvalue of $T^\ast$.
 \end{proof}
 
-\begin{lemma}[Schur's Lemma (Orthonormal Version)]
+\begin{lemma}[Schur's Lemma (Orthonormal Version)]\label{lemma:schurs}
     Let $T : V \to V$ on $V$ finite dimensional and suppose that $p_T(t)$ splits. Then there is an orthonormal basis $\beta$ for $V$ such that $[T]_\beta$ upper triangular.
 \end{lemma}
 
@@ -42,7 +42,7 @@
 \end{proof}
 
 \begin{remark}
-    If $T, T^\ast$ had precisely the same eigenvectors, then using precisely the same proof, we could get that $[T]_\beta$ diagonal, since then $T v_n = \overline{\lambda} v_n$. This would happen, for instance, if $T = T^\ast$, but this condition can be relaxed:
+    If $T, T^\ast$ had precisely the same eigenvectors, then using precisely the same proof, we could get that $[T]_\beta$ diagonal, since then $T v_n = \overline{\lambda} v_n$. This would happen, for instance, if $T = T^\ast$, but this condition can be relaxed; consider this as motivation going forward.
 \end{remark}
 
 \begin{definition}[Normality]
@@ -68,7 +68,7 @@
     \end{enumerate}
 \end{example}
 
-\begin{proposition}[Properties of Normal Operators]
+\begin{proposition}[Properties of Normal Operators]\label{prop:propertiesofnormaloperators}
     Let $T : V \to V$ be a normal linear operator on $V$ finite dimensional. \begin{enumerate}[label=(\alph*)]
         \item $\norm{Tv} = \norm{T^\ast v}$ for all $v \in V$.
         \item $T - a I_V$ (or more generally $p(T)$ for any polynomial $p(t)$, ie the powers of $T$ are normal) is normal.
