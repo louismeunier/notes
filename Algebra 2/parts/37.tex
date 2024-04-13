@@ -2,15 +2,39 @@
     Call a basis consisting of eigenvectors of an operator $T$ an \emph{eigenbasis} of $T$.
 \end{definition}
 
-\begin{theorem}[Diagonalizability of Normal Operators]
+\begin{theorem}[Diagonalizability of Normal Operators]\label{thm:diagnormal}
     Let $T : V\to V$ on $V$ finite dimensional over $\C$. Then, $T$ is normal iff there is an orthonormal eigenbasis for $T$.
 \end{theorem}
 
 \begin{lemma}
-    % TODO
+    Let $T : V \to V$ on $V$ finite dimensional. Suppose $W \subseteq V$ a subspace such that both $W$ and $W^\perp$ are $T$-invariant. Then, if $T$ is normal, then so are the restrictions $T_W$ and $T_{W^\perp}$.
 \end{lemma}
 
-\begin{proof}
+\begin{proof}(Of Lemma)
+    Let $\alpha, \beta$ be orthonormal bases for $W, W^\perp$ resp., so $\gamma \defeq \alpha \cup \beta$ an orthonormal basis for $V$ and hence $[T^\ast]_\gamma = [T]^\ast_\gamma$, so by normality, $[T]_\gamma^\ast \cdot [T]_\gamma = [T^\ast]_\gamma\cdot [T]_\gamma = [T^\ast T]_\gamma = [T]_\gamma \cdot [T]_\gamma^\ast$. But \begin{align*}
+        [T]_\gamma = \begin{pmatrix}
+            [T_W]_\alpha & 0\\
+            0 & [T_{W^\perp}]_\beta
+        \end{pmatrix},
+    \end{align*}
+    so $[T]_\gamma^\ast = \begin{pmatrix}
+        [T_W]_\alpha^\ast & 0\\
+        0 & [T_{W^\perp}]_\beta^\ast,
+    \end{pmatrix}$
+    so \begin{align*}
+        [T]_\gamma^\ast \cdot [T]_\gamma = \begin{pmatrix}
+            [T_W]_\alpha^\ast \cdot [T_W]_\alpha & 0\\
+            0 & [T_{W^\perp}]_\beta^\ast \cdot [T_{W^\perp}]_\beta
+        \end{pmatrix}, \qquad [T]_\gamma \cdot [T]_\gamma^\ast = \begin{pmatrix}
+            [T_W]_\alpha \cdot [T_W]_\alpha^\ast & 0\\
+            0 & [T_{W^\perp}]_\beta \cdot [T_{W^\perp}]_\beta^\ast
+        \end{pmatrix}.
+    \end{align*}
+    Normality of the restrictions follows easily.
+\end{proof}
+
+\begin{proof}(Of \nameref{thm:diagnormal})
+
     ($\implies$) Suppose $T$ is normal, hence the eigenvectors of $T$ and $T^\ast$ are the same by \cref{prop:propertiesofnormaloperators}. Because $\field  = \C$, all polynomials split so in particular $p_T(t)$ splits, and applying precisely the same proof of \cref{lemma:schurs} with inductive assumption that there is an orthonormal basis such that the matrix diagonal (rather than upper triangular). In the inductive step, we put $W \defeq \Span (\{v_n\})$, and have $W^\perp$ $T$-invariant and $n - 1$ dimensional, and $T_{W^\perp}$ is normal by lemma above. Hence, the inductive hypothesis applies to $T_{W^\perp}$, yielding an orthonormal eigenbasis $\beta'$ for $W^\perp$, and  with $\beta \defeq \beta \cup \{v_n\}$, since each $v_n$ also an eigenvector of $T$, $[Tv_n]_\beta = \begin{pmatrix}
         0 \\
         \vdots\\
@@ -61,7 +85,7 @@ In particular, this gives that self-adjoint operators on complex inner products 
 
 \begin{theorem}[Spectral Theorem (for normal/self adjoint operators)]\label{thm:spectral}
     Let $T : V \to V$ on a finite dimensional inner product space $V$ over $\field$. If $\field = \C$, then suppose $T$ is normal, and if $\field = \R$, suppose that $T$ is self-adjoint. Then, $T$ admits a unique (up to reindexing) \emph{spectral decomposition}, ie \[
-    T = \lambda_1 P_1 + \lambda_2 P_2 + \cdots + \lambda_k P_3,
+    T = \lambda_1 P_1 + \lambda_2 P_2 + \cdots + \lambda_k P_k,
     \]
     where the $P_i$ are orthogonal projections such that $I_V = P_1 + \cdots + P_k$ and $P_i \circ P_j = \delta_{ij} P_{j}$. In other words, $V = \bigoplus_{i=1}^k \im(P_i)$ and the images $\im(P_i) \perp \im(P_j)$ for $i \neq j$.
 \end{theorem}

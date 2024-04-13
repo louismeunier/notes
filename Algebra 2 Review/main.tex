@@ -930,4 +930,28 @@ For $T : V\to V$, \begin{enumerate}[label=(\alph*)]
   \item For distinct $\lambda_1 \neq \lambda_2$ eigenvalues $\eig_T(\lambda_1) \perp \eig_T(\lambda_2)$.
 \end{enumerate}
 \end{prop}
+
+\begin{thm}[\textcolor{red}{$\star$} Diagonalizability of Normal Operators over $\C$]
+  Let $T : V \to V$ over $\C$. Then $T$ is normal iff there is an orthonormal eigenbasis for $T$.
+\end{thm}
+
+\begin{lemma}
+  Eigenvalues of self-adjoint operators are always real.
+\end{lemma}
+
+\begin{lemma}
+  Characteristic polynomials of real symmetric matrices split over $\R$. Moreover, if $T$ self-adjoint, $p_T(t)$ splits over $\R$.
+\end{lemma}
+
+\begin{thm}[\textcolor{red}{$\star$} Diagonalizability of Self-Adjoint Operators over $\R$]
+  $T : V\to V$ over $\R$ self-adjoint iff there is an orthonormal eigenbasis for $T$.
+\end{thm}
+
+\begin{thm}[\textcolor{red}{$\star$} Spectral Theorem]
+  Let $T : V\to V$ be self-adjoint if $\field = \R$ and normal if $\field = \C$. Then $T$ admits a unique spectral decomposition \[
+    T = \lambda_1 P_1 + \cdots + \lambda_k P_k,
+  \]
+  where the $P_i$'s orthogonal projections, $I_V = P_1 + \cdots + P_k$, and $P_i \circ P_j = \delta_{ij} P_j$ (ie, $V = \bigoplus_{i=1}^k \im(P_i)$ and $\im(P_i) \perp \im(P_j)$, $i \neq j$).
+\end{thm}
+
 \end{document}
