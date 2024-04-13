@@ -1,0 +1,59 @@
+We work first the understand the specifics of this statement.
+
+\begin{definition}[Spectral Decomposition]
+    Let $T : V \to V$ on $V$ finite dimensional. A \emph{spectral decomposition} of $T$ is a representation of $T$ as a linear combination of orthogonal projections $P_1, \dots, P_k$ ie $T = \lambda_1 P_1 + \cdots + \lambda_k P_k$ for some $\lambda_1, \dots, \lambda_k \in \field$ such that $P_i \circ P_j = 0$ for all $i \neq j$ and $I_V = P_1 + \cdots + P_k$.
+\end{definition}
+
+\begin{lemma}
+    Let $V$ finite dimensional and let $P_1, \dots, P_k : V \to V$ be orthogonal projections. Then, TFAE:
+    \begin{enumerate}
+        \item $P_i \circ P_j = 0$ for all $i \neq j$ and $I_V = P_1 + \cdots + P_k$
+        \item $\im(P_i) \perp \im(P_j)$ for all $i \neq j$ and $V = \bigoplus_{i=1}^k \im(P_i)$.
+    \end{enumerate}
+\end{lemma}
+\begin{remark}
+    This explains the "in other words" of the spectral decomposition theorem.
+\end{remark}
+
+\begin{proof}
+    First, for $i \neq j$, observe that $P_i \circ P_j = 0 \iff \forall P_i \circ P_j(V) = \{0\} \iff P_i(\im(P_j)) = \{0\} \iff \im(P_j) \subseteq \ker(P_i) = \im(P_i)^\perp \iff \im(P_j) \perp \im(P_i)$.
+
+    Second, $I_V = P_1 + \cdots + P_k \iff \forall v\in V$, $v = P_1v + \cdots + P_k v \implies V = \bigoplus_{i=1}^k \im(P_i)$ (independence of the subspaces follows from above). For the $\impliedby$ direction, take $v \in \bigoplus_{i=1}^k \im(P_i)$ so $v = w_1 + \cdots + w_k$ where $w_i \in \im(P_i)$, and we have that for any $i = 1, \dots, k$, $P_i(v) = P_i(w_1) + \cdots + P_i(w_k) = \sum_{j=1}^k \delta_{ij} w_j = w_i$, and thus $v = P_1v + \cdots + P_2v$, proving the converse.
+\end{proof}
+
+\begin{lemma}[Spectral Decomposition via Eigenspaces]
+    Let $T : V \to V$, $V$ finite dimensional, $P_1, \dots, P_k : V \to V$ be orthogonal projections, and $\lambda_1, \dots, \lambda_k \in \field$. TFAE:\begin{enumerate}
+        \item $T = \lambda_1 P_1 + \cdots + \lambda_k P_k$ is a spectral decomposition of $T$.
+        \item $\{\lambda_1, \dots, \lambda_k\}$ is the set of distinct eigenvalues of $T$ and $\im(P_i) = \eig_{T}(\lambda_i)$ for $i = 1, \dots, k$, $\eig_{T}(\lambda_i) \perp \eig_T(\lambda_j)$ for $i \neq j$, and $V = \bigoplus_{i=1}^k \eig_T(\lambda_i)$. ($\iff \sum_{i=1}^k m_g(\lambda_i) = \dim(V)$).
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    (1. $\implies$ 2.) Denote $W_i \defeq \im(P_i)$ and remark that $W_i \subseteq \eig(\lambda_i)$: indeed, if $w_i \in W_i$, $Tw_i= \lambda_1 P_1w_i+\cdots+\lambda_i P_iw_i+\cdots+\lambda_kP_kw_i = \lambda_i w_i \in \eig(\lambda_i)$. By the previous lemma, being a spectral decomposition, we have $V = \bigoplus_{i=1}^k W_i$ so $n \defeq \sum_{i=1}^k \dim(W_i) = \dim(V)$ and so $\sum_{i=1}^k \dim(\eig_T(\lambda_i)) \geq n$, hence $=n$. But for it to equal $n$, $\dim(W_i) = \dim(\eig_T(\lambda_i))$ (we've shown its leq) for each $i$, so $W_i = \eig_T(\lambda_i)$ for all $i$. In particular, the only eigenvalues of $T$ are exactly $\lambda_1, \dots, \lambda_k$.
+
+    The fact that $\eig_T(\lambda_i) \perp \eig_T(\lambda_j)$ follows from $P_i \circ P_j = \delta_{ij}$ and the previous lemma.
+
+    (2. $\implies$ 1.) Suppose 2. Then $P_i \circ P_j = \delta_{ij}$ follows from the previous lemma. It remains to show that $T = \lambda_1 P_1 + \cdots + \lambda_k P_k$. Let $v \in V$. Because $V = \bigoplus_{i=1}^k \eig_T(\lambda_i)$, $v = w_1 + \cdots + w_k$ where $w_i \in \eig_T(\lambda_i) = \im(P_i)$. Hence $P_i(w_i) = w_i$ and $P_i(w_j) = 0_V$ for all $j \neq i$ hence $\im(P_i) \perp \im(P_j)$. Thus, $P_i(v) = \sum_{j=1}^k \delta_{ij} w_j = w_i$, and so $T(v) = T(w_1) + \cdots + T(w_k) = \lambda_1 w_1 + \cdots + \lambda_k w_k = \lambda_1P_1v + \cdots + \lambda_k P_k v$. Hence, $T = \lambda_1 P_1 + \cdots + \lambda_k P_k$, as desired.
+\end{proof}
+
+\begin{corollary}
+    If a spectral decomposition of $T : V \to V$, $T = \lambda_1 P_1 + \cdots + \lambda_k P_k$, exists, then it is unique, up to permuting the indices.
+\end{corollary}
+
+\begin{proof}
+    Follows from 2. of the previous lemma; the $\lambda_i$'s are the eigenvalues and $P_i$'s the orthogonal projections onto the respective eigenspaces.
+\end{proof}
+
+\begin{proof}(Of \nameref{thm:spectral})
+    If existence holds, we have uniqueness from the previous corollary.
+
+    For existence, let $\lambda_1, \dots, \lambda_k$ be the distinct eigenvalues of $T$ and $P_i \defeq$ orthogonal projection onto $\eig_T(\lambda_i)$. We have that for a normal $T$, $\eig_T(\lambda_i) \perp \eig_T(\lambda_j)$ for all $i \neq j$ and if $\field = \C$, or $\field = \R$ and $T = T^\ast$, then $T$ admits an orthonormal eigenbasis, which implies $V = \bigoplus_{i=1}^n \eig_T(\lambda_i)$ so condition (2) of the previous lemma is satisfied and thus $T = \lambda_1 P_1 + \cdots + \lambda_k P_k$ is a spectral decomposition of $T$.
+\end{proof}
+
+\begin{remark}
+    The set of eigenvalues of a given operator $T : V \to V$ is called the \emph{spectrum} of $T$, hence the name of the theorem and corresponding decomposition.
+\end{remark}
+
+\begin{corollary}
+    % TODO
+\end{corollary}

@@ -6,8 +6,12 @@
     Let $T : V\to V$ on $V$ finite dimensional over $\C$. Then, $T$ is normal iff there is an orthonormal eigenbasis for $T$.
 \end{theorem}
 
+\begin{lemma}
+    % TODO
+\end{lemma}
+
 \begin{proof}
-    ($\implies$) Suppose $T$ is normal, hence the eigenvectors of $T$ and $T^\ast$ are the same by \cref{prop:propertiesofnormaloperators}. Because $\field  = \C$, all polynomials split so in particular $p_T(t)$ splits, and applying precisely the same proof of \cref{lemma:schurs} with inductive assumption that there is an orthonormal basis such that the matrix diagonal (rather than upper triangular). In the inductive step, then, since each $v_n$ also an eigenvector of $T$, $[Tv_n]_\beta = \begin{pmatrix}
+    ($\implies$) Suppose $T$ is normal, hence the eigenvectors of $T$ and $T^\ast$ are the same by \cref{prop:propertiesofnormaloperators}. Because $\field  = \C$, all polynomials split so in particular $p_T(t)$ splits, and applying precisely the same proof of \cref{lemma:schurs} with inductive assumption that there is an orthonormal basis such that the matrix diagonal (rather than upper triangular). In the inductive step, we put $W \defeq \Span (\{v_n\})$, and have $W^\perp$ $T$-invariant and $n - 1$ dimensional, and $T_{W^\perp}$ is normal by lemma above. Hence, the inductive hypothesis applies to $T_{W^\perp}$, yielding an orthonormal eigenbasis $\beta'$ for $W^\perp$, and  with $\beta \defeq \beta \cup \{v_n\}$, since each $v_n$ also an eigenvector of $T$, $[Tv_n]_\beta = \begin{pmatrix}
         0 \\
         \vdots\\
         0\\
@@ -35,7 +39,7 @@ In particular, this gives that self-adjoint operators on complex inner products 
 \end{lemma}
 
 \begin{proof}
-    Let $A \in M_n(\R)$ be a symmetric matrix, ie $A = A^t$, hence $A = A^\ast$ (since $A^\ast = \overline{A}^t = A^t$, since all entries are real). Let $L_A : \C^n \to \C^n$ denote the usual multiplication by $A$. Then, $L_A^\ast = L_{A^\ast} = L_A$, so $L_A$ itself a self-adjoint operator on $\C^n$ (with inner product given by the dot product). Then, $p_{L_A}(t)$ splits over $\C$ and the roots of $p_{L_A}(t)$ are real because $L_A$ self-adjoint. Hence, $p_{L_A}(t)$ splits over $\R$ as well. But, letting $\beta$ be the standard basis for $\C^n$, we have $p_{L_A}(t) = p_{[L_A]_\beta}(t) = p_A(t)$, so $p_A(t)$ itself splits over $\R$.
+    Let $A \in M_n(\R)$ be a symmetric matrix, ie $A = A^t$, hence $A = A^\ast$ (since $A^\ast = \overline{A}^t = A^t$, since all entries are real). Let $L_A : \C^n \to \C^n$ denote the usual multiplication by $A$. Then, $L_A^\ast = L_{A^\ast} = L_A$, so $L_A$ itself a self-adjoint operator on $\C^n$ (with inner product given by the dot product). Then, $p_{L_A}(t)$ splits over $\C$ and the roots of $p_{L_A}(t)$ are real because $L_A$ self-adjoint, by the previous lemma. Hence, $p_{L_A}(t)$ splits over $\R$ as well. But, letting $\beta$ be the standard basis for $\C^n$, we have $p_{L_A}(t) = p_{[L_A]_\beta}(t) = p_A(t)$, so $p_A(t)$ itself splits over $\R$.
 \end{proof}
 
 \begin{corollary}
@@ -56,7 +60,7 @@ In particular, this gives that self-adjoint operators on complex inner products 
 \end{proof}
 
 \begin{theorem}[Spectral Theorem (for normal/self adjoint operators)]\label{thm:spectral}
-    Let $T : V \to V$ on a finite dimensional inner product space $V$ over $\field$. If $\field = \C$, then suppose $T$ is normal, and if $\field = \R$, suppose that $T$ is self-adjoint. Then, $T$ admits a \emph{spectral decomposition}, ie \[
+    Let $T : V \to V$ on a finite dimensional inner product space $V$ over $\field$. If $\field = \C$, then suppose $T$ is normal, and if $\field = \R$, suppose that $T$ is self-adjoint. Then, $T$ admits a unique (up to reindexing) \emph{spectral decomposition}, ie \[
     T = \lambda_1 P_1 + \lambda_2 P_2 + \cdots + \lambda_k P_3,
     \]
     where the $P_i$ are orthogonal projections such that $I_V = P_1 + \cdots + P_k$ and $P_i \circ P_j = \delta_{ij} P_{j}$. In other words, $V = \bigoplus_{i=1}^k \im(P_i)$ and the images $\im(P_i) \perp \im(P_j)$ for $i \neq j$.

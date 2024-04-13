@@ -567,6 +567,8 @@ A good example to keep in mind is $f_n \defeq \begin{cases}
   2nx & 0 \leq x \leq \frac{1}{2n}\\
   0 & x > \frac{1}{2n}
 \end{cases}$ on $[0, 1]$, which converges pointwise to $0$ but not uniformly.
+
+A good trick for disproving uniform convergence of $f_n \to f$ is by showing $f_n(x_0)$ constant and $\neq f(x_0)$ for all $n$. For instance, $f_n(x) \defeq \sin(\frac{x}{n}) \to 0$ pointwise, but $f_n(\frac{n\pi}{2}) = 1 \forall n$ so the convergence os not uniform.
 \end{remark}
 \begin{prop}
   Uniform $\implies$ pointwise convergence.
