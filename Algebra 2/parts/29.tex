@@ -7,7 +7,7 @@
 \begin{proof}
     Recall that $T$ diagonalizable iff $\exists$ a basis consisting of eigenvectors. 
 
-    ($\implies$) If $\beta \defeq \{v_1, \dots, v_n\}$ a basis for $V$ of eigenvectors, then each $v_i \in \eig_T(\lambda_j)$  for some $j$, so $\beta\subseteq \cup_{i=1}^k \eig_T(\lambda_i)$ and $\beta \cap \eig_T(\lambda_i)$ is linearly independent, hence $|\beta \cap \eig_T(\lambda_i)| \leq m_g(\lambda_i)$. Thus, $n = \abs{\beta} = \sum_{i=1}^k \abs{\beta \cap \eig_T(\lambda_i)} \leq \sum_{i=1}^k m_g(\lambda_i)$. By the previous corollary, it follows that $\sum_{i=1}^k m_g(\lambda_i) = n$.
+    ($\implies$) If $\beta \defeq \{v_1, \dots, v_n\}$ a basis for $V$ of eigenvectors, then each $v_i \in \eig_T(\lambda_j)$  for some $j$, so $\beta\subseteq \bigcup_{i=1}^k \eig_T(\lambda_i)$ and $\beta \cap \eig_T(\lambda_i)$ is linearly independent, hence $|\beta \cap \eig_T(\lambda_i)| \leq m_g(\lambda_i)$. Thus, $n = \abs{\beta} = \sum_{i=1}^k \abs{\beta \cap \eig_T(\lambda_i)} \leq \sum_{i=1}^k m_g(\lambda_i)$. By the previous corollary, it follows that $\sum_{i=1}^k m_g(\lambda_i) = n$.
 
     ($\impliedby$) Suppose $\sum_{i=1}^k m_g(\lambda_i) = n$ and let $\beta_i$ a basis for $\eig_T(\lambda_i)$. By the linear independence of the eigenspaces, $\beta \defeq \cup_{i=1}^k \beta_i$ still linearly independent and, having $n$ elements, is a basis for $V$ consisting of eigenvectors by construction.
 \end{proof}
