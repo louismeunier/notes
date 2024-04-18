@@ -44,7 +44,7 @@ Let $\beta \defeq \{u_1, u_2, \dots, u_n\}$ be an orthonormal basis for $V$. The
 \end{proof}
 
 
-Clearly, orthonormal bases are quite convenient; but does one always exist? More precisely, does every inner product space admit an orthonormal basis? We will show that the finite dimensional ones always do.
+Clearly, orthonormal bases are quite convenient; but does one always exist? More precisely, does every inner product space admit an orthonormal basis? We will show that the finite dimensional ones always do in \cref{5.4}.
 
 \begin{definition}[Orthogonality to a Set]
     For a set $S \subseteq V$ and $v \in V$, we say that $v$ is \emph{orthogonal to $S$} and write $v \perp S$ if $v$ is orthogonal to all vectors in $S$.
@@ -59,7 +59,7 @@ Clearly, orthonormal bases are quite convenient; but does one always exist? More
 \end{proof}
 
 \begin{lemma}\label{lemma:orthonormalsetproj}
-    Suppose $\alpha \defeq \{u_1, \dots, u_k\}$ is an orthonormal set. For each $v \in V$, the vector $$\proj_\alpha(v) \defeq \sum_{i=1}^k \proj_{u_i}(v) = \sum_{i=1}^k \iprod{v, u_i} u_i$$ has the property that $v \proj_\alpha(v) \perp \alpha$, in particular, $v = \proj_\alpha(v) \perp \proj_\alpha(v)$.
+    Suppose $\alpha \defeq \{u_1, \dots, u_k\}$ is an orthonormal set. For each $v \in V$, the vector $$\proj_\alpha(v) \defeq \sum_{i=1}^k \proj_{u_i}(v) = \sum_{i=1}^k \iprod{v, u_i} u_i$$ has the property that $v -\proj_\alpha(v) \perp \alpha$, in particular, $v = \proj_\alpha(v) \perp \proj_\alpha(v)$.
 
     Thus, $v = \proj_\alpha(v) + \orth_\alpha(v)$ where $\orth_\alpha(v) \defeq v - \proj_\alpha$, where $\proj_\alpha(v) \perp \orth_\alpha(v)$.
 \end{lemma}
@@ -73,6 +73,7 @@ Clearly, orthonormal bases are quite convenient; but does one always exist? More
 \end{proof}
 
 \subsection{Gram-Schmidt Algorithm}
+% TODO write out nicer
 We describe now a process to
 \[
 \underset{\text{independent set}}{\{v_1, v_2, \dots, v_k\}} \rightsquigarrow \underset{\text{orthonormal set}}{\{u_1, u_2, \dots, u_k\}}

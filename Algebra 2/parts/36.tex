@@ -14,6 +14,10 @@
     Let $T : V \to V$ on $V$ finite dimensional and suppose that $p_T(t)$ splits. Then there is an orthonormal basis $\beta$ for $V$ such that $[T]_\beta$ upper triangular.
 \end{lemma}
 
+\begin{remark}
+    This can also be proven over arbitrary (ie non-inner product) vector spaces, with the omission of "orthonormal" (as this has no meaning without an inner product).
+\end{remark}
+
 \begin{proof}
     Because $p_T(t)$ splits, $T$, hence by \cref{cor:eigenvaluesofadjoint} also $T^\ast$, has eigenvalues. We prove by induction on $n \defeq \dim(V)$. For $n = 1$, matrix is upper triangular so we are done.
     
@@ -51,6 +55,9 @@
         \item \emph{self-adjoint} if $T = T^\ast$.
     \end{itemize}
 \end{definition}
+\begin{remark}
+    Self-adjoint $\implies$ normal.
+\end{remark}
 
 \begin{example}
     \begin{enumerate}[label=(\alph*)]
@@ -83,6 +90,6 @@
         \item $\norm{Tv}^2 = \iprod{Tv, Tv} = \iprod{v, T^\ast T v} \overset{!}{=} \iprod{v, T T^\ast v} = \iprod{v, T^{\ast \ast} T^{\ast} v} = \iprod{T^\ast v, T^\ast v} = \norm{T^\ast v}^2$.
         \item $(T - aI_V)(T^\ast - \overline{a} I_V) = T T^\ast - a T^\ast - \overline{a} T - a \overline{a}I_V \overset{!}{=} T^\ast T - aT^\ast - \overline{a}T - a \overline{a} I_V = (T^\ast - \overline{a} I_V)(T - a \overline{I_V})$. Similar proof follows for general polynomials.
         \item $v$ an eigenvector of $T$ corresponding to $\lambda$ $\iff$ $(T - \lambda I_V)(v) = 0 \iff \norm{(T-\lambda I_V)(v)} = 0 \overset{\text{! by (a)}}{\iff} \norm{(T^\ast - \overline{\lambda} I_V)(v)} =0 \iff v$ an eigenvector of $T^\ast$ corresponding to $\overline{\lambda}$.
-        \item Let $v_1 \in \eig_T(\lambda_1)$, $v_2 \in \eig_T(\lambda_2)$. Then $\lambda_1 \iprod{v_1, v_2} = \iprod{\lambda_1 v_1, v_2} = \iprod{Tv_1, v_2} \overset{!}{=} \iprod{v_1, T^\ast v_2} = \iprod{v_1, \overline{\lambda_2} v_2} = \lambda_2 \iprod{v_1, v_2}$ so $(\lambda_1 - \lambda_2)(\iprod{v_1, v_2}) = 0$, but $\lambda_1, \lambda_2$ assumed distinct hence $\iprod{v_1, v_2} = 0$ and $v_1 \perp v_2$.
+        \item Let $v_1 \in \eig_T(\lambda_1)$, $v_2 \in \eig_T(\lambda_2)$. Then $\lambda_1 \iprod{v_1, v_2} = \iprod{\lambda_1 v_1, v_2} = \iprod{Tv_1, v_2} \overset{!}{=} \iprod{v_1, T^\ast v_2} \overset{!}{=} \iprod{v_1, \overline{\lambda_2} v_2} = \lambda_2 \iprod{v_1, v_2}$ so $(\lambda_1 - \lambda_2)(\iprod{v_1, v_2}) = 0$, but $\lambda_1, \lambda_2$ assumed distinct hence $\iprod{v_1, v_2} = 0$ and $v_1 \perp v_2$.
     \end{enumerate}
 \end{proof}

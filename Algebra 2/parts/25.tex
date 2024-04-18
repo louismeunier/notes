@@ -22,7 +22,7 @@
 \end{definition}
 
 \begin{proposition}
-    $\text{sgn} : S_n \to (\{1, -1\}, \cdot)$ is a group homomorphism, that is $-1$ of transpositions. In particular, \begin{enumerate}
+    $\text{sgn} : S_n \to (\{1, -1\}, \cdot)$ is a group homomorphism, that is $-1$ on transpositions. In particular, \begin{enumerate}
         \item $\text{sgn}(\pi^{-1}) = \text{sgn}(\pi)$
         \item If $\pi$ a product of $k$ transpositions, $\tau_1 \cdot \tau_2 \cdots \tau_k$, then $k = \sharp \pi \mod 2$.
     \end{enumerate}
@@ -107,7 +107,7 @@ For $A \in M_n(\field)$, $\det(A) = 0$ iff $A$ noninvertible.
     \]
     so $A \cdot B$ also noninvertible and $\det(A \cdot B) = 0$. Hence, $\det(A) \cdot \det(B) = 0 \cdot \det(B) = 0 = \det(A \cdot B)$.
 
-    Suppose now $A$ invertible. Then, writing $A = E_1 \cdots E_k$ as a product of elementary matrices; it suffices to show, by induction, for a single $E$. By \cref{lemma:elementarymatricesdelta}, $\det(A) = \det(E \cdot I) = c$ for some non-zero constant $c \in \field$, so $\det(A) \cdot \det(B) = c \cdot \det(B)$. On the other hand, $\det(A \cdot B) = \det(E \cdot B) = c \cdot \det(B)$, also by \cref{lemma:elementarymatricesdelta}.
+    Suppose now $A$ invertible. Then, we can write $A = E_1 \cdots E_k$ as a product of elementary matrices; it suffices to show, by induction, for a single $E$. By \cref{lemma:elementarymatricesdelta}, $\det(A) = \det(E \cdot I) = c$ for some non-zero constant $c \in \field$, so $\det(A) \cdot \det(B) = c \cdot \det(B)$. On the other hand, $\det(A \cdot B) = \det(E \cdot B) = c \cdot \det(B)$, also by \cref{lemma:elementarymatricesdelta}.
 \end{proof}
 \begin{corollary}
     $\det(A^{-1}) = \det(A)^{-1}, \forall A \in \GL_n(\field)$.
