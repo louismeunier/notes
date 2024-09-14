@@ -2,6 +2,8 @@
 #import "../typst/notes.typ": *
 #import "../typst/shortcuts.typ": *
 
+#import "@preview/cetz:0.2.2"
+
 // ! configuration
 #show: doc => conf(
   course_code: "MATH454",
@@ -334,3 +336,142 @@ mu(A) &= lim_(n-> infinity) mu(A_n)\
 $ hence $mu = m$.
 ]
 
+#proposition[If $mu$ a measure on $(RR, borel)$ assigning finite values to compact sets and is translation invariant, then $mu = c m$ for some $c > 0$.]
+
+#remark[
+  This proposition is also tacitly stating that $borel$ translation invariant; this needs to be shown.
+]
+#lemma[$borel$ translation invariant; for any $A in borel, x in RR, A + x in borel$.]
+
+#proof[
+  We employ the "good set strategy"; fix some $x in RR$ and let $
+  Sigma := {B in borel : B + x in borel}.
+  $
+  One can check that $Sigma$ a $sigma$-algebra, and so $Sigma subset.eq borel$. But in addition, its easy to see that ${(a, b) : a <b in RR} subset.eq Sigma$, since a translated interval is just another interval, and since these sets generate $borel$, it must be further that $borel subset.eq Sigma$, completing the proof.
+]
+
+#proof[(of the proposition) Let $c = mu((0, 1])$, noting that $c > 0$ (why? Consider what would happen if $c = 0$).
+
+This implies that $forall n >= 1$, $mu ((0, 1/n]) = c/n$ (obtained by "chopping up" $(0, 1]$ into $n$ disjoint intervals); from here we can draw many further conclusions: $
+&forall m = 1, dots, n - 1, mu((0, m/n]) = m/n c\
+&=> forall q in QQ sect (0, 1], mu((0, q]) = q c\
+&=> forall q in QQ^+, mu ((0, q]) = q dot c "(translate)"\
+&=> forall a in RR, mu((a, a + q]) = q dot c\
+&=> forall "intervals" I, mu(I) = c dot ell (I) "(continuity)"\
+&=> forall n >= 1, a, b in RR, mu((a, b) sect [-n, n]) = c dot ell ((a, b) sect [-n, n]) = c dot m ((a, b) sect [-n, n]),
+$
+but then, $mu = c dot m$ on $borel_[-n,n]$, and by appealing again the Dynkin's, $mu = c dot m$ on all of $borel$.
+]
+
+#proposition("Scaling")[$m$ has the _scaling property_ that $forall A in cal(M)$, $c in RR$, $c dot A = {c x : x in A} in cal(M)$, and $m (c dot A) = |c| m(A)$.]
+
+#proof[Assume $c eq.not 0$. Given $A subset.eq RR$, remark that ${I_n}$ an open interval cover of $A$ iff ${c I_n}$ and open interval cover of $c A$, and $ell (c I_n) = |c| ell(I_n)$, and thus $m^ast (c A) = |c| m^ast (A)$.
+
+Now, suppose $A in cal(M)$. Then, we have for any $B subset.eq RR$, $
+m^ast (B) = |c| m^ast (1/c B) &= |c| m^ast (1/c B sect A) + |c| m^ast (1/c B sect A^c)\
+&= m^ast (B sect c A) + m^ast (B sect  (c A)^c),
+$ so $c A in cal(M)$.
+]
+
+== Relationshion between $borel$ and $cal(M)$
+
+#definition[Given $(X, cal(F), mu)$, consider the following collection of subsets of $X$, $
+cal(N) := {B subset.eq X : exists A in cal(F) "s.t." mu(A) =0, B subset.eq A}.
+$ Put $overline(cal(F)) := sigma (cal(F) union cal(N))$; this is called the _completion_ of $cal(F)$ with respect to $mu$.
+]
+
+#proposition[$overline(cal(F)) = {F subset.eq X : exists E, G in cal(F) "s.t." exists E subset.eq F subset.eq G "and" m(G \\ E) = 0}$.]
+
+#proof[
+Put $cal(G)$ the set on the right; one can check $cal(G)$ a $sigma$-algebra. Since $cal(F) subset.eq cal(G)$  and $cal(N) subset.eq cal(G)$, we have $overline(cal(F)) subset.eq cal(G)$.
+
+Conversely, for any $F in cal(G)$, we have $E, G in cal(F)$ such that $E subset.eq F subset.eq G$ with $m(G \\ E) = 0$. We can rewrite $
+F = underbrace(E, in cal(F)) union underbrace((F \\ E), subset.eq G \\ E \ => mu (F \\ E )= 0 \ => G\\E in cal(N)),
+$ hence $F in cal(F) union cal(N)$ and thus in $cal(F)$, and equality holds.
+]
+
+#definition[Given $(X, cal(F), mu)$, $mu$ can be _extended_ to $overline(cal(F))$ by, for each $F in overline(cal(F))$ with $E subset.eq F subset.eq G$ s.t. $mu(G\\E) = 0$, put $
+mu(F) = mu(E) = mu(G).
+$ We call then $(X, cal(F), mu)$ a _complete measure space_.]
+
+#remark[It isn't obvious that this is well defined a priori; in particular, the $E, G$ sets are certainly not guaranteed to be unique in general, so one must check that this definition is valid regardless of choice of "sandwich sets".]
+
+#theorem[$(RR, cal(M), m)$ is the completion of $(RR, borel, m)$.]
+
+#proof[
+  Given $A in cal(M)$, then $forall n >= 1, exists G_n$-open with $A subset.eq G_n$ s.t. $m^ast (G_n \\ A) <= 1/n$ and $exists F_n$-closed with $F_n subset.eq A$ s.t. $m^ast (A \\ F_n) <= 1/n$.
+
+  Put $C := sect.big_(n=1)^infinity G_n$, $B := sect.big_(n=1)^infinity F_n$, remarking that $C, B in borel$, $B subset.eq A subset.eq C$, and moreover $
+  m(C \\ A) <= 1/n, m(A \\ B) <= 1/n\
+  => m(C \\ B) = m(C\\A) + m(A \\ B) <= 2/n,
+  $
+  but $n$ can be arbitrarily large, hence $m (C \\ B) = 0$; in short, given a measurable set, we can "sandwich it" arbitrarily closely with Borel sets. Thus, $A in overline(borel) => cal(M) subset.eq overline(borel)$. But recall that $cal(M)$ complete, so $borel subset.eq cal(M) => overline(borel) subset.eq overline(cal(M)) = cal(M)$, and thus $overline(borel) = cal(M)$ indeed.
+
+  Heuristically, this means that any measurable set is "different" from a Borel set by at most a null set.
+]
+
+== Some Special Sets
+
+Remark that for any countable set $A in cal(M)$, $m(A) = 0$. One naturally asks the opposite question, does there exist a measurable, uncountable set with measure 0? We construct a particular one here, the Cantor set, $C$.
+
+This requires an "inductive" construction. Define $C_0 = [0, 1]$, and define $C_k$ to be $C_(k-1)$ after removing the middle third from each of its disjoint components. For instance $C_1 = [0, 1/3] union [2/3, 1]$, then $C_2 = [0, 1/9] union [2/9, 1/3] union [2/3, 7/9] union [8/9, 1]$, and so on. This may be clearest graphically:
+
+#align(center,
+  cetz.canvas({
+    import cetz.draw: *
+    line((0, 5), (5, 5))
+
+    line((0, 4), (5/3, 4))
+    line((2*5/3, 4), (2*5/3+5/3, 4))
+
+    line((0, 3), (5/9, 3))
+    line((2*5/9, 3), (2*5/9+5/9, 3))
+    line((0+2*5/3, 3), (5/9+2*5/3, 3))
+    line((2*5/9+2*5/3, 3), (2*5/9+5/9+2*5/3, 3))
+
+    content((5/3/2, 2), $dots.v$)
+    content((5-5/6, 2), $dots.v$)
+
+    content((6, 5), $C_0$)
+    content((6, 4), $C_1$)
+    content((6, 3), $C_2$)
+    content((6, 2), $dots.v$)
+  })
+)
+
+ Remark that the $C_n arrow.b$. Put finally $
+C := sect.big_(n=1)^infinity C_n.
+$
+
+#proposition[The follow hold for the Cantor set $C$:
+
++ $C$ is closed (and thus $C in borel$);
++ $m(C) = 0$;
++ $C$ is uncountable.
+]
+
+#proof[
+1. For each $n$, $C_n$ is the countable (indeed, finite) union of $2^n$-many disjoint, closed intervals, hence each $C_n$ closed. $C$ is thus a countable intersection of closed sets, and is thus itself closed.
+
+2. For each $n$, each of the $2^n$ disjoint closed intervals in $C_n$ has length $1/3^n$, hence $
+m(C_n) = 2^n / 3^n = (2/3)^n.
+$ Since ${C_n} arrow.b$, by continuity of $m$ we have $
+m(C) = lim_(n=> infinity) m(C_n) = lim_(n-> infinity) (2/3)^n = 0.
+$
+
+3. This part is a little trickier. Notice that for any $x in [0, 1]$, we can define a sequence $(a_n)$ where each $a_n in {0, 1, 2}$, and such that $
+x = sum_(n=1)^infinity a_n/3^n;
+$ in particular, this is just the base-3 representation of $x$, which we denote $(x)_3 = (a_1 a_2 dots.c)$.
+
+I claim now that $
+C = {x in [0, 1] : (x)_3 "has no" 1"'s"}.
+$ Indeed, at each stage $n$ of the construction of the Cantor set, we get rid of the segment of the real line that would correspond to the $a_n = 1$. One should note that $(x)_3$ not necessarily unique; for instance $(1/3)_3 = (1, 0, 0, dots) = (0, 2, 2, dots)$, but if we specifically consider all $x$ such that there _exists_ a base three representation with no 1's, i.e. like $1/3$, then $C$ indeed captures all the desired numbers.
+
+Thus, we have that $
+"card" (C) = "card" ({{ a_n} : a_n = 0, 2}).
+$ Define now the function $
+f : C -> [0, 1], #h(1em) x |-> sum_(n=1)^infinity a_n/2 1/2^n, "where" (x)_3 = (a_n)
+$ i.e., we "squish" the base-3 representation into a base-2 representation of a number. This is surjective; for any $y in [0, 1]$, $(b_n) := (y)_2$ contains only 0's and 1's, hence $(2 b_n)$ contains only $0$'s and $1$'s, so let $x$ be the number such that $(x)_3 = (2 b_n)$. This necessarily exists, indeed, we simply take our definitions backwards: $
+x := sum_(n=1)^infinity (2 b_n)/3^n,
+$ which maps to $y$ under $f$ and is contained in $C$. Hence, $"card"(C) >= "card"([0, 1])$; but $[0, 1]$ uncountable, and thus so must $C$.
+]
