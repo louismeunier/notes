@@ -166,3 +166,20 @@
 !*Analysis*2*Review/*.pdf
 !*Analysis*2*Review/*.tex
 !*Analysis*2*Review/*.sty
+
+
+# Typst things
+!*typst
+!*typst/notes.typ
+!*typst/shortcuts.typ
+!*typst/README.md
+
+# Algebra 3
+!*Algebra*3
+!*Algebra*3/*.pdf
+!*Algebra*3/*.typ
+
+# Analysis 3
+!*Analysis*3
+!*Analysis*3/*.pdf
+!*Analysis*3/*.typ

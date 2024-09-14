@@ -1,0 +1,1 @@
+Contains template files + shortcuts for Typst notes files

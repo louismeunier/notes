@@ -151,7 +151,7 @@
 \end{remark}
 
 \begin{remark}
-  Complemented each of these requirements gives similar definitions for closed sets of $X$.
+  Complementing each of these requirements gives similar definitions for closed sets of $X$.
 \end{remark}
 
 \begin{defn}[Topology on a Metric Space]
@@ -240,7 +240,7 @@
 \end{defn}
 
 \begin{prop}
-  A basis for the product space is given by cyliders of the form $A = \prod_{\alpha \in J} A_\alpha \times \prod{\alpha \notin J} X_\alpha$ for $A_\alpha$-open in $X_\alpha$, where $J \subseteq I$-finite.
+  A basis for the product space is given by cyliders of the form $A = \prod_{\alpha \in J} A_\alpha \times \prod_{\alpha \notin J} X_\alpha$ for $A_\alpha$-open in $X_\alpha$, where $J \subseteq I$-finite.
 \end{prop}
 
 \begin{defn}[Compact]
@@ -269,7 +269,7 @@
   Intervals in $\R$ are connected.
 \end{prop}
 
-\begin{thm}[Intermediate Value Theorem]
+\begin{thm}[\important Intermediate Value Theorem]
   If $X$ connected, $f : X \to \R$ continuous, then $f$ takes intermediate value; if $a = f(x), b = f(y)$ for $x, y \in X$ with $a < b$, then for any $a < c < b$ $\exists z \in X \st f(z) = c$.
 \end{thm}
 
@@ -282,7 +282,7 @@
 \end{prop}
 
 \begin{defn}[Path Connected]
-  A set $A \subseteq X$ is path connected if for any $x, y \in A, \exists f : [a, b] \to X$ continuous such that $f(a) = x, f(b) = y f([a, b]) \subseteq A$.
+  A set $A \subseteq X$ is path connected if for any $x, y \in A, \exists f : [a, b] \to X$ continuous such that $f(a) = x, f(b) = y, f([a, b]) \subseteq A$.
 \end{defn}
 
 \begin{thm}
@@ -395,17 +395,17 @@
 \end{proof}
 
 \begin{remark}
-  While not a particularly enlightening result, used in proofs of the chain rule, etc.
+  While not a particularly enlightening result, it is helpful in proofs of the chain rule, etc.
 \end{remark}
 
-\begin{thm}[Chain Rule]
+\begin{thm}[\important Chain Rule]
   Let $f : J \to \R, g : I \to R \st f(J) \subseteq I$. If $f(x)$ differentiable at $c$ and $g(y)$ at $f(c)$, $g \circ f$ differentiable at $c$ with $(g \circ f)'(c) = g'(f(c))\cdot f'(c)$.
 \end{thm}
 \begin{proof}[Sketch]
   Apply Caratheodory's to $f$ at $c$ and $g$ at $f(c)$, and compose.
 \end{proof}
 
-\begin{thm}[Rolle's]
+\begin{thm}[\important Rolle's]
   Let $f : [a, b] \to \R$ continuous. If $f'(x)$ exists on $(a, b)$ and $f(a) = f(b) = 0$, $\exists c \in (a, b) : f'(c) = 0$.
 \end{thm}
   
@@ -439,6 +439,10 @@
     \item $n$ odd; neither. 
   \end{itemize}
 \end{cor}
+
+\begin{proof}[Sketch]
+  Apply Taylor's and gaze.
+\end{proof}
 
 \section{Integration}
 
@@ -504,7 +508,7 @@
 \end{thm}
 
 \begin{thm}
-  For $f \in \RR[a, b]$ and any $z \in [a, b]$, put $F(z) \defeq \int_a^z f(x) \dd{X}$. Then, $F$ continuous on $[a, b]$.
+  For $f \in \RR[a, b]$ and any $z \in [a, b]$, put $F(z) \defeq \int_a^z f(x) \dd{x}$. Then, $F$ continuous on $[a, b]$.
 \end{thm}
 
 \begin{thm}[\textcolor{red}{$\star$} Fundamental Theorem of Calculus p2]
@@ -653,6 +657,10 @@ A good trick for disproving uniform convergence of $f_n \to f$ is by showing $f_
 \begin{thm}[\important Cauchy Criterion of Series]
   $f_n(x) : D \to \R$ converges uniformly on $D$ iff $\forall \epsilon > 0, \exists N \st \forall m,n \geq N, \sum_{i=n+1}^m f_i(x) < \epsilon \forall x \in D$.
 \end{thm}
+
+\begin{remark}
+  Letting $s_n \defeq \sum_{i=1}^n x_n$, remark that this is equivalent to $\abs{s_n - s_m} < \epsilon$, ie the Cauchy criterion for sequences.
+\end{remark}
 
 \begin{prop}[Weierstrass M-Test]
   If $\abs{f_n(x)} \leq M_n \forall x \in D \subseteq \R$ and $\sum_n M_n < + \infty$, then $\sum_n f_n(x)$ converges uniformly on $D$.
