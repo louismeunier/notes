@@ -444,6 +444,7 @@ $ We call then $(X, cal(F), mu)$ a _complete measure space_.]
 ]
 
 == Some Special Sets
+=== Uncountable Null Set?
 
 Remark that for any countable set $A in cal(M)$, $m(A) = 0$. One naturally asks the opposite question, does there exist a measurable, uncountable set with measure 0? We construct a particular one here, the Cantor set, $C$.
 
@@ -476,7 +477,7 @@ This requires an "inductive" construction. Define $C_0 = [0, 1]$, and define $C_
 C := sect.big_(n=1)^infinity C_n.
 $
 
-#proposition[The follow hold for the Cantor set $C$:
+#proposition[The following hold for the Cantor set $C$:
 
 + $C$ is closed (and thus $C in borel$);
 + $m(C) = 0$;
@@ -508,3 +509,100 @@ $ i.e., we "squish" the base-3 representation into a base-2 representation of a 
 x := sum_(n=1)^infinity (2 b_n)/3^n,
 $ which maps to $y$ under $f$ and is contained in $C$. Hence, $"card"(C) >= "card"([0, 1])$; but $[0, 1]$ uncountable, and thus so must $C$.
 ]
+
+We can naturally extend the function $f$ to map the entire interval $[0, 1] -> [0, 1]$ as follows $
+f(x) := cases(
+  sum_(n=1)^infinity a_n/2 dot.c 1/2^n "if" x in C\, (x)_3 = (a_n),
+  f(a) "if" x in.not C "then" x in (a, b) "s.t." (a, b) "removed from " [0, 1]
+).
+$
+This function is often called the _Devil's Staircase_ or _Cantor-Lebesgue function_.
+
+#proposition[
+  1. $f(0) = 0, f(1) = 1, f equiv 1/2$ on $(1/3, 2/3)$, $f equiv 1/4$ on $(1/9, 2/9)$
+  2. $f : [0, 1] -> [0, 1]$ a surjection
+  3. $f$ is nondecreasing
+  4. $f$ is continuous
+]
+
+#proof[
+  1., 2., clear from construction. 
+  
+  For 3., let $x_1 < x_2 in C$, and suppose $(x_1)_3 = (a_n), (x_2)_3 = (b_n)$. Then, since $x_1 < x_2$, it must be that $a_n, b_n$ can only be equal up to some finite $N$; then the next $0 = a_(N+1) < b_(N+1) = 2$. Hence, it follows that the "modified binary expansion" that arises from $f$ gives directly that $f(x_1) <= f(x_2)$.
+
+  For 4., $f$ is clearly continuous on $[0,1] minus C$, since it is piecewise-constant here. Also, $f$ is "one-sided continuous" at each of the "boundary points" $1/3, 2/3, 1/9, 2/9, dots$. If $x in C$, for any $n >=1 $, there must be $x_n, x_n '$ such that $x_n < x < x_n '$ (if $x = 0$, only need $x_n '$, if $x = 1$, only need $x_n$) and $f(x_n ') - f(x_n) <= 1/2^n$. Then, $f$ is continuous at $x$ by monotonicity of $f$.
+]
+
+=== Non-Measurable Sets?
+We've shown then that there is indeed an uncountable set of measure 0. Another question we may ask ourselves is, is there a $A subset.eq RR$ that is non-measurable? The answer to this turns out to be yes, but the construction requires invoking the axiom of choice:
+
+#axiom("Of Choice")[If $Sigma$ a collection of nonempty sets, then $exists$ a function $
+S : Sigma -> union.big_(A in sigma) A,
+$ such that $A in sigma$, $S(A) in A$. Such a function is called a _selection function_, and $S(A)$ a _representative_ of $A$.]
+
+We construct now a non-measurable set, assuming the above. Consider $[0, 1]$, and define an equivalence relation $tilde$ on $[0, 1]$ by $
+a tilde b <=> a - b in QQ.
+$ Its easy to check that this is indeed an equivalence relation. Denote by $E_a$ the equivalence class containing $a$, and set $Sigma = {E_a : a in [0, 1]}$. Note that for any $E_a in Sigma, E_a eq.not nothing$. 
+
+Invoking the axiom of choice, we can select exactly one element S_a from $E_a$ for each $E_a in Sigma$. Set $
+N := {S_a : S_a "is a representative of " E_a, E_a in Sigma}.
+$
+
+#proposition[
+  $N$, called a _Vitali set_, is non-measurable.
+]
+
+#proof[
+  Assume towards a contradiction that $N$ indeed measurable, $N in cal(M)$. Consider $[-1, 1] sect QQ$; this is countable, so we can enumerate it ${q_k}$, $k >=1$. For each $k$, put $
+  N_k := N + q_k.
+  $ By the assumption of measurability and translation invariance of $m$, it must be that each $N_k$ measurable and has the same measure as $N$.
+
+  We claim each $N_k$ disjoint. Assume not, then $exists k eq.not ell$ (i.e. $q_k eq.not q_ell$) and $S_a, S_b in N$ such that $S_a + q_k = S_b + q_ell$. But then $S_a - S_b = q_ell - q_k in QQ$, hence $S_a tilde S_b$. But we constructed $N$ to have only one representative from each equivalence class, hence it must be that $S_a = S_b$, and so $S_a + q_k = S_a + q_ell => q_k = q_ell$, contradicting the assumed distinctness of the $q$'s; hence, the $N_k$'s indeed disjoint.
+
+  We claim next that $[0, 1] subset.eq union.big_(n-1)^infinity N_k$. Let $x in [0, 1]$. Then, $x tilde S_a$ for some unique $S_a in N$ and so $x - S_a in QQ$. But also, $x, S_a in [0, 1]$, hence $x - S_a in [-1, 1]$ (moreover, $x - S_a in [-1, 1] sect QQ$) and there must exist a $k$ such that $x - S_a = q_k$, since the $q_k$'s enumerate the entire $[-1, 1] sect QQ$. Thus, $x in N_k$ by the construction of the $N_k$'s. Thus, $[0, 1] subset.eq union.big_(n=1)^infinity N_k$ indeed.
+
+  On the other hand, $union.big_(k=1)^infinity N_k subset.eq [-1, 2]$ and so we have the "bound" $
+  [0, 1] subset.eq union.big_(n=1)^infinity N_k subset.eq [-1, 2].
+  $ Taking the measure of all sides then, we have the bound $
+  1 <= mu (union.big_(n=1)^infinity N_k) <= 3.
+  $ Invoking the disjointness of the $N_k$'s, we can also use countable additivity to write $
+  mu (union.big_(n=1)^infinity N_k) = sum_(k=1)^infinity m(N_k) = sum_(k=1)^infinity m(N),
+  $ but this final line is a sequence of positive, constant real numbers; hence, it is impossible for it to be within $1$ and $3$, and we have a contradiction. Hence, $N$ indeed not measurable.
+
+  Remark that this proof also shows that $m^ast (N_k) > 0$ so $m^ast (N) > 0$ (given the interval bound on $N$ we've found).
+]
+
+#proposition[
+  For every $A in cal(M)$ such that $m(A) > 0$, there exists $B subset.eq A$ such that $B$ is non-measurable.
+]
+
+#proof[
+  Assume otherwise, that there is a $A in cal(M)$ with $m(A) > 0$ such that any subset $B$ of $A$ is also measurable.
+
+  Remark that $A subset.eq union.big_(n in ZZ) A sect [n, n + 1]$. Then, there exists an $n$ such that $m ( A sect [n, n + 1]) > 0$ and thus, translating $A' := A sect [n, n + 1] - n)$, $m(A') > 0$, noting that $A' subset.eq [0, 1]$. Now, for any $B'subset.eq A'$, $B' + n subset.eq A$. By assumption, then $B' + n$ must be measurable so $B'$ measurable.
+
+  In summary, then, we have $A' subset.eq [0, 1]$ with $m (A') > 0$ such that (by assumption) $B'$ measurable for all $B' subset.eq A'$.
+
+  Let $N, {q_k}, N_k$ be as in the previous proof. Set $
+  A_k ' := A' sect N_k, k >= 1.
+  $ Then, $A_k '$ disjoint, and $
+  A' = [0, 1] sect A' subset.eq union.big_(k=1)^infinity (N_k sect A') = union.big_(k=1)^infinity A_k'.
+  $ Since $m(A') > 0$, there exists a $k$ such that $m(A_k ') > 0$. Set, for this $k$, $
+  L := {ell >= 1 : q_ell + q_k in [-1, 1]}.
+  $ This set is again countably infinite. We translate, obtaining a disjoint sequence of sets ${q_ell + A_k ' : ell in L}$; since $q_ell + q_k in [-1, 1] sect QQ$, then $q_ell + q_k = q_m$ for some unique $m$, and so $q_ell + A_k ' = q_ell + A' sect (N + q_k) subset.eq N_m$. Hence, we have on the one hand that by countable additivity $
+  union.big_(ell in L) (q_ell + A_k ') subset.eq [-1, 2] => sum_(ell in L) m(q_ell + A_k ') <= 3,
+  $ and so it must be that $m(q_ell + A_k ') = m(A_k ') = 0$ (else the series couldn't be finite), contradicting the finiteness assumption on $m(A_k ')$.
+]
+
+=== Non-Borel Measurable Set?
+We may ask, is there $A in cal(M)$ such that $A in.not borel$?
+
+Let $f : [0, 1] -> [0, 1]$ be the Cantor-Lebesgue function, and put $g(x) = f(x) + x$; note that $g$ is continuous and strictly increasing, and is defined $g : [0, 1] -> [0, 2]$. Remark that $g$ bijective; the strictly increasing gives injective, and moreover $g(0) = 0, g(1) = 2$ hence by intermediate value theorem it is surjective. Hence, $g^(-1) : [0, 2] -> [0, 1]$ exists, and is also continuous, so in short $g$ is a homeomorphism; it maps open to open, closed to closed. In particular, if $A in borel$, then $g(A) in borel$.
+
+Recall that if $(a, b)$ an open interval that gets removed from the construction of $C$, then $f$ is constant and so $g$ will map $(a, b)$ to another open interval of the same length $b - a$. Thus, $
+m(g([0, 1] \\ C)) = m([0, 1] \\ C) = 1.
+$
+
+Hence, $m(g(C)) = 2 - 1 = 1 > 0$, since $g (C union [0, 1]\\C) = [0, 2]$. Hence, there exists a $B subset.eq G(C)$ such that $B in.not cal(M)$, as per the previous proposition.
+
+Let $A := g^(-1) (B)$; then $A subset.eq g^(-1) (g (C))= C$. Since $m(C) = 0$, $A in cal(M)$ and $m(A) = 0$. But, $A in.not borel$; if it were, then $g(A) = B in borel$, since $g$ "maintains" Borel sets, but $B$ is not even Lebesgue measurable and so this is a contradiction).
