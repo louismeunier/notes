@@ -30,7 +30,7 @@ We can then define the upper and lower Riemann integrals of $f$ over the region 
 $
 We then say $f$ *Riemann integrable* if these two quantities are equal, and denote this value by $integral_a^b f(x) dif x$.
 
-Many "nice-enough" functions are Riemann integrable, but many that we would like to be able to "integrate" are simply not, for instance Dirichlet's fucntion $x |-> cases(
+Many "nice-enough" (continuous, monotonic, etc.) functions are Riemann integrable, but many that we would like to be able to "integrate" are simply not, for instance Dirichlet's function $x |-> cases(
   1  x in QQ \\ [a, b]\
 0  x in QQ^c \\ [a,b]).$ Hence, we need a more general notion of integration.
 // TODO
@@ -126,9 +126,13 @@ and call the triple $(X, cal(F), mu)$ a _measure space_.
 ]
 
 #example[
-  The measure on $frak(B)_RR$ given by $A |-> cases(|A| "if" A "finite"\ infinity " else")$ is called the _counting measure_. 
+  The measure on $frak(B)_RR$ given by $
+  A |-> cases(|A| "if" A "finite"\ infinity " else")
+  $ is called the _counting measure_. 
 
-  Fix $x_0 in RR$, then the measure on $frak(B)_RR$ given by $A |-> cases(1 "if" x_0 in A\ 0 "else")$ is called the _point mass at $x_0$_.
+  Fix $x_0 in RR$, then the measure on $frak(B)_RR$ given by $
+  A |-> cases(1 "if" x_0 in A\ 0 "else")
+  $ is called the _point mass at $x_0$_.
 ]
 
 #theorem("Properties of Measures")[
@@ -149,7 +153,36 @@ and call the triple $(X, cal(F), mu)$ a _measure space_.
   $
 ]
 
-== Contructing the Lebesgue Measure on $RR$
+#remark[
+In 4., note that since $A_n$ increasing, that the union $union.big_(n=1)^infinity A_n supset.eq A_m$ for any arbitrarily large $m$; indeed, one could logically right $lim_(n-> infinity) A_n = union.big_(n=1)^infinity A_n$. This this notation, then, 4. simply states that we may interchange limit and measure. A similar argument can be viewed for 5. (how?).
+]
+
+#remark[
+  The finiteness condition in 5. may be slightly modified such as to state that $mu(A_n) < infinity$ for some $n$; remark why this would suffice to ensure the entire rest of the sequence has finite measure.
+]
+
+#proof[
+1. Extend $A_1, dots, A_N$ to an infinite sequence by $A_n := nothing$ for $n > N$. Then this simply follows from countable additivity and $mu(nothing) = 0$.
+2. We may write $B = A union (B \\ A)$; this is a disjoint union of sets. By finite additivity, then, $
+mu(B) = mu(A) + mu(B \\ A) >= mu(A),
+$ since the measure is positive.
+3. We prove only for a countable union; use the technique from 1. to extend to finite. We first "disjointify" the sequence such that we can use the countable additivity axiom. Let $B_1 = A_1, B_n = A_n \\ (union.big_(i=1)^(n-1) A_i)$ for $n >= 2$. Remark then that ${B_n} subset.eq cal(F)$ is a disjoint sequence of sets, and that $union.big_(n=1)^infinity B_n = union.big_(n=1)^infinity A_n$. By countable additivity and subadditivity, $
+mu(union.big_(n=1)^infinity A_n) = mu(union.big_(n=1)^infinity B_n) = sum_(n=1)^infinity mu(B_n) <= sum_(n=1)^infinity mu(A_n).
+$
+4. We again "disjointify" the sequence ${A_n}$. Put $B_1 = A_1$, $B_n = A_n \\ A_(n-1)$ for all $n >= 2$ (remark that this is equivalent to the construction from the previous proof because the sets are increasing). Then, again, $union.big_(n=1)^infinity B_n = union.big_(n=1)^infinity A_n$, and in particular, for all $N >= 1$, $union.big_(n=1)^N B_n = A_N$. Then $
+mu(union.big_(n=1)^infinity A_n) = mu(union.big_(n=1)^infinity A_n) &= sum_(n=1)^infinity mu(B_n)\
+&= lim_(N-> infinity) sum_(n=1)^N mu(B_n)\
+&= lim_(N-> infinity) mu(union.big_(n=1)^N B_n) = lim_(N->infinity) mu(A_N).
+$
+5. We yet again disjointify, backwards (in a way) from the previous case. Put $B_n = A_1 \\ A_n$ for all $n  >= 1$. Then, ${B_n} subset.eq cal(F)$, $B_n$ increasing, and $union.big_(n=1)^infinity B_n = A_1 \\ sect.big_(n=1)^infinity A_n$. Then, by continuity from below, $
+mu(A_1 \\ sect.big_(n=1)^infinity A_n) = mu(union.big_(n=1)^infinity B_n) = lim_(n-> infinity) mu(B_n) = lim_(n-> infinity) mu(A_1 \\ A_n)
+$ and also $
+mu(A_1) &= mu(A_1 \\ sect.big_(n=1)^infinity A_n) + mu(sect.big_(n=1)^infinity A_n)\
+&= mu(A_1 \\ A_n) + mu(A_n),
+$ and combining these two equalities yields the desired result.
+]
+
+== Constructing the Lebesgue Measure on $RR$
 
 #definition("Lebesgue outer measure")[
 For all $A subset.eq RR$, define $
@@ -224,7 +257,7 @@ By subadditivity, $<=$ always holds in the definition above.
 
 #theorem("Carathéodary's Theorem")[
   Let $
-  cal(M) := {A subset.eq RR : A m^ast-"measurable"}.
+  cal(M) := {A subset.eq RR : A #h(0.5em) m^ast-"measurable"}.
   $ Then, $cal(M)$ is a $sigma$-algebra of subsets of $RR$.
 
   Define $m : cal(M) -> [0, infinity]$, $m(A) = m^ast (A)$. Then, $m$ is a measure on $cal(M)$, called the _Lebesgue measure_ on $RR$. We call sets in $cal(M)$ _Lebesgue-measurable_ or simply _measurable_ (if clear from context) accordingly. We call $(RR, cal(M), m)$ the _Lebesgue measure space_.
@@ -373,7 +406,7 @@ m^ast (B) = |c| m^ast (1/c B) &= |c| m^ast (1/c B sect A) + |c| m^ast (1/c B sec
 $ so $c A in cal(M)$.
 ]
 
-== Relationshion between $borel$ and $cal(M)$
+== Relationship between $borel$ and $cal(M)$
 
 #definition[Given $(X, cal(F), mu)$, consider the following collection of subsets of $X$, $
 cal(N) := {B subset.eq X : exists A in cal(F) "s.t." mu(A) =0, B subset.eq A}.

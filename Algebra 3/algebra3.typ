@@ -248,7 +248,7 @@ Recall that we can naturally define $G$ as a $G$-set in three ways; by left mult
 
 An orbit, in this case, is called a _conjugacy class_.
 
-#proposition[Conjugation on $S_n$ preserves cycle shape.]
+#proposition[Conjugation on $S_n$ preserves cycle shape.]<prop:cycles>
 #proof[
 Just to show an example, consider $(13)(245) in S_5$ and let $g in S_5$, and put $sigma := g (13) (245) g^(-1)$. Then, we can consider what $sigma g(k)$ is for each $k$;
 $
@@ -278,4 +278,64 @@ $3 + 1$, [$4 dot.c 2 = 8$ (4 points fixed, 2 possible orders)],
 $4$, [$3! = 6$ (pick 1 first, then 3 choices, then 2)],
 $2 + 2$, $3$
 )
+]<ex:s4conjclass>
+
+The converse of @prop:cycles actually holds as well:
+
+#theorem[Two permutations in $S_n$ are conjugate if and only if they induce the same cycle shape.]
+
+#proof[We need to show the converse, that if two permutations have the same cycle shape, then they are conjugate.
+
+We show by example. Let $g = (1 2 3 )(4 5) (6), g' = (6 1 5)(24)(3) in S_6$. We can let $h in S_6$ such that it sends $1 |-> 6$, $2 |-> 1$, $3 |-> 5$, etc; precisely
+$
+h = (1 6 3 5 4 2).
+$ Remark that $h$ need not be unique! Indeed, we could rewrite $g' = (1 5 6) ( 4 2) (3)$ (which is the same permutation of course), but would result in $
+h = (1) (2 5) (3 6) ( 4),
+$ which is not the same as the $h$ above.
 ]
+
+#example[We return to @ex:s4conjclass, and recall that $S_4 tilde.equiv "Aut"("cube")$. Can we identify the conjugacy classes of $S_4$ with "classes" of symmetries in the cube?
+
+#table(
+  columns: (1fr, 1fr, 1fr),
+  [*Conjugation Class*], $hash$, [*Cube Symmetry*],
+  $1$, $1$, $id$,
+  $(12)$, $6$, "Rotations about edge diagonals",
+  $(12)(34)$, $3$, [Rotations about the face centers by $pi$],
+  $(123)$, $8$, "Rotations about principal diagonals",
+  $(1234)$, $6$, [Rotations about the face centers by $pi/2$]
+  // TODO pictures?
+)
+]
+
+#example[Let $FF$ be a field and consider the vector space $V = FF^n$. Then $
+"Aut"(V) = "GL"_n ( FF) = {"invertible" n times n "matrices"}.
+$
+Recall that linear transformations are described by matrices, after choosing a basis for $V$; i.e. $
+{"linear transformations on" V } <--> M_n (FF) := {n times n "matrices with entries in" FF}. 
+$ However, this identification _depends_ on the choose of basis; picking a different basis induces a different bijection. Suppose we have two bases $beta, beta'$, then $beta' = P beta$ for some $P in "GL"_n (FF)$ ($P$ called a "change of basis matrix"). Then for $T : V -> V$, and with $M := [T]_beta, M' := [T]_(beta')$, then as discussed in linear algebra, $M' = P M P^(-1)$. Hence, understanding $M_n (FF) <-> "Hom"(V -> V)$ can be thought of as understanding $M_n (FF)$ as a $G$-set of $G = "GL"_n (FF)$ under conjugation; then orbits $<->$ conjugacy classes.
+
+*Conjugacy Invariants*
+- The trace $tr$ and determinant $det$ are invariant under conjugation; $tr (P M P^(-1)) = tr (M)$ and $det (P M P^(-1)) = det (M)$
+- $"spec" (M) :=$ set of eigenvalues is a conjugate invariant (with caveats on the field, etc)
+- Characteristic polynomial, minimal polynomial
+]
+
+== 
+
+Recall that if $H subset.eq G$ a subgroup, then Lagrange's gives us that $hash H | hash G$. We are interested in a (partial) converse; given some integer $n$ such that $n divides hash G$, is there a subgroup of cardinality $n$?
+
+To see that this is not true in general, let $G = S_5$. $hash G = 120$; the divisors and the (if existing) subgroups:
+$
+1 &-> {1}\
+2 &-> {1, (12)}\
+3 &-> ZZ\/3ZZ\
+4 &-> ZZ\/4 ZZ, ZZ\/2ZZ times ZZ\/2ZZ\
+5 &-> ZZ\/5ZZ\
+6 &->angle.l(12)(345)angle.r tilde.equiv ZZ\/6ZZ, S_3\
+8 &-> D_8\
+10 &->D_10\
+12 &-> A_4\
+15 &-> "None :("
+$
+There is a unique group of order 15, $ZZ\/15ZZ$; but this would need an element of order 15, which doesn't exist in $S_5$.
