@@ -544,7 +544,7 @@ We construct now a non-measurable set, assuming the above. Consider $[0, 1]$, an
 a tilde b <=> a - b in QQ.
 $ Its easy to check that this is indeed an equivalence relation. Denote by $E_a$ the equivalence class containing $a$, and set $Sigma = {E_a : a in [0, 1]}$. Note that for any $E_a in Sigma, E_a eq.not nothing$. 
 
-Invoking the axiom of choice, we can select exactly one element S_a from $E_a$ for each $E_a in Sigma$. Set $
+Invoking the axiom of choice, we can select exactly one element $S_a$ from $E_a$ for each $E_a in Sigma$. Set $
 N := {S_a : S_a "is a representative of " E_a, E_a in Sigma}.
 $
 
@@ -606,3 +606,163 @@ $
 Hence, $m(g(C)) = 2 - 1 = 1 > 0$, since $g (C union [0, 1]\\C) = [0, 2]$. Hence, there exists a $B subset.eq G(C)$ such that $B in.not cal(M)$, as per the previous proposition.
 
 Let $A := g^(-1) (B)$; then $A subset.eq g^(-1) (g (C))= C$. Since $m(C) = 0$, $A in cal(M)$ and $m(A) = 0$. But, $A in.not borel$; if it were, then $g(A) = B in borel$, since $g$ "maintains" Borel sets, but $B$ is not even Lebesgue measurable and so this is a contradiction).
+
+= Integration Theory
+
+== Measurable Functions
+
+We will be considering functions $f$ defined on $RR$ or some subset of $RR$ that could take positive or negative infinite as its value i.e. $
+f : RR -> overline(RR) := RR union {- infinity, infinity},
+$ where $overline(RR)$ the _extended real line_; we say $f$ is $overline(RR)$-valued. If $f$ never takes $infinity, -infinity$ for any $x in RR$, we say $f$ finite-valued, or just $RR$-valued.
+
+For all $a in RR$, we consider inverse images $
+f^(-1) ([-infinity, a)) := {x in RR : f(x) in [-infinity, a)} = {f < a},
+$ remarking the inclusion of $-infinity$; similarly $
+f^(-1) ((a, infinity]) :=  {x in RR : f(x) in (a, infinity]} = {f > a},
+$ and so on, for any $B subset.eq RR$, $
+f^(-1)(B) := {x in RR : f(x) in B} = {f in B}.
+$ Remark that $
+f^(-1) (B^c) &= (f^(-1) (B))^c\
+f^(-1) (A sect B) &= f^(-1) (A) sect f^(-1) (B)\
+f^(-1) (A union B) &= f^(-1) (A) union f^(-1) (B),
+$ which extend naturally for countable unions/intersections.
+
+#definition("Measurable Function")[
+  $f : RR -> overline(RR)$ is _measurable_ if $forall a in RR$, $
+  f^(-1) ([-infinity, a)) in cal(M).
+  $
+]
+
+#proposition("Equivalent Definitions of Measurability")[
+  $
+  f "is measurable" &<=> forall a in RR, f^(-1) ([a, infinity]) in cal(M)\
+    &<=> forall a in RR, f^(-1) ((a, infinity]) in cal(M)\
+    &<=> forall a in RR, f^(-1) ([-infinity, a]) in cal(M)
+  $
+]
+
+#proof[
+  We prove just the last equivalence. Notice that $forall a in RR$, we can use the commuting of inverse images with countable unions, intersections, complement to write $
+  f^(-1) ([-infinity, a)) &= union.big_(n=1)^infinity f^(- 1) ([-infinity, a - 1/n))
+  $ and $
+  f^(-1) ([-infinity, a]) = sect.big_(n=1)^infinity f^(-1) ([-infinity a + 1/n)).
+  $
+]
+
+#proposition[If $f$ finite-valued, Then
+$
+f "is measurable" &<=> forall a < b in RR, f^(-1) ((a, b)) in cal(M)\
+&<=>  wide dots.c wide f^(-1) ((a, b]) in cal(M)\
+&<=>  wide dots.c wide f^(-1) ([a, b)) in cal(M)\
+&<=>  wide dots.c wide f^(-1) ([a, b]) in cal(M).
+$
+]
+
+#definition("Extended Borel Sigma Algebra")[Define the Borel "extended" algebra $frak(B)_(overline(RR))$ of subsets of $overline(RR)$, defined by $
+frak(B)_(overline(RR)) := sigma (borel union {{-infinity}, {infinity}}).
+$
+]
+#proposition[
+  $frak(B)_(overline(RR)) = sigma ({[-infinity, a) : a in RR})$.
+]
+
+#proof[
+  For every $a in RR$, we may write $
+  [-infinity, a) = underbrace((-infinity, a), in borel) union {-infinity} in frak(B)_(overline(RR)),
+  $ so $sigma ({[-infinity, a) : a in RR}) subset.eq frak(B)_(overline(RR))$.
+
+  Conversely, notice that $
+  {-infinity} = sect.big_(n=1)^infinity [-infinity, -n),
+  $ and $
+  {infinity} = overline(RR) minus (union.big_(n=1)^infinity [-infinity, n)),
+  $ so ${-infinity}, {infinity} in sigma ({[-infinity, a) : a in RR})$. Hence, for any $a in RR$, $
+  (- infinity, a) = [-infinity, a) minus {-infinity} in sigma ({[-infinity, a) : a in RR}),
+  $ and so $borel subset.eq sigma ({[-infinity, a) : a in RR})$. ${-infinity}, {infinity} in sigma ({[-infinity, a) : a in RR})$ already, and thus $frak(B)_(overline(RR)) subset.eq sigma ({[-infinity, a) : a in RR})$.
+]
+
+#proposition[$f : RR -> overline(RR)$ measurable $<=>$ for all $B in frak(B)_(overline(RR)), f^(-1) (B) in cal(M)$.]
+
+#proof[
+  $impliedby$ is immediate. For $=>$, let $cal(C)$ be a collection of subsets of $overline(RR)$, then put $
+  f^(-1) (cal(C)) := {f^(-1)(B) : B in cal(C)}.
+  $ By an assignment question (2.6), $
+  f^(-1) (sigma (cal(C))) = sigma (f^(-1) (cal(C))).
+  $ Take $cal(C) = {[-infinity, a) : a in RR}$. Then, $
+  f^(-1) (sigma (cal(C))) = f^(-1) (frak(B)_(RRR)) = sigma (f^(-1) ({[-infinity, a) : a in RR})).
+  $ But $f$ measurable, so $f^(-1) ([-infinity, a)) in cal(M)$ for each $a in RR$, hence sigma $(f^(-1) ({[-infinity, a) : a in RR})) subset.eq cal(M)$ and so $f^(-1) (sigma (cal(C))) subset.eq cal(M)$ completing the proof.
+]
+
+#corollary[If $f$ finite-valued, then $f$ is measurable $<=>$ for every $B in borel$, $f^(-1) (B) in cal(M)$.]
+
+#proposition[Given $f : RR -> RRR$, define the _finite valued component_ of $f$ given by $
+f_RR (x) := cases(f(x) : -infinity < f(x) < infinity, 0 "otherwise").
+$ Then, $f$ measurable $<=>$ $forall B in borel$, $f^(-1)_RR (B) in cal(M)$ AND ${f = infinity}, {f = -infinity}$ both in $cal(M)$.]
+
+#proof[
+  ($impliedby$) For any $a in RR$, $
+  f^(-1)([-infinity, a)) = {f = -infinity} union f^(-1) ((-infinity, a)) = {f = -infinity} union f^(-1)_RR ((-infinity, a)),
+  $ a union of measurable sets and hence is itself measurable.
+
+  ($=>$) Remark that ${f = infinity}, {f = -infinity} in cal(M)$ automatically. For any $B in borel$, we have $
+  f^(-1)_RR (B)  = {x in RR : f_RR (x) in B} = {x in RR : f (x) in B, -infinity < f < infinity} union {x in RR : 0 in B,  f(x) = plus.minus infinity} in cal(M).
+  $
+]
+
+#definition[If a statement is true for every $x in A$ where $A in cal(M)$ s.t. $m(A^c) = 0$, then we say the statement is true a.e. (almost everywhere).]
+
+#proposition[If $f : RR -> RRR$ is measurable and $f = g$ a.e. then $g$ is measurable.]
+
+#corollary[If $f$ is finite-valued a.e., then $f$ is measurable $<=>$ $f_RR$ is measurable $<=>$ $forall a < b in RR$, $f^(-1)((a, b)) in cal(M)$.]
+
+#proposition[
+  If $f equiv c$ then $f$ measurable. 
+  
+  If $f =bb(1)_A$ for some $A subset.eq RR$, then $f$ is measurable $<=>$ $A in cal(M)$.
+]
+
+#proof[
+  Assume $f equiv c$. Then $
+  f^(-1) ([-infinity, a)) = cases(RR  "if" c < a, nothing "if" c >= a) in cal(M).
+  $ Assume now $f = bb(1)_A$. For all $a in RR$, $
+  f^(-1) ([-infinity, a)) = cases(RR "if" a > 1, A^c "if" 0< a <= 1, nothing "if" a <= 0) in cal(M) <=> A in cal(M).
+  $
+]
+
+#proposition[If $f$ is (finite-valued) continuous, then $f$ is measurable.]
+#proof[
+  $f : RR -> RR$ continuous $<=>$ for all $G subset.eq RR$ open, $f^(-1) (G)$ open. For all $a < b in RR$, then $f^(-1) ((a, b))$ open so $f^(-1) ((a, b)) in cal(M)$ so $f$ measurable.
+
+  In fact, if $f : RR -> RR$ continuous, then for all $B in borel$, $f^(-1) (B) in borel$; $
+  f^(-1) (borel) = f^(-1) (sigma ({"open sets"})) = sigma (underbrace(f^(-1) ({"open sets"}), "all open")) subset.eq sigma ({"open sets"}) = borel.
+  $ Moreover, if $f^(-1)$ (inverse) exists and is continuous, then for any $B in borel$, $f(B) in borel$.
+]
+
+#proposition[
+  If $f : RR -> RR$ is measurable and $g : RR -> RR$ is continuous, then $g compose f$ is measurable.
+]
+
+#remark[The order matters! The converse doesn't hold in general.]
+
+#proof[
+  For all $a in RR$, $
+  (g compose f)^(-1) ((- infinity , a)) &= {x in RR : g(f(x)) < a} \
+  &= {x in RR : f(x) in g^(-1) ([-infinity, a))}\
+  &=f^(-1)(g^(-1)([-infinity, a))) in cal(M).
+  $
+]
+
+#proposition[If $f : RR -> RRR$ is measurable, then:
++ for every $c in RR$, $c f$ is measurable (in particular $-f$ measurable);
++ $|f|$ is measurable;
++ for every $k in NN$, $f^k$ is a measurable. 
+]
+
+#proof[
+  We prove just 3. If $k = 0$ this is trivial.  For any $a in RR$, $
+  (f^k)^(-1) ([-infinity, a)) = cases(
+    f^(-1)(\[-infinity, a^(1/k)\)) &"if" k "is odd",
+    nothing &"if" k "is even and " a<= 0,
+    f^(-1)(\[-a^(1/k), a^(1/k)\)) &"if" k "is even and" a > 0,
+  ) in cal(M).
+  $
+]
