@@ -611,7 +611,7 @@ Let $A := g^(-1) (B)$; then $A subset.eq g^(-1) (g (C))= C$. Since $m(C) = 0$, $
 
 == Measurable Functions
 
-We will be considering functions $f$ defined on $RR$ or some subset of $RR$ that could take positive or negative infinite as its value i.e. $
+We will be considering functions $f$ defined on $RR$ or some subset of $RR$ that could take positive or negative infinity as its value i.e. $
 f : RR -> overline(RR) := RR union {- infinity, infinity},
 $ where $overline(RR)$ the _extended real line_; we say $f$ is $overline(RR)$-valued. If $f$ never takes $infinity, -infinity$ for any $x in RR$, we say $f$ finite-valued, or just $RR$-valued.
 
@@ -766,3 +766,101 @@ $ Then, $f$ measurable $<=>$ $forall B in borel$, $f^(-1)_RR (B) in cal(M)$ AND 
   ) in cal(M).
   $
 ]
+
+#proposition[
+  If $f, g$ are two finite-valued measurable functions, then $f + g$, $f dot g, f or g := max {f ,g}, f and g := min {f, g}$ are measurable functions, where $
+  (f or g)(x) = max{f(x), g(x)}.
+  $
+]
+
+#proof[
+For all $a in RR$, $
+  (f + g)^(-1) ([-infinity, a) &= {x in RR : f(x) + g(x) < a}\
+  &= {x in RR : f(x) < a - g(x)}\
+  &= union.big_(q in QQ) {x in RR : f(x) < q < a - g(x)}\
+  &= union.big_(q in QQ) underbrace({x in RR : f(x) < q}, in cal(M)) sect underbrace({x in RR : g(x) < a - q }, in cal(M)) in cal(M). // TODO put something "in the middle" of f, g such that you can split the sets.
+$ This implies, then, that $f - g$ measurable, as are $(f+g)^2$ and $(f-g)^2$, and thus $
+f g = 1/4 [(f+g)^2 - (f - g)^2]
+$ is measurable.
+
+We have too that $
+f or g = 1/2 (abs(f - g) + (f + g))
+$ and so is measurable, and so $
+f and g = - max{-f, - g} = - (-f or - g)
+$ is measurable.
+]
+
+#corollary[
+  If $f$ is measurable, then $f^plus := f or 0 = max{f, 0}$ and $f^minus := - (f and 0) = max{-f, 0}$ are measurable, as is $f and k$ for any $k in RR$.
+]
+#remark[
+  Notice that $f = f^plus - f^minus$, even with "infinities", and $|f| = f^plus + f^minus$.
+]
+
+#proposition[
+  Let ${f_n}$ be a sequence of measurable functions. Then, $sup_(n) f_n$, $inf_n f_n$, $limsup_(n->infinity) f_n$, and $liminf_(n->infinity) f_n$ are all measurable (where $(limsup_(n->infinity) f_n) (x) := limsup_(n->infinity) f_n (x) = inf_(m>=1) sup_(n>=m) f_n (x)=lim_(m->infinity) sup_(n>=m) f_n (x)$).
+]
+
+#proof[
+  To show $sup_n f_n$ measurable, we will show for all $a in RR$ ${sup_n f_n <= a} in cal(M)$. $
+  x in {sup_n f_n <= a} &<=> sup_n f_n (x) <= a <=> f_n (x) <= a forall n >= 1 <=> x in sect.big_(n=1)^infinity {f_n <= a},
+  $ hence ${sup_n f_n <= a} = sect.big_(n=1)^infinity underbrace({f_n <= a}, in cal(M)) in cal(M)$ and hence $sup_n f_n$ is measurable. Note that using $<=$ was important; ${sup_n f_n < a} subset.neq sect.big_(n=1)^infinity {f_n < a}$, since the $sup_n f_n$ could equal $a$. We could say the following, however: $
+  {sup_n f_n < a} = union.big_(k=1)^infinity {sup_n f_n <= a - 1/k} = union.big_(k=1)^infinity sect.big_(n=1)^infinity {f_n <= a - 1/k} in cal(M).
+  $ Next, we have $inf_n f_n = - sup_n (- f_n)$ so we are done. // TODO compare {inf fn < a} and union {f_n < a} and the same with equalities
+
+  For $limsup, liminf$, we have $
+  limsup_n f_n = inf_(m >= 1) underbrace(sup_(n >= m) f_n, := g_m).
+  $ $g_m$ is measurable for each $m >= 1$, hence $inf_m g_m$ is measurable, hence $limsup_n f_n$ is measurable. Similar logic follows for $liminf$.
+
+  We could have show, more directly, that $
+  {limsup_n f_n < a}&= {inf_(m >= 1) sup(n>= m) f_n < a}\
+  &= union.big_(m=1)^infinity {sup_(n>=m)  f_n < a}\
+  &= union.big_(m=1)^infinity union.big_(k=1)^infinity {sup_(n>=m)  f_n <= a- 1/k}\ // turn strict inequality into nonstrict inequality!!
+  &= union.big_(m=1)^infinity union.big_(k=1)^infinity sect.big_(n=m)^infinity { f_n <= a- 1/k}.
+  $
+  // TODO express {limsup f_n <, <= a} as a set, etc.
+]
+
+#proposition[
+  Let ${f_n}$ be a sequence of measurable functions. Then, all of the following sets are also measurable:
+  $
+  &{x in RR : lim_(n->infinity) f_n (x) "exists in" RR} =: {lim_(n->infinity) f_n "exists in" RR},\
+  &{lim f_n = infinity}, {lim f_n = -infinity}, {lim f_n = c in RR}.
+  $ Moreover, if $lim_(n->infinity) f_n$ exists (in $RR$ or as $plus.minus infinity$) a.e. with $f = lim_(n->infinity) f_n$ a.e. then $f$ is measurable.
+]
+
+#proof[
+We have $
+{lim f_n "exists in" RR} &= {limsup f_n = liminf f_n "and" -infinity < limsup f_n < infinity}\
+&= {-infinity < liminf f_n < infinity} sect {-infinity < limsup f_n < infinity} sect {limsup f_n - liminf f_n = 0} in cal(M).
+$ Similarly, $
+{lim f_n = c} &= {x in RR : forall k >= 1, exists n >= 1 st forall m>=n, |f_n (x) - c| <= 1/k}\
+&= sect.big_(k=1)^infinity union.big_(n=1)^infinity sect.big_(m=n)^infinity {abs(f_n (x) - c) <= 1/k}.
+$ // TODO rewrite using Cauchy sequence characterization.
+]
+
+== Approximation by Simple Functions
+
+Given a function $f : RR -> RRR$, measurable, we may write $
+f = f^plus - f^minus,
+$ where $f^plus, f^minus$ are non-negative measurable functions; so, it suffices to study non-negative measurable functions. For any $n >= 1$, we have $
+f_n^plus := (f^plus and n) dot bb(1)_([-n,n]),
+$ i.e., we cap $f^plus$ at $n$, and disregard values of $f^plus$ outside of $[-n, n]$; hence we limit our view to a $2 n times n$ "box". Then, $f_n^plus$ is non-negative, measurable, bounded (by $n$), compactly supported (zero outside a bounded set), and in particular $f_n^plus arrow.t$, with limit $
+lim_(n-> infinity) f_n^plus = f^plus.
+$ An identical construction follows for $f^minus$ with $
+f_n^minus := (f^minus and n) bb(1)_([-n,n]),
+$ with $f_n^minus arrow.t$ and $
+lim_(n->infinity) f_n^minus = f^minus.
+$ Fix some $n$ and consider $f_n^plus$. For $k = 0, 1, 2, dots, 2^n n$, define $
+A_(n, k) := {x in [-n,n] : k/(2^n) <= f_n^plus (x) < (k+1)/(2^n)} in cal(M),
+$ noting that $A_(n, k) sect A_(n, ell) = nothing$ if $k eq.not ell$. Set now $
+phi_n := sum_(k=0)^(n dot 2^n) bb(1)_(A_(n,k)) k/(2^n) = sum_(k=0)^(n dot 2^n) cases(k/(2^n) "if in" A_(n,k), 0 "else").
+$ We call $phi_n$ a "simple function"; more generally:
+
+#definition[ $phi$ is a _simple function_ if $phi = sum_(k=1)^L bb(1)_(E_k) dot a_k$ where $L$ a positive integer, $a_k$'s are constant, $E_k$'s are measurable sets of finite measure.]
+
+Moreover, note that $phi_n arrow.t$; at each new stage $n -> n+1$, the regions are cut in two, $A_(n, k) = A_(n + 1, 2k) union A_(n+1, 2k + 1)$. Moreover, $
+lim_(n->infinity) phi_n = f^plus .
+$
+
+#theorem[If $g$ is measurable and non-negative, then $exists$ a sequence of simply functions ${phi_n}$ such that $phi_n arrow.t$ and $lim_(n->infinity) phi_n (x) = g(x)$ for every $x in RR$.]
