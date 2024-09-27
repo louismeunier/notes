@@ -468,7 +468,7 @@ where $hash G = p^t m$.
   Thus, the cardinality of $X$ will be, modulo $p$, 1.
 ]
 
-#example("Illustrations of the Sylow Theorems")[
+=== Illustrations of the Sylow Theorems
 1. $G = S_4$; $hash G = 2^3 dot 3$. The Sylow $8$-subgroup is $D_8$, $
 {1, (1234), (13)(24), (1432), (12)(34), (14)(23), (13), (24)}.
 $ $N_2$ must divide $3$ and must equal $1$ modulo $2$, so $N_2 = 1$ or $3$. In this case, $N_2 = 3$ indeed; $D_8$ is not normal in $S_4$, which it would have to be if $N_2 = 1$. Inside $S_4$, we also have the "Klein group" $
@@ -479,9 +479,81 @@ $ is then a group of cardinality $6$, isomorphic to $S_3$. Consider the homomorp
 phi : S_4 -> S_3.
 $ $S_3$ has 3 elements of order 2, $(a b), (a c), (b c)$ which generate subgroups of order 2. If $A$ one of these subgroups of order 2, then $phi^(-1) (A)$ is a Sylow $2$-subgroup.
 
-2. Let $p, q$ be primes and suppose $p < q$, $p divides.not q-1$. Then, we have the following theorem:
+2. 
 #theorem[
-  If $G$ is a group of cardinality $p dot q$, then $G tilde.equiv ZZ\/p q ZZ$.
+  Let $p, q$ be primes with $p < q$, $p divides.not q-1$. If $G$ is a group of cardinality $p dot q$, then $G tilde.equiv ZZ\/p q ZZ$.
 ]
-What if $p divides q - 1$? Consider $p = 2, q = 3$, then $S_3$ has cardinality $p dot q$. More generally, suppose $p = 2$ and $q$ any odd prime. Then $p divides q-1$ always, and we may consider $D_(2 q)$.
+What if $p divides q - 1$? Consider, for instance, $p = 2, q = 3$, then $S_3$ has cardinality $p dot q$. More generally, suppose $p = 2$ and $q$ any odd prime. Then $p divides q-1$ always, and we may consider $D_(2 q)$.
+
+For $p eq.not 2$, consider the field $FF_q = ZZ\/q ZZ$, and let $
+G = {T_(a, b) : FF_q -> FF_q, T_(a, b) (x) := a x + b : a in FF_q^times, b in FF_q}
+$ be the group of affine-linear transformations on the field. We have that $hash G = (q - 1) q$ ($q - 1$ choices for $a$, $q$ choices for $b$), and that $G$ _not_ abelian; $
+(T_(a_1, b_1) compose T_(a_2, b_2))(x) = a_1 (a_2 x + b_2) + b_1 = a_1 a_2 x + a_2 b_2 + b_1 = T_(a_1 a_2, a_2 b_2 + b_1)(x) eq.not (T_(a_2, b_2) compose T_(a_1, b_1)) (x).
+$ There exists a subgroup $H subset FF_q^times$ with $hash H = p$, since $FF_q^times$ abelian and $p | hash FF_q^times = q - 1$, so we may consider the subgroup of $G$ given by $
+G_(p q) = {T_(a, b) : FF_q -> FF_q : a in H, b in FF_q} subset G,
+$ with $hash G_(p q) = p dot q$. Let us consider the Sylow subgroups of $G_(p q)$. 
+
+A Sylow $p$-subgroup can be given by $P:={T_(a, 0) : a in H}$, and a Sylow $q$-subgroup can be given by ${T_(1, b) : b in FF_q}$. Let $N_p, N_q$ the number of Sylow $p$-, $q$-subgroups. By Sylow 3, we know that $N_p equiv_p 1$ and $N_p | q$, hence it must be that $N_p = 1$ _or_ $q$. Similarly, $N_q equiv_q 1$ and $N_q | p$, so it must be that $N_q = 1$ so the Sylow $q$-subgroup we found is unique, and moreover normal.
+
+Remark that the map $
+ T_(a, b) |-> a, wide G -> FF_q^times "and" G_(p q) -> H
+$ is a homomorphism.
+
+To further investigate if $N_p = 1$ or $q$, we can see how $P$ behaves under conjugation; if it is normal, then it is unique and so $N_p = 1$, else if we can find any second conjugate subgroup then it must be that $N_p = q$. Consider $
+(T_(1, 1) compose T_(a, 0) compose T_(1, -1))(x) = a(x - 1) + 1 = a x - a + 1 = T_(a, - a + 1) (x) in.not P "if" a = 1, 
+$hence $P$ not normal and thus $N_p = q$.
+
+== Burnside's Counting Lemma
+
+#definition("Fixed Point Set")[
+  Let $G$ a finite group and $X$ a finite $G$-set. Given $g in G$, we denote $
+  X^g := {x in X | g x = x}.
+  $ the _fixed-point set_ of $g$, and $
+  "FP"_X (g) := hash X^g.
+  $
+]
+
+#example[
+  If $G = S_4$ acting on $X = {1, 2, 3, 4}$, then for instance $
+  "FP"_X ((12)) = 2, "FP"_X ((12)(34)) = 0.
+  $
+]
+
+#proposition[
+$"FP"_X (h g h^(-1)) = "FP"_X (g)$; we say $"FP"_X$ a _class function_ on $G$, being constant on conjugacy classes.
+]
+
+#proof[
+  Define $X^g -> X^(h g h^(-1))$ by $x |-> h x$, noting $h g h^(1) h x = x$ for $x in X^(g)$; this is a bijection.
+]
+
+#theorem("Burnside")[
+  $
+  1/(hash G) sum_(g in G) "FP"_X (g)= hash (X\/G) = hash G-"orbits on" X.
+  $
+]
+
+#proof[
+  Let $Sigma subset.eq G times X$ such that $
+  Sigma = {(g, x) : g x = x}.
+  $ We will count $hash Sigma$ in two different ways, by noting that we can "project" $Sigma$ either to $G$ or $X$ on the first or second coordinate, respectively. On the one hand (the "$G$ view"), we have $
+   hash Sigma = sum_(g in G) "FP"_(X) (g),
+  $ and on the other (the "$X$ view") $
+  hash Sigma = sum_(x in X) hash "Stab"_G (x) &= sum_(sans(O) in X \/ G) sum_(x in sans(O)) hash "Stab"_G (x).
+  $ The orbit-stabilizer theorem gives us that for any $x in sans(O)$, $hash "Stab"_G (x) dot hash O = hash G$, hence further $
+  hash Sigma = sum_(sans(O) in X\/G) sum_(x in sans(O)) (hash G)/(hash sans(O)) = sum_(sans(O) in X\/G) hash G,
+  $ where the simplification in the final equality comes from the fact that we remove dependence on $x$ in the inner summation, and we are just summing a constant $hash sans(O)$ times. Hence, $
+  hash Sigma = hash (X \/ G) dot hash G,
+  $ and so bringing in our original computation ("$G$ view"), $
+sum_(g in G) "FP"_(X) (g) = hash (X \/ G) dot hash G =>   1/(hash G) sum_(g in G) "FP"_X (g)= hash (X\/G),
+  $ completing the proof.
+]
+
+// TODO One can view the the theorem as "the average number of fixed points is the number of orbits"
+#corollary[If $X$ is a transitive $G$-set with $hash X > 1$, then $exists g in G$ such that $"FP"_(X) (g) = 0$.]
+
+#proof[
+  By Burnside's, $
+  1/(hash G) sum_(g in G) "FP"_X (g) = 1,
+  $ but we have that $"FP"_X (1) = hash X > 1$ since $1$ fixes everything, so there must be at least a $g$ such that $"FP"_X (g) = 0$.
 ]
