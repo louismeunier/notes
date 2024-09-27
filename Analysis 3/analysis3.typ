@@ -446,7 +446,9 @@ $ We call then $(X, cal(F), mu)$ a _complete measure space_.]
 == Some Special Sets
 === Uncountable Null Set?
 
-Remark that for any countable set $A in cal(M)$, $m(A) = 0$. One naturally asks the opposite question, does there exist a measurable, uncountable set with measure 0? We construct a particular one here, the Cantor set, $C$.
+Remark that for any countable set $A in cal(M)$, $m(A) = 0$; indeed, one may write $A = union.big_(n=1)^infinity {a_n}$ for singleton sets ${a_n}$, and so $
+m(A) = sum_(n=1)^infinity m(a_n) = 0.
+$ One naturally asks the opposite question, does there exist a measurable, _uncountable_ set with measure 0? We construct a particular one here, the Cantor set, $C$.
 
 This requires an "inductive" construction. Define $C_0 = [0, 1]$, and define $C_k$ to be $C_(k-1)$ after removing the middle third from each of its disjoint components. For instance $C_1 = [0, 1/3] union [2/3, 1]$, then $C_2 = [0, 1/9] union [2/9, 1/3] union [2/3, 7/9] union [8/9, 1]$, and so on. This may be clearest graphically:
 
@@ -502,15 +504,15 @@ C = {x in [0, 1] : (x)_3 "has no" 1"'s"}.
 $ Indeed, at each stage $n$ of the construction of the Cantor set, we get rid of the segment of the real line that would correspond to the $a_n = 1$. One should note that $(x)_3$ not necessarily unique; for instance $(1/3)_3 = (1, 0, 0, dots) = (0, 2, 2, dots)$, but if we specifically consider all $x$ such that there _exists_ a base three representation with no 1's, i.e. like $1/3$, then $C$ indeed captures all the desired numbers.
 
 Thus, we have that $
-"card" (C) = "card" ({{ a_n} : a_n = 0, 2}).
+"card"(C) = "card"({{ a_n} : a_n = 0, 2}).
 $ Define now the function $
-f : C -> [0, 1], #h(1em) x |-> sum_(n=1)^infinity a_n/2 1/2^n, "where" (x)_3 = (a_n)
+f : C -> [0, 1], #h(1em) x |-> sum_(n=1)^infinity a_n/2 dot 1/2^n, "where" (x)_3 = (a_n)
 $ i.e., we "squish" the base-3 representation into a base-2 representation of a number. This is surjective; for any $y in [0, 1]$, $(b_n) := (y)_2$ contains only 0's and 1's, hence $(2 b_n)$ contains only $0$'s and $1$'s, so let $x$ be the number such that $(x)_3 = (2 b_n)$. This necessarily exists, indeed, we simply take our definitions backwards: $
 x := sum_(n=1)^infinity (2 b_n)/3^n,
-$ which maps to $y$ under $f$ and is contained in $C$. Hence, $"card"(C) >= "card"([0, 1])$; but $[0, 1]$ uncountable, and thus so must $C$.
+$ which maps to $y$ under $f$ and is contained in $C$. Hence, $"card"(C) >= "card"([0, 1])$; but $[0, 1]$ uncountable, and thus so is $C$.
 ]
 
-We can naturally extend the function $f$ to map the entire interval $[0, 1] -> [0, 1]$ as follows $
+We can naturally extend the function $f$ used here to map the entire interval $[0, 1] -> [0, 1]$ as follows $
 f(x) := cases(
   sum_(n=1)^infinity a_n/2 dot.c 1/2^n "if" x in C\, (x)_3 = (a_n),
   f(a) "if" x in.not C "then" x in (a, b) "s.t." (a, b) "removed from " [0, 1]
@@ -537,7 +539,7 @@ This function is often called the _Devil's Staircase_ or _Cantor-Lebesgue functi
 We've shown then that there is indeed an uncountable set of measure 0. Another question we may ask ourselves is, is there a $A subset.eq RR$ that is non-measurable? The answer to this turns out to be yes, but the construction requires invoking the axiom of choice:
 
 #axiom("Of Choice")[If $Sigma$ a collection of nonempty sets, then $exists$ a function $
-S : Sigma -> union.big_(A in sigma) A,
+S : Sigma -> union.big_(A in Sigma) A,
 $ such that $A in sigma$, $S(A) in A$. Such a function is called a _selection function_, and $S(A)$ a _representative_ of $A$.]
 
 We construct now a non-measurable set, assuming the above. Consider $[0, 1]$, and define an equivalence relation $tilde$ on $[0, 1]$ by $
@@ -645,7 +647,7 @@ $ which extend naturally for countable unions/intersections.
   We prove just the last equivalence. Notice that $forall a in RR$, we can use the commuting of inverse images with countable unions, intersections, complement to write $
   f^(-1) ([-infinity, a)) &= union.big_(n=1)^infinity f^(- 1) ([-infinity, a - 1/n))
   $ and $
-  f^(-1) ([-infinity, a]) = sect.big_(n=1)^infinity f^(-1) ([-infinity a + 1/n)).
+  f^(-1) ([-infinity, a]) = sect.big_(n=1)^infinity f^(-1) ([-infinity, a + 1/n)).
   $
 ]
 
@@ -852,15 +854,127 @@ f_n^minus := (f^minus and n) bb(1)_([-n,n]),
 $ with $f_n^minus arrow.t$ and $
 lim_(n->infinity) f_n^minus = f^minus.
 $ Fix some $n$ and consider $f_n^plus$. For $k = 0, 1, 2, dots, 2^n n$, define $
-A_(n, k) := {x in [-n,n] : k/(2^n) <= f_n^plus (x) < (k+1)/(2^n)} in cal(M),
+A_(n, k) := {x in [-n,n] : k/(2^n) <= f_n^plus (x) < (k+1)/(2^n)} = {k/(2^n) <= f_n^plus <(k+1)/(2^n) } sect [-n, n]  in cal(M),
 $ noting that $A_(n, k) sect A_(n, ell) = nothing$ if $k eq.not ell$. Set now $
 phi_n := sum_(k=0)^(n dot 2^n) bb(1)_(A_(n,k)) k/(2^n) = sum_(k=0)^(n dot 2^n) cases(k/(2^n) "if in" A_(n,k), 0 "else").
 $ We call $phi_n$ a "simple function"; more generally:
 
 #definition[ $phi$ is a _simple function_ if $phi = sum_(k=1)^L bb(1)_(E_k) dot a_k$ where $L$ a positive integer, $a_k$'s are constant, $E_k$'s are measurable sets of finite measure.]
 
-Moreover, note that $phi_n arrow.t$; at each new stage $n -> n+1$, the regions are cut in two, $A_(n, k) = A_(n + 1, 2k) union A_(n+1, 2k + 1)$. Moreover, $
-lim_(n->infinity) phi_n = f^plus .
-$
+Moreover, note that $phi_n arrow.t$; at each new stage $n -> n+1$, the regions are cut in two, $A_(n, k) = A_(n + 1, 2k) union A_(n+1, 2k + 1)$. In addition, we have $phi_n <= f_(n)^plus <= f^plus$ for all $n$. Moreover, we have the following: 
+#proposition[$
+lim_(n->infinity) phi_n (x) = f^plus (x) $ for all $x in RR$.
+]
+#proof[
+For all $x in RR$, for sufficiently large $n$ we have that $x in [-n ,n]$ and so $f^(plus) (x) = f^plus (x) bb(1)_([-n,n]) (x)$. Assume for now $f^(plus) < infinity$. Then, for sufficiently large(r?) $n$, we can ensure $f^(plus) (x) < n$ and so $f^(plus) (x) = f_(n)^plus (x)$ for such an $x$. Further, we have that $
+0 <= f_(n)^plus (x) - phi_n (x) < 2^(-n)
+$ by construction and so $0 <= f^(plus) (x) - phi_n (x) <= 2^(-n)$ and thus $lim_(n->infinity) phi_n (x) = f^plus (x)$.
 
-#theorem[If $g$ is measurable and non-negative, then $exists$ a sequence of simply functions ${phi_n}$ such that $phi_n arrow.t$ and $lim_(n->infinity) phi_n (x) = g(x)$ for every $x in RR$.]
+In the case that $f^(plus) (x) = infinity$, then $phi_n (x) = n$ for all sufficiently large $n$ hence $
+lim_(n -> infinity) phi_n (x) = lim_(n->infinity) n = infinity = f^(plus) (x).
+$
+]
+
+#theorem[If $g$ is measurable and non-negative, there exists a sequence of simply functions ${phi_n}$ such that $phi_n arrow.t$ and $lim_(n->infinity) phi_n (x) = g(x)$ for every $x in RR$.]
+
+We can repeat this same construction and proof for $f^minus$ with a sequence $tilde(phi_n)$. Even better:
+
+#theorem[If $f$ is measurable, then $exists$ a sequence of simple functions ${psi_n}$ such that $|psi_n| arrow.t$ and $|psi_n| <= |f|$ for all $n$ and for all $x in RR$, $lim_(n->infinity) psi_n (x) = f(x)$.]
+
+#proof[
+  Take $psi_n = phi_n - tilde(phi_n)$ as above; then for all $x in RR$, at least one of $phi_n (x), tilde(phi_n) (x)$ equals zero. Then $
+  abs(psi_n) = phi_n + tilde(phi_n) < f^plus + f^minus = |f|,
+  $ and $
+  lim_(n->infinity) psi_n (x) = lim_(n -> infinity) phi_n (x) - lim_(n -> infinity) tilde(phi_n) (x) = f^plus - f^minus = f.
+  $
+]
+
+#definition("Step Function")[
+$theta$ a _step function_ if it takes the form $
+theta (x) = sum_(k=1)^L a_k bb(1)_(I_k) (x),
+$ where $L in NN, a_k$'s constant, and $I_k$ finite, open intervals.
+]
+
+#theorem[
+  If $f$ is measurable, then there exists a sequence of step functions ${theta_n}$ such that $
+  lim_(n->infinity) theta_n (x) = f(x) "for" bold("almost every") x in RR.
+  $ In particular, we do not have pointwise convergence as for general simple functions, but we have convergence outside a zero-measure set.
+]
+
+#proof[
+  Assume, wlog, that $f$ non-negative (by the previous construction, we can "split" $f$ if not and approximate its positive, negative parts). Given $A in cal(M)$ with finite measure, recall that for every $epsilon > 0$, there exists finitely many finite open intervals $I_1, dots, I_N$ such that $
+  m(A triangle.t (union.big_(i=1)^N I_i))  < epsilon.
+  $ By renaming/rearranging $I_i$'s if necessary, we may assume that $I_i$'s are disjoint; hence $
+  bb(1)_(union.big_(i=1)^N I_i) = sum_(i=1)^N bb(1)_(I_i).
+  $ Put $
+    theta_A := sum_(i=1)^N bb(1)_(I_i),
+  $ noting this is indeed a step function as the name suggests. Then, remark that $
+  m underbrace(({ x in RR : bb(1)_A (x) eq.not theta_A (x)}), = A triangle.t (union.big_(n=1)^N I_i)) < epsilon.
+  $ Since $f$ measurable and non-negative, $exists {phi_n}$ sequence of simple functions with limit $f$. In particular, $
+  phi_n = sum_(k=0)^(n 2^n) k/(2^n) bb(1)_(A_(n, k)).
+  $ Applying our above analysis to each $A_(n, k)$, then, we have that for any $n >= 1$ and $k = 0, 1, dots, n 2^(n)$ we can find a step function $theta_(n, k)$ such that $
+  m ({ x in RR : bb(1)_(A_(n, k)) eq.not theta_(n, k) (x)}) < 1/(2^n (n 2^n + 1)) thin thin (\" = epsilon \").
+  $ Put then $
+  theta_n :=  sum_(k=0)^(n 2^n) k/(2^n) theta_(n, k),
+  $ which is itself a step function. Put $
+  E_n := {x in RR : theta_n (x) eq.not phi_n (x)}.
+  $ Then, $
+  m(E_n) <= m(union.big_(k=0)^(n 2^n) {theta_(n, k) eq.not bb(1)_(A_(n, k))}) <= sum_(k=0)^(n 2^n) m({theta_(n, k) eq.not bb(1)_(A_(n,k))}) <= 2^(-n).
+  $ The $phi_n$'s are chosen such that $forall x in RR$, $|phi_n (x) - f_n (x)| <= 1/(2^n)$. Putting $
+  F_n := {x in RR : |theta_n (x) - f_n (x) | > 2^(-n)},
+  $ then remark that $F_n subset.eq E_n$ so $m(F_n) <= 1/(2^n)$. 
+
+  We claim now that for a.e. $x in RR$, $exists m >= 1$ such that $forall n >= m$, $|theta_n (x) - f_n (x)| <= 1/(2^n)$, remarking that such an $m$ is _dependent_ on $x$. Consider the complement of this statement; if this set has measure 0, we are done. The logical negation would be "for every $m >= 1$, exist $n >= m$ such that $|theta_n (x) - f_n (x) | > 2^(-n)$", which is equivalent to the set $
+  sect.big_(m=1)^infinity union.big_(n=m)^infinity { x in RR : |theta_n (x) - f_n (x)| > 2^(-n)} = sect.big_(m=1)^infinity union.big_(n=m)^infinity F_n.
+  $ Let $B_m := union.big_(n=m)^infinity F_n$; notice $B_m arrow.b$. Then, by continuity from above $thin^(ast ast ast ast)$
+  // TODO some issues if infinite here
+   $
+  m( sect.big_(m=1)^infinity union.big_(n=m)^infinity F_n) = lim_(m->infinity) m(B_m) <= lim_(m-> infinity) sum_(n=m)^infinity m(F_n) <= lim_(m-> infinity) sum_(n=m)^infinity 1/(2^n) = 0,
+  $ since the tail of a convergent series must converge to zero. Hence, the set has measure 0 as desired so for almost every $x in RR$ there exists $m >= 1$ such that for all $n >= m$, $|theta_n - f_n| <= 1/(2^n)$, hence almost every where $lim_(n->infinity)( theta_n - f_n) = 0$. Therefore, almost everywhere, $
+  theta_n = (theta_n - f_n) + f_n -->^(n-> infinity) f.
+  $
+]
+In this proof, we have proven (and then used) more generally:
+
+#lemma("Borel-Cantelli Lemma")[
+  If ${F_n} subset.eq cal(M)$ such that $sum_(n=1)^infinity m(F_n) < infinity$, then $
+  m(sect.big_(m=1)^infinity union.big_(n=m)^infinity F_n) = 0.
+  $
+]
+
+
+== Convergence Almost Everywhere vs Convergence in Measure
+
+#definition("Convergence Almost Everywhere")[For measurable functions ${f_n}$, $f$ we say $f_n$ converges to $f$ a.e. and write $f_n -> f "a.e."$  if for almost every $x in RR$, $lim_(n-> infinity) f_n (x) = f(x)$.
+
+Similarly, we say $f_n -> f$ a.e. on $A$ if $exists B subset.eq A$ with $m(B) = 0$ such that $forall x in A minus B$, $lim_(n->infinity) f_n (x) = f(x)$.]
+
+#definition("Convergence in Measure")[For measurable, finite-valued functions ${f_n}$, $f$ we say $f_n$ converges to $f$ in measure and write $f_n -> f "in measure"$ if for every $delta > 0$, $
+lim_(n-> infinity) m({x in RR : |f_n (x) - f(x)| >= delta}) = 0.
+$ 
+
+Similarly, we say $f_n -> f$ in measure on $A$ if $forall delta > 0$, $lim_(n->infinity) m({x in A : |f_n (x) - f(0)| >= delta}) =0$.
+]
+
+#proposition[
+  Given finite-valued measurable functions ${f_n}, f$ and $A in cal(M)$ with finite measure, then if $f_n -> f$ a.e. on $A$, then $f_n -> f$ in measure on $A$.
+]
+
+#proof[
+  For all $delta > 0$, $
+  sect.big_(m=1)^infinity union.big_(n=m) {x in A : |f_n (x) - f(x)| > delta} subset.eq {x in A : lim_(n->infinity) f_n (x) eq.not f(x)}.
+  $ The set on the RHS has measure zero and thus so does the left one. Then, $
+  lim_(m -> infinity) m(union.big_(n=m) {x in A : |f_n (x) - f(x)| > delta}) = 0
+  $ by continuity, and $
+  {|f_m - f| > delta} subset.eq union.big_(n =m)^infinity {|f_n - f| > delta}
+  $ hence $m({|f_m - f| > delta}) <= m(union.big_(n =m)^infinity {|f_n - f| > delta}) -->^(m-> infinity) 0$.
+]
+
+#example[
+We give an example of why the assumption that $m(A) < infinity$ is necessary. Let, $f_n = bb(1)_([n, infinity))$ and $f equiv 0$. Then, $lim_(n->infinity) f_n (x) = f(x)$ for every $x in RR$. But $m({x in RR : |f_n (x) - f(x)| = 1}) = m([n, infinity)) = infinity$.
+
+In general, the converse statement $f_n -> f$ in measure does _not_ imply that $f_n -> f$ almost everywhere, even on finite measure sets. Put $phi_(1, 1) = bb(1)_([0, 1))$, $phi_(2, 1) = bb(1)_([0, 1/2))$, $phi_(2, 2) = bb(1)_([1/2, 1))$, $phi_(3, 1) = bb(1)_([0, 1/3))$, $phi_(3, 2) = bb(1)_([1/3, 2/3))$, $phi_(3, 3) = bb(1)_([2/3, 1))$, or in general $phi_(k, j) = bb(1)_([(j-1)/k, j/k))$ for $j = 1, dots, k$. Reorder $phi_(k, j)$ "lexicographically" into ${f_n}$. Then, we claim $f_n -> 0$ in measure on $[0, 1)$; for any $delta in (0, 1)$, $
+m ({|f_n - 0| > delta}) = 1/
+(k(n)) -> 0,
+$ where $k(n)$ the "row" that $f_n$ comes from. Hence, $f_n$ converges in measure. However, $f_n$ does not converge almost eveywhere on $[0, 1)$. Indeed, for each $x in RR$ and $k >= 1$, there exists a _unique_ $j$ such that $x in [(j-1)/k, j/k]$ hence $phi_(k,j) (x) = 1$, so in other notation there always exists an $n$ such that $f_n (x) = 1$, and so precisely $f_n (x) = 1$ for infinitely many $n$. Hence, we do not have convergence everywhere (in fact, anywhere).
+]

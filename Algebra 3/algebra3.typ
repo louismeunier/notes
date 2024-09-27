@@ -540,7 +540,7 @@ $"FP"_X (h g h^(-1)) = "FP"_X (g)$; we say $"FP"_X$ a _class function_ on $G$, b
    hash Sigma = sum_(g in G) "FP"_(X) (g),
   $ and on the other (the "$X$ view") $
   hash Sigma = sum_(x in X) hash "Stab"_G (x) &= sum_(sans(O) in X \/ G) sum_(x in sans(O)) hash "Stab"_G (x).
-  $ The orbit-stabilizer theorem gives us that for any $x in sans(O)$, $hash "Stab"_G (x) dot hash O = hash G$, hence further $
+  $ The orbit-stabilizer theorem gives us that for any $x in sans(O)$, $hash "Stab"_G (x) dot hash sans(O) = hash G$, hence further $
   hash Sigma = sum_(sans(O) in X\/G) sum_(x in sans(O)) (hash G)/(hash sans(O)) = sum_(sans(O) in X\/G) hash G,
   $ where the simplification in the final equality comes from the fact that we remove dependence on $x$ in the inner summation, and we are just summing a constant $hash sans(O)$ times. Hence, $
   hash Sigma = hash (X \/ G) dot hash G,
