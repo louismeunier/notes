@@ -866,8 +866,8 @@ Moreover, note that $phi_n arrow.t$; at each new stage $n -> n+1$, the regions a
 lim_(n->infinity) phi_n (x) = f^plus (x) $ for all $x in RR$.
 ]
 #proof[
-For all $x in RR$, for sufficiently large $n$ we have that $x in [-n ,n]$ and so $f^(plus) (x) = f^plus (x) bb(1)_([-n,n]) (x)$. Assume for now $f^(plus) < infinity$. Then, for sufficiently large(r?) $n$, we can ensure $f^(plus) (x) < n$ and so $f^(plus) (x) = f_(n)^plus (x)$ for such an $x$. Further, we have that $
-0 <= f_(n)^plus (x) - phi_n (x) < 2^(-n)
+For all $x in RR$, for sufficiently large $n$ we have that $x in [-n ,n]$ and so $f^(plus) (x) = f^plus (x) bb(1)_([-n,n]) (x)$. Assume for now $f^(plus) < infinity$. Then, for sufficiently large(r?) $n$, we can ensure $f^(plus) (x) < n$ and so $f^(plus) (x) = f_(n)^plus (x)$ for such an $x$. Further, we have that $x in A_(n, k)$ for some $k$ so $phi_n (x) = k/(2^n)$ and $f_n^+ (x) < (k+1)/(2^n)$ and thus $
+0 <= f_(n)^plus (x) - phi_n (x) < (k+1)/(2^n) - k/(2^n) = 2^(-n)
 $ by construction and so $0 <= f^(plus) (x) - phi_n (x) <= 2^(-n)$ and thus $lim_(n->infinity) phi_n (x) = f^plus (x)$.
 
 In the case that $f^(plus) (x) = infinity$, then $phi_n (x) = n$ for all sufficiently large $n$ hence $
@@ -978,3 +978,24 @@ m ({|f_n - 0| > delta}) = 1/
 (k(n)) -> 0,
 $ where $k(n)$ the "row" that $f_n$ comes from. Hence, $f_n$ converges in measure. However, $f_n$ does not converge almost eveywhere on $[0, 1)$. Indeed, for each $x in RR$ and $k >= 1$, there exists a _unique_ $j$ such that $x in [(j-1)/k, j/k]$ hence $phi_(k,j) (x) = 1$, so in other notation there always exists an $n$ such that $f_n (x) = 1$, and so precisely $f_n (x) = 1$ for infinitely many $n$. Hence, we do not have convergence everywhere (in fact, anywhere).
 ]
+
+// Pagella
+// $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
+
+// Bonum
+// #show math.equation: set text(font: "TeX Gyre Bonum Math") 
+// $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
+
+// Termes
+// #show math.equation: set text(font: "TeX Gyre Termes Math") 
+// $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
+
+// DejaVu
+// #show math.equation: set text(font: "TeX Gyre DejaVu Math") 
+// $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
+
+// Schola
+// #show math.equation: set text(font: "TeX Gyre Schola Math") 
+// $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
+// #show math.equation: set text(font: "New Computer Modern Math") 
+// $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$

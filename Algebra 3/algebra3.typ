@@ -557,3 +557,4 @@ sum_(g in G) "FP"_(X) (g) = hash (X \/ G) dot hash G =>   1/(hash G) sum_(g in G
   1/(hash G) sum_(g in G) "FP"_X (g) = 1,
   $ but we have that $"FP"_X (1) = hash X > 1$ since $1$ fixes everything, so there must be at least a $g$ such that $"FP"_X (g) = 0$.
 ]
+
