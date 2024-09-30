@@ -558,3 +558,51 @@ sum_(g in G) "FP"_(X) (g) = hash (X \/ G) dot hash G =>   1/(hash G) sum_(g in G
   $ but we have that $"FP"_X (1) = hash X > 1$ since $1$ fixes everything, so there must be at least a $g$ such that $"FP"_X (g) = 0$.
 ]
 
+#example("Application of Burnside's")[
+Let $G = S_4 = "Aut"("cube")$. We can realize several different (transitive) $G$-sets; for instance $X = {1, 2, 3, 4}, F = {"faces"}, E = {"edges"}, V={"vertices"}$. We can compute the number of fixed points $"FP"_X (g)$ of different elements of $G$ on these $G$-sets. Recall that it suffices to check one element per conjugacy class of $G$.
+
+#align(center, 
+  table(
+  columns: (auto, auto, auto, auto, auto, auto, auto, 1fr),
+  inset: 8pt,
+  stroke: none,
+  align: horizon,
+  [*Conj. Class*], $hash$, $X$, $F$, $E$, $V$, [*Geometric Desc.*], [],
+  table.hline(start: 0, end: 7),
+  $id$, $1$, [4], [6], [12], [8], [$id$], [],
+  $(12)$, $6$, [2], [0], [2], [0], [Rotations about\ "edge diagonals"], image("./cuberotee.png", width: 60%),
+  $(12)(34)$, $3$, [0], [2], [0], [0], [Rotations about\ "face diagonals", $pi$],image("./cuberotf.png", width: 60%),
+  $(123)$, $8$, [1], [0], [0], [2], [Rotations about\ "principal diagonals"],image("./cuberotec.png", width: 60%),
+  $(1234)$, $6$, [0], [2], [0], [0], [Rotations about\ "face diagonals", $pi\/2$], image("./cuberotf.png", width: 60%),
+  table.hline(start: 0, end: 7),
+  [$1/(hash G) sum "FP"_(\"X\") (g):$], [], $1$, $1$, $1$, $1$, [], []
+  )
+)
+The number of orbits, hence, in each case is $1$, as we already knew since $G$ acts transitively on all of these sets.
+
+Remark that for two $G$-sets $X_1, X_2$, $"FP"_(X_1 times X_2) (g) = "FP"_(X_1) (g) dot "FP"_(X_2) (g)$, where the action of $G$ on $X_1 times X_2$ defined by $g (x_1, x_2) = (g x_1, g x_2)$. Using this we can consider actions on "pairs" of elements;
+
+#align(center, 
+  table(
+  columns: (auto, auto, auto, auto),
+  inset: 8pt,
+  stroke: none,
+  [*Conj. Class*], $F times F$, $F times V$, $V times V$,
+  table.hline(start: 0, end: 7),
+  [$id$], $36$, $48$, $64$,
+  [$(12)$], $0$, $0$, $0$,
+  [$(12)(34)$], $4$, $0$, $0$,
+  [$(123)$], $0$, $0$, $4$, 
+  [$(1234)$], $4$, $0$, $0$,
+  table.hline(start: 0, end: 7),
+  [$1/(hash G) sum "FP"_(\"X\") (g):$], $3$, $2$, $4$
+  )
+)
+For $F times F$, the orbits are of the form $(x, x)$, $(x, y)$ for $x, y$ adjacent edges, and $(x, y)$ for $x, y$ opposite edges.
+
+How many ways may we color the _faces_ of a cube with $t$ colors? There are $6$ faces with $t$ choices per face, so $t^6$ faces. More interestingly, how many _distinct_ ways are there, up to an automorphism (symmetry) of the cube? $G$ acts on $F$, and hence on the set of "$t$-colorings". We define the set of $t$-colorings by $
+c^F := {c : F -> {1, dots, t}},
+$ ($c$ assigns to each face $F_i$ a color label $i in {1, dots, t}$), and hence we seek to find $
+  hash (c^F \/ G).
+$
+]
