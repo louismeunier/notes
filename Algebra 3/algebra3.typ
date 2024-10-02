@@ -601,8 +601,60 @@ Remark that for two $G$-sets $X_1, X_2$, $"FP"_(X_1 times X_2) (g) = "FP"_(X_1) 
 // For $F times F$, the orbits are of the form $(x, x)$, $(x, y)$ for $x, y$ adjacent edges, and $(x, y)$ for $x, y$ opposite edges.
 ]
 
-#example[How many ways may we color the _faces_ of a cube with $t$ colors? There are $6$ faces with $t$ choices per face, so $t^6$ faces. More interestingly, how many _distinct_ ways are there, up to an automorphism (symmetry) of the cube? $G$ acts on $F$, and hence on the set of "$t$-colorings". We define the set of $t$-colorings by $
-c^F := {c : F -> {1, dots, t}},
-$ ($c$ assigns to each face $F_i$ a color label $i in {1, dots, t}$), and hence we seek to find $
-  hash (c^F \/ G).
+#definition([Colorings of a $G$-set])[Let $C := {1, 2, dots, t}$ be a set of "colors". A coloring of $X$ by $C$ is a function $X -> C$. The set of all such functions is denoted $C^X$. Then, $G$ acts on $C^X$ naturally by $
+G times C^X -> C^X, wide (g, f) |-> g f : X -> C, wide g f(x) := f (g^(-1) x).
 $]
+
+
+#example[How many ways may we color the _faces_ of a cube with $t$ colors? There are $6$ faces with $t$ choices per face, so $t^6$ faces. More interestingly, how many _distinct_ ways are there, up to an automorphism (symmetry) of the cube? $G$ acts on $F$, and hence on the set of "$t$-colorings". Let $F$ again be the set of faces and $X := C^F$. Then, $
+hash X = t^(6).
+$ We would like to calculate the number of orbits of $G$ acting on $X$, namely $hash (X \/ G)$. We compute the number of fixed points for each conjugacy class of $G$; in general, $hash (C^F)^g = t^(hash (F\/angle.l g angle.r))$. 
+($g <-> (a b c) (d e) (f) (g)$ for each element $a$, say, we have $t$ choices for the coloring of $a$. Then $b$, $c$ must be the same color. This repeats for each transposition. etc // TODO)
+
+#align(center, table(
+  align: horizon,
+  inset: 8pt,
+  columns: 5,
+  stroke: none,
+  $C$, $hash$, $F$, [Shape], $X$,
+  table.hline(start: 0, end: 5),
+  $id$, $1$, $6$, $1^6$, $t^6$,
+  $(12)$, $6$, $0$, $(a b)(c d)(e f)$, $t^3$,
+  $(12)(34)$, $3$, $2$, $(a b) (c d)$, $t^4$,
+  $(123)$, $8$, $0$, $(a b c) (d e f)$, $t^2$,
+  $(1234)$, $6$, $2$, $(a b c d)$, $t^3$,
+  table.hline(start: 0, end: 5)
+)) By Burnside's then, $
+hash (C^F \/G) &= 1/24 sum_(g in G) "FP"_(C^F)(g)\
+&= 1/24 (t^6 + 6t^3 + 3 t^4 + 8 t^2 + 6 t^3)\
+&= 1/(24) (t^6 + 3t^4 + 12 t^3 + 8t^2).
+$ Remark that this polynomial does not have integer coefficients, but indeed must have integer outputs for integer $t$'s. This is not obvious.
+
+// We define the set of $t$-colorings by $
+// c^F := {c : F -> {1, dots, t}},
+// $ ($c$ assigns to each face $F_i$ a color label $i in {1, dots, t}$), and hence we seek to find $
+//   hash (c^F \/ G).
+// $
+]
+
+#example[
+  We consider the fixed points of $S_5$ acting on various sets, in particular the quotient space $S_5 \/ F_(20)$, where $F_(20)$ the _Frobenius group_ of affine linear transformations $sigma : x |-> a x + b$, $a in FF_5^times$, $b in FF_5$. The possible orders of elements $sigma in F_20 subset S_5$ are $
+  1 <-> 1^5, 5 <-> (0 1 2 3 4), 4 <-> (1 2 4 3), 2 <-> (14) (23).
+  $ In particular, each (non-identity) permutation has _at most_ one fixed point. Remark that to find the cycle shape when acting on $S_5 \/ F_(20)$, it suffices to check if the permutation given is conjugate to an element in $F_(20)$, since $(12) g F_(20) = g F_(20) <=> g^(-1) (12) g in F_20$.  
+
+  #align(center, table(
+    columns: 6,
+    inset:8pt,
+    stroke:none,
+    $C$, $hash$, ${1,2,3,4,5}$, ${1,2,3,4,5,6}$, $S_5 \/ F_(20)$, [Shape on $S_5 \/ F_(20)$],
+    table.hline(start: 0, end: 6),
+    $id$, $1$, $5$, $6$, $6$, $()$,
+    $(12)$, $10$, $3$, $4$, $0$, $(a b) (c d) (e f)$,
+    $(12)(34)$, $15$, $1$, $2$, $2$, $(a b)(c d)$,
+    $(123)$, $20$, $2$, $3$, $0$, $(a b c) (d e f)$,
+    $(1234)$, $30$, $1$, $2$, $2$, $(a b c d)$,
+    $(12345)$, $24$, $0$, $1$, $1$, $(a b c d e)$,
+    $(123)(45)$, $20$, $0$, $1$, $0$, $(a b c d e f)$,
+    table.hline(start: 0, end:6)
+  )) Hence, the list of elements in the right-most column is precisely the cycle shapes of elements in the "exotic" $S_5 subset S_6$, not conjugate to the typical inclusion $S_5 arrow.hook S_6$.
+]
