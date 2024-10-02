@@ -999,3 +999,82 @@ $ where $k(n)$ the "row" that $f_n$ comes from. Hence, $f_n$ converges in measur
 // $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
 // #show math.equation: set text(font: "New Computer Modern Math") 
 // $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
+
+#proposition[Given ${f_n}$, $f$ measurable, finite-valued functions, if $f_n -> f$ in measure, then there exists a subsequence ${f_(n_k)}$ such that $f_(n_k) -> f$ a.e. as $k -> infinity$.]
+
+#proof[
+  Assume $f_n -> f$ in measure, that is for every $delta > 0$, $m({|f_n - f| > delta}) -> 0$. Hence, for all $k >= 1$, with $delta = 1/k$, we have that for some sufficiently large $n_k$, we have that $m(underbrace({|f_(n_k) - f| > 1/k}, := A_k)) <= 1/(k^2)$, hence $sum_(k=1)^infinity m(A_k) < infinity$. Hence, $
+  m(sect.big_(ell=1)^infinity union.big_(k=ell)^infinity A_k) = lim_(ell -> infinity) m(union.big_(k=ell)^infinity A_k) <= lim_(ell -> infinity) sum_(k=ell)^infinity m(A_k) = 0,
+  $ since $sum_(k=ell)^infinity m(A_k)$ the tail of a converging series. Hence, complementing the above, a.e. there $exists ell$ such that for every $k >= ell$, $|f_(n_k) - f| <= 1/k$ and so $lim_(k->infinity) |f_(n_k) - f| = 0$ almost everywhere, and so $f_(n_k) -> f$ a.e. (as $k-> infinity$).
+]
+
+#proposition("Subsequence Test")[
+Given ${f_n}$, $f$ measurable, finite-valued functions, $f_n -> f$ in measure $<=>$ for every subsequence ${n_k}$, there exists a subsubsequence ${n_(k_ell)} subset {n_k}$ such that $f_(n_(k_ell)) -> f$ in measure as $ell -> infinity$.
+]
+
+#proof[
+$=>$ is clear. For $impliedby$, suppose towards a contradiction that $f_(n) arrow.not f$ in measure. Then, $exists delta > 0$ and subsequence ${n_k}$ $m({|f_(n_k) - f| > delta}) > delta$ for every $k$. By the assumption of the RHS, there exists a further subsequence ${n_(k_ell)}$ such that $f_(n_k_ell) -> f$ in measure. This is a contradiction.
+]
+
+#example("Assignment Exercise")[
+  Prove that if $f_n -> f$ in measure and $g_n -> g$ in measure, $f_n g_n -> f g$ in measure (everything finite valued, measurable).
+]
+
+== Egorov's Theorem and Lusin's Theorem
+
+Recall that if $f$ is measurable, then $exists {theta_n}$ sequence of step functions such that $theta_n -> f$ almost everywhere.
+
+#theorem("Egorov's")[
+  Given ${f_n}$, $f$ measurable functions and $A in cal(M)$ with $m(A) < infinity$, if $f_n -> f$ a.e. on $A$, then $forall epsilon > 0$, there exists a closed subset $A_epsilon subset.eq A$ with $m(A \\ A_epsilon) <= epsilon$ such that $f_n -> f$ uniformly on $A_epsilon$.
+]
+
+#proof[
+  We assume first $f$ is finite-valued on $A$ (otherwise, replace $A$ with $A sect {-infinity < f < infinity}$; we'll deal with ${f = plus.minus infinity}$ later). We want to show that $forall epsilon > 0, exists$ closed $A_epsilon subset.eq A$ s.t. $m(A \\ A_epsilon) < epsilon$ _and_ $sup_(x in A_epsilon) |f_n (x) - f(x)| -> 0$ as $n -> infinity$.
+
+  For each $k >= 1$ and $n >= 1$, put $
+  E^((k))_n := {x in A : |f_j (x) - f(x)| <= 1/k forall j >= n}.
+  $ For fixed $k$, remark that $E_n^((k)) subset.eq E_(n+1)^((k))$, i.e. $E_n^((k))$ increasing (wrt $n$), so we may consider $
+  union.big_(n=1)^infinity E_(n)^((k)) = {x in A : exists n >= 1 "s.t." forall j >= n, |f_j (x) - f(x) | <= 1/k} supset.eq {x in A : lim_(n->infinity) f_n (x) = f(x)} =: A'.
+  $ By assumption, $m(A') = m(A)$, so by continuity and the superset relation above, $m(A) = m(A') <= m(union.big_(n=1)^infinity E_(n)^((k))) = lim_(n->infinity) m(E_(n)^((k))) <= m(A)$, and thus $lim_(n->infinity) m(E_(n)^((k))) = m(A)$ for every $k >= 1$.
+
+  Given, then, any $epsilon > 0$, there exists a $n_k$ such that $m(A \\ E_(n_k)^((k))) = m(A) -  m(E_(n_k)^((k))) < 1/(2^k) epsilon/2$. Set $
+  B := A \\ (sect.big_(k=1)^infinity E_(n_k)^((k))),
+  $ then $
+  m(B) = m(union.big_(k=1)^infinity A \\ E_(n_k)^((k))) <= sum_(k=1)^infinity m(A \\ E_(n_k)^((k))) <= epsilon/2.
+  $ Put $
+  tilde(A) := A \\ B = sect.big_(k=1)^infinity E_(n_k)^((k)). 
+  $ Then, if $x in tilde(A)$, then $x in E_(n_k)^((k))$ for every $k$, and hence for every $k >= 1$ and $j >= n_k$, $|f_j (x) - f(x)| <= 1/k$. This shows then that $f_n -> f$ uniformly on $tilde(A)$. By regularity of $m$, there exists a closed $A_(epsilon) subset.eq tilde(A)$ such that $m(tilde(A) \\ A_epsilon) <= epsilon/2$. Then, $f_n -> f$ uniformly on $A_epsilon$, and $m(A \\ A_epsilon) = m(A\\ tilde(A)) + m(tilde(A) \\ A_epsilon) < epsilon$.
+
+  Now, if $f = infinity\/-infinity$ on $A$, then $A = A^(infinity) union A^(-infinity) union A^RR$ (with $A^bullet := {f = bullet} sect A$). The last case is done. For $A^infinity$ (similar construction for $A^(-infinity)$), define for every $k$, $n >= 1$,$
+  E_n^((k)) := {x in A : f_j (x) > k forall j >= n}.
+  $ Then, the remainder of the proof follows precisely the same for the sequence of sets $E_(n)^((k))$.
+]
+
+#remark[
+  1. The assumption $m(A) < infinity$ is necessary. For instance $f_n = bb(1)_([n, infinity)) -> 0$ pointwise, but for any $a in RR$, $f_n$ does not converge to $0$ uniformly on $(a, infinity)$.
+  2. In general, Egorov's $arrow.double.not f_n -> f$ uniformly a.e.. For instance, on $[0, 1]$, let $f_n (x) = x^n$ and $f(x) equiv 0$. For every $x in [0, 1)$, $f_n (x) -> f(x)$ as $n -> infinity$. Hence, $f_n -> f$ a.e. on $[0, 1]$ (the only point that doesn't converge, indeed, is at $1$). If $A subset.eq [0, 1]$ is closed such that $1 in A$, then $f_n arrow.not f$ uniformly on $A$. To see this, let ${x_m} subset.eq A$ such that $x_m arrow.t$ and $lim_(m->infinity) x_m = 1$. Then, for any fixed $n$, $
+  sup_(x in A)|f_n (x) - f(x)| >= sup_(m)|f_n (x_m) - f(x_m)| = sup_m x_m^n = 1,
+  $ hence $f_n$ does not converge uniformly on $A$.
+]
+
+#theorem("Lusin's Theorem")[
+  Given $f$ measurable and finite-valued and $A in cal(M)$ with $m(A) < infinity$, for all $epsilon > 0$, there exists a closed $A_epsilon subset.eq A$ with $m(A\\A_epsilon) < epsilon$ such that $f|_(A_epsilon)$ is continuous.
+]
+
+#remark[Lusin's Theorem states that $f|_(A_(epsilon))$ is continuous as a function on $epsilon$, which is _not_ the same as saying $f$ as a function of $A$ is continuous at points in $A_epsilon$.
+
+For instance, $f = bb(1)_(QQ sect [0, 1])$ is not continuous anywhere on $[0, 1]$. However, $f|_(QQ sect [0, 1])$ is constant and therefore continuous _on_ $QQ sect [0, 1]$.
+]
+
+#proof[
+  Let ${theta_n}$ be a sequence of step functions such that $theta_n -> f$ a.e. on $A$. Note that $theta_n$ piecewise constant and hence piecewise continuous. Given $epsilon > 0$ and $n >= 1$, we can find an open set $E_n$ such that $theta_n|_(E_n^c)$ is continuous and $m(E_n) <= epsilon/2 1/2^n$. Meanwhile, Egorov's implies that there exists a closed $B subset.eq A$ such that $m(A \\ B) <= epsilon/2$ such that $theta_n -> f$ uniformly on $B$. Set $
+  A_epsilon = B \\ union.big_(n=1)^infinity E_n,
+  $ noting that $A_epsilon subset A$ closed and $
+  m(A\\A_epsilon) = m(A\\B) + m(union.big_(n=1)^infinity E_n) =  epsilon/2 + sum_(n=1)^infinity m(E_m) <= epsilon.
+  $ Finally, on $A_epsilon$, $theta_n -> f$ uniformly and $theta_n|_(A_epsilon)$ continuous, and hence $f|_(A_epsilon)$ continuous (uniform limit of continuous functions is continuous).
+]
+
+#remark[
+  1. Lusin's Theorem $arrow.double.not$ $f$ is continuous almost everywhere in general.
+  2. (Exercise) The ${theta_n}$'s are not continuous on $RR$, but you can choose a sequence ${tilde(theta_n)}$ to be continuous on $RR$ such that $tilde(theta_n) -> f$ a.e..
+]

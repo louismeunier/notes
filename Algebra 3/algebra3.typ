@@ -608,7 +608,7 @@ $]
 
 #example[How many ways may we color the _faces_ of a cube with $t$ colors? There are $6$ faces with $t$ choices per face, so $t^6$ faces. More interestingly, how many _distinct_ ways are there, up to an automorphism (symmetry) of the cube? $G$ acts on $F$, and hence on the set of "$t$-colorings". Let $F$ again be the set of faces and $X := C^F$. Then, $
 hash X = t^(6).
-$ We would like to calculate the number of orbits of $G$ acting on $X$, namely $hash (X \/ G)$. We compute the number of fixed points for each conjugacy class of $G$; in general, $hash (C^F)^g = t^(hash (F\/angle.l g angle.r))$. 
+$ We would like to calculate the number of orbits of $G$ acting on $X$, namely $hash (X \/ G)$. We compute the number of fixed points for each conjugacy class of $G$; in general, $hash (C^F)^g = t^(hash (F\/angle.l g angle.r)) = t^(hash "orbits of" <g> "on" F)$. 
 ($g <-> (a b c) (d e) (f) (g)$ for each element $a$, say, we have $t$ choices for the coloring of $a$. Then $b$, $c$ must be the same color. This repeats for each transposition. etc // TODO)
 
 #align(center, table(
