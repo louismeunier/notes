@@ -658,3 +658,37 @@ $ Remark that this polynomial does not have integer coefficients, but indeed mus
     table.hline(start: 0, end:6)
   )) Hence, the list of elements in the right-most column is precisely the cycle shapes of elements in the "exotic" $S_5 subset S_6$, not conjugate to the typical inclusion $S_5 arrow.hook S_6$.
 ]
+
+= Rings and Fields
+
+Groups are to symmetries as rings are to numbers.
+
+== Definitions
+
+#definition("Ring")[
+  A _ring_ is a set $R$ endowed with two operations, $+, times : R times R -> R$ satisfying \
+- (_addition_) $(R,+)$ is an abelian group, with neutral element $0_R$ and (additive) inverses of $a in R$ denoted $-a$;\
+- (_multiplication_) $(R, times)$ is a _monoid_ i.e. it has a neutral element $1_R$ and is associative;
+- (_distribution 1_) $a times (b + c) = a times b + a times c$ for all $a,b, c in R$;
+- (_distribution 2_) $(b + c) times a = b times a + c times a$ for all $a, b, c in R$.
+]
+
+#remark[
+ + Conventions differ; some texts do not require $1$, and call such objects with one a "ring with unity".
+ + We will blanketly assume $1 eq.not 0$, else $R$ is trivial.
+ + 0 is never invertible; $1 times a = (0 + 1) times a = 0 times a + 1 times a => 0 times a = 0$ for any $a in RR$, so in particular there is no $a$ such that $0 times a = 1$.
+ + Exercise: show $(-a) times (- b) = a times b$.
+]
+
+#example("Examples of Rings")[
++ $ZZ$
++ $QQ$ (essentially $ZZ$ appending inverses)
++ Completions of $QQ$; taking ${"Cauchy Sequences"}\/{"Null Sequences"} = RR$ under the standard distance $d(x, y) = abs(x - y)$. Alternatively, let $p$ be a prime and take the $p$-adic metric $|x - y|_p := p^(-"ord"_p (x - y))$ on $QQ$, and consider the completion with respect to $|dot|_p$, denoted $QQ_p$, called the _field of $p$-adic numbers_.
++ $CC := RR[i] = {a + b i : a, b in RR}$
++ Polynomial rings; given a ring $R$, we may define $R[x] := {a_0 + a_1 x + dots.c a_n x^n : a_i in R}$ where $x$ a "formal" indeterminate variable.
++ The _Hamilton quaternions_, $HH = {a + b i + c j + d k : a, b, c, d in RR}$, where $i^2 = j^2 = k^2 = -1$ and $i j = -j i = k, j k = -k j = i, i k = - k i = -j$.
++ For any commutative ring $R$, $M_n (R) = n times n$ matrices with entries in $R$ is a ring. In particular, associativity of multiplication in $M_n (R)$ follows from the identification of matrices with $R$-linear functions $R^n -> R^n$ and the fact that function composition is associative.
++ Given a ring $R$, we can canonically associate two groups, $(R, +, 0)$ ("forgetting" multiplication) and $(R^times, times, 1)$ ("forgetting" addition and restricting to elements with inverses, i.e. _units_). 
+
+If $G$ is any group and $R$ a ring, we may consider $R[G] = {sum a_g g}$, a _group ring_.
+]
