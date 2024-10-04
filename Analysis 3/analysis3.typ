@@ -605,7 +605,7 @@ Recall that if $(a, b)$ an open interval that gets removed from the construction
 m(g([0, 1] \\ C)) = m([0, 1] \\ C) = 1.
 $
 
-Hence, $m(g(C)) = 2 - 1 = 1 > 0$, since $g (C union [0, 1]\\C) = [0, 2]$. Hence, there exists a $B subset.eq G(C)$ such that $B in.not cal(M)$, as per the previous proposition.
+Hence, $m(g(C)) = 2 - 1 = 1 > 0$, since $g (C union [0, 1]\\C) = [0, 2]$. Hence, there exists a $B subset.eq g(C)$ such that $B in.not cal(M)$, as per the previous proposition.
 
 Let $A := g^(-1) (B)$; then $A subset.eq g^(-1) (g (C))= C$. Since $m(C) = 0$, $A in cal(M)$ and $m(A) = 0$. But, $A in.not borel$; if it were, then $g(A) = B in borel$, since $g$ "maintains" Borel sets, but $B$ is not even Lebesgue measurable and so this is a contradiction).
 
@@ -1075,6 +1075,96 @@ For instance, $f = bb(1)_(QQ sect [0, 1])$ is not continuous anywhere on $[0, 1]
 ]
 
 #remark[
-  1. Lusin's Theorem $arrow.double.not$ $f$ is continuous almost everywhere in general.
+  1. Lusin's Theorem $arrow.double.not$ $f$ is continuous almost everywhere in general. For instance, recall that fat Cantor set $tilde(C)$, with $m(tilde(C)) = 1/2$. Let $f = bb(1)_tilde(C)$. $f$ is NOT continuous a.e. on $[0, 1]$, i.e. $forall B subset.eq [0, 1]$ with $m(B) = 1$, $f|_B$ is NOT continuous. To see this, let $tilde(D) = [0, 1] \\ tilde(C)$. Since $m(B) = 1$, then $m(tilde(C) sect B) = m(tilde(D) sect B) = 1/2$. Then for any $x in tilde(C) sect B$, $f|_B$ is NOT continuous at $x$. If it were at say some $x_0 in tilde(C) sect B$,  then there must exist some $delta > 0$ such that for any $x in (x_0 - delta, x_0 + delta) sect B$, $|f(x) - f(x_0)| < 1/2$. Hence, for any $x in (x_0 - delta, x_0 + delta) sect B$, $1/2 <= f(x) <= 3/2$. However, $m((x_0 - delta, x_0 + delta) sect B sect tilde(D)) > 0$ so it must be that $exists y in (x_0 - delta, x_0 + delta) sect B sect tilde(D) => f(y) = 0$, a contradiction. How, then, does one apply Lusin's; that is, $forall epsilon > 0$, there must exist some $A_epsilon subset.eq [0, 1]$ such that $m([0, 1] \\ A_epsilon) < epsilon$ and $f|_(A_epsilon) < epsilon$ (exercise)?
   2. (Exercise) The ${theta_n}$'s are not continuous on $RR$, but you can choose a sequence ${tilde(theta_n)}$ to be continuous on $RR$ such that $tilde(theta_n) -> f$ a.e..
+  3. Lusin's Theorem $=>$ $forall k$ sufficiently large, $exists A_k subset.eq A$ closed such that $m(A \\ A_k) <= 1/k$ and $f|_(A_k)$ continuous on $A_k$. In fact, we can construct them such that $A_k arrow.t$ (otherwise replace $A_k$ with $union.big_(i=1)^k A_i$).
+]
+
+== Construction of Integrals
+
+=== Integral of Simple Functions
+
+#definition[
+  Given a simple function $phi = sum_(k=1)^L a_k bb(1)_(E_k)$, the _(Lebesgue) integral_ of $phi$ is defined as $
+  integral_RR phi(x) dif x = integral_RR phi := sum_(k=1)^L a_k dot m(E_k).
+  $ For any $A in cal(M)$, $bb(1)_A phi$ is again a simple function and we define $
+  integral_A phi := integral_RR bb(1)_A phi.
+  $
+]
+
+#proposition([Properties of $integral_RR phi$])[
++ (Well-definedness) The written representation of $phi$ is not necessarily unique, but if $phi = sum_(k=1)^L a_k bb(1)_E_k = sum_(ell=1)^M b_ell bb(1)_F_ell$, then $
+sum_(k=1)^L a_k m(E_k) = sum_(ell=1)^M b_ell m(F_ell).
+$
++ (Linearity) If $phi, psi$ two simple functions and $a, b in RR$, then $a phi + b psi$ a simple function, and $
+integral_RR a phi + b psi = a dot integral_RR phi + b dot integral_RR psi.
+$ 
++ (Finite Additivity) If $phi$ a simple function, $A, B in cal(M)$ with $A sect B = nothing$, then $
+integral_(A union B) phi = integral_A phi + integral_B phi.
+$
++ (Monotonicity) If $phi, psi$ are two simple functions with $phi <= psi$, then $integral_RR phi <= integral_RR psi$.
++ If $phi$ a simple function then so is $|phi|$ and $|integral_RR phi| <= integral_RR |phi|$.
+]
+
+#proof[
+1. wlog, we may assume $E_k$ and $F_ell$ are respectively disjoint. Set $a_0 = b_0 = 0$, $E_0 := (union.big_(k=1)^L E_k)^c, F_0 := (union.big_(ell=1)^M F_ell)^c$ for convenience. Now, ${E_0, dots, E_L}, {F_0, dots, F_M}$ are two partitions of $RR$. In particular, then, for each $k$, $bb(1)_E_k = sum_(ell=0)^M bb(1)_(E_k sect F_ell)$, since $E_k = union.big.sq_(ell=0)^M (E_k sect F_ell)$. Now, we have $
+phi = sum_(k=0)^L a_k bb(1)_(E_k) = sum_(k=0)^L sum_(ell=0)^M a_k bb(1)_(E_k sect F_ell).
+$ Similarly partitioning, we have $
+phi = sum_(ell=0)^M b_ell bb(1)_(F_ell) =  sum_(ell=0)^M sum_(k=0)^L b_ell bb(1)_(E_k sect F_(ell)).
+$ If $E_k sect F_ell eq.not nothing$, then $a_k = b_ell$, and thus on the one hand$
+integral_RR phi =  sum_(k=0)^L sum_(ell=0)^M a_k m(E_k sect F_ell)
+$ and on the other $
+integral_RR phi =  sum_(ell=0)^M sum_(k=0)^L b_ell m(E_k sect F_(ell)),
+$ (with summation convention $0 dot infinity = 0$). If $m(E_k sect F_ell) > 0$, then $E_k sect F_ell eq.not nothing$ and so $a_k = b_ell$ and so the two sums agree.
+4. Assume $phi = sum_(k=1)^L a_k bb(1)_(E_k), psi = sum_(ell = 1)^M b_ell bb(1)_(F_ell)$. Repeat the partitioning/rewriting steps from part 1, then note that since $phi <= psi$, if $E_k sect F_ell eq.not nothing$, it must be that $a_k <= b_ell$, so if $m(E_k sect F_ell) > 0$ $a_k <= b_ell$ and thus the monotonicity follows.
+]
+
+
+=== Integral of Non-Negative Functions
+
+#definition[
+  If $f$ a non-negative, measurable function then the integral of $f$ is given by $
+  integral_RR f(x) dif x = integral_RR f := sup{integral_RR phi :  phi "is simple and" phi <= f}.
+  $
+]
+
+#proposition[The definition above agrees with that for simple functions that are also non-negative, namely this definition is consistent with the previous.]
+
+#proof[
+  Let $phi$ be non-negative. Then $phi <= phi$ certainly so the first definition $integral_RR phi <= sup {dots.c}$. Conversely, it suffices to show that for any non-negative simple $psi <= phi$, $integral_RR psi <= integral_RR phi$, using the first definition. But this simply follows from monotonicity of $integral$, and we are done.
+]
+
+#remark[
+  Given $f >= 0$ and measurable, this definition implies that there exists a sequence ${phi_n}$ of simple functions such that $phi_n <= f$ and $lim_(n-> infinity) integral_RR phi_n = integral_RR f$. We would like to show that, in some sense, the choice of ${phi_n}$ is arbitrary.
+]
+
+#theorem[Suppose $f >= 0$ and measurable. If ${phi_n}$ a sequence of simple functions such that $phi_n arrow.t$ and $lim_(n->infinity) phi_n = f$ pointwise, then $
+lim_(n->infinity) integral_RR phi_n = integral_RR f.
+$]
+
+#proof[
+  Since $phi_n <= f$ for all $n >= 1$, then $integral_RR phi_n <= integral_RR f$ and so $lim_(n->infinity) integral_RR phi_n <= integral_RR f$ (nothing the limit on the LHS necessarily always exists by monotonicity). On the other hand, it suffices to show that $forall psi <= f$ simple, that $integral_RR psi <= lim_(n->infinity) integral_RR phi_n$. Assume $psi = sum_(k=1)^L a_k bb(1)_(E_k) = sum_(k=0)^L a_k bb(1)_(E_k)$ where ${E_0, dots, E_L}$ forms a partition of $RR$. Since $
+  integral_RR psi = sum_(k=0)^L a_k m(E_k)
+  $ and $
+  integral_RR phi_n = sum_(k=0)^L integral_(E_k) phi_n
+  $ by finite additivity. It suffices to show then that for each $k = 0, dots, L$, $a_k m(E_k) <= lim_(n->infinity) integral_E_k phi_n$.
+
+  First, if $a_k = 0$ or $m(E_k) = 0$, then we are done. Assume $a_k, m(E_k) > 0$. For each fixed $k$, $lim_(n->infinity) phi_n = f >= psi$ so for every $x in E_k$, $lim_(n -> infinity) phi_n (x) >= psi(x) = a_k$. For any $epsilon > 0$, put $
+  C_n^epsilon := {x in E_k : phi_n (x) >= (1 - epsilon) a_k}.
+  $ Since $phi_n <= phi_(n+1)$, $C_n^epsilon arrow.t$ wrt $n$. Then note $
+  union.big_(n=1)^infinity C_n^epsilon = E_k.
+  $ Then, $
+  lim_(n->infinity) integral_E_k phi_n = lim_(n->infinity) integral_RR bb(1)_(E_k) phi_n >= lim_(n->infinity) integral_RR bb(1)_(C_n^epsilon) phi_n >= lim_(n->infinity) (1- epsilon) a_k m(C_n^epsilon) = (1 - epsilon)a_k m(E_k), 
+  $ where we use the fact that $bb(1)_(E_k)phi_n >= bb(1)_(C_n^epsilon) phi_n >= ( 1- epsilon) a_k bb(1)_(C_k^epsilon)$ and $lim_(n->infinity) m(C_n^epsilon) = m(union.big_(n=1)^infinity C_n^epsilon) = m(E_k)$. Since $epsilon$ arbitrary, then $
+  lim_(n->infinity) integral_E_k phi_n >= a_k m(E_k),
+  $ and we are done.
+]
+
+#corollary[
+ For any $f >= 0$ measurable, if $forall n >= 1, k = 0, 1, dots, n 2^n$  with $A_(n, k) := {k/(2^n) <= f < (k+1)/(2^n)}$, then $
+ integral_RR f = lim_(n->infinity) sum_(k=0)^(n 2^n) k/(2^n) m(A_(n,k)).
+ $
+]
+#proof[
+  Let $phi_n = sum_(k=0)^(n 2^n) k/(2^n) bb(1)_(A_(n, k))$, then $phi_n arrow.t$ and $phi_n -> f$.
 ]
