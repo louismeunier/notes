@@ -12,6 +12,8 @@
   doc
 )
 
+#import "@preview/commute:0.2.0": node, arr, commutative-diagram
+
 #set align(left)
 
 // TODO starts here
@@ -685,10 +687,72 @@ Groups are to symmetries as rings are to numbers.
 + $QQ$ (essentially $ZZ$ appending inverses)
 + Completions of $QQ$; taking ${"Cauchy Sequences"}\/{"Null Sequences"} = RR$ under the standard distance $d(x, y) = abs(x - y)$. Alternatively, let $p$ be a prime and take the $p$-adic metric $|x - y|_p := p^(-"ord"_p (x - y))$ on $QQ$, and consider the completion with respect to $|dot|_p$, denoted $QQ_p$, called the _field of $p$-adic numbers_.
 + $CC := RR[i] = {a + b i : a, b in RR}$
-+ Polynomial rings; given a ring $R$, we may define $R[x] := {a_0 + a_1 x + dots.c a_n x^n : a_i in R}$ where $x$ a "formal" indeterminate variable.
++ Polynomial rings; given a ring $R$, we may define $R[x] := {a_0 + a_1 x + dots.c + a_n x^n : a_i in R}$ where $x$ a "formal" indeterminate variable.
 + The _Hamilton quaternions_, $HH = {a + b i + c j + d k : a, b, c, d in RR}$, where $i^2 = j^2 = k^2 = -1$ and $i j = -j i = k, j k = -k j = i, i k = - k i = -j$.
 + For any commutative ring $R$, $M_n (R) = n times n$ matrices with entries in $R$ is a ring. In particular, associativity of multiplication in $M_n (R)$ follows from the identification of matrices with $R$-linear functions $R^n -> R^n$ and the fact that function composition is associative.
 + Given a ring $R$, we can canonically associate two groups, $(R, +, 0)$ ("forgetting" multiplication) and $(R^times, times, 1)$ ("forgetting" addition and restricting to elements with inverses, i.e. _units_). 
++ If $G$ is any finite group and $R$ a ring, we may consider $R[G] = {sum_(g in G) a_g g : a_g in R}$, a _group ring_. Addition is defined component-wise, and multiplication $
+(sum_(g in G) a_g g)(sum_(h in H) b_h h) = sum_(g, h in G) a_g b_h dot g h = sum_(g in G) (sum_(h_1 dot h_2 = h in G) a_(h_1) b_(h_2))g.
+$
+]
 
-If $G$ is any group and $R$ a ring, we may consider $R[G] = {sum a_g g}$, a _group ring_.
+== Homomorphisms
+
+#definition("Homomorphism of Rings")[
+  A _homomorphism_ from a ring $R_1$ to a ring $R_2$ is a map $phi: R_1 -> R_2$ satisfying:
+  - $phi(a + b) = phi(a) + phi(b)$ for all $a, b in R_1$ (that is, $phi$ a group homomorphism of the additive groups $(R_1, +)$, $(R_2, +)$)
+  - $phi(a b) = phi(a)phi(b)$
+  - $phi(1_(R_1)) = phi(1_(R_2))$
+]
+
+#definition("Kernel")[The _kernel_ of a ring homomorphism $phi$ is the kernel as a homomorphism of additive groups, namely $
+ker(phi) = {a in R_1 : phi(a) = 0_(R_2)}.
+$]
+
+#definition("Ideal")[A subset $I subset.eq R$ is an _ideal_ of $R$ if 
++ $I$ an additive subgroup of $(R, +)$, in particular $0 in I$, $I$ closed under addition and additive inverses
++ $I$ closed under multiplication by elements in $R$, i.e. for all $a in R, b in I$, $a b in I$ _and_ $b a in I$ (the second condition only being necessary when $R$ non-commutative.)
+]
+
+#proposition[If $phi$ is a ring homomorphism, then $ker(phi)$ is an ideal of $R_1$.]
+
+#proof[The first requirement follows from the fact that $phi$ an additive group homomorphism. For the second, let $a in R_1, b in ker(phi)$, then $phi( a b) = phi(a) phi(b) = phi(a) dot 0 = 0$ so $a b in ker(phi)$.]
+
+#proposition[
+  If $I$ an ideal of $R_1$, then there exists a ring $R_2$ and a ring homomorphism $phi : R_1 -> R_2$ such that $I = ker(phi)$.
+]
+
+#proof[
+  Let $R_2 = R_1 \/ I = {a + I : a in R_1}$ be the quotient group of $R_1$ additively. We can define multiplication by $(a + I) (b + I) := a b + I$. One may verify this indeed makes $R_2$ a ring. Then take $phi$ to be the quotient map $
+  phi : R_1 -> R_2, wide a |-> a + I.
+  $ Then, this is indeed a (surjective) ring homomorphism, with $ker(phi) = I$.
+]
+
+#theorem("Isomorphism Theorem")[Let $R$ be a ring (group) and $phi$ be a surjective homomorphism of rings (groups) $phi : R ->> S$. Then, $S$ is isomorphic to $R \/ ker (phi)$.
+
+
+#align(center)[#commutative-diagram(
+  node((0, 0), $R$),
+  node((0, 1), $S$),
+  node((1, 0), $R \/ "ker"(phi)$, "quot"),
+  arr($R$, $S$, $phi$, "surj"),
+  arr("quot", (0, 1), $tilde(phi)$, label-pos: right, "dashed"),
+  arr($R$, "quot", $pi$),
+)]
+]
+
+#proof[
+Define $
+tilde(phi) : R \/ ker(phi) -> S, wide a + ker(phi) |-> phi(a).
+$ One can verify this indeed an isomorphism.
+]
+
+== Maximal and Prime Ideals
+
+#definition("Maximal")[An ideal $I subset.eq R$ is _maximal_ if it is not properly contained in any proper ideal of $R$, namely if $I subset.neq I'$ for any other ideal $I'$, then $I' = R$.]
+
+#definition("Prime")[An ideal $I subset.eq R$ is _prime_ if $a b in I$, then $a$ or $b$ in $I$.]
+
+#example[
+  Let $R = ZZ$ and $I = (n) = n ZZ = {n a : a in ZZ}$ for some $n in NN$. We claim $(n)$ is prime iff $n$ is prime. If $n$ prime, then if $a b in I$, then $n | a b$. By Gauss's Lemma, then $n$ divides at least one of $a$ or $b$, and hence either $a$ or $b$ in $I$. Conversely, if $n$ not prime, then we may write $n = a b$ where $|a|, |b| < n$. Then, $a, b in I$, but $n$ divides neither and so $a, b in.not I$.
 ]
