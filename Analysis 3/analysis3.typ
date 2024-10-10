@@ -1168,3 +1168,75 @@ $]
 #proof[
   Let $phi_n = sum_(k=0)^(n 2^n) k/(2^n) bb(1)_(A_(n, k))$, then $phi_n arrow.t$ and $phi_n -> f$.
 ]
+
+#proposition("Properties of Integral of Non-Negative Functions")[
+  1. (Well-definedness) If $f, g >= 0$ measurable such that $f = g$ a.e., then $integral_RR f = integral_RR g$.
+  2. (Linearity) For any $f, g >= 0$ measurable and $a, b >= 0$, then $integral_RR (a f + b g) = a integral_RR f + b integral_RR g$.
+  3. (Monotonicity) If $f, g >= 0$ measurable and $f <= g$ a.e., then $integral_RR f <= integral_RR g$.
+  4. i. Let $f >= 0$ measurable, then $integral_RR f = 0 <=> f equiv 0$ a.e.\
+    ii. Let $f >= 0$ measurable, $A in cal(M)$. Then $integral_A f = 0 <=> $ either $f equiv 0$ a.e. on $A$ or $m(A) = 0$.\
+    iii. Let $f >= 0$ measurable, then if $integral_RR f < infinity$ then $f$ is finite valued a.e.
+  5. (Markov's Inequality) Let $f >= 0$ measurable and $0 < a < infinity$. Then, $m({f > a}) <= 1/a integral_RR f$. In particular, if the RHS is finite, $lim_{a -> infinity} m({f > a}) = 0$, in fact in $cal(O)(1/a)$.
+]
+
+#proof[
+1. Let ${phi_n}, {psi_n}$ sequences of simple functions such that both are monotonically increasing with $phi_n -> f, psi_n -> g$. Put $h_n := phi_n bb(1)_({f = g}) + psi_n bb(1)_({f eq.not g})$; then $h_n$ again simple, $h_n arrow.t$, and $h_n -> g$ everywhere. Then, $
+integral_RR g = lim_n integral_RR h_n &= lim_n (integral_{f = g} phi_n + integral_{f eq.not g} psi_n)= lim_n integral_{f = g} phi_n.
+$ Meanwhile, $
+integral_RR f  = lim_n integral_RR phi_n = lim_n (integral_{f = g} phi_n + integral_{f eq.not g} phi_n) = lim_n integral_{f = g} phi_n,
+$ and so $integral_RR f = integral_RR g$.
+2. Take ${phi_n}, {psi_n}$ as in the previous proof. Then ${h_n : a phi_n + b psi_n}$ again a sequence of monotonically increasing simple functions with limit $a f + b g$. Then $
+integral_RR (a f + b g) = lim_n integral_RR h_n = lim_n integral_RR (a phi_n + b psi_n)= lim_n (a integral_RR phi_n + b integral_RR psi_n) = a integral_RR f + b integral_RR g.
+$
+3. wlog, assume that $f <= g$ everywhere by replacing $f$ with $f bb(1)_{f <= g}$. Then, ${phi : "simple", phi <= f} subset.eq {phi : "simple", phi <= g}$ and so $integral_RR f <= integral_RR g$.
+4.
+  i. $impliedby$ clear. Conversely, we would like to prove that if $A = {f > 0}, m(A) = 0$. Put $A_n := {f >= 1/n}$ for $n >= 1$. Then, $A_n arrow.t$ and $union.big_(n=1)^infinity A_n = A$. By continuity of $m$, $
+m(A) = lim_n m(A_n).
+$ Suppose towards a contradiction that $m(A) = delta > 0$. Then, $delta = lim_n m(A_n)$, and so must exist $N >= 1$ such that $m(A_N) >= delta/2$. Since $f >= f bb(1)_(A_N) >= 1/N bb(1)_(A_N)$. By monotonicity, $integral_RR f >= integral_RR 1/N bb(1)_(A_N) = 1/N m(A_N) >= 1/N delta/2 > 0$, a contradiction.\
+  ii. By i., $integral_A f = 0 <=> bb(1)_A f equiv 0$ a.e. on $RR$. If $m(A) = 0$, then $bb(1)_A equiv 0$ a.e. so $bb(1)_A f equiv 0$ a.e.. Else, if $m(A) > 0$, then $f equiv 0$ a.e. on $A$.\
+  iii. Put $A := {f = infinity}$. Assume towards a contradiction that $m(A) = delta > 0$. Then, for every $n >= 1$, $f >= f bb(1)_A >= n bb(1)_A$ and so $integral_RR f >= integral_RR n bb(1)_A = n m(A) = n delta$. But this holds for any arbitrary $n$, so $integral_RR f = infinity$, a contradiction.
+  5. Put $A_a := {f > a}$. Then $f >= f bb(1)_A_a > a bb(1)_A_a$ so $integral_RR f >= a m(A_a)$.
+]
+
+=== Integral of General Measurable, Integrable Functions
+
+#definition[For $f$ measurable, $integral_RR f := integral_RR f^+ - integral_RR f^-$, provided that at least one of $integral_RR f^+$, $integral_RR f^-$ is finite; in particular, $integral_RR f$ may be finite or infinite.]
+
+#remark[Only having $integral_RR f$ being defined is not sufficient for the desirable properties (linearity, monotonicity) to hold.]
+
+#definition("Integrable")[A measurable function $f$ is called _integrable_, denoted $f in L^1 (RR)$, if _both_ $integral_RR f^+ < infinity$ and $integral_RR f^- < infinity$. Note that $
+f in L^1 (RR) &<=> integral_RR |f| < infinity "(since" integral_RR |f| = integral_RR f^+ + integral_RR f^-")"\
+&<=> integral_RR f "finite valued".
+$]
+
+#proposition("Properties of Integrals of Integrable Functions")[
+1. $|integral_RR f| <= integral_RR |f|$
+2. $f in L^1 (RR) => f$ is finite valued a.e.
+3. (Linearity) For $f, g in L^1 (RR)$ and $a, b in RR$, $a f + b g in L^1 (RR)$ and $integral_RR (a f + b g) = a integral_RR f + b integral_RR g$
+4. If $f in L^1 (RR)$ and $A in cal(M)$ and $m(A) = 0$ then $integral_A f = 0$; in particular if $f, g in L^1(RR)$ with $f = g$ a.e. then $integral_RR f = integral_RR g$
+5. (Monotonicity) If $f, g in L^1(RR)$ with $f <= g$ a.e., then $integral_RR f <= integral_RR g$
+]
+
+#proof[
+  1. $- integral_RR f^- <= integral_RR f <= integral_RR f^+$ and $integral_RR f^(plus.minus) <= integral_RR |f|$.
+  2. We know $integral_RR |f| < infinity$ so $|f| < infinity$ a.e. by properties of integrals of non-negative functions so $m({f = plus.minus infinity}) = 0$
+  3. $|a f| <= |a| |f|$ so by monotonicity of non-negative functions, $integral_RR |a f| <= |a| integral_RR |f| < infinity$ so $a f$ in $L^1 (RR)$. Note then that $
+  (a f)^+ = cases(a f^plus "if" a >= 0, - a f^- "if" a < 0), wide (a f)^minus = cases(a f^- "if" a >= 0, - a f^+ "if" a < 0)
+  $ so $
+  integral_RR a f &= integral_RR (a f)^+ - integral_RR (a f)^-\
+  &= cases(
+    integral_RR a f^+ - integral_RR a f^- "if" a >= 0\
+    integral_RR (-a) f^- - integral_RR (-a) f^+ "if" a < 0
+  )\
+  &= cases(
+    a (integral_RR f^+ - integral_RR f^-) "if" a >= 0\
+    (-a) (integral_RR f^- - integral_RR f^+) "if" a < 0
+  ) = a integral_RR f.
+  $ By the same argument $b g in L^1 (RR)$ and $integral_RR (b g) = b integral_RR g$. wlog, $a = b = 1$. We want to show $f + g in L^1 (RR)$; clearly $|f + g| <= |f| + |g| < infinity$ so it must be $f + g in L^1 (RR)$. Set $h := f + g$ then $|h, f, g| < infinity$ a.e. and each of the integrals of $|h, f, g| < infinity$. Then, $h^+ - h^- = f^+ - f^- + g^+ - g^-$. Then $h^+ + f^- + g^- = f^+ + g^+ + h^-$, where now both sides are non-negative functions. By linearity of integrals of non-negative functions and since all terms finite a.e., $
+  integral h^+ + integral f^- + integral  g^- &=integral  f^+ +integral  g^+ + integral  h^-\
+  &=> integral h^+ - integral h^- = integral f^+ - integral f^- + integral g^+ - integral g^-\
+  &=>  integral (f + g) = integral h = integral f + integral g.
+  $
+  4. $|integral_A f| <= integral_A |f| = 0$.
+  5. Put $h = g - f$ (valid since $f, g in L^1 (RR)$) then $h >= 0$ a.e. Then $integral_RR h >= 0$ so by linearity $integral_RR (g - f) = integral_RR g - integral_RR f >= 0$.
+]
