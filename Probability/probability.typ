@@ -282,3 +282,30 @@ For $alpha > 0$, we say $EE(|X|^alpha)$ (if it exists) is the _$alpha$-th moment
 #theorem[If $EE(|X|^k) < infinity$ for some $k > 0$, then $
 n^k P(|X| > n) -> 0
 $ as $n-> infinity$.]
+
+== Binomial Distribution
+
+Let $X_i$ for $i = 1,dots, n$ be a discrete boolean rv with $P(X_i = 1) = p, P(X_i = 0) = 1-p$. Put $S = sum_(i=1)^n X_i$. We say $S$ has binomial distribution, and write $
+S tilde "Bin"(n,p).
+$ Then, we have that $
+P(S) = mat(n; k) p^k (1-p)^(n-k) 
+$ and so $
+EE[S] = sum_(k=0)^n k P(S = k) = dots.c = n p.
+$
+
+== Variance
+Let $X$ a random variable. Put $mu_X := EE[X]$. We define the _variance_ of $X$, denoted $sigma_X^2$, by $
+sigma_X^2 = "Var"(X) = EE[(X - mu_x)^2]
+$ which, upon manipulation and using the linearity of $EE$, we find to eqaul $
+EE[X^2] - mu_X^2.
+$ Let $S tilde "Bin"(n,p)$. Then, $"Var"[S] = EE[S^2]- (n p)^2$. To compute $EE[S^2] = EE[S(S-1) + S]$, we may abuse combinatorial identities and eventually find $
+"Var"[S] = n p (1 - p).
+$
+
+== Hypergeometric Distribution
+
+Consider a population of $N$ objects, and a subpopulation of $M$ objects. Let $X_i$ be a random variable equal to 1 if a sampled object is from the $M$-subpopulation, $0$ else, and put $Y = sum_(i=1)^n X_i$. Then, $
+P(Y) = (mat(M;k) mat(N-M;n-k))/(mat(N;n))
+$ for any $k = 0, dots, n$. We have $
+EE[Y] = M (n/N).
+$
