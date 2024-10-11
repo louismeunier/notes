@@ -8,7 +8,7 @@
 #show: doc => conf(
   course_code: "MATH454",
   course_title: "Analysis 3",
-  subtitle: "",
+  subtitle: "Measure spaces; Integration.",
   semester: "Fall 2024",
   professor: "Prof. Linan Chen",
   doc

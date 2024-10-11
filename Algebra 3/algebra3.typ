@@ -6,7 +6,7 @@
 #show: doc => conf(
   course_code: "MATH456",
   course_title: "Algebra 3",
-  subtitle: "",
+  subtitle: "Groups; ring theory; fields.",
   semester: "Fall 2024",
   professor: "Prof. Henri Darmon",
   doc
@@ -16,10 +16,9 @@
 
 #set align(left)
 
-// TODO starts here
 = Groups
 
-== Review
+== Definitions
 #definition("Group")[
   A *group* is a set $G$ endowed with a binary composition rule $G times G -> G, (a, b) |-> a star b$, satisfying
   + $exists e in G "s.t." a star e = e star a = a forall a in G$
@@ -787,4 +786,72 @@ $ One can verify this indeed an isomorphism.
 
 #example[
   Let $R = FF[x, y]$. Consider $(x, y) = R x + R y = {f : f(0,0) = 0}$ with typical element $x f(x, y) + y g(x, y)$; these will not have constant terms.
+]
+
+#proposition[
+  $I$ is a prime ideal of $R$ iff $R\/I$ has no zero divisors (namely an element $x eq.not 0$ such that $x y = 0$ for some $y eq.not 0$); such a ring is called an _integral domain_.
+]
+
+#proof[
+  Given $a + I, b + I in R\/I$, $(a + I)(b + I) = 0 => a b + I = 0 => a b in I$. By primality of $I$, then at least one of $a, b in I$, so at least one of $a + I, b + I = 0$.
+]
+
+#remark[
+  If $R$ an integral domain, then it satisfies the "cancellation law", namely $forall a eq.not 0, a x = a y => x = y$, since we may write $a (x - y) = 0$ hence it must be $ x- y = 0 => x = y$.
+]
+
+#theorem[$I$ is a maximal ideal $<=>$ $R\/I$ is a field.]
+
+#proof[
+  ($=>$) Let $a + I in R \/ I$. If $a + I eq.not 0$, then consider the ideal $R a + I supset.neq I$. By maximality of $I$, it must be that $R a + I = R$. So, anything in $R$ can be written as a "multiple" of $a$ plus an element of $I$, so in particular $1 in R$ may be written $1 = b a + i$ for some $i in I, b in R$. Passing to the quotient, we find $
+  1 + I = (b + I)(a + I) => b + I = (a + I)^(-1) in R\/I,
+  $ so we indeed have multiplicative inverses.\
+  ($impliedby$) Given $J supset.neq I$, let $a in J minus I$. Then, $a + I eq.not 0 in R\/I$, so there exists a $b$ such that $b a + I = 1 + I$ since $R\/I$ a field, and hence $1 in J$ so $J = R$ and thus $I$ maximal.
+]
+
+== Quotients
+
+#example[
+  Let $R = ZZ, I = (n)$, and consider $
+  R\/I = ZZ\/n ZZ &= { a + n ZZ : a + ZZ}\
+  &= {0, 1, 2, dots, n - 1} thin (mod n).
+  $
+  Let $R = FF[x], I = (f(x))$, and consider $
+  R\/I = FF[x]\/(f(x)) &= {p(x) + f(x) FF[x]}\
+  &= {p(x) : "deg" p <= d - 1 "where" d := deg f }.
+  $
+]
+
+#remark[
+  In $R\/I, a+I = b+I<-> a - b in I$. If $I = (d)$ principal, then $a + I = b + I <=> d | b - a$. For more general quotients (namely, more general ideals) this is a more difficult question.
+]
+
+#example[
+  Let $R = ZZ[x], I = (2, x) = {f(x) : f(0) "even"}$, then $ZZ[x]\/I$ has precisely two elements, and indeed is isomorphic to $ZZ\/2 ZZ$. To see this, consider the map $
+  phi : ZZ[x] -> ZZ\/2 ZZ, wide f(x) |-> f(0) "mod" 2,
+  $ a surjective homomorphism, with $
+  ker (phi) = {f(x) : f(0) equiv_2 0} = {f(x) : f(0) "even"} = I,
+  $ so by the isomorphism theorem, $ZZ[x]\/ker(phi) tilde.equiv im(phi) => ZZ[x]\/I tilde.equiv ZZ\/2ZZ$.
+]
+
+#example[
+  Let $R = FF[x, y] = {sum_(i,j = 1)^N a_(i,j) x^i y^j : a_(i,j) in FF}$ and $I = (x, y) = {f(x, y) : f(0,0) = 0}$. Then, $R\/I tilde.equiv FF$ by the map $f(x, y) + I |-> f(0,0)$.
+]
+
+#example[
+  Let $R = FF[x_1, dots, x_n]$ and $I = (f_1, dots, f_t)$, for $f_j (x_1, dots, x_n) in R$. Then, consider $R\/I$; this is hard. Let $
+  V(I) := {(x_1, dots, x_n) : f_i (x_1, dots, x_n) = 0 "for all" i = 1, dots, t}.
+  $ Then, we may identify $R\/I -> $ functions on $V(I)$.
+]
+
+== Adjunction of Elements
+
+#theorem[Given a ring $R$ and $p(x) in R[x]$, there exists a ring $S$ containing both $R$ and a root of $p(x)$.]
+
+#proof[
+  Let $S = R[x]\/(p(x))$, $R -> S$ by $a |-> a + (p(x))$. Let $alpha = x + (p(x))$; then $p(alpha) = p(x) + (p(x)) = 0 + (p(x))$.
+]
+
+#example[
+  Let $R = RR$ and $p(x) = x^2 + 1$. Then, $RR[x]\/(x^2 + 1) = CC$.
 ]
