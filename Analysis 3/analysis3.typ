@@ -1240,3 +1240,117 @@ $]
   4. $|integral_A f| <= integral_A |f| = 0$.
   5. Put $h = g - f$ (valid since $f, g in L^1 (RR)$) then $h >= 0$ a.e. Then $integral_RR h >= 0$ so by linearity $integral_RR (g - f) = integral_RR g - integral_RR f >= 0$.
 ]
+
+== Convergence Theorems of Integral
+
+#theorem("Monotone Covergence Theorem (MON)")[
+Assume ${f_n}$, $f$ are non-negative, measurable functions. If $f_n arrow.t$ and $lim_(n->infinity) f_n = f$, then $
+integral_RR f = lim_(n->infinity) integral_RR f_n.
+$
+]
+#remark[
+  When we write $lim_n f_n = f$, we mean pointwise convergence; however, one can replace these statements with convergence a.e. and obtain an equivalent, more general result wlog.
+]
+#proof[
+  By monotonicity of non-negative functions, $lim_(n -> infinity) integral_RR f_n$ exists, forming an increasing sequence. Since $f_n <= f$, then we know too that $lim_(n-> infinity) integral_RR f_n <= integral_RR f$. 
+
+  Conversely, for every $n$, let ${phi_(n, k)}_(k in NN)$ be a sequence of simple functions such that $phi_(n, k) arrow.t$ w.r.t $k$ and $phi_(n, k) -> f_n$ as $k -> infinity$. For each $k >= 1$, let $
+  g_k := max{phi_(1,k), phi_(2,k), dots, phi_(k,k)}.
+  $ Then, $g_k$ simple for each $k$, and $g_k arrow.t$ and $g_k <= f$. So, $lim_(k->infinity) g_k$ exists. Then, for all $n >= 1$, $lim_(k->infinity) g_k >= lim_(k->infinity) phi_(n, k) = f_n$ so $lim_(k->infinity) g_k >= lim_(n -> infinity) f_n = f$. Thus, $lim_(k -> infinity) integral_RR g_k = integral_RR f$ by a previous theorem. Since $forall k >= 1$, $phi_(1, k), phi_(2, k), dots.c, phi_(k, k) <= f_k$, $g_k <= f_k$ and thus by monotonicity $integral_RR g_k <= integral_RR f_k => integral_RR f =  lim_(k -> infinity) integral_RR g_k <= lim_(k->infinity) integral_RR f_k$ as desired.
+]
+
+#corollary[
+  If ${f_n}, f$ measurable functions such that $f_n arrow.t$ and $lim_n f_n = f$ and $integral_RR f_1^- < infinity$, then $integral_RR f = lim_(n) integral_RR f_n$.
+]
+#proof[
+Since $f_n arrow.t, f_n >= f_1$ so $f >= f_1$. Then, $f_n^- <= f_1^-, f^- <= f_1^-$, all of these are finite valued a.e., and $integral_RR f_n^- <= integral_RR f_1^- < infinity$ and $integral_RR f^- <= integral_RR f_1^- < infinity$. For each $n >= 1$, set $tilde(f_n) := f_n + f_1^- = f_n^+ - f_n^- + f_1^- >= 0$, and $tilde(f_n) arrow.t$ with $lim_(n) tilde(f_n) = f + f_1^- =: tilde(f) >= 0$. By MON, $integral_RR tilde(f) = lim_(n) integral_RR tilde(f_n)$ so $integral_RR (f + f_1^-) = lim_(n) integral_RR (f_n + f_1^-)$.
+
+We have that $tilde(f_n) = f_n + f_1^- = f_n^+ - f_n^- + f_1^- => tilde(f_n)+ f_n^- = f_n^+ + f_1^-$, which is valid since $f_n^- < infinity$ a.e.. By linearity, then, $
+integral_RR tilde(f_n) + integral_RR f_n^- &= integral_RR f_n^+ + integral_RR f_1^-\
+&=> integral_RR tilde(f_n) = integral_RR f_n^+ - integral_RR f_n^- + integral_RR f_1^- wide "because" integral_RR f_n^- < infinity\
+&=>integral_RR tilde(f_n) = integral_RR f_n + integral_RR f_1^-.
+$ Similar work gives $integral_RR tilde(f) = integral_RR f + integral_RR f_1^-$, and taking limits and using $lim_n integral_RR (f_n + f_1^-) = integral_RR (f + f_1^-)$ completes the proof.
+]
+
+#theorem("Reverse MON")[
+  Assume ${f_n}$, measurable such that $f_n arrow.b$ and $lim_(n->infinity) f_n = f$. If $integral_RR f_1^+ < infinity$, then $integral_RR f = lim_(n) integral_RR f_n$.
+]
+
+#proof[
+  Consider ${-f_n}$ and use the previous corollary.
+]
+
+#theorem("Fatou's Lemma")[
+  Assume ${f_n}$ non-negative, measurable. Then $
+  integral_RR (liminf_(n->infinity) f_n) <= liminf_(n->infinity)( integral_RR f_n).
+  $
+]
+
+#proof[
+  For every $m >= 1$, set $g_m := inf_(n >= m) f_n$. Then, $g_m$ non-negative and $g_m arrow.t$, with $lim_(m) g_m = liminf_n f_n$. By MON, $integral_RR liminf_n f_n = lim_(m->infinity) (integral_RR g_m)$. For every $n >= m$ , $g_m <= f_n$, so by monotonicity, $integral_RR g_m <= integral_RR f_n$ for every $n >= m$, so $integral_RR g_m <= inf_(n >= m) integral_RR f_n$, and hence $lim_(m->infinity) integral_RR g_m <= lim_(m -> infinity) inf_(n>=m) integral_RR f_n = liminf_(n) (integral_RR f_n)$, and the proof follows.
+]
+
+#corollary[
+  Assume ${f_n}$ measurable and there exists a measurable function $g$ such that $integral_RR g^- < infinity$ and $f_n >= g$ for every $n$. Then, $
+  integral_RR (liminf_n f_n) <= liminf_n (integral_RR f_n).
+  $
+]
+
+#proof[
+  Since $f_n >= g$ for all $n >= 1$, $f_n^- <= g^-$ so $f_n^- < infinity$ a.e. and $integral_RR f_n^- < infinity$. Set $tilde(f_n) := f_n + g^- >= 0$. Then, apply Fatou to get $integral_RR liminf_n tilde(f_n) <= liminf_n integral_RR tilde(f_n)$, then it suffices to check linearity.
+]
+
+#theorem("Reverse Fatou")[
+  Assume ${f_n}$ measurable and there exists a $g$ measurable such that $integral_RR g^+ < infinity$ and $f_n <= g$ for all $n >= 1$. Then, $
+  integral_RR (limsup_n f_n) >= limsup_n (integral_RR f_n).
+  $
+]
+#proof[
+  Apply previous proof to ${-f_n}$.
+]
+
+#remark[
+  The "floor" $g$ is necessary. Let $f_n (x) := cases(-1 & "if" x>= n, 0 & "if" x < n)$. Then, $f_n arrow.t$, and $lim_n f_n = 0$ while $integral_RR f_n = -infinity$ for every $n$, so MON doesn't apply.
+]
+
+#theorem("Dominated Convergence Theorem (DOM)")[
+Assume ${f_n}, f$ measurable with $lim_(n) f_n = f$. If there exists a $g in L^1 (RR)$ such that $|f_n| <= |g|$ for all $n$, then $f_n -> f$ in $L_1 (RR)$ i.e. $lim_(n->infinity) integral_RR |f_n - f| =0$. In particular, $integral_RR f = lim_n integral_RR f_n$.
+]
+
+#proof[
+  Since $|f_n| <= |g|$ and $f = lim_(n->infinity) f_n$, then $|f| <= |g|$. So, $integral_RR |f_n| <= integral_RR |g| < infinity$ and similarly $integral_RR |f| <= integral_RR |g| < infinity$ so $|f_n|, f in L^1 (RR)$.
+
+  Observe that $|f_n - f| <= 2 |g|$, and $integral_RR (2 |g|) < infinity$. Applying Reverse Fatou to ${|f_n - f|}_(n in NN)$, we find $
+  integral_RR (underbrace(limsup_n (|f_n - f|), 0)) &>= limsup_n (integral_RR |f_n - f|)\
+  &=>  lim_(n -> infinity) integral_RR |f_n - f|= 0,
+  $ so in particular $
+  |integral_RR f_n - integral_RR f| = |integral_RR (f_n - f)| <= integral_RR |f_n - f| -> 0
+  $ so $lim_(n) integral_RR f_n = integral_RR f$.
+]
+
+#remark[
+  We must fine $g in L^1 (RR)$ to dominate $|g| >= |f_n|$ irrespective of $n$. For instance, if $f_n = bb(1)_[n,2n]$, then $lim_(n) f_n = 0$, but $integral_RR f_n = n$ for all $n >= 1$. DOM doesn't apply, since we would need a constant $1$ function to dominate all $f_n$, which is not integrable.
+]
+
+#proposition[Assume $f in L^1 (RR), {h_n}$ a sequence of measurable functions that are uniformly bounded, i.e. $exists M > 0$ such that $|h_n| <= M$ a.e. for all $n >= 1$. If $h_n -> h$ a.e. for some measurable function $h$, then $
+lim_n integral_RR (f h_n) = integral_RR (f h).
+$]
+
+#proof[
+  For every $n$, $|f dot h_n| <= M |f| in L_1 (RR)$. The conclusion follows from DOM.
+]
+
+#corollary[
+  If $f in L^1 (RR)$ then for all $epsilon > 0$, there exists a compact set $K subset.eq RR$ such that $integral_(K^c) |f| <= epsilon$.
+]
+#proof[
+  If $h_n := bb(1)_[-n,n]$, the $lim_(n) integral_RR f h_n = lim_n integral_[-n,n] f = integral_RR f$, and also $lim_(n) integral_{RR minus[-n,n]} f = 0$.
+]
+
+#corollary[
+If $f in L^1 (RR)$, then for all $epsilon > 0$, $exists N >= 1$ such that $integral_{|f| > N} |f| <= epsilon$.
+]
+
+#proof[
+Let $h_n = bb(1)_{|f| >n}$ then $lim_(n->infinity) integral_{|f| > n} f = 0$.
+]
