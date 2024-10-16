@@ -1254,7 +1254,17 @@ $
 #proof[
   By monotonicity of non-negative functions, $lim_(n -> infinity) integral_RR f_n$ exists, forming an increasing sequence. Since $f_n <= f$, then we know too that $lim_(n-> infinity) integral_RR f_n <= integral_RR f$. 
 
-  Conversely, for every $n$, let ${phi_(n, k)}_(k in NN)$ be a sequence of simple functions such that $phi_(n, k) arrow.t$ w.r.t $k$ and $phi_(n, k) -> f_n$ as $k -> infinity$. For each $k >= 1$, let $
+  Conversely, for every $n$, let ${phi_(n, k)}_(k in NN)$ be a sequence of simple functions such that $phi_(n, k) arrow.t$ w.r.t $k$ and $phi_(n, k) -> f_n$ as $k -> infinity$;
+  $
+  f_1 & wide f_2 & wide dots.c & wide f_k & wide f_(k+1) & wide dots.c & wide -> f\
+  dots.v & wide dots.v  & wide  dots.up & wide  dots.v & wide dots.v\
+  phi_(1, k) & wide phi_(2, k) & wide dots.up & wide phi_(k,k) & wide phi_(k+1, k) & wide dots.c \
+  dots.v & wide dots.v  & wide  dots.up & wide  dots.v & wide dots.v & wide dots.c \
+  phi_(1, 2) & wide phi_(2, 2) & wide dots.up & wide phi_(k,2) & wide phi_(k+1, 2)& wide dots.c  \
+  phi_(1, 1) & wide phi_(2, 1) & wide dots.c & wide phi_(k,1) & wide phi_(k+1, 1) & wide dots.c \
+  
+  $
+   For each $k >= 1$, let $
   g_k := max{phi_(1,k), phi_(2,k), dots, phi_(k,k)}.
   $ Then, $g_k$ simple for each $k$, and $g_k arrow.t$ and $g_k <= f$. So, $lim_(k->infinity) g_k$ exists. Then, for all $n >= 1$, $lim_(k->infinity) g_k >= lim_(k->infinity) phi_(n, k) = f_n$ so $lim_(k->infinity) g_k >= lim_(n -> infinity) f_n = f$. Thus, $lim_(k -> infinity) integral_RR g_k = integral_RR f$ by a previous theorem. Since $forall k >= 1$, $phi_(1, k), phi_(2, k), dots.c, phi_(k, k) <= f_k$, $g_k <= f_k$ and thus by monotonicity $integral_RR g_k <= integral_RR f_k => integral_RR f =  lim_(k -> infinity) integral_RR g_k <= lim_(k->infinity) integral_RR f_k$ as desired.
 ]
@@ -1314,7 +1324,7 @@ $ Similar work gives $integral_RR tilde(f) = integral_RR f + integral_RR f_1^-$,
 ]
 
 #theorem("Dominated Convergence Theorem (DOM)")[
-Assume ${f_n}, f$ measurable with $lim_(n) f_n = f$. If there exists a $g in L^1 (RR)$ such that $|f_n| <= |g|$ for all $n$, then $f_n -> f$ in $L_1 (RR)$ i.e. $lim_(n->infinity) integral_RR |f_n - f| =0$. In particular, $integral_RR f = lim_n integral_RR f_n$.
+Assume ${f_n}, f$ measurable with $lim_(n) f_n = f$. If there exists a $g in L^1 (RR)$ such that $|f_n| <= |g|$ for all $n$, then $f_n -> f$ in $L^1 (RR)$ i.e. $lim_(n->infinity) integral_RR |f_n - f| =0$. In particular, $integral_RR f = lim_n integral_RR f_n$.
 ]
 
 #proof[

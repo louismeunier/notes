@@ -638,27 +638,64 @@ $ Remark that this polynomial does not have integer coefficients, but indeed mus
 // $
 ]
 
-#example[
-  We consider the fixed points of $S_5$ acting on various sets, in particular the quotient space $S_5 \/ F_(20)$, where $F_(20)$ the _Frobenius group_ of affine linear transformations $sigma : x |-> a x + b$, $a in FF_5^times$, $b in FF_5$. The possible orders of elements $sigma in F_20 subset S_5$ are $
-  1 <-> 1^5, 5 <-> (0 1 2 3 4), 4 <-> (1 2 4 3), 2 <-> (14) (23).
-  $ In particular, each (non-identity) permutation has _at most_ one fixed point. Remark that to find the cycle shape when acting on $S_5 \/ F_(20)$, it suffices to check if the permutation given is conjugate to an element in $F_(20)$, since $(12) g F_(20) = g F_(20) <=> g^(-1) (12) g in F_20$.  
+== The Exceptional Outer Automorphism of $S_6$
+
+We consider the fixed points of $S_5$ acting on various sets, in particular the quotient space $S_5 \/ F_(20)$, where $F_(20)$ the _Frobenius group_ of affine linear transformations $sigma : x |-> a x + b$, $a in FF_5^times$, $b in FF_5$. The possible orders of elements $sigma in F_20 subset S_5$ are $
+1 <-> 1^5, 5 <-> (0 1 2 3 4), 4 <-> (1 2 4 3), 2 <-> (14) (23).
+$ In particular, each (non-identity) permutation has _at most_ one fixed point. One can verify that elements of these types indeed exist in $F_20$.
+
+  Remark that to find the cycle shape when acting on $S_5 \/ F_(20)$, it suffices to check if the permutation given is conjugate to an element in $F_(20)$, since $(12) g F_(20) = g F_(20) <=> g^(-1) (12) g in F_20$. So, in short, $sigma in C$ for some conjugacy class $C subset S_5$ has no fixed points if it is not conjugate to an element in $F_20$. This holds more generally. 
 
   #align(center, table(
-    columns: 6,
+    columns: 7,
     inset:8pt,
     stroke:none,
-    $C$, $hash$, ${1,2,3,4,5}$, ${1,2,3,4,5,6}$, $S_5 \/ F_(20)$, [Shape on $S_5 \/ F_(20)$],
-    table.hline(start: 0, end: 6),
-    $id$, $1$, $5$, $6$, $6$, $()$,
-    $(12)$, $10$, $3$, $4$, $0$, $(a b) (c d) (e f)$,
-    $(12)(34)$, $15$, $1$, $2$, $2$, $(a b)(c d)$,
-    $(123)$, $20$, $2$, $3$, $0$, $(a b c) (d e f)$,
-    $(1234)$, $30$, $1$, $2$, $2$, $(a b c d)$,
-    $(12345)$, $24$, $0$, $1$, $1$, $(a b c d e)$,
-    $(123)(45)$, $20$, $0$, $1$, $0$, $(a b c d e f)$,
-    table.hline(start: 0, end:6)
-  )) Hence, the list of elements in the right-most column is precisely the cycle shapes of elements in the "exotic" $S_5 subset S_6$, not conjugate to the typical inclusion $S_5 arrow.hook S_6$.
-]
+    align: horizon,
+    $C$, $hash$, ${1,2,3,4,5}$, ${1,2,3,4,5,6}$, $S_5 \/ F_(20)$, [Shape on $S_5 \/ F_(20)$], "Reasoning",
+    table.hline(start: 0, end: 7),
+    $id$, $1$, $5$, $6$, $6$, $()$, "Identity",
+    $(12)$, $10$, $3$, $4$, $0$, $(a b) (c d) (e f)$,"Order 2 with no fixed points",
+    $(12)(34)$, $15$, $1$, $2$, $2$, $(a b)(c d)$,[Square of $(1234)$],
+    $(123)$, $20$, $2$, $3$, $0$, $(a b c) (d e f)$,"Order 3 with no fixed points",
+    $(1234)$, $30$, $1$, $2$, $2$, $(a b c d)$,"Order 4",
+    $(12345)$, $24$, $0$, $1$, $1$, $(a b c d e)$,"Order 5",
+    $(123)(45)$, $20$, $0$, $1$, $0$, $(a b c d e f)$,"Order 6 with no fixed points",
+    table.hline(start: 0, end:7)
+  )) 
+  
+Since $F_20$ of index $6$ in $S_5$, we have then a natural injection $
+f: S_5 -> "Aut"(S_5\/F_20) tilde.equiv S_6,
+$ with image $tilde(S_5) := im(f) subset S_6$. The cycle shapes of elements in $tilde(S_5)$ are precisely those listed in the 2nd-right-most column above.
+
+Now, we can realize $S_5 subset S_6$ naturally as the permutations that fix, say, $6$. However, its clear that while $S_5 tilde.equiv tilde(S_5)$, they are not conjugate to each other; indeed, $tilde(S_5)$ contains cycle shapes that $S_5$ does not, and since conjugation preserves cycle shape, they certainly cannot be conjugate.
+
+We have that $S_6$ acts transitively on $S_6 \/ S_5$, which is isomorphic as a $G$-set to the typical action of $S_6$ on 6 numbers. This induces a natural map $S_6 -> "Aut"(S_6\/S_5) tilde.equiv S_6$. One can show that this map is actually an automorphism of $S_6$, more specifically an _inner automorphism_, one that may be realized as conjugation by an element of $S_6$. But we can also view $S_6$ acting on $S_6 \/ tilde(S_5)$, which will also be a transitive group action and also induce an automorphism $S_6 -> "Aut"(S_6\/ tilde(S_5)) tilde.equiv S_6$. To view how this automorphism acts on elements of $S_6$, we view how elements of distinct conjugacy classes of $S_6$ affect $tilde(S_5)$. To do so, we need only consider that 1) automorphisms preserve order and 2) automorphisms induce bijections when restricted to conjugacy classes, namely, given a conjugacy class $C$, it must entirely map to another conjugacy class of the same size. We use the notation $("order")("letter if more than one of that order")$ for conjugacy classes.
+
+ #align(center,
+table(
+  columns: 4,
+  stroke: none,
+  inset: 0.5em,
+  $C$, $hash$, $S_6\/S_5$, $S_6\/tilde(S_5)$,
+  table.hline(start: 0, end: 4),
+  $1A$, $1$, $()$, $()$,
+  $2A$, $15$, $(12)$, $(a b)(c d)(e f)$,
+  $2B$, $45$, $(12)(34)$, $(a b)(c d)$,
+  $2C$, $15$, $(12)(34)(56)$, $(a b)$,
+  $3A$, $40$, $(123)$, $(a b c)(d e f)$,
+  $3B$, $40$, $(123)(456)$,$(a b c)$,
+  $4A$, $90$, $(1234)$, $(a b c d)$,
+  $4B$, $90$, $(1234)(56)$, $(a b c d)(e f)$,
+  $5A$, $144$, $(12345)$, $(a b c d e)$,
+  $6A$, $120$, $(123456)$, $(a b c)(d e)$,
+  $6B$, $120$, $(123)(45)$, $(a b c d e f)$,
+)
+)
+In particular, the automorphism $S_6 -> "Aut"(S_6 \/ tilde(S_5))$ interchanges the conjugacy classes $2A$ and $2C$, $3A$ and $3B$, and $6A$ and $6C$.
+
+
+  // Hence, the list of elements in the right-most column is precisely the cycle shapes of elements in the "exotic" $S_5 subset S_6$, not conjugate to the typical inclusion $S_5 arrow.hook S_6$.
+
 
 = Rings and Fields
 
