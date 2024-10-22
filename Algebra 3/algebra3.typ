@@ -386,7 +386,7 @@ There is a unique group of order 15, $ZZ\/15ZZ$; but this would need an element 
 #proof[
   It suffices to prove 1. holds. Let $
   X = {"all subsets of" G "of size" p^t}.
-  $ $X$ a $G$-set; for any $A in X$, $g A$ also a set of size $p^t$ hence $g A in X$. Moreover, $G$ acts on $X$ without fixed points (why?). We have in addition $
+  $ $X$ a $G$-set; for any $A in X$, $g A$ also a set of size $p^t$ hence $g A in X$. Moreover, $G$ acts on $X$ without fixed points; that is, there is no element $x$ in $X$ such that $g x = x$ for every $g in G$. We have in addition $
   hash X = mat(p^t dot m; p^t) = ((p^t m)(p^t m - 1) (dots.c) (p^t m - p^t + 1))/(p^t)! = product_(j=0)^(p^t - 1) ((p^t m - j)/(p^t - j)).
   $ The max power of $p$ dividing $p^t m - j$ will be the same as the maximum power of $p$ dividing $j$ itself (since $p | p^t m$), and by the same logic the same power that divides $p^t - j$. That is, then, the max power of $p$ that divides both numerator and denominator in each term of this product for each $j$, hence they will cancel identically in each term. Thus, $p divides.not hash X$ as desired.
 
@@ -617,7 +617,7 @@ $ We would like to calculate the number of orbits of $G$ acting on $X$, namely $
   inset: 8pt,
   columns: 5,
   stroke: none,
-  $C$, $hash$, $F$, [Shape], $X$,
+  "Conj. Class", $hash$, $F$, [Shape], $X$,
   table.hline(start: 0, end: 5),
   $id$, $1$, $6$, $1^6$, $t^6$,
   $(12)$, $6$, $0$, $(a b)(c d)(e f)$, $t^3$,
@@ -892,3 +892,69 @@ $ One can verify this indeed an isomorphism.
 #example[
   Let $R = RR$ and $p(x) = x^2 + 1$. Then, $RR[x]\/(x^2 + 1) = CC$.
 ]
+
+= Midterm Review
+== $A_5$ has no normal subgroups
+
+#proposition[
+  $A_5$, the group of even permutations on 5 letters, contains no normal subgroups.
+]
+Normal subgroups are always unions of conjugacy classes, so we begin by analyzing these. Remark that for any $x in A_5$, the conjugacy class $C_A (x)$ of $x in A_5$ is a subset of $C_S (x)$ of $x in S_5$. However, we cannot simply assume they are the same, since while two elements may be conjugate in $S_5$, the element needed to conjugate between them may not be in $A_5$.
+
+Let $x in A_5$. Then, by the orbit-stabilizer theorem, $
+hash C_A (x) = (hash A_5)/(hash "Stab"_A (x))
+$ since $A_5$ acts on $C_A (x)$ transitively by conjugation. Similarly, $
+hash C_S (x) = (hash S_5)/(hash "Stab"_S (x)).
+$ Note that $"Stab"_S (x) supset.eq "Stab"_A (x)$ a subgroup, hence $hash "Stab"_S (x) = k dot "Stab"_A (x)$ for some $k in NN$. Moreover, since $hash S_5 = 2 dot hash A_5$, we may combine the expressions above and find $
+hash C_S (x) = 2/k hash C_A (x) => k = 1, 2.
+$ So, in particular, $hash C_A (x)$ is either equal to or half of $hash C_S (x)$. Since we know $C_A (x) subset C_S (x)$, then if the two are of the same size they are therefore equal.
+
+We can now specialize to particular elements in $A_5$. 
+
+- $(a b)(c d)$: there are $15$ such elements in $A_5$, hence $hash C_S ((a b)) = 15$. This isn't divisble by 2, hence it must be that $C_S ((a b)) = C_A ((a b))$. (We can also see this by noting that $(a b)$ stabilizes $(a b)(c d)$ but isn't contained in $A_5$, so the formula above gives the same result).
+- $(a b c)$: there are 20 3-cycles in $A_5$, so we need to do a little more work here. Notice that by our work above $
+C_S (x) = C_A (x) <=> hash "Stab"_S (x) = 2 dot hash "Stab"_A (x) <=> "Stab"_A (x) subset.neq "Stab"_S (x),
+$ so to show the conjugacy classes are equal, it suffices to show that the stabilizers _aren't_ equal. Remark that, for instance, $(1 2) in "Stab"_S ((345))$, but $(12) in.not A_5$ so certainly $(1 2) in.not "Stab"_A ((3 4 5))$. It follows that the two subgroups are not equal, and thus $C_A ((3 4 5)) = C_S ((3 4 5)) = C_S ((a b c))$.
+- $(a b c d e)$: there are 24 such elements in $A_5$; but remark that $24 divides.not hash A_5 = 60$, hence it can't be that $A_5$ acts transitively on the set of $5$-cycles. It follows then by our work above that there must be precisely two distinct conjugacy classes, each of size 12, of $5$-cycles in $A_5$, which we can represent, for instance, by $C_A ((12345)), C_A ((12354))$.\ \ We can see this more explicitly another way. Put $sigma := (1 2 3 4 5)$ and consider again $"Stab"_S (sigma)$. Clearly, $sigma^t in "Stab"_S (sigma)$ for $t = 0, dots, 4$, so $"Stab"_S (sigma) >= 5$; remark that each of these elements in $A_5$ as well. Suppose $g in "Stab"_S (sigma)$. Then, for every $k in {1, dots, 5}$, $
+sigma = g^(-1) sigma g &<=> sigma (k) = g^(-1) sigma g(k)\
+& <=> g (k + 1) = g (k) + 1,
+$ since $sigma$ just "shifts" elements (mod $5$). In particular, such $g$'s are uniquely determined by their effect on a single element, since then we can apply this recursive relation to find its affects on the others. So, we have $5$ choices for, say, $g(1)$, and so in particular $hash "Stab"_S (sigma) <= 5$, and thus equals $5$. Hence, since every element in the stabilizer also in $A_5$, we conclude that $"Stab"_A (sigma) = "Stab"_S (sigma)$, and thus $hash C_A (sigma) = 1/2 hash C_S (sigma)$.
+
+In summary, we have the following table:
+
+#align(center, table(
+  columns: 2,
+  stroke: none,
+  inset: .5em,
+  "Conj. Class", $hash$,
+  table.hline(start: 0, end: 2),
+  $()$, $1$,
+  $(12)(34)$, $15$,
+  $(123)$, $20$,
+  $(12345)$, $12$,
+  $(12354)$, $12$,
+  table.hline(start: 0, end: 2),
+  "", $60$
+))
+
+We can now use the fact that normal subgroups are always unions of conjugacy classes and that the order of a subgroup always divides the order of the group to conclude that $A_5$ has no normal subgroups. Indeed, the possible orders of subgroups of $A_5$ would be the divisors of $60$, namely, $
+1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30,
+$ none of which cannot be achieved by adding cardinalities of conjugacy classes.
+
+== Sylow 2-subgroups of $S_(n-1), S_n$
+
+#proposition[
+  Let $n$ odd. Then, $S_(n-1)$ and $S_n$ have the same Sylow 2-subgroup, and the number of Sylow 2-subgroups in $S_n$ is precisely $n$ times that in $S_(n-1)$.
+]
+
+We have the natural inclusion $S_(n-1) subset S_n$ by fixing an element, hence any Sylow 2-subgroups of $S_(n-1)$ are necessarily contained in $S_n$. Moreover, we have that $
+(hash S_n)/(hash S_(n-1)) = (n!)/((n-1)!) = n,
+$ by assumption odd, hence the powers of two in $n!, (n-1)!$ are the same, and so the Sylow 2-subgroups of the two must be the same as well.
+
+To show the second claim, let $
+X_n := {"Sylow" 2"-subgroups of" S_n}, quad X_(n-1) := {"Sylow" 2"-subgroups of" S_(n-1)}.
+$ Fix some $P in X_(n-1)$, noting that $P in X_(n)$ as well. Then, we have that $
+hash X_n = (hash S_n)/(hash "Stab"_(S_n) (P)), wide hash X_(n-1) =  (hash S_(n-1))/(hash "Stab"_(S_(n-1)) (P)).
+$ Clearly, $"Stab"_(S_(n-1)) (P) subset "Stab"_(S_(n)) (P)$, so $hash "Stab"_(S_(n)) (P) = k dot hash "Stab"_(S_(n-1)) (P)$ for some $k in NN$. This implies then that $
+hash X_n = (n dot hash S_(n-1))/(k dot hash "Stab"_(S_(n-1)) (P)) = n/k hash X_(n-1),
+$ so in particular, $hash X_n <= n dot hash X_(n-1)$. I claim that $k = 1$...
