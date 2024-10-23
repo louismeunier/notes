@@ -960,3 +960,25 @@ hash X_n = (n dot hash S_(n-1))/(k dot hash "Stab"_(S_(n-1)) (P)) = n/k hash X_(
 $ so in particular, $hash X_n <= n dot hash X_(n-1)$. I claim that $k = 1$, namely that $"Stab"_(S_n) (P) = "Stab"_(S_(n-1)) (P)$. Clearly, we have $"Stab"_(S_n) (P) supset.eq "Stab"_(S_(n-1)) (P)$. Suppose there existed some $sigma in "Stab"_(S_n) (P) minus "Stab"_(S_(n-1)) (P)$; namely, then, $sigma in S_(n) - S_(n-1)$ i.e. $sigma$ doesn't fix $n$. Let $p in P$, then remark that $
 sigma^(-1) p sigma (n) &= n <=> p sigma (n) = sigma (n) <=> p "fixes" sigma(n)
 $ $sigma(n) eq.not n$ by assumption, so this means that $p$ fixes some non-$n$ element. I claim this is impossible. I claim that $P$ acts upon ${1, dots, n - 1}$ without fixed points. Suppose towards a contradiction that there exists some $x in {1, dots, n-1}$ (wlog, $x = n-1$) such that $p x = x$ for every $p in P$. Then, this implies we can embed $P subset S_(n-2)$. However, $hash P = 2^t$ and $hash S_(n-2) = (hash S_(n))/(n(n-1)) = 2^t m/(n(n-1))$ so $hash P divides.not hash S_(n-2)$ so this is impossible. Hence, $p$ acts upon ${1, dots, n - 1}$ without fixed points, and thus such a $sigma$ cannot exist. We conclude $"Stab"_(S_n) (P) = "Stab"_(S_(n-1)) (P)$ indeed. The proof follows.
+
+== Midterm Questions
+
+#proposition[
+  Describe two non-abelian groups of cardinality 8 and show that they are not isomorphic.
+]
+
+#proposition[
+  Write down the class equation for the symmetric group $S_4$ on $4$ elements and use this to give a complete list of the normal subgroups of $S_4$.
+]
+
+#proposition[
+  Give a formula for the number of distinct ways of coloring the 8 corners (i.e. vertices) of a cube with $t$ distinct colors. (Note that the class equation computed in Question 2 can and should be used to assist you with this question.)
+]
+
+#proposition[
+  Let $p$ be a prime number. State the Sylow theorem for $p$. Starting with the fact (which was proven in class, and which you may assume for this question) that every finite group of cardinality not a power of $p$ can be made to act transitively on a set whose cardinality is neither $1$ nor divisible by $p$, show that eery finite group contains a Sylow $p$-subgroup.
+]
+
+#proposition[
+  Show that $S_5$ can be made to act transitively on a set $X$ of size $6$, and describe how the elements of order 3 and 6 in $S_5$ act on $X$. (I.e. describe their cycle shapes.)
+]

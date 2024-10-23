@@ -1364,3 +1364,108 @@ If $f in L^1 (RR)$, then for all $epsilon > 0$, $exists N >= 1$ such that $integ
 #proof[
 Let $h_n = bb(1)_{|f| >n}$ then $lim_(n->infinity) integral_{|f| > n} f = 0$.
 ]
+
+#corollary[If ${A_n} subset.eq cal(M)$ such that $A_n arrow.t$, then $integral_(union_(n=1)^infinity A_n) f = lim_(n->infinity) integral_(A_n) f$ ($bb(1)_(A_n) f -> bb(1)_(union_(n=1)^infinity A_n) f$).]
+
+#corollary("Countable Additivity")[If ${B_n} subset.eq cal(M)$ are disjoint, then $integral_(union_(n=1)^infinity B_n) f = sum_(n=1)^infinity integral_(B_n) f$.]
+
+#corollary[
+  If ${A_n} subset.eq cal(M)$ such that $A_n arrow.b$, then $integral_(sect_(n=1)^infinity A_n) f = lim_(n->infinity) integral_(A_n) f$.
+]
+
+#proposition[Assume $f$ is non-negative, measurable, and finite-valued a.e.. Then, for every $k in ZZ$, put $A_k := {x in RR : 2^k  <= f(x) < 2^(k+1)}$. Then, $
+f "integrable" <=> integral_RR f < infinity <=> sum_(k in ZZ) 2^k m(A_k) < infinity.
+$
+]
+
+#proof[($=>$) Note that the $A_k$'s disjoint and $union.big_(k in ZZ) A_k = {0 < f < infinity}$. So, $
+integral_RR f &= underbrace(integral_{f=0} f, = 0 "since" f = 0) + integral_{0<f<infinity} + underbrace(integral_{f=infinity} f, = 0 "since" f < infinity "a.e.") = sum_(k in ZZ) integral_(A_k) f.
+$ For each $k in ZZ$, for every $x in A_k$, $2^k <= f(x) < 2^(k+1)$ so $2^k m(A_k) <= integral_A_k f(x) <2^(k+1) m(A_k)$. Hence, $
+sum_(k in ZZ) 2^k m(A_k) <= sum_(k in ZZ) integral_(A_k) f = integral_RR f < infinity.
+$ 
+($arrow.double.l$) Suppose $sum_(k in ZZ) 2^k m(A_k) < infinity$. We know again $
+integral_RR f = integral_({0 < f < infinity}) f =_("By MON") sum_(k in ZZ) integral_(A_k) f < sum_(k in ZZ) 2^(k+1) m(A_k) = 2 sum_(k in ZZ) 2^(k) m(A_k) < infinity. // TODO check
+$
+]
+
+#example[
+  Let $f(x) = |x|^(-alpha) bb(1)_[-1,1] (x)$, with $f(0) = infinity$ and $alpha > 0$; $f$ finite-valued a.e.. For every $k in ZZ$, put $A_k := {2^k <= f < 2^(k+1)} = {x in [-1, 1] : 2^k <= |x|^(-alpha) < 2^(k+1)}$. By definition, $|f| >= 1$, so $
+  A_k = [-2^(-k/alpha), -2^((-(k+1))/alpha)) union (2^((-(k+1))/alpha), 2^(-k/alpha)] "for" k >= 0, wide A_k = nothing "if" k < 0.
+  $ Hence, $
+  sum_(k in ZZ) 2^k m(A_k) = sum_(k=0)^infinity 2^k dot 2 dot (1-2^(-1/alpha))2^(-k/alpha) = 2(1-2^(-1/alpha)) sum_(k=0)^infinity 2^(k(1-1/alpha)).
+ $ Hence, the series $< infinity <=> alpha < 1$, and thus $integral_[-1,1] |x|^(-alpha) dif x < infinity <=> alpha < 1$.
+]
+
+#example[
+  Let $g(x) = |x|^(-beta) bb(1)_(RR-[-1,1]) (x)$ with $beta > 0$. We have $|g| < 1$; we again put $
+  A_k := {2^k <= g < 2^(k+1)} = cases(
+    [-2^(-k/beta), -2^((-(k+1))/beta)) union (2^((-(k+1))/beta), 2^(-k/beta)] & "if" k < 0\
+    nothing & "if" k >= 0.
+  ) .
+  $ So, $
+  integral_(RR - [-1, 1]) |x|^(-beta) dif x < infinity <=> sum_(k in ZZ) 2^k m(A_k) < infinity <=> beta > 1.
+  $
+]
+
+#example[
+Let $f_n (x) = (1 + x/n)^(-n) sin(x/n)$. What is $lim_(n->infinity) integral_((0, infinity)) f_n (x) dif x$? We have that for all $x > 0$, $lim_(n->infinity) f_n (x) = 0$. We have that since $|sin (x/n)| <= 1$, so $
+|f_n (x)| <= (1+x/n)^(-n) <= (1+x/2)^(-2) forall x > 0, forall n >= 2.
+$ Let $g(x) := (1+x/2)^(-2)$. We would like to apply DOM, so we need to check that $g in L^1 ((0, infinity))$. We have that $
+integral_((0, infinity)) g = integral_(0,1] g + integral_((1, infinity)) g <=  integral_(0,1] 1 + underbrace(integral_((1, infinity)) 4/x^2 dif x, beta = 2 "of previous example")< infinity,
+$ so indeed $g in L^1 ((0, infinity))$. Applying DOM, then, we have that $
+lim_(n->infinity) integral_((0, infinity)) f_n = integral_((0, infinity)) lim_(n->infinity) f_n = 0.
+$
+]
+
+#example[
+  Let $c > 0$, $f_n (x) = x^(-c) (cosh x)^(-1/n)$. What is $lim_n integral_((1, infinity)) f_n$?
+
+  For every $x > 1$, $cosh x > 1$, so $(cosh x)^(-1/n) arrow.t$ with respect to $n$, with $lim_(n) (cosh x)^(-1/n) = 1$, so $lim_(n->infinity) f_n (x) = x^(-c)$ for every $x > 1$. Let $g(x) = x^(-c)$, then. By previous examples, when $c > 1$, $g in L^1 ((1, infinity))$ so DOM applies and thus $
+  lim_n integral_((1, infinity)) f_n = integral_((1, infinity)) lim_n f_n = integral_((1, infinity)) x^(-c) dif x < infinity.
+  $
+  When $0 < c <= 1$, by Fatou, $
+  liminf_n integral_((1, infinity)) f_n >= integral_((1,infinity)) liminf_n (f_n) = integral_((1,infinity)) x^(-c) dif x,
+  $ since $f_n$ converges. When $0 < c <= 1$, the RHS $= infinity$, and thus $lim_(n->infinity) integral_((1,infinity)) f_n = infinity$.
+]
+
+#example[
+  Let $c >= 0$, $f_n (x) := n/(1+n^2 x^2)$ for $x >= 0$. What is $lim_n integral_([c, infinity)) f_n$? 
+  
+  We have that $
+  lim_n f_n (x) = cases(0 & "if" x > 0, infinity & "if" x = 0).
+  $ 
+  
+  On $x in [1, infinity)$, $f_n (x) >= f_(n+1) (x)$ for all $n >= 1$, namely $f_n arrow.b$, and so $f_n (x) <= f_1 (x) = 1/(1+x^2)$. $f_1 (x) in L^1 (RR)$, by comparison with $1/(x^2)$ $(alpha = 2)$.
+
+  If $x in (0, 1)$, $f_n (x) = 1/x (n x)/(1 + (n x)^2) <= A 1/x $, with $A := sup_(t > 0) t/(1+t^2) < infinity$. But $A/x in.not L^1 ((0, 1))$.
+
+  When $c > 0$, for all $x >= c$ and for all $n >= 1$, $
+  f_n (x) <= bb(1)_([1, infinity)) (x) 1/(1+x^2) + bb(1)_[c, 1) A/x <= bb(1)_[1, infinity) (x) 1/(1+x^2) + bb(1)_[c, 1) (x) A/c in L^1 ([c, infinity)).
+  $ Hence, we may apply DOM, so $
+  lim_n integral_([c, infinity)) f_n  = integral_([c, infinity)) lim_n f_n = 0,
+  $ when $c > 0$. However, when $c = 0$, we have no such dominating function; so what is $integral_[0, infinity) f_n (x) dif x$?
+]
+
+== Riemann Integral vs Lebesgue Integral
+
+Recall; let $f$ be bounded on $[a, b]$. Then, $f$ is Riemann integrable on $[a, b]$ if $
+cases(f "is continuous on" [a, b], f "is monotonic on" [a, b], f "is continuous except at possibly finitely many points in" [a, b]).
+$
+
+Recall the function $f = bb(1)_(QQ sect [0, 1])$. $f$ is not Riemann integrable, but is Lebesgue integrable, because $|f| <= bb(1)_[0, 1] in L^1 (RR)$.
+
+#remark[
+  1. $exists$ bounded functions on $[a, b]$ that are not Riemann integrable.
+  2. In general, $g$ being Riemann integrable and $|f| <= |g| arrow.double.r.not f$ is Riemann integrable ($bb(1)_(QQ sect [0, 1]) <= bb(1)_[0,1]$).
+  3. In general, DOM and MON do _not_ apply to Riemann integrable. For instance, consider ${q_n}$ an enumeration of $QQ sect [0, 1]$. Define $f_n (x) := cases(1 &"if" x in {q_1, dots, q_n}, 0 &"else")$. $f_n arrow.t$, with $f_n -> bb(1)_(QQ sect [0, 1])$. So, MON applies with the Lebesgue integral, but $f_n$ is only discontinuous, for every $n$, at finitely many points, so $f_n$ Riemann integrable with $integral_0^1^((R)) f_n = 0$, but the limit is not Riemann integrable.
+]
+
+#theorem[Assume $f$ is Riemann integrable on $[a, b]$. Then, $f$ is Lebesgue integrable on $[a, b]$, i.e. $f in L^1 ([a, b])$. Moreover, $integral_a^b^((R)) f = integral_[a, b] f$.]
+
+#proof[
+  $f$ is Riemann integrable on $[a, b]$, so there is some $M > 0$ such that $|f| <= M$ on $[a, b]$. Further, there exist step functions $phi_n, psi_n$ with $phi_n <= f <= psi_n$ on $[a, b]$ and $|phi_n|, |psi_n| <= M$ for all $n >= 1$, and $
+  lim_(n->infinity) integral_(a)^b^((R)) phi_n =   integral_(a)^b^((R)) f = lim_(n->infinity) integral_(a)^b^((R)) psi_n.
+  $ Denote $phi := lim_(n->infinity) phi_n, psi:= lim_(n->infinity) psi_n$, which exist by Monotonicity. Since $phi_n, psi_n$ are step functions, they are measurable hence $phi, psi$ measurable with $phi <= f <= psi$. Observe that the Lebesgue, Riemann integral coincide on step functions. Hence, $integral_a^b^((R)) phi_n = integral_[a, b] phi_n$, same with $psi_n$. By DOM, (with $M$ as the dominator) $
+  integral_[a, b] phi = lim_n integral_[a, b] phi_n  = lim_n integral_a^b^((R)) phi_n = integral_a^b^((R)) (f) = lim_n integral_a^b^((R)) psi_n = lim_n integral_[a, b] psi_n = integral_[a, b] psi.
+  $ Since $phi <= psi$ and $integral_[a, b] (psi - phi) = 0$, we have that $psi = phi$ a.e. on $[a, b]$ by properties of integrals of non-negative functions, and thus $f = phi = psi$ a.e. on $[a, b]$. In particular, then, $f$ is measurable, being equal a.e. to measurable functions. Thus, since $|f| <= M$ on $[a, b]$, $f in L^1 ([a, b])$, and so since integrals agree on functions that are equal a.e.,  $integral_[a, b]  f = integral_[a, b] phi = integral_a^b^((R)) f$ as desired.
+]
