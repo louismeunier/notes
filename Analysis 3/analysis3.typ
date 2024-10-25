@@ -1469,3 +1469,117 @@ Recall the function $f = bb(1)_(QQ sect [0, 1])$. $f$ is not Riemann integrable,
   integral_[a, b] phi = lim_n integral_[a, b] phi_n  = lim_n integral_a^b^((R)) phi_n = integral_a^b^((R)) (f) = lim_n integral_a^b^((R)) psi_n = lim_n integral_[a, b] psi_n = integral_[a, b] psi.
   $ Since $phi <= psi$ and $integral_[a, b] (psi - phi) = 0$, we have that $psi = phi$ a.e. on $[a, b]$ by properties of integrals of non-negative functions, and thus $f = phi = psi$ a.e. on $[a, b]$. In particular, then, $f$ is measurable, being equal a.e. to measurable functions. Thus, since $|f| <= M$ on $[a, b]$, $f in L^1 ([a, b])$, and so since integrals agree on functions that are equal a.e.,  $integral_[a, b]  f = integral_[a, b] phi = integral_a^b^((R)) f$ as desired.
 ]
+
+#example[
+  We return to our example of computing $lim_(n->infinity) integral_([0, infinity)) n/(1+n^2 x^2) dif x$. We may rewrite $
+  integral_([0, infinity)) n/(1+n^2 x^2) dif x = integral_([0, T]) n/(1+n^2 x^2) dif x + integral_([T, infinity)) n/(1+n^2 x^2) dif x
+  $ where $T > 0$. We know from the previous example that the RHS integral converges to 0 by application of DOM. Now, $n/(1+n^2 x^2)$ is continuous on $[0, T]$ and thus Riemann integrable, and so by the previous theorem $
+  integral_([0, T]) n/(1+n^2 x^2) = integral_([0, T])^((R)) n/(1+n^2 x^2) = arctan(n T).
+  $ As $n -> infinity$, $arctan(n T) -> pi/2$, and thus the limit of the whole integral indeed exists, and is in fact equal to $pi/2$.
+]
+
+== $L^p$-space
+
+#definition([$p$-integrable])[Let $f$ measurable and $1 <= p < infinity$. We say $f$ is _$p$-integrable_ and write $f in L^p (RR)$ if $integral_RR |f|^p < infinity$, i.e. $|f|^p in L^1 (RR)$.
+
+For $f in L^p (RR)$, define the $p$-norm $
+||f||_p := (integral_RR |f|^p)^(1/p).
+$
+]
+
+#remark[When $p = 1$, we see that $||dot||_1$ a norm fairly clearly from properties of the integral. We need to show this for more general $p > 1$.]
+
+#remark[$||dot||_p$ also defined when $p = infinity$; given $f$ measurable, we define $
+||f||_infinity := "ess sup"_(x in RR) |f(x)| := inf {a in overline(RR) : |f| <= a "a.e."}.
+$ Then, we define $
+L^infinity (RR) := {f "measurable s.t." ||f||_infinity < infinity}.
+$ One can show that if $f in L^infinity (RR)$, $|f| <= ||f||_infinity$ a.e..
+]
+
+#theorem("Hölder's Inequality")[Let $1 < p < infinity$ and let $q := p/(p-1)$ (such a $q$ is called the _Hölder Conjugate_ of $p$). If $f in L^p (RR)$ and $g in L^q (RR)$, then $f g in L^1 (RR)$, and $
+||f g||_1 <= ||f||_p ||g||_q.
+$ In particular, if $p = q = 2$, then we have the _Cauchy-Schwarz Inequality_.
+]
+
+#remark[$1/p + 1/q = 1$.]
+
+#proof[
+  We will employ "Young's Inequality", which states that for all $a, b >= 0$, $a b <= (a^p)/p + (b^q)/q$ where $1/p + 1/q = 1$. Since $f in L^p, g in L^q$,  set $tilde(f) := f/(||f||_p)$ and $tilde(g) := g/(||g||_q)$. Then, a.e. $
+  |tilde(f) tilde(g)| <= (|tilde(f)|^p)/p + (|tilde(g)|^q)/q.
+  $ We have $
+  integral_RR |tilde(f) tilde(g)| = integral_RR (|f g|)/(||f||_p ||g||_q)
+  $ and $
+  integral_RR  (|tilde(f)|^p)/p + (|tilde(g)|^q)/q = 1/p (integral_(RR) |f|^p)/(||f||_p^p) + 1/q (integral_(RR) |g|^q)/(||g||_q^q) = 1/p + 1/q = 1,
+  $ and thus $
+  integral_(RR) |f g| = ||f g||_q <= ||f||_p ||g||_q
+  $ as required.
+]
+
+#remark[This inequality also holds for $p = 1, q = infinity$ (assignment question).]
+
+#lemma[For all $a, b >= 0$, $a b <= (a^p)/p + (b^q)/q$ where $1/p + 1/q = 1$.]
+#proof[
+  // TODO
+]
+
+#theorem("Minkowski's Inequality")[
+Let $1 <= p < infinity$ and $f, g in L^p (RR)$. Then, $f + g in L^p (RR)$, and in particular $
+||f + g||_p <= ||f||_p + ||g||_p.
+$ In particular, then, $||dot||_p$ satisfies the triangle inequality and is indeed a norm on $L^p (RR)$.
+]
+#proof[
+We have $|f+ g|^p <= 2^p (|f|^p + |g|^p)$ hence $f + g in L^p (RR)$ since $|f|^p, |g|^p in L^1 (RR)$. Further $
+integral_RR |f+g|^p = integral_RR |f+g| |f+g|^(p-1) &<= integral_RR |f| |f+g|^(p-1) + integral_RR |g| |f+g|^(p-1)\
+("Hölder's") wide &<= (integral_(RR) |f|^p)^(1/p) (integral_RR |f+g|^((p-1)q))^(1/q) +  (integral_(RR) |g|^p)^(1/p) (integral_RR |f+g|^((p-1)q))^(1/q) \
+&<= (||f||_p + ||g||_p) (integral_RR |f+g|^p)^(1/q)\
+& => ||f+g||_p <= ||f||_p + ||g||_p
+$
+]
+
+#remark[Minkowski's also holds for $p = infinity$.]
+
+#lemma[
+  Let $1 <= p < infinity$. If ${g_k} in L^p (RR)$ such that $sum_(k=1)^infinity ||g_k||_p < infinity$, then $exists G in L^p (RR)$ such that $G_m := sum_(k=1)^m g_k -> G$ as $m -> infinity$ a.e. as well as in $L^p (RR)$.
+]
+
+#proof[
+  Put $tilde(G_m) := sum_(k=1)^m |g_k|$ and $tilde(G) := sum_(k=1)^infinity |g_k|$. Then, $tilde(G_m) arrow.t$ with $lim_(m->infinity) tilde(G_m) = tilde(G)$. By MON, $
+  integral_RR tilde(G)^p = lim_(m->infinity) integral_RR tilde(G_m)^p = lim_(m->infinity) ||tilde(G_m)||_p^p <= lim_(m->infinity) (sum_(k=1)^m ||g_k||_p)^p
+  $ where the final inequality is by Minkowski's. Then, $
+   <= (lim_(m->infinity) sum_(k=1)^m ||g_k||_p)^p = (sum_(k=1)^infinity ||g_k||_p)^p < infinity, "by assumption"
+  $ Hence, $tilde(G) in L^p (RR)$ and $||tilde(G)||_p <= sum_(k=1)^infinity ||g_k||_p$ and thus $tilde(G)$ finite-valued a.e. and hence $sum_(k=1)^infinity g_k$ absolutely convergent a.e.. Set $G =lim_(m->infinity) G_m = sum_(k=1)^infinity g_k$ a.e.. Moreover, we know $
+  |G| = |sum_(k=1)^infinity g_k| <= sum_(k=1)^infinity |g_k| = tilde(G) => G in L^p (RR)
+  $  and $
+  |G - G_m| <= sum_(k=m+1)^infinity |g_k|.
+  $ Fix $epsilon > 0$. Since $sum_(k=1)^infinity ||g_k||_p < infinity$, exists some $M >= 1$ such that $sum_(k=M+1)^infinity ||g_k||_p < epsilon$. Then, $
+  integral_RR |G - G_M|^p <= integral_RR (sum_(k=M+1)^infinity |g_k|)^p &= lim_(L -> infinity) integral_RR (sum_(k=M+1)^L |g_k|)^p\
+  ("Minkowski") wide & <= lim_(L->infinity) (sum_(k=M+1)^L ||g_k||_p)^p\
+  &= (sum_(k=M+1)^infinity ||g_k||_p)^p <= epsilon
+  $ hence $G_m -> G$ in $L^p (RR)$.
+]
+
+#theorem[Let $1 <= p < infinity$. Then $L^p (RR)$ is a complete normed space under the $p$-norm.]
+
+#proof[
+  Let $f_n in L^p (RR)$ be a Cauchy sequence under $||dot||_p$. We can choose a subsequence ${n_k}$ such that for every $k >= 1$, $||f_n_(k+1) - f_(n_k)||_p <= 2^(-k)$. Set $g_k := f_(n_(k+1)) - f_(n_k)$. By the lemma, if $G_m := sum_(k=1)^m g_k$, there exists some $G in L^p (RR)$ such that $G_m -> G$ a.e. and in $L^p (RR)$. In fact, we have $
+  G_m = sum_(k=1)^m g_k = sum_(k=1)^m (f_(n_(k + 1)) - f_n_k) = f_(n_(m+1)) - f_n_1,
+  $ hence $
+  G = lim_(m->infinity) G_m = (lim_(m->infinity) f_(n_(m+1))) - f_n_1.
+  $ Let $f := G + f_n_1$. Then, $f = lim_(m->infinity) f_(n_m)$ a.e. and since $G_m -> G$ in $L^p$, we have that $f_n_m -> f$ in $L^p$ as $m -> infinity$. It remains to show convergence in $L^p$ along the whole subsequence.
+
+  Fix $epsilon > 0$. Let $N >= 1$ such that $sup_(k, ell >= n) ||f_k - f_ell||_p < epsilon$ and $m$ sufficiently large such that $n_m > n$ and $||f_(n_m) - f||_p <= epsilon$. Then, $
+  ||f_n - f||_p <= underbrace(||f_n - f_(n_m)||_p, < epsilon) + underbrace(||f_n_m - f||_p, < epsilon)<2 epsilon,
+  $ completing the proof.
+]
+
+#remark[$L^infinity$ also complete.]
+
+#lemma[Bounded and compactly supported functions are dense in $L^p (RR)$.]
+
+#proof[
+  Given $f in L^p (RR)$, set $
+  f_n (x) = bb(1)_([-n,n]) (x) dot f(x) dot bb(1)_({|f| <= n}) (x)
+  $ which are bounded and compactly supported on $[-n, n]$. We claim $f_n -> f$ in $L^p (RR)$. We have $integral_RR |f_n - f|^p $ nonzero only if $x in.not [-n,n]$ or $|f(x) > n|$. Hence $
+  integral_RR |f_n - f|^p <= integral_(RR \\ [-n,n]) |f|^p + integral_({|f| > n}) |f|^p -> 0 "as" n-> infinity. 
+  $
+]
