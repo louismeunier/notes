@@ -276,7 +276,7 @@ $ Note that $(B sect A_1) union (B sect A_1^c sect A_2^c) = B sect (A_1 union A_
 m^ast (B) >= m^ast (B sect (A_1 union A_2)) + m^ast (B sect (A_1 union A_2)^c),
 $ and since the other direction of the inequality comes for free, we conclude $A_1 union A_2 in cal(M)$.
 
-Let now ${A_n} subset.eq cal(M)$. We "disjointify" ${A_n}$; put $B_1 := A_1$, $B_n := A_n /\ union.big_(i=1)^(n-1) A_i, n >= 2$, noting $union.big_n A_n = union.big_n B_n$, and each $B_n in cal(M)$, as each is but a finite number of set operations applied to the $A_n$'s, and thus in $cal(M)$ as demonstrated above. Put $E_n := union.big_(i=1)^n B_i$, noting again $E_n in cal(M)$. Then, for all $B subset.eq RR$, $
+Let now ${A_n} subset.eq cal(M)$. We "disjointify" ${A_n}$; put $B_1 := A_1$, $B_n := A_n \\ union.big_(i=1)^(n-1) A_i, n >= 2$, noting $union.big_n A_n = union.big_n B_n$, and each $B_n in cal(M)$, as each is but a finite number of set operations applied to the $A_n$'s, and thus in $cal(M)$ as demonstrated above. Put $E_n := union.big_(i=1)^n B_i$, noting again $E_n in cal(M)$. Then, for all $B subset.eq RR$, $
 m^ast (B) &= m^ast (underbrace(B sect E_n, "chop up" B_n)) +m^ast ( underbrace(B sect E_n^c, E_n subset.eq union B_n => E_n^c supset.eq (union B_n)^c))\
 &>= m^ast (B sect underbrace(E_n sect B_n, = B_n)) + m^ast (B sect underbrace(E_n sect B_n^c, = E_(n-1))) + m^ast (B sect (union.big_(n=1)^infinity B_n)^c)\
 & >= m^ast (B sect B_n) + m^ast (underbrace(B sect E_(n-1), "chop up" B_(n-1))) + m^ast (B sect (union.big_(n=1)^infinity B_n)^c)\
@@ -329,7 +329,7 @@ $forall a, b in RR$ with $a< b$, $(a, b) in cal(M)$, and $m((a, b)) = b - a$.
 
 == Properties of the Lebesgue Measure
 
-#proposition([Regularity Assumptions on $m$])[For all $A in cal(M)$, the following hold.
+#proposition([Regularity Properties of $m$])[For all $A in cal(M)$, the following hold.
 - For all $epsilon >0, exists G$ open such that $A subset.eq G$ and $m(G\\A) < epsilon$.
 - For all $epsilon > 0$, $exists F$-closed such that $F subset.eq A$ and $m(A\\F) <= epsilon$.
 - $m(A) = inf {m(G) : G "open", G supset.eq A}$.
@@ -561,7 +561,7 @@ $
 
   We claim each $N_k$ disjoint. Assume not, then $exists k eq.not ell$ (i.e. $q_k eq.not q_ell$) and $S_a, S_b in N$ such that $S_a + q_k = S_b + q_ell$. But then $S_a - S_b = q_ell - q_k in QQ$, hence $S_a tilde S_b$. But we constructed $N$ to have only one representative from each equivalence class, hence it must be that $S_a = S_b$, and so $S_a + q_k = S_a + q_ell => q_k = q_ell$, contradicting the assumed distinctness of the $q$'s; hence, the $N_k$'s indeed disjoint.
 
-  We claim next that $[0, 1] subset.eq union.big_(n-1)^infinity N_k$. Let $x in [0, 1]$. Then, $x tilde S_a$ for some unique $S_a in N$ and so $x - S_a in QQ$. But also, $x, S_a in [0, 1]$, hence $x - S_a in [-1, 1]$ (moreover, $x - S_a in [-1, 1] sect QQ$) and there must exist a $k$ such that $x - S_a = q_k$, since the $q_k$'s enumerate the entire $[-1, 1] sect QQ$. Thus, $x in N_k$ by the construction of the $N_k$'s. Thus, $[0, 1] subset.eq union.big_(n=1)^infinity N_k$ indeed.
+  We claim next that $[0, 1] subset.eq union.big_(k=1)^infinity N_k$. Let $x in [0, 1]$. Then, $x tilde S_a$ for some unique $S_a in N$ and so $x - S_a in QQ$. But also, $x, S_a in [0, 1]$, hence $x - S_a in [-1, 1]$ (moreover, $x - S_a in [-1, 1] sect QQ$) and there must exist a $k$ such that $x - S_a = q_k$, since the $q_k$'s enumerate the entire $[-1, 1] sect QQ$. Thus, $x in N_k$ by the construction of the $N_k$'s. Thus, $[0, 1] subset.eq union.big_(n=1)^infinity N_k$ indeed.
 
   On the other hand, $union.big_(k=1)^infinity N_k subset.eq [-1, 2]$ and so we have the "bound" $
   [0, 1] subset.eq union.big_(n=1)^infinity N_k subset.eq [-1, 2].
@@ -815,7 +815,7 @@ $ is measurable.
   $ $g_m$ is measurable for each $m >= 1$, hence $inf_m g_m$ is measurable, hence $limsup_n f_n$ is measurable. Similar logic follows for $liminf$.
 
   We could have show, more directly, that $
-  {limsup_n f_n < a}&= {inf_(m >= 1) sup(n>= m) f_n < a}\
+  {limsup_n f_n < a}&= {inf_(m >= 1) sup_(n>= m) f_n < a}\
   &= union.big_(m=1)^infinity {sup_(n>=m)  f_n < a}\
   &= union.big_(m=1)^infinity union.big_(k=1)^infinity {sup_(n>=m)  f_n <= a- 1/k}\ // turn strict inequality into nonstrict inequality!!
   &= union.big_(m=1)^infinity union.big_(k=1)^infinity sect.big_(n=m)^infinity { f_n <= a- 1/k}.
@@ -837,7 +837,7 @@ We have $
 &= {-infinity < liminf f_n < infinity} sect {-infinity < limsup f_n < infinity} sect {limsup f_n - liminf f_n = 0} in cal(M).
 $ Similarly, $
 {lim f_n = c} &= {x in RR : forall k >= 1, exists n >= 1 st forall m>=n, |f_n (x) - c| <= 1/k}\
-&= sect.big_(k=1)^infinity union.big_(n=1)^infinity sect.big_(m=n)^infinity {abs(f_n (x) - c) <= 1/k}.
+&= underbrace(sect.big_(k=1)^infinity, forall epsilon = 1/k > 0) underbrace(union.big_(n=1)^infinity, exists n >= 1) underbrace(sect.big_(m=n)^infinity, forall m >= n) {abs(f_n (x) - c) <= 1/k}.
 $ // TODO rewrite using Cauchy sequence characterization.
 ]
 
@@ -1339,7 +1339,7 @@ Assume ${f_n}, f$ measurable with $lim_(n) f_n = f$. If there exists a $g in L^1
 ]
 
 #remark[
-  We must fine $g in L^1 (RR)$ to dominate $|g| >= |f_n|$ irrespective of $n$. For instance, if $f_n = bb(1)_[n,2n]$, then $lim_(n) f_n = 0$, but $integral_RR f_n = n$ for all $n >= 1$. DOM doesn't apply, since we would need a constant $1$ function to dominate all $f_n$, which is not integrable.
+  We must find $g in L^1 (RR)$ to dominate $|g| >= |f_n|$ irrespective of $n$. For instance, if $f_n = bb(1)_[n,2n]$, then $lim_(n) f_n = 0$, but $integral_RR f_n = n$ for all $n >= 1$. DOM doesn't apply, since we would need a constant $1$ function to dominate all $f_n$, which is not integrable.
 ]
 
 #proposition[Assume $f in L^1 (RR), {h_n}$ a sequence of measurable functions that are uniformly bounded, i.e. $exists M > 0$ such that $|h_n| <= M$ a.e. for all $n >= 1$. If $h_n -> h$ a.e. for some measurable function $h$, then $
@@ -1567,7 +1567,7 @@ $
   G = lim_(m->infinity) G_m = (lim_(m->infinity) f_(n_(m+1))) - f_n_1.
   $ Let $f := G + f_n_1$. Then, $f = lim_(m->infinity) f_(n_m)$ a.e. and since $G_m -> G$ in $L^p$, we have that $f_n_m -> f$ in $L^p$ as $m -> infinity$. It remains to show convergence in $L^p$ along the whole subsequence.
 
-  Fix $epsilon > 0$. Let $N >= 1$ such that $sup_(k, ell >= n) ||f_k - f_ell||_p < epsilon$ and $m$ sufficiently large such that $n_m > n$ and $||f_(n_m) - f||_p <= epsilon$. Then, $
+  Fix $epsilon > 0$. Let $N >= 1$ such that $sup_(k, ell >= N) ||f_k - f_ell||_p < epsilon$ and $m$ sufficiently large such that $n_m > N$ and $||f_(n_m) - f||_p <= epsilon$. Then, $
   ||f_n - f||_p <= underbrace(||f_n - f_(n_m)||_p, < epsilon) + underbrace(||f_n_m - f||_p, < epsilon)<2 epsilon,
   $ completing the proof.
 ]
@@ -1580,6 +1580,6 @@ $
   Given $f in L^p (RR)$, set $
   f_n (x) = bb(1)_([-n,n]) (x) dot f(x) dot bb(1)_({|f| <= n}) (x)
   $ which are bounded and compactly supported on $[-n, n]$. We claim $f_n -> f$ in $L^p (RR)$. We have $integral_RR |f_n - f|^p $ nonzero only if $x in.not [-n,n]$ or $|f(x) > n|$. Hence $
-  integral_RR |f_n - f|^p <= integral_(RR \\ [-n,n]) |f|^p + integral_({|f| > n}) |f|^p -> 0 "as" n-> infinity. 
+  integral_RR |f_n - f|^p <= integral_(RR \\ [-n,n]) |f|^p + integral_({|f| > n}) |f|^p -> 0 "as" n-> infinity.  
   $
 ]
