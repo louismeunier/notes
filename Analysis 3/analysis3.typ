@@ -223,7 +223,7 @@ $ from which it follows that $m^ast (I) = b - a = ell(I)$.
 
 Finally, suppose $I$ infinite. Then, $forall M >= 0, exists$ closed, finite interval $I_M$ with $I_M subset.eq I$ and $ell(I_M) >= M$. Hence, $m^ast (I) >= m^ast (I_M) >= M$ and thus as $M$ arbitrary it must be that $m^ast (I) = infinity = ell(I)$.
 
-6. Denote $tilde(m) (A) := inf {m^ast (B) : A subset.eq B subset.eq R, B - "open"}$. For any $A subset.eq B subset.eq RR$ with $B$ open, monotonicity gives that $m^ast (A) <= m^ast (B)$, hence $m^ast (A) <= tilde(m) (A)$. Conversely, assuming wlog $m^ast (A) < infinity$ (else holds trivially), then for all $epsilon > 0$, there exists ${I_n}$ such that $A subset.eq union.big_(n=1)^infinity I_n$ with $sum_(n=1)^infinity ell(I_n) <= m^ast (A) + epsilon$. Setting $B := union.big_(n=1)^infinity I_n$, we have that $A subset.eq B$ and $m^ast (B) = m^ast (union.big I_n) <=$ (by finite subadditivity) $sum_(n=1)^infinity m^ast (I_n) = sum_(n=1)^infinity ell(I_n) <= m^ast (A) + epsilon$  hence $m^ast (B) <= m^ast (A)$ for all $B$. Thus $m^ast (A) >= tilde(m)(A)$ and equality holds.
+6. Denote $tilde(m) (A) := inf {m^ast (B) : A subset.eq B subset.eq RR, B - "open"}$. For any $A subset.eq B subset.eq RR$ with $B$ open, monotonicity gives that $m^ast (A) <= m^ast (B)$, hence $m^ast (A) <= tilde(m) (A)$. Conversely, assuming wlog $m^ast (A) < infinity$ (else holds trivially), then for all $epsilon > 0$, there exists ${I_n}$ such that $A subset.eq union.big_(n=1)^infinity I_n$ with $sum_(n=1)^infinity ell(I_n) <= m^ast (A) + epsilon$. Setting $B := union.big_(n=1)^infinity I_n$, we have that $A subset.eq B$ and $m^ast (B) = m^ast (union.big I_n) <=$ (by finite subadditivity) $sum_(n=1)^infinity m^ast (I_n) = sum_(n=1)^infinity ell(I_n) <= m^ast (A) + epsilon$  hence $m^ast (B) <= m^ast (A)$ for all $B$. Thus $m^ast (A) >= tilde(m)(A)$ and equality holds.
 
 7. Put $delta := d(A_1, A_2) > 0$. Clearly $m^ast (A) <= m^ast (A_1) + m^ast (A_2)$ by finite subadditivity. wlog, $m^ast (A) < infinity$ (and hence $m^ast (A_i) < infinity, i = 1, 2$) (else holds trivially). Then $forall epsilon > 0, exists {I_n} : A subset.eq union.big I_n$ and $sum ell(I_n) <= m^ast (A) + epsilon$. Then, for all $n$, we consider a "refinement" of $I_n$; namely, let ${I_(n, i)}_(i >= 1)$ such that $I_n subset.eq union.big_(i) I_(n, i)$ and $ell(I_(n, i)) < delta$ and $sum_(i) ell(I_(n, i)) <= ell(I_n) + epsilon/(2^n)$. Relabel ${I_(n, i) : n, i >= 1} arrow.squiggly {J_m : m >= 1}$ (both are countable). Then, ${J_m}$ defines an open-interval cover of $A$, and since $ell(J_m) < delta$ for each $m$, $J_m$ intersects at most one $A_i$. For each $m$ and $p = 1, 2$, put $
 M_p := {m : J_m sect A_p eq.not nothing},
@@ -875,7 +875,7 @@ lim_(n -> infinity) phi_n (x) = lim_(n->infinity) n = infinity = f^(plus) (x).
 $
 ]
 
-#theorem[If $g$ is measurable and non-negative, there exists a sequence of simply functions ${phi_n}$ such that $phi_n arrow.t$ and $lim_(n->infinity) phi_n (x) = g(x)$ for every $x in RR$.]
+#theorem[If $g$ is measurable and non-negative, there exists a sequence of simple functions ${phi_n}$ such that $phi_n arrow.t$ and $lim_(n->infinity) phi_n (x) = g(x)$ for every $x in RR$.]
 
 We can repeat this same construction and proof for $f^minus$ with a sequence $tilde(phi_n)$. Even better:
 
@@ -940,6 +940,12 @@ In this proof, we have proven (and then used) more generally:
   If ${F_n} subset.eq cal(M)$ such that $sum_(n=1)^infinity m(F_n) < infinity$, then $
   m(sect.big_(m=1)^infinity union.big_(n=m)^infinity F_n) = 0.
   $
+]
+
+#proof[
+  Remark that $union.big_(n=m)^infinity F_n$ a decreasing sequence of functions indexed by $m$. By continuity of the measure and subadditivity, $
+  m(sect.big_(m=1)^infinity union.big_(n=m)^infinity F_n) = lim_(m->infinity) m(union.big_(n=m)^infinity F_n) <= lim_(m->infinity) sum_(n=m)^infinity m(F_n) = 0,
+  $ since the tail of a converging sequence must converge to zero.
 ]
 
 

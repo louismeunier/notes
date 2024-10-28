@@ -937,14 +937,80 @@ $ One can verify this indeed an isomorphism.
   If we can find $f(x) in ZZ\/p ZZ [x]$ irreducible of degree $t$, then we'd have $FF = ZZ\/p ZZ [x] \/ (f(x))$ a field of cardinality $p^t$.
 ]
 
-#theorem[For all primes $p$ and integers $t >= 1$, there exists a unique field $KK$ with $hash K = p^t$.]
+#theorem[For all primes $p$ and integers $t >= 1$, there exists a unique field $KK$ with $hash KK = p^t$.]
 
+= Modules and Vector Spaces
 
+Groups $G$ are to $G$-sets as rings $R$ are to $R$-modules.
 
+== Modules
 
+#definition("Module")[An _$R$-module_ is an abelian group $M$ equipped with a map $R times M -> M$ satisfying, for $lambda in R, m_1, m_2, m in M$:
++ $lambda (m_1 + m_2) = lambda m_1 + lambda m_2$;
++ $lambda (- m) = - lambda m$;
++ $lambda dot 0_M = 0_M$;
+(that is, for all fixed $lambda in R$, left-multiplication by $lambda$ $M -> M, m |-> lambda m$ is a group homomorphism from $M$ to itself) and for all $lambda_1, lambda_2 in R, m in M$, 
+4. $(lambda_1 + lambda_2) m = lambda_1 m + lambda_2 m$;
+5. $(lambda_1 lambda_2 ) m = lambda_1 (lambda_2 m)$;
+6. $1_R dot m = m$.
+(that is, multiplication $R times M -> M$ defines a ring homomorphism $R -> "End"(M)$)
+]
 
+#remark[For an abelian group $M$, $
+"End"(M) := {f : M -> M | f "a group homomorphism"}
+$ is a _ring_, with pointwise addition $(f+g) (m) := f(m) + g(m)$ and multiplication given by composition $(f compose g) (m) := f(g(m))$.
+]
 
+#remark[
+  When $R$ a field, we call $M$ a vector space.
+]
 
+#definition("Spanning Set")[
+  Let $M$ an $R$-module. A set $Sigma subset M$ is called a _spanning set_ if for all $m in M$, there exists $m_1, dots, m_t in Sigma$ and $lambda_1, dots, lambda_t in R$ such that $
+  m = lambda_1 m_1 + dots.c + lambda_t m_t.
+  $
+]
+
+#remark[We do not assume $Sigma$ finite.]
+
+#definition("Linear Dependence")[
+  A set $Sigma subset M$ is _linearly independent_ if for all $m_1, dots, m_t in Sigma$ and $lambda_1, dots, lambda_t$, $
+  lambda_1 m_1 + dots.c + lambda_t m_t => lambda_1 = lambda_2 = dots.c = lambda_t = 0.
+  $
+]
+
+#definition("Basis")[
+  A set $Sigma subset M$ is a _basis_ if it is both a spanning set and linearly independent.
+
+  Equivalently, $Sigma$ a basis if every element in $M$ may be written in a unique way with elements in $Sigma$ and scalars in $R$.
+]
+
+#theorem[
+  If $R = FF$ a field and $V$ a vector space over $FF$, then $V$ has a basis.
+]
+
+#proof[
+  Let $cal(L)$ be the set of all linearly independent subsets of $V$. Inclusion gives a partial ordering on $cal(L)$ ($W_1 <= W_2$ for $W_1 subset.eq W_2 in cal(L)$). With this order, $(cal(L), <=)$ satisfies the "maximal chain condition"; namely, if $S subset.eq cal(L)$ totally ordered under $<=$, then there exists an element $Sigma in cal(L)$ such that $Sigma supset.eq B$ for every $B in S$. Indeed, simply taking $Sigma = union.big_(B in S) B$ satisfies this condition, remarking that $Sigma in cal(L)$ indeed.
+
+  We appeal now to Zorn's Lemma; since the maximal chain condition holds, there is an element $B$ in $cal(L)$ which is maximal in the sense that  if $B subset.neq B'$, then $B' in.not cal(L)$. We claim $B$ a basis for $V$. By definition, it is linearly independent (being a member of $cal(L)$) so it remains to show $B$ spans.
+
+  Suppose $B$ is not spanning. Then, there exists some $v in V$ such that $v in.not "Span"(B)$. Consider the set $B union {v}$; this set is linearly independent. To see this, suppose we take $v$ and $v_1, dots, v_n in B$, and scalars $lambda_0, lambda_1, dots, lambda_n$ such that $lambda_0 v + dots.c + lambda_n v_n = 0$.
+
+  If $lambda_0 = 0$, then by linear independence of $B$ $lambda_1 = dots.c = lambda_n = 0$.
+
+  Otherwise, if $lambda_0 eq.not 0$, then _since $FF$ a field_, we may invert $lambda_0$ and write $
+  v = - lambda_0^(-1) lambda_1 v_1 + dots.c + - lambda_0^(-1) lambda_n v_n => v in "span" (B),
+  $ a contradiction. Hence, $B$ indeed spanning, and thus a basis.
+]
+
+#example[
+  + $V$ is _finitely generated_ if it admits a finite spaning set.
+  + Suppose $V = RR$ over $FF = QQ$; this is called the "Hamel basis".
+]
+
+#remark[Existence of bases is _not true_ in general for modules over rings; notice in our proof we used the existence of inverses.]
+
+#pagebreak()
 = Midterm Review
 == $A_5$ has no normal subgroups
 
