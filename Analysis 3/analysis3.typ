@@ -25,8 +25,8 @@ Let $f : RR-> RR$ and $[a,b] subset RR$. Define a *partition* of $[a,b]$ as the 
 "part"([a,b]) := {a =: x_0 < x_1 < dots.c < x_N := b}.
 $
 We can then define the upper and lower Riemann integrals of $f$ over the region $[a,b]$ as $
-"upper:" #h(2em) overline(integral_a^b) f(x) dif x := inf_("part"([a,b])) {sum_{i=1}^N sup_(x in [x_(i-1), x_(i)]) f(x) dot.c (x_i - x_(i-1))}\
-"lower:" #h(2em) underline(integral_a^b) f(x) dif x := sup_("part"([a,b])) {sum_{i=1}^N inf_(x in [x_(i-1), x_(i)]) f(x) dot.c (x_i - x_(i-1))}.
+"upper:" #h(2em) overline(integral_a^b) f(x) dif x := inf_("part"([a,b])) {sum_(i=1)^N sup_(x in [x_(i-1), x_(i)]) f(x) dot.c (x_i - x_(i-1))}\
+"lower:" #h(2em) underline(integral_a^b) f(x) dif x := sup_("part"([a,b])) {sum_(i=1)^N inf_(x in [x_(i-1), x_(i)]) f(x) dot.c (x_i - x_(i-1))}.
 $
 We then say $f$ *Riemann integrable* if these two quantities are equal, and denote this value by $integral_a^b f(x) dif x$.
 
@@ -154,7 +154,7 @@ and call the triple $(X, cal(F), mu)$ a _measure space_.
 ]
 
 #remark[
-In 4., note that since $A_n$ increasing, that the union $union.big_(n=1)^infinity A_n supset.eq A_m$ for any arbitrarily large $m$; indeed, one could logically right $lim_(n-> infinity) A_n = union.big_(n=1)^infinity A_n$. This this notation, then, 4. simply states that we may interchange limit and measure. A similar argument can be viewed for 5. (how?).
+In 4., note that since $A_n$ increasing, that the union $union.big_(n=1)^infinity A_n supset.eq A_m$ for any arbitrarily large $m$; indeed, one could logically right $lim_(n-> infinity) A_n = union.big_(n=1)^infinity A_n$. In this notation, then, 4. simply states that we may interchange limit and measure. A similar argument can be viewed for 5. (how?).
 ]
 
 #remark[
@@ -380,7 +380,7 @@ $ hence $mu = m$.
   We employ the "good set strategy"; fix some $x in RR$ and let $
   Sigma := {B in borel : B + x in borel}.
   $
-  One can check that $Sigma$ a $sigma$-algebra, and so $Sigma subset.eq borel$. But in addition, its easy to see that ${(a, b) : a <b in RR} subset.eq Sigma$, since a translated interval is just another interval, and since these sets generate $borel$, it must be further that $borel subset.eq Sigma$, completing the proof.
+  We have by construction $Sigma subset.eq borel$. One can check too that $Sigma$ a $sigma$-algebra. But in addition, its easy to see that ${(a, b) : a <b in RR} subset.eq Sigma$, since a translated interval is just another interval, and since these sets generate $borel$, it must be further that $borel subset.eq Sigma$, completing the proof.
 ]
 
 #proof[(of the proposition) Let $c = mu((0, 1])$, noting that $c > 0$ (why? Consider what would happen if $c = 0$).

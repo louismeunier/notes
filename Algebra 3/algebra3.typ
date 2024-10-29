@@ -728,7 +728,7 @@ Groups are to symmetries as rings are to numbers.
 + For any commutative ring $R$, $M_n (R) = n times n$ matrices with entries in $R$ is a ring. In particular, associativity of multiplication in $M_n (R)$ follows from the identification of matrices with $R$-linear functions $R^n -> R^n$ and the fact that function composition is associative.
 + Given a ring $R$, we can canonically associate two groups, $(R, +, 0)$ ("forgetting" multiplication) and $(R^times, times, 1)$ ("forgetting" addition and restricting to elements with inverses, i.e. _units_). 
 + If $G$ is any finite group and $R$ a ring, we may consider $R[G] = {sum_(g in G) a_g g : a_g in R}$, a _group ring_. Addition is defined component-wise, and multiplication $
-(sum_(g in G) a_g g)(sum_(h in H) b_h h) = sum_(g, h in G) a_g b_h dot g h = sum_(g in G) (sum_(h_1 dot h_2 = h in G) a_(h_1) b_(h_2))g.
+(sum_(g in G) a_g g)(sum_(h in G) b_h h) = sum_(g, h in G) a_g b_h dot g h = sum_(g in G) (sum_(h_1 dot h_2 = h in G) a_(h_1) b_(h_2))g.
 $
 ]
 
@@ -790,7 +790,7 @@ $ One can verify this indeed an isomorphism.
 #definition("Prime")[An ideal $I subset.eq R$ is _prime_ if $a b in I$, then $a$ or $b$ in $I$.]
 
 #example[
-  Let $R = ZZ$ and $I = (n) = n ZZ = {n a : a in ZZ}$ for some $n in NN$. We claim $(n)$ is prime iff $n$ is prime. If $n$ prime, then if $a b in I$, then $n | a b$. By Gauss's Lemma, then $n$ divides at least one of $a$ or $b$, and hence either $a$ or $b$ in $I$. Conversely, if $n$ not prime, then we may write $n = a b$ where $|a|, |b| < n$. Then, $a, b in I$, but $n$ divides neither and so $a, b in.not I$.
+  Let $R = ZZ$ and $I = (n) = n ZZ = {n a : a in ZZ}$ for some $n in NN$. We claim $(n)$ is prime iff $n$ is prime. If $n$ prime, then if $a b in I$, then $n | a b$. By Gauss's Lemma, then $n$ divides at least one of $a$ or $b$, and hence either $a$ or $b$ in $I$. Conversely, if $n$ not prime, then we may write $n = a b$ where $|a|, |b| < n$. Then, $a dot b in I$, but $n$ divides neither and so $a, b in.not I$.
 ]
 
 #theorem[If $I subset.eq ZZ$ an ideal, then there exists $n in ZZ$ such that $I = (n)$.]
