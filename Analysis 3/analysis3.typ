@@ -16,7 +16,18 @@
 
 #set align(left)
 
+// #let calold = cal
+
+// #let cal(it) = math.class("normal",
+//   text(font: "New Computer Modern Math", stylistic-set: 1, $calold(it)$)
+// )
+
+
+// #show math.equation: set text(font: "New Computer Modern Math") 
+// $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
+
 // TODO starts here
+
 = Sigma Algebras and Measures
 
 == A Review of Riemann Integration
@@ -1003,8 +1014,6 @@ $ where $k(n)$ the "row" that $f_n$ comes from. Hence, $f_n$ converges in measur
 // Schola
 // #show math.equation: set text(font: "TeX Gyre Schola Math") 
 // $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
-// #show math.equation: set text(font: "New Computer Modern Math") 
-// $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
 
 #proposition[Given ${f_n}$, $f$ measurable, finite-valued functions, if $f_n -> f$ in measure, then there exists a subsequence ${f_(n_k)}$ such that $f_(n_k) -> f$ a.e. as $k -> infinity$.]
 
@@ -1067,7 +1076,7 @@ Recall that if $f$ is measurable, then $exists {theta_n}$ sequence of step funct
   Given $f$ measurable and finite-valued and $A in cal(M)$ with $m(A) < infinity$, for all $epsilon > 0$, there exists a closed $A_epsilon subset.eq A$ with $m(A\\A_epsilon) < epsilon$ such that $f|_(A_epsilon)$ is continuous.
 ]
 
-#remark[Lusin's Theorem states that $f|_(A_(epsilon))$ is continuous as a function on $epsilon$, which is _not_ the same as saying $f$ as a function of $A$ is continuous at points in $A_epsilon$.
+#remark[Lusin's Theorem states that $f|_(A_(epsilon))$ is continuous as a function on $A_epsilon$, which is _not_ the same as saying $f$ as a function on $A$ is continuous at points in $A_epsilon$.
 
 For instance, $f = bb(1)_(QQ sect [0, 1])$ is not continuous anywhere on $[0, 1]$. However, $f|_(QQ sect [0, 1])$ is constant and therefore continuous _on_ $QQ sect [0, 1]$.
 ]

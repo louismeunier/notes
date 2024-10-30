@@ -1010,6 +1010,106 @@ $ is a _ring_, with pointwise addition $(f+g) (m) := f(m) + g(m)$ and multiplica
 
 #remark[Existence of bases is _not true_ in general for modules over rings; notice in our proof we used the existence of inverses.]
 
+#remark[
+  If $M subset R$, then $M$ is an $R$-module if it is an ideal of $R$.
+]
+
+#example[
+  + Consider $M = ZZ^n$ as a $ZZ$-module; this has a basis, the standard ${e_i : i = 1, dots, n}$ $e_i$ the vector with all zero entries but the $i$th.
+  + Consider $M = QQ$ as a $ZZ$-module. Notice that 
+    (a) Any two elements in $M$ are linearly  dependent; given $a/b, c/d in QQ$, $
+    (c b) (a/b) - (a d)(c/d) = 0.
+    $
+    (b) Any finite set in $QQ$ does not span $QQ$ over $ZZ$. For instance, if we had $
+    S = {(a_1)/(b_1), dots, (a_N)/(b_N)} subset QQ,
+    $ then, for instance, $
+    1/(b_1 b_2 dots.c b_N + 1) in.not "Span"(S).
+    $
+    As such, $QQ$ has no basis over $ZZ$.
+  + Consider $M = ZZ\/n ZZ$ as a $ZZ$-module, and consider ${1}$. It spans $ZZ\/n ZZ$, but is not linearly independent, since for instance, taking $n in ZZ$, $n dot 1 = n equiv 0$ in $ZZ\/ n ZZ$.
+  + If $I$ is an ideal of $R$, $I$ has a basis iff $I$ is principal, $I = (a)$, and $a$ is not a zero divisor. If $a, b in I$, then $b a - a b = 0$ so $a, b$ necessarily linearly dependent.
+]
+
+#definition([$R$-module homomorphism])[An _$R$-module homomorphism_ is a map $
+f : M_1 -> M_2
+$ between two $R$-modules $M_1, M_2$, such that 
++ $f$ a group homomorphism;
++ $f(lambda m) = lambda f (m)$ for every $lambda in R, m in M$.
+Define $
+ker(f) = {m in M_1 | f(m) = 0}.
+$
+]
+
+#proposition[$ker(f)$ a subgroup of $M_1$, closed under scalar multiplication. In particular, it is an _$R$-submodule_ of $M_1$.]
+#proof[
+  The subgroup property comes from the fact that $f$ a group homomorphism. For $lambda in R, m in ker(f)$, $f(lambda m) = lambda f (m) = lambda 0 = 0 => lambda m in ker(f)$.
+]
+
+We have in summary the following general properties concerning kernels of homomorphisms in the different categories we've discussed so far:
+#align(center, 
+  table(
+    columns: 3,
+    stroke: none,
+    [], [kernels], [closure property],
+    table.hline(start:0, end:4),
+    table.vline(x:1,start:0, end:4),
+    "Non-Abelian Groups", "Normal subgroup", [Conjugation by $G$],
+    "Rings", "Ideal", [Multiplication by $R$],
+    [$R$-modules], [$R$-submodules],[Multiplication by $R$]
+  )
+)
+
+Just as with groups and rings, we can similarly talk about quotienting modules by submodules.
+== Quotients
+
+#definition[
+  If $N subset M$ are $R$-modules, then $M\/N$ is an $R$-module with operation defined $
+  lambda in R, a + N in M\/N => lambda (a + N) = lambda a + N.
+  $
+]
+
+#theorem("Isomorphism Theorem")[
+  If $f : M_1 -> M_2$ an $R$-module homomorphism, then it induces an injective homomorphism $
+  overline(f) : M_1\/"ker"(f) -> M_2, wide a + ker(f) |-> f(a).
+  $
+]
+
+#proof[
+  We just check injectivity. $
+  overline(f)(a + ker(f)) = 0 => f(a) = 0 => a in ker(f) => a + ker(f) = 0 in M_1\/ker(f),
+  $ i.e. $overline(f)$ has trivial kernel and so is injective.
+]
+
+== Free Modules
+#definition([Free Module])[An $R$-module $M$ is said to be _free_ if it has a basis.
+
+If $M$ is free with a finite basis $e_1, dots, e_n$, then as a module, $M tilde.equiv R^n$.
+]
+
+#theorem[If $M$ is a free $R$-module with a finite basis, then any two bases of $M$ have the same cardinality.]
+
+#proof[
+  Let $I$ be a proper maximal ideal of $R$. Let $F = R\/I$; this is a field by maximality. Let $
+  I M := "span"{lambda m : lambda in I, m in M}.
+  $ $I M$ is an $R$-submodule of $M$. Consider $M \/ I M$; this is an $R$-module as well, but is in fact actually an $F$-vector space, since $I$ acts as 0 on $M\/ I M$. That is, for $lambda in R$, $
+  (lambda + I) (m + I M) = lambda m + I M.
+  $ If $M$ has a basis of size $n$, $M tilde.equiv R^n$. Then, $
+  M \/ I M tilde.equiv F^n
+  $ as an $F$-vector space. Then, supposing $M$ has bases ${e_1, dots, e_n}, {f_1, dots, f_m}$ are two bases of $M$, then we have that $
+  M tilde.equiv R^n tilde.equiv R^m
+  $ and so $
+  M\/ I M tilde.equiv F^n tilde.equiv F^m
+  $ as $F$-vector spaces, but by the same theorem for specifically vector spaces, it must be that $n = m$.
+]
+
+#definition("Rank")[
+  If $M$ is free, the cardinality of a basis is called the _rank_ of $M$ over $R$.
+]
+
+
+
+
+
 #pagebreak()
 = Midterm Review
 == $A_5$ has no normal subgroups
