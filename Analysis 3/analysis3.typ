@@ -1589,6 +1589,7 @@ $
 
 #remark[$L^infinity$ also complete.]
 
+=== Dense Subspaces of $L^p (RR)$
 #lemma[Bounded and compactly supported functions are dense in $L^p (RR)$.]
 
 #proof[
@@ -1598,3 +1599,139 @@ $
   integral_RR |f_n - f|^p <= integral_(RR \\ [-n,n]) |f|^p + integral_({|f| > n}) |f|^p -> 0 "as" n-> infinity.  
   $
 ]
+
+#lemma[
+Simple functions are dense in $L^p (RR)$.
+]
+
+#proof[
+  For $f in L^p (RR)$, let $f_n$ be as in the previous proof. For each $n >= 1, k = 0, 1, dots, n 2^n - 1$, set $
+  A_(n, k) := {x in [-n, n] : k/(2^n) <= f_n^+ < (k+1)/2^n}, wide phi_(n)^+ :=  sum_(k=0)^(n 2^n - 1) k/2^n bb(1)_(A_(n,k)), 
+  $ and $
+  B_(n, k) := {x in [-n, n] : k/(2^n) <= f_n^- < (k+1)/2^n}, phi_(n)^- :=  sum_(k=0)^(n 2^n - 1) k/2^n bb(1)_(B_(n,k)).
+  $ Put $phi_n := phi_n^+ - phi_n^-$. This is a simple function, and $|phi_n| <= n$ and supported on $[-n, n]$ for every $n$ hence $phi_n in L^p (RR)$. In addition, $lim_n phi_n (x) = f(x)$. In particular, for any $n >= 1$, $
+  |f_n (x) - phi_n (x)| <= |f_n^+ (x) - phi_n^+ (x)| + |f_n^(-) (x) - phi_n^- (x)| <= 2 dot 2^(-n).
+  $ Then, in particular $
+  ||f - phi_n||_p <= underbrace(||f - f_n||_p, -> 0) + underbrace(||f_n - phi_n||_p, =(integral_([-n,n]) |f_n - phi_n|^p)^(1/p) \ <= (( 2 dot 2^(-n))^p m([-n,n]))^(1/p) -> 0),
+  $ and so indeed $phi_n -> f$ in $L^p (RR)$.
+]
+
+#theorem[Let $C_c (RR)$ denote the space of continuous and compactly supported functions. Then, $C_c (RR)$ is dense in $L^p (RR)$ for $1 <= p < infinity$.]
+
+#proof[
+  Give $f in L^p (RR)$, let ${phi_n}$ simple functions as in the previous proof. Recall that, for every $n >= 1$, there exists a step function $theta_n$ such that $theta_n <= sup_x |phi_n (x)| <= n$, is supported on $[-n - 1, n+1]$, _and_ ${theta_n eq.not phi_n}$ has arbitrarily small measure. In particular, we choose $theta_n$ such that $m({theta_n eq.not phi_n}) <= 2^(-n - 1)$ for every $n >= 1$.
+
+  Recall that given a step function $theta_n$, there exists a function $tilde(theta_n)$ continuous on $RR$, $tilde(theta_n)$ is supported on $[-n - 2, n + 2]$, _and_ $m({tilde(theta_n) - theta_n}) <= 2^(-n-1)$. Thus, ${tilde(theta_n)} subset.eq C_c (RR)$, and $
+  m({tilde(theta_n) - phi_n}) <= m ({tilde(theta_n) eq.not theta_n}) + m({theta_n eq.not phi_n}) <= 2^(-n).
+  $ So, we have $
+  ||f - tilde(theta_n)||_p <= underbrace(||f - phi_n||_p, -> 0 "by lemma") + underbrace(||phi_n - tilde(theta_n)||_p, = (integral_RR |phi_n - tilde(theta_n)|^p)^(1/p) \ = (integral_{tilde(theta_n) eq.not phi_n}|phi_n - tilde(theta_n)|^p)^(1/p)\
+   <= ((2n)^p 2^(-n))^(1/p) -> 0),
+  $ and thus $tilde(theta_n) -> f$ in $L^p (RR)$.
+]
+
+#remark[
+  The density of $C_c (RR)$ in $L^p (RR)$ is useful in the study of properties of generic $L^p$ functions. For instance, show that if $f in L^p (RR)$, then $lim_(n -> infinity) integral_RR |f(x+1/n) - f(x)|^p dif x = 0$, that is $f(dot + 1/n) -> f$ in $L^p (RR)$ using this density.
+]
+
+#remark[
+  $C_c (RR)$ is _NOT_ dense in $L^infinity (RR)$.
+]
+
+== Convergence Modes and Uniform Integrability
+
+Recall that, given ${f_n}, f$ measurable and finite-valued a.e., we have that 
++ $f_n -> f$ in measure $=>exists {n_k}$  such that $f_(n_k) -> f$ a.e. as $k -> infinity$
++ $f_n -> f$ a.e. on $A in cal(M)$ with $m(A) < infinity$ $=> f_n -> f$ in measure on $A$
++ $f_n -> f$ in $L^p (RR)$.
+
+
+#proposition[
+  If ${f_n}, f$ in $L^p (RR)$ for $1 <= p < infinity$ and $f_n -> f$ in $L^p (RR)$, then $f_n -> f$ in measure.
+]
+
+#proof[
+  For $delta > 0$, we have $
+  m({|f_n - f| > delta}) = integral_{|f_n - f| > delta} 1 dif x.
+  $ Remark that $1 <= |f_n - f|/delta$ over ${|f_n - f| > delta}$; further $1^p = 1 <= (|f_n - f|/delta)^p$. Hence, $
+   <= integral_({|f_n - f| > delta}) (|f_n - f|^p)/(delta^p) dif x <= 1/delta^p integral_RR |f_n - f|^p <= 1/(delta^p) ||f_n - f||^p_p.
+  $ But by assumption $||f_n - f||^p_p -> 0$ for any $delta > 0$, hence $m({|f_n - f| > delta}) -> 0$ i.e. $f_n -> f$ in measure.
+]
+
+#remark[In general, convergence in $L^p arrow.r.double.not$ convergence a.e., with the same counter example from convergence in measure $arrow.r.double.not$ convergence a.e..]
+
+#remark[When do we have convergence a.e. $=>$ convergence in $L^p$? This doesn't hold in general, unless some integral convergence theorem from before holds.]
+
+#remark[When do we have convergence in measure $=> $ convergence in $L^p$? No in general, unless one of the integral convergence theorem holds; with some slight adaptation.]
+
+#proposition("MON, Measure Version (mMON)")[
+  Let $f_n$ non-negative with $f_n arrow.t$ and $f_n -> f$ in measure. Then, $
+  integral_RR f = lim_n integral_RR f_n.
+  $
+]
+
+#proof[
+  $f_n -> f$ in measure implies $f_(n_k) -> f$ almost everywhere along some subsequence $n_k$, so it must be that $f$ non-negative. Suppose the claim fails. Then, there exists some subsequence ${n_ell}$ such that $integral_RR f_(n_ell) arrow.not integral_RR f$. However, along this subsequence we also have $f_(n_ell) -> f$ in measure, and hence exists a subsubsequence $n_ell_p$ such that $f_n_ell_p -> f$ a.e.. Then, by MON applied to this subsubsequence, we know that $
+  lim_p integral_RR f_n_ell_p = integral_RR f,
+  $ a contradiction. 
+]
+
+#proposition("mDOM")[
+  If $f_n in L^1 (RR)$ with $f_n -> f$ in measure and there exists some $g in L^1 (RR)$ such that $|f_n| <= |g|$, then $f_n -> f$ in $L^1 (RR)$.
+]
+
+Recall that if $f in L^1 (RR)$, then $integral_{|f| > n} |f| ->$ as $n -> infinity$. The converse does not hold in general; consider $f equiv 1$. However, we can achieve a partial converse.
+
+For $A in cal(M)$, we say $f in L^1 (A)$ if $integral_A |f| < infinity$.
+
+#proposition[
+  Given $A in cal(M)$ with $m(A) < infinity$, then $
+  f in L^1 (A) <=> lim_n integral_(A sect {|f| > n}) |f| = 0.
+  $
+]
+#proof[
+  ($=>$) We've proven before, c.f. properties of integral of non-negative functions.
+
+  ($arrow.l.double$) Choose $N$ such that $integral_(A sect {|f| > N}) |f| <= 1$. Then, $
+  integral_A |f| &= integral_(A sect {|f| <= N}) |f| + integral_(A sect {|f| > N}) |f|\
+  & <= N dot m(A) + 1 < infinity.
+  $
+]
+
+#definition("Uniform Integrability")[Given ${f_n}$ measurable and $A in cal(M)$, we say ${f_n}$ is uniformly integrable on $A$ if $
+lim_(M -> infinity) (sup_(n>=1)( integral_(A sect {|f_n| > M}) |f_n|)) = 0.
+$]
+
+#proposition[
+  Let ${f_n}$ measurable, $A in cal(M)$. 
+  + If $m(A) < infinity$ and ${f_n}$ uniformly integrable on $A$, then ${f_n}$ is bounded in $L^1 (A)$, that is $sup_(n >= 1) integral_A |f_n| < infinity$.
+  + If ${f_n}$ is bounded in $L^p (A)$ for any $1 < p < infinity$, then ${f_n}$ is uniformly integrable on $A$.
+]
+
+#proof[
+  + Let $M$ such that $sup_(n>=1) integral_(A sect {|f_n| > M}) |f_n| <= 1$. Then, we have that $
+  sup_(n>=1) integral_A |f_n| &= sup_(n>=1) (integral_(A sect {|f_n| <= M}) |f_n| + integral_(A sect {|f_n| > M}) |f_n|)\
+  & <= M dot m(A) + 1 < infinity.
+  $ 
+  + For any $M > 0$, note that $1 <= ((|f_n|)/M)^(p-1)$ over A sect {|f_n| > M}. So $
+  sup_n integral_(A sect {|f_n| > M}) |f_n| &<= sup_n  integral_(A sect {|f_n| > M}) |f_n| ((|f_n|)/M)^(p-1)\
+  &<=underbrace(1/(M^(p-1)), > 0) underbrace(sup_n integral_(A) |f_n|^p, < infinity) -> 0 "as" M->infinity.
+  $
+]
+#remark[Notice that 2. does _not_ require finiteness of the measure of $A$, in particular one can take $A = RR$.]
+
+#proposition[Given ${f_n}$ measurable and $A in cal(M)$ with $m(A) < infinity$, TFAE:\
+(i) $f_n in L^1 (A) forall n >= 1$, $f in L^1 (A)$ and $f_n -> f$ in $L^1 (A)$,\
+(ii) ${f_n}$ is uniformly integrable on $A$ and $f_n -> f$ in measure on $A$.
+]
+
+#proof[
+  (i) $=>$ (ii) Assume $f_n -> f$ in $L^1 (A)$, hence $integral_A |f_n| -> integral_A |f|$ so ${f_n}$ bounded in $L^1 (A)$. For $M > 0$, $
+  integral_(A sect {|f_n| > M}) |f_n| &<= integral_(A sect {|f_n| > M}) |f_n - f| + integral_(A sect {|f_n| > M}) |f|\
+  & <= underbrace(integral_A |f_n - f|, -> 0) + underbrace(integral_(A sect {|f_n| > M} sect {|f| <= sqrt(M)}) |f|, <= sqrt(M) dot m(A sect {|f_n| > M}) \
+  <= sqrt(M) (sup_n integral_A |f_n|)/M -> 0 "as" M -> infinity \ ("Markov's")) + underbrace(integral_(A sect {|f_n| > M} sect {|f| > sqrt(M)}) |f|, <= integral_(A sect {|f| > sqrt(M)}) |f| -> 0 "since" f in L^1).
+   $ Fix $epsilon > 0$. Choose $N$ such that for all $n >= N$, $integral_A |f_n - f| <= epsilon/3$, choose  $M$ such that $integral_(A sect {|f| > sqrt(M)}) |f| < epsilon/3$ and $(sup_n integral_A |f_n|)/sqrt(M) < epsilon/3$. Thus, $
+   sup_(n >= N) integral_(A sect {|f_n| > M}) |f_n| <= epsilon/3 + epsilon/3 + epsilon/3 = epsilon.
+   $ We want this to hold for $N = 1$ for uniformity, i.e. we need to deal with the first $N - 1$ turns. We achieve this by making $M$ larger if necessary such that $
+   integral_(A sect {|f_k| > M} ) |f_k| <= epsilon
+   $ for every $k = 1, 2, dots, N-1$. 
+  ]
