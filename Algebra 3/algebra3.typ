@@ -1089,7 +1089,7 @@ If $M$ is free with a finite basis $e_1, dots, e_n$, then as a module, $M tilde.
 #theorem[If $M$ is a free $R$-module with a finite basis, then any two bases of $M$ have the same cardinality.]
 
 #proof[
-  Let $I$ be a proper maximal ideal of $R$. Let $F = R\/I$; this is a field by maximality. Let $
+  Let $I$ be a proper maximal ideal of $R$ (which exists by a similar argument to the existence of a basis of a vector space, i.e. via Zorn's Lemma argument). Let $F = R\/I$; this is a field by maximality. Let $
   I M := "span"{lambda m : lambda in I, m in M}.
   $ $I M$ is an $R$-submodule of $M$. Consider $M \/ I M$; this is an $R$-module as well, but is in fact actually an $F$-vector space, since $I$ acts as 0 on $M\/ I M$. That is, for $lambda in R$, $
   (lambda + I) (m + I M) = lambda m + I M.
@@ -1106,8 +1106,84 @@ If $M$ is free with a finite basis $e_1, dots, e_n$, then as a module, $M tilde.
   If $M$ is free, the cardinality of a basis is called the _rank_ of $M$ over $R$.
 ]
 
+=== Changing Bases
+Given a basis $B = (m_1, dots, m_n)$ of an $R$-module $M$, we have a natural isomorphism
+$
+R^n ->^(phi_B) M, wide vec(lambda_1, dots.v, lambda_n) |-> B dot vec(lambda_1, dots.v, lambda_n) = lambda_1 m_1 + dots.c + lambda_n m_n.
+$ Namely, such an isomorphism is dependent on $B$. Given another basis $B' = (m'_1 , dots, m'_n)$, then there exists some invertible matrix $P in "GL"_n (R)$ such that $
+B' = B P, wide (m'_1, dots, m'_n) = (m_1, dots, m_n) P
+$ thinking of $B, B'$ as vectors, where the $j$th column of $P$ is the coordintes of $m'_j$ relative to $B$.
 
+=== Homomorphisms Between Free Modules
 
+#definition("Free Module Homomorphism")[
+A map $
+T : M_1 -> M_2
+$ between two free $R$-modules of rank $n, m$ respectively is a _free module homomorphism_ if $T$ a group homomorphism and is $R$-linear, i.e. $
+T(lambda m) = lambda T(m)
+$ for every $lambda in R$, $m in M$.
+]
+
+#definition("Matrix Representation of Module Homomorphism")[
+  If $B_1 = (e_1, dots, e_n)$ and $B_2 = (f_1, dots, f_m)$ bases for $M_1, M_2$ resp., and $T : M_1 -> M_2$ a free module homomorphism, then let $
+  M_(T, B_1, B_2) in M_(m times n) (R)\
+  M_(T, B_1, B_2)^((j)) := j"-th column of" M_(T, B_1, B_2) = "coordinates of " T(e_j) "relative to" B_2 =: [T(e_j)]_(B_2).
+  $
+In other words, the following diagram commutes:
+#align(center)[#commutative-diagram(
+  node((0, 0), $M_1$),
+  node((0, 1), $M_2$),
+  node((1, 0), $R^n$),
+  node((1, 1), $R^m$),
+  arr($M_1$, $M_2$, $T$),
+  arr($R^n$, $M_1$, $phi_B_1$),
+  arr($R^m$, $M_2$, $phi_B_2$, label-pos: right),
+  arr($R^n$, $M_1$, $≀$, label-pos: right),
+  arr($R^m$, $M_2$, $≀$, label-pos: left),
+  arr($R^n$, $R^m$, $\ \ \ M_(T, B_1, B_2)$, label-pos: "below"),
+  // arr("quot", (0, 1), $tilde(phi)$, label-pos: right, "dashed"),
+  // arr($R$, "quot", $pi$),
+)]
+i.e., $M_(T, B_1, B_2) = phi_B_2^(-1) compose T compose phi_(B_1)$.
+]
+
+#proposition[
+Suppose $M_1 = M_2 =: M$, and $B_1 = B_2 =: B$, i.e. $T$ a homomorphism from $M$ to itself. Consider $M_(T, B) := M_(T, B, B) in M_n (R)$. Given another basis $B'$, then $M_(T, B), M_(T, B')$ are conjugate, namely there exists some $P in "GL"_n (R)$ such that $
+M_(T, B) = P M_(T, B') P^(-1).
+$
+]
+
+#proof[
+  Let $P$ be such that $B' = B P$. Then for $vec(x_1, dots.v, x_n) in R^n$, $
+  phi_(B') (vec(x_1, dots.v, x_n)) = B' dot vec(x_1, dots.v, x_n) =  B P vec(x_1, dots.v, x_n) = (phi_B compose P) (vec(x_1, dots.v, x_n)),
+  $  i.e. $phi_(B') = phi_B compose P$. We have too $M_(T, B) = phi_B^(-1) T phi_B, M_(T, B') = phi_B'^(-1) T phi_B'$, so in particular $
+  M_(T, B') = phi_B'^(-1) T phi_B' = P^(-1) (phi_(B)^(-1) compose T compose phi_B) P = P^(-1) M_(T, B) P,
+  $ so indeed, $
+  M_(T, B) = P M_(T, B') P^(-1).
+  $
+]
+
+=== Matrices Up To Conjugation
+Given $M, M' in "M"_n (R)$, we'd like to be able to tell when two matrices are conjugate. In particular, we'd like to study $"M"_n (R)$ (which is a free $R$-module of rank $n^2$), modulo conjugation. Namely, we can view $"GL"_n (R)$ acting naturally on $"M"_n (R)$ by conjugation, and we'd like to study the orbits of this action, namely the set $
+"M"_n (R)\/ "GL"_n (R).
+$
+Suppose for now $R = F$ a field. Given $M in M_n (F)$, consider an "evaluation" homomorphism $
+"ev"_M : F[x] -> M_n (F), &wide f(x) |-> f(M), \
+f(x) := a_n x^n + dots.c + a_1 x + a_0 &|-> a_n M^n + dots.c + a_1 M + a_0 I_n =: f(M).
+$
+
+#proposition[
+  $"ev"_M$ is a homomorphism from $F[x]$ to $M_n (F)$.
+]
+
+$"ev"_M$ is not injective; notice that $F[x], M_n (F)$ are both vector spaces over $F$, but $"dim"_F (F[x]) = infinity$ (we actually have an explicit basis $B = {1, x, x^2, dots}$) and $"dim"_F (M_n (F)) = n^2$ (${E_(i, j) :1 <= i, j <= n}$). Hence, $ker("ev"_M)$ is an infinite-dimensional ideal of $F[x]$. $F[x]$ a principal ideal domain, so it must be that $
+ker("ev"_M) = (p(x)),
+$ for some $p(x) in F[x]$; let us require that $p(x)$ monic, namely the coefficient of its highest power is $1$. We can always do this, and in particular makes the generator $p$ unique.
+// TODO why vector space?
+
+#definition("Minimal Polynomial")[
+  $p(x)$ is called the _minimal polynomial_ of $M$.
+]
 
 
 #pagebreak()
