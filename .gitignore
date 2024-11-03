@@ -188,3 +188,8 @@
 !*Probability
 !*Probability/*.pdf
 !*Probability/*.typ
+
+# PDEs
+!*PDEs-Summary
+!*PDEs-Summary/*.pdf
+!*PDEs-Summary/*.typ

@@ -125,7 +125,7 @@ P(A | H) = P(A sect H)/(P(H)),
 $ if $P(H) eq.not 0$.
 ]
 
-#definition[We say two events $A, B$ are independent if $P(A | B) = P(A)$, or equivalently $P(A and B) = P(A) P(B)$.]
+#definition[We say two events $A, B$ are independent if $P(A | B) = P(A)$, or equivalently $P(A sect B) = P(A) P(B)$.]
 
 #proposition("Multiplication Rule")[
 $
@@ -216,7 +216,7 @@ $ where ${p_n}$ defines a non-negative sequence.]
 P(B) = integral_B f(t) dif t
 $ for every $B in frak(B)_RR$.]
 
-#theorem[Every nonnegative real function $f$ that is integral over $RR$ and such that $integral_(-infinity)^infinity f(x) dif x = 1$ is the PDF of some continuous $X$.]
+#theorem[Every nonnegative real function $f$ that is integrable over $RR$ and such that $integral_(-infinity)^infinity f(x) dif x = 1$ is the PDF of some continuous $X$.]
 
 == Functions of a Random Variable
 
@@ -283,7 +283,40 @@ For $alpha > 0$, we say $EE(|X|^alpha)$ (if it exists) is the _$alpha$-th moment
 n^k P(|X| > n) -> 0
 $ as $n-> infinity$.]
 
-== Binomial Distribution
+
+== Variance
+Let $X$ a random variable. Put $mu_X := EE[X]$. We define the _variance_ of $X$, denoted $sigma_X^2$, by $
+sigma_X^2 = "Var"(X) = EE[(X - mu_X)^2]
+$ or eqiuvalently $
+"Var"(X) &= EE[X^2] - 2 mu_X EE[X] + EE[mu_X^2]\
+&= EE[X^2] - 2 mu_X^2 + mu_X^2 = EE[X^2]-EE[X]^2
+$ Let $S tilde "Bin"(n,p)$. Then, $"Var"[S] = EE[S^2]- (n p)^2$. To compute $EE[S^2] = EE[S(S-1) + S]$, we may abuse combinatorial identities and eventually find $
+"Var"[S] = n p (1 - p).
+$
+
+== Some Particular Distributions
+=== Hypergeometric
+
+Consider a population of $N$ objects, and a subpopulation of $M$ objects. Let $X_i$ be a random variable equal to 1 if a sampled object is from the $M$-subpopulation, $0$ else, and put $Y = sum_(i=1)^n X_i$. Then, $
+P(Y = k) = (mat(M;k) mat(N-M;n-k))/(mat(N;n))
+$ for any $k = 0, dots, n$. We have $
+EE[Y] &= 1/(mat(N;n)) sum_(k=0)^n k  mat(M;k) mat(N-M; n-k)\
+&=1/(mat(N;n)) sum_(k=0)^n cancel(k)  (M!)/(cancel(k)(k-1)! (N-k)!) mat(N-M;n-k)\
+&= M/(mat(N;n)) sum_(k=0)^n mat(M-1; k-1) mat(N-M;n-k)\
+&= M/(mat(N;n))sum_(k=0)^(n-1) mat(M-1; k) mat(N-M; (n-1)-k)\
+&= M/(mat(N;n)) mat(N-1; n-1) \
+&= M dot (n! (N-n)! (N-1)!)/(N! (n-1)! (N-n)!)\
+&= M (n/N).
+$
+
+=== Uniform Distribution
+
+Let $X$ be a discrete uniformly distributed random variable, with $P(X = x) = 1/N$ for $x in {1, dots, N}$ (one typically writes $X tilde "unif"{1,N}$). Then, $
+EE[X] = sum_(k=1)^N k/N = N(N+1)/(2N) = (N+1)/2.
+$
+
+=== Binomial Distribution
+
 
 Let $X_i$ for $i = 1,dots, n$ be a discrete boolean rv with $P(X_i = 1) = p, P(X_i = 0) = 1-p$. Put $S = sum_(i=1)^n X_i$. We say $S$ has binomial distribution, and write $
 S tilde "Bin"(n,p).
@@ -292,20 +325,6 @@ P(S) = mat(n; k) p^k (1-p)^(n-k)
 $ and so $
 EE[S] = sum_(k=0)^n k P(S = k) = dots.c = n p.
 $
-
-== Variance
-Let $X$ a random variable. Put $mu_X := EE[X]$. We define the _variance_ of $X$, denoted $sigma_X^2$, by $
-sigma_X^2 = "Var"(X) = EE[(X - mu_x)^2]
-$ which, upon manipulation and using the linearity of $EE$, we find to eqaul $
-EE[X^2] - mu_X^2.
-$ Let $S tilde "Bin"(n,p)$. Then, $"Var"[S] = EE[S^2]- (n p)^2$. To compute $EE[S^2] = EE[S(S-1) + S]$, we may abuse combinatorial identities and eventually find $
-"Var"[S] = n p (1 - p).
-$
-
-== Hypergeometric Distribution
-
-Consider a population of $N$ objects, and a subpopulation of $M$ objects. Let $X_i$ be a random variable equal to 1 if a sampled object is from the $M$-subpopulation, $0$ else, and put $Y = sum_(i=1)^n X_i$. Then, $
-P(Y) = (mat(M;k) mat(N-M;n-k))/(mat(N;n))
-$ for any $k = 0, dots, n$. We have $
-EE[Y] = M (n/N).
+An easier way to compute this is by using the linearity of $EE$, namely, $
+EE[S] = EE[sum_(i=1)^n X_i] = sum_(i=1)^n EE[X_i] = sum_(i=1)^n 1 dot p + 0 dot (p - 1) = n p.
 $
