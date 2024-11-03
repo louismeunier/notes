@@ -1547,6 +1547,8 @@ We have $|f+ g|^p <= 2^p (|f|^p + |g|^p)$ hence $f + g in L^p (RR)$ since $|f|^p
 integral_RR |f+g|^p = integral_RR |f+g| |f+g|^(p-1) &<= integral_RR |f| |f+g|^(p-1) + integral_RR |g| |f+g|^(p-1)\
 ("Hölder's") wide &<= (integral_(RR) |f|^p)^(1/p) (integral_RR |f+g|^((p-1)q))^(1/q) +  (integral_(RR) |g|^p)^(1/p) (integral_RR |f+g|^((p-1)q))^(1/q) \
 &<= (||f||_p + ||g||_p) (integral_RR |f+g|^p)^(1/q)\
+&=>  ||f+g||_p = (integral_RR |f+g|^p)^(1/p) = (integral_RR |f+g|^p) dot (integral_RR |f+g|^p)^(-1/q) \
+& wide <= (||f||_p + ||g||_p) (integral_RR |f+g|^p)^(1/q) dot (integral_RR |f+g|^p)^(-1/q) =  ||f||_p + ||g||_p \
 & => ||f+g||_p <= ||f||_p + ||g||_p
 $
 ]
@@ -1608,7 +1610,7 @@ Simple functions are dense in $L^p (RR)$.
   For $f in L^p (RR)$, let $f_n$ be as in the previous proof. For each $n >= 1, k = 0, 1, dots, n 2^n - 1$, set $
   A_(n, k) := {x in [-n, n] : k/(2^n) <= f_n^+ < (k+1)/2^n}, wide phi_(n)^+ :=  sum_(k=0)^(n 2^n - 1) k/2^n bb(1)_(A_(n,k)), 
   $ and $
-  B_(n, k) := {x in [-n, n] : k/(2^n) <= f_n^- < (k+1)/2^n}, phi_(n)^- :=  sum_(k=0)^(n 2^n - 1) k/2^n bb(1)_(B_(n,k)).
+  B_(n, k) := {x in [-n, n] : k/(2^n) <= f_n^- < (k+1)/2^n}, wide phi_(n)^- :=  sum_(k=0)^(n 2^n - 1) k/2^n bb(1)_(B_(n,k)).
   $ Put $phi_n := phi_n^+ - phi_n^-$. This is a simple function, and $|phi_n| <= n$ and supported on $[-n, n]$ for every $n$ hence $phi_n in L^p (RR)$. In addition, $lim_n phi_n (x) = f(x)$. In particular, for any $n >= 1$, $
   |f_n (x) - phi_n (x)| <= |f_n^+ (x) - phi_n^+ (x)| + |f_n^(-) (x) - phi_n^- (x)| <= 2 dot 2^(-n).
   $ Then, in particular $
@@ -1639,7 +1641,7 @@ Simple functions are dense in $L^p (RR)$.
 
 == Convergence Modes and Uniform Integrability
 
-Recall that, given ${f_n}, f$ measurable and finite-valued a.e., we have that 
+Recall that, given ${f_n}, f$ measurable and finite-valued a.e., we have the following notions of convergence
 + $f_n -> f$ in measure $=>exists {n_k}$  such that $f_(n_k) -> f$ a.e. as $k -> infinity$
 + $f_n -> f$ a.e. on $A in cal(M)$ with $m(A) < infinity$ $=> f_n -> f$ in measure on $A$
 + $f_n -> f$ in $L^p (RR)$.
@@ -1652,7 +1654,7 @@ Recall that, given ${f_n}, f$ measurable and finite-valued a.e., we have that
 #proof[
   For $delta > 0$, we have $
   m({|f_n - f| > delta}) = integral_{|f_n - f| > delta} 1 dif x.
-  $ Remark that $1 <= |f_n - f|/delta$ over ${|f_n - f| > delta}$; further $1^p = 1 <= (|f_n - f|/delta)^p$. Hence, $
+  $ Remark that $1 <= (|f_n - f|)/delta$ over ${|f_n - f| > delta}$; further $1^p = 1 <= ((|f_n - f|)/delta)^p$. Hence, $
    <= integral_({|f_n - f| > delta}) (|f_n - f|^p)/(delta^p) dif x <= 1/delta^p integral_RR |f_n - f|^p <= 1/(delta^p) ||f_n - f||^p_p.
   $ But by assumption $||f_n - f||^p_p -> 0$ for any $delta > 0$, hence $m({|f_n - f| > delta}) -> 0$ i.e. $f_n -> f$ in measure.
 ]
@@ -1711,8 +1713,8 @@ $]
   + Let $M$ such that $sup_(n>=1) integral_(A sect {|f_n| > M}) |f_n| <= 1$. Then, we have that $
   sup_(n>=1) integral_A |f_n| &= sup_(n>=1) (integral_(A sect {|f_n| <= M}) |f_n| + integral_(A sect {|f_n| > M}) |f_n|)\
   & <= M dot m(A) + 1 < infinity.
-  $ 
-  + For any $M > 0$, note that $1 <= ((|f_n|)/M)^(p-1)$ over A sect {|f_n| > M}. So $
+  $ \
+  2. For any $M > 0$, note that $1 <= ((|f_n|)/M)^(p-1)$ over $A sect {|f_n| > M}$. So, $
   sup_n integral_(A sect {|f_n| > M}) |f_n| &<= sup_n  integral_(A sect {|f_n| > M}) |f_n| ((|f_n|)/M)^(p-1)\
   &<=underbrace(1/(M^(p-1)), > 0) underbrace(sup_n integral_(A) |f_n|^p, < infinity) -> 0 "as" M->infinity.
   $
@@ -1725,13 +1727,16 @@ $]
 ]
 
 #proof[
-  (i) $=>$ (ii) Assume $f_n -> f$ in $L^1 (A)$, hence $integral_A |f_n| -> integral_A |f|$ so ${f_n}$ bounded in $L^1 (A)$. For $M > 0$, $
+  (i) $=>$ (ii) Assume $f_n -> f$ in $L^1 (A)$, hence $integral_A |f_n| -> integral_A |f|$ so ${f_n}$ bounded in $L^1 (A)$. Note we've already proven that $f_n -> f$ in measure. For $M > 0$, $
   integral_(A sect {|f_n| > M}) |f_n| &<= integral_(A sect {|f_n| > M}) |f_n - f| + integral_(A sect {|f_n| > M}) |f|\
   & <= underbrace(integral_A |f_n - f|, -> 0) + underbrace(integral_(A sect {|f_n| > M} sect {|f| <= sqrt(M)}) |f|, <= sqrt(M) dot m(A sect {|f_n| > M}) \
   <= sqrt(M) (sup_n integral_A |f_n|)/M -> 0 "as" M -> infinity \ ("Markov's")) + underbrace(integral_(A sect {|f_n| > M} sect {|f| > sqrt(M)}) |f|, <= integral_(A sect {|f| > sqrt(M)}) |f| -> 0 "since" f in L^1).
    $ Fix $epsilon > 0$. Choose $N$ such that for all $n >= N$, $integral_A |f_n - f| <= epsilon/3$, choose  $M$ such that $integral_(A sect {|f| > sqrt(M)}) |f| < epsilon/3$ and $(sup_n integral_A |f_n|)/sqrt(M) < epsilon/3$. Thus, $
    sup_(n >= N) integral_(A sect {|f_n| > M}) |f_n| <= epsilon/3 + epsilon/3 + epsilon/3 = epsilon.
-   $ We want this to hold for $N = 1$ for uniformity, i.e. we need to deal with the first $N - 1$ turns. We achieve this by making $M$ larger if necessary such that $
+   $ We want this to hold for $N = 1$ for uniformity, i.e. we need to deal with the first $N - 1$ terms. We achieve this by making $M$ larger if necessary such that $
    integral_(A sect {|f_k| > M} ) |f_k| <= epsilon
    $ for every $k = 1, 2, dots, N-1$. 
+
+
+   (ii) $=>$ (i) assignment question.
   ]

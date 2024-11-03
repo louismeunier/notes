@@ -895,7 +895,7 @@ $ One can verify this indeed an isomorphism.
 #proof[
   Let $KK = FF[x]\/(f(x))$. 
   
-  1. This is a field, since $(f(x))$ maximal. To see this, suppose otherwise that $(f(x)) subset.neq I subset.neq FF[x]$ for some ideal $I$ of $FF[x]$. Since $FF[x]$ principal, then $I = (g(x))$ for some $g in FF[x]$. Then, $g(x)|f(x)$ by assumption, but by irreducibility $g(x) = 1$, which implies $I = FF[x]$, or $g(x) = lambda dot f(x)$ for some non-zero $lambda in FF$, which implies $I = (f(x))$. In either case, we concldue $(f(x))$ indeed maximal.
+  1. This is a field, since $(f(x))$ maximal. To see this, suppose otherwise that $(f(x)) subset.neq I subset.neq FF[x]$ for some ideal $I$ of $FF[x]$. Since $FF[x]$ principal, then $I = (g(x))$ for some $g in FF[x]$. Then, $g(x)|f(x)$ by assumption, but by irreducibility $g(x) = 1$, which implies $I = FF[x]$, or $g(x) = lambda dot f(x)$ for some non-zero $lambda in FF$, which implies $I = (f(x))$. In either case, we conclude $(f(x))$ indeed maximal.
 
   2. $FF arrow.hook KK$ by the map $lambda |-> lambda + (f(x))$.
   3. We can view $f(t) in FF[t] subset KK[t] = (FF[x]\/(f(x)))[t]$; indeed, $f$ gains a root in $KK[t]$. Let $alpha = x + (f(x)) in KK$. $f(t)$, again viewed as an element of $KK[t]$, evaluated at this $alpha in KK$, gives $
@@ -975,7 +975,7 @@ $ is a _ring_, with pointwise addition $(f+g) (m) := f(m) + g(m)$ and multiplica
 
 #definition("Linear Dependence")[
   A set $Sigma subset M$ is _linearly independent_ if for all $m_1, dots, m_t in Sigma$ and $lambda_1, dots, lambda_t$, $
-  lambda_1 m_1 + dots.c + lambda_t m_t => lambda_1 = lambda_2 = dots.c = lambda_t = 0.
+  lambda_1 m_1 + dots.c + lambda_t m_t = 0 => lambda_1 = lambda_2 = dots.c = lambda_t = 0.
   $
 ]
 
