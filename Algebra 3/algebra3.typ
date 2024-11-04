@@ -1176,15 +1176,97 @@ $
   $"ev"_M$ is a homomorphism from $F[x]$ to $M_n (F)$.
 ]
 
-$"ev"_M$ is not injective; notice that $F[x], M_n (F)$ are both vector spaces over $F$, but $"dim"_F (F[x]) = infinity$ (we actually have an explicit basis $B = {1, x, x^2, dots}$) and $"dim"_F (M_n (F)) = n^2$ (${E_(i, j) :1 <= i, j <= n}$). Hence, $ker("ev"_M)$ is an infinite-dimensional ideal of $F[x]$. $F[x]$ a principal ideal domain, so it must be that $
-ker("ev"_M) = (p(x)),
-$ for some $p(x) in F[x]$; let us require that $p(x)$ monic, namely the coefficient of its highest power is $1$. We can always do this, and in particular makes the generator $p$ unique.
+$"ev"_M$ is not injective; notice that $F[x], M_n (F)$ are both vector spaces over $F$, but $"dim"_F (F[x]) = infinity$ (we actually have an explicit basis $B = {1, x, x^2, dots}$) and $"dim"_F (M_n (F)) = n^2$ (with basis ${E_(i, j) :1 <= i, j <= n}$). Hence, $ker("ev"_M)$ is an infinite-dimensional ideal of $F[x]$. $F[x]$ a principal ideal domain, so it must be that $
+ker("ev"_M) = (p_M (x)),
+$ for some $p_M (x) in F[x]$; let us require that $p_M (x)$ monic, namely the coefficient of its highest power is $1$. We can always do this, and in particular makes the generator $p_M$ unique.
 // TODO why vector space?
 
 #definition("Minimal Polynomial")[
-  $p(x)$ is called the _minimal polynomial_ of $M$.
+  $p_M (x)$ is called the _minimal polynomial_ of $M$.
 ]
 
+#proposition[
+  $p_M (M) = 0$. In particular, if $f(M) = 0$ for some other $f in F[x]$, then $p_M|f$.
+]
+#proof[This follows from the fact that $p_M$ is a generator for the kernel of $"ev"_M$.]
+
+#proposition[Let $T : F^n -> F^n$ be a linear map, $B$ a basis for $F^n$ and $M = [T]_B in M_n (F)$. Then, for any $A in "GL"_n (F)$, then $
+p_(A M A^(-1)) = p_M,
+$ namely, the minimal polynomial of a linear transformation is independent of the choice of basis used to represent it as a matrix; namely $p_T$, the _minimal polynomial of $T$_, is well-defined.
+]
+
+#proof[
+  If $f in F[x]$, then notice that since $
+  (A M A^(-1))^k = A M^k A^(-1),
+  $ and in addition, since conjugation by $A$ linear (namely $A (M_1 + M_2)A^(-1) = A M_1 A^(-1) + A M_2 A^(-1)$), the map $M |-> A M A^(-1)$ is an automorphism of $M_n (F)$. So, in particular we have that $
+  f(A M A^(-1)) = A f(M) A^(-1),
+  $ so the following commutes,
+  #align(center)[#commutative-diagram(
+  node((0, 0), $F[x]$),
+  node((0, 1), $M_n (F) \ $),
+  // node((1, 0), $R^n$),
+  arr($F[x]$, $M_n (F) \ $, $"ev"_M$),
+  node((1, 1), $M_n (F)$),
+  arr($F[x]$, $M_n (F)$, $"ev"_(A M A^(-1))$),
+  arr($M_n (F) \ $, $M_n (F)$, $P |-> A P A^(-1)$),
+  // arr($F[x]$, $M_n (F)$, $"ev"_M$),
+  // arr($R^n$, $M_1$, $phi_B_1$),
+  // arr($R^m$, $M_2$, $phi_B_2$, label-pos: right),
+  // arr($R^n$, $M_1$, $≀$, label-pos: right),
+  // arr($R^m$, $M_2$, $≀$, label-pos: left),
+  // arr($R^n$, $R^m$, $\ \ \ M_(T, B_1, B_2)$, label-pos: "below"),
+  // arr("quot", (0, 1), $tilde(phi)$, label-pos: right, "dashed"),
+  // arr($R$, "quot", $pi$),
+)] i.e. $ker("ev"_M) = ker("ev"_(A M A^(-1)))$, and thus have the same generators.
+]
+
+#definition("Minimal Polynomial of a Transform")[The minimal polynomial $p$ of $T$ is the unique monic polynomial over $F$ satisfying 
++ $p(T) = 0$; and
++ if $f(T) = 0$ then $p | f$.
+]
+
+More abstractly, we may consider, basis-free, the evaluation homomorphism $
+"ev"_T : F[x] -> "End"_F (V), wide f(x) |-> f(T),
+$ where $"End"_F (V)$ the ring of endomorpisms of $V$ as a $F$-vector space. We can then equivalently define the minimal polynomial as that which generates $ker("ev"_T)$.
+
+Note that $
+"deg" p_T = "smallest non-zero linear combination of" I, T, T^2, T^3, dots.
+$ Hence, in particular since $
+dim_F "End"_F (V) = n^2,
+$ then certainly $
+"deg" p_T <= n^2,
+$ since if it were any more, then some power of $T$ would be linearly dependent on another. However, we can bound this further; indeed, we clam that the map $"ev"_T$ is never surjective (if $n > 1$).
+
+To see this, note that by the isomorphism theorem, $
+im("ev"_T) tilde.equiv F[x]\/ (p_T (x)).
+$ But notice that $F[x]\/(p_T (x))$ is a commutative ring, while $"End"_F (V)$ is not. Hence, it certainly can't be that $im("ev"_T)$ equals the whole $"End"_F (V)$. What is it? // TODO
+
+=== Zeros of the Minimal Polynomial
+
+
+#definition("Eigenvalue")[
+  $lambda$ is an _eigenvalue_ of $T$ if there is a non-zero vector $v in V$ with the property $T v = lambda v$.
+]
+
+#theorem[If $p_T (lambda) = 0$ for some $lambda in F$, then $lambda$ an eigenvalue of $T$.
+]
+#proof[
+  $p_T (lambda) = 0$ hence $p_T (x) = (x - lambda) q(x)$ for some polynomial $q$ of one degree smaller than $p_T$. Then, $
+  0 = p_T (T) &= (T - lambda I) compose q(T).
+  $ Note that $q(T) eq.not 0$, by assumption of minimality of $p_T$. Hence, we have in particular that $im (q(T))$ contained in $ker(T - lambda I)$. Let $v in im (q(T))$ non-zero. Then, $(T - lambda I) v = 0 => T v = lambda v$.
+]
+
+The converse holds as well:
+
+#theorem[
+  If $lambda$ is an eigenvalue of $T$, then $p_T (lambda) = 0$.
+]
+
+#proof[
+  Let $v$ be such that $T v = lambda v$. Let $g(x)$ be any polynomial in $F[x]$. Then, $g(T) (v) = g(lambda) v$, namely, $g(lambda)$ an eigenvalue of $g(T)$ with vector $v$. Specify $g$ to be $p_T$. Then, $
+  0 = p_T (T) (v) = p_T (lambda) v.
+  $ but $v eq.not 0$ hence $p_T (lambda) = 0$ as desired.
+]
 
 #pagebreak()
 = Midterm Review
@@ -1261,8 +1343,16 @@ $ $sigma(n) eq.not n$ by assumption, so this means that $p$ fixes some non-$n$ e
   Describe two non-abelian groups of cardinality 8 and show that they are not isomorphic.
 ]
 
+#proof[
+  Consider $D_8$ (symmetry group of the square) and $HH$ (the quaternions). Argue on the order of elements.
+]
+
 #proposition[
   Write down the class equation for the symmetric group $S_4$ on $4$ elements and use this to give a complete list of the normal subgroups of $S_4$.
+]
+
+#proof[
+  $hash S_4 = 1 + $
 ]
 
 #proposition[

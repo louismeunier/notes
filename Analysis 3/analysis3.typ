@@ -11,6 +11,7 @@
   subtitle: "Measure spaces; Integration.",
   semester: "Fall 2024",
   professor: "Prof. Linan Chen",
+  cute: "../analysis 3/page.png",
   doc
 )
 
