@@ -1741,3 +1741,121 @@ $]
 
    (ii) $=>$ (i) assignment question.
   ]
+
+  = Product space
+  == Preparations
+  Given a measure space $(X, cal(F), mu)$ with $mu$ a $sigma$-finite measure (i.e. there exists a sequence ${X_n} subset.eq cal(F)$ such that $X_n arrow.t$ and $union.big_n X_n = X$, and $mu(X_n) < infinity$ for each $n$).
+
+  #definition("Measurable")[$f : X -> overline(R)$ is $cal(F)$-measurable if $forall a in RR$, $f^(-1)([-infinity, a)) in cal(F)$.]
+
+  We have similar properties for $f$ in general as in the Lebesgue setting.
+  -For $f$ $cal(F)$-measurable, $c f, f^k, |f|, f and a, f or b, f^+, f^-$ are all $cal(F)$-measurable for $a, b, c in RR$.
+  - For $f, g$ $cal(F)$-measurable, $f + g, f - g, f dot g, f and g, f or g$ are all $cal(F)$-measurable.
+  - If ${f_n}$ $cal(F)$-measurable, $sup_n f_n, inf_n f_n, limsup_n f_n, liminf_n f_n$ are $cal(F)$-measurable.
+
+  We may "dissect" functions as before. For $f$ $cal(F)$-measurable, write $f = f^+ - f^-$, and put for $n >= 1$ and $bullet = +, -$, $
+  f_n^bullet := bb(1)_(X_n) (f^bullet and n). 
+  $ Then, $f_n^bullet arrow.t f^bullet$. Put $
+  phi^bullet_n := sum_(k=0)^(n 2^n) k/2^n bb(1)_(A_(n,k)^bullet),
+  $ where, for $k = 0,1, dots, n 2^n$ for $n >= 1$, $
+  A_(n, k)^bullet = {x in X_n : k/2^n <= f_n^bullet < (k+1)/2^n} in cal(F).
+  $ Then, we may define the integral of the simple function $
+  integral_X phi_n^bullet dif mu := sum_(k=0)^(n 2^n) k/2^n mu(A_(n,k)^bullet).
+  $ Define then $
+  integral_X f^(bullet) dif mu := lim_n integral_X phi_n^bullet dif mu,
+  $ and $
+    integral_X f dif mu := integral_X f^+ dif mu - integral_X f^- dif mu.
+  $ We say, then, $f in L^1 (mu)$ if $integral_X |f| dif mu < infinity$. This generalizes the notion of integration to a (slightly more) general $sigma$-algebra.
+
+== Product Lebesgue $sigma$-Algebra
+
+We will restrict our constructions to the product of 2 spaces, i.e. $RR^2$, but generalizes for general $RR^d$.
+
+#definition([Product $sigma$-algebra])[
+  The _product $sigma$-algebra_ of subsets of $RR^2$, denoted by $cal(M) times.circle cal(M)$ or simply $cal(M)^2$, is defined as $
+  cal(M)^2 := sigma({A times B : A, B in cal(M)}),
+  $ where $
+  A times B := {(x, y) : x in A, y in B}
+  $ as is standard.
+]
+
+Notice $cal(M)^2$ contains 
+- rectangles $I_1 times I_2$, $I_1, I_2$ intervals;
+- singletons ${(x, y)}$;
+- open sets, closed sets, and so $frak(B)(RR^2) := sigma({"open sets in" RR^2}) subset.eq cal(M)^2$.
+
+Given $G$ open, then for every $x in G$, there exists some disc centered at $x$ contained entirely in $G$. Moreover, there exist $(a_1, a_2), (b_1, b_2)$ with $a_i, b_i in QQ$ such that $x in (a_1, a_2) times (b_1, b_2) subset G$. Then, $G = union.big_(x in G)(a_1, a_2) times (b_1, b_2).
+$
+
+#definition("Slice")[Given $E subset.eq RR^2$, then for every $x in R$, define $
+E_x := {y in RR : (x, y) in E} subset.eq RR,
+$ called the _slice_ of $E$ at $x$. Similarly, define for $y in RR$, $
+E^y := {x in RR : (x, y) in E} subset.eq RR.
+$]
+
+#proposition[
+  If $E in cal(M)^2$, then for every $x in RR$, $E_x in cal(M)$, and for every $y in RR$ $E^y in cal(M)$; that is, product measurability $=>$ marginal measurability.
+]
+
+#proof[
+  Define $
+  cal(A) := {E subset.eq RR^2 : forall x in RR, E_x in cal(M)}.
+  $ We claim $cal(A)$ a $sigma$-algebra of subsets of $RR^2$.
+
+  - $RR^2 in cal(A)$? Yes, since for every $x in RR$, $RR^2_x = RR in cal(M)$.
+  - Let $E in cal(A)$. Then, $E_x in cal(M)$ for every $x in RR$. But we have too $
+  (E^c)_x = (E_x)^c,
+  $ and since $E_x in cal(M) => (E_x)^c in cal(M)$, it follows that $E^c in cal(A)$.
+  - If ${E_n} subset.eq cal(A)$, then for every $x in RR$, $
+  (union.big_(n) E_n)_x = (union.big_(n) (E_n)_x) in cal(M)
+  $ so $union.big_(n) E_n in cal(A)$.
+
+  Hence, $cal(A)$ indeed a $sigma$-algebra of subsets of $RR^2$. For every $A, B in cal(M)$, we claim $A times B in cal(A)$. We have that for every $x in RR$, $
+  (A times B)_x = cases(
+    nothing & "if" x in.not A, B & "if" x in A
+  ) in cal(M),
+  $ hence $A times B in cal(A)$. Thus, since such sets generate $cal(M)^2$, it follows that $cal(M)^2 subset.eq cal(A)$, and so every set in $cal(M)^2$ has the desired property.
+
+  An identical proof follows for $E^y$-type slices.
+]
+
+#remark[Notice we didn't prove $cal(A) = cal(M)^2$, indeed, because its not true.
+
+For instance, let $E = N times A$ with $N$ the Vitali set and $A in cal(M)$. Then, for every $x in A$, $E_x = cases(A & "if" x in N, nothing & "if" x in.not N) in cal(M)$, but $E in.not cal(M)^2$, because for every $y in RR$, $E^y = cases(N &"if" y in A, nothing "else")$.
+
+In fact, there eixsts sets such that $E_x$ and $E^y in cal(M)$ for every $x, y in RR$, but $E in.not cal(M)^2$ (the _Sierpinski set_).
+
+However, if $E subset.eq RR^2$ a product set, i.e. $E = A times B$ for some $A, B subset.eq RR$, then $A, B in cal(M) => E in cal(M)^2$.
+]
+
+#definition("Slice of sets")[Let $f : RR^2 -> overline(RR)$ a function. For every $x in RR$, define $
+f_x : RR -> overline(RR), wide f_x (y) := f(x, y),
+$ called the _slice_ of $f$ at $x$. Similarly define $f^y$.]
+
+#example[If $f = bb(1)_E$ for some $E subset.eq RR^2$, then $f_x = bb(1)_(E_x)$.]
+
+#proposition[
+If $f : RR^2 -> overline(R)$ is $cal(M)^2$-measurable, then for every $x in RR$, $f_x$ is $cal(M)$-measurable, and for every $y in RR$ $f^y$ is $cal(M)$-measurable.
+]
+
+#proof[
+  Observe that for every $B subset.eq RR$, $
+  (f^(-1)(B))_x = f_x^(-1) (B)
+  $ for every $x in RR$, with similar for $thin^y$. In particular, then, if $f$ $cal(M)^2$-measurable, then for every $a in RR$, $f^(-1) ([-infinity, a)) in cal(M)^2$ hence $f_x^(-1) ([-infinity, a)) = (f^(-1) ([-infinity, a))_x in cal(M)$, with the same idea following for $thin^y$.
+  // $epsilon -> 0$
+]
+
+#remark[
+  - If $f : RR^2 -> R$ is continuous, then $f$ is measurable. For every $a in RR$, $f^(-1) ((-infinity, a))$ open by virtue (indeed, definition) of continuity, hence in $cal(M)^2$.
+  - If $f = bb(1)_E$ for some $E subset.eq RR^2$, $f$ $cal(M)^2$-measurable $<=>$ $E in cal(M)^2$.
+  - In general, there exists $f : RR^2 -> overline(R)$ such that $f_x$ $cal(M)$-measurable but $f$ is not $cal(M)^2$-measurable.
+  - If $f(x, y) = h(x) g(y)$ for some non-trivial $h, g : RR -> overline(RR)$, then $f$ is $cal(M)^2$-measurable $<=>$ both $h$ and $g$ are $cal(M)$-measurable. We show $<=$; $
+  f^(-1) ([-infinity, a)) &= {(x, y) : h(x) g(y) < a} \
+  &= {(x, y) : h(x)= 0, 0 < a} \
+  & wide union {(x, y) : h(x) > 0, g(y) < a/(h(x))} \
+  & wide union {(x, y) : h(x) < 0, g(y) > a/(h(x))}\
+  &= {x : h(x) = 0} times RR sect {0 < a} wide in cal(M)^2 \
+  & wide union (union.big_(q in QQ) underbrace({x : 0 < h(x),  q < a/(h(x))}, in cal(M)) times underbrace({y : g(y) < q}, in cal(M)))\ 
+  & wide union (union.big_(q in QQ) underbrace({x : 0 > h(x),  q > a/(h(x))}, in cal(M)) times underbrace({y : g(y) > q}, in cal(M))) in cal(M)^2
+  $ 
+]
