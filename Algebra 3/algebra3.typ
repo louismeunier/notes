@@ -1239,7 +1239,70 @@ $ since if it were any more, then some power of $T$ would be linearly dependent 
 
 To see this, note that by the isomorphism theorem, $
 im("ev"_T) tilde.equiv F[x]\/ (p_T (x)).
-$ But notice that $F[x]\/(p_T (x))$ is a commutative ring, while $"End"_F (V)$ is not. Hence, it certainly can't be that $im("ev"_T)$ equals the whole $"End"_F (V)$. What is it? // TODO
+$ But notice that $F[x]\/(p_T (x))$ is a commutative ring, while $"End"_F (V)$ is not. Hence, it certainly can't be that $im("ev"_T)$ equals the whole $"End"_F (V)$. What is it?
+
+#theorem[
+  $deg(p_T (x)) <= n$
+]<thm:degpt>
+
+#proof[(A first proof) Recall that $f_T (x) := det(x I - T)$, the characteristic polynomial of $T$, has degree $n$. By the Cayley-Hamilton theorem, $f_T (T) = 0$, and thus $p_T | f_T$ and so $"deg" p_T <= n$.
+]
+
+#example[
+  Let $T in "GL"_3 (FF_2)$ of order $7$. What is the minimal polynomial of $T$?
+
+  We know $T^7 - 1 = 0$, so $
+  p_T | f(x) = (x+1)(x^3+x^2+1)(x^3+x+1).
+  $ These resulting polynomials on the RHS are irreducible, hence we know $p_T$ to be some combination of these.
+
+  Claim: $deg p_T <= 3$
+  - $p_T (1) eq.not 0$. If it were, then $T$ has 1 as an eigenvalue, i.e. $exists v$ such that $T v = v$. Hence, $T in "Stab"_("GL"_3 (FF_2)) (v)$, but $hash "Stab"_("GL"_3 (FF_2)) (v) = 168/7 = 24$, and $7 divides.not 24$ so this is impossible. It follows that $x+1$ not a factor of $p_T$.
+
+  - For any $v eq.not 0$, $v, T(v), T^2 (v)$ are linearly independent, hence are a basis for $V$. Suppose otherwise, that there exists $a_0, a_1, a_2 in FF_2$ such that $a_0 v + a_1 T(v) + a_2 T^2 (v) = 0$. Then, letting $f(x) = a_2 x^2 + a_1 x + a_0$, we equivalently claim that $f(T)(v) = 0$.\
+  But we know that $gcd(f, p_T) = 1$ since $f$ irreducible. By the lemma below, $f(T)$ invertible, but this contradicts the fact that there is some $v$ such that $f(T)(v) = 0$, i.e. $f(T)$ has nontrivial kernel. We conclude that indeed ${v, T(v), T^2 (v)}$ linearly independent.
+
+  In short, then, we have that every vector $v$ is a _cyclic vector_ for $T$, namely ${v, T v, T^2 v}$ is a basis for $V$. In particular, there is some $f(x) = x^3 + a_2 x^2 + a_1 x + a_0 in FF_2[x]$ such that $f(T)(v) = 0$ i.e. $a_0 v + a_1 T(v) + a_2 T^2 (v) + T^3 (v) = 0$. We claim $f(T) equiv 0$. Indeed, we have that $
+  0 = T compose f(T) (v) = f(T)(T v) = 0 => T v in ker(f(T)),
+  $ and similarly $T^2 v in ker(f(T))$, hence $ker(f(T)) = V$, namely, $f(T)(w) = 0$ for every $w in V$. Hence, $
+  f(T) = 0,
+  $ so we conclude indeed that $p_T$ indeed of degree at most 3.
+
+  So, $p_T$ is one of $x^3 + x^2 + 1$ or $x^3 + x + 1$; it could be either, for general $T$.
+
+  Indeed, there are 2 conjugacy classes in $"GL"_3 (FF_2)$ of order $7$, with the minimal polynomial of those in one conjugacy class $x^3 + x^2 + 1$, the other $x^3 + x + 1$.
+]
+
+#lemma[If $gcd(f, p_T) = 1$, then $f$ is invertible.]
+
+#proof[
+Appealing to the euclidean algorithm, there exist $a, b in FF[x]$ such that $1 = a f + b p_T$. Evaluating on $T$, we find $
+I = a(T) f(T) + cancel(b(T) p_T (T)) => I = a(T) f(T) => a(T) = (f(T))^(-1).
+$
+]
+
+#proof[(A second proof of @thm:degpt)
+If $V$ has a cyclic vector $v$ for $T$, then we are done, since then $
+{v, T v, dots, T^(n-1) v}
+$ a basis for $V$, and so there is some $f(x) in FF[x]$ of degree $n$ such that $
+f(T)(v) = 0 => f(T)(T^k v) = T^k f(T)(v) = T^k (0) = 0,
+$ i.e. $f(T) equiv 0$, and thus $p_T | f$ and $deg p_T <= deg f = n$.
+
+Otherwise, we proceed by induction on $dim V$. We prove the statement $
+P_n: "if" T in "End"(V) "with" dim "End"(V) = n, "then" deg p_T <= n.
+$ Suppose The case for $P_(n-1)$ and let $V$ be of dimension $n$. Let $v in V - {0}$, and let $
+W = "span"{v, T v, T^2 v, dots}.
+$ If $v$ was cyclic, we are in the previous case and we are done, hence assume $W subset.neq V$. Remark $W$ a $T$-stable subspace; $T$ maps vectors in $W$ to vectors in $W$. Let $T_W : W -> W$ denote the restriction of $T$ to $W$. This induces a linear transformation $
+overline(T) : V \/ W -> V\/W, wide v + W |-> T v + W,
+$ which is well defined, since if $v_1 + W = v_2 + W$, then $v_1, v_2$ differ by something in $W$, i.e. $v_1 - v_2 in W$ so $T(v_1 - v_2) in W$ as well since $W$ stable under $T$. It follows that $T(v_1) - T(v_2) in W$.
+
+We know that $deg p_T_W <= dim W$ and likewise $deg p_overline(T) <= dim (V \/ W)$ by the induction hypothesis. We claim $p_T_W p_(overline(T))$ vanishes on $T$. 
+
+We have that $
+p_(overline(T)) (overline(T)) = 0 &=> p_(overline(T)) (overline(T)) (v + W) = 0\
+&=>  p_overline(T) (T)(v) + W = 0\
+&=>p_overline(T) (T)(v) in W,
+$ for any $v in W$.
+]
 
 === Zeros of the Minimal Polynomial
 
@@ -1267,6 +1330,7 @@ The converse holds as well:
   0 = p_T (T) (v) = p_T (lambda) v.
   $ but $v eq.not 0$ hence $p_T (lambda) = 0$ as desired.
 ]
+
 
 #pagebreak()
 = Midterm Review
@@ -1352,11 +1416,19 @@ $ $sigma(n) eq.not n$ by assumption, so this means that $p$ fixes some non-$n$ e
 ]
 
 #proof[
-  $hash S_4 = 1 + $
+  $
+  S_4 = {1} union.sq {"transpositions"}  union.sq {3"-cycles"} union.sq {2,2"-cycles"} union.sq {4"-cycles"}\
+  hash S_4 = 1 + binom(4, 2) + 2dot binom(4,3) + 3 +3!
+  $
+  A subgroup is normal if it a union of conjugacy classes, so it suffices to check the possible unions of conjugacy classes. Should give ${1}, S_4, A_4, K_4$.
 ]
 
 #proposition[
   Give a formula for the number of distinct ways of coloring the 8 corners (i.e. vertices) of a cube with $t$ distinct colors. (Note that the class equation computed in Question 2 can and should be used to assist you with this question.)
+]
+
+#proof[
+  // Use the fact that 
 ]
 
 #proposition[
