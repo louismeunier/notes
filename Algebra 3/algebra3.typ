@@ -1375,8 +1375,77 @@ The converse holds as well:
   $ but $v eq.not 0$ hence $p_T (lambda) = 0$ as desired.
 ]
 
+== The Primary Decomposition Theorem
+
+#theorem("Primary Decomposition")[
+  Let $T : V -> V$ a linear transformation on a vector space $V$ over a field $F$. Supopse $p_T (x) = p_1 (x) p_2 (x)$ with $gcd(p_1, p_2) = 1$. Then, there exists unique subspaces $V_1, V_2 subset.eq F$ such that 
+  1. $V = V_1 plus.circle V_2$
+  2. $V_j$ is stable under $T$, and the minimal minimal polynomial of $T_j := T|_(V_j)$ is $p_j (x)$.
+]<thm:primarydecomp>
+
+#example[
+  If $T$ idempotent i.e. $T^2 = T$, then $p_T (x) = x^2 - x = x(x-1)$, $p_1 (x) = x$, $p_2 (x) = x - 1$. Then, $V_1 = ker(T), V_2 = im(T)$; on $V_1$, $T$ acts as $0$, on $V_2$, $T$ acts as the identity.
+]
+
+#proposition("Chinese Remainder Theorem")[
+$
+F[x]\/(p_T (x)) tilde.equiv F[x]\/(p_1(x)) times  F[x]\/(p_2(x)).
+$
+]
+#proof[
+  Consider $phi: F[x] -> F[x]\/(p_1(x)) times  F[x]\/(p_2(x))$ given by $f(x) |-> (f(x)+(p_1 (x)), f(x)+(p_2 (x)))$. This has kernel $
+  ker(phi)= {f : p_1|f, p_2|f} = {f : p_1 p_2|f} = {f : p_T|f} = (p_T (x)),
+  $ since $p_1, p_2$ relatively prime. Hence, we have an induced injection $
+  overline(phi) : F[x]\/(p_T(x)) arrow.hook F[x]\/(p_1 (x)) times F[x]\/(p_2 (x)).
+  $ Moreover, as a vector space $
+  dim F[x]\/(p_T (x)) = deg(p_T (x)), wide dim (F[x]\/(p_1 (x)) times F[x]\/(p_2 (x))) = deg(p_1 (x))+ deg(p_2 (x)),
+  $ // TODO why is this sufficient?
+  and since $deg(p_T) = deg(p_1) +deg(p_1)$, the dimensions of both sides agree. Hence, the map $overline(phi)$ also surjective and thus the isomorphism we sought.
+]
+
+#remark[
+  Given $R_1, R_2$ rings, $R_1 times R_2$ a ring. If $M_1, M_2$ are modules over $R_1, R_2$, then $M_1 times M_2$ is an $(R_1 times R_2)$-module by the action $(lambda_1, lambda_2) (m_1, m_2) = (lambda_1 m_1, lambda_2 m_2)$.
+]
+
+#theorem[If $M$ is any module over $R_1 times R_2$, then there are $R_j$-modules $M_j$, $j = 1, 2$, such that $M tilde.equiv M_1 times M_2$.]
+
+#proof[
+  Consider $i_1 : R_1 -> R_1 times R_2, a |-> (a, 0)$. This is _not_ a ring homomorphism ($1 arrow.not 1$), but does include $R_1 subset R_2$ as an ideal in $R_1 times R_2$. Define $M_1 = (1, 0) M, M_2 = (0, 1) M$. We claim $M = M_1 times M_2$.
+
+  Given $m in M$, $m = (1, 1)m = (1, 0)m + (0, 1)m$. Putting $m_1 := (1, 0) m, m_2 := (0, 1)m$ gives $m = m_1 + m_2$ with $m_1, m_2 in M_1, M_2$ resp, hence $M_1 times M_2$ spans $M$.
+
+  We now wish to show $M_1 sect M_2 = {0}$. Let $m in M_1 sect M_2$. Then, $m = (1,0) m_1 = (0, 1)m_2$. Multiplying both sides by $(1, 0)$ gives that $m = (1, 0) m_1 = 0$, and the claim follows.
+]
+
+#proof[(Of @thm:primarydecomp) If $p_T (x) = p_1 (x) p_2 (x)$ as given, notice $V$ is a module over $F[x]\/(p_T (x)) = F[x]\/(p_1 (x)) times F[x]\/(p_2 (x))$. By the previous theorem, then, $V = V_1 plus.circle V_2$, where $V_1$ a $F[x]\/(p_1 (x))$-module, $V_2$ a $F[x]\/(p_2 (x))$-module. On $V_i$, $p_i (T) = 0$.
+]
+
+#theorem("PDT 2")[
+  If $p_T (x) = p_1 (x)^(e_1) dots.c p_t (x)^(e_t)$ where $p_1, dots, p_t$ irreducible, then $
+  V = V_1 plus.circle dots.c plus.circle V_t,
+  $ where $
+    p_T|_(V_j) = p_j (x)^(e_j)
+  $ for each $j = 1, dots, t$.
+]
+#theorem("PDT 3")[
+  Suppose $F$ is algebraically closed, so $
+  p_T (x) = (x - lambda_1)^(e_1) dots.c (x-lambda_t)^(e_t),
+  $ then $
+  V = V_1 plus.circle dots.c plus.circle V_t,
+  $ where $
+  p_T|_(V_j) = (x - lambda_j)^(e_j).
+  $ If $e_1 = dots.c = e_t = 1$, then $T|_(V_j) = $ multiplication by $lambda_j$, so in particular $V_j$ the eigenspace for $lambda_j$ and $T$ diagonalizable.
+]
+
+#corollary[
+  If $p_T (x) = (x - lambda_1) dots.c (x - lambda_t)$ where $lambda_1, dots, lambda_t$ distinct, then $T$ is diagonalizable.
+]
 
 
+
+
+
+// ! Ending
 #pagebreak()
 = Midterm Review
 == $A_5$ has no normal subgroups
