@@ -1440,10 +1440,88 @@ $
 #corollary[
   If $p_T (x) = (x - lambda_1) dots.c (x - lambda_t)$ where $lambda_1, dots, lambda_t$ distinct, then $T$ is diagonalizable.
 ]
+#remark[
+  More concretely, we may construct $
+  V_i := ker(p_(i)).
+  $ Notice $V_i$ $T$-stable. Since $gcd(p_1, p_2) = 1$, we have find $a, b in F[x]$ such that $
+  1 = a p_1 + b p_2.
+  $ Evaluating on $T$, we find $
+  I = a(T) p_1 (T) + b(T) p_2 (T)
+  $ and evaluating further on some arbitrary $v in V$, we find $
+  v  =  underbrace(a(T) p_1 (T)(v), in V_2) + underbrace(b(T) p_2 (T) (v), in V_1),
+  $ i.e. $V_1 union V_2 = V$ indeed. Moreover, suppose $v in V_1 sect V_2$. Then, $a(T)p_1 (T)(v) = 0$ _and_ $b(T)p_2(T)(v) = 0$, hence $v = 0$ itself. We conclude $V_1 sect V_2 = {0}$ as desired.
+]
 
+#corollary[
+  If $F$ algebraically closed, then $V$ is a direct sum of generalized eigenspaces, $
+  V = V_1 plus.circle dots.c plus.circle V_t,
+  $ where $V_j = ker((T - lambda_j)^(e_j))$ for some $lambda_j in F, e_j >= 1$.
+]
 
+#definition("Generalized Eigenspace")[
+  Given $T : V -> V$, $lambda in F$, the eigenspace of $T$ attached to $lambda$ is $
+  V_lambda := {v in V : T v = lambda v} = ker(T - lambda).
+  $ The _generalized eigenspace_ attached to $lambda$ is $
+  V_((lambda)) := {v in V : (T - lambda)^m (v) = 0 "some" m >= 1} = union.big_(m>=1) ker((T - lambda)^m).
+  $
+]
 
+#theorem("Jordan Canonical Form")[
+  There is a basis for $V_((lambda))$ for which the matrix of $T$ is of the form $
+  mat(
+      J_(1, lambda), 0, 0, 0;
+      0, J_(2, lambda), 0, 0;
+      0, 0, dots.down, 0;
+      0, 0, 0, J_(m, lambda) 
+  ),
+  $ where $
+  J_(1, lambda) = mat(lambda, 1, 0, 0, 0; 0, lambda, 1, 0, 0; 0, 0, dots.down, 1,0 ; 0, 0,0, lambda, 1; 0, 0, 0,0, lambda),
+  $ a $d_1 times d_1$ matrix with diagonals $lambda$ and upper-diagonal $1$'s, and $d_1 + d_2 + dots + d_m = dim (V_((lambda)))$.
+]
 
+== Modules over Principal Ideal Domains
+
+#definition("Finitely Generated")[
+A module $M$ over a ring $R$ is _finitely generated_ if it has a finite spanning set.
+]
+
+#theorem[
+Let $M$ be a finitely generated module over a PID $R$. Then, there exists elements $a_1|a_2|dots.c|a_t$ and an integer $m >= 0$ such that $
+M tilde.equiv R\/(a_1) plus.circle R\/(a_2) plus.circle dots.c plus.circle R\/(a_t) plus.circle R^m.
+$ $a_1, dots, a_t$ are called the _elementary divisors_ of $M$, and $m$ is called the _rank_ of $M$ over $R$.
+]<thm:moduletheorem>
+
+#remark[
+  $M$ free $<=>$ $t = 0$.
+]
+
+#remark[
+  If $G$ is a finitely-generated abelian group, then $
+  G tilde.equiv ZZ\/n_1 plus.circle dots.c plus.circle ZZ\/n_t plus.circle ZZ^m.
+  $ $G$ finite $<=>$ $m = 0$.
+]
+
+#remark[
+  If $V$ a generalized eigenspace for $T$ with eigenvalue $lambda$, then $
+  V = F[x]\/((x-lambda)^(n_1)) plus.circle dots.c plus.circle F[x]\/((x-lambda)^(n_t)) plus.circle F[x]^m,
+  $ where actually $m = 0$ (since $V$ finite dimensional) and $n_1 <= n_2 <= dots.c <= n_t$.
+]
+
+#theorem[
+If $M$ a finitely generated $R$-module, then it is a quotient of a free $R$-module.
+]
+
+#proof[
+  Let $m_1, dots, m_t$ be a system of $R$-module generators for $M$. Then consider $
+  phi: R^t -> M, wide (lambda_1, dots, lambda_t) |-> lambda_1 m_1 + dots.c + lambda_t m_t.
+  $ Since $m_1, dots, m_t$ generate $M$, this is a surjective module homomorphism. This gives $
+  M tilde.equiv R^t\/(ker(phi)).
+  $
+]
+
+// #proof[
+
+// ]
 
 // ! Ending
 #pagebreak()

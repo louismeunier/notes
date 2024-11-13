@@ -1849,7 +1849,7 @@ If $f : RR^2 -> overline(R)$ is $cal(M)^2$-measurable, then for every $x in RR$,
   - If $f : RR^2 -> R$ is continuous, then $f$ is measurable. For every $a in RR$, $f^(-1) ((-infinity, a))$ open by virtue (indeed, definition) of continuity, hence in $cal(M)^2$.
   - If $f = bb(1)_E$ for some $E subset.eq RR^2$, $f$ $cal(M)^2$-measurable $<=>$ $E in cal(M)^2$.
   - In general, there exists $f : RR^2 -> overline(R)$ such that $f_x$ $cal(M)$-measurable but $f$ is not $cal(M)^2$-measurable.
-  - If $f(x, y) = h(x) g(y)$ for some non-trivial $h, g : RR -> overline(RR)$, then $f$ is $cal(M)^2$-measurable $<=>$ both $h$ and $g$ are $cal(M)$-measurable. We show $<=$; $
+  - If $f(x, y) = h(x) g(y)$ for some non-trivial $h, g : RR -> overline(RR)$, then $f$ is $cal(M)^2$-measurable $<=>$ both $h$ and $g$ are $cal(M)$-measurable. We show $impliedby$; $
   f^(-1) ([-infinity, a)) &= {(x, y) : h(x) g(y) < a} \
   &= {(x, y) : h(x)= 0, 0 < a} \
   & wide union {(x, y) : h(x) > 0, g(y) < a/(h(x))} \
@@ -1858,4 +1858,244 @@ If $f : RR^2 -> overline(R)$ is $cal(M)^2$-measurable, then for every $x in RR$,
   & wide union (union.big_(q in QQ) underbrace({x : 0 < h(x),  q < a/(h(x))}, in cal(M)) times underbrace({y : g(y) < q}, in cal(M)))\ 
   & wide union (union.big_(q in QQ) underbrace({x : 0 > h(x),  q > a/(h(x))}, in cal(M)) times underbrace({y : g(y) > q}, in cal(M))) in cal(M)^2
   $ 
+]
+
+== Product Measure
+
+#definition[
+  Given $E in cal(M)^2$, define functions $
+  I_E^((1)) : RR -> overline(RR), wide I_E^((1)) (x) := m(E_x)
+  $ and $
+  I_E^((2)) : RR -> overline(RR), wide I_E^((2))(y) := m(E^y).
+  $
+]
+
+#theorem[
+  Given $E in cal(M)^2$, $I_E^((1)), I_E^((2))$ are $cal(M)$-measurable functions, and in particular $
+  integral_RR I_E^((1)) (x) dif x = integral_RR I^((2))_E (y) dif y. wide ast.circle
+  $
+]
+
+#proof[
+  If indeed $I_E^((1)), I_E^((2))$ $cal(M)$-measurable, then the integrals of the functions are well-defined, being non-negative functions.
+
+  Set $
+  Sigma := {E in cal(M)^2 : I_(E_N)^((1)), I_(E_N)^((2)) "are" cal(M)"-measurable and "  ast.circle "holds", "for" E_N := E sect [-N, N]^2 "for all " N > 0}.
+  $
+  Note that for every $E in cal(M)^2$, for all $N > 0$, $
+  I_(E_N)^((1)) (x) &= cases(m((E_N)_x) & "if" x in [-N, N], 
+  0 & "o.w."
+  ) = bb(1)_[-N, N] (x) I_(E_N)^((1)) (x).
+  $ similarly for $I_(E_N)^((2))$.
+
+  Let $cal(C) := {A times B : A, B in cal(M)}$ (recall $cal(M)^2 = sigma (cal(C))$).
+
+  - _Claim 1:_ $cal(C) subset.eq Sigma$
+
+  For every $N > 0$, $E_N = (A times B) sect [-N, N]^2 = A_N times B_N$ ($A_N := A sect [-N, N]$). Then, $
+  I_(E_N)^((1)) (x) = I_(A_N times B_N)^((1)) (x) = cases(
+     m(B_N) & "if"  x in A_N,
+     0 & "if" x in.not A_N
+  ), wide I_(E_N)^((2)) (y) = I_(A_N times B_N)^((2)) (y) = cases(
+     m(A_N) & "if"  y in B_N,
+     0 & "if" y in.not B_N
+  ),
+  $ and so $I_(E_N)^((1)), I_(E_N)^((2))$ are measurable seeing as they are both just indicator functions of measurable sets times a constant. In particular, $
+  integral_RR I_(E_N)^((1)) = m(B_N)m(A_N) = integral_RR I_(E_N)^((2)),
+  $ as required. Hence, indeed $E_N in Sigma$ and so $cal(C) subset.eq Sigma$.
+
+
+  - _Claim 2:_ $RR^2 in Sigma$
+
+  For every $N > 0$, $
+  I_([-N,N]^2)^((1)) (x) = cases(
+2N & "if" x in [-N, N],
+0 & "o.w."
+  ), 
+  $ similar for $I^((2))_[-N,N]^2$. $I_[-N,N]^2^((1)), I_[-N,N]^((2))$ are both $cal(M)$-measurable, and their integrals agree, and so it follows that $R^2 in Sigma$.
+
+  - _Claim 3:_ $E in Sigma => E^c in Sigma$
+
+  For each $N > 0$, denote $
+  F_N := E^c sect[-N,N]^2.
+  $ $I_(F_N)^((1)) = 0$ outside of $[-N, N]$, and for $x in [-N,N]$, $
+  (F_N)_x = {y : (x, y) in E^c sect [-N,N]^2} = [-N,N]\\E_x = [-N, N] \\ (E_N)_x
+  $ so $
+  I_(F_N)^((1)) (x) = 2 N - I_(E_N)^((1)) (x)
+  $ for $x in [-N, N]$. Similarly, $
+  I_(F_N)^((2)) (y) = cases(
+    2N-I_(E_N)^((2)) (y) & "if" y in [-N,N],
+    0 & "o.w."
+  ).
+  $ In particular, then, $I_(F_N)^((1)), I_(F_N)^((2))$ measurable, and $
+  integral_RR I_(F_N)^((1)) = integral_[-N,N] 2N - I_(E_N)^((1)) = 4N^2 - integral_RR I_(E_N)^((1)) \ 
+  integral_RR I_(F_N)^((2)) = integral_[-N,N] 2N - I_(E_N)^((2)) = 4N^2 - integral_RR I_(E_N)^((2)),
+  $ but we know $integral_RR I_(E_N)^((1)) = integral_RR I_(E_N)^((2))$ since $E_N in Sigma$, hence it follows that $integral_RR F_N^((1)) = integral_RR F_N^((2))$ and so it follows that $E^c in Sigma$.
+
+  - _Claim 4:_ ${E_k} subset.eq Sigma => E:=union.big_(k=1)^infinity E_k in Sigma$.
+
+  Wlog, $E_n$'s disjoint. For $N > 0$, $E_N = union.big_(k=1)^infinity E_(k,N)$.
+  $
+  I_(E_N)^((1)) (x) = bb(1)_[-N,N] (x) m(union.big_(k=1)^infinity (E_(k, N))_x) = bb(1)_[-N,N] sum_(k=1)^infinity m((E_(k,N))_x) = sum_(k=1)^infinity I^((1))_(E_(k,N)) (x),
+  $ with similarly $I_(E_N)^((2))(y) = sum_(k=1)^infinity I_(E_(k,N))^((2)) (y)$. This implies $I_(E_N)^((1)), I_(E_N)^((2))$ are $cal(M)$-measurable, and in particular $
+  integral_RR I^((1))_(E_N) = sum_(k=1)^infinity integral_RR I_(E_(k,N))^((1)), wide  integral_RR I^((2))_(E_N) = sum_(k=1)^infinity integral_RR I_(E_(k,N))^((2)),
+  $ which are equal since by assumption $E_(k) in Sigma$. Hence, $E in Sigma$, and thus by Claims 2-4, $Sigma$ a $sigma$-algebra of subsets of $RR^2$, and thus by Claim 1 $Sigma = cal(M)^2$.
+
+  Hence, for every $E in cal(M)^2$, $E in Sigma$ and so all the statements hold for $E_N$ for every $N > 0$. Then, $
+  I_(E)^((1)) (x) = lim_(N->infinity) bb(1)_[-N, N] (x) m((E_N)_x) = lim_(N->infinity) m((E_N)_x) = m(E_x) = lim_(N->infinity) I_(E_N)^((1)) (x),
+  $ and in particular ${I_(E_N)^((1))} arrow.t$, hence $I_(E)^((1))$ $cal(M)$-measurable, and $
+  integral_RR I_E^((1)) = lim_(N->infinity) integral_RR I_(E_N)^((1)),
+  $ with similar for $I_E^((2))$, by monotonicity. Thus, since $integral_RR I_(E_N)^((1)) = integral_RR I_(E_N)^((2))$ for every $N$, the proof follows.
+]
+
+#definition[Define a non-negative set function on $(RR^2, cal(M)^2)$ by $
+m(E) := integral_RR I_E^((1)) (x) dif x = integral_RR I_E^((2)) (x) dif x, wide E in cal(M)^2.
+$ $m$ is called the _Lebesgue measure on $RR^2$_.
+]
+
+#proposition[
+  $m$ is indeed a measure on $(RR^2, cal(M)^2)$.
+]
+
+#proof[
+  - $m(nothing) = integral_RR 0 = 0$
+  - If ${E_k} subset.eq cal(M)^2$ disjoint, let $E = union.big_(k=1)^infinity E_k$. Then $
+  m(E) = sum_(k=1)^infinity m(E_k), 
+  $ since for every $x in RR$, $E_x = union.big_(k=1)^infinity (E_k)_x$ disjoint, so $
+  integral_RR I_E^((1)) = sum_(k=1)^infinity integral_RR I_(E_k)^((1)),
+  $ and the proof follows.
+]
+
+#remark[
+  1. For any $E = I_1 times I_2$, $m(E) = ell(I_1) dot ell(I_2)$. It follows that any singleton, and countable set, and any line on $RR^2$ is a null set.
+  2. If $A subset.eq RR$ is a null set in $cal(M)$, then $A times RR, RR times A$ are null sets, in $cal(M)^2$.
+  3. $cal(M)^2$ is _not_ complete under $m$, since for instance if $N subset RR$ the Vitali set, $a in RR$, then ${a} times N subset.eq {a} times RR$ is a subset of a null set, but ${a} times N$ is not measurable.
+  4. It is possible to construct $m$ on $RR^2$ through the "outer measure" approach. We take $E subset.eq RR^2$, and define $
+  m^ast (E) = inf {sum_(n=1)^infinity "Area"(R_n) : R_n"'s closed, finite rectangles s.t." E subset.eq union.big_(n=1)^infinity R_n}.
+  $ Then, $m^ast$ satisfies similar properties as the 1-dimensional analog. We then say a set $E$ is measurable if for every $F subset.eq RR^2$, $m^ast (F) = m^ast (F sect E) + m^ast (F sect E^c)$. Collect all such sets, $overline(cal(M)^2) := {E subset.eq RR^2 : E "measurable"}$. This is a $sigma$-algebra of subsets of $RR^2$, with $m := m^ast|_(overline(cal(M)^2))$ a measure when restricted to it. Indeed, $m$ matches the Lebesgue measure defined above, and $overline(cal(M)^2)$, as suggestively notated, the completion of $cal(M)^2$ under the Lebesgue measure. In addition, $overline(cal(M)^2) = overline(frak(B)_(RR^2))$.
+  + The Lebesgue measure $m$ on $RR^2$ is the unique measure on $cal(M)^2\/frak(B)_(RR^2)\/overline(cal(M)^2)$ such that for all $I_1 times I_2$ rectangles, $m(I_1 times I_2) = ell(I_1) ell(I_2)$. This is because $cal(I) := {I_1 times I_2 : I_1, I_2 "finite intervals"}$ is a $pi$-system and generates $frak(B)_(RR^2)$.
+  + The Lebesgue measure on $RR^2$ is translation invariant (rectangle area is invariant under translation). Namely, show that $m_Z : cal(M)^2 -> [0, infinity]$, $m_z (E) := m(E + z)$ is a measure and $m_z = m$ on $cal(I)$.
+  + The Lebesgue measure $m$ on $RR^2$ is the only measure on $cal(M)^2 \/ frak(B)_(RR^2)\/ overline(cal(M)^2)$ that is translation invariant and assigns $1$ to $[0, 1] times [0, 1]$.
+]
+
+== Fubini's Theorem
+#definition[Let $f : RR^2 -> overline(RR)$ be $cal(M)^2$-measurable and non-negative. Define the functions $
+I_f^((1)) (x) := integral_RR f(x, y) dif y = integral_RR f_x (y) dif y, wide I_f^((2)) (y) := integral_RR f(x, y) dif x = integral_RR f^y (x) dif x.
+$ 
+]
+
+#remark[
+  Given $f : RR^2 -> [0, infinity]$, $cal(M)^2$-measurable and non-negative, the integral of $f$ wrt the Lebesgue measure on $RR^2$ is denoted by $integral_(RR^2) f(x, y) dif x dif y$ or $integral_(RR^2) f$ if there is no ambiguity.
+]
+
+#theorem("Tonelli's")[
+  Let $f : RR^2 -> [0, infinity]$ be $cal(M)^2$-measurable and non-negative. Then, $
+  integral_(RR^2) f(x, y) dif x dif y = integral_RR I^((1))_f (x) dif x = integral_RR I_f^((2)) (y) dif y,
+  $ or more explicitly, $
+  integral_(RR^2) f(x, y) dif x dif y = integral_RR (integral_RR f(x, y) dif y) dif x = integral_RR (integral_RR f(x, y) dif x) dif y.
+  $
+]
+
+#proof[
+  Since $f$ $cal(M)^2$-measurable, non-negative, there exists ${phi_n}$-sequence of simple functions with $phi_n arrow.t f$, and $integral_(RR^2) f = lim_n integral_(RR^2 )phi_n$, where, eg $
+  phi_n = sum_(k=0)^(n 2^n) k/(2^n) bb(1)_(A_(n, k)), wide A_(n, k) := {(x, y) in [-n, n]^2 : k/(2^n) <= f(x, y) < (k+1)/(2^n)},thin thin k = 0, 1, dots, n 2^n.
+  $ So, $
+  integral_(RR^2) f(x, y) dif x dif y = lim_(n) sum_(k=0)^(n 2^n) k/(2^n) m(A_(n,k)).
+  $ On the other hand, $forall x in RR$, by MON $
+  I_(f)^((1)) (x) = integral_RR f(x, y) dif y &= lim_(n->infinity) integral_RR phi_n (x, y) dif y\
+  &=lim_(n->infinity) sum_(k=0)^(n 2^n) k/(2^n) I^((1))_(A_(n,k)) (x)\
+  &= lim_(n->infinity) sum_(k=0)^(n 2^n) k/(2^n) m((A_(n,k))_x).
+  $ We have then, again by MON, that $
+  integral_(RR) I_(f)^((1)) (x) dif x = lim_(n->infinity) integral_(RR) sum_(k=0)^(n 2^n) k/(2^n) I^((1))_(A_(n,k)) (x) dif x = lim_(n->infinity) sum_(k=0)^(n 2^n) k/(2^n) integral_RR I_(A_(n,k))^((1)) (x) dif x.
+  $ Similarly, we find $
+  integral_(RR) I_f^((2)) (y) dif y = lim_(n->infinity) sum_(k=0)^(n 2^n) k/(2^n) integral_RR I_(A_(n, k))^((2)) (y) dif y.
+  $ By definition, $
+  m(A_(n, k)) = integral_(RR) I_(A_(n,k))^((1))(x) dif x = integral_(RR) I_(A_(n,k))^((2))(y) dif y, 
+  $ hence all of our terms actually agree, and bringing them together gives the proof.
+]
+
+#definition[Given $f : RR^2 -> overline(RR)$ $cal(M)^2$-measurable, we write $f in L^1 (RR^2)$ if $
+integral_(RR^2) |f(x, y)| dif x dif y < infinity,
+$ or equivalently if $
+integral_(RR^2) f^(+) "and" integral_(RR^2) f^(-) <infinity.
+$]
+
+#remark[
+  Suppose $f in L^1 (RR^2)$. Then by Tonelli's, $
+  integral_(RR^2) |f(x, y)| dif x dif y = integral_(RR) (integral_RR |f(x, y)| dif y) dif x = integral_(RR) (integral_(RR) |f(x, y)|  dif x) dif y,
+  $ and in particular all integrals are finite; namely, $I_(|f|)^((1)),I_(|f|)^((2)) in L^1 (RR)$.
+]
+
+#theorem("Fubini's")[
+  If $f : RR^2 -> overline(RR)$ is $cal(M)^2$-measurable and $f in L^1 (RR^2)$, then 
++ $I_f^((1)), I_f^((2))in L^1 (RR)$ (product integrability $=>$ marginal integrability)
++ $I_f^((1)) (x)$ finite-valued for a.e. $x in RR$ $=>$ $f_X in L^1 (RR)$ for a.e. $x in RR$, similar for $I_f^((2))$, i.e. $f^y in L^1 (RR)$ for a.e. $y in RR$.
++ $integral_(RR^2) f(x, y) dif x dif y = integral_RR I_f^((1)) (x) dif x = integral_RR I_f^((2)) (y) dif y$.
+]
+
+#proof[
+ Assume $f in L^1 (RR)$. Then by Tonelli's $
+ integral_(RR) |I_f^((1))| <= integral_RR (integral_RR |f(x, y)| dif y) dif x = integral_(RR^2) f(x, y) dif x dif y < infinity => I_f^((1)) in L^1 (RR). 
+ $ We have 1. $=>$ 2..
+
+ Now, write $f = f^+ - f^-$. $f in L^1 (RR^2)$ gives that $f^+, f^- in L^1 (RR^2)$ so $f^+, f^-$ each finite valued a.e.. By Tonelli's, then, $
+ integral_RR I_(f^+)^((1)) (x) dif x = integral_RR I_(f^+)^((2)) (y) dif y = integral_(RR^2) f^+ (x, y) dif x dif y < infinity,
+ $ same with $f^-$. Then, $I^((1))_(f^+), I^((2))_(f^+), I^((1))_(f^-), I^((2))_(f^-) in L^1 (RR)$, hence are finite-valued a.e.. By linearity on $L^1$ functions, then $
+ integral_(RR) I_(f^+)^((1)) (x) dif x - integral_(RR) I_(f^-)^((1)) (x) dif x = integral_(RR) I_(f^+)^((1)) - I_(f^-)^((1)).
+ $ For a.e. $x in RR$, $f_(x)^+, f_x^- in L^1 (RR)$, so by linearity $
+ I_(f^+)^((1)) (x) - I_(f^-)^((1)) (x) = integral_(RR) f_(x)^+ (y) dif y - integral_(RR) f_x^- (y) dif y = integral_(RR) (f_x^+ - f_x^-) = integral_RR f_x,
+ $ so $
+ integral_RR I_(f^+)^((1)) - integral_RR I_(f^-)^((1)) = integral_RR I_f^((1)),
+ $ with similarly for $
+ integral_RR I_(f^+)^((2)) - integral_RR I_(f^-)^((2)) = integral_RR I_f^((2)).
+ $ All together, then, $
+ integral_(RR) I_f^((1)) = integral_RR I_f^((2)) = integral_(RR^2) (f^+ - f^-) = integral_(RR^2) f.
+ $
+] 
+
+#remark[
+  In general, $I_f^((1)), I_f^((2)) in L^1 (RR) arrow.r.double.not f in L^1 (RR^2)$. For instance, let $
+  f(x, y) = cases(1 & "if" x < y < x+1, -1 & "if" x - 1 < y < x, 0 & "else"). // TODO picture?
+  $ Then, for all $x in RR$, $
+  I^((1))_f (x) = integral_RR f(x, y) dif y = 0,
+  $ and similarly $
+  I^((2))_f (y) = integral_RR f(x, y) dif x = 0,
+  $ so $I_f^((1)),I_f^((2)) in L^1 (RR)$, but $f in.not L^1 (RR^2)$.
+]
+
+#remark[
+  If $f : RR^2 -> overline(R)$ is $overline(cal(M)^2)$-measurable, Tonelli's, Fubini's still hold. We'll use the same notations in this case.
+
+  In fact, there exists a $tilde(f) : RR^2 -> overline(R)$ that is $cal(M)^2$-measurable such that $tilde(f) = f$ a.e. (exercise).
+]
+
+#remark[
+The constructions above extend to $RR^d$, $d >= 3$. In particular, we have
+- $cal(M)^d := sigma({A_1 times dots.c times A_d : A_i in cal(M)})$.
+- The product measure $m$ is the Lebesgue measure on $(RR^d, cal(M)^d)$.
+- $overline(cal(M)^d)$ is the completion of $cal(M)^d$ under $m$.
+- Tonelli's, Fubini's hold, with "$d$-embedded" integrals.
+- $m$ shares similar properties on $RR^d$ as on $RR$;
+  - translation invariance,
+  - scaling property,
+  - regularity, (outer: for every $E in cal(M)^d$, $m(E) = inf{m(G) : G "open s.t." E subset.eq G}$, inner: for every $E in cal(M)^d$, $m(E) = sup{m(K) : K "compact s.t." E supset.eq K}$).
+]
+
+= Differentiation
+
+In the Riemann setting, differentiation and integration are closely related. For instance, if $F(x) := integral_(a)^x f(t) dif t$ for some Riemann-integrable $f$ on $[a, b]$ and $x in [a, b]$, then $F$ is differentiable and $F' = f$ on $(a, b)$. Or, if $F$ differentiable, and $F'$ is Riemann integrable on some $[a, b]$, then $F(b) - F(a) = integral_(a)^b F'(t) dif t$. How much does this extend to the Lebesgue setting?
+
+== Hardy-Littlewood Maximal Function
+
+#definition("Hardy-Littlewood Maximal Function")[Suppose $f in L^1 (RR)$. The _Hardy-Littlewood Maximal Function_ (H-L max.), denoted $f^ast$, is defined as $
+f^ast (x) := sup_(I in cal(I)(x)) 1/(m(I)) integral_I |f|,
+ $ where $cal(I)(x) := {I : I "an open interval containing" x}$.
+]
+
+#proposition[
+  Given $f in L^1 (RR)$, $f^ast$ is measurable.
+]
+
+#proof[
+  $f^ast >= 0$, so it suffices to show that for every $a >= 0$, ${f^ast > a}$ is measurable. Let $x in {f^ast > a}$. Then, $a < f^ast (x)$, hence there must exist some $I in cal(I)(x)$ such that $1/(m(I)) integral_(I) |f| > a$. $I$ is open, and $x in I$, so there exists some $delta > 0$ such that $(x - delta, x + delta) subset.eq I$. For every $y in (x - delta, x + delta)$, $y in I$, hence $I in cal(I)(y)$. So, $f^ast (y) >= 1/(m(I)) integral_I |f| > a$. Thus, $y in {f^ast > a}$ as well. It follows, then, that $(x - delta, x + delta) subset.eq {f^ast > a}$, hence ${f^ast > a}$ is open, and so in particular is measurable.
 ]
