@@ -2099,3 +2099,106 @@ f^ast (x) := sup_(I in cal(I)(x)) 1/(m(I)) integral_I |f|,
 #proof[
   $f^ast >= 0$, so it suffices to show that for every $a >= 0$, ${f^ast > a}$ is measurable. Let $x in {f^ast > a}$. Then, $a < f^ast (x)$, hence there must exist some $I in cal(I)(x)$ such that $1/(m(I)) integral_(I) |f| > a$. $I$ is open, and $x in I$, so there exists some $delta > 0$ such that $(x - delta, x + delta) subset.eq I$. For every $y in (x - delta, x + delta)$, $y in I$, hence $I in cal(I)(y)$. So, $f^ast (y) >= 1/(m(I)) integral_I |f| > a$. Thus, $y in {f^ast > a}$ as well. It follows, then, that $(x - delta, x + delta) subset.eq {f^ast > a}$, hence ${f^ast > a}$ is open, and so in particular is measurable.
 ]
+
+#lemma("Vitali's Covering Lemma")[
+  Assume that $cal(I) := {I_1, dots, I_N}$ a finite collection of open intervals. Then, there exists a sub-collection ${I_(k_1), dots, I_(k_M)} subset cal(I)$ such that $I_(k_i) sect I_(k_j) = nothing$ for all $i eq.not j$ and $
+  m(union.big_(i=1)^N I_(i)) <= 3sum_(j=1)^M m(I_(k_j)).
+  $
+]
+#proof[
+  Assume wlog that $m(I_i) < infinity$ for all $1 <= i <= N$; if otherwise exists an $i$ such that $m(I_i) = infinity$, then simply take your subcollection $I_k_1 := I_i$, and the claim holds trivially. 
+
+  Begin with the largest interval in $cal(I)$, call it $I_k_1$. Let $
+  cal(I)_(k_1) := {I in cal(I) : I sect I_(k_1) eq.not nothing}.
+  $ For any $I in cal(I)_(k_1)$, $I sect I_(k_1) eq.not nothing$ and $m(I) <= m(I_k_1)$, so in particular $I subset.eq 3 I_(k_1)$ (if $I_k_1 = (a, b)$, $3 I_k_1 := (a-3(b-a), a+3(b-a))$). // TODO check.
+
+  #align(
+    center,
+    image("3times.png", width: 60%)
+  )
+
+  Then, in particular $
+  union.big_(I in cal(I)_(k_1)) I subset.eq 3 I_(k_1).
+  $ Consider now $cal(I)\\cal(I)_(k_1)$, and choose the largest interval in the remaining part of the collection. Call it $I_(k_2)$. Set $
+  cal(I)_k_2 := {I in cal(I)\\cal(I)_(k_1) : I sect I_k_2 eq.not nothing}.
+  $ Similarly to before, $union.big_(I in cal(I)_(k_2)) I subset.eq 3 I_k_2.$ By choice, too, $I_k_1 sect I_k_2 = nothing$. 
+  
+  Repeat this process, until $cal(I)\\ (cal(I)_k_1 union dots.c union cal(I)_k_M) = nothing$, i.e. we have no intervals left in the original collection. Then, we obtain $I_k_1, dots, I_k_M$ disjoint intervals, with corresponding subcollections $cal(I)_k_1, dots, cal(I)_k_M$ forming a partition of $cal(I)$. Then, $
+  m(union.big_(n=1)^N I_n) = sum_(j=1)^M m(union.big_(I in cal(I)_(k_j)) I)
+ <= 3 sum_(j=1)^M m(I_k_j).
+ $
+]
+
+#proposition[
+  Suppose $f in L^1 (R)$ and let $f^ast$ be the H-L max function of $f$. Then, for every $epsilon > 0$, $
+  m({x in RR : f^ast (x) > epsilon}) <= 3/epsilon ||f||_1 = 3/epsilon integral_RR |f|.
+  $
+]
+
+#proof[
+Fix $epsilon>0$ and put $B := { x in RR : f^ast (x) > epsilon}$. By inner regularity, $
+m(B) = sup {m(K) : B supset.eq K "compact"}.
+$ It suffices to show then that $m(K) <= 3/epsilon ||f||_1$ for every compact $K subset.eq B$. For every $x in K$, $f^ast (x) > epsilon$ so there exists some open interval $I_x$ such that $x in I_x$ and $1/(m(I_x)) integral_(I_x) |f| > epsilon$. Hence, we may cover $K subset.eq union.big_(x in K) I_x$. Since $K$ compact it admits a finite subinterval, call it $cal(I) = {I_1, dots, I_N}$, such that $K subset.eq union.big_(n=1)^N I_n$. By the Covering Lemma, $
+m(K) <= m(union.big_(n=1)^N I_n) <= 3 sum_(j=1)^M m(I_k_j),
+$ for some disjoint subcollection $I_k_1, dots, I_k_M$. Meanwhile, for every $1 <= j <= M$, $
+m(I_k_j) < 1/epsilon integral_(I_k_j) |f|,
+$ hence, we find $
+m(K) <= 3 sum_(j=1)^M 1/epsilon integral_(I_k_j) |f| = 3/epsilon integral_(union.big_(j=1)^M I_k_j) |f|  <= 3/epsilon integral_RR |f| = 3/epsilon ||f||_1.
+$
+]
+
+#corollary[
+  Given $f in L^1 (RR)$, $f^ast$ is finite-valued a.e..
+]
+#proof[
+  For every $N > 0$, $m({f^ast > N}) <= 3/N ||f||_1$. Taking $N -> infinity$, we find then $m({f^ast > N}) -> 0$, and since $m({f^ast = infinity}) <= m({f^ast > N}) forall N > 0$ it follows that $m({f^ast = infinity}) = 0$.
+]
+
+#remark[While a Markov-like inequality, $f^ast$ need not be integrable in general. For instance, let $f = bb(1)_[-1, 1] in L^1 (RR)$. Then, consider $f^ast$, and in particular consider the average of $f$ over intervals $I = (a, b)$; $
+1/(b - a) integral_a^b f(t) dif t = cases(
+0 & "if" (a, b) sect [-1, 1] = nothing, 
+(min{b, 1} - max{a, -1})/(b - a) & "if" (a, b) sect [-1, 1] eq.not nothing.
+).
+$ So, we find that $f^ast (x) = 1$ if $x in (-1, 1)$ (take your $I =[-1, 1]$, this achieves max), and $f^ast (x) = 2/(|x| + 1)$ if $x in.not (-1, 1)$ (you want as much of the $[-1, 1]$ support as possible, and with your other endpoint as close to $x$ as possible). // TODO pictures
+$f^ast$ not integrable.
+
+#align(center,
+image("examplehl.png", width: 50%)
+)
+]
+
+== Lebesgue Differentiation Theorem
+#theorem("Lebesgue Differentiation Theorem")[
+  Given $f in L^1 (RR)$, for a.e. $x in RR$, if ${I_n}$ a sequence of open intervals such that $x in I_n forall n >= 1$ and $lim_(n->infinity) m(I_n) = 0$ (we say ${I_n}$ a sequence of intervals _shrinking to $x$_), then $
+  lim_(n->infinity) 1/(m(I_n)) integral_(I_n) |f(t) - f(x)| dif t = 0.
+  $ In particular, $
+  lim_(n->infinity) 1/(m(I_n)) integral_(I_n) f(t) dif t = f(x).
+  $
+]
+
+#proof[
+  The "In particular" comes from the fact that, for $x$ such that $f(x) < infinity$, $
+  |1/(m(I_n)) integral_(I_n) f(t) dif t - f(x)| &= abs(1/(m(I_n)) integral_(I_n) f(t) - f(x) dif t) <= 1/(m(I_n)) integral_(I_n) abs(f(t) - f(x)) dif t,
+  $ so if the RHS $-> 0$, so does the left.
+
+  Without loss of generality, assume $f$ finite valued everywhere, and only use finite-valued intervals $I_n$. For every $k >= 1$, define $
+  B_k := {x in RR : exists {I_n} subset.eq cal(I)(x) "with" lim_(n->infinity) m(I_n) = 0 "s.t." limsup_(n->infinity) 1/(m(I_n)) integral_(I_n) |f(t) - f(x)| dif t >= 1/k}.
+  $ Notice $B_k arrow.t$ and $union.big_(k=1)^infinity B_k = {x in RR : "theorem fails"}$. So, it suffices to show that $m(B_k) = 0$ for every $k >= 1$.
+
+  Fix an arbitrary $epsilon > 0$. Continuous, compactly supported functions are dense in $L^1 (RR)$ so we may find $g in C_c (RR)$ such that $||f - g||_1 <= epsilon$. Since $g$ continuous and compactly supported, for every $x in RR$ and $k >= 1$, there exists some $alpha > 0$ such that if $|t - x| <= alpha$, $|g(t)-g(x)| <= 1/(3 k)$.
+
+  Given any $x in RR$ and any sequence ${I_n} subset.eq cal(I)(x)$ with $lim_n m(I_n) = 0$, we have$
+  1/(m(I_n)) integral_(I_n) |f(t) - f(x)| dif x & <= 1/(m(I_n)) integral_(I_n) |f(t) - g(t)| dif t wide &(1)\
+  & wide + 1/(m(I_n)) integral_(I_n) |g(t) - g(x)| dif x  wide &(2)\
+  & wide + |g(x) - f(x)| wide &(3)
+  $ by triangle inequality, adding/subtracting $g(t), g(x)$. We know that when $n$ sufficiently large such that $m(I_n) < alpha$, $|g(t) - g(x)| <= 1/(3 k) forall t in I_n$, hence $(2) <= 1/(3k)$ for sufficiently large $n$. For $x$ to be in $B_k$, we need too that $limsup_n( (1)+(2)+(3)) > 1/k$. But we know that $(2) <= 1/(3k)$ for all sufficiently large $n$, we must have that $limsup_(n)((1) + (3)) > 2/(3 k)$. Let $
+  C_k := {x in RR : limsup_n (1) > 1/(3 k)}, wide D_k := {x in RR : limsup_n (3) > 1/(3 k)},
+  $ then remark $m(B_k) <= m(C_k) + m(D_k)$ since $B_k subset.eq C_k union D_k$. Then, $
+  m(D_k) = m({|f - g|  > 1/(3 k)}) <= 3k ||f - g||_1 <= 3 k epsilon,
+  $ by Markov's, and $
+  m(C_k) &= m({limsup_n 1/(m(I_n)) integral(I_n) |f - g| > 1/(3k)}) \
+  &<= m({(f-g)^ast > 1/(3 k)}) <= 3 dot 3 k ||f - g||_1 = 9 k epsilon,
+  $ by using the previous H-L inequality. Hence, we find $
+  m(B_k) <= 12 k epsilon,
+  $ and, sending $epsilon -> 0$ we find $m(B_k) = 0$, completing the proof.
+]
