@@ -1537,23 +1537,50 @@ If $M$ a finitely generated $R$-module, then it is a quotient of a free $R$-modu
     So, we find that $N tilde.equiv N_0 plus.circle R$, where $N_0 subset.eq R^n$. Applying the inductive hypothesis to $N_0$, we find $N_0$ free of rank $m <= n$, ie $N_0 tilde.equiv R^m$, and thus $N tilde.equiv R^(m+1)$ of rank $m+1<= n + 1$, completing the proof.
   ]
 
-#proposition("Diagonlization")[
-  There exists a basis $e_1, dots, e_n$ of $R^n$ such that $d_1 e_1, dots, d_m e_m$ is a basis for $N$, such that $d_1|d_2|dots.c|d_m$.
+// #proposition("Diagonlization")[
+//   There exists a basis $e_1, dots, e_n$ of $R^n$ such that $d_1 e_1, dots, d_m e_m$ is a basis for $N$, such that $d_1|d_2|dots.c|d_m$.
+// ]
+We now have a fairly simple representation of our module as $R^n \/ R^m$. To ultimately obtain the proof we seek, we wish to simplify the structure of $R^m$ even further. We approach this by considering the image of our module under invertible matrices.
+
+// #proof[
+Let $e_1, dots, e_n$ be a basis of $R^n$.
+  Let $v_1, dots, v_m$ a basis for $N$, where $
+v_i = vec(a_(1 i), dots.v, a_(n i)), wide i = 1, dots, m,
+$ and let $v_(j) = 0$ for $j = m+1, dots, n$, and so consider the matrix with columns $v_i$, $A = (a_(i j))_(1<=i,j<=n) in M_n (R)$. Then, our finitely generated $R$-module $Omega = R^n \/ A R^n$. We have the following:
++ If $Q in "GL"_n (R)$, then $R^n\/ A Q^(-1) R^n = R^n \/ A R^n$, since $Q^(-1)$ induces an isomorphism on $R^n$, hence $Q^(-1) R^n = R^n$.
++ If $P in "GL"_n (R)$, then $R^n\/ P A R^n tilde.equiv R^n\/A R^n$, by considering the map $R^n\/ A R^n -> P R^n \/ P A R^n = R^n\/ P A R^n, v |-> P v$.
+In short, we have an action $"GL"_n (R) times "GL"_n (R)$ acting on $X = M_n (R)$ by $(P, Q) (A) = P A Q^(-1)$.
+
+We claim, then, that for any $A in M_n (R)$, the orbit of $A$ contains a diagonal matrix with entries $d_1|d_2|dots.c|d_n$, where the $d_i$'s may be 0.
+
+We wish to study $"GL"_n (R)\\M_n (R)\/"GL"_n (R)$, that is, the orbits of $M_n (R)$ under this action. This is difficult, so we instead consider the restricted orbits $"SL"_n (R)\\M_n (R)\/"SL"_n (R)$.
+// We consider the more restricted action $"SL"_n (R)$
+//   Let $e_1, dots, e_n$ be a basis of $R^n$ and $f_1, dots, f_m$ an $R$-basis for $N$, with $
+//     f_1 = a_(1 1 ) e_1 + dots.c + a_(n 1) e_n,\
+//     f_2 = a_(1 2) e_1 + dots.c + a_(n 2) e_n, \
+//     dots.down\
+//     f_m = a_(1 m) e_1 + dots.c + a_(n m) e_m.
+//   $ I.e. $
+//   M\/N tilde.equiv R^n\/im(underbrace(mat(a_(1 1), a_(1 2), dots.c, a_(1 m); a_(2 1), a_(2 2), dots.c, a_(2 m); dots.v, dots.v, dots.down, dots.v; a_(n 1), a_(n 2), dots.c, a_(n m)), =: A)).
+//   $ Remark that:
+//   - If $P in "GL"_(n) (R)$, then $R^n\/im(A) = R^n \/im(P A)$;
+//   - If $Q in "GL"_m (R)$, then $R^n\/im(A) = R^n\/im(A Q^(-1))$.
+//   In other words, $"GL"_n (RR) times "GL"_m (R)$ acts on $"Mat"_(n times m) (R)$ by the rule, $
+//   (P, Q)(X) = P X Q^(-1).
+//   $ We claim that every orbit of this action contains a diagonal matrix. 
+// // ]
+// ]
+
+#theorem[Let $M = R^n$ and let $N subset.eq M$ a (free) $R$-submodule. Then, there exists a basis for $M$ $m_1, dots, m_n$ such that $N$ is spanned by $d_1 m_1, d_2 m_2, dots, d_n m_n$ with $d_1|d_2|dots.c|d_n$.]
+
+#remark[If $v = lambda_1 m_1 + dots.c + lambda_n m_n in M$, then $v in N <=> d_1|lambda_1, d_2|lambda_2, dots, d_n|lambda_n$. Hence, $M\/N tilde.equiv R^n\/mat(d_1, 0, 0; 0, dots.down, 0; 0, 0, d_n)R^n tilde.equiv (R\/ d_1 R) times (R\/d_2 R) times dots.c times (R\/ d_n R)$.
 ]
 #proof[
-  Let $e_1, dots, e_n$ be a basis of $R^n$ and $f_1, dots, f_m$ an $R$-basis for $N$, with $
-    f_1 = a_(1 1 ) e_1 + dots.c + a_(n 1) e_n,\
-    f_2 = a_(1 2) e_1 + dots.c + a_(n 2) e_n, \
-    dots.down\
-    f_m = a_(1 m) e_1 + dots.c + a_(n m) e_m.
-  $ I.e. $
-  M\/N tilde.equiv R^n\/im(underbrace(mat(a_(1 1), a_(1 2), dots.c, a_(1 m); a_(2 1), a_(2 2), dots.c, a_(2 m); dots.v, dots.v, dots.down, dots.v; a_(n 1), a_(n 2), dots.c, a_(n m)), =: A)).
-  $ Remark that:
-  - If $P in "GL"_(n) (R)$, then $R^n\/im(A) = R^n \/im(P A)$;
-  - If $Q in "GL"_m (R)$, then $R^n\/im(A) = R^n\/im(A Q^(-1))$.
-  In other words, $"GL"_n (RR) times "GL"_m (R)$ acts on $"Mat"_(n times m) (R)$ by the rule, $
-  (P, Q)(X) = P X Q^(-1).
-  $ We claim that every orbit of this action contains a diagonal matrix. 
+  We prove by induction on $n$. If $n = 1$, $M = R$ and $N subset.eq R$. Let $m_1 = 1$. $N$ an ideal of $R$, so $N = (d_1) = d_1 R$ for some $d_1 in R$, then $N$ spanned by $d_1 m_1$.
+
+  Suppose the claim for $n$. Let $M = R^(n+1)$. Given $phi in "Hom"(M, R)$, $I(phi) := im(phi|_N) = {phi(n) : n in N} subset.eq R$. This is an $R$-submodule of $R$, hence an ideal, so we may write $I(phi) = (d_phi)$. Let $
+  Sigma := {I(phi) : phi in "Hom"(M, R)}.
+  $ $Sigma$ is partially ordered by inclusion (or equivalently divisibility of generators). Let $(d_1)$ be a maximal element of $Sigma$, i.e. $d_1$ minimal for divisbility.
 ]
 
 
