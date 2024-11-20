@@ -2202,3 +2202,130 @@ image("examplehl.png", width: 50%)
   m(B_k) <= 12 k epsilon,
   $ and, sending $epsilon -> 0$ we find $m(B_k) = 0$, completing the proof.
 ]
+
+#definition("Lebesgue Point")[
+  We call $x$ a _Lebesgue point_ of $f$ if the Lebesgue Differentiation Theorem holds for $f$ at $x$.
+]
+
+#remark[In the statement, the "a.e. $x in RR$" cannot be replaced with "pointwise". For example, consider $f = bb(1)_([0,1])$ and $I_n = (-1/n, 1/n) in cal(I)(0)$. Then $
+1/(m(I_n)) integral_(I_n) f = 2/n integral_(-1/n)^(1/n) bb(1)_([0,1]) = 1/2 eq.not f(0),
+$ hence $0$ not a Lebesgue point of $f$.]
+
+#corollary[
+  If $f in L^1 (RR)$, then for a.e. $x in RR$, $
+  0 &= lim_(h->0) 1/(2h) integral_(x-h)^(x+h) |f(t)-f(x)| dif t wide "(i)"\
+  &= lim_(h->0) 1/(2h) integral_(-h)^(h) |f(x+y)-f(x)| dif y wide "(ii)".
+  $
+]
+
+#proof[
+(i) $=>$ (ii) by translation of the integral.
+
+If $x in RR$ is such that (i) fails, then there is a sequence ${h_n} in RR^+$ such that $lim h_n = 0$ and $lim_n 1/(2 h_n) integral_(x - h_n)^(x + h_n) |f(t)-f(x)| dif t eq.not 0$. Then, the Lebesgue Diff Thm fails at $x$ for $I_n = (x - h_n, x + h_n)$ so $x$ not a Lebesgue point. Hence, ${x : "(i) fails"}$ a null set.
+
+In particular, this implies that $lim_(h-> 0) 1/(2 h) integral_(x-h)^(x+h) f(t) dif t = f(x)$ for a.e. $x in RR$, so as a function of $x$, $lim_(h-> 0) 1/(2 h) integral_(x-h)^(x+h) f(t) dif t$ measurable.
+]
+
+#corollary[
+  Given $f in L^1 (RR)$, then $|f| <= f^ast$ a.e..
+]
+#proof[
+Apply LDT to $|f|$. This implies that for a.e. $x in RR$, $|f(x)| = lim_(n->infinity) 1/(m(I_n)) integral_(I_n) |f(t)| dif t$, $I_n := (x - 1/n, x + 1/n)$. By definition, $lim_(n->infinity) 1/(m(I_n)) integral_(I_n) |f(t)| dif t <= f^ast (x)$, being the supremum of such quantities, and the proof follows.
+]
+
+#theorem[
+  Given $f in L^1 (RR)$ and $a in RR$, define $F(x) := integral_(a)^x f(t) dif t$ for every $x >= a$. Then, $F$ is uniformly continuous, $F'(x)$ exists and is equal to $f(x)$ for a.e. $x in RR$.
+]<thm:sudoftc>
+
+#lemma[
+If $f in L^1 (RR)$, then for every $epsilon > 0$ there exists $delta > 0$ such that $forall I$-interval with $m(I) <= delta$, $integral_(I) |f| <= epsilon$.
+]
+
+#proof[
+Recall $f^ast < infinity$ a.e.. Let $A_N := {f^ast > N}$, then $bb(1)_A_N -> 0$ almost everywhere as $N -> infinity$. Hence, $
+lim_(N->infinity) integral_(RR) bb(1)_(A_N) |f| = 0
+$ by DOM, and so $
+integral_({f^ast > N}) |f| -> 0
+$ as $N -> infinity$. Given $epsilon$, then, $exists N$ such that $integral_({f^ast > N}) |f| <= epsilon/2$. Let $delta = epsilon/(2N)$. Then, for every $I$ (wlog open) with $m(I) < delta$, $
+integral_(I) |f| &= integral_(I sect {f^ast > N}) |f| + integral_(I sect {f^ast <= N}) |f| \ 
+& <= integral_({f^ast > N}) |f| + integral_(I sect {f^ast <= N}) |f| \
+&<= epsilon/2 + N dot m(I) \ 
+&<=epsilon/2 + N epsilon/(2 N) = epsilon.
+$
+]
+
+#proof[(of @thm:sudoftc) For every $epsilon > 0$, let $delta > 0$ as in the lemma. Then for every $x > y >= a$ such that $|x - y| <= delta$, $
+|F(x) - F(y)| = |integral_(y)^x f(t) dif t| <= integral_((y, x)) |f| <= epsilon,
+$ so $F$ uniformly continuous.
+
+Let $x in RR$ be a Lebesgue point of $f$ and such that $f(x)$ is finite valued. Then, $
+abs(1/h (F(x+h) - F(x)) - f(x)) &= abs(1/h integral_(x)^(x+h) f(t) dif t - f(x)) \ 
+&= abs(1/h integral_(x)^(x + h) f(t) - f(x) dif t) \ 
+&<= 1/h integral_(x)^(x + h) abs(f(t) - f(x)) dif t \ 
+& <= 2 1/(2h) integral_(x - h)^(x + h) abs(f(t) - f(x)) dif x -> 0 "as" h -> 0^+.
+$ We can similarly show that $lim_(h -> 0) abs(1/h (F(x)-F(x-h)) - f(x)) = 0$.
+]
+
+#remark[In general, the a.e. statement cannot be dropped. For instance, if $f = bb(1)_{0}$, $F equiv 0$ and $F' equiv 0$ but $F'(0) eq.not f(0)$.]
+
+== Monotonic (Increasing) Functions
+
+Let $F$ an increasing function on $[a, b]$ (we restrict fo finite-valued functions). If needed, we can extend $F$ to beyond this interval by setting $F(x) = F(a)$ everywhere to the left of $a$, and $F(x) = F(b)$ everywhere to the right of $b$; then $F$ still increasing on $RR$.
+
+#proposition[
+  If $F$ increasing on $[a, b]$, then $F$ is continuous except at most countably many points in $[a, b]$. In particular, $F$ is measurable.
+]
+
+#let dro = $overline(D_r)$
+#let dru = $underline(D_r)$
+#let dlo = $overline(D_ell)$
+#let dlu = $underline(D_ell)$
+
+#remark[
+  For general functions and $x in RR$, we define $
+  overline(D_r)F(x) := limsup_(h->0) (F(x+h)-F(x))/h, wide underline(D_r) F(x) := liminf_(h -> 0) (F(x + h) - F(x))/h \ 
+  overline(D_ell)F(x) := limsup_(h->0) (F(x)-F(x-h))/h, wide underline(D_ell) F(x) := liminf_(h -> 0) (F(x) - F(x-h))/h.  
+  $
+
+  If $overline(D_r)F(x) = underline(D_r)F(x) = overline(D_ell)F(x) = underline(D_ell)F(x)$, $F' (x)$ exists and equals this equal limit.
+]
+
+#proposition[
+  Assume $F$ increasing on $[a, b]$. Then, $F'$ exists a.e. on $[a, b]$.
+]
+
+#proof[
+  For every $x in [a, b]$, $dru F(x) <= dro F(x), dlu F(x) <= dlo F(x)$. If we can show $dro F(x) <= dlu F(x)$ and $dlo F(x) <= dru F(x)$ a.e., we'd be done.
+
+  Set $E := {x in [a, b] : dlo F(x) > dru F(x)}$. We want to show $m(E) = 0$. For $p < q in QQ,$ set $
+  E_(p q) := {x in [a, b] : dlo F(x) > q "and" dru F(x) < p}.
+  $ Notice that $E = union.big_(p < q in QQ) E_(p, q)$, which is a countable union, so it suffices to show that $m(E_(p, q)) =0$.
+  
+  Suppose otherwise, that there is some $delta > 0$ such that $m(E_(p, q)) = delta$. fix any $0 < epsilon < delta/2$. Choose an open $G supset.eq E_(p, q) $ with $m(G) <= m(E_(p, q)) + epsilon = delta + epsilon$. Consider $
+  cal(J) := {I = [x, x+h] subset.eq G : (F(x + h) - F(x))/h < p} .
+  $ For every $x in E_(p, q)$, $x in G$-open, and $dru F(x) < p$. So, for every $x in E_(p, q)$, there exists $I = [x, x + h] in cal(J)$ for arbitrarly small $h$. In particular, $cal(J)$ a _Vitali covering_ of $E_(p, q)$ (see following lemma). Hence, there exists a disjoint subcollection $I_1, dots, I_N in cal(J)$ such that $m(E_(p, q) \\ union.big_(i=1)^N I_i) <= epsilon$. Write $I_i = [x_i, x_i + h_i], i = 1, dots, N$. Define $
+  tilde(G) := union.big_(i=1)^N (x_i, x_i + h_i), wide tilde(E_(p, q)) = E_(p, q) sect tilde(G).
+  $ Then, $
+  m(tilde(E_(p,q))) = m(E_(p, q) sect tilde(G)) = m(E_(p, q) sect union.big_(i=1)^N I_n) = m(E_(p, q)) - m(E_(p, q)\\union.big_(i=1)^N I_i) >= delta - epsilon.
+  $ Since $tilde(E_(p, q)) subset.eq tilde(G)$ and $tilde(G)$ is open, define $tilde(cal(J)) := {tilde(I) = [y - r, y]  subset.eq tilde(G) : (F(y) - F(y - r))/(r) > q}$. Then, $tilde(J)$ is a Vitali covering of $tilde(E_(p, q))$, and we can extract disjoint $tilde(I_1), dots, tilde(I_M) in tilde(cal(J))$ such that $m(tilde(E_(p, q))\\union.big_(j=1)^M tilde(I_j))  <= epsilon$. Hence, $
+  m(union.big_(j=1)^M tilde(I_j)) &= m(tilde(E_(p,q))) - m(tilde(E_(p, q))\\union.big_(j=1)^M tilde(I_j)) \ 
+  &>= delta -  epsilon - epsilon = delta - 2 epsilon.
+  $ Write $tilde(I_j) := [y_j - r_j, y_j], j = 1, dots, M$. Then, $tilde(I_1), dots, tilde(I_M)$ form a disjoint subintervals of $I_1, dots, I_N$. Since $F$ is increasing, $
+  sum_(j=1)^M (F(y_j) - F(y_j - r_j)) <= sum_(i=1)^N (F(x_i + h) - F(x_i)).
+  $ We have that $
+  "RHS" <= p sum_(i=1)^N h_i = p m(union.big_(i=1)^N I_i) <= p m(G) <= p (delta + epsilon),
+  $ and similarly, $
+  "LHS" >= q sum_(j=1)^M r_j = q m(union.big_(j=1)^M tilde(I_j)) >= q (delta - 2 epsilon),
+  $ hence we find $
+  q (delta - 2 epsilon) <= p (delta + epsilon),
+  $ but $epsilon$ arbitrary, so we find $q delta <= p delta$, contradicting $p < q$, hence $delta = 0$.
+]
+
+#remark[We tacitly used that $dro F$, etc, are measurable to say that $E$ measurable. This needs to be proven.]
+#lemma("Vitali's Covering Theorem")[
+  Given a set $E subset.eq RR$, a collection $cal(J)$ of intervals is called a _Vitali covering_ of $E$ if for every $x in E$ and $epsilon > 0$, there is an $I in cal(J)$ such that $x in I$ and $m(I) < epsilon$.
+
+  If $E in cal(M)$ with $m(E) < infinity$ and $cal(J)$ a Vitali covering of $E$, then for every $epsilon > 0$, there is a finite subcollection $I_1, I_2, dots, I_N in cal(J)$ such that $I_i sect I_j = nothing$ for $i eq.not j$, and $
+  m(E \\ union.big_(i=1)^N I_i) <= epsilon.
+  $
+]
