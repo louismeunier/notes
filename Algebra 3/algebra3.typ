@@ -1575,14 +1575,49 @@ We wish to study $"GL"_n (R)\\M_n (R)\/"GL"_n (R)$, that is, the orbits of $M_n 
 
 #remark[If $v = lambda_1 m_1 + dots.c + lambda_n m_n in M$, then $v in N <=> d_1|lambda_1, d_2|lambda_2, dots, d_n|lambda_n$. Hence, $M\/N tilde.equiv R^n\/mat(d_1, 0, 0; 0, dots.down, 0; 0, 0, d_n)R^n tilde.equiv (R\/ d_1 R) times (R\/d_2 R) times dots.c times (R\/ d_n R)$.
 ]
+#remark[
+  If $d_1, dots, d_t$ are non-zero, then $d_1 m_1, dots, d_t m_t$ are linearly independent; however, in general, there may be some $d_i$'s equal to zero.
+]
 #proof[
   We prove by induction on $n$. If $n = 1$, $M = R$ and $N subset.eq R$. Let $m_1 = 1$. $N$ an ideal of $R$, so $N = (d_1) = d_1 R$ for some $d_1 in R$, then $N$ spanned by $d_1 m_1$.
 
+// TODO maybe change induction step
   Suppose the claim for $n$. Let $M = R^(n+1)$. Given $phi in "Hom"(M, R)$, $I(phi) := im(phi|_N) = {phi(n) : n in N} subset.eq R$. This is an $R$-submodule of $R$, hence an ideal, so we may write $I(phi) = (d_phi)$. Let $
   Sigma := {I(phi) : phi in "Hom"(M, R)}.
-  $ $Sigma$ is partially ordered by inclusion (or equivalently divisibility of generators). Let $(d_1)$ be a maximal element of $Sigma$, i.e. $d_1$ minimal for divisbility.
+  $ $Sigma$ is partially ordered by inclusion (or equivalently divisibility of generators), and so satisfies the maximal chain property.  Let $(d_1) = I(phi_1)$ be a maximal element of $Sigma$, i.e. $d_1$ minimal for divisibility. Let $n_1 in N$ be such that $phi_1 (n_1) = d_1$. We claim that $n_1$ is divisible $d_1$, i.e. there is an $m_1 in M$ such that $n_1 = d_1 m_1$.
+
+  Let $eta_1, dots, eta_(n+1)$ be the natural projections $M -> R$, $eta_j (lambda_1, dots, lambda_(n+1)) := lambda_j$. So, if $n_1 = (x_1, dots, x_(n+1))$, we need to show that $d_1|x_j = eta_j (n_1)$ for each $j = 1,dots, n+1$. Let $d = eta_j (n_1)$. Let $d_0 = gcd(d_1, d)$, which we can write $d_0 = r d_1 + s d$ for some $r, s in R$. We have, unpacking definitions, $
+  d_0 &= r phi_1 (n_1) + s eta_j (n_1) \ 
+  &= (r phi_1 + s eta_j)(n_1).
+  $ The map $r phi_1 + s eta_j in "Hom"(M, R)$, hence $(d_0) in Sigma$. We have too that $d_0|d_1$, and by maximality of $d_1$, $d_1|d_0$ hence it must be $(d_0) = (d_1)$. In addition, $d_0|d$ and thus $d_1|d$. This holds for all $d = eta_j (n_1)$'s, hence it follows that $d_1|n_1$.
+
+  Let $m_1$ then be such that $d_1 m_1 = n_1$. Recall $phi_1 (n_1) = d_1$. Then, $
+  phi_1 (d_1 m_1) = phi_1 (n_1) = d_1 \ 
+  => d_1 phi_1 (m_1) = d_1 => phi_1 (m_1) = 1.
+  $ We claim, then, $M tilde.equiv R m_1 plus.circle ker(phi_1)$. Consider the map $
+  M -> R m_1 plus.circle ker(phi_1), wide m |-> (phi_1 (m) m_1, m - phi_1 (m) m_1),
+  $ noticing that $
+  phi_1 (m - phi_1 (m) m_1) = phi_1 (m) - phi_1 (phi_1 (m) m_1) = phi_1 (m) - phi_1 (m) underbrace((phi_1 (m_1)), = 1) = 0.
+  $ Let $M_2 := ker(phi_1)$, noting then $M_2 tilde.equiv R^n$. We can write then $N = R n_1 plus.circle (ker(phi_1) sect N)$; given $n in N$, we have, recalling $phi_1 (N) = (d_1)$, $
+  n = (underbrace((phi_1 (n))/d_1, "since" phi_1 (n) in (d_1))  n_1, n - (phi_1 (n))/d_1 n_1 ).
+  $ Let $N_2 := (ker(phi_1) sect N)$. $N_2$ a submodule of $M_2 tilde.equiv R^n$. By the induction hypothesis, there is a basis $m_2, dots, m_(n+1)$ for $M_2$ and $d_2, dots, d_(n+1) in R$ with $d_2|d_3|dots.c|d_(n+1)$ such that $n_2 := d_2 m_2, dots, n_(n+1) := d_(n+1) m_(n+1)$ spans $N_2$. Then, $m_1, dots, m_(n+1)$ a basis for all of $M$, and $d_1 m_1, dots, d_(n+1) m_(n+1)$ spans $N$, so it remains to show that $d_1|d_2$.
+
+  Consider $eta_j$ be the $j$th coordinate homomorphism relative to our basis $m_1, dots, m_(n+1)$, i.e. if $m = lambda_1 m_1 + dots.c + lambda_(n+1) m_(n+1)$, $eta_j (m) = lambda_j$. Then, remark since $n_1 = m_1 d_1$ $
+  eta_1 (n_1) = d_1, wide eta_2 (n_1) = 0
+  $ and since $n_2 in M_2$, $
+  eta_1 (n_2) = 0, wide eta_2 (n_2) = d_2.
+  $ Let $d_0 = gcd(d_1, d_2) = r d_1 + s d_2$ for some $r, s in R$. Let $eta = r eta_1 + s eta_2 in "Hom"(M, R)$. Then, $
+  eta(n_1 + n_2) = d_0.
+  $ Hence $(d_0) in Sigma$, since $n_1 + n_2 in N$. By maximiality of $d_1$, $d_1|d_0$, but also $d_0|d_2$ hence $d_1|d_2$, as we needed to show.
 ]
 
+#corollary[
+  $M\/N = R^n\/(d_1 R plus.circle dots.c plus.circle d_n R) = (R\/d_1 R) plus.circle dots.c  plus.circle (R\/d_n R)$.
+]
+
+#example[
+  Let $A$ be a finitely generated abelian group. Then, $A tilde.equiv ZZ\/d_1 plus.circle dots.c plus.circle ZZ\/d_t plus.circle ZZ^m$. In particular, if $A$ is finite, then $m = 0$. Then, $d_1 dots.c d_t = hash A$, and $d_t a = 0$ for any $a in A$, and indeed the smallest such integer with this property (called the _exponent_ of $A$).
+]
 
 // #proof[(Of @thm:moduletheorem)
 // For the remainder of the proof, assume $R$ a PID. By the previous theorem, we may write $M$ as a quotient $R^n\/N$.

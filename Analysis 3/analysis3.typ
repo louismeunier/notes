@@ -2188,10 +2188,10 @@ image("examplehl.png", width: 50%)
   Fix an arbitrary $epsilon > 0$. Continuous, compactly supported functions are dense in $L^1 (RR)$ so we may find $g in C_c (RR)$ such that $||f - g||_1 <= epsilon$. Since $g$ continuous and compactly supported, for every $x in RR$ and $k >= 1$, there exists some $alpha > 0$ such that if $|t - x| <= alpha$, $|g(t)-g(x)| <= 1/(3 k)$.
 
   Given any $x in RR$ and any sequence ${I_n} subset.eq cal(I)(x)$ with $lim_n m(I_n) = 0$, we have$
-  1/(m(I_n)) integral_(I_n) |f(t) - f(x)| dif x & <= 1/(m(I_n)) integral_(I_n) |f(t) - g(t)| dif t wide &(1)\
-  & wide + 1/(m(I_n)) integral_(I_n) |g(t) - g(x)| dif x  wide &(2)\
+  1/(m(I_n)) integral_(I_n) |f(t) - f(x)| dif t & <= 1/(m(I_n)) integral_(I_n) |f(t) - g(t)| dif t wide &(1)\
+  & wide + 1/(m(I_n)) integral_(I_n) |g(t) - g(x)| dif t  wide &(2)\
   & wide + |g(x) - f(x)| wide &(3)
-  $ by triangle inequality, adding/subtracting $g(t), g(x)$. We know that when $n$ sufficiently large such that $m(I_n) < alpha$, $|g(t) - g(x)| <= 1/(3 k) forall t in I_n$, hence $(2) <= 1/(3k)$ for sufficiently large $n$. For $x$ to be in $B_k$, we need too that $limsup_n( (1)+(2)+(3)) > 1/k$. But we know that $(2) <= 1/(3k)$ for all sufficiently large $n$, we must have that $limsup_(n)((1) + (3)) > 2/(3 k)$. Let $
+  $ by triangle inequality, adding/subtracting $g(t), g(x)$. We know that when $n$ sufficiently large such that $m(I_n) < alpha$, $|g(t) - g(x)| <= 1/(3 k) forall t in I_n$, hence $(2) <= 1/(3k)$ for sufficiently large $n$. For $x$ to be in $B_k$, we need too that $limsup_n ( (1)+(2)+(3)) > 1/k$. But we know that $(2) <= 1/(3k)$ for all sufficiently large $n$, we must have that $limsup_(n)((1) + (3)) > 2/(3 k)$. Let $
   C_k := {x in RR : limsup_n (1) > 1/(3 k)}, wide D_k := {x in RR : limsup_n (3) > 1/(3 k)},
   $ then remark $m(B_k) <= m(C_k) + m(D_k)$ since $B_k subset.eq C_k union D_k$. Then, $
   m(D_k) = m({|f - g|  > 1/(3 k)}) <= 3k ||f - g||_1 <= 3 k epsilon,
