@@ -239,7 +239,7 @@ Finally, suppose $I$ infinite. Then, $forall M >= 0, exists$ closed, finite inte
 
 7. Put $delta := d(A_1, A_2) > 0$. Clearly $m^ast (A) <= m^ast (A_1) + m^ast (A_2)$ by finite subadditivity. wlog, $m^ast (A) < infinity$ (and hence $m^ast (A_i) < infinity, i = 1, 2$) (else holds trivially). Then $forall epsilon > 0, exists {I_n} : A subset.eq union.big I_n$ and $sum ell(I_n) <= m^ast (A) + epsilon$. Then, for all $n$, we consider a "refinement" of $I_n$; namely, let ${I_(n, i)}_(i >= 1)$ such that $I_n subset.eq union.big_(i) I_(n, i)$ and $ell(I_(n, i)) < delta$ and $sum_(i) ell(I_(n, i)) <= ell(I_n) + epsilon/(2^n)$. Relabel ${I_(n, i) : n, i >= 1} arrow.squiggly {J_m : m >= 1}$ (both are countable). Then, ${J_m}$ defines an open-interval cover of $A$, and since $ell(J_m) < delta$ for each $m$, $J_m$ intersects at most one $A_i$. For each $m$ and $p = 1, 2$, put $
 M_p := {m : J_m sect A_p eq.not nothing},
-$ noting that $M_1 sect M_2 = nothing$. Then ${J_m : m in M_p}$ is an open covereing of $A_p$, and so $
+$ noting that $M_1 sect M_2 = nothing$. Then ${J_m : m in M_p}$ is an open covering of $A_p$, and so $
 m^ast (A_1) + m^ast (A_2) &<= sum_(m in M_1) ell(J_m) + sum_(m in M_2) ell(J_m) \
 & <= sum_(m=1)^infinity ell(J_m) = sum_(n, i = 1)^infinity ell(I_n, i)\
 & <= sum_(n) (ell(I_n) + epsilon/(2^n))\
@@ -2328,4 +2328,93 @@ Let $F$ an increasing function on $[a, b]$ (we restrict fo finite-valued functio
   If $E in cal(M)$ with $m(E) < infinity$ and $cal(J)$ a Vitali covering of $E$, then for every $epsilon > 0$, there is a finite subcollection $I_1, I_2, dots, I_N in cal(J)$ such that $I_i sect I_j = nothing$ for $i eq.not j$, and $
   m(E \\ union.big_(i=1)^N I_i) <= epsilon.
   $
+]
+
+#proof[
+  Assume, wlog, $m(union.big_(I in cal(J)) I) < infinity$. Else, let $G$ open such that $G supset.eq E$ and $m(G) < infinity$, and redefine $cal(J)' := {I in cal(J) : I subset.eq G}$, then, if $cal(J)$ a Vitali covering of $E$, so is $cal(J)'$. Defining then $
+  alpha_1 := sup {m(I) : I in cal(J)},
+  $ we know $alpha_1 < infinity$. Then, $exists I_1 in cal(J)$ such that $m(I_1) > (alpha_1)/2$. Then, consider $
+  cal(J)_1 := {I in cal(J) : I sect I_1 = nothing}.
+  $ Define $
+  alpha_2 := sup{m(I) : I in cal(J)_1} < infinity,
+  $ so there exists $I_2 in cal(J)_1$ such that $m(I_2) > (alpha_2)/2$, and put $cal(J)_2 := {I in cal(J) : I sect I_1 = nothing "and" I sect I_2 = nothing}$. Repeat this procedure; this will generate a sequence ${alpha_k}$ and ${I_k}$ such that the $I_k$'s are disjoint, and $alpha_k = sup{m(I) : I in cal(J), I sect I_j = nothing forall j = 1, dots, k - 1}$. Since $union.big_(k=1)^infinity I_k subset.eq union.big_(I in cal(J)) I$ and disjointness,$
+  sum_(k=1)^infinity m(I_k) = m(union.big_(k=1)^infinity I_k) < infinity.
+  $ In addition, $m(I_k) > (alpha_k)/2$ hence $sum_(k=1)^infinity m(I_k) >= sum_(k=1)^infinity (alpha_k)/2$, noticing that $alpha_k -> 0$ as $k -> infinity$ and in particular this means $sum_(k=1)^infinity (alpha_k)/2$ a converging series. Fix $epsilon > 0$, then there exists some $N$ sufficiently large such that $
+  sum_(k=N+1)^infinity m(I_k) < epsilon/5.
+  $ We claim that ${I_i}_(i=1)^N$ satisfies our desired properties, namely that $m(E \\ union.big_(i=1)^N I_i) < epsilon$. It suffices to show $m(E \\ union.big_(i=1)^N overline(I_i)) < epsilon$, since this adds/removes only points so doesn't change the measure. Since $union.big_(i=1)^N overline(I_i)$ closed, then for every $x in E\\ union.big_(i=1)^N overline(I_i)$, $"dist"(x, union.big_(i=1)^N overline(I_i)) = lambda > 0$. Since $cal(J)$ a Vitali covering, there is some $I^ast in cal(J)$ such that $x in I^ast$ and $m(I^ast) < lambda$. Hence, it must be that $I^ast sect I_i = nothing$ for every $i = 1, dots, N$. Hence, $m(I^ast) <= alpha_(N+1)$. Let $N^ast >= N+1$ be such that $alpha_(N^ast + 1) < m(I^ast) <= alpha_(N^ast)$. So, there is a $j = N + 1, dots, N^ast$ such that $I^ast sect I_j eq.not nothing$ (we "start seeing" $I^ast$ at the $j$th step). Now, $
+  m(I^ast) <= alpha_(N^ast) <= alpha_j <= 2 m(I_j).
+  $ In particular, $I^ast subset.eq \"5 I_j\"$, where $5 I_j$ is $I_j$ "expanded" $5$ times. So, $
+  E\\ union.big_(i=1)^N overline(I_i) subset.eq union.big_(k=N+1)^infinity \" 5 I_k \",
+  $ so $
+   m(E\\ union.big_(i=1)^N overline(I_i)) <= m(union.big_(k=N+1)^infinity \" 5 I_k \") <= 5 sum_(k=N+1)^infinity m(I_k) = 5 dot  epsilon/5 = epsilon,
+  $ as we aimed to show.
+]
+
+#proposition[
+  Assume $F : [a, b] -> RR$ is increasing. Then, $F' in L^1 ([a, b])$, $F' >= 0$ a.e. on $[a, b]$, and $integral_(a)^b F'(t) dif t <= F(b) - F(a)$.
+]
+
+#proof[
+  $F' >= 0$ clear. For a.e. $x in [a, b]$, $F' (x) = lim_(n->infinity) G_n (x)$ where $G_n (x) := (F(x + 1/n) - F(x))/(1/n)$, expanding $F$ to be constant its last value outside of $[a, b]$ if necessary. Then, by Fatou, $
+    integral_(a)^b F'(x) dif x &<=  liminf_(n) integral_(a)^b G_n (x)dif x \ 
+    &= liminf_n (n (integral_(a)^b F(x + 1/n) dif x - integral_(a)^b F(x) dif x)) \ 
+    &= liminf_n (n (integral_(a + 1/n)^(b + 1/n) F(t) dif t - integral_(a)^b F(t) dif t)) \ 
+    &= liminf_n (n( integral_(b)^(b + 1/n) F(t) dif t - integral_(a)^(a + 1/n) F(t) dif t))\
+    &<= liminf_(n) (n (F(b) 1/n - F(a) 1/n)) = F(b) - F(a).
+  $ This proves in turn $F' in L^1 ([a, b])$.
+]
+#remark[
+  The inequality established may be strict. Recall $f$ the Cantor-Lebesgue function. It is continuous and increasing, so $f'$ exists almost everywhere on $[0, 1]$, indeed, for every $x in [0, 1]\\C$, $f'(x) = 0$. Then, $f' equiv 0$ a.e. on $[0, 1]$ so $integral_(0)^1 f'(x) dif x = 0$, while $f(1) - f(0) = 1$.
+]
+
+== Functions of Bounded Variation
+#definition("Bounded Variation")[
+  A function $F : [a, b] -> RR$ is of _bounded variation_ on $[a, b]$, denoted by $f in "BV"([a, b])$ if $
+  T_F (a, b) := sup {sum_(k=1)^N |F(x_k) - F(x_(k-1))| : N >= 1, a = x_0 < x_1 < x_2 <dots.c < x_N = b} < infinity.
+  $ We call $x_0, dots, x_N$ a partition of $[a, b]$, and $T_F$ the _total variation_ of $F$ over $[a, b]$.
+]
+
+#proposition[
+  1. For $x in [a, b]$, set $V_F (x) := T_F (a, x)$. Then, $V_F : [a, b] -> [0, infinity]$ is increasing and for every $a <= x <= y <= b$, $V_F (y) - V_F (x) = T_F ((x, y))$.
+  2. If $F, G in "BV"([a, b])$, then both $F + G, F - G in "BV"([a, b])$ and $T_(F + G) (a, b) <= T_F (a, b) + T_G (a, b)$.
+  3. If $F$ is monotonic on $[a, b]$, $F in "BV"([a, b])$.
+  4. If $f in L^1 (RR)$ and $F(x) := integral_(a)^x f(t) dif t$ for $x in [a, b]$, then $F in "BV"([a, b])$ and $T_F (a, b) <= integral_(a)^b |f(t)| dif t$.
+  5. If $F in "BV"([a, b])$, $F$ is bounded on $[a, b]$.
+  6. If $F$ is continuous on $[a, b]$ and differentiable everywhere on $(a, b)$, and there is some $M > 0$ such that $|F'(x)| <= M$ for every $x in (a, b)$, then $F in "BV"([a, b])$. 
+  7. In 6., the boundedness of $F'$ cannot be dropped.
+]
+
+#proof[
+  3. For any partition $a = x_0 < dots.c < x_N = b$, we have $
+  sum_(k=1)^N |F(x_k) - F(x_(k-1))| = sum_(k=1)^N F(x_k) - F(x_(k-1)) = F(b) - F(a),
+  $ which was true of any partition so in particular $T_F (a, b) = |F(b) - F(a)|$.
+  4. For any partition $a = x_0 < dots.c < x_N = b$, $
+  sum_(k=1)^N |F(x_k) - F(x_(k-1))| &=  sum_(k=1)^N |integral_(x_(k-1))^(x_k) f(t) dif t| \ 
+  &<= sum_(k=1)^N integral_(x_(k-1))^(x_k) |f(t)| dif t = integral_(a)^b |f(t)| dif t < infinity.
+  $
+  5. For every $x in [a, b]$, $
+  |F(x)| <= |F(x) - F(a)| + |F(a)| &<=  T_F (a, x) + |F(a)| \ 
+  &<= T_F (a, b) + |F(a)| < infinity.
+  $
+  6. By the mean value theorem, for every $x < y in (a, b)$, there is some $z in (x, y)$ such that $(F(y) - F(x))/(y - x) = F'(z)$. Hence, for every such $x, y$, $
+  |F(y) - F(x)| <= M (y - x).
+  $ For any partition $a = x_0 < dots.c < x_N = b$, then, $
+  sum_(k=1)^N |F(x_k) - F(x_(k-1))| <= M (b - a).$
+  7. For instance, consider $F(x) = cases(x sin (1/(x^2)) wide & x eq.not 0, 0 & x = 0)$. Then $F$ continuous on $[0, 1]$ and differentiable on $(0, 1)$, but $F in.not "BV"([0, 1])$.
+]
+
+#theorem[A function $F : [a, b] -> RR$ is in $"BV"([a, b])$ if and only if there exist $H, G : [a, b] -> RR$ increasing such that $F(x) = H(x) - G(x)$ for every $x in [a, b]$.]
+
+#proof[
+  ($arrow.l.double$) Increasing functions are in $"BV"([a, b])$, so $H, G$ and thus $H - G in "BV"([a, b])$.
+
+  ($=>$) Assume $F in "BV"([a, b])$. Let $H(x) = V_F (x)$ for $x in [a, b]$, which is increasing on $[a, b]$. Let $G = H - F$, which we claim is also increasing. For every $x < y in [a, b]$, $
+  G(y) - G(x) &= H(y) - H(x) - (F(y) - F(x)) \ 
+  &= T_F (x, y) - (F(y) - F(x)) \ 
+  &>= T_F (x, y) - |F(y) - F(x)| >= 0.
+  $
+]
+
+#theorem[
+  If $F : [a, b] -> RR$ is of bounded variation, then $F$ is continuous on $[a, b]$ except at at most countably many points, $F'$ exists almost everywhere $[a, b]$, and $F' in L^1 ([a, b])$.
 ]
