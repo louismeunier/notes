@@ -1616,20 +1616,69 @@ We wish to study $"GL"_n (R)\\M_n (R)\/"GL"_n (R)$, that is, the orbits of $M_n 
 ]
 
 #example[
-  Let $A$ be a finitely generated abelian group. Then, $A tilde.equiv ZZ\/d_1 plus.circle dots.c plus.circle ZZ\/d_t plus.circle ZZ^m$. In particular, if $A$ is finite, then $m = 0$. Then, $d_1 dots.c d_t = hash A$, and $d_t a = 0$ for any $a in A$, and indeed the smallest such integer with this property (called the _exponent_ of $A$).
+  Let $A$ be a finitely generated abelian group; $A$ then just a fg $ZZ$-module. Then, $A tilde.equiv ZZ\/d_1 plus.circle dots.c plus.circle ZZ\/d_t plus.circle ZZ^m$. In particular, if $A$ is finite, then $m = 0$. Then, $d_1 dots.c d_t = hash A$, and $d_t a = 0$ for any $a in A$, and indeed the smallest such integer with this property (called the _exponent_ of $A$). 
+
+  Note that $A$ is _not_ characterized by its exponent and cardinality; if two groups have the same exponent and cardinality, they need not be isomorphic. For instance, consider $
+  ZZ\/3 times ZZ\/3 times ZZ\/9, wide ZZ\/9 times ZZ\/9,
+  $ which are not isomorphic but have the same cardinality, $81$, and exponent, $9$.
 ]
 
-// #proof[(Of @thm:moduletheorem)
-// For the remainder of the proof, assume $R$ a PID. By the previous theorem, we may write $M$ as a quotient $R^n\/N$.
+#example[
+  Let $R = FF[x]$ for some field $FF$, and $
+  M = FF[x]\/(d_1 (x)) plus.circle dots.c  plus.circle FF[x]\/(d_t (x))  plus.circle FF[x]^r,
+  $ where $r = 0 <=> dim_FF (M) < infinity$ as a vector space. In particular, $
+  dim_FF (M) = deg d_1 + dots.c + deg d_t.
+  $ In particular, we have a correspondence $
+  "fg" FF[x] "module", r = 0 &<--> (V, T), dim_FF (V) < infinity "and" T : V -> V\
+  M = V, f(x) dot v := f(T)(v) &arrow.l.squiggly.long (V, T) \ 
+  V & arrow.r.squiggly.long V, T(v) := x dot v.
+  $
+  The maximal divisor $d_t (x)$ is the minimal polynomial of $T$.
+]
+
+#proposition[$d_1 (x) dots.c d_t (x)$ the characteristic polynomial of $T$.]
+
+#proof[
+  We let $p_T$ the minimal polynomial, $f_T$ the characteristic polynomial. Recall that $p_T|f_T$, $deg f_T = dim V$, and if $V = V_1 plus.circle V_2$ as a $FF[x]$-module (namely, $V_1, V_2$ respectively stable under the action of $FF[x]$), then $f_T = f_T|_V_1 dot f_T|_V_2$.
+
+  If $t = 1$, $V = FF[x]\/(p(x))$, with $p_T (x) = p(x)$. Since $p_T|f_T$ and $deg f_T = dim_FF V = deg p_T$ so $p_T = f_T$.
+
+  For general $t$, $V = FF[x]\/(p_1 (x)) plus.circle dots.c plus.circle FF[x]\/(p_t (x)) =: V_1 plus.circle dots.c plus.circle V_t$, then $f_T (x)$ is just $f_T|_(V_1) dots.c f_T|_(V_t)$, and since $f_T|_(V_i) = p_i$ as per the $t = 1$ case, the proof follows.
+]
+
+We summarize our interpretations of the structures that arise from the theorem:
+#align(center, table(
+  columns: 3,
+  stroke: none,
+  inset: 8pt,
+  "", $ZZ$, $FF[x]$,
+  table.hline(start: 0, end:3),
+  "fg modules", "fg abelian groups", [fg $F[x]$-modules],
+  $r=0$, "finite abelian groups", [finite dimensional $(V, T)$],
+  $d_t$, "exponent", "minimal polynomial",
+  $d_1 dots.c d_t$, "cardinality", "characteristic polynomial"
+)
+)
+
+#proposition[
+Given two matrices $M_1, M_2 in M_n (FF)$, $M_1$ is conjugate to $M_2$ if and only if the associated $FF[x]$-modules have the same elementary divisors.
+]
+
+#proof[
+With $M_1, M_2 : V -> V$, $V$ can be viewed as an $FF[x]$-module in two different ways. We denote these modules $V_i$, where $f(x) v = f(M_i)(v)$ for $i = 1, 2$. Suppose that $V_1, V_2$ have the same elementary divisors, $d_1, dots, d_t$. This implies $
+V_1 tilde.equiv FF[x]\/(d_1) plus.circle dots.c plus.circle FF[x]\/(d_t) tilde.equiv V_2,
+$ _as $FF[x]$-modules_. Hence, there exists some isomorphism, $j : V_1 -> V_2$ of $FF[x]$-modules, so in particular $
+j(x v) = x dot j(v)
+$ for all $v in V_1$, but recalling that the action of $FF[x]$ is, we have  $
+j(M_1 v) = M_2 j (v),
+$ hence, $
+j compose M_1 = M_2 compose j,
+$ and so $M_1, M_2$ indeed conjugate.
+]
 
 
 
 
-// ]
-
-// #proof[
-
-// ]
 
 // ! Ending
 #pagebreak()
