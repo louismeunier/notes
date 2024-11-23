@@ -294,6 +294,13 @@ $ Let $S tilde "Bin"(n,p)$. Then, $"Var"[S] = EE[S^2]- (n p)^2$. To compute $EE[
 "Var"[S] = n p (1 - p).
 $
 
+#theorem[
+  If $X$ a random variable and $g$ a Borel-measurable function, then $
+  EE[g(X)] &= integral_(-infinity)^infinity h(x) f_X (x) dif x "if continuous"\
+  EE[g(X)] &= sum_(k=0)^infinity h(x_k) p_k "if discrete"
+  $
+]
+
 == Some Particular Distributions
 === Hypergeometric
 
@@ -328,3 +335,286 @@ $
 An easier way to compute this is by using the linearity of $EE$, namely, $
 EE[S] = EE[sum_(i=1)^n X_i] = sum_(i=1)^n EE[X_i] = sum_(i=1)^n 1 dot p + 0 dot (p - 1) = n p.
 $
+== MGF, PGF
+
+#definition("PGF")[
+Given a discrete random variable $X$ with support in the naturals and pmf ${p_k}$, the _probability generating function_ (PGF) of $X$ is defined as $
+P(s) = sum_(k=0)^infinity p_k s^k,
+$ wherever this series converges.
+]
+
+#proposition[
+$1/(n!) P^((n)) (0) = p_n$ for any $n >= 0$. Similarly, $
+P'(s)|_(s=1) = EE[X], wide P''(s)|_(s = 1) = EE[X (X-1)], wide dots
+$
+]
+
+#example[
+  If $X tilde "Poisson"(lambda)$, then $
+  P(s) &= sum_(k=0)^infinity (e^(-lambda) lambda^k)/(k!) s^k \ 
+  &= e^(-lambda) sum_(k=0)^infinity ((lambda s)^k)/(k!)  \
+  &= e^(-lambda) e^(lambda s) = e^(lambda (s - 1)).
+  $
+]
+
+#definition("MGF")[
+The _moment generating function_ (MGF) of a continuous random variable $X$ with pdf $f_X$ is given by, where the integral converges, $
+M_X (s) := EE[e^(s X)] = integral_(-infinity)^infinity e^(s x) f_X (x) dif x.
+$
+]
+
+#example[
+  Let $X tilde exp(lambda)$ for $lambda > 0$, namely $
+  f_X (x) = lambda e^(- lambda x)
+  $ for $x > 0$, $0$ otherwise. Then, $
+  M_X (s) = integral_(0)^infinity e^(s x) lambda e^(lambda x) dif x = dots.c = (lambda/(lambda - s)) "if" lambda > s,
+  $ and does not exist (does not converge) otherwise.
+]
+
+#theorem[
+  A given MGF uniquely determines a CDF, and conversely, if an MGF of a random variable exists, it is unique.
+]
+
+#theorem[
+  If $M_X (s)$ exists for $|s| < s_0$, then the derivatives of $M_X$ of all order exists at $s = 0$, and can be evaluated under the integral; namely, $
+  M_X^((k))(s)|_(s = 0) = EE[X^k], wide k > 0.
+  $ Ie, $
+  M_X (s) = sum_(k=0)^infinity M^((k)) (0) (s^k)/(k!)
+  $
+]
+
+#example[
+  Let $X tilde "Geom"(p)$, $1 > p > 0$, where $p_k = p(1-p)^(k-1), k = 1, dots$. Then, $
+  // P(X = n)
+  $
+]
+
+== Moment Inequalities
+
+#theorem("Markov's")[
+  Let $h(x) >= 0$ a function of a random variable $X$. If $EE[h(X)]$ exists, then for every $epsilon > 0$, $
+  P({h(X) >= epsilon}) <= (EE[h(X)])/(epsilon).
+  $
+]
+#proof[
+  Let $A = {h >= epsilon}$ and denote the pdf of $X$ by $f_X$. Then, $
+  EE[h(X)] &= integral_(-infinity)^infinity h(x) f_X (x) dif x \
+  &= integral_(A) h(x) f_X (x) dif x + integral_(A^c) h(x) f_X (x) dif x \ 
+  &>= epsilon integral_(A) f_X (x) dif x = epsilon P({X in A}) = epsilon P({h(X) >= epsilon}).
+  $
+]
+
+#corollary[For any $k, r > 0$, $
+P{|X| >= k} <= (EE[ |X|^r])/k^r.
+$]
+
+#proof[
+  Let $epsilon = k^r$, $h(x) = |x|^r$.
+]
+
+#corollary("Chebychev's Inequality")[
+  Let $mu_X = EE[X]$ and $sigma_X^2 = "Var"(X)$. Then, for any $k >= 1$, $
+  P({|X - mu_X| > k sigma}) <= 1/(k^2).
+  $
+]
+#proof[
+  Let $h(x) = (X - mu_X)^2, epsilon = h^2 sigma_X^2$.
+]
+
+#example[
+  When $k = 3$, this tells us that the likelihood of $X$ being more than three standard deviations ($sqrt("Var"(X))$) away from the mean is less that $1/(3^2) = 1/9$, i.e. at least $89 percent$ of the time, $X$ is within $3$ stdevs of the mean. We can sharpen this bound in general.
+]
+
+#theorem("Gauss's Inequality")[
+  Let $X tilde f$ be unimodal with mode $v = "argmax"_x (f(x))$. Put $tau^2 = EE[(X - v)^2]$. Then, $
+  P{|X - v| > epsilon} <= cases(
+    (4 tau^2)/(9 epsilon^2) "if" epsilon >= tau 2/sqrt(3), 
+    1 - epsilon/(tau sqrt(3)) "else".
+  )
+  $
+]
+
+#theorem("Vysochanskij-Petunin (VP) Inequality")[
+  Let $X$ unimodal and put $xi^2 = EE[(X - alpha)^2]$ for $alpha in RR$. Then, for any $epsilon > 0$, $
+  P(|X - alpha| > epsilon) <=  cases( (4 xi^2)/(9 epsilon^2) "if" epsilon >= xi sqrt(8/3), (4 xi^2)/(9 epsilon^2) - 1/3 "else").
+  $
+]
+
+#example[
+  If $alpha = mu_X =  EE[X]$ and we take $epsilon = sigma_X$, the previous inequality gives that $
+  P{|X - mu_X|  > 3 sigma} <= 4/81 approx 0.05,
+  $ namely, gives rise to the "3-$sigma$" rule.
+]
+
+#theorem[
+  Let $X$ be a random variable with $EE[X] = 0, "Var"(X) = sigma^2$. Then, $
+  P(X > x) <= sigma^2/(sigma^2 + x^2),wide "for" x > 0 \
+  P(X > x) >= x^2/(sigma^2 + x^2),wide "for" x < 0.
+  $
+]
+
+#lemma[
+$|a+b|^r <= C_r (|a|^r + |b|^r)$ where $C_r = cases(1 "if" 0 <= r <= 1, 2^(r - 1) "if" r > 1)$.
+]
+
+#theorem[
+Let $X, Y$ be random variables and let $r > 0$. If $EE|X|^r, EE|Y|^r$ exist, then $EE|X+Y|^r$ exists, and we have $
+EE|X+Y|^r<=C_r (EE|X|^r + EE|Y|^r).
+$
+]
+
+= Multiple Random Variables
+
+#definition[
+  A vector of random variables $bold(X) = (X_1, dots, X_n)$. We say $X_1, dots, X_n$ jointly distributed according to some $F$ if $
+  P(bold(X) <= bold(a)) = P(X_1 <= a_1, dots, X_n <= a_n) = F(a_1, dots, a_n).
+  $ One must be careful in defining $F$ appropriately, as there are some caveats compared to the one dimensional case. See the text for details.
+
+  We only deal with cases to follow where all random variables are of the same type.
+]
+
+#definition("Marginal Distribution")[
+  Given $X, Y tilde F$, the marginal cumulative distribution of $X$ is defined as $
+  F_1 (x) = lim_(y -> infinity) F(x, y)
+  $ if $X, Y$ continuous and $
+  F_1 (x_i) = sum_(i : x_i <= 1) sum_(j=1) p_(i j)
+  $ when $X$ discrete.
+
+  The marginal pdf of $X$ is given by $
+  f_1 (x) = integral_(-infinity)^infinity f (x, y) dif y,
+  $ when continuous, and when discrete, $
+  P(X = x_i) = p_(i bullet) = sum_(j=1)^infinity p_(i, j)
+  $
+]
+
+== Conditional Distributions
+
+#definition[
+Let $X, Y$ be two jointly distributed random variables. We define $
+p_(i|j) = P(X = x_i | Y = y_j) = (p_(i, j))/(p_(bullet, j)),
+$ which yields conditional cdf $
+F_(X|Y) (x, y) = P(X <= x | Y = y) = (P(X <= x, Y = y))/(P(Y = y)),
+$ as long as $P(Y = y) eq.not 0$.
+
+When continuous, we define the conditional cdf $
+F_(X|Y) (x, y) = (integral_(-infinity)^x f(y, y) dif u)/(f_2 (y)),
+$ where $f_2$ the marginal pdf of $Y$. By extension, the conditional pdf is given by $
+f_(X|Y)(x, y) = (f(x, y))/(f_2 (y)).
+$
+]
+
+#definition[
+  We say two jointly distributed random variables $X, Y$ are independent if $
+  P(X = x_i, Y = y_j) = P(X = x_i) P(Y = y_j)
+  $ for every $x_i, y_j$ in the respective supports if $X, Y$ discrete, and $
+  f_(X, Y) (x, y) = f_X (x) f_Y (y)
+  $ for every $x, y$ where defined if $X, Y$ continuous. Similarly, $X_1, dots, X_n$ are said to be mutually independent if $
+  P_X (X_i in A_i) = product_(i=1)^n P(X_i in A_i)
+  $ for every Borel set $A_i$.
+
+  If $X_1, dots, X_n$ are independent, and all have the same marginal distributions, call it $f$, we say $X_1, dots, X_n$ are independent and identically distributed, and write $X_1, dots, X_n tilde^("iid") f$.
+]
+
+#definition[
+The expected value of a function $h$ of two jointly distributed random variables $X, Y$ is defined to be $
+EE[h(X, Y)] = integral_(-infinity)^infinity integral_(-infinity)^infinity h(x, y) f_(X, Y) (x, y) dif x dif y.
+$ We defined the conditional expectation $
+EE[h(X, Y) | Y = y] = integral_(-infinity)^infinity h(x, y) f_(X|Y)(x|y) dif x.
+$
+]
+
+#proposition[
+  $EE[X] = EE[EE[X|Y]]$, $"Var"(X) = EE["Var"(X|Y)] + "Var"(EE(X|Y))$.
+]
+
+#example[
+Let $X_i tilde^("iid") f, i = 1, dots, n$. Let $X_((j)) = max_(1 <= i <= j) X_i$. Then, $
+P(X_((j)) <= x) = F_(X) (x)^j,
+$ where $F_X$ the common cdf of the $X_i$'s.
+
+Let $Y_((j)) = min_(1 <= i <= j) X_i$ Then, $
+P(Y_((j)) <= y) = [1 - F_X (x)]^n
+$
+]
+
+#theorem[
+  Let $(X_1, dots, X_n) tilde f_(bold(X)) (bold(x))$. Let $u_i = g_i (bold(x)), i = 1, dots, n$ be continuous one-to-one maps with continuous inverses $x_i = h_i (bold(u)) = h_i (u_1, dots, u_n)$, such that the partials $(partial x_i)/(partial u_j)$ exists and are continuous for $1 <= i, j <= n$, and such that the Jacobian $
+  J = (partial (x_1, dots, x_n))/(partial (u_1, dots, u_n)) eq.not 0,
+  $ in the range of definition. Then, the new random variable $bold(U) = (U_1, dots, U_n)$ has joint, absolutely continuous distribution function with joint pdf given by $
+  w(u_1, dots, u_n) = |J| f_(bold(X)) (h_1 (bold(u)), dots, h_n (bold(u))).
+  $
+]
+
+#example[Rocket // TODO
+]
+
+== Covariance, Correlation
+
+#definition("Covariance, Correlation")[
+  Given two random variables $X, Y$ with means $mu_X, mu_Y$ respectively, define $
+  "Cov"(X, Y) = EE[(X - mu_X)(Y - mu_Y)].
+  $
+  Let $sigma_X^2, sigma_Y^2$ be the variance of $X, Y$ respectively, then define, if $sigma_X, sigma_Y > 0$, the correlation of $X, Y$$
+  rho(X, Y) = "Cov"(X,Y)/(sigma_X sigma_Y).
+  $
+]
+
+#proposition[
+Correlation is translation, scaling invariant.
+]
+
+#proposition[If $X, Y$ independent, $"Cov"(X, Y) = 0$.]
+
+#theorem("Holders")[
+  Let $p, q > 1$ such that $1/p + 1/q = 1$. Then, $
+  EE[X Y] <= (EE|X|^p)^(1/p) (EE|X|^q)^(1/q).
+  $ In particular, if $p = q = 2$, we have the Cauchy-Schwarz inequality, and if $X -> X - mu_X, Y -> Y - mu_Y$, then this tells us $|"Cov"(X, Y)| <= sigma_X sigma_Y$, and hence $|rho(X, Y)| <= 1$.
+]
+
+#corollary("Lyapunov's")[
+  For every $1 <= r < s < infinity$, $
+  (EE|X|^r)^(1/r) <= (EE|X|^s)^(1/s).
+  $
+]
+
+#corollary("Jensen's")[
+Let $g$ be a convex function. Then, $
+g(EE[X]) <= EE[g(X)].
+$ 
+]
+
+#theorem("Minkowski's")[
+  Let $p >= 1$. Then, assuming all expectations exist, $
+  (EE |X + Y|^p)^(1/p) <= (EE |X|^p)^(1/p) + (EE |Y|^p)^(1/p).
+  $
+]
+
+= Convergence of Random Variables
+
+#definition("Almost Sure Convergence")[
+  Let ${X_n}$ be a sequence of random variables. We say $X_n$ converges to an rv $X_0$ _almost surely_ (a.s.) and write $X_n ->^("a.s.") X_0$ if $
+  P{ lim_(n->infinity) X_n = X_0} = 1.
+  $
+]
+
+#definition("Convergence in Probability")[
+  We say $X_n -> X_0$ _in probability_ if for every $epsilon > 0$, $
+  lim_(n->infinity) P(|X_n - X_0| > epsilon) = 0.
+  $ Compare this to the notation of convergence in measure.
+]
+
+#definition("Convergence in Law/Weak Convergence")[
+  Suppose $X_n tilde F_n$. If $F_0$ another cdf with $X_0 tilde F_0$, we say $X_n$ converges to $X_0$ in law/distribution/weakly and write $X_n ->^("L") X_0$ or $F_n ->^"W" F_0$ if $
+  F_n (x) -> F_0 (x)
+  $ for every $x$ such that $F_0$ continuous at $x$.
+]
+
+#example[
+  Let $0 <= p <= 1$ and let $X_i = {1 "with" p, 0 "with" 1 -p}$. Let $
+  T_n = 1/n sum_(i=1)^n X_i
+  $ for all $n >= 1$. We claim that $T_n -> p$ in probability.
+]
+
+#example[
+  Let $X_i tilde^("iid") "Unif"(0, theta)$. Let $M_n = max{X_1, dots, X_n}$. Prove that $M_n -> theta$ in probability.
+]

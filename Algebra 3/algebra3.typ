@@ -1787,3 +1787,21 @@ $ $sigma(n) eq.not n$ by assumption, so this means that $p$ fixes some non-$n$ e
 #proposition[
   Show that $S_5$ can be made to act transitively on a set $X$ of size $6$, and describe how the elements of order 3 and 6 in $S_5$ act on $X$. (I.e. describe their cycle shapes.)
 ]
+
+= Final Review
+
+#proposition[
+  Let $T$ be a linear transformation over a field $F$ having $(x - lambda)^2$ as minimal polynomial, for some $lambda in F$, and let $g(x)$ be a polynomial in $F[x]$. Show that 
+$
+g(T) = g(lambda)I + g'(lambda)(T - lambda I)
+$
+where $I$ is the identity transformation. Can you generalize this formula to the case where the minimal polynomial is $(x - lambda)^k$?
+]
+
+#proof[
+Since $p_T (x) = (x - lambda)^2$, it follows that $
+0 = T^2 - 2 lambda T + lambda^2.
+$ If $g(x) = g_m x^m + dots.c + g_1 x + g_0 in FF[x]$, then $
+g(lambda) I + g' (lambda) (T - lambda I) &= (g_m lambda^m + dots.c + g_0) + (m g_m lambda^(m-1) + dots.c + g_1) (T - lambda I).
+$ Let us compare coefficients of $g$.
+]
