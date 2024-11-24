@@ -324,4 +324,112 @@ u(x, t) = 1/(sqrt(4 pi alpha t)) integral_(-infinity)^infinity e^(-(x - y)^2 /(4
 $ In particular, $
 lim_(t -> 0^+) u(x, t) = g(x)
 $ for every $x in RR$.
+
+Let $Phi(x, t) := 1/(sqrt( 4 pi alpha))e^(- (x^2)/(4 alpha t))$, this is called the _heat kernel_. Then, notice that $
+u(x, t) = (Phi(dot, t) convolve g)(x).
+$
+]
+
+#theorem[$Phi$ as the following properties: 
+1. $forall t > 0, integral_(-infinity)^infinity Phi(x, t) dif x = 1$.
+2. $Phi$ is just the normal probability density function with mean 0 and variance $2 alpha t$.
+3. $Phi$ solves the heat equation itself.
+4. As $t -> 0^+$, $Phi -> delta_0$ in the sense of distributions.
+]
+
+= Laplace's Equation
+#definition[We call a function _harmonic_ if $laplace u = 0$. 
+
+Given a bounded domain $Omega$ and a function $g$, we call $
+cases(
+laplace u = 0 "on" Omega,
+u = g "on" partial Omega
+) wide "[D]"
+$ the Dirichlet problem of the Laplacian
+]
+
+#theorem("Properties of Harmonic Functions")[
+  
+  (Mean Value Property)
+  Let $Omega subset RR^3$ a domain and $u in C^2 (Omega)$ harmonic. Let $x_0 in Omega$ and $r > 0$ such that $B(x_0, r) subset Omega$. Then, $
+u(x_0) = 1/(4 pi r^2) integral.double_(partial B(x_0, r)) u(x) dif S_x.
+$ This actually holds if and only if.
+
+(Maximum Principle) Let $Omega$ bounded and connected, $u in C^2 (Omega) sect C^1 (overline(Omega))$. If $u$ attains its maximum in $Omega$, then $u$ must be identically constant on $overline(Omega)$.
+
+(Stability of the Dirichlet Problem) Let $g_1, g_2$ continuous on $partial Omega$ and let $u_i$ solve $
+cases(laplace u_i = 0 "on" Omega, u_i = g_i "on" partial Omega)
+$ for $i = 1, 2$. Then, $
+max_(x in Omega) |u_1 - u_2| <= max_(x in partial Omega) |g_1 - g_2|.
+$
+
+(Dirichlet's Principle) Let $Omega subset RR^N$ be a bounded domain $cal(A)_h := {omega in C^2 (Omega) sect C^1 (overline(Omega)) : omega = h "on" partial Omega}$ for some function $h$. Let $
+E[omega] := 1/2 integral_(Omega) |gradient omega|^2 dif x.
+$ Then, $u in cal(A)_h$ minimizes $E$ if and only if $u$ solves the Dirichlet problem with $u = h$ on $partial Omega$.
+]
+
+#definition("Fundamental Solution to the Laplacian")[
+  The _fundamental solution_ to the Laplacian over $RR^N$ is given by $
+  Theta(x) = cases(
+1/(2 pi) ln |x| wide & N = 2,
+-1/((4 pi) |x|) & N = 3,
+1/(N(N-2) omega_N |x|^(N-2)) & N >= 4
+  ),
+  $ where $omega_N$ the volume of the unit sphere in $RR^N$.
+]
+
+#theorem[
+In the sense of distributions, $laplace Phi = delta_0$.
+]
+
+#theorem("Representation Formula")[
+Let $Omega$ bounded and $u in C^2 (overline(Omega))$ and harmonic on $Omega$. Then, for $x_0 in Omega$, $
+u(x_0) = integral_(partial Omega) u(x) (partial Phi (x - x_0))/(partial n) - Phi(x - x_0) (partial u(x))/(partial n) dif S_x.
+$
+]
+
+#theorem[
+For [D], define the _Green's function_ of $Omega$ as the function $G(x, x_0)$, for $x in overline(Omega), x_0 in Omega$, such that, for $x eq.not x_0$, $
+G(x, x_0) = Phi(x - x_0) + H_x_0 (x),
+$ where $H_x_0$ harmonic and $H_x_0 (x) = - Phi(x -x_0)$ for $x in partial Omega$. Suppose such a $G$ exists, then $u(x_0)$ solves [D], where for $x_0 in partial Omega$, $
+u(x_0) = integral_(partial Omega) g(x) (partial)/(partial n) G(x, x_0).
+$ 
+]
+#remark[Assuming existence, the proof follows by applying the representation formula and Green's Second identity.]
+
+#theorem("Properties of Green's Function")[
+  Let $G$ be the Green's function for some $Omega$. Then, 
+  1. $G$ is unique
+  2. $G(x, x_0) = G(x, x_0)$ for every $x eq.not x_0 in Omega$.
+]
+
+= Fourier Series
+
+
+= Helpful Identities
+
+#theorem("Averaging Lemma")[
+Let $phi$ continuous on $RR^3$. Then, for any $x_0 in RR^3$, $
+phi(x_0) = lim_(r->0^+) 3/(4 pi r^3) integral_(B(x_0, r)) phi(x) dif x.
+$ Similar statements hold in arbitrary dimensions.
+]
+
+#remark[This is just a special case of the Lebesgue Differentiation Theorem.]
+
+// TODO divergence theorem
+#theorem("Vector Field Integration by Parts")[
+Let $bold(u)$ be a $C^1$ vector field and $v$ a $C^1$ function defined on some $Omega subset.eq RR^3$. Then, $
+integral_(Omega) bold(u) dot gradient v dif x = - integral_(Omega) ("div" bold(u)) v dif x + integral_(partial Omega) (v bold(u)) dot bold(n) dif S_x.
+$
+]
+#remark[
+  Computed $(u^i v)_x_i$ for $i = 1, 2, 3$, sum over the indices, integrate, apply the divergence theorem.
+]
+
+#theorem("Green's Identities")[
+  Let $u, v in C^2 (Omega) sect C^1 (overline(Omega))$ for some bounded domain $Omega$. Then
+$
+1.& wide  integral_(Omega) v laplace u dif x = integral_(partial Omega) v (partial u)/(partial n) - integral_(Omega) gradient u dot gradient v dif x \ 
+2.& wide integral_(Omega) v laplace u - u laplace v dif x= integral_(partial Omega) v (partial u)/(partial n) - u (partial v)/(partial n) dif S_x.
+$
 ]
