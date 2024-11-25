@@ -1674,7 +1674,88 @@ j(M_1 v) = M_2 j (v),
 $ hence, $
 j compose M_1 = M_2 compose j,
 $ and so $M_1, M_2$ indeed conjugate.
+
+More concretely, $j$ restricts to an isomorphism of $FF$-vector spaces, which as we know can simply be realized as multiplication by an invertible matrix, hence $J M_1 = M_2 J$ where $J$ the matrix realization of such an isomorphism.
 ]
+
+#example[
+  Let $G = "GL"_3 (FF_2)$. Recall $hash G = 168$. Conjugacy classes in $G$ are, by the previous theorem, in bijection with possible sequences of elementary divisors $(d_1, dots, d_t)$.
+
+  _t=1_: $d_1 (x)$ a polynomial of degree three with coefficients in $FF_2$. Since $T$ must be invertible, $x divides.not d_1$, so we have $
+  d_1(x) = x^3 + ? x^2 + ? x + 1
+  $ where $? in {0, 1}$. We go through all possibilities:
+  #align(center, table(
+    stroke: none, 
+    inset: 5pt, 
+    columns: 3,
+    table.vline(start:0, end: 5, x:1),
+    table.vline(start:0, end: 5, x:2),
+    [], [$d_1(x)$], [$C$],
+    table.hline(start:0, end: 5),
+    [(a)], [$x^3 + 1 = (x + 1)(x^2 + x + 1)$], [3A],
+    [(b)], [$x^3+x+1$], [7A],
+    [(c)], [$x^3+x^2+1$], [7B],
+    [(d)], [$x^3+x^2+x+1$], [4A],
+  ))
+  - By the PDT, $T$ with minimal polynomial (a) splits $V = V_1 plus.circle V_2$ where $T$ acts on $V_1$ as the identity. Let $T_2 = T|_V_2$. Then, since $x^2 + x + 1$ the minimal polynomial of $T_2$, it must be that $T_2^3 = 1$. Hence, $T$ is an element of order 3.
+  - For (b), (c), we've seen that these polynomials are irreducible over $FF_2$. In particular, if $T$ has such a minimal polynomial, then $T$ of order 7.
+  - For (d), $x^3 + x^2 + x + 1 = (x + 1)(x^2 + 1) = (x + 1)^3$. Then, $T^3 = T^2 + T + 1$ so $T^4 = T^3 + T^2 + T = T^2 + T + T^2 + T + 1 = 1$, hence $T$ of order 4.
+
+_$t = 2$:_ consider ($d_1$, $d_2$). It must be that $d_1 (x) = x + 1$, and so $d_2 (x)= (x+1)^2$ is the only possibility. Then, $FF_2^3 = FF_2[x]\/(x+1) plus.circle FF_2[x]\/((x+1)^2) = FF_2 plus.circle FF_2[epsilon]\/(epsilon^2)$. Then, $T <-> (1, 1 + epsilon)$, $T^2 <-> (1, 1 + 2 epsilon + epsilon^2) = (1, 1)$, so $T$ of order $2$. We have #align(center, table(
+    stroke: none, 
+    inset: 5pt, 
+    columns: 3,
+    table.vline(start:0, end: 5, x:1),
+    table.vline(start:0, end: 5, x:2),
+    [], [$(d_1(x), d_2 (x))$], [$C$],
+    table.hline(start:0, end: 5),
+    [(e)], [$(x+1, (x+1)^2)$], [2A]
+  ))
+
+_$t=3$:_ it must be $(d_1, d_2, d_3) = (x + 1, x+ 1, x+1)$. Such a transformation must be the identity.
+#align(center, table(
+    stroke: none, 
+    inset: 5pt, 
+    columns: 3,
+    table.vline(start:0, end: 5, x:1),
+    table.vline(start:0, end: 5, x:2),
+    [], [$(d_1(x), d_2 (x), d_3 (x))$], [$C$],
+    table.hline(start:0, end: 5),
+    [(f)], [$(x+1, x+1, x+1)$], [1A]
+  ))
+]
+
+#theorem[If $t = 1$, then $Z_G (A) = (FF[x]\/(d_1 (x)))^times$.]
+
+#proof[
+  We know $V tilde.equiv FF[x]\/(d_1 (x))$ as an $FF[x]$-module. Then, $Z_G (A) = "Aut"_(FF[x]) (V) = "Aut"_FF[x] (FF[x]\/(d_1 (x))) = (FF[x]\/(d_1))^times$. 
+
+  We have that $M in Z_G (A) <=> M A = A M <=> M A v = A M v$ for every $v in V$. Thinking of these as $FF[x]$-modules, this is equivalent to aking $M (x v) = x M v$, or equivalently $M$ an automorphism of $V$ as an $FF[x]$-module, i.e. respects $FF[x]$ scalar multiplication.
+]
+
+#example[
+  We compute the size of the conjugacy classes of $"GL"_3 (FF_2)$ found above.
+
+  _3A:_ By the previous theorem, $
+  Z_G ("3A") &= (FF_2[x]\/(x^3+1))^times = (FF_2 times FF_2[x]\/(x^2 + x + 1))^times = FF_2^times times FF_4^times = 1 times ZZ\/3 ZZ.
+  $
+
+  _7A:_ Similarly, $
+  Z_G ("7A") &= (FF_2[x]\/(x^3 + x + 1))^times \ 
+  &= (FF_8)^times = ZZ\/7ZZ.
+  $
+
+  _7B:_ $
+  Z_G ("7B") &= (FF_2[x]\/(x^3 + x^2 + 1))^times = (FF_8)^times = ZZ\/7ZZ.
+  $
+
+  _4A:_ $
+  Z_G ("4A") &= (FF_2[x]\/((x+1)^3))^times = (FF_2[epsilon]\/(epsilon^3))^times.
+  $ The ring $FF_2[epsilon]\/(epsilon^3) = {a + b epsilon + c epsilon^2 : a, b, c in FF_2}$. An element is invertible if and only if $a = 1$, so $(FF_2[epsilon]\/(epsilon^3))^times = {1 + b epsilon + c epsilon^2 : b, c in FF_2}$, with $
+  (1 + b epsilon + c epsilon^2)^(-1) = 1 + (b epsilon + c epsilon^2) + (b epsilon + c epsilon^2)^2.
+  $ So, we have that $hash Z_G ("4A") = 4$, namely only the powers of the element itself.
+]
+
 
 
 

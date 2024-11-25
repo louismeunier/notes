@@ -200,7 +200,7 @@ $ where $x_0, y_0$ such that $(x_0, y_0) in Gamma$.
 #remark[One can pick $x_0, y_0$ (with caveats) for convenience, as long as the point $(x_0, y_0)$ lies on $Gamma$, ensuring we can find $u$ here. For simple data like $u(x, 0) = phi(x)$ for $x in RR$, it is easiest to pick $y_0 := 0$, then letting $x_0$ be free; this serves as a "parametrization" of the curves; not in the sense that $s$ is a parameter, rather a parametrization of the family of characteristics, i.e. one should end up with a family ${gamma}_(x_0 in RR)$.]
 #remark[In temporal equations, i.e. where $y$ (for instance) equals $t$, we will often have $b(x, t) equiv 1$; in this case, one can often reparametrize with $t$ rather than $s$, since the ODE for $dot(t)(s)$ will just result in $t(s) = s + t_0$, effectively reducing from a system of 3 to 2 equations.]
 
-#remark[This method extends naturally to higher-dimensions equations; a PDE on $RR^N$ will result in $N+1$ ODEs to solve. Note that characteristics are _still_ curves in this case, _not_ $N-1$ dimensional manifolds as one mihgt expect!!]
+#remark[This method extends naturally to higher-dimensions equations; a PDE on $RR^N$ will result in $N+1$ ODEs to solve. Note that characteristics are _still_ curves in this case, _not_ $N-1$ dimensional manifolds as one might expect!!]
 #theorem("Semiilinear Equations")[Given a semiilinear PDE of the form $
 a(x, y) u_x + b(x, y)u_y = c(x, y, u),
 $ where $c$ may be nonlinear, we have characteristics given by $
@@ -416,20 +416,26 @@ $ Similar statements hold in arbitrary dimensions.
 
 #remark[This is just a special case of the Lebesgue Differentiation Theorem.]
 
-// TODO divergence theorem
+#theorem("Divergence Theorem")[
+Let $F$ a smooth vector field on bounded domain $Omega$ with outer normal $n$. Then, 
+$
+integral_Omega "div" F dif x = integral_(partial Omega) F dot n dif S_x
+$
+]
+
 #theorem("Vector Field Integration by Parts")[
 Let $bold(u)$ be a $C^1$ vector field and $v$ a $C^1$ function defined on some $Omega subset.eq RR^3$. Then, $
 integral_(Omega) bold(u) dot gradient v dif x = - integral_(Omega) ("div" bold(u)) v dif x + integral_(partial Omega) (v bold(u)) dot bold(n) dif S_x.
 $
 ]
 #remark[
-  Computed $(u^i v)_x_i$ for $i = 1, 2, 3$, sum over the indices, integrate, apply the divergence theorem.
+  Compute $(u^i v)_x_i$ for $i = 1, 2, 3$, sum over the indices, integrate, apply the divergence theorem.
 ]
 
 #theorem("Green's Identities")[
   Let $u, v in C^2 (Omega) sect C^1 (overline(Omega))$ for some bounded domain $Omega$. Then
 $
 1.& wide  integral_(Omega) v laplace u dif x = integral_(partial Omega) v (partial u)/(partial n) - integral_(Omega) gradient u dot gradient v dif x \ 
-2.& wide integral_(Omega) v laplace u - u laplace v dif x= integral_(partial Omega) v (partial u)/(partial n) - u (partial v)/(partial n) dif S_x.
+2.& wide integral_(Omega) v laplace u - u laplace v dif x= integral_(partial Omega) v (partial u)/(partial n) - u (partial v)/(partial n) dif S_x
 $
 ]
