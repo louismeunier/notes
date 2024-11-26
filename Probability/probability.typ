@@ -8,7 +8,7 @@
   course_title: "Probability",
   subtitle: "",
   semester: "Fall 2024",
-  professor: "Prof. Asoud Asgharian",
+  professor: "Prof. Masoud Asgharian",
   doc
 )
 #set align(left)
@@ -617,4 +617,22 @@ $
 
 #example[
   Let $X_i tilde^("iid") "Unif"(0, theta)$. Let $M_n = max{X_1, dots, X_n}$. Prove that $M_n -> theta$ in probability.
+]
+
+== Consequences of Convergence in Probability
+
+#remark[See page 260 of the textbook.]
+
+#theorem("Continuous Mapping Theorem")[
+  Let $X_n (->)^P X$ and $g : RR -> RR$ a continuous function. Then, $g(X_n) ->^(P) g(X)$.
+]
+
+#theorem[$X_n->^P X => X_n->^L X$.]
+
+#theorem("Slutsky's Theorem")[If $|X_n - X| ->^P 0$ and $Y_n->^L Y$, then $X_n->^L Y$.]
+
+#theorem("Cramer's Theorem")[
+1. $X_n ->^L X, Y_n->^P c => X_n plus.minus Y_n ->^L Y_n plus.minus c$.
+2. $X_n ->^L X, Y_n ->^P c => cases(X_n Y_n ->^L c x "of" c eq.not 0, X_n Y_n ->^P 0 "if" c = 0)$.
+3. $X_n->^L X, Y_n->^P c => X_n/Y_n ->^L x/c$ if $c eq.not 0$.
 ]
