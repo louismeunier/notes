@@ -1679,7 +1679,7 @@ More concretely, $j$ restricts to an isomorphism of $FF$-vector spaces, which as
 ]
 
 #example[
-  Let $G = "GL"_3 (FF_2)$. Recall $hash G = 168$. Conjugacy classes in $G$ are, by the previous theorem, in bijection with possible sequences of elementary divisors $(d_1, dots, d_t)$.
+  Let $G = "GL"_3 (FF_2)$. Recall $hash G = 168$. Conjugacy classes in $G$ are, by the previous theorem, in bijection with possible sequences of elementary divisors $(d_1, dots, d_t)$, such that $d_1|d_2|dots.c|d_t$ and $deg(d_1 d_2 dots.c d_t) = deg(d_1) + dots.c + deg(d_t) = 3$. In particular, since the elements of $G$ are invertible, $x$ cannot be a root of any of the divisors.
 
   _t=1_: $d_1 (x)$ a polynomial of degree three with coefficients in $FF_2$. Since $T$ must be invertible, $x divides.not d_1$, so we have $
   d_1(x) = x^3 + ? x^2 + ? x + 1
@@ -1754,8 +1754,35 @@ _$t=3$:_ it must be $(d_1, d_2, d_3) = (x + 1, x+ 1, x+1)$. Such a transformatio
   $ The ring $FF_2[epsilon]\/(epsilon^3) = {a + b epsilon + c epsilon^2 : a, b, c in FF_2}$. An element is invertible if and only if $a = 1$, so $(FF_2[epsilon]\/(epsilon^3))^times = {1 + b epsilon + c epsilon^2 : b, c in FF_2}$, with $
   (1 + b epsilon + c epsilon^2)^(-1) = 1 + (b epsilon + c epsilon^2) + (b epsilon + c epsilon^2)^2.
   $ So, we have that $hash Z_G ("4A") = 4$, namely only the powers of the element itself.
+
+  In particular, this gives $hash 3 A = 56, hash 7 A = 24, hash 7 B = 24, hash 4 A = 42$ (by taking $hash G$ divided by $hash Z_G$).
+
+  For $g in 2 A$, we have $
+  Z_G (g) = "End"_(FF[x]) (FF[x]\/(x + 1) plus.circle FF[x]\/((x+1)^2))^times.
+  $ 
 ]
 
+More generally, consider a commutative ring $R$ and $M = M_1 plus.circle M_2$ where $M_1, M_2$ are $R$-modules. Then, for $f in "End"_R (M_1 plus.circle M_2)$, we write $f(m_1, m_2) = (f_1 (m_1, m_2), f_2 (m_1, m_2))$ where $f_i (m_1, m_2) in M_i$, and $f_i in "Hom"(M_1 plus.circle M_2, M_i)$. Note that $f_1 (m_1, m_2) = f_1 ((m_1, 0) + (0, m_2)) = f_1(m_1, 0) + f_1 (0, m_2)$,namely, $f_1$ completely determined by its effect on elements of the form $(m_1, 0), (0, m_2)$. Similar holds for $f_2$. Define $
+f_(11) : M_1 -> M_1, wide f_11 (m_1) = f_1 (m_1, 0),\
+f_12 : M_2 -> M_1, wide f_12 (m_2) = f_1 (0, m_2), \
+f_21 : M_1 -> M_2, wide f_21 (m_1) = f_2 (m_1, 0),\
+f_22 : M_2 -> M_2, wide f_22 (m_2) = f_2 (0, m_2).
+$ Then, theres a clear association with matrices with entries $mat(f_11, f_12; f_21, f_22)$, namely, $
+"End"_R (M_1 plus.circle M_2) = {mat(f_11, f_12; f_21, f_22): f_(i j) in "Hom"_R (M_j, M_i), i, j = 1, 2}.
+$
+
+#example[
+   We now specialize to our case above, letting $M_1 = FF[x]\/(x+ 1) = FF$, with the action $f(x) dot 1 = f(1) 1$. With $epsilon = x + 1$, we can view $M_1 = FF[epsilon]\/(epsilon) = FF$ by the rule $f(epsilon) dot 1 = f(0) 1$. Then, $M_2 = FF[x]\/((x+1)^2) = FF[epsilon]\/(epsilon^2)$. We have $
+   "End"_(FF[epsilon]) (M_1) = FF[epsilon]\/(epsilon) = FF.\
+   "End"_(FF[epsilon]) (M_2) = "End"_(FF[epsilon]) (FF[epsilon]\/(epsilon^2)) = FF[epsilon]\/(epsilon^2).\
+   "Hom"(M_2, M_1) = "Hom"_(FF[epsilon]) (FF[epsilon]\/(epsilon^2), FF) = FF. \ 
+   "Hom"(M_1, M_2) = "Hom"_(FF[epsilon]) (FF, FF[epsilon]\/(epsilon^2)) = (epsilon FF[epsilon])\/(epsilon^2).
+   $ So, $
+   "End"_(FF[epsilon]) (FF plus.circle FF[epsilon]\/(epsilon^2)) = {mat(f_11, f_12; f_21, f_12) : f_11 in FF, f_12 in FF, f_21 in (epsilon FF[epsilon])\/(epsilon^2), f_21 in FF[epsilon]\/(epsilon^2)},
+   $ so in particular,  $hash "End"_(FF[epsilon]) (FF plus.circle FF[epsilon]\/(epsilon^2)) = hash FF dot hash FF dot hash (epsilon FF[epsilon])\/(epsilon^2) dot hash FF[epsilon]\/(epsilon^2) = 2 dot 2 dot 2 dot 4 = 32$.
+
+   We consider now $"Aut"_(FF[epsilon]) (M) = "End"_(FF[epsilon]) (M)^times$. Given a matrix $f = mat(f_11, f_12; f_21, f_22)$, we claim that $f$ iff $f_11 f_22 - f_12 f_21 in FF$. $f_12 f_21 = 0$ so we actually want $f_11 f_22 in FF^times$ i.e. $f_11 f_22 = 1 mod epsilon$ namely $f_11 = 1, f_22 = 1 + d epsilon$. This gives that $hash "Aut"_FF[epsilon] (M) = 1 dot 2 dot 2 dot 2 = 8$.
+]
 
 
 
