@@ -2416,5 +2416,73 @@ Let $F$ an increasing function on $[a, b]$ (we restrict fo finite-valued functio
 ]
 
 #theorem[
-  If $F : [a, b] -> RR$ is of bounded variation, then $F$ is continuous on $[a, b]$ except at at most countably many points, $F'$ exists almost everywhere $[a, b]$, and $F' in L^1 ([a, b])$.
+  If $F : [a, b] -> RR$ is of bounded variation, then $F$ is continuous on $[a, b]$ except at at most countably many points, $F'$ exists almost everywhere on $[a, b]$, and $F' in L^1 ([a, b])$.
 ]
+
+== Absolutely Continuous Functions
+
+#definition("Absolutely Continuous")[A function $F : [a, b] -> RR$ is called _absolutely continuous_ on $[a, b]$, denoted $F in "AC"([a, b])$, if for every $epsilon > 0$ there is a $delta > 0$ such that for any disjoint intervals $(a_k, b_k) subset.eq (a, b), k = 1, dots, N$ with $sum_(k=1)^N (b_k - a_k) <= delta$, it holds that $
+sum_(k=1)^N |F(b_k) - F(a_k)| <= epsilon.
+$]
+
+#remark[
+  The ${(a_k, b_k)}$'s need not partition $(a, b)$.
+]
+
+#proposition([Properties of $"AC"([a, b])$])[
+1. $F in "AC"([a, b]) =>F$ is uniformly continuous on $[a, b]$.
+2. If $f in L^1 ([a, b])$ and $F(x) := integral_(a)^x f(t) dif t$ for $x in [a, b]$, then $F in "AC"([a, b])$.
+3. If $F, G in "AC"([a, b])$ then $F + G, F - G in "AC"([a, b])$.
+4. If $F in "AC"([a, b])$, then $F in "BV"([a, b])$.
+5. If $F$ is continuous on $[a, b]$ and differentiable everywhere on $(a, b)$ and there is some $M > 0$ such that $|F'(x)| <= M$ for every $x in (a, b)$, then $F in "AC"([a, b])$.
+]
+
+#proof[
+  1. For $epsilon > 0$, let $delta$ as in the definition, then for every $x, y in [a, b] , x < y$, if $y - x < delta$, $|F(y) - F(x)| <= epsilon$ (namely, taking a single interval in the definition of $"AC"([a, b])$).
+  2. Recall that $forall epsilon < 0$, there is a constant $M > 0$ such that $integral_{f^ast > M} |f| < epsilon/2$. Let $delta = epsilon/(2 M)$. Then, for every $(a_k, b_k) subset.eq (a, b)$ disjoint, $k = 1, dots, N$ such that $sum_(k=1)^N (b_k - a_k) <= delta,$ we have $
+  sum_(k=1)^N |F(b_k) - F(a_k)| &<= sum_(k=1)^N integral_(a_k)^b_k |f| \ 
+  &= sum_(k=1)^N integral_((a_k, b_k) sect {f^ast > M}) |f| + sum_(k=1)^N integral_((a_k, b_k) sect {f^ast <= M}) |f| \ 
+  &<= integral_(union.big_(k=1)^N (a_k, b_k) sect {f^ast > M}) |f| + M sum_(k=1)^N (b_k - a_k) \ 
+  &<= epsilon/2 + M delta = epsilon.
+  $
+  4. Let $epsilon = 1$ and take $delta$ in the definition of AC. Consider a partition of $[a, b]$, $a = t_0 < dots.c < t_L = b$ such that $t_(i+1) - t_i = (b - a)/L$ and $L$ is such that $(b - a)/L <= delta$. For each $i = 0, dots, L$, take any partition of $[t_i, t_(i+1)]$, $t_i = x_0 < dots.c < x_N t_(i+1)$. Then, $(x_k, x_(k+1))$'s are disjoint and $sum_(k=0)^(N-1) (x_(k+1) - x_k ) = t_(i+1) - t_i <= delta$. So, $sum_(k=0)^(N-1) |F(x_(k+1)) - F(x_k)| <= 1$ i.e. $T_F (t_(i), t_(i+1)) <= 1$. Then, $T_F (a, b) <= sum_(i=0)^(L-1) T_F (t_i - t_(i+1)) <= L < infinity$.
+  5. Use mean value theorem and the similar proof for $"BV"([a, b])$.
+]
+
+#theorem[If $F in "AC"([a, b])$, then $F'$ exists a.e. on $[a, b]$ and $F' in L^1 ([a, b])$.]
+
+#proof[
+  $"AC"([a, b]) subset.eq "BV"([a, b])$, and the same property holds for $"BV"([a, b])$.
+]
+
+#theorem[
+  Given $F in "AC"([a, b])$, $F$ is constant on $[a, b]$, that is, there is some $c in RR$ such that $F(x) = c$ for every $x in [a, b]$ if and only if $F' = 0$ a.e. on $[a, b]$.
+]
+
+#proof[
+  ($=>$) If $F equiv c$, $F' equiv 0$ on $(a, b)$.
+
+  ($impliedby$) Assume $F in "AC"([a, b])$ and $F' = 0$ a.e. on $[a, b]$. We want to show that for every $c in (a, b]$, $F(c) = F(a)$. Fix $c in (a, b]$. Set $E = {x in [a, c] : F'(x) = 0}$, so $m([a, c]\\E) = 0$. Fix $epsilon > 0$, let $delta > 0$ as in the definition of $"AC"$, and let $
+  cal(J) := {I = [x, x+h] subset.eq (a, c) : x in E, h > 0, |F(x+h)-F(x)| <= epsilon h}.
+  $ Then, for every $x in E$, $x in (a, c)$ and $F'(x) = 0$ so there is some $I = [x, x + h] in cal(J)$ with $x in I$ and $h$ arbitrarily small. So in particular, $cal(J)$ a Vitali covering of $E$. Then, there are disjoint $I_1, dots, I_N in cal(J)$ such that $m(E\\union.big_(i=1)^N I_i) <= delta$. Hence, $m([a, c] \\ union.big_(i=1)^N I_i) <= delta$. Denote $I_i = [x_i, x_i + h]$, and relabel so that they are increasing, namely $x_1 < x_1 + h_1 < x_2 < x_2 + h_2 < dots.c < x_N < x_(N) + h_N$. For every $i = 1, dots, N$, $|F(x_i + h_i) - F(x_i)| <= epsilon h_i$, by construction. So, notice that $
+  |F(a) - F(c)| &<= |F(a) - F(x_1)| + underbrace(sum_(i=1)^(N) |F(x_i + h_i) - F(x_i)|, <= epsilon sum_(i=1)^N h_i \ <= epsilon (c-a)) + sum_(i=1)^(N-1) |F(x_(i+1)) - F(x_i + h_i)| + |F(c) - F(x_N + h_N)|.
+  $ The remaining intervals to deal with are $(a, x_1), {(x_i + h_i, x_(i+1))}, (x_N + h_N, c)$. These are all disjoint, and the union of them equals $(a, c)\\union.big_(i=1)^N I_i$. Hence, the sum of the lengths of these intervals is bounded by $delta$. So, $|F(x_1) - F(a)| + sum_(i=1)^N |F(x_(i+1)) - F(x_(i) + h_i)| + |F(c) - F(x_N + h_N)| <= epsilon$ by AC. Thus, $
+  |F(a) - F(c)| <= epsilon + epsilon (c - a) = epsilon ( c - a + 1),
+  $  and since $epsilon$ arbitrarily small, it must be that $F(a) = F(c)$, completing the proof.
+]
+
+#remark[
+  The condition $F in "AC"([a, b])$ cannot be dropped. Namely, if $F$ is the Cantor-Lebesgue function on $[0, 1]$, then $F' equiv 0$ a.e. but $F$ is not constant. In particular, $F$ is not $"AC"([0, 1])$, but is $"BV"([0, 1])$, being an increasing function.
+]
+
+#theorem("Fundamental Theorem of Calculus")[
+  If $F in "AC"([a, b])$, then $F'$ exists almost everywhere on $[a, b]$, $F' in L^1 ([a, b])$, and for every $x in [a, b]$, $
+  F(x) - F(a) = integral_(a)^x F' (t) dif t.
+  $ In particular, $F(b) - F(a) = integral_(a)^b F(t) dif t$.
+]
+
+#proof[
+Assume $F in "AC"([a, b])$. Define $G(x) := F(a) + integral_(a)^x F'(t) dif t$ for every $x in [a, b]$. Then, since $F' in L^1 (RR)$, $integral_a^x F'(t) dif t in "AC"([a, b])$ so $G in "AC"([a, b])$. Moreover, by the previous theorem, $G' = F'$ almost everywhere on $[a, b]$. // TODO why? 
+ Thus, $H := F - G in "AC"([a, b])$ and $H' = F' - G' = 0$ almost everywhere on $[a, b]$ hence $H(x) = H(a) = 0$ for every $x in [a, b]$. Hence, $F (x) = G(x) = F(a) + integral_a^x F'(t) dif t$ for every $x in [a, b]$.
+]
+
