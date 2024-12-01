@@ -1730,7 +1730,7 @@ _$t=3$:_ it must be $(d_1, d_2, d_3) = (x + 1, x+ 1, x+1)$. Such a transformatio
 #proof[
   We know $V tilde.equiv FF[x]\/(d_1 (x))$ as an $FF[x]$-module. Then, $Z_G (A) = "Aut"_(FF[x]) (V) = "Aut"_FF[x] (FF[x]\/(d_1 (x))) = (FF[x]\/(d_1))^times$. 
 
-  We have that $M in Z_G (A) <=> M A = A M <=> M A v = A M v$ for every $v in V$. Thinking of these as $FF[x]$-modules, this is equivalent to aking $M (x v) = x M v$, or equivalently $M$ an automorphism of $V$ as an $FF[x]$-module, i.e. respects $FF[x]$ scalar multiplication.
+  We have that $M in Z_G (A) <=> M A = A M <=> M A v = A M v$ for every $v in V$. Thinking of these as $FF[x]$-modules, this is equivalent to taking $M (x v) = x M v$, or equivalently $M$ an automorphism of $V$ as an $FF[x]$-module, i.e. respects $FF[x]$ scalar multiplication.
 ]
 
 #example[
@@ -1782,11 +1782,59 @@ $
    $ so in particular,  $hash "End"_(FF[epsilon]) (FF plus.circle FF[epsilon]\/(epsilon^2)) = hash FF dot hash FF dot hash (epsilon FF[epsilon])\/(epsilon^2) dot hash FF[epsilon]\/(epsilon^2) = 2 dot 2 dot 2 dot 4 = 32$.
 
    We consider now $"Aut"_(FF[epsilon]) (M) = "End"_(FF[epsilon]) (M)^times$. Given a matrix $f = mat(f_11, f_12; f_21, f_22)$, we claim that $f$ iff $f_11 f_22 - f_12 f_21 in FF$. $f_12 f_21 = 0$ so we actually want $f_11 f_22 in FF^times$ i.e. $f_11 f_22 = 1 mod epsilon$ namely $f_11 = 1, f_22 = 1 + d epsilon$. This gives that $hash "Aut"_FF[epsilon] (M) = 1 dot 2 dot 2 dot 2 = 8$.
+
+   #align(center, 
+    table(
+      columns: 4,
+      stroke: none,
+      inset: 10pt,
+      [$(d_1, dots.c)$], $C$, $hash Z_G (g)$, $hash C$,
+      table.hline(start:0, end: 5),
+      $x^3 + 1$, $3A$, $3$, $56$,
+      $x^3+x+1$, $7A$, $7$, $24$,
+      $x^3+x^2+1$, $7B$, $7$, $24$,
+      $x^3+x^2+x+1$, $4A$, $4$, $42$,
+      $(x+1, (x+1)^2)$,$2A$, $8$, $21$,
+      $(x+1, x+1,x+1)$, $1A$, $168$, $1$
+    )
+  )
+
+  $V tilde.equiv FF[x]\/(x+1)plus.circle FF[x]\/((x+1)^2) = FF plus.circle FF[epsilon]\/(epsilon^2)$.
+
+  Two generators, as $FF[x]$ ($epsilon$) module, $(1, 0), (0, 1)$. If $f in "End"_(FF[epsilon]) (V)$, $f(e_1) = a e_1 + beta e_2$ for som $a in FF, beta in FF[epsilon]\/(epsilon^2)$.
+
+  But $epsilon e_1 = 0$ so $0 = f(epsilon e_1) = epsilon f(e_1) = epsilon a e_1 + epsilon beta e_2 = epsilon beta e_2$. So, it must be that $epsilon beta = 0$ i.e. $epsilon beta in (epsilon^2)$ so $beta = epsilon dot b$ some $b in FF$. So, $f(e_1) = a e_1 + b epsilon e_2$ for some $a, b in FF$.
+
+  $f(e_2) = c e_1 + delta e_2$ for $c in FF, delta in FF[epsilon]$. 
+
+  We can identify then $
+  "End"_(FF[epsilon]) (V) = {mat(a, c; b epsilon, delta) : a, b, c in FF, delta = d_1 + d_2 epsilon in FF[epsilon]\/(epsilon^2)}.
+  $
+
+  Consider the quotient module $overline(V) := V\/(epsilon) V tilde.equiv FF plus.circle FF$.
+
 ]
 
+#example[
+
+  If $f in "End"_(FF[epsilon]) (V)$, it restricts to $overline(f) : overline(V) -> overline(V)$, represented by $mat(a, c ; 0, d_1)$, where now all the entries are in the field. Hence, $overline(f)$ invertible $=> a = d_1 = 1$. Hence, $"End"(V)^times subset {mat(1, c ; b epsilon, 1 + d_2 epsilon) : c, b, d_2 in FF}$. One can show all such elements are invertible, and thus $"End"(V)^times$ is precisely this set, which turns out to be a group of order 8 isomorphic to $D_8$.
 
 
+]
 
+#remark[
+  If $FF$ is any field, $"End"_(FF[x]) (FF[x]\/(f_1) plus.circle FF[x]\/(f_2)) =:"End"_(FF[x]) (M_1 plus.circle M_2)  = {mat(a_11, a_12; a_21, a_22) : a_(i j) in "Hom"_(FF[x]) (M_j, M_i)}$.
+]
+
+#theorem[
+  $"Hom"_(FF[x]) (FF[x]\/(f_1), FF[x]\/(f_2)) = f_2/("gcd" (f_1, f_2)) dot FF[x]\/(f_2)$. In particular, $
+  "Hom"_(FF[x]) (FF[x]\/(f_1), FF[x]\/(f_2)) = cases(
+    0 wide & "if" gcd (f_1, f_2) = 1,
+    f_2/f_1 FF[x]\/(f_2)&  "if" f_1|f_2,
+    FF[x]\/(f_2) & "if" f_2|f_1.
+  )
+  $
+]
 
 // ! Ending
 #pagebreak()

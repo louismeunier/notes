@@ -15,6 +15,8 @@
   doc
 )
 
+#import "@preview/commute:0.2.0": node, arr, commutative-diagram
+
 #set align(left)
 
 // #let calold = cal
@@ -301,7 +303,7 @@ m^ast (B) &>=  sum_(i=1)^infinity [ m^ast (B sect B_i)] + m^ast (B sect (union.b
 & >= m^ast (B sect (union.big_(n=1)^infinity B_n)) + m^ast (B sect (union.big_(n=1)^infinity B_n)^c).
 $ As usual, the inverse inequality comes for free, and thus we can conclude $union.big_(n=1)^infinity B_n$ also $m^ast$-measurable, and thus so is $union.big_(n=1)^infinity A_n$. This proves $cal(M)$ a $sigma$-algebra.
 
-We show now $m$ a measure. By previous propositions, we have that $m >= 0$ and $m(nothing) = 0$ (since $m = m^ast |_cal(M)$), so it remains to prove countable subadditivity.
+We show now $m$ a measure. By previous propositions, we have that $m >= 0$ and $m(nothing) = 0$ (since $m = m^ast |_cal(M)$), so it remains to prove countable additivity.
 
 Let ${A_n} subset.eq cal(M)$-disjoint. Following precisely the same argument as above, used to prove that $cal(M)$ closed under countable unions, shows that for any $n >= 1$ $
 m (union.big_(i=1)^n A_i) = sum_(i=1)^n m(A_i),
@@ -2478,11 +2480,196 @@ $]
 #theorem("Fundamental Theorem of Calculus")[
   If $F in "AC"([a, b])$, then $F'$ exists almost everywhere on $[a, b]$, $F' in L^1 ([a, b])$, and for every $x in [a, b]$, $
   F(x) - F(a) = integral_(a)^x F' (t) dif t.
-  $ In particular, $F(b) - F(a) = integral_(a)^b F(t) dif t$.
+  $ In particular, $F(b) - F(a) = integral_(a)^b F'(t) dif t$.
 ]
 
 #proof[
-Assume $F in "AC"([a, b])$. Define $G(x) := F(a) + integral_(a)^x F'(t) dif t$ for every $x in [a, b]$. Then, since $F' in L^1 (RR)$, $integral_a^x F'(t) dif t in "AC"([a, b])$ so $G in "AC"([a, b])$. Moreover, by the previous theorem, $G' = F'$ almost everywhere on $[a, b]$. // TODO why? 
+Assume $F in "AC"([a, b])$. Define $G(x) := F(a) + integral_(a)^x F'(t) dif t$ for every $x in [a, b]$. Then, since $F' in L^1 (RR)$, $integral_a^x F'(t) dif t in "AC"([a, b])$ so $G in "AC"([a, b])$. Moreover, by theorem 4.2, $G' = F'$ almost everywhere on $[a, b]$. // TODO why? 
  Thus, $H := F - G in "AC"([a, b])$ and $H' = F' - G' = 0$ almost everywhere on $[a, b]$ hence $H(x) = H(a) = 0$ for every $x in [a, b]$. Hence, $F (x) = G(x) = F(a) + integral_a^x F'(t) dif t$ for every $x in [a, b]$.
 ]
 
+#v(1fr)
+
+#set text(size: 10pt)
+#align(center)[#commutative-diagram(
+  node((0,0), 
+  [$F$ continuous on $[a, b]$,\ $F' exists$ everywhere on $(a, b)$, \ $F'$ bounded on $(a, b)$]
+  ),
+  node((0,1), 
+  [$F' exists$ a.e. and $F' in L^1 ([a, b])$]
+  ),
+  node((0,2),
+  [$F$ increasing on $[a, b]$]
+  ),
+  node((1,0),
+  [$F' exists$ a.e., $F' in L^1 ([a, b])$, \
+  $forall x in [a, b], F(x) - F(a) = integral_a^x F'(t) dif t$
+  ]
+  ),
+  node((1,1),
+  [$F$ abs. cnts on $[a, b]$]
+  ),
+  node((1,2),
+  $F in "BV"([a, b])$
+  ),
+  node((2,0),
+    [$exists f in L^1 ([a, b])$ s.t. \ $forall x in [a, b], F(x) - F(a) = integral_a^x f(t) dif t$.]
+  ),
+  node((2, 1),
+    [$F$ uniformly cnts]
+  ),
+  arr(
+    [$F$ increasing on $[a, b]$],
+    [$F' exists$ a.e. and $F' in L^1 ([a, b])$],
+    "",
+    // stroke: 1pt,
+  ),
+  arr(
+    [$F$ continuous on $[a, b]$,\ $F' exists$ everywhere on $(a, b)$, \ $F'$ bounded on $(a, b)$],
+    [$F$ abs. cnts on $[a, b]$],
+    ""
+  ),
+  arr(
+    [$F' exists$ a.e., $F' in L^1 ([a, b])$, \
+      $forall x in [a, b], F(x) - F(a) = integral_a^x F'(t) dif t$
+      ],
+  [$F$ abs. cnts on $[a, b]$],
+  "",
+  curve: 18deg
+  ),
+  arr(
+  [$F$ abs. cnts on $[a, b]$],
+  [$F' exists$ a.e., $F' in L^1 ([a, b])$, \
+      $forall x in [a, b], F(x) - F(a) = integral_a^x F'(t) dif t$
+      ],
+    "",
+    curve: 20deg
+  ),
+  arr(
+    [$F$ increasing on $[a, b]$],
+    $F in "BV"([a, b])$,
+    ""
+  ),
+  arr(
+    $F in "BV"([a, b])$,
+    [$F$ increasing on $[a, b]$],
+    [Difference of \ increasing],
+    label-pos: right,
+    curve: -45deg,
+    "dashed"
+  ),
+  arr(
+    $F in "BV"([a, b])$,
+    [$F' exists$ a.e. and $F' in L^1 ([a, b])$],
+    ""
+  ),
+  arr(
+    [$F$ abs. cnts on $[a, b]$],
+    $F in "BV"([a, b])$,
+    ""
+  ),
+  arr(
+    [$F' exists$ a.e. and $F' in L^1 ([a, b])$],
+  [$F$ abs. cnts on $[a, b]$],
+  [$times.big$],
+  "dashed",
+  label-pos: 0
+  ),
+  arr(
+    $F in "BV"([a, b])$,
+    [$F$ abs. cnts on $[a, b]$],
+    $times.big$,
+    "dashed",
+    curve: 30deg,
+    label-pos: 0
+  ),
+  arr(
+    [$F' exists$ a.e., $F' in L^1 ([a, b])$, \
+    $forall x in [a, b], F(x) - F(a) = integral_a^x F'(t) dif t$
+    ],
+    [$exists f in L^1 ([a, b])$ s.t. \ $forall x in [a, b], F(x) - F(a) = integral_a^x f(t) dif t$.],
+    "",
+    curve: -30deg
+  ),
+  arr(
+    [$exists f in L^1 ([a, b])$ s.t. \ $forall x in [a, b], F(x) - F(a) = integral_a^x f(t) dif t$.],
+    [$F' exists$ a.e., $F' in L^1 ([a, b])$, \
+    $forall x in [a, b], F(x) - F(a) = integral_a^x F'(t) dif t$
+    ],
+    "LDT",
+    label-pos:right,
+    curve: -30deg
+  ),
+  arr(
+     [$F$ abs. cnts on $[a, b]$],
+    [$F$ uniformly cnts],
+    ""
+  ),
+  arr(
+     [$exists f in L^1 ([a, b])$ s.t. \ $forall x in [a, b], F(x) - F(a) = integral_a^x f(t) dif t$.],
+    [$F$ uniformly cnts],
+    ""
+  )
+)]
+#v(1fr)
+#pagebreak()
+#set text(size: fontsizes.normal)
+
+= A Glance Towards Probability Theory
+
+Assume $mu$ a probability measure on $(RR, frak(B)_RR)$. Define $F_mu (x) := mu((-infinity, x])$ for $x in RR$, called the distribution function of $mu$. Then, 
+1. $F_mu$ increasing.
+2. $lim_(x -> infinity) F_mu (x) = 1$ and $lim_(x -> - infinity) F_mu (x) = 0$.
+3. $F_mu$ has at most countably many discontinuities and $F_mu$ is RCLL (right continuous with left-handed limits) i.e. for every $x in RR$, $F_mu (x+) = F_mu (x)$ and $F_mu (x-)$ exists.
+4. For every $x in RR$, $F_mu (x) - F_mu (x -) = mu({x})$ i.e. $F_mu$ continuous at $x <=> mu({x}) = 0$.
+5. For every $a < b in RR$, $F_mu (b) - F_mu (a) = mu((a, b])$, $F_mu (b-) - F_mu (a) = mu((a, b))$, $F_mu (b) - F_mu (a-) = mu([a, b])$, $F_mu (b-) - F_mu (a-) = mu([a, b))$.
+6. $F_mu$ uniquely determines $mu$, i.e. if $mu, nu$ are both probability measures on $(RR, frak(B)_RR)$ and $F_mu = F_nu$ then $mu = nu$.
+7. Any $F:RR -> [0, 1]$ satisfying 1., 2., and 3. is the distribution function of some probability measure $mu$ on $(RR, frak(B)_RR)$.
+
+#definition[
+  Let $mu$ a probability measure on $(RR, borel)$ with df $F_mu$. We say $mu$ is absolutely continuous with respect to $m$ and write $mu << m$ if $F_mu$ is absolutely continuous on $RR$. I.e., there is some $f in L^1 (RR)$ such that for every $a in RR, x>a$, $F_mu (x) - F_mu (a) = integral_a^x f(t) dif t$. Such an $f$ is called the "probability density" of $mu$.
+]
+
+#proposition[If $mu$ absolutely continuous wrt $m$ with density $f$ then for every $B in borel$, $mu(B) = integral_B f$.]
+
+#proof[
+  Let $tilde(mu)$ on $borel$ by $tilde(mu) (B) := integral_B f$ for every $B in borel$. One can verify $tilde(mu)$ a probability measure on $RR$. If $F_tilde(mu)$ the distribution function of $tilde(mu)$, then for every $x in RR$, $F_(tilde(mu)) (x) = F(x) => mu = tilde(mu)$.
+]
+
+#corollary[
+  Assume $mu << m$ with density $f$. Then if $g : RR -> RR$ Borel-measurable, then $integral_RR |g| dif mu = integral_RR |g(x)|f(x) dif x$. In particular, $g in L^1 (mu)<=> g dot f in L^1 (RR)$.
+]
+
+#remark[
+  Any equivalent description of $mu << m$ is that for every $A in borel$, if $m(A) = 0, mu(A) = 0$. More generall:
+]
+
+#theorem("Radon-Nikodym Theorem")[
+  Let $mu, nu$ be two $sigma$-finite measures on $(RR, borel)$. If $forall A in borel$ $nu(A) = 0 => mu(A) = 0$ then $mu << nu$ and so there is some $f in L^1 (nu)$ such that for every $B in borel$, $mu (B) = integral_B f dif nu$. We call such an $f$ the Radon-Nikodym derivative of $mu$ with respect to $nu$, denoted by $f = (dif mu)/(dif nu)$.
+]
+
+#remark[
+  On the other hand, if $mu$ is such that $mu (B) = integral_B f dif nu$ for some $f in L^1 (nu)$ and for every $B in borel$, then $nu$-null $=>$ $mu$-null.
+]
+
+#theorem("Lebesgue Decomposition Theorem")[
+Given $mu$ any probability measure on $(RR, borel)$, $mu$ admits a _unique_ decomposition $mu = mu_a + mu_s$ such that 
+1. $mu_a$ a finite measure on $(RR, borel)$ and $mu_a << m$.
+2. $mu_s$ a finite measure on $(RR, borel)$ such that "$mu_s perp m$", that is $mu_s$ "singular" to $m$ i.e. there exists $E in borel$ such that $m(E) = 0$ but $mu_s (E^c) = 0$.
+]
+
+#proof[
+  Set $lambda = mu + m$. Then, $lambda$ a $sigma$-finite measure on $(RR, borel)$ and for every $A in borel$, if $lambda (A) = 0$, then $mu(A) = m(A) = 0$. By R-N Thm, there is some $f, g in L^1 (lambda)$ such that $mu(B) = integral_B f dif lambda, m(B) = integral_B g dif lambda$ for every $B in borel$.
+
+  Set $E := {x in RR : g(x) = 0}$. Then, $m(E) = 0$. Define $mu_a, mu_s$ by for every $B in borel$ by $mu_a (B) = mu (B sect E^c), mu_s (B) = mu (B sect E)$.
+
+  Then, $mu = mu_a + mu_s$ and $mu_s (E^c) = mu (E^c sect E) = 0$.
+
+  We need to show $mu_a << m$. Assume $A in borel$ is such that $m(A) = 0$. Then, $
+  0 = integral_A g dif lambda = cancel(integral_(A sect E) g dif lambda) + integral_(A sect E^c) g dif lambda => lambda(A sect E^c) = 0,
+  $ so $mu (A sect E^c) = mu_a (A) = 0$.
+]
+
+#example[
+  Let $F : RR -> [0, 1]$ be $1$ for $x >= 1$, $0$ for $x <= 0$, and the Cantor Lebesgue function on $[0, 1]$. Then, $F$ is a distribution function of a (unique) probability measure $mu$. In fact, $mu perp m$. For instance, if $C$ is the Cantor set, $m(C) = 0$ and $mu (RR\\C) = 0$.
+]
