@@ -6,7 +6,7 @@
 #show: doc => conf(
   course_code: "MATH456",
   course_title: "Algebra 3",
-  subtitle: "Groups; ring theory; fields.",
+  subtitle: "Groups; ring theory; fields; modules.",
   semester: "Fall 2024",
   professor: "Prof. Henri Darmon",
   doc
@@ -1834,6 +1834,66 @@ $
     FF[x]\/(f_2) & "if" f_2|f_1.
   )
   $
+]
+
+== Jordan Canonical Form
+Let $T : V-> V$ over an _algberaically closed_ field $FF$. Then, the minimal polynomial $p_T (x) = (x - lambda_1)^(d_1) dots.c (x - lambda_r)^(d_r)$ factors into linear polynomials.
+
+Since $(x - lambda_1)^(d_1), dots, (x - lambda_r)^(d_r)$ are pairwise relatively prime, the primary decomposition theorem tells us we may write $
+V = V_(lambda_1) plus.circle dots.c plus.circle V_lambda_r,
+$ where $
+T_j = T|_V_lambda_j : V_lambda_j -> V_lambda_j
+$ is $V_lambda_j$-stable, and $p_T_j (x) = (x - lambda_j)^(d_j)$. $V_lambda_j$ is called the generalized eigenspace associated to $lambda_j$.
+
+Let $lambda$ be some eigenvalue and $V_lambda$ the corresponding generalized eigenspace. This is a $FF[x]$-module by the rule $x dot v = T(v)$. By the structure theorem, we have that $
+V_lambda tilde.equiv FF[x]\/(d_1 (x)) plus.circle dots.c plus.circle FF[x]\/(d_t (x)).
+$ We have that $d_t (x) = (x - lambda)^(d_lambda)$, and the remaining divisors $d_1 (x) = (x - lambda)^(e_1), d_2 (x) = (x - lambda)^(e_2), dots, d_t (x) = (x - lambda)^(e_t)$ where $e_1 <= e_2 <= dots.c <= e_t$, $e_t = d_lambda$, and $e_1 + e_2 + dots.c + e_t = dim V_lambda$.
+
+#definition[
+  A $T$-stable subspace of $V_lambda$ isomorphic to $FF[x]\/((x-lambda)^e)$ is called a _cyclic subspace_ or a _Jordan subspace_.
+]
+
+Given a Jordan subspace $W = FF[x]\/((x - lambda)^e)$, we call the basis $
+B := (v_1, dots, v_e) = ((x - lambda)^(e - 1), (x - lambda)^(e - 2), dots, (x - lambda), 1)
+$ the _Jordan basis_ for $W$. In this basis, $
+(T - lambda)(v_1) &= (x - lambda)(x - lambda)^(e - 1) = 0 \
+(T - lambda)(v_2) &= (x - lambda)^(e-1) = v_1\
+dots.down \ 
+(T - lambda)(v_e) &= (x - lambda) = v_(e - 1).
+$ So in this basis, $
+[T - lambda]_B = mat(
+  0, 1, dots.c, 0;
+  0, 0, dots.down, 0;
+  dots.v, dots.down, dots.down, 1;
+  0, 0, 0, 0
+),
+$ and so $
+[T]_beta = [T - lambda]_B + lambda I = mat(
+  lambda, 1, "", "", "";
+  "", lambda, 1, "", "";
+  "", "", dots.down, dots.down "";
+  "", "", "", dots.down , 1;
+  "", "", "", "",lambda
+).
+$
+
+#theorem[
+  If $V_lambda$ is the generalized eigenspace for $T$ attached to $lambda$, then there is a basis for $V_lambda$ such that $
+  M_(T, V_lambda) = mat(
+    J_(lambda, e_1), "", "", "";
+    "", J_(lambda, e_2) "", "";
+    "", "", dots.down, "";
+     "", "", "", J_(lambda, e_t);
+  ),
+  $ where $
+  J_(lambda, e_j) = mat(
+  lambda, 1, "", "", "";
+  "", lambda, 1, "", "";
+  "", "", dots.down, dots.down "";
+  "", "", "", dots.down , 1;
+  "", "", "", "",lambda
+)
+  $ a $e_j times e_j$ matrix and $e_1 <= e_2 <= dots.c <= e_t$.
 ]
 
 // ! Ending
