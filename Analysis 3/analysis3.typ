@@ -1977,7 +1977,7 @@ $ $m$ is called the _Lebesgue measure on $RR^2$_.
   $ Then, $m^ast$ satisfies similar properties as the 1-dimensional analog. We then say a set $E$ is measurable if for every $F subset.eq RR^2$, $m^ast (F) = m^ast (F sect E) + m^ast (F sect E^c)$. Collect all such sets, $overline(cal(M)^2) := {E subset.eq RR^2 : E "measurable"}$. This is a $sigma$-algebra of subsets of $RR^2$, with $m := m^ast|_(overline(cal(M)^2))$ a measure when restricted to it. Indeed, $m$ matches the Lebesgue measure defined above, and $overline(cal(M)^2)$, as suggestively notated, the completion of $cal(M)^2$ under the Lebesgue measure. In addition, $overline(cal(M)^2) = overline(frak(B)_(RR^2))$.
   + The Lebesgue measure $m$ on $RR^2$ is the unique measure on $cal(M)^2\/frak(B)_(RR^2)\/overline(cal(M)^2)$ such that for all $I_1 times I_2$ rectangles, $m(I_1 times I_2) = ell(I_1) ell(I_2)$. This is because $cal(I) := {I_1 times I_2 : I_1, I_2 "finite intervals"}$ is a $pi$-system and generates $frak(B)_(RR^2)$.
   + The Lebesgue measure on $RR^2$ is translation invariant (rectangle area is invariant under translation). Namely, show that $m_Z : cal(M)^2 -> [0, infinity]$, $m_z (E) := m(E + z)$ is a measure and $m_z = m$ on $cal(I)$.
-  + The Lebesgue measure $m$ on $RR^2$ is the only measure on $cal(M)^2 \/ frak(B)_(RR^2)\/ overline(cal(M)^2)$ that is translation invariant and assigns $1$ to $[0, 1] times [0, 1]$.
+  + The Lebesgue measure $m$ on $RR^2$ is the only measure on $cal(M)^2 \/ frak(B)_(RR^2)\/ overline(cal(M)^2)$ that is translation invariant, assigns finite values to compact sets, and assigns $1$ to $[0, 1] times [0, 1]$.
 ]
 
 == Fubini's Theorem

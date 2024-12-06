@@ -2015,9 +2015,100 @@ where $I$ is the identity transformation. Can you generalize this formula to the
 ]
 
 #proof[
-Since $p_T (x) = (x - lambda)^2$, it follows that $
-0 = T^2 - 2 lambda T + lambda^2.
-$ If $g(x) = g_m x^m + dots.c + g_1 x + g_0 in FF[x]$, then $
-g(lambda) I + g' (lambda) (T - lambda I) &= (g_m lambda^m + dots.c + g_0) + (m g_m lambda^(m-1) + dots.c + g_1) (T - lambda I).
-$ Let us compare coefficients of $g$.
+Let $g in FF[x]$, then by Taylor expanding around $lambda$ and assuming $deg g = n$, $
+g(x) = g(lambda) + g'(lambda)(x - lambda) + (g''(lambda))/2 (x - lambda)^2 + dots.c + (g^((n))(lambda))/n! (x - lambda)^n.
+$ If $p_T (x) = (x - lambda)^k$, plugging $T$ into $g$ cancels all terms for which the degree is greater than or equal to $k$, so $
+g(T) &= g(lambda) + g'(lambda)(x - lambda) + (g''(lambda))/2 (x - lambda)^2 + dots.c + (g^((k-1))(lambda))/((k-1)!) (x - lambda)^(k-1) \
+&= sum_(i=0)^(k-1) (g^((k)) (x - lambda)^i)/i!.
+$ 
+// Since $p_T (x) = (x - lambda)^2$, it follows that $
+// 0 = T^2 - 2 lambda T + lambda^2.
+// $ If $g(x) = g_m x^m + dots.c + g_1 x + g_0 in FF[x]$, then $
+// g(lambda) I + g' (lambda) (T - lambda I) &= (g_m lambda^m + dots.c + g_0) + (m g_m lambda^(m-1) + dots.c + g_1) (T - lambda I).
+// $ Let us compare coefficients of $g$.
+]
+
+#proposition[Show that an element of $ZZ[i]$ is irreducible if and only if it is either of the form $i^n p$ where $p$ a prime of the form $4 k + 3$ or of the form $a + b i$ where $a^2 + b^2$ is either 2 or a prime of the form $4 k + 1$.]
+
+#proof[
+
+]
+
+#proposition[
+  Factor the element $-31 + 51 i$ into prime elements of $ZZ[i]$.
+]
+
+#proof[
+  $(-1 - i)(-3 + 2 i)(-4 + 11 i)$.
+]
+
+#proposition[
+  Let $R = ZZ[alpha]$ be the ring generated over $ZZ$ by a complex number $alpha$ satisfying the polynomial $x^2 + x + 6 = 0$. Show that the ideal $I = (2, alpha)$ is not principal, and the same is true for $I^2$, but that $I^3$ is not a principal ideal. What is a generator for this ideal?
+]
+
+#proof[
+  Since $alpha$ satisfies $x^2 + x + 6 = 0$, it follows that $alpha = (-1 plus.minus sqrt(-23))/(2)$. We can take either positive or negative root so just take the positive. We can then define the norm of any element $r = a + b alpha in R$ by $
+  N(a + b alpha) = (a + b alpha)(a + b overline(alpha)) = a^2 + a b (alpha + overline(alpha)) + b^2 alpha overline(alpha).
+  $ Notice that $
+  alpha + overline(alpha) = -1,
+  $ and $
+  alpha overline(alpha) = 6
+  $ so $
+  N(a + b alpha) = a^2 - a b + 6 b^2.
+  $ If $a >= b$, then $a^2 >= a b$ so $
+ N(r) = a^2 - a b + 6 b^2 >= 6 b^2
+  $ and if $a <= b$, $b^2 >= a b$ so $
+  N(r) = a^2 + 5 b^2 + b^2 - a b >= a^2 + 5 b^2.
+  $ STAC $I = (r)$. Then it must be that $r|2$ so in particular $N(r)|N(2)$ by multiplicativity. But $N(2) = 4$, and so by the bounds found above it must be that $b = 0$. But then $r = a$ and $N(r) = a^2$, and the only way for $a|2$ is that $a = 1$ or $2$ (plus or minus). 
+
+  One can verify that $r =plus.minus 2$ cannot divide $alpha$ since $N(r) = 4$ and $N(alpha) = 6$, so the only case to consider is $r = plus.minus 1$. If this were the case, $I$ would be the whole ring. But notice $
+  R\/I = (ZZ[x]\/(x^2 + x + 6))\/(2, x) = ZZ_2 [x]\/(x) = ZZ_2 eq.not nothing,
+  $ hence $I$ a proper ideal. We conclude $I$ not a principal ideal.
+
+  We have $I^2 = (4, 2 alpha, - alpha - 6)$. One can similarly verify that if $r = a + b alpha$ a generator, then $N(r)$ must divide $N(4) = 16$, $N(2 alpha) = 24$ and $N(- alpha - 6) = 42$. The only possibilities are $plus.minus 1$ and $plus.minus 2$. One can verify similarly to the previous case that neither of these are possible, and that $I^2$ a proper ideal so not principal.
+
+  We have finally $I^3 = (8, 4 alpha, - 12 - 2 alpha, 6 - 5 alpha)$. We claim $r = 2 + alpha$ a generator. Notice first that $2 + alpha = 8 - (6 - 5 alpha) - 4 alpha$ so $(2 + alpha) subset.eq I^3$. We need to show that every element in $I^3$ a multiple of $2 + alpha$, or equivalently that $2 + alpha$ divides each of the generators. We can find $
+  8/(2 + alpha) &= 2 + overline(alpha) \ 
+  (4 alpha)/(2 + alpha) &= alpha + 6 \
+  (-12 - 2 alpha)/(2 + alpha) &= -3 + alpha \ 
+  (6 - 5 alpha)/(2 + alpha) &= -1 - 2 alpha,
+  $ by multiplying each numerator, denominator by $2 + overline(alpha)$ and simplifying.
+ ]
+
+#proposition[
+  The regular icosahedron is a regular solid in three-dimensional space whose faces are isosceles triangles. The group of rotations which preserve this figure is isomorphic to the alternating group $A_5$ on five elements, and it acts transitively on the edges, vertices, and faces of the icosahedron. Each vertex is contained in five faces, and every face is preserved by a rotation of order 3. From this information, compute the number of faces, edges and vertices in the regular icosahedron. (A competent latinist might guess at the answer, but please indicate a mathematical reasoning!) 
+]
+
+#proposition[
+  Let $T:V->V$ be a linear transformation on a finite-dimensional vector space $V$ over a field $F$. Show that the set of linear transformations that commute with $T$, i.e., satisfy $S T=T S$, is a subring of the ring $"End"_F (V)$. Give a necessary and sufficient condition on $T$ for this ring to be commutative.
+]
+
+#proposition[
+   Let $G="GL"_3 (F_2)$ be the group of order 168 consisting of the invertible $3 times 3$ matrices with coefficients in the field with 2 elements. Describe all the conjugacy classes in $G$ and their sizes, and write down the class equation for $G$.
+]
+
+#proposition[
+   Describe a Sylow 3-subgroup of $"GL"_3 (F_p)$ where $F_p$ is the field with $p$ elements and $p$ is a prime of the form $1+3k$ with $k$ not divisible by 3. 
+]
+
+#proposition[
+   Let $R$ be a principal ideal domain. Show that there is no infinite strictly increasing sequence of ideals $I_1 subset I_2 subset dots.c$ ordered by inclusion. 
+]
+
+#proof[
+  Let $I = union.big_(n=1)^infinity I_n$. One can verify that $I$ an ideal of $R$ so there exists some generator $a$, i.e. $I = (a)$. But then, $a in I_n$ for some $n >= 1$ and so $(a) subset.eq I_n$. But also $I_n subset.eq I = (a)$, hence it must be that $I_n = (a)$, and so any $I_(i)$ for $i > n$ cannot be proper supsets of $I_n$.
+]
+
+#proposition[
+  An $R$-submodule $N$ of an $R$-module $M$ is said to be a direct summand in $M$ if there is a submodule $N'$ of $M$ with $M=N plus.circle N'$. Let $R$ be a PID. Show that an $R$-submodule $N$ of a finitely generated free $R$-module $M$ is a direct summand in $M$ if and only if the quotient $M\/N$ is free over $R$. 
+]
+
+#proof[
+  ($=>$) Since $N$ a submodule of a free module, it itself is free, let ${m_1, dots, m_t}$ its basis, same with $N'$, let ${m_(t+1), dots, m_(n)}$ its basis. Then, I claim that $M\/N$ has ${m_(t + 1) + N, dots, m_n + N}$ as basis. This proves $M\/N$ free.
+
+  ($impliedby$) $M\/N$ free, let ${m_1 + N, dots, m_t + N}$ a basis. Let $beta = {m_1, dots, m_t}$ and $N' = "span" beta$. I claim that $M = N plus.circle N'$. 
+
+  If $m in N$, then $m + N in M\/N$ so exist scalars $a_1, dots, a_t$ such that $m + N = a_1 m_1 + dots.c + a_t m_t + N$ so in particular $m = a_1 m_1 + dots.c + a_t m_t + n$ for some $n in N$, in particular $m in N' union N$, so $M subset.eq N' union N$, hence we have equality as the converse inclusion comes for free.
+
+  Suppose $m in N' sect N$. Then, $m = a_1 m_1 + dots.c + a_t m_t$ for some $a_i$'s such that $m in N$. Passing to the quotient, it must be that $m + N = N$ i.e. $a_1 (m_1 + N) + dots.c + a_t (m_t + N)$. But $m_i + N$ a basis for $M\/N$, so in particular there is a unique way to write the zero vector $0 + N$, and it must be that $a_1 = dots.c = a_t = 0$ and so $m$ itself must be the zero 0 vector. It follows that $N' sect N = {0}$ and thus $M = N plus.circle N'$.
 ]
