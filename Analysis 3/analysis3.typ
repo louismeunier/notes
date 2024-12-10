@@ -2447,7 +2447,7 @@ $]
   &<= integral_(union.big_(k=1)^N (a_k, b_k) sect {f^ast > M}) |f| + M sum_(k=1)^N (b_k - a_k) \ 
   &<= epsilon/2 + M delta = epsilon.
   $
-  4. Let $epsilon = 1$ and take $delta$ in the definition of AC. Consider a partition of $[a, b]$, $a = t_0 < dots.c < t_L = b$ such that $t_(i+1) - t_i = (b - a)/L$ and $L$ is such that $(b - a)/L <= delta$. For each $i = 0, dots, L$, take any partition of $[t_i, t_(i+1)]$, $t_i = x_0 < dots.c < x_N t_(i+1)$. Then, $(x_k, x_(k+1))$'s are disjoint and $sum_(k=0)^(N-1) (x_(k+1) - x_k ) = t_(i+1) - t_i <= delta$. So, $sum_(k=0)^(N-1) |F(x_(k+1)) - F(x_k)| <= 1$ i.e. $T_F (t_(i), t_(i+1)) <= 1$. Then, $T_F (a, b) <= sum_(i=0)^(L-1) T_F (t_i - t_(i+1)) <= L < infinity$.
+  4. Let $epsilon = 1$ and take $delta$ in the definition of AC. Consider a partition of $[a, b]$, $a = t_0 < dots.c < t_L = b$ such that $t_(i+1) - t_i = (b - a)/L$ and $L$ is such that $(b - a)/L <= delta$. For each $i = 0, dots, L$, take any partition of $[t_i, t_(i+1)]$, $t_i = x_0 < dots.c < x_N = t_(i+1)$. Then, $(x_k, x_(k+1))$'s are disjoint and $sum_(k=0)^(N-1) (x_(k+1) - x_k ) = t_(i+1) - t_i <= delta$. So, $sum_(k=0)^(N-1) |F(x_(k+1)) - F(x_k)| <= 1$ i.e. $T_F (t_(i), t_(i+1)) <= 1$. Then, $T_F (a, b) <= sum_(i=0)^(L-1) T_F (t_i - t_(i+1)) <= L < infinity$.
   5. Use mean value theorem and the similar proof for $"BV"([a, b])$.
 ]
 

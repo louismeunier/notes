@@ -1378,7 +1378,7 @@ The converse holds as well:
 == The Primary Decomposition Theorem
 
 #theorem("Primary Decomposition")[
-  Let $T : V -> V$ a linear transformation on a vector space $V$ over a field $F$. Supopse $p_T (x) = p_1 (x) p_2 (x)$ with $gcd(p_1, p_2) = 1$. Then, there exists unique subspaces $V_1, V_2 subset.eq F$ such that 
+  Let $T : V -> V$ a linear transformation on a vector space $V$ over a field $F$. Suppose $p_T (x) = p_1 (x) p_2 (x)$ with $gcd(p_1, p_2) = 1$. Then, there exists unique subspaces $V_1, V_2 subset.eq V$ such that 
   1. $V = V_1 plus.circle V_2$
   2. $V_j$ is stable under $T$, and the minimal minimal polynomial of $T_j := T|_(V_j)$ is $p_j (x)$.
 ]<thm:primarydecomp>
@@ -2031,7 +2031,11 @@ $
 #proposition[Show that an element of $ZZ[i]$ is irreducible if and only if it is either of the form $i^n p$ where $p$ a prime of the form $4 k + 3$ or of the form $a + b i$ where $a^2 + b^2$ is either 2 or a prime of the form $4 k + 1$.]
 
 #proof[
+($=>$) Suppose $i^n p = x y$ where $p$ a prime of the form $4 k + 3$. Then $N(i^n p) = p^2 = N(x) N(y)$. Suppose $N(x) = N(y) = p$. 
 
+Suppose $a + b i = x y$ where $a^2 + b^2$ a prime of the form $4 k + 1$. Then, $N(a + b i) = p = N(x) N(y)$ so it must be that one of $x, y$ a unit and $a + b i$ prime.
+
+($impliedby$) Let $z in ZZ[i]$ irreducible. If $N(z) = p$ for some prime $p$, 
 ]
 
 #proposition[
@@ -2079,8 +2083,27 @@ $
   The regular icosahedron is a regular solid in three-dimensional space whose faces are isosceles triangles. The group of rotations which preserve this figure is isomorphic to the alternating group $A_5$ on five elements, and it acts transitively on the edges, vertices, and faces of the icosahedron. Each vertex is contained in five faces, and every face is preserved by a rotation of order 3. From this information, compute the number of faces, edges and vertices in the regular icosahedron. (A competent latinist might guess at the answer, but please indicate a mathematical reasoning!) 
 ]
 
+#proof[
+  Let $E, V, F$ denote the set of edges, vertices, faces and $G = A_5$. Then there are subgroups $H_E, H_V$ and $H_F$ such that $E tilde.eq G\/H_E$, etc. where $H_E = "Stab"(e)$ of some typical $e in E$. Since $f in F$ fixed by some $(a b c) in G$, it must be that $angle.l (a b c) angle.r subset H_F$ so in particular $3|hash H_F$. $hash H_F|hash G = 60$ as well so it must be that $hash H_F$ one of $3, 6, 12, 15, 30, 60$ so $hash F$ one of $20, 10, 5, 4, 2, 1$. $hash F$ obviously can't be $1, 2, 4$ or $5$ else this would contradict that each vertex is contained in precisely 5 faces. If $hash F = 20$, we have by Euler's formula $
+  V - E + F = 2 => E - V = 18.
+  $ In addition, $E$ and $V$ must each other be divisors of $60$. The only choices to make this hold are $E = 20, 30$ and respectively $V = 2, 12$. Two vertices is again impossible. $12$ vertices and $30$ edges is possible. We check the other case, when $hash F = 10$. This would imply that $E - V = 8$ so $E = 20, 12, 10$ and respectively $V = 12, 4, 2$. The $2, 4$ vertices cases are impossible so the last case is $V = 12, E = 20$.
+  // TODO
+]
+
 #proposition[
   Let $T:V->V$ be a linear transformation on a finite-dimensional vector space $V$ over a field $F$. Show that the set of linear transformations that commute with $T$, i.e., satisfy $S T=T S$, is a subring of the ring $"End"_F (V)$. Give a necessary and sufficient condition on $T$ for this ring to be commutative.
+]
+
+#proof[
+Let $X = {S in "End"_F (V) : S T = T S}$. It is a subring. Notice that multiplication by a constant (diagonal matrix with all entries a constant) commutes with $T$ always so we can realize $F subset X$ as a subring, so in particular we can view $X$ as a $F$-vector space. I claim $T$ $X$-invariant. Indeed, if $S in X$, the element $T S$ commutes with $T$ since $(T S) T = T (S T)$. Hence, we can consider the restriction $T_X$. This gives that $X$ also a $F[x]$-module by the rule $f(x) dot S = f (T_X) S$ for $f in F[x], S in X$.
+
+By structure theorem for modules over PIDs (in this case the module being $X$ over the PID $F[x]$), $
+X tilde.eq F[x]\/(p_1) plus.circle dots.c plus.circle F[x]\/(p_r).
+$ Now, $X$ is commutative if and only if there is a single divisor, namely iff $
+X tilde.eq F[x]\/(p).
+$ In particular, $p$ is the minimal polynomial of $T_X$; then $p|p_T$ being the minimal polynomial of $T$.
+
+Notice that all polynomials in $T$ commute with $T$, hence $F[x]\/(p_T) subset.eq X$.
 ]
 
 #proposition[
@@ -2089,6 +2112,25 @@ $
 
 #proposition[
    Describe a Sylow 3-subgroup of $"GL"_3 (F_p)$ where $F_p$ is the field with $p$ elements and $p$ is a prime of the form $1+3k$ with $k$ not divisible by 3. 
+]
+
+#proof[
+  
+  $
+  hash "GL"_3 (F_p) &= (p^3 - 1)(p^3 - p)(p^3 - p^2) \ 
+  &= 3^4 k^3 (1 + 3 k)^2 (1 + 3 k + 3 k^2) (2 + 9 k + 9 k^2) =: 3^4 m
+  $ where $3 divides.not m$.
+
+  Note that $hash (F_p)^times = p-1 = 3 k$ hence by Sylow there is a subgroup, call it $H subset (F_p)^times$, of cardinality $3$ since $3 divides.not k$. 
+  
+
+  Consider $
+  S = {mat(a, "", ""; "", b, ""; "", "", c) : a,b, c in H} union {mat("", a, ""; "", "", b; c, "", "") : a, b, c in H} union {mat("","", a; b, "", ""; "", c, "") : a, b, c in H}.
+  $ Multiplication of matrices of these types result in the same type. Because all of the coefficients are in a (multiplicative) subgroup of $F_p$, the entries of products of matrices in $S$ will stay in $H$ and thus $S$ closed under multiplication. It clearly contains the identity and thus is a subgroup.
+  // Let $
+  // R := {mat(a, "", ""; "", b, ""; "", "", c) : a,b, c in H} subset "GL"_3 (F_p).
+  // $ Then, its clear to see $R$ a subgroup of size $3^3$. Moreover, by Sylow it must be that the Sylow subgroup we seek, call it $S$, contains $R$ as a subgroup.
+
 ]
 
 #proposition[
