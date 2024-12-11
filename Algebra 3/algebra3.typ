@@ -1676,6 +1676,18 @@ j compose M_1 = M_2 compose j,
 $ and so $M_1, M_2$ indeed conjugate.
 
 More concretely, $j$ restricts to an isomorphism of $FF$-vector spaces, which as we know can simply be realized as multiplication by an invertible matrix, hence $J M_1 = M_2 J$ where $J$ the matrix realization of such an isomorphism.
+
+For the converse, suppose $M_2 = P M_1 P^(-1)$ for some $P in "GL"_n (FF)$. Denote by $V_1$, $V_2$ the $FF[x]$-modules induced by the multiplication by $M_1$, $M_2$ respectively. We need to show $V_1, V_2$ are isomorphic as $FF[x]$-modules. Consider the map $
+phi : V_1 -> V_2, wide A |-> P A.
+$ We claim this a $FF[x]$-module homomorphism. Indeed, for $v in V_1, f(x) in FF[x]$, $
+phi(f(x) dot v) &= phi (f(M_1) v) \
+&= P f(M_1) v \ 
+&= f(P M_1) v \
+&= f(M_2 P) v \ 
+&= f(M_2) P v \
+&= f(M_2) phi(v) \ 
+&= f(x) dot phi(v).
+$
 ]
 
 #example[
