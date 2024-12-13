@@ -2198,7 +2198,7 @@ image("examplehl.png", width: 50%)
   $ then remark $m(B_k) <= m(C_k) + m(D_k)$ since $B_k subset.eq C_k union D_k$. Then, $
   m(D_k) = m({|f - g|  > 1/(3 k)}) <= 3k ||f - g||_1 <= 3 k epsilon,
   $ by Markov's, and $
-  m(C_k) &= m({limsup_n 1/(m(I_n)) integral(I_n) |f - g| > 1/(3k)}) \
+  m(C_k) &= m({limsup_n 1/(m(I_n)) integral_(I_n) |f - g| > 1/(3k)}) \
   &<= m({(f-g)^ast > 1/(3 k)}) <= 3 dot 3 k ||f - g||_1 = 9 k epsilon,
   $ by using the previous H-L inequality. Hence, we find $
   m(B_k) <= 12 k epsilon,
@@ -2487,10 +2487,10 @@ $]
 Assume $F in "AC"([a, b])$. Define $G(x) := F(a) + integral_(a)^x F'(t) dif t$ for every $x in [a, b]$. Then, since $F' in L^1 (RR)$, $integral_a^x F'(t) dif t in "AC"([a, b])$ so $G in "AC"([a, b])$. Moreover, by theorem 4.2, $G' = F'$ almost everywhere on $[a, b]$. // TODO why? 
  Thus, $H := F - G in "AC"([a, b])$ and $H' = F' - G' = 0$ almost everywhere on $[a, b]$ hence $H(x) = H(a) = 0$ for every $x in [a, b]$. Hence, $F (x) = G(x) = F(a) + integral_a^x F'(t) dif t$ for every $x in [a, b]$.
 ]
-
+We summarize the family of functions discussed in the past section:
 #v(1fr)
 
-#set text(size: 10pt)
+#set text(size: 11pt)
 #align(center)[#commutative-diagram(
   node((0,0), 
   [$F$ continuous on $[a, b]$,\ $F' exists$ everywhere on $(a, b)$, \ $F'$ bounded on $(a, b)$]
