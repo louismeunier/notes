@@ -193,3 +193,8 @@
 !*PDEs-Summary
 !*PDEs-Summary/*.pdf
 !*PDEs-Summary/*.typ
+
+# PDEs
+!*Analysis 3 Summary
+!*Analysis 3 Summary/*.pdf
+!*Analysis 3 Summary/*.typ
