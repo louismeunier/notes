@@ -194,7 +194,27 @@
 !*PDEs-Summary/*.pdf
 !*PDEs-Summary/*.typ
 
-# PDEs
+
 !*Analysis 3 Summary
 !*Analysis 3 Summary/*.pdf
 !*Analysis 3 Summary/*.typ
+
+# Algebra 4
+!*Algebra*4
+!*Algebra*4/*.pdf
+!*Algebra*4/*.typ
+
+# Analysis 4
+!*Analysis*4
+!*Analysis*4/*.pdf
+!*Analysis*4/*.typ
+
+# Stats
+!*Statistics
+!*stats.pdf
+!*stats.typ
+
+# Ad Calc
+!*Advanced*Calculus
+!*calc.pdf
+!*calc.typ
