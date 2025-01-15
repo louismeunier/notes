@@ -43,7 +43,6 @@
   2. Let $G = {g_1, dots, g_N}$ be a finite abelian group, and suppose $FF$ an algebraically closed field of characeristic 0 (such as $CC$). Let $rho : G -> "Aut" (V)$ and denote $T_j := rho (g_j)$ for $j = 1, dots, N$. Then, ${T_1, dots, T_N}$ is a set of mutually commuting linear transformations. Then, there exists a simultaneous eigenvector, say $v$, for ${T_1, dots, T_N}$, and so $"span" (v)$ a $G$-stable subspace of $V$. Thus, if $V$ irreducible, it must be that $dim_FF V = 1$.
 ]
 
-//  ! 01-08
 
 #theorem[If $G$ a finite abelian group and $V$ an irreducible finite dimensional representation over an algebraically closed field of characeristic 0, then $dim V = 1$.]
 
@@ -111,3 +110,25 @@ If $T$ has $1$ as an eigenvalue.
 
 Let $W' = ker(tilde(pi))$. Then, $W'$ $G$-stable, and $V = W plus.circle W'$.
 ]
+
+// ! 01-15
+We present an alternative proof to the previous proposition by appealing to the existence of a certain inner product on complex representations of finite groups.
+
+#definition[
+  Given a vector space $V$ over $CC$, a _Hermitian pairing/inner product_ is a hermitian-bilinear map $V times V -> CC$, $(v, w) |-> angle.l v, w angle.r$ such that 
+  - linear in the first coordinate;
+  - conjugate-linear in the second coordinate;
+  - $angle.l v, v angle.r in RR^(>= 0)$ and equal to zero iff $v = 0$.
+ ]
+
+ #theorem[Let $V$ be a finite dimensional complex representation of a finite group $G$. Then, there is a hermitian inner product $angle.l dot, dot angle.r$ such that $angle.l g v , g w angle.r = angle.l v, w angle.r$ for every $g in G$ and $v, w in V$.]
+
+ #proof[
+  Let $angle.l dot, dot angle.r_0$ be any inner product on $V$ (which exists by defining $angle.l e_i, e_j angle.r_0 = delta_i^j$ and extending by conjugate linearity). We apply "averaging": $
+  angle.l v, w angle.r := 1/(hash G) sum_(g in G) angle.l g v, g w angle.r.
+  $ Then, one can check that $angle.l dot, dot angle.r$ is hermitian linear, positive, and in particular $G$-equivariant.
+ ]
+
+ From this, the previous proposition follows quickly by taking $W' = W^perp$, the orthogonal complement to $W$ with respect to the $G$-invariant inner product that the previous theorem provides.
+
+ From this proposition, Maschke's follows by repeatedly applying this logic. Since at each stage $V$ is split in two, eventually the dimension of the resulting dimensions will become zero since $V$ finite dimensional. Hence, the remaining vector spaces $V_1, dots, V_t$ left will necessarily be irreducible, since if they weren't, we could apply the proposition further.
