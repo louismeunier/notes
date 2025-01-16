@@ -40,7 +40,7 @@ We say $X$ _continuous_ if there is a nonnegative function $f$, called the _prob
 
 If $X : Omega -> RR$ a random variable and $g : RR -> RR$ a Borel-measurable function, then $Y := g(X) : Omega -> RR$ also a random variable.
 ]
-
+% ! 01-09
 #definition("Moments")[
   Let $X$ be a discrete/random random variable with pmf/pdf $f$ and support $S$. Then, if $sum_(x in S) |x| f(x)$/$integral_S |x| f(x) dif x < infinity$, then we say the first moment/mean of $X$ exists, and define $
   mu_X = EE[X] = cases(sum_(x in S) x f(x) \ integral_S x f(x) dif x).
@@ -77,4 +77,60 @@ If $X : Omega -> RR$ a random variable and $g : RR -> RR$ a Borel-measurable fun
   $ We have the notion of a joint mgf, $
   M(t_1, dots, t_n) = EE[e^(sum_(i=1)^n t_i X_i)],
   $ if it exists for $0 < (sum_(i=1)^n t_i^2)^(1/2) < h$ for some $h > 0$. Notice that $M(0, dots, 0, t_i, 0, dots, 0)$ is equal to the mgf of $X_i$.
+]
+
+#definition("Conditional Probability")[
+  Let $(X_1, dots, X_n)$ a random vector. Let $cal(I) = {1, dots, n}$ and $A, B$ disjoint subsets of $cal(I)$ with $k := |A|, h := |B|$. Write $X_A = (X_i_1, dots, X_i_k)^t$, similar for $B$. Then, the conditional probability of $A$ given $B$ is given by $
+  f_(X_A|X_B)(x_a|x_b) := f_(X_A | X_B = x_B) (x_A) =( f_(X_A, X_B) (x_a, x_b))/(f_X_b (x_b)),
+  $ provided the denominator is nonzero. Sometimes we have information about conditional probabilities but not the main probability function; we have that $
+  f(x_1, dots, x_n) = f(x_1) f(x_2 | x_1) f(x_3|x_1 ,x_2) dots.c f(x_n |x_1, dots, x_(n-1)),
+  $ which follows from expanding the previous definition and observing the cancellation.
+
+  Let $X = (X_1, dots, X_n) tilde F$. We say $X_1, dots, X_n$ (mutually) independent and write $product.co_(i=1)^n X_i $ if 
+  $
+  F(x_1, dots, x_n) = product_(i=1)^n F_(X_i) (x_i),
+  $ where $F_X_i$ the marginal cdf of $X_i$. Equivalently, $
+  product.co_(i=1)^n X_i  &<=> f(x_1, dots, x_n) = product_(i=1)^n f_(X_i) (x_i) \ 
+  & <=> P(X_1 in B_1, dots, X_n in B_n) = product_(i=1)^n P(X_i in B_i) forall B_i in borel \
+  & <=> M_(X) (t_1, dots, t_n) = product_(i=1)^n M_(X_i) (t_i).
+  $ If $X, Y$ are two random variables with cdfs $F_X, F_Y$ such that $F_X (z) = F_Y (z)$ for every $z$, we say $X, Y$ identically distributed and write $X =^d Y$ (note that $X$ need not equal $Y$ pointwise). If $X_1, dots, X_n$ a collection of random variables that are independent and identically distributed with common cdf $F$, we write $X_1, dots, X_n tilde^("iid") F$.
+
+  Further, define the covariance, correlation of two random variables $X, Y$ respectively: $
+  "Cov"(X, Y) := sigma_(X, Y) := EE[(X - EE[X])(Y - EE[Y])] = EE[X Y] - mu_X mu_Y, wide rho_(X, Y) := (sigma_(X Y))/(sigma_X sigma_Y),
+  $ _if_ $EE[ |X - EE[X]| |Y - EE[Y]| ] < infinity$.
+]
+
+#theorem[If $X_1, dots, X_n$ independent and $g_1, dots, g_n : RR-> RR$ borel-measurable functions, then $g_1 (X_1), dots, g_n (X_n)$ also independent.]
+
+
+#definition("Conditional Expectation")[
+  Let $X, Y$ be random variables and $g : RR -> RR$ a borel-measurable function. We define the following notions: $
+  EE[g(X)|Y = y] = cases(sum_(x in S_X) g(x) f(x|y) "discrete", integral_S_x g(x) f(x|y) dif x "cnts").\
+  "Var"(X|Y = y)  = EE[X^2|Y=y] - EE^2 [X|Y = y].
+  $
+]
+#theorem[If $EE[g(X)]$ exists, then $EE[g(X)] = EE[EE[g(X)|Y]]$, where the first nested $EE$ is with respect to $x$, the second $y$.]
+
+#theorem[If $EE[X^2] < infinity$, then $"Var"(X) = "Var"(EE[X|Y]) + EE["Var"(X|Y)]$. In particular, $"Var"(X) >= "Var"(EE[X|Y])$.]
+
+= Statistics
+#definition("Inference")[
+  We consider some population with some characteristic we wish to study. We can model this characteristic as a random variable $X tilde F$. In general, we don't have access to $F$, but wish to take samples from our population to make inferences about its properties. 
+
+  (1) _Parametric inference:_ in this setting, we assume we know the functional form of $X$ up to some parameter, $theta in Theta subset RR^d$, where $Theta$ our "parameter space". Namely, we know $X tilde F_theta in cal(F) := {F_theta | theta in Theta}$.
+
+  (2) _Non-parametric inference:_ in this setting we know noting about $F$ itself, except perhaps that $F$ continuous, discrete, etc.
+
+Other types exist. We'll focus on these two.
+]
+
+#definition("Random Sample")[Let $X_1, dots, X_n tilde^("iid") F$. Then $X_1, dots, X_n$ called a _random sample_ of the population.
+
+We also call $X_i$ the "pre-experimental data" (to be observed) and $x_i$ the "post-experimental data" (been observed).
+]
+
+#definition("Statistics")[
+  Let $X_1, dots, X_n tilde^"iid" F$ where $X_i$ a $d$-dimensional random vector. Let $
+  T : underbrace(RR^d times RR^d times dots.c times RR^d, n-"fold") -> RR^k
+  $ be a borel-measurable function. Then, $T(X_1, dots, X_n)$  is called a _statistic_, provided it does not depend on any unknown.
 ]
