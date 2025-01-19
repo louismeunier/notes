@@ -75,8 +75,15 @@ If $T$ has $1$ as an eigenvalue.
   We simply check each element. $r v_1 = v_2$ and $r v_2 = r^2 v_1 = - v_1$ which are both in $W$ hence $r$ and thus $angle.l r angle.r$ fixes $W$. Next, $h v_1 = v_1$ and $v v_2 = v r v_1 = r h v_1 = r v_1 = v_2$ (since $r h r^(-1) = v$) and so $h v_2 = - v_2$ and $v v_1 = - v_1$ and so $W$ $G$-stable. Finally, $d_1$ and $d_2$ are just products of these elements and so $W$ $G$-stable.
 ]
 
+#definition("Isomorphism of Representations")[
+  Given a group $G$ and two representations $rho_i : G -> "Aut"_FF (V_i)$, $i = 1, 2$ an isomorphism of representations is a vector space isomorphism $phi: V_1 -> V_2$ that respects the group action, namely $
+  phi(g v) = g phi(v)
+  $ for every $g in G, v in V_1$.
+]
+
 //  ! 01-13
 
+== Maschke's Theorem
 #theorem("Maschke's")[
   Any representation of a finite group $G$ over $CC$ can be written as a direct sum of irreducible representations, i.e. $
   V = V_1 plus.circle dots.c plus.circle V_t,
@@ -132,3 +139,35 @@ We present an alternative proof to the previous proposition by appealing to the 
  From this, the previous proposition follows quickly by taking $W' = W^perp$, the orthogonal complement to $W$ with respect to the $G$-invariant inner product that the previous theorem provides.
 
  From this proposition, Maschke's follows by repeatedly applying this logic. Since at each stage $V$ is split in two, eventually the dimension of the resulting dimensions will become zero since $V$ finite dimensional. Hence, the remaining vector spaces $V_1, dots, V_t$ left will necessarily be irreducible, since if they weren't, we could apply the proposition further.
+
+// % ! 01-17
+#theorem("Schur's Lemma")[
+  Let $V, W$ be irreducible representations of a group $G$. Then, $
+  Hom_G (V, W) = cases(0 "if" V tilde.eq.not_G W, CC "if" V tilde.eq_G W),
+$ where $Hom_G (V, W) = {T : V -> W | T "linear and" G-"equivariant"}$.
+]
+
+#proof[
+  Suppose $V tilde.eq.not_G W$ and let $T in Hom_G (V, W)$. Then, notice that $ker(T)$ a subrepresentation of $V$ (a subspace that is a representation in its own right), but by assumption $V$ irreducible hence either $ker(T) = V$ or ${0}$.
+
+  If $ker(T) = V$, then $T$ trivial, and if $ker(T) = {0}$, then this implies $T : V-> im(T) subset W$ a representation isomorphism, namely $im(T)$ a irreducible subrepresentation of $W$. This implies that, since $W$ irreducible, $im(T) = W$, contradicting the original assumption.
+
+  Suppose now $V tilde.eq_G W$. Let $T in Hom_G (V, W) = "End"_G (V)$. Since $CC$ algebraically closed, $T$ has an eigenvalue, $lambda$. Then, notice that $T - lambda I in "End"_G (V)$ and so $ker(T - lambda I) subset V$ a, necessarily trivial because $V$ irreducible, subrepresentation of $V$. Hence, $T - lambda I = 0 => T = lambda I$ on $V$. It follows that $Hom_G (V, W)$ a one-dimensional vector space over $CC$, so namely $CC$ itself.
+]
+
+#corollary[
+  Given a general representation $V = plus.circle.big_(j=1)^t V_j^(m_j)$, $
+  m_j = dim_CC Hom_G (V_j, V).
+  $
+]
+
+#definition("Trace")[The trace of an endomorphism $T : V-> V$ is the trace of any matrix defining $T$. Since the trace is conjugation-invariant, this is well-defined regardless of basis.]
+
+#proposition[
+  Let $W subset.eq V$ a subspace and $pi : V -> W$ a projection. Then, $tr(pi) = dim(W)$.
+]
+
+#theorem[If $rho : G -> "Aut"_FF (V)$ a complex representation of $G$, then $
+dim (V^G) = 1/(hash G) sum_(g in G) tr(rho(g)),
+$  where $V^G = {v in V : g v = v forall g in G}$.
+]
