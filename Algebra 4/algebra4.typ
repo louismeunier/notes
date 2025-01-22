@@ -171,3 +171,16 @@ $ where $Hom_G (V, W) = {T : V -> W | T "linear and" G-"equivariant"}$.
 dim (V^G) = 1/(hash G) sum_(g in G) tr(rho(g)),
 $  where $V^G = {v in V : g v = v forall g in G}$.
 ]
+
+#proof[
+  Let $pi = 1/(hash g) sum_(g in G) rho(g)$. Then, notice that $im (pi) = V^G$ and $pi^2 = pi$ hence a projection from $V$ onto $V^G$. Using the previous proposition and linearity of the trace completes the proof.
+]
+
+== Characters
+
+#definition[
+  Let $dim (V) < infinity$ and $G$ a group. The _character_ of $V$ is the function $
+  chi_V : G -> CC, wide chi_V (g) := tr(rho(g)).
+  $
+]
+

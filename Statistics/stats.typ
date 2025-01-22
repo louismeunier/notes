@@ -40,7 +40,7 @@ We say $X$ _continuous_ if there is a nonnegative function $f$, called the _prob
 
 If $X : Omega -> RR$ a random variable and $g : RR -> RR$ a Borel-measurable function, then $Y := g(X) : Omega -> RR$ also a random variable.
 ]
-% ! 01-09
+// % ! 01-09
 #definition("Moments")[
   Let $X$ be a discrete/random random variable with pmf/pdf $f$ and support $S$. Then, if $sum_(x in S) |x| f(x)$/$integral_S |x| f(x) dif x < infinity$, then we say the first moment/mean of $X$ exists, and define $
   mu_X = EE[X] = cases(sum_(x in S) x f(x) \ integral_S x f(x) dif x).
@@ -133,4 +133,33 @@ We also call $X_i$ the "pre-experimental data" (to be observed) and $x_i$ the "p
   Let $X_1, dots, X_n tilde^"iid" F$ where $X_i$ a $d$-dimensional random vector. Let $
   T : underbrace(RR^d times RR^d times dots.c times RR^d, n-"fold") -> RR^k
   $ be a borel-measurable function. Then, $T(X_1, dots, X_n)$  is called a _statistic_, provided it does not depend on any unknown.
+]
+
+#example[
+  $overline(X_n) := 1/n sum_(i=1)^n X_i$ (the "sample mean") and $S_n^2 = 1/(n - 1) sum_(i=1)^n (X_i - overline(X_n))^2$, (the "sample variance") are both typical statistics.
+]
+
+#theorem[
+  Let $x_1, dots, x_n in RR$, then 
+
+  (a) $"argmin"_(alpha in RR) {sum_(i=1)^n (x_i - alpha)^2} = overline(x_n)$;
+
+  (b) $sum_(i=1)^n (x_i - overline(x_n))^2 = sum_(i=1)^n (x_i^2) - n overline(x_n)^2$;
+
+  (c) $sum_(i=1)^n (x_i - overline(x_n)) = 0$.
+]
+
+#theorem[
+  Let $X_1, dots, X_n tilde^"iid" F$, and $g : RR-> RR$ borel-measurable such that $"Var" (g(X)) < infinity$. Then, 
+
+  (a) $EE[sum_(i=1)^n g(X_i)] = n EE[g(X_1)]$;
+
+  (b) $"Var" (sum_(i=1)^n g(X_i)) = n "Var"(X_1)$.
+]
+
+#theorem[
+  Let $X_1, dots, X_n tilde^"iid" F$ with $sigma^2 < infinity$, then 
+
+  1. $EE[overline(X_n)] = mu$, $"Var"(overline(X_n)) = (sigma^2)/n$, $EE[S_n^2] = sigma^2$.
+  2. If $M_X_1 (t)$ exists in some neighborhood of $0$, then $M_(overline(X_n)) (t) = M_(X_1) (t/n)^n$, where it exists. 
 ]
