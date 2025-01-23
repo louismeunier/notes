@@ -26,7 +26,7 @@
 // )
 
 
-// #show math.equation: set text(font: "New Computer Modern Math") 
+#show math.equation: set text(font: "New Computer Modern Math") 
 // $cal(A) cal(B) cal(C) cal(D) cal(E) cal(F) cal(G) cal(H) cal(I) cal(J) cal(K) cal(L) cal(M) cal(N) cal(O) cal(P) cal(Q) cal(R) cal(S) cal(T) cal(U) cal(V) cal(W) cal(X) cal(Y) cal(Z)$
 
 // TODO starts here
@@ -205,7 +205,7 @@ The goal in this section is to find conditions for a sequence of functions ${f_n
 
 We'll say a set $E subset.eq X$ _hollow_ if $"int" E = nothing$, or equivalently if $E^c$ dense in $X$.
 
-#theorem[
+#theorem("Baire Category Theorem")[
   Let $X$ be a complete metric space. 
 
   (a) Let ${F_n}$ a collection of closed hollow sets. Then, $union.big_(n=1)^infinity F_n$ also hollow.
@@ -217,4 +217,183 @@ We'll say a set $E subset.eq X$ _hollow_ if $"int" E = nothing$, or equivalently
 
 #corollary[
   Let $X$ complete and ${F_n}$ a sequence of closed sets in $X$. Then, $union.big_(n=1)^infinity partial F_n$ hollow.
+]
+
+
+// ! 01-16
+=== Applications of Baire Category Theorem
+
+#theorem[
+  Let $cal(F) subset C(X)$ where $X$ complete. Suppose $cal(F)$ pointwise bounded. Then, there exists a nonempty, open set $cal(O) subset.eq X$ such that $cal(F)$ uniformly bounded on $cal(O)$.
+]
+
+#theorem[
+  Let $X$ complete, and ${f_n} subset.eq C(X)$ such that $f_n -> f$ pointwise on $X$. Then, there exists a dense subset $D subset.eq X$ such that ${f_n}$ equicontinuous on $D$ and $f$ continuous on $D$.
+]
+
+== Topological Spaces
+Throughout, assume $X eq.not nothing$.
+
+#definition("Topology")[
+  Let $X eq.not nothing$. A _topology_ $cal(T)$ on $X$ is a collection of subsets of $X$, called _open sets_, such that 
+  - $X, nothing in cal(T)$;
+  - If ${E_n} subset.eq cal(T)$, $sect.big_(n=1)^N E_n in cal(T)$ (closed under _finite_ intersections);
+  -  If ${E_n} subset.eq cal(T)$, $union.big_n E_n in cal(T)$ (closed under _arbitrary_ unions).
+
+  If $x in X$, a set $E in cal(T)$ containing $x$ is called a neighborhood of $x$.
+]
+
+#proposition[$E subset.eq X$ open $<=>$ for every $x in X$, there is a neighborhood of $x$ contained $E$.]
+
+#example[
+  Every metric space induces a natural topology given by open sets under the metric. The _discrete topology_ is given by $cal(T) = 2^X$ (and is actually induced by the discrete metric), and is the largest topology. The _trivial topology_ ${nothing, X}$ is the smallest.  The _relative topology_ defined on a subset $Y subset.eq X$ is given by $cal(T)_Y := {E sect Y : E in cal(T)}$.
+]
+
+#definition("Base")[
+  Given a topological space $(X, cal(T))$, let $x in X$. A collection $cal(B)_x$ of neighborhoods of $x$ is called a _base_ of $cal(T)$ at $x$ if for every neighborhood $cal(U)$ of $x$, there is a set $B in cal(B)_x$ siuch that $B subset.eq cal(U)$. 
+
+  We say a collection $cal(B)$ a base for all of $cal(T)$ if for every $x in X$, there is a base for $x, cal(B)_x subset.eq cal(B)$.
+]
+
+#proposition[
+  If $(X, cal(T))$ a topological space, then $cal(B) subset.eq cal(T)$ a base for $cal(T)$ $<=>$ every nonempty open set $cal(U) in cal(T)$ can be written as a union of elements of $cal(B)$.
+]
+
+//  ! 01-21
+
+#proposition[
+$cal(B) subset.eq cal(T)$ a base $<=>$ 
+- $X = union.big_(B in cal(B)) B$
+- If $B_1, B_2 in cal(B)$ and $x in B_1 sect B_2$, then there is a $B in cal(B)$ such that $x in B subset.eq B_1 sect B_2$.
+]
+
+// #remark[Finite intersections stay closed in $cal(B)$.]
+
+#definition[
+  If $cal(T)_1 subset.neq cal(T)_2$, we say $cal(T)_1$ _weaker/coarser_ and $cal(T)_2$ _stronger/finer_.
+
+  Given a subset $S subset.eq 2^X$, define $
+  cal(T)(S) = sect.big "all topologies containing" S = "unique weakest topology containing" S
+  $ to be the topology _generated_ by $S$.
+]
+
+#proposition[
+  If $S subset.eq 2^X$, $
+  cal(T)(S) = union.big {"finite intersection of elts of" S}.
+  $
+]
+
+#definition("Point of closure/accumulation point")[
+  If $E subset.eq X, x in X$, $x$ is called a _point of closure_ if $forall cal(U)_x$, $cal(U)_x sect E eq.not nothing$. The collection of all such sets is called the _closure_ of $E$, denote $overline(E)$. We say $E$ _closed_ if $E = overline(E)$.
+]
+
+#proposition[
+  Let $E subset.eq X$, then 
+  - $overline(E)$ closed,
+  - $overline(E)$ is the smallest closed set containing $E$,
+  - $E$ open $<=>$ $E^c$ closed.
+]
+
+== Separation, Countability, Separability
+
+#definition[
+  A neighborhood of a set $K subset.eq X$ is any open set containing $K$.
+]
+
+#definition("Notions of Separation")[
+  We say $(X, cal(T))$:
+
+  - _Tychonoff Separable_ if $forall x, y in X, exists cal(U)_x, cal(U)_y$ such that $y in.not cal(U)_x, x in.not cal(U)_y$
+  - _Hausdorff Separable_ if $forall x, y in X$ can be separated by two disjoint open sets i.e. $exists cal(U)_x sect cal(U)_y = nothing$
+  - _Normal_ if Tychonoff and in addition any 2 disjoint closed sets can be separated by disjoint neighborhoods.
+]
+
+#remark[
+  Metric space $subset.eq$ normal space $subset.eq$ Hausdorff space $subset.eq$ Tychonoff space.
+]
+
+#proposition[
+  Tychonoff $<=>$ $forall x in X$, ${x}$ closed.
+]
+
+#proposition[
+  Every metric space normal.
+]
+
+// ! 01-23
+
+#proposition[Let $X$ Tychonoff. Then $X$ normal $<=>$ $forall F subset.eq X$ closed and neighborhood $cal(U)$ of $F$, there exists an open set $cal(O)$ such that $
+F subset.eq cal(O) subset.eq overline(cal(O)) subset.eq cal(U).
+$ This is called the "nested neighborhood property" of normal spaces.]
+
+#definition("Separable")[
+  A space $X$ is called _separable_ if it contains a countable dense subset.
+]
+
+#definition("1st, 2nd Countable")[
+  A topological space $(X, cal(T))$ is called 
+
+  - _1st countable_ if there is a countable base at each point
+  - _2nd countable_ if there is a countable base for all of $cal(T)$.
+]
+
+#example[Every metric space is first countable.]
+
+#definition("Convergence")[
+  Let ${x_n} subset.eq X$. Then, we say $x_n -> x$ in $cal(T)$ if for every neighborhood $cal(U)_x$, there exists an $N$ such that $forall n >= N$, $x_n in cal(U)_x$.
+]
+
+#remark[In general spaces, such a limit may not be unique. For instance, under the trivial topology, the only nonempty neighborhood is the whole space, so every sequence converges to every point in the space.]
+
+#proposition[Let $(X, cal(T))$ be Hausdorff. Then, all limits are unique.]
+
+#proposition[Let $X$ be 1st countable and $E subset.eq X$. Then, $x in overline(E)$ $<=>$ there exists ${x_j} subset.eq E$ such that $x_j -> x$.]
+
+== Continuity and Compactness
+
+#definition[
+  Let $(X, cal(T)), (Y, cal(S))$ be two topological spaces. Then, a function $f : X -> Y$ is said to be continuous at $x_0$ if for every neighborhood $cal(O)$ of $f(x_0)$ there exists a neighborhood $cal(U)(x_0)$ such that $f(cal(U)) subset.eq cal(O)$. We say $f$ continuous on $X$ if it is continuous at every point in $X$.
+]
+
+#proposition[
+  $f$ continuous $<=>$ $forall cal(O)$ open in $Y$, $f^(-1) (cal(O))$ open in $X$.
+]
+
+#definition("Weak Topology")[
+Consider $cal(F) := {f_lambda : X -> X_lambda}_(lambda in Lambda)$ where $X, X_lambda$ topological spaces. Then, let $
+S := {f^(-1)_lambda (cal(O)_lambda) | f_lambda in cal(F), cal(O)_lambda in X_lambda} subset.eq X.
+$ We say that the topology $cal(T)(S)$ generated by $S$ is the _weak topology_ for $X$ induced by the family $cal(F)$.
+]
+
+#proposition[
+  The weak topology is the weakest topology in which each $f_lambda$ continuous on $X$.
+]
+
+#example[
+  The key example of the weak topology is given by the product topology. Consider ${X_lambda}_(lambda in Lambda)$ a collection of topological spaces. We can defined a "natural" topology on the product $X := product_(lambda in Lambda) X_lambda$ by consider the weak topology induced by the family of projection maps, namely, if $pi_lambda : X -> X_lambda$ a coordinate-wise projection and $cal(F) = {pi_lambda : lambda in Lambda}$, then we say the weak topology induced by $cal(F)$ is the _product topology_ on $X$. In particular, a base for this topology is given, by previous discussions, $
+  cal(B) = {sect.big_(j=1)^n pi^(-1)_(lambda_j) (cal(O_j))} = {product_(lambda in Lambda) cal(U)_lambda : cal(U)_lambda "open" "and all by finitely many " U_lambda's  = X_lambda}.
+  $
+]
+
+#definition("Compactness")[
+  A space $X$ is said to be _compact_ if every open cover of $X$ admits a finite subcover.
+]
+
+#proposition[
+  - Closed subsets of compact spaces are compact
+  - $X$ compact $<=>$ if ${F_k} subset.eq X$-nested and closed, $sect_(k=1)^infinity F_k eq.not nothing $.
+  - Continuous images of compact sets are compact
+  - Continuous real-valued functions on a compact topological space achieve their min, max.
+]
+
+#proposition[
+  Let $K$ be contained in a Hausdorff space $X$. Then, $K$ closed in $X$.
+]
+
+#definition("Sequential Compactness")[
+  We say $(X, cal(T))$ _sequentially compact_ if every sequence in $X$ has a converging subsequence with limit contained in $X$.
+]
+
+#proposition[
+  Let $(X, cal(T))$ second countable. Then, $X$ compact $<=>$ sequentially compact.
 ]
