@@ -114,6 +114,8 @@ If $X : Omega -> RR$ a random variable and $g : RR -> RR$ a Borel-measurable fun
 #theorem[If $EE[X^2] < infinity$, then $"Var"(X) = "Var"(EE[X|Y]) + EE["Var"(X|Y)]$. In particular, $"Var"(X) >= "Var"(EE[X|Y])$.]
 
 = Statistics
+
+== Sample Distributions
 #definition("Inference")[
   We consider some population with some characteristic we wish to study. We can model this characteristic as a random variable $X tilde F$. In general, we don't have access to $F$, but wish to take samples from our population to make inferences about its properties. 
 
@@ -162,4 +164,109 @@ We also call $X_i$ the "pre-experimental data" (to be observed) and $x_i$ the "p
 
   1. $EE[overline(X_n)] = mu$, $"Var"(overline(X_n)) = (sigma^2)/n$, $EE[S_n^2] = sigma^2$.
   2. If $M_X_1 (t)$ exists in some neighborhood of $0$, then $M_(overline(X_n)) (t) = M_(X_1) (t/n)^n$, where it exists. 
+]
+
+#theorem[
+  Let $X_1, dots, X_n tilde^("iid") cal(N)(mu, sigma^2)$. Then
+
+  1. $overline(X_n) tilde cal(N)(mu, sigma^2 /n)$;
+  2. $overline(X_n), S_n^2$ are independent;
+  3. $((n-1) S_n^2)/(sigma^2) = (sum_(i=1)^n (X_i - overline(X_n))^2)/(sigma^2) tilde chi_((n-1))^2$.
+]
+
+#remark[
+  2. actually holds iff the underlying distribution is normal.
+]
+
+#proof[
+  We prove 2. We first write $S_n^2$ as a function of $(X_2 - overline(X)_n, dots, X_n - overline(X)_n)$: $
+  S_n^2 = 1/(n - 1) sum_(i=1)^n (X_i - overline(X)_n)^2 &= 1/(n - 1) {sum_(i=2)^n (X_i - overline(X)_n)^2 + (X_1 - overline(X)_n)^2} \ 
+  &= 1/(n - 1) {sum_(i=2)^n (X_i - overline(X)_n)^2 + (sum_(i=2)^n (X_i - overline(X)_n))^2}.
+  $ Then, it suffices to show that $overline(X)_n$ and $(X_2 - overline(X)_n, dots, X_n - overline(X)_n)$ are independent.
+
+  Consider now the transformation $
+  cases(
+    y_1 &= overline(x)_n, 
+    y_2 &= x_2 - overline(x)_n, 
+    &dots.down,
+    y_n &= x_n - overline(x)_n
+  ) => cases(
+    x_1 &= y_1 - sum_(i=2)^n y_i ,
+    x_2 &= y_2 + y_1 ,
+    & dots.down ,
+    x_n &= y_n + y_1
+  ),
+  $ which gives Jacobian $
+  |J| = abs(mat(
+    1, -1, dots.c, -1;
+    1, 1, 0, dots.c;
+    dots.v, dots.down, dots.down, dots.v;
+    1,0, dots.c, 1
+  )) = n,
+  $ and so $
+  f_(Y_1, dots, Y_n) (y_1, dots, y_n) &= |J| dot f_(X_1, dots, X_n) (x_1 (y_1, dots, y_n), dots, x_n (y_1, dots, y_n)) \ 
+    &= n dot product_(i=1)^n 1/(sqrt(2 pi sigma^2)) e^(-1/(2 sigma^2) (x_i (y_1, dots, y_n) - mu)^2) \ 
+    &approx underbrace(e^(- n ((y_1 - mu)^2)/(2 sigma^2)), "only" y_1) dot underbrace(e^( - 1/(2 sigma^2) {(sum_(i=2)^n y_i)^2 + sum_(i=2)^n y_i^2}), "no" y_1 "dependence"),
+  $ and hence as the PDFs split, we conclude $Y_1$ independent of $Y_2, dots, Y_n$ and so $overline(X)_n$ independent of $(X_2 - overline(X)_n, dots, X_n - overline(X)_n)$ and so in particular of any Borel-measurable function of this vector such as $S_n^2$, completing the proof.
+
+  For 3, note that $
+  V := sum_(i=1)^n ((X_i - mu)/sigma)^2 &= 1/(sigma^2) sum_(i=1)^n ((X_i - overline(X)_n) - (mu - overline(X)_n))^2 \ 
+  &=  (sum_(i=1)^n (X_i - overline(X)_n)^2)/(sigma^2) + (n (overline(X)_n - mu)^2)/sigma^2 =: W_1 + W_2.
+  $ The first part, $W_1$, of this summation is just $(n - 1)(S_n^2)/(sigma^2)$, a function of $S_n^2$, and the second, $W_2$, is a function of $overline(X)_n$. By what we've just shown in the previous part, these two are independent. In addition, $V tilde chi_((n))^2$ and $
+  W_2 = (n (overline(X)_n - mu)^2)/sigma^2 = ((overline(X)_n - mu)/(sigma/(sqrt(n))))^2 tilde chi_((1))^2,
+  $ since the inner random variable is a standard normal. Then, since $W_1, W_2$ independent, $M_V (t) = M_W_1 (t) M_W_2 (t)$, so for $t < 1/2$, $
+  M_(W_1)(t) = (M_V (t))/(M_W_2 (t)) = ((1-2 t)^(- n/2))/((1 - 2 t)^(-1/2))= (1 - 2 t)^(- ((n - 1))/2),
+  $ hence $W_1 tilde chi_((n - 1))^2$.
+]
+
+#proposition[
+  Let $X tilde t(nu)$, the Student $t$-distribution i.e $
+  f(x) = Gamma((nu+1)/2)/(sqrt(pi nu) dot Gamma(nu/2)) (1 + x^2 /nu)^(- (nu+1)/2),
+  $ then 
+  - $"Var"(X) = nu/(nu - 2)$ for $nu > 2$
+  - If $Z tilde cal(N)(0, 1)$ and $V tilde chi^2_((nu))$ are independent random variables, then $T = Z/(sqrt(V \/nu)) tilde t(nu)$.
+]
+
+#theorem[
+  Let $X_1, dots, X_n tilde^("iid") cal(N)(mu, sigma^2)$. Then, $
+  T = (overline(X)_n - mu)/(sqrt(S_n^2 \/n)) = (sqrt(n) (overline(X)_n - mu))/(S_n) tilde t(n - 1).
+  $
+]
+
+#remark[
+  By combing CLT and Slutsky's Theorem, $T$ asymptotes to $cal(N)(0, 1)$, but this gives a general distribution. Note that for large $n$, $t(n - 1)$ approximately normal too.
+]
+
+#proof[
+  Notice that $
+  W_1 := sqrt(n) (overline(X)_n - mu)/(sigma) tilde cal(N)(0, 1), wide W_2 := ((n - 1) S_n^2)/(sigma^2) tilde chi_((n-1))^2
+  $ are independent, and $
+  T = W_1/(sqrt(W_2 \/ (n- 1)))
+  $ so by the previous proposition $T tilde t(n - 1)$.
+]
+
+#proposition[
+  Given $U tilde chi_((m))^2, V tilde chi_((n))^2$ independent, then $F = (U\/m)/(V\/n) tilde F(m, n)$. If $T tilde t(nu)$, $T^2 tilde F(1, nu)$.
+]
+
+#theorem[
+  Let $X_1, dots, X_m tilde^"iid" cal(N)(mu_1, sigma_1^2)$ and $Y_1, dots, Y_n tilde^"iid" cal(N)(mu_2, sigma_2^2)$ be mutually independent random samples. Then, $
+  F = (S_m^2 \/ sigma_1^2)/(S_n^2 \/ sigma_2^2) tilde F(m - 1, n - 1).
+  $
+]
+
+#proof[
+  We have that $U = ((m - 1) S_m^2)/(sigma_1^2) tilde chi_((m - 1))^2$ and $V = ((n - 1) S_n^2)/(sigma_2^2)$ are independent so by the previous proposition $
+  F = (U \/ (m - 1))/(V \/ (n - 1)) tilde F(m - 1, n - 1).
+  $
+]
+
+== Order Statistics
+
+#definition[
+Let $X_1, dots, X_n tilde^"iid" F$. Then, the _order statistics_ are $
+X_((1)) <= X_((2)) <= dots.c <= X_((n)),
+$ where $X_((i))$ the $i$th largest of $X_1, dots, X_n$. The _sample range_ is defined $
+R_n = X_((n)) - X_((1)).
+$
 ]
