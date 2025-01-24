@@ -40,11 +40,11 @@
   V = V_+ plus.circle V_-,
   $ where $V_plus.minus := {v | tau v = plus.minus v}$. Hence, $V$ is irreducible only if one of $V_+, V_-$ all of $V$ and the other is trivial, or in other words $tau$ acts only as multiplication by $1$ or $-1$.
 
-  2. Let $G = {g_1, dots, g_N}$ be a finite abelian group, and suppose $FF$ an algebraically closed field of characeristic 0 (such as $CC$). Let $rho : G -> "Aut" (V)$ and denote $T_j := rho (g_j)$ for $j = 1, dots, N$. Then, ${T_1, dots, T_N}$ is a set of mutually commuting linear transformations. Then, there exists a simultaneous eigenvector, say $v$, for ${T_1, dots, T_N}$, and so $"span" (v)$ a $G$-stable subspace of $V$. Thus, if $V$ irreducible, it must be that $dim_FF V = 1$.
+  2. Let $G = {g_1, dots, g_N}$ be a finite abelian group, and suppose $FF$ an algebraically closed field of characteristic 0 (such as $CC$). Let $rho : G -> "Aut" (V)$ and denote $T_j := rho (g_j)$ for $j = 1, dots, N$. Then, ${T_1, dots, T_N}$ is a set of mutually commuting linear transformations. Then, there exists a simultaneous eigenvector, say $v$, for ${T_1, dots, T_N}$, and so $"span" (v)$ a $G$-stable subspace of $V$. Thus, if $V$ irreducible, it must be that $dim_FF V = 1$.
 ]
 
 
-#theorem[If $G$ a finite abelian group and $V$ an irreducible finite dimensional representation over an algebraically closed field of characeristic 0, then $dim V = 1$.]
+#theorem[If $G$ a finite abelian group and $V$ an irreducible finite dimensional representation over an algebraically closed field of characteristic 0, then $dim V = 1$.]
 
 #proof[
   Let $rho : G -> "Aut"(V)$, label $G = {g_1, dots, g_N}$ and put $T_j := rho (g_j)$ for $j = 1, dots, N$. Then, ${T_1, dots, T_N}$ a family of mutually commuting linear transformations on $V$. Then, there is a simultaneous eigenvector $v$ for ${T_1, dots, T_N}$  and thus $"span"(v)$ is $T_1, dots, T_N$-stable and so $V = "span"(v)$.
@@ -184,3 +184,69 @@ $  where $V^G = {v in V : g v = v forall g in G}$.
   $
 ]
 
+#proposition[Characters are class functions, namely constant on conjugacy classes.]
+
+#theorem[If $V_1, V_2$ are 2 representations of $G$, then $V_1 tilde.eq_G V_2 <=> chi_(V_1) = chi_(V_2)$.]
+
+#proposition[
+  Given two representations $V, W$ of $G$, there is a natural action of $G$ on $Hom(V, W)$ given by $g ast T = g compose T compose g^(-1)$. Then, 
+  $
+  Hom(V, W)^G = {T : V -> W | g ast T = T},
+  $ so $
+  Hom(V, W)^G = Hom_G (V, W).
+  $
+]
+
+#proposition[
+  Suppose $V = V_1^(m_1) plus.circle dots.c plus.circle V_t^(m_t)$ a representation of $G$ written in irreducible form. Then,
+  $
+  Hom_G (V_j, V) = CC^m_j.
+  $
+]
+
+#proof[
+"$Hom$ is linear with respect to $plus.circle$".
+]
+
+#proposition[
+  If $V, W$ are two representations, then so is $V plus.circle W$ with point-wise action, and $chi_(V plus.circle W) = chi_V + chi_W$.
+]
+
+#theorem[
+  $chi_(Hom(V, W)) = overline(chi_V) chi_W$.
+]
+#proof[
+  Use an eigenbasis for $V, W$ respectively to define a corresponding eigenbasis for $Hom(V, W)$ such as to write any $g in G$ as a diagonal matrix. The entries will contain an expression depending solely on the eigenvalues for $g$ acting on $V, W$.
+]
+
+#theorem("Orthogonality of Irreducible Group Characters")[
+  Suppose $V_1, dots, V_t$ is a list of irreducible representations of $G$ and $chi_1, dots, chi_t$ are their corresponding characters. Then, the $chi_j$'s naturally live in the space $L^2 (G) tilde.eq CC^(hash G)$, which we can equip with the inner product $
+  angle.l f_1, f_2 angle.r : 1/(hash G) sum_(g in G) overline(f_1 (g)) f_2 (g).
+  $ Then, $
+  angle.l chi_i, chi_j angle.r = delta_i^j.
+  $
+]
+
+#proof[
+$
+angle.l chi_i, chi_j angle.r &= 1/(hash G) sum_(g in G) overline(chi_i (g)) chi_j (g) \ 
+&= 1/(hash G) sum_(g in G) chi_(Hom(V_i, V_j)) (g) \ 
+&= dim_CC (Hom (V_i, V_j)^G) \ 
+&= cases(
+  dim_CC (CC) i =j\
+  dim_CC (0) i eq.not j
+) = delta_i^j.
+$
+]
+
+#corollary[
+  $chi_1, dots, chi_t$ orthonormal vectors in $L^2 (G)$.
+]
+
+#corollary[
+  $chi_1, dots, chi_t$ linearly independent, so in particular $t <= hash G = dim L^2 (G).$
+]
+
+#corollary[
+  $t <= h(G) := hash$ conjugacy classes.
+]
