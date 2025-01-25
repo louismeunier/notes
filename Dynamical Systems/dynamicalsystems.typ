@@ -85,3 +85,60 @@ Notice that if $v in Gamma (u_0)$, then $Gamma (v) = Gamma (u_0)$; namely a comp
 
 #definition("Invariance")[The set $B$ is said to be _positively invariant_ if $S(t) B subset.eq B$ for all $t >= 0$. Similarly, $B$ is said to be _negatively invariant_ if $B subset.eq S(t) B$ for all $t >= 0$.
 ]
+
+#definition([$omega$-limit sets])[
+  A point $x in RR^p$ is called an _$omega$-limit point_ of $u_0$ if there exists a sequence ${t_n}$ with $t_n -> infinity$ such that $S(t_n) u_0 -> x$ as $n->infinity$. The set of all such points for an initial condition $u_0$ is denoted $omega(u_0)$, and called the $omega$-limit set of $u_0$.
+
+  Given a bounded set $B$, the $omega$-limit set of $B$ is defined as $
+  omega(B) := {x in RR^p : exists t_n -> infinity, y_n in B "s.t." S(t_n)y_n -> x}.
+  $
+]
+
+#remark[
+  In general, $omega(B)$ is _not_ the union of $omega$-limit sets of points in $B$.
+]
+
+#theorem[
+  For any $u_0 in RR^p$, $
+  omega(u_0) = sect.big_(s >= 0) overline(union.big_(t >= s) {S(t) u_0}),
+  $ and similarly for any bounded $B subset.eq RR^p$, $
+  omega(B) = sect.big_(s >= 0) overline(union.big_(t >= s) S(t) B).
+  $
+]
+
+
+#definition([$alpha$-limit set])[
+  A point $x in RR^p$ is called an _$alpha$-limit point_ for $u_0 in RR^p$ if there exists a negative orbit through $u_0$ and a sequence ${t_n}$ with $t_n -> - infinity$ such that $u(t_n) -> x$. The set of all such points for $u_0$ is denoted $alpha(u_0)$.
+]
+
+#theorem[
+  If $Gamma^+ (u_0)$ bounded, then $omega(u_0)$ is a non-empty, compact, invariant, connected set.
+]
+
+#definition("Attraction")[
+  We say a set $A$ _attracts_ $B$ if for every $epsilon > 0$, there is a $t^ast = t^ast (epsilon, A, B)$ such that $S(t) B subset.eq N(A, epsilon)$ for every $t >= t^ast$, where $N(A, epsilon)$ denotes the $epsilon$-neighborhood of $A$.
+
+  A compact, invariant set $A$ is called an _attractor_ if it attracts an open neighborhood of itself, i.e. $exists epsilon > 0$ such that $A$ attracts $N(A, epsilon)$.
+
+  A _global attractor_ is an attractor that attracts every bounded subset of $RR^p$.
+]
+
+#theorem("Continuous Gronwall Lemma")[
+  Let $z(t)$ be such that $dot(z) <= a z + b$ for some $a eq.not 0, g in RR$ and $z(t) in RR$. Then, $forall t >= 0$, $
+  z(t) <= e^(a t) z(0) + b/a (e^(a t) - 1).
+  $
+]
+
+#theorem([$omega$-limit sets as attractors])[
+  Assume $B subset.eq RR^p$ is a bounded, open set such that $S(t) B subset.eq overline(B) forall t>0$. Then, $omega(B) subset.eq B$, and $omega(B)$ is an attractor, which attracts $B$. Furthermore, $
+  omega(B) = sect.big_(t >= 0) S(t) B.
+  $
+]
+
+#definition("Dissipative")[
+  A dynamical system is called _dissipative_ if there exists a bounded set $B$ such $forall A$ bounded, there exists a $t^ast = t^ast (A) > 0$ such that $S(t) A subset.eq B$ $forall t >= t^ast$. We then call such a $B$ an _absorbing set_. 
+]
+
+#remark[
+  $B$ absorbing $=>$ $omega(A) subset.eq omega(B)$. Moreover, $omega(B)$ attracts $A$ for every bounded set $A$. I.e., $omega(B)$ is a global attractor.
+]
