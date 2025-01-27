@@ -250,3 +250,76 @@ $
 #corollary[
   $t <= h(G) := hash$ conjugacy classes.
 ]
+
+#proof[
+  We have that $L_c^2 (G) subset.eq L^2 (G)$, where $L_c^2 (G)$ is the space of $CC$-valued functions on $G$ that are constant on conjugacy classes. It's easy to see that $dim_CC (L_c^2 (G)) = h(G)$. Then, since $chi_1, dots, chi_t$ are class functions, the live naturally in $L_c^2 (G)$ and hence since they are linearly independent, there are at most $h(G)$ of them.
+]
+
+#remark[
+  We'll show this inequality is actually equality soon.
+]
+
+#theorem("Characterization of Representation by Characters")[
+  If $V, W$ are two complex representations, they are isomorphic as representations $<=>$ $chi_V = chi_W$.
+]
+
+#proof[
+  By Maschke's, $V = V_1^m_1 plus.circle dots.c plus.circle V_t^m_t$ and hence $chi_V = m_1 chi_1 + dots.c + m_t chi_t$. By orthogonality, $m_j = angle.l chi_V, chi_j angle.r$ for each $j = 1, dots, t$, hence $V$ completely determined by $chi_V$.
+]
+
+#definition("Regular Representation")[
+  Define $
+  V_"reg" &:=  CC[G] "with left mult."\ 
+  &tilde.eq L^2 (G) "with" (g ast f)(x) := f(g^(-1) x),
+  $ the "regular representation" of $G$.
+]
+
+#proposition[
+  $chi_"reg" (g) = cases(hash G & "if" g = id \ 0 "else" )$.
+]
+#proof[
+  If $g = id$, then $g$ simply acts as the identity on $V_"reg"$ and so has trace equal to the dimension of $V_"reg"$, which has as basis just the elements of $G$ hence dimension equal to $hash G$. If $g eq.not id$, then $g$ cannot fix any basis vector, i.e. any other element $h in G$, since $g h = h <=> g = id$. Hence, $g$ permutes every element in $G$ with no fixed points, hence its matrix representation in the standard basis would have no 1s on the diagonal hence trace equal to zero.
+]
+
+#theorem[
+  Every irreducible representation of $V$, $V_j$, appears in $V_"reg"$ at least once, specifically, with multiplicity $dim _CC (V_j)$. Specifically, $
+  V_"reg" = V_1^(d_1) plus.circle dots.c plus.circle V_t^(d_t),
+  $ where $d_j := dim_CC (V_j)$.
+
+  In particular, $
+  hash G = d_1^2 + dots.c + d_t^2.
+  $
+]
+#proof[
+Write $V_"reg" = V_1^(m_1) plus.circle dots.c plus.circle V_t^m_t$. We'll show $m_j = d_j$ for each $j = 1, dots, t$. We find $
+m_j &= angle.l chi_"reg", chi_j angle.r \ 
+&= 1/(hash G)  sum_(g in G) overline(chi_"reg" (g)) chi_j (g) \ 
+&= 1/(hash G) hash G chi_j (id) = chi_j (id) = d_j,
+$ since the trace of the identity element acting on a vector space is always the dimension of the space. In particular, then $
+hash G = dim_CC (V_"reg") &= dim_CC (V_1^d_1 plus.circle dots.c plus.circle V_t^(d_t)) \ 
+&= d_1 dot dim_CC (V_1) + dots.c + d_t dot dim_CC (V_t) \ 
+&= d_1^2 + dots.c + d_t^2.
+$
+]
+
+#theorem[$t = h(G)$.]
+
+#proof[
+  Remark that $CC[G]$ has a natural ring structure, combining multiplication of coefficients in $CC$ and internal multiplication in $G$. Define a group homomorphism $
+  underline(rho)  = (rho_1, dots, rho_t) : G -> "Aut"(V_1) times dots.c times "Aut"(V_t),
+  $ collecting all the irreducible representation homomorphisms into a single vector. Then, this extends naturally by linearity to a ring homomorphism $
+  underline(rho) : CC[G] -> "End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_t).
+  $ By picking bases for each $"End"_CC (V_j)$, we find that $dim_CC ("End"_CC (V_j)) = d_j^2$ hence $dim_CC ("End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_t)) = d_1^2 + dots.c + d_t^2 = hash G$, as we saw in the previous theorem. On the other hand, $dim_CC (CC[G]) = hash G$ hence the dimensions of the two sides are equal. We claim that $underline(rho)$ an isomorphism of rings. By dimensionality as $CC$-vector spaces, it suffices to show $underline(rho)$ injective.
+
+  Let $theta in ker(underline(rho))$. Then, $rho_j (theta) = 0$ for each $j = 1, dots, t$, i.e. $theta$ acts as 0 on each of the irreducibles $V_1, dots, V_t$. Applying Maschke's, it follows that $theta$ must act as zero on every representation, in particular on $CC[G]$. Then, for every $sum beta_g g in CC[G]$, $theta dot (sum beta_g g) = 0$ so in particular $theta dot 1 = 0$ hence $theta = 0$ in $CC[G]$. Thus, $underline(rho)$ has trivial kernel as we wanted to show and thus $CC[G]$ and $"End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_t)$ are isomorphic as rings (moreover, as $CC$-algebras).
+
+  We look now at the centers of the two rings, since they are (in general) noncommutative. Namely, $
+  Z(CC[G]) = {sum lambda_g g | (sum lambda_g g) theta = theta (sum lambda_g g) forall theta in CC[G]}.
+  $ Since multiplication in $CC$ is commutative and "factors through" internal multiplication, it follows that $sum lambda_g g n Z(CC[G])$ iff it commutes with every group element, i.e. $
+  (sum lambda_g g) h = h (sum lambda_g g) & <=> sum_g (lambda_g h^(-1) g h) = sum_g lambda_g g \
+  & <=> sum_g lambda_(h^(-1) g h) g = sum_g lambda_g g \ 
+  & <=> lambda_(h^(-1) g h) = lambda_g forall g in G.
+  $ Hence, $sum lambda_g g in Z(CC[G])$ iff $lambda_(h^(-1) g h) = lambda_g$ for every $g, h in G$. It follows, then, that the induced map $g |-> lambda_g$ a class function, and thus $dim_CC (Z(CC[G])) = h(G)$.
+
+  On the other hand, $dim_CC (Z("End"_CC (V_j))) = 1$ (by representing as matrices, for instance, one can see that only scalar matrices will commute with all other matrices), hence $dim_CC (Z("End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_t))) = t$. $underline(rho)$ naturally restricts to an isomorphism of these centers, hence we conclude justly $t = h(G)$.
+]
