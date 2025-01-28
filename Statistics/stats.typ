@@ -266,7 +266,112 @@ We also call $X_i$ the "pre-experimental data" (to be observed) and $x_i$ the "p
 #definition[
 Let $X_1, dots, X_n tilde^"iid" F$. Then, the _order statistics_ are $
 X_((1)) <= X_((2)) <= dots.c <= X_((n)),
-$ where $X_((i))$ the $i$th largest of $X_1, dots, X_n$. The _sample range_ is defined $
-R_n = X_((n)) - X_((1)).
+$ where $X_((i))$ the $i$th largest of $X_1, dots, X_n$.
+]
+
+#definition("Related Functions of Order Statistcs")[
+ The _sample range_ is defined $
+R_n := X_((n)) - X_((1)).
+$ The _sample median_ is defined $
+M(X_1, dots, X_n) := cases(
+X_(((n+1)/2)) & "if" n "odd",
+(X_(((n)/2)) + X_(((n+1)/2)))/2 & "if" n "even".
+)
 $
+]
+
+#theorem("Distribution of Max, Min")[
+Let $X_1, dots, X_n tilde^"iid" F, f$.
+
+_(Discrete)_ 
+
+(a) $
+P(X_((1)) = x) =  [1 - F(x^-)]^n - [1 - F(x)]^n$
+
+(b) $P(X_((n)) = y) = [F(y)]^n - [F(y^-)]^n$
+
+_(Continuous)_
+
+(c) $F_(X_((1))) (x)  = P(X_((1)) <= x) = 1 - [1 - F(x)]^n$, $wide$ $f_(X_((1))) (x) = n dot f (x) [1 - F(x)]^(n-1)$
+
+(d) $F_(X_((n))) (y) = [F(y)]^n, wide f_(X_((n))) (y) = n dot f (y) [F(y)]^(n-1)$
+]
+
+#proof[
+  (a) Notice $
+P(X_((1)) = x) &= P(X_((1)) <= x) - P(X_((1)) < x).
+$ We have $
+P(X_((1)) <= x) &= 1 - P(X_((1)) > x) \ 
+&= 1 - P(X_1 > x, X_2 > x, dots, X_n > x) \ 
+&= 1 - P(X_1 > x) P(x_2 > x) dots.c P(X_n > x) \ 
+&= 1 - [1 - F(x)]^n,
+$ and similarly $
+P(X_((1)) < x) = 1 - P(X_((1)) >= x) = 1 - [1 - F(x^-)]^n,
+$ where $F(x^-) = lim_(z -> x^-) F(z)$. So in all, $
+P(X_((1)) = x) =  [1 - F(x^-)]^n - [1 - F(x)]^n.
+$ (b) is very similar. For (c), we have $
+P(X_((1)) <= x) &= 1 - P(X_((1)) > x) \ 
+&= 1 - P(X_1 > x, dots, X_n > x) \ 
+&= 1 - [1 - F(x)]^n.
+$ (d) is similar.
+]
+
+#theorem(["Distribution of" $j$th Order Statistics])[
+Let $X_1, dots, X_n tilde^"iid" F, f$.
+
+  _(Discrete)_ Suppose the $X_i$'s take values in $S_x = {x_1, x_2, dots}$ and put $p_i = P(X_i)$. Then, $
+  F_(X_((j))) (x_i) = P(X_((j)) (x_i) <= x_i) = sum_(k=j)^n binom(n, k) P_i^k (1 - P_i)^(n -k),
+  $ where $P_i = P(X_i <= x_i) = sum_(ell=1)^i p_ell$.
+
+  _(Continuous)_ $
+  F_(X_((j))) (x) = sum_(k=j)^n binom(n, k) F^k (x) [1 - F(x)]^(n-k),
+  $ so $
+  f_(X_((j))) (x) = (n!)/((j-1)! (n-j)!) thin f(x) [F(x)]^(j-1) [1 - F(x)]^(n-j).
+  $
+]
+
+#proof[
+  For discrete, we have $
+  P(X_((j)) (x_i) <= x_i) &= P("at least" j "out of" X_1, dots, X_n <= x_i).
+  $ Then, $
+   P("at least" j "out of" X_1, dots, X_n <= x_i) &= sum_(k=j)^n binom(n, k) P_i^k (1 - P_i)^(n -k).
+  $ Continuous is similar.
+]
+
+== Large Sample/Asymptotic Theory
+
+#definition("Convergence in Probability")[
+  We say $T_n = T(X_1, dots, X_n)$ converges _in probability_ to $theta$ $T_n ->^P theta$ as $n -> infinity$ if for any $epsilon > 0$, $
+  lim_(n -> infinity) P(|T_n - theta| > epsilon) = 0.
+  $
+]
+
+#definition("Convergence in Distribution")[
+  Find a positive sequence ${r_n}$ with $r_n -> infinity$ such that $
+  r_n (T_n - theta) ->^"d" T,
+  $ where $T$ a random variable. 
+]
+
+#theorem("Slutsky's")[
+  Suppose $X_n ->^"d" X$ and $Y_n ->^"P" a$ for some $a in RR$. Then, $
+  X_n + Y_n &->^"d" X + a \ 
+X_n Y_n &->^"d" a X,
+$ and if $a eq.not 0$,
+$
+  X_n/Y_n &->^"d" X/a.
+  $
+]
+
+#theorem("Continuous Mapping Theorem (CMT)")[
+  Suppose $X_n ->^"P" X$ and $g$ is continuous on the set $C$ such that $P(X in C) = 1$. Then, $
+  g(X_n) ->^"P" g(X).
+  $
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" F$ with $mu = EE[X_i], sigma^2 = "Var"(X_i) < infinity$. Then, $
+  (sqrt(n) (overline(X)_n - mu))/(S_n) ->^"d" cal(N) (0, 1),
+  $ since we may rewrite $
+  (sqrt(n) (overline(X)_n - mu)\/sigma)/(S_n\/sigma).
+  $ The numerator $->^"d" cal(N)(0, 1)$ by CLT. $S_n^2 ->^P sigma^2$, so the denominator goes to $1$ in probability
 ]
