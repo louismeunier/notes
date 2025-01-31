@@ -323,3 +323,79 @@ $
 
   On the other hand, $dim_CC (Z("End"_CC (V_j))) = 1$ (by representing as matrices, for instance, one can see that only scalar matrices will commute with all other matrices), hence $dim_CC (Z("End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_t))) = t$. $underline(rho)$ naturally restricts to an isomorphism of these centers, hence we conclude justly $t = h(G)$.
 ]
+
+== Fourier Analysis on Finite Groups
+
+#definition[
+  For a finite group $G$, let $
+  L^2 (G) = {"square integrable functions" G -> CC},
+  $ equipped with the $L^2$-norm, $||f||^2 = 1/(hash G) sum_(g in G) |f(g)|^2$. This is a vector space isomorphic to $CC^(hash G)$. We make the space a Hilbert space by defining $
+  angle.l f_1, f_2 angle.r = 1/(hash G) sum_(g in G) overline(f_1 (g)) f_2 (g).
+  $
+]
+#definition[
+  Denote by $hat(G) = {chi_1, dots, chi_N}$ the set of irreducible characters of $G$. Then, $hat(G)$ an orthonormal family of functions in $L^2 (G)$.
+]
+
+We suppose for now $G$ abelian. In this case, $hash hat(G) = hash G$ so $hat(G)$ is an orthonormal basis for $L^2 (G)$ (comparing dimensions).
+
+#definition[
+  Given $f in L^2 (G)$, the function $hat(f) : hat(G) -> CC$ is defined by $
+  hat(f)(chi) = 1/(hash G) sum_(g in G) overline(chi)(g) f(g),
+  $ called the _Fourier transform_ of $f$ over $G$. Then, $
+  f = sum_(chi in hat(G)) hat(f)(chi) chi,
+  $ is called the _Fourier inversion formula_.
+]
+
+#example[
+  Consider $G = RR\/ZZ$. $L^2 (G)$ space of $CC$-valued periodic functions on $RR$ which are square integrable on $[0, 1]$. Then, $hat(G)$ abstractly isomorphic to $ZZ$. Write $hat(G) = {chi_n | n in ZZ}$. Then, remark that $
+  chi_n : RR\/ZZ -> CC^times, wide chi_n (x) = e^(2 pi i n x)
+  $ gives the characteristic function for any integer $n$. More precisely, its not hard to see that the map $RR -> CC^times, x |-> e^(2 pi i n x)$ factors through (is constant on integer multiples) $ZZ$. 
+
+  To speak about orthogonality of members of $hat(G)$, we must define a norm. We can identity $RR\/ZZ$ with $[0, 1]$, and so write $
+  angle.l f_1, f_2 angle.r := integral_(0)^1 overline(f_1 (x)) f_2 (x) dif x. 
+  $ Then, its not hard to see $
+  angle.l chi_n, chi_m angle.r = integral_(0)^1 e^(-2 pi i (m - n) x) dif x = delta_m^n.
+  $
+]
+
+#example[
+  Let $G = ZZ\/N ZZ$ under addition. Note that $G$ then a subgroup of $RR\/ZZ$, and in particular, $
+  hat(G) = {chi_0, chi_1, dots, chi_(N-1)}, wide chi_j (k) := e^(2 pi i j k\/N) .
+  $ Then, one notices $
+  chi_j_1 dot chi_j_2 = chi_(j_1 + j_2),
+  $ so there is indeed a natural group structure on $hat(G)$. Then, the Fourier transform in this case gives, for $f in L^2 (ZZ\/N ZZ)$, $
+  hat(f) (n) = 1/N sum_(k=0)^(N-1) e^(-2 pi i n k\/N) f(k).
+  $
+]
+=== Application to Computing Particular Infinite Series
+
+We consider an application of the theory we've developed on $G = ZZ\/N ZZ$ to study particular infinite summations. Its well know that the harmonic series $1 + 1/2 + 1/3 + dots.c$ diverges. A natural extension is to study modified such series, for instance $1 - 1/3 + 1/5 - 1/7 + dots.c$ and to ask if this series converges, and if it does, to what?
+
+To approach this question, we more generally consider, for $f in L^2 (ZZ\/N ZZ)$ (i.e. a complex-valued $N$-periodic function defined on the integers), the series $
+S(f) := sum_(n=1)^infinity f(n)/n,
+$ when the summation exists. Remark then that $f |-> S(f)$ is linear. So, it suffices to consider the value of $S(f)$ on a basis of $L^2 (ZZ\/N ZZ)$, which we've derived in the previous example, namely $hat(G) = {chi_j : j = 0, dots, N-1}$. We can explicitly compute $S(chi_j)$: $
+S(chi_j) &= sum_(n=1)^infinity (chi_j (n))/n \ 
+&= sum_(n=1)^infinity (x^n)/n, wide x := e^((2 pi i j)/N) \ 
+&= - log ( 1 - x),
+$ where the final sequence converges on the unit circle in the complex plane centered at the $1 + 0 i$. 
+
+In particular, if $j = 0$, $S(chi_0)$ diverges. Otherwise, each $chi_j$ maps onto the roots of unity hence the convergence is well-defined. In particular, then, we find $
+S(chi_j) = cases(
+  - log (1 - e^(2 pi i j/N)) &"if" j eq.not 0,
+  0 &"else"
+).
+$ Now, for a general function $f in L^2 (ZZ\/N ZZ)$, we find by the Fourier inversion formula $
+S(f) = S(hat(f)(0) chi_0 + dots.c + hat(f)(N-1) chi_(N-1)),
+$ which certainly diverges if $hat(f)(0) eq.not 0$. Otherwise, we find by linearity $
+S(f) = sum_(j=1)^(N-1) hat(f)(j) (- log(1 - x)).
+$ So, returning to our original example, we can define $f in L^2 (ZZ\/4 ZZ)$ by $f(n) = cases(
+  0 &"if" n "even",
+  1 &"if" n = 1 + 4 k,
+  -1 &"if" n = 3 + 4 k
+)$. Then, we find $
+1 - 1/3 + 1/5 - 1/7 + 1/9 - dots.c &= S(f) \
+&= 1/(2 i) (S(chi_1) - S(chi_3)) \ 
+&= 1/(2 i) (- log(1 - i) + log(1 + i)) \ 
+&= 1/(2 i) (- log (sqrt(2)) + (pi i)/4 + log(sqrt(2)) + (pi i)/4) = pi/4.
+$
