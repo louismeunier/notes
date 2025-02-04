@@ -13,6 +13,16 @@
 )
 #set align(left)
 
+
+// TODO
+#let Var = "Var"
+
+#let Bias = "Bias"
+#let mse = "MSE"
+#let MSE = "MSE"
+
+// TODO
+
 #pagebreak()
 
 = Review of Probability
@@ -316,7 +326,7 @@ P(X_((1)) <= x) &= 1 - P(X_((1)) > x) \
 $ (d) is similar.
 ]
 
-#theorem(["Distribution of" $j$th Order Statistics])[
+#theorem([Distribution of $j$th Order Statistics])[
 Let $X_1, dots, X_n tilde^"iid" F, f$.
 
   _(Discrete)_ Suppose the $X_i$'s take values in $S_x = {x_1, x_2, dots}$ and put $p_i = P(X_i)$. Then, $
@@ -373,5 +383,134 @@ $
   (sqrt(n) (overline(X)_n - mu))/(S_n) ->^"d" cal(N) (0, 1),
   $ since we may rewrite $
   (sqrt(n) (overline(X)_n - mu)\/sigma)/(S_n\/sigma).
-  $ The numerator $->^"d" cal(N)(0, 1)$ by CLT. $S_n^2 ->^P sigma^2$, so the denominator goes to $1$ in probability
+  $ The numerator $->^"d" cal(N)(0, 1)$ by CLT. $S_n^2 ->^P sigma^2$, so the denominator goes to $1$ in probability.
+]
+
+#definition([Big $cal(O)$, Little $cal(o)$ Notation])[
+  Let ${a_n}, {b_n} subset.eq RR$ real sequences. 
+  
+  - We say $a_n = cal(O)(b_n)$ if $exists 0 < c in RR$ and $N in NN$ such that $|a_n/b| <= c$ for every $n >= N$.
+
+  - We say $a_n = cal(o)(b_n)$ if $lim_(n->infinity) a_n/b_n = 0$.
+]
+
+#definition([Big $cal(O)_p$, Little $cal(o)_p$ Notation])[
+  Let ${X_n}, {Y_n}$ sequences of random variables. 
+  - We say $X_n = cal(O)_p (1)$ if $forall epsilon > 0$ there is a $N_epsilon in  NN$ and $C_epsilon in RR$ such that $
+  P(|X_n| > C_epsilon) < epsilon
+  $ for every $n > N_epsilon$.
+    - We say $X_n = cal(O)_p (Y_n)$ if $X_n\/Y_n = cal(O)_p (1)$.
+  - We say $X_n = cal(o)_p (1)$ if $X_n ->^"P" 0$.
+    - We say $X_n = cal(o)_p (Y_n)$ if $X_n\/Y_n = cal(o)_p (1)$.
+]
+
+#proposition[
+  If $X_n ->^d X$, then $X_n = cal(O)_p (1)$.
+]
+
+#proposition("The Delta Method (First Order)")[
+Let $sqrt(n) (X_n - mu) ->^"d" V$ and $g$ a real-valued function such that $g'$ exists at $x = mu$ and $g'(mu) eq.not 0$. Then, $
+sqrt(n) (g(X_n) - g(mu)) ->^"d" g'(mu) V.
+$ In particular, if $V tilde cal(N)(0, sigma^2)$ then $
+sqrt(n) (g(X_n) - g(mu)) ->^"d" cal(N)(0, g'(mu)^2 sigma^2).
+$
+]
+#proof[
+  Taylor expanding the LHS, $
+  sqrt(n) {g(X_n) - g(mu)} = g'(mu) sqrt(n) (X_n -mu) + cal(o)_p (1) -> g'(mu) V.
+  $ 
+]
+
+#proposition("The Delta Method (Second Order)")[
+  Suppose $sqrt(n) (X-n - mu) ->^"d" cal(N)(0, sigma^2)$ and $g'(mu) = 0$ but $g'' (mu) eq.not 0$. Then, $
+  n {g(X_n) - g(mu)} ->^"d" sigma^2 dot( g''(mu))/2  dot chi_((1))^2.
+  $
+]
+#proof[
+  $
+  g(X_n) - g(mu) = (g''(mu))/2 (X_n - mu)^2 + cal(o)_p (1),
+  $ so $
+   n (g(X_n) - g(mu)) = sigma^2 (g''(mu))/2 [(sqrt(n)(X_n - mu))/sigma]^2 + cal(o)_p (1).
+  $ The bracketed term converges in distribution to $cal(N)(0, 1)$ and the $cal(o)_p (1)$ term converges in probability to zero, so the proposition follows by applying Slutsky's Theorem.
+]
+
+#example[
+  $sqrt(n) (overline(X)_n - mu) ->^"d" cal(N) (0, sigma^2)$ by CLT. Letting $g(x) = x^2$, and assuming $mu eq.not 0$, then $
+  sqrt(n) (overline(X)_n^2 - mu^2) -> cal(N)(0, 4 mu^2 sigma^2),
+  $ by the first-order delta method.
+]
+
+#proposition[
+  Let $X_1, dots, X_n tilde^"iid" F$, and denote the ECDF $F_n (x) = 1/n sum_(i=1)^n bb(1)(X_i <= x)$. Then, 
+  1. $EE[F_n (x)] = F(x)$;
+  2. $"Var" (F_n (x)) = 1/n F(x) (1 - F(x))$;
+  3. $n F_n (x) = sum_(i=1)^n bb(1) (X_i <= x) tilde "Bin"(n, F(x))$;
+  4. $(sqrt(n) (F_n (x) - F(x)))/(sqrt(F(x)(1 - F(x)))) ->^"d" cal(N)(0, 1)$.
+  5. $F_n (x) ->^"P" F(x)$.
+  6. $P(|F_n (x) - F(x)| >= epsilon) <= 2 e^(- 2 n epsilon^2)$, by Hoeffing's Inequality.
+  7. $sup_(x in RR) |F_n (x) - F(x)| = ||F_n - F||_infinity ->^"a.s." 0$, by the Glivenko-Cantelli Theorem.
+  8. $P(||F_n - F||_infinity > epsilon) <= C epsilon e^(-2 n epsilon^2)$ for some constant $C$ (Dvoretzky-Kiefer-Wolfowitz Theorem).
+]
+#remark[
+  The constant in 8. was shown to be $2$ by Massart.
+]
+
+== Parametric Inference
+
+#definition("Point Estimator")[
+  Let $X_1, dots, X_n$ a random sample. A _point estimator_ $hat(theta):=hat(theta) (X_1, dots, X_n)$ is an estimator of a parameter $theta$ if it is a statistic. 
+]
+
+#example[
+  Let $X$ be a random variable denoting whether a randomly selected electronic chip is operational or not, i.e. $X = cases(
+1 "operational", 0 "else"
+  )$, supposing $X tilde "Ber"(theta)$, then $0 < theta < 1$ is the probability a randomly selected chip is operational. Let $X_1, dots, X_n tilde^"iid" "Ber"(theta)$. Then, $
+  cal(F) = {"Ber"(theta) : 0 < theta < 1}, wide Theta = (0, 1).
+  $ Then, possible estimators are $overline(X)_n, (X_1 + X_2)/2$, just $X_2$, etc. 
+]
+
+#definition("Bias")[
+  An estimator $hat(theta)_n$ is an _unbiased_ estimator of $theta$ if $
+  EE_theta [hat(theta)_n] = theta, wide forall theta in Theta,
+  $ where the expected value is taken with respect to the distribution of $hat(theta)_n$ (and thus depends on the distribution $F_theta$).
+
+  Generally, the _bias_ of an estimator $hat(theta)_n$ is defined $
+  "Bias"(hat(theta)_n) := EE_theta [hat(theta)_n] - theta, wide theta in Theta.
+  $ If $hat(theta)_n$ unbiased, then $"Bias"(hat(theta)_n) = 0$.
+]
+
+#example[
+For instance, recalling the previous example, $
+EE_theta [overline(X)_n] = 1/n sum_(i=1)^n EE_theta [X_i] = 1/n n theta = theta,
+$ so $overline(X)_n$ unbiased. Also, $
+EE_theta [X_1] = theta,
+$ so just $X_1$ also unbiased, as is $(X_1 + X_2)/2$.
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" F_theta$, $theta = vec(mu, sigma^2)$, $mu = EE[X_i], sigma^2 "Var"(X_i)$. Then, $hat(mu)_n = overline(X)_n = 1/n sum_(i=1)^n X_i$ an unbiased estimator of $mu$. Let $hat(sigma)_n^2 = S_n^2 = 1/(n - 1) sum_(i=1)^n (X_i - overline(X)_n)^2$, then recalling $EE[hat(sigma)^2_n] = sigma^2$, this is an unbiased estimator of $sigma^2$. However, changing the constant term, to get $
+  hat(sigma)^(ast 2)_n = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2,
+  $ is biased, with $
+  EE_theta [hat(sigma)^(ast 2)_n] = (n-1)/n sigma^2,
+  $ so $
+  "Bias"(hat(sigma)^(ast 2)_n) = - sigma^2/n < 0,
+  $ i.e. $ hat(sigma)^(ast 2)_n$ underestimates the true parameter on average. Of course, in the limit it becomes 0.
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" cal(U)(0, theta)$, $theta > 0$, $Theta = (0, infinity)$. Recall $EE_theta [X_i] = theta/2$. Consider $
+  hat(theta)_(n,1) := 2 X_3, wide hat(theta)_(n, 2) := 2 overline(X)_n, wide hat(theta)_(n, 3) := X_((n)) .
+  $ Then, $EE[hat(theta)_(n, i)] = theta$ for $i = 1, 2$ and $n/(n+1) theta$ for $i = 3$. Hence, we can scale the last one, $hat(theta)_(n, 4) := (n+1)/n hat(theta)_(n, 3)$,  to get an unbiased estimator.
+]
+
+#definition("Mean-Squared Error")[
+The _Mean-Squared Error_ (MSE) of an estimator is defined $
+mse_(theta) (hat(theta)_n) &:= EE_(theta) [(hat(theta)_n - theta)^2] \ 
+&= EE_theta [((hat(theta)_n - EE_theta [hat(theta)_n]) + (EE_theta [hat(theta)_n] - theta))^2] \
+&= Var_(theta) (hat(theta)_n) + [Bias (hat(theta)_n)]^2.
+$ Remark that if $EE_theta [hat(theta)_n] = theta$, i.e. $hat(theta)_n$ unbiased, then $MSE_theta (hat(theta)_n) = Var_theta (hat(theta)_n)$.
+]
+
+#definition("Consistency")[
+  We say an estimator $hat(theta)_n$ of $theta$ is _consistent_ if $hat(theta)_n ->^"P" theta$ as $n -> infinity$.
 ]

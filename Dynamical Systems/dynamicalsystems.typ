@@ -142,3 +142,84 @@ Notice that if $v in Gamma (u_0)$, then $Gamma (v) = Gamma (u_0)$; namely a comp
 #remark[
   $B$ absorbing $=>$ $omega(A) subset.eq omega(B)$. Moreover, $omega(B)$ attracts $A$ for every bounded set $A$. I.e., $omega(B)$ is a global attractor.
 ]
+
+= Stability Theory
+
+#definition("Stable/Unstable Manifolds")[
+If $u^ast$ a steady state of a dynamical system, the _stable manifold_ of $u^ast$ is defined as the set $
+{u in RR^p : omega(u) = u^ast},
+$ and similarly, the _unstable manifold_ is defined $
+{u in RR^p : Gamma^(-) (u) exists "and" alpha(u) = u^ast}.
+$
+]
+
+#definition("Lyapunov Stability")[
+  A steady state $u^ast$ is called _Lyapunov stable_ if $forall epsilon > 0$, there exists a $delta > 0$ such that if $||u^ast - v|| < delta$, then $||S(t) v - u^ast|| < epsilon$ for all time $t >= 0$.
+]
+
+#definition("Quasi-Asymptotically Stable")[
+  A steady state $u^ast$ is called _Quasi-asymptotically stable_ (qas) if there exists a $delta > 0$ such that if $||u - u^ast|| < delta$, $lim_(t -> infinity) ||S(t)u - u^ast|| = 0$. 
+]
+
+#definition("Asymptotically Stable")[
+  A steady state $u^ast$ is called asymptotically stable if it is both Lyapunov stable and qas.
+]
+
+#definition("Linearization")[
+ Consider a dynamical system $dot(u) = f(u)$, where $f(u^ast) = 0$. Let $v(t) = u(t) - u^ast$, then, $dot(v) = f(u^ast + v)$, and $v^ast = 0$ corresponds to a fixed point. Taylor expanding $dot(v)$, we find $
+ dot(v) &= f(u^ast + v) \
+ &= f(u^ast) + J_f (u^ast) v + cal(O)(||v||^2) \ 
+ &= J_f (u^ast) dot v + cal(O)(||v||^2),
+ $ where $J_f (u^ast)$ the Jacobian matrix of $f$ evaluated at $u^ast$. The linear system $
+ dot(v) = J_f (u^ast) v
+ $ is called the _linearization_ of $dot(u) = f(u)$ at $u^ast$.
+]
+
+#proposition[
+  The general solution to the linearized system $
+  dot(v) = J v, wide v(0) = v_0,
+  $ is $
+  v(t) = e^(t J) dot v_0 ,
+  $ where $e^(dot )$ the matrix exponential defined by the (always convergent) series $
+  e^(M) = sum_(j=0)^infinity M^j/j!.
+  $
+]
+
+Suppose $dot(v) = J v$ and $J$ complex diagonlizable with eigenvalues $lambda_1, dots, lambda_n$. Then, $J$ conjugate to the diagonal matrix $Lambda$ with diagonal entries equal to the eigenvalues, namely $
+J = P Lambda P^(-1).
+$ It follows that $
+v(t) = P e^(t Lambda) P^(-1) v_0.
+$ Equivalently (changing coordinates), letting $w (t) = P^(-1) v(t)$, we find $
+w(t) = e^(t Lambda) w(0),
+$ noting that now, since $Lambda$ diagonal, $
+e^(t  Lambda) = mat(e^(t lambda_1), "", ""; "", dots.down, ""; "", "", e^(t lambda_n)).
+$
+
+#definition("Linear Stable, Unstable, Centre Manifolds")[
+  Supposing $0$ a steady state and $J_f (0)$ complex diagonalizable, define respectively the _linear_ stable, unstable, and centre manifolds:  $
+  E^s (0) &:= {u | u "spanned by eigenvectors with" Re(lambda) < 0} \ 
+  E^u (0) &:= {u | u "spanned by eigenvectors with" Re(lambda) > 0} \ 
+  E^c (0) &:= {u | u "spanned by eigenvectors with" Re(lambda) = 0}.
+  $
+  Notice that if $u_0 in E^s (0)$, then the corresponding solution with initial condition $u_0$, $u(t)$, converges to $0$ as $t-> infinity$, with similar conditions for $u_0 in E^u (0)$.
+]
+
+#definition("Hyperbolic")[
+  A steady state $u^ast$ is called _hyperbolic_ if $J_f (u^ast)$ has no eigenvalues with $Re(lambda) = 0$, i.e. $dim(E^c (u^ast)) = 0$.
+]
+
+#theorem[
+  If $u^ast$ a hyperbolic steady state of $dot(u) = f(u)$, and all of the eigenvalues of $J_f (u^ast)$ have strictly negative real part, then $u^ast$ is asymptotically stable.
+]
+
+#theorem[
+  If $u^ast$ a steady state and $J_f (u^ast)$ has a steady state with eigenvalue having real part strictly positive real part, then $u^ast$ unstable (namely not Lyapunov stable).
+]
+
+#remark[
+  These theorems describe cases in which the linearization is correct in predicting the nonlinear behaviour.
+]
+
+#remark[
+  The second theorem can only guarantee non-Lyapunov stability because linearization is a local process - quasi-asymptotic stability is "more global", and not picked up by the linearization necessarily.
+]

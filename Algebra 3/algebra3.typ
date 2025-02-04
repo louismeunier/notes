@@ -1443,7 +1443,7 @@ $
 #remark[
   More concretely, we may construct $
   V_i := ker(p_(i)).
-  $ Notice $V_i$ $T$-stable. Since $gcd(p_1, p_2) = 1$, we have find $a, b in F[x]$ such that $
+  $ Notice $V_i$ $T$-stable. Since $gcd(p_1, p_2) = 1$, we can find $a, b in F[x]$ such that $
   1 = a p_1 + b p_2.
   $ Evaluating on $T$, we find $
   I = a(T) p_1 (T) + b(T) p_2 (T)
@@ -2165,4 +2165,78 @@ Notice that all polynomials in $T$ commute with $T$, hence $F[x]\/(p_T) subset.e
   If $m in N$, then $m + N in M\/N$ so exist scalars $a_1, dots, a_t$ such that $m + N = a_1 m_1 + dots.c + a_t m_t + N$ so in particular $m = a_1 m_1 + dots.c + a_t m_t + n$ for some $n in N$, in particular $m in N' union N$, so $M subset.eq N' union N$, hence we have equality as the converse inclusion comes for free.
 
   Suppose $m in N' sect N$. Then, $m = a_1 m_1 + dots.c + a_t m_t$ for some $a_i$'s such that $m in N$. Passing to the quotient, it must be that $m + N = N$ i.e. $a_1 (m_1 + N) + dots.c + a_t (m_t + N)$. But $m_i + N$ a basis for $M\/N$, so in particular there is a unique way to write the zero vector $0 + N$, and it must be that $a_1 = dots.c = a_t = 0$ and so $m$ itself must be the zero 0 vector. It follows that $N' sect N = {0}$ and thus $M = N plus.circle N'$.
+]
+
+== $"PSL"(2, 5) tilde.eq A_5$
+
+Consider $"GL"(2, 5) := "GL"_2 (FF_5)$, and its subgroup $"SL"(2, 5) = ker(delta)$, where $
+delta : "GL"(2, 5) ->> (FF_5)^times
+$ the kernel of the surjective group homomorphism given by the determinant. Let $
+"PSL"(2, 5) := "SL"(2, 5) \/<mat(-1, ""; "", -1)>.
+$ We claim that $"PSL"(2, 5) tilde.eq A_5$.
+
+=== The Sylow-5 Subgroups of $"PSL"(2,5)$
+
+=== The Class Equation of $"SL"(2,5)$
+We use $M$ to denote a typical element of each "type".
+- _Order 1:_ Done, 1A
+- _Order 2:_ Then, $p_M (x) | x^2 - 1  = (x - 1) (x + 1)$. 
+  - $x - 1$ impossible since then $M = I$.
+  - $(x - 1)(x+1)$ impossible since then $M$ has distinct eigenvalues $4, 1$ and so in some appropriate basis $M = mat(4, ""; "", 1)$ which does not have determinant 1
+  - Must be that $p_M (x) = x + 1$ so in particular $M = mat(-1, ""; "", -1)$. Being a scalar matrix, it commutes with everything, so we find our single conjugacy class of elements of order 2, 2A, has size 1.
+- _Order 3:_ $p_M (x) = x^3 - 1 = (x - 1)(x^2 + x + 1)$ so it must be that $p_M (x) = x^2 + x + 1$, which is irreducibile, and thus $
+Z_G (M) = (FF_5[x]\/(x^2 + x + 1))^times = FF_25^times,
+$ so $hash Z_G (M) = 24$. Then, $Z_S (M) = ker (delta_M)$, so $hash Z_S (M)|24$ and $6|hash Z_S (M)$ (since $angle.l M angle.r$, $angle.l -M angle.r$ in $Z_S (M)$) so $hash Z_S (M) = 6, 12, 24$. It can't be 24, since this would imply every element that commutes with $M$ has determinant 1, but take for instance $mat(2, ""; "", 2)$. So, a conjugacy class of elements of order $3$ has either $10$ or $20$ elements.\ Remark that every element of order 3 must have determinant 1, since $M^3 = 1 => det(M^3) = det(M)^3 = 1$, and the only cube in $FF_5$ is $1$, hence $det M =1$. 
+- _Order 6:_ From each conjugacy class of order 3, we get another for elements of order 6 by multiplying by $- I$. This gives 6A.
+- _Order 4:_ $p_M (x)|x^4 -1 = (x - 1)(x+1)(x-2)(x-3)$.
+  - All of the 1-degree possibilities impossible since then $M$ a scalar matrix, and the only scalar matrices in this group are in 1A, 2A.
+  - It must be that $deg p_M = 2$ then, and so in particular in any of the combinations above $M$ has two distinct eigenvalues, call them $lambda_1, lambda_2$. In particular, then, we can find a basis such that $M = mat(lambda_1, ""; "", lambda_2)$, so $det M = lambda_1 lambda_2 = 1$. The only possibilities for $lambda_1, lambda_2$ in the choices ${1, -1, 3, 2}$ with these properties are $3, 2$, so $p_M (x) = (x - 3)(x - 2)$. Then, the number of such elements is in bijection with the set of ordered pairs of distinct eigenspaces, of which there are 30, so $hash$4A = 30. // TODO don't like this
+- _Order 5:_ $p_M (x)|x^5 - 1 = (x -1)^5$, so $p_M (x) = (x - 1)^2$ since $M eq.not I$. Then, the centralizer, denoted $Z_G (M)$, of $M$ in $"GL"(2, 5)$ is given by $
+Z_G (M) = (FF_5[x]\/(x-1)^2)^times.
+$ This ring is not a field, indeed any scalar multiple of $x - 1$ is a zero divisor, hence its number of invertible elements is $5^2 - 5 = 20$ ($5^2$ elements, $5$ scalar choices for zero divisors). Consider $
+det_M : Z_G (M) -> FF_5^times.
+$ Notice that $Z_S (M) = ker (det_M)$. We know the following, then:
+  - $hash Z_S (M)|hash Z_G (M) = 20$.
+  - $angle.l M angle.r, - I dot angle.l M angle.r subset Z_S (M) => hash Z_S (M) >= 10$ (i.e., powers of $M$ and negative 1 times powers of $M$ always commuted with $M$ and remain in $"SL"(2,5)$ so we may lower bound the size). \ So, we know $hash Z_S (M) = 10$ or 20, and thus any conjugacy class of elements of order 5 must have either $12$ or $6$ elements ($120/10, 20$ resp). Notice that $M = mat(1, 1; 0, 1)$ of order 5, so there exist at least $5$ elements of order 5 and so in particular at least one such conjugacy class; moreover there exists, then at least $6$ elements of order $5$.  To conclude precisely how many, let us consider the Sylow-5 subgroups of $"SL"(2, 5)$. $hash "SL"(2, 5) = 2^3 3 dot 5$, so $N_5 | 24$ and so is either $1$ or $6$. Hence, $N_5 = 6$; if it were $1$, then there would only be $4$ elements of order $5$, which we've shown isn't true. Hence, there are precisely $6 * 4 = 24$ elements of order 5 in $"SL"(2,5)$ (each Sylow-5 subgroup is isomorphic to $ZZ\/5 ZZ$ so each contribute 4 distinct elements of order 5).\ Now, if $hash Z_S (M) = 20 = hash Z_G (M)$, this implies that every element that commutes with $M$ in $"GL"(2, 5)$ has determinant $1$. This isn't true, for instance $mat(2, ""; "", 2)$, hence it must be that $hash Z_S (M) < 20$ and thus $hash Z_S (M) = 10$. It follows then that every conjugacy class of elements of order 5 must have precisely 12 elements, and as there are 24 such elements, we find two conjugacy classes, 5A, 5B.
+- _Order 10:_ Notice that $- M$, for any $M$ of order 5, is of order 10. So, rinsing and repeating the logic of the previous case, we find two conjugacy classes of elements of order 10, 10A, 10B.
+
+#table(
+  columns: 2,
+  "Conj.", $hash$,
+  [1A], $1$,
+  [2A], $1$,
+  [3A], $20$,
+  [4A], $30$,
+  [5A], $12$,
+  [5B], $12$,
+  [6A], $20$,
+  [10A], $12$,
+  [10B], $12$
+)
+
+#pagebreak()
+== Final Questions
+#proposition[
+Describe a Sylow $2$-subgroup of $S_6$. Show that $S_6$ can be made to act transtively on a set of 45 elements. Show that any such set is isomorphic (as a $G$-set).
+]
+#proposition[
+  Suppose $G_1, G_2$ are finite groups with normal subgroups $H_1, H_2$ respectively. Suppose further that $H_1$ and $H_2$ are isomorphic, and $G_1\/H_1$ and $G_2\/H_2$ are isomorphic. Are $G_1$ and $G_2$ necessarily isomorphic? Prove or give a counterexample.
+]
+
+#proposition[State Burnside's Lemma. Use it to compute the number of ways to color a regular $7$-gon with $k$ colors, up to rotations.]
+
+#proposition[
+  Let $G$ be a group of cardinality $77$. Show that $G$ abelian.
+]
+
+#proposition[
+  Let $G := "GL"_3 (FF_2)$. Compute the cardinality of $G$, and use the structure theorem for finitely generated modules over a PID to compute the conjugacy classes and their sizes of $G$.
+]
+
+#proposition[
+  Let $R$ be a ring which contains a field $F$ as a subring. Let $I$ be an ideal such that $R\/I$ is finite dimensional as a vector space over $F$. Prove that $I$ is a prime ideal if and only if $I$ is a maximal ideal.
+]
+
+#proposition[
+  Let $T : V -> V$ a linear transformation on a finite dimensional vector space $V$ over a field $FF$. Describe how the minimal and characteristic polynomials of $T$ can be described in terms of the elementary divisors of $V$ viewed as a $FF[x]$-module by multiplication by polynomials in $T$. Conclude the Cayley-Hamilton Theorem, that $f(T) = 0$ where $f$ is the characteristic polynomial of $T$.
 ]
