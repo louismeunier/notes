@@ -222,4 +222,19 @@ $
 
 #remark[
   The second theorem can only guarantee non-Lyapunov stability because linearization is a local process - quasi-asymptotic stability is "more global", and not picked up by the linearization necessarily.
+] 
+
+#theorem("Hartman-Grobman Theorem")[
+  If $f$ continuously differentiable and $dot(u) = f(u)$ has a hyperbolic steady state $u^ast$, then there exists an open ball $B(u^ast, delta) subset.eq RR^p$, an open set $0 in N$ and a homeomorphism $
+  H : B(u^ast, delta) -> N
+  $ such that while $u(t) in B(u^ast, delta)$ a solution to $dot(u) = f(u),$ then $v(t) = H(u(t))$ a solution of $dot(v) = J_f (u^ast) v$.
 ]
+
+#definition("Stable, Unstable Manifold")[
+  The _stable, unstable_ manifolds of a steady state $u^ast$ are defined $
+  W^s (u^ast) := {u in RR^p | S(t) u -> u^ast "as" t -> infinity} \ 
+  W^u (u^ast) := {u in RR^p | Gamma^- (u) exists "and" S(t) u -> u^ast "as" t->-infinity}.
+  $
+]
+
+= Delay Differential Equations

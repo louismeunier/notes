@@ -16,6 +16,7 @@
 
 // TODO
 #let Var = "Var"
+#let Cov = "Cov"
 
 #let Bias = "Bias"
 #let mse = "MSE"
@@ -513,4 +514,80 @@ $ Remark that if $EE_theta [hat(theta)_n] = theta$, i.e. $hat(theta)_n$ unbiased
 
 #definition("Consistency")[
   We say an estimator $hat(theta)_n$ of $theta$ is _consistent_ if $hat(theta)_n ->^"P" theta$ as $n -> infinity$.
+]
+
+#remark[
+  There are many ways of establishing consistency; by direct definition of convergence in probability, the WLLN (maybe continuous mapping theorem), or checking if $EE_theta [hat(theta)_n]-> theta$ (if this happens we say $hat(theta)_n$ "asymptotically unbiased") and $Var_theta (hat(theta)_n) -> 0$ as $n-> infinity$, for in this case by Chebyshev's Inequality we have consistency.
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" F_theta$.
+
+  1. $hat(mu)_n := overline(X)_n ->^"P" mu$ by WLLN, and $S_n^2 ->^"P" sigma^2$ similarly.
+
+  2. If $X_1, dots, X_n tilde^"iid" cal(U)(0, theta)$, then $EE[X_i] = theta/2$. Note that $hat(theta)_(n, 1) = 2 overline(X)_n$ and $hat(theta)_(n, 2) = (n + 1)/n X_((n))$ are both unbiased estimators of $theta$, and both are consistent. To see the second one, we have that for any $epsilon > 0$, $
+  P(|X_((n)) - theta| > epsilon) &= P(theta - X_((n)) > epsilon) \ 
+  &= P(X_((n)) <  theta - epsilon)\
+  &= ((theta - epsilon)/(theta))^n -> 0 "as" n -> infinity.
+  $ We have too that $
+  MSE_theta (hat(theta)_(n, 1)) = Var_theta (hat(theta)_(n, 1)) = 4 Var_theta (overline(X)_n) = 4/n Var(X_i) = 4/n theta^2/12 = theta^2/(3n).
+  $ Also $
+  MSE_theta (hat(theta)_(n, 2)) &= Var_theta (hat(theta)_(n, 2)) = ((n + 1)/n)^2 Var(X_((n))) \
+  &= dots.c = theta^2/n(n + 2) = theta^2/(3 n) dot 3/(n +2) 
+  <= MSE_theta (hat(theta)_(n, 1)) forall n >= 1.
+  $
+]
+
+We will focus on the class of unbiased estimators of a real-valued parameter, $tau(theta)$, $tau : Theta -> RR$. 
+
+
+=== Uniformly Minimum Variance Unbiased Estimators (UMVUE)
+
+#definition("UMVUE")[
+  Let $bold(X) = (X_1, dots, X_n)^t$ be a random variable with a joint pdf/pmf given by $
+  p_theta (bold(x)) = p_theta (x_1, dots, x_n),
+  $ where $theta$ some parameter in $Theta subset.eq RR^d$. An estimator $Tau(bold(X))$ of a real valued parameter $tau(theta)$, $Theta -> RR$ is said to be a UMVUE of $tau(theta)$ if 
+  1. $EE_theta [Tau (bold(X))] = tau(theta)$ for every $theta in Theta$;
+  2. for any other unbiased estimator $Tau^ast (bold(X))$ of $tau(theta)$, we have $
+  Var_theta (Tau(bold(X))) <= Var_theta (Tau^ast (bold(X))), forall  theta in Theta.
+  $
+]
+
+#proposition("Cramér-Rau Lower Bound")[
+We define in the case $d = 1$ ($Theta subset.eq RR$) for convenience. Assume that 
+
+(1) the family ${p_theta : theta in Theta}$ has a common support $S = {bold(x) in RR^n : p_theta (bold(x))  > 0}$ that does not depend on $theta$;
+
+(2) for $bold(x) in S$, $theta in Theta$, $dif/(dif theta) log p_theta (bold(x)) < infinity$;
+
+(3) for any statistic $h(bold(x))$ with $EE_theta [ |h(bold(x))| ] < infinity$ for every $theta in Theta$, we have $
+dif/(dif theta) integral_S h(bold(x)) p_theta (bold(x)) dif bold(x) = integral_S h(bold(x)) dif/(dif theta) p_theta (bold(x)) dif bold(x),
+$ whenever the right-hand side is finite.
+
+Let $Tau(bold(X))$ be such that $Var_theta (Tau(bold(X))) < infinity$ and $EE_theta [Tau(bold(X))] = tau(theta)$ for every every $theta in Theta$. Then if $0 < EE_theta [(dif/(dif theta) log(p_theta (bold(x))))^2] < infinity$ for every $theta in Theta$, then the Cramér-Rao Lower Bound (CRLB) holds: $
+Var_theta (Tau(bold(X))) >= [tau'(theta)]^2/(EE_theta [(dif/(dif theta) log p_theta (bold(x)))^2]), wide forall theta in Theta.
+$
+]
+
+#remark[
+  The quantity $
+  I(theta) := EE_theta [(dif/(dif theta) log(p_theta (bold(x))))^2]
+  $ is called the _Fisher information_ contained in $bold(X)$ about $theta$.
+]
+
+#proof[
+  Note that $tau(theta) = EE_theta [Tau(bold(X))]$ implies $
+  tau'(theta)&= dif/(dif theta) EE[Tau(bold(X))] \
+  &= dif/(dif theta) [integral_S Tau(bold(x)) p_theta (bold(x)) dif bold(x)] \ 
+  "by ass. 2, 3" wide &= integral_S  Tau(bold(x)) dif/(dif theta) p_theta (bold(x)) dif bold(x) \ 
+  &= integral_S Tau(bold(x)) dif/(dif theta) [log p_theta (bold(x))] p_theta (bold(x)) dif x \ 
+  &= EE_theta [Tau(bold(X)) dif/(dif theta) log p_theta (bold(X))], wide forall theta in Theta. wide "(I)"
+  $ On the other hand, by (3) with $h equiv 1$, then $
+  0 = integral_S dif/(dif theta) p_theta (bold(x)) dif bold(x) = integral_S [dif/(dif theta) log p_theta (bold(x))] p_theta (bold(x)) dif bold(x) wide forall theta in Theta \ 
+  => EE_theta [dif/(dif theta) log p_theta (bold(X))] = 0. wide "(II)"
+  $ Combining (I) and (II), $
+  tau' (theta) = "Cov"_theta (Tau(bold(X)), dif/(dif theta) log p_theta (bold(x))),
+  $ since $"Cov"(X, Y) = EE[X Y] - EE[X]EE[Y]$, but the second of these terms vanishes by (II). Thus, $
+  [tau'(theta)^2] = Cov_theta^2 (Tau(bold(x)), dif/(dif theta) log p_theta (bold(X)))
+  $
 ]
