@@ -93,7 +93,7 @@ We have several (equivalent) notions, then, of continuity; via sequences, $epsil
 ]
 
 #definition("Sequentially Compact")[
-  $(X, rho)$ _sequentially compact_ if every sequence in $X$ has a convergence subsequence whose limit is in $X$.
+  $(X, rho)$ _sequentially compact_ if every sequence in $X$ has a convergent subsequence whose limit is in $X$.
 ]
 
 #definition("Relatively/Pre- Compact")[
@@ -101,10 +101,14 @@ We have several (equivalent) notions, then, of continuity; via sequences, $epsil
 ]
 
 #theorem[TFAE: 
-- $X$ complete and totally bounded;
-- $X$ compact;
-- $X$ sequentially compact.
+1. $X$ complete and totally bounded;
+2. $X$ compact;
+3. $X$ sequentially compact.
 ]
+
+// #proof[
+// (1. $=>$ 2.) Let ${cal(U)_lambda}_(lambda in Lambda)$ be an arbitrary open cover of 
+// ]
 
 #remark[
   $E subset.eq X$ relatively compact if every sequence in $E$ has a convergent subsequence.
@@ -138,6 +142,23 @@ Let $C(X) := {f : X -> RR | f "continuous"}$ and $||f||_infinity := max_(x in X)
   &> alpha - alpha/2 > 0,
   $ which contradicts the Cauchy-ness of ${f_n}$, completing the proof.
 ]
+
+#definition("Density/Separability")[
+A set $D subset.eq X$ is called _dense_ in $X$ if for every nonempty open subset $A subset.eq X$, $D sect A eq.not nothing$. We say $X$ _separable_ if there is a countable dense subset of $X$.
+]
+
+#remark[
+  If $A$ dense in $X$, then $overline(A) = X$.
+]
+
+#proposition[
+  If $X$ compact, $X$ separable.
+]
+
+#proof[
+  Since $X$ compact, it is totally bounded. So, for $n in NN$, there is some $K_n$ and ${x_i} subset.eq X$ such that $X subset.eq union.big_(i=1)^K_n B(x_i, 1/n)$. Then, $D = union.big_(n=1)^infinity union.big_(i=1)^K_n {x_i}$ countable and dense in $X$.
+]
+
 
 // % ! 01-09
 == Arzelà-Ascoli
@@ -195,11 +216,30 @@ The goal in this section is to find conditions for a sequence of functions ${f_n
   Let $(X, rho)$ a compact metric space and ${f_n} subset.eq C(X)$ be a uniformly bounded and (uniformly) equicontinuous family of functions. Then, ${f_n}$ is pre-compact in $C(X)$, i.e. there exists ${f_n_k} subset.eq {f_n}$ such that $f_n_k$ is uniformly convergent on $X$.
 ]
 
+#proof[
+  Since $(X, rho)$ compact it is separable and so by the lemma there is a subsequence ${f_n_k}$ that converges pointwise on $X$. Denote by $g_k := f_n_k$ for notational convenience.
+
+  We claim ${g_k}$ uniformly Cauchy. Let $epsilon > 0$. By uniform equicontinuity, there is a $delta > 0$ such that $rho(x, y) < delta => |g_k (x) - g_k (y)| < epsilon/3$. Since $X$ compact it is totally bounded so there exists ${x_i}_(i=1)^N $ such that $X subset.eq union.big_(i=1)^N B(x_i, delta)$. For every $1 <= i <= N$, ${g_k (x_i)}$ converges by the lemma hence is Cauchy in $RR$. So, there exists a $K_i$ such that for every $k, ell >= K_i$ $|g_k (x_i) - g_ell (x_i)| <= epsilon/3$. Let $K := max{K_i}$. Then for every $ell, k <= K$, $|g_k (x_i) - g_ell (x_i)| <= epsilon/3$ for every $i = 1, dots, N$. So, for all $x in X$, there is some $x_i$ such that $rho(x, x_i) < delta$, and so for every $k, ell >= K$, $
+  |g_k (x) - g_ell (x)| & <= |g_k (x) - g_k (x_i)| \ 
+  & wide + |g_k (x_i) - g_ell (x_i)| \ 
+  & wide + |g_ell (x_i) - g_ell (x)| < epsilon,
+  $ the first and last follow by the equicontinuity and the second from the lemma. This holds for every $x$ and thus $||g_k - g_ell||_infinity < epsilon$, so ${g_k}$ Cauchy in $C(X)$. But $C(X)$ complete so converges in the space.
+]
+
 #remark[
   If $K subset.eq X$ a compact set, then $K$ bounded and closed.
 ]
 
 #theorem[Let $(X, rho)$ compact and $cal(F) subset.eq C(X)$. Then, $cal(F)$ a compact subspace of $C(X)$ iff $cal(F)$ closed, uniformly bounded, and (uniformly) equicontinuous.]
+
+#proof[
+  $(impliedby)$ Let ${f_n} subset.eq cal(F)$. By Arzelà-Ascoli Theorem, there exists a subsequence ${f_n_k}$ that converges uniformly to some $f in C(X)$. Since $cal(F)$ closed, $f in cal(F)$ and so $cal(F)$ sequentially compact hence compact.
+
+  $(implies)$ $cal(F)$ compact so closed and bounded in $C(X)$. To prove equicontinuous, we argue by contradiction. Suppose otherwise, that $cal(F)$ not-equicontinuous at some $x in X$. Then, there is some $epsilon_0 > 0$ and ${f_n} subset.eq cal(F)$ and ${x_n} subset.eq X$ such that $|f_n (x_n) - f_n (x)| >= epsilon_0$ while $rho(x, x_n) < 1/n$. Since ${f_n}$ bounded and $cal(F)$ compact, there is a subsequence ${f_n_k}$ that converges to $f$ uniformly. Let $K$ be such that $forall k >= K$, $||f_n_k - f||_infinity <= epsilon_0/3$. Then, $
+  |f(x_n_k) -f | &>=  | |f(x_n_k) - f_n_k (x_n_k)| - |f_n_k (x_n_k) - f_n_k (x)| - |f_n_k (x) - f(x)| | \ 
+  &>= epsilon_0/3,
+  $ while $rho(x_n_k, x) <= 1/n_k$, so $f$ cannot be continuous at $x$, a contradiction.
+]
 
 == Baire Category Theorem
 
@@ -210,15 +250,40 @@ We'll say a set $E subset.eq X$ _hollow_ if $"int" E = nothing$, or equivalently
 
   (a) Let ${F_n}$ a collection of closed hollow sets. Then, $union.big_(n=1)^infinity F_n$ also hollow.
 
-  (b) Let ${O_n}$ a collection of open dense sets. Then, $sect.big_(n=1)^infinity O_n$ also dense.
+  (b) Let ${cal(O)_n}$ a collection of open dense sets. Then, $sect.big_(n=1)^infinity cal(O)_n$ also dense.
+]
+
+#proof[
+  Notice that $(a) <=> (b)$ by taking complements. We prove $(b)$.
+
+  Put $G := sect.big_(n=1)^infinity cal(O)_n$. Fix $x in X$ and $r > 0$, then to show density of $G$ is to show $G sect B(x, r) eq.not nothing$. 
+  
+  Since $cal(O)_1$ dense, then $cal(O)_1 sect B(x, r)$ nonempty and in particular open. So, let $x_1 in X$ and $r_1 < 1/2$ such that $overline(B)(x, r_1) subset.eq B(x, 2 r_1) subset.eq cal(O)_1 sect B(x, r)$.
+
+  Similarly, since $cal(O)_2$ dense, $cal(O)_2 sect B(x_1, r_1)$ open and nonempty so there exists $x_2 in X$ and $r_2 < 2^(-2)$ such that $overline(B)(x_2, r_2) subset.eq cal(O)_2 sect B(x_1, r_1)$.
+
+  Repeat in this manner to find $x_n in X$ with $r_n  < 2^(-n)$ such that $overline(B)(x_n, r_n) subset.eq cal(O)_n sect B(x_(n-1), r_(n-1))$ for any $n in NN$. This creates a sequence of sets $
+  overline(B)(x_1, r_1) supset.eq overline(B)(x_2, r_2) supset.eq dots.c,
+  $ with $r_n -> 0$. Hence, the sequence of points ${x_n}$ Cauchy and since $X$ complete, $x_j -> x_0 in X$, so in particular $
+  {x_0} = sect.big_(n=1)^infinity overline(B)(x_n, r_n),
+  $ hence $x_0 in cal(O)_n$ for every $n$ and thus $G sect B(x, r)$ nonempty.
 ]
 
 #corollary[Let $X$ complete and ${F_n}$ a sequence of closed sets in $X$. If $X = union.big_(n>=1) F_n$, there is some $n_0$ such that $"int"(F_n_0) eq.not nothing$.]
+
+#proof[
+  If not, violates BCT since $X$ is not hollow in itself.
+]
 
 #corollary[
   Let $X$ complete and ${F_n}$ a sequence of closed sets in $X$. Then, $union.big_(n=1)^infinity partial F_n$ hollow.
 ]
 
+#proof[
+  We claim $"int"(partial F_n) = nothing$. Suppose not, then there exists some $B(x_0, r) subset.eq partial F_n$. Then $x_0 in partial F_n$ but $B(x_0, r) sect F_n^c = nothing$, a contradiction.
+  // TODO why?
+  So, since $partial F_n$ closed and $partial F_n sect B(x_0, r) = nothing$ for every such ball, by BCT $union.big_(n=1)^infinity partial F_n$ must be hollow.
+]
 
 // ! 01-16
 === Applications of Baire Category Theorem
@@ -227,8 +292,37 @@ We'll say a set $E subset.eq X$ _hollow_ if $"int" E = nothing$, or equivalently
   Let $cal(F) subset C(X)$ where $X$ complete. Suppose $cal(F)$ pointwise bounded. Then, there exists a nonempty, open set $cal(O) subset.eq X$ such that $cal(F)$ uniformly bounded on $cal(O)$.
 ]
 
+#proof[
+  Let $
+  E_n &:= {x in X : |f(x)| <= n forall f in cal(F)} \ 
+  &= sect.big_(f in cal(F)) underbrace({x : |f(x)| <= n}, "closed").
+  $ Since $cal(F)$ pointwise bounded, for every $x in X$ there is some $M_x > 0$ such that $|f(x)| <= M_x$ for every $f in cal(F)$. Hence, for every $n in NN$ such that $n >= M_x$, $x in E_n$ and thus $X = union.big_(n=1)^infinity E_n$. 
+  
+  $E_n$ closed and hence by the previous corollaries there is some $n_0$ such that $"int"(E_n_0) eq.not nothing$ and hence there is some $r > 0$ and $x_0 in X$ such that $B(x_0, r) subset.eq E_n_0$. Then, for every $x in B(x_0, r)$, $|f(x)| <= n_0$ for every $f in cal(F)$, which gives our desired non-empty open set upon which $cal(F)$ uniformly bounded.
+]
+
 #theorem[
   Let $X$ complete, and ${f_n} subset.eq C(X)$ such that $f_n -> f$ pointwise on $X$. Then, there exists a dense subset $D subset.eq X$ such that ${f_n}$ equicontinuous on $D$ and $f$ continuous on $D$.
+]
+
+#proof[
+  For $m, n in NN$, let $
+  E(m, n) &:= {x in X : |f_j (x) - f_k (x)| <= 1/m forall j,k >= n} \ 
+  &= sect.big_(j,k>=n) {x : |f_j (x) - f_k (x)| <= 1/m}.
+  $ The union of the boundaries of these sets are hollow, hence $D := (union.big_(m,n >= 1) partial E(m,n))^c$ is dense. Then, if $x in D sect E(m, n)$, then $x in (partial E(m,n))^c$ implies $x in "int"(E(m,n))$.
+
+  We claim ${f_n}$ equicontinuous on $D$. Let $x_0 in D$ and $epsilon > 0$. Let $1/m <= epsilon/4$. Then, since ${f_n (x_0)}$ convergent it is therefore Cauchy (in $RR$). Hence, there is some $N$ such that $|f_j (x_0) - f_k (x_0)| <= 1/m$ for every $j, k >= N$, so $x_0 in D sect E(m, N)$ hence $x_0 in "int"(E(m,N)).$
+
+  Let $B(x_0, r) subset.eq E(m, N)$. Since $f_N$ continuous at $x_0$ there is some $delta > 0$ such that $delta < r$ and $
+  |f_N (x) - f_N (x_0)| < 1/m forall x in B(x_0, delta),
+  $ and hence $
+  |f_j (x) - f_j (x_0)| & <= |f_j (x) - f_N (x)| + |f_N (x) - f_N (x_0)| + |f_N (x_0) - f_j (x_0)| \ 
+  & <= 3/m <= 3/4 epsilon,
+  $ for every $x in B(x_0, delta)$ and $j >= N$, where the first, last bounds come from Cauchy and the middle from continuity of $f_N$. Hence, we've show ${f_n}$ equicontinuous at $x_0$ since $delta$ was independent of $f$.
+
+  In particular, this also gives for every $x in B(x_0, delta)$ the limit $
+  3/4 epsilon > lim_(j->infinity) |f_j (x) - f_j (x_0)| = |f(x) - f(x_0)|,
+  $ so $f$ continuous on $D$.
 ]
 
 == Topological Spaces
@@ -243,8 +337,13 @@ Throughout, assume $X eq.not nothing$.
   If $x in X$, a set $E in cal(T)$ containing $x$ is called a neighborhood of $x$.
 ]
 
-#proposition[$E subset.eq X$ open $<=>$ for every $x in X$, there is a neighborhood of $x$ contained $E$.]
+#proposition[$E subset.eq X$ open $<=>$ for every $x in E$, there is a neighborhood of $x$ contained in $E$.]
 
+#proof[
+  $=>$ is trivial by taking the neighborhood to be $E$ itself. $impliedby$ follows from the fact that, if for each $x$ we let $cal(U)_x$ a neighborhood of $x$ contained in $E$, then $
+  E = union.big_(x in E) cal(U)_x,
+  $ so $E$ open being a union of open sets.
+]
 #example[
   Every metric space induces a natural topology given by open sets under the metric. The _discrete topology_ is given by $cal(T) = 2^X$ (and is actually induced by the discrete metric), and is the largest topology. The _trivial topology_ ${nothing, X}$ is the smallest.  The _relative topology_ defined on a subset $Y subset.eq X$ is given by $cal(T)_Y := {E sect Y : E in cal(T)}$.
 ]
@@ -259,14 +358,30 @@ Throughout, assume $X eq.not nothing$.
   If $(X, cal(T))$ a topological space, then $cal(B) subset.eq cal(T)$ a base for $cal(T)$ $<=>$ every nonempty open set $cal(U) in cal(T)$ can be written as a union of elements of $cal(B)$.
 ]
 
+#proof[
+  $=>$ If $cal(U)$ open, then for $x in cal(U)$ there is some basis element $B_x$ contained in $cal(U)$. So in particular $cal(U) = union.big_(x in cal(U)) B_x$.
+
+  $impliedby$ Let $x in cal(U)$ and $cal(B)_x := {B in cal(B) | x in B}$. Then, for every neighborhood of $x$, there is some $B$ in $cal(B)_x$ such that $B subset.eq cal(U)$ so $cal(B)_x$ a base for $cal(T)$ at $x$.
+]
+
+#remark[
+  A base $cal(B)$ defines a unique topology, ${nothing, union cal(B)_x}$.
+]
 //  ! 01-21
 
 #proposition[
-$cal(B) subset.eq cal(T)$ a base $<=>$ 
+$cal(B) subset.eq 2^X$ a base for a topology on $X$ $<=>$ 
 - $X = union.big_(B in cal(B)) B$
 - If $B_1, B_2 in cal(B)$ and $x in B_1 sect B_2$, then there is a $B in cal(B)$ such that $x in B subset.eq B_1 sect B_2$.
 ]
 
+#proof[
+  ($=>$) If $cal(B)$ a base, then $X$ open so $X = union_B B$. If $B_1, B_2 in cal(B)$, then $B_1 sect B_2$ open so there must exist some $B subset.eq B_1 sect B_2$ in $cal(B)$.
+
+  ($impliedby$) Let $
+  cal(T) = {cal(U) | forall x in cal(U), exists B in cal(B) "with" x in B subset.eq cal(U)}.
+  $ One can show this a topology on $X$ with $cal(B)$ as a base.
+] 
 // #remark[Finite intersections stay closed in $cal(B)$.]
 
 #definition[
@@ -279,8 +394,12 @@ $cal(B) subset.eq cal(T)$ a base $<=>$
 
 #proposition[
   If $S subset.eq 2^X$, $
-  cal(T)(S) = union.big {"finite intersection of elts of" S}.
-  $
+  cal(T)(S) = union.big {"finite intersections of elts of" S}.
+  $ We call $S$ a "subbase" for $cal(T)(S)$ (namely, we allow finite intersections of elements in $S$ to serve as a base for $cal(T)(S)$).
+]
+
+#proof[
+  Let $cal(B) := {X, "finite intersections of elements of" S}$. We claim this a base for $cal(T)(S)$.
 ]
 
 #definition("Point of closure/accumulation point")[
@@ -316,15 +435,31 @@ $cal(B) subset.eq cal(T)$ a base $<=>$
   Tychonoff $<=>$ $forall x in X$, ${x}$ closed.
 ]
 
+#proof[
+  For every $x in X$, $
+  {x} "closed" &<=> {x}^c "open" \ 
+  &<=> forall  y in {x}^c, exists cal(U)_y subset.eq {x}^c \ 
+  &<=> forall y eq.not x, exists cal(U)_y "s.t." x in.not cal(U)_y,
+  $ and since this holds for every $x$, $X$ Tychonoff.
+]
+
 #proposition[
   Every metric space normal.
 ]
-
+// ! page 17
 // ! 01-23
 
 #proposition[Let $X$ Tychonoff. Then $X$ normal $<=>$ $forall F subset.eq X$ closed and neighborhood $cal(U)$ of $F$, there exists an open set $cal(O)$ such that $
 F subset.eq cal(O) subset.eq overline(cal(O)) subset.eq cal(U).
 $ This is called the "nested neighborhood property" of normal spaces.]
+
+#proof[
+  ($=>$) Let $F$ closed and $cal(U)$ a neighborhood of $F$. Then, $F$ and $cal(U)^c$ closed disjoint sets so by normality there exists $cal(O), cal(V)$ disjoint open neighborhoods of $F$, $cal(U)^c$ respectively. So, $cal(O) subset.eq cal(V)^c$ hence $overline(cal(O)) subset.eq overline(cal(V))^c = cal(V)^c$ and thus $
+  F subset.eq cal(O) subset.eq overline(cal(O)) subset.eq cal(V)^c subset.eq cal(U).
+  $
+
+  ($impliedby$) Let $A, B$ be disjoint closed sets. Then, $B^c$ open and moreover $A subset.eq B^c$. Hence, there exists some open set $cal(O)$ such that $A subset.eq cal(O) subset.eq overline(cal(O)) subset.eq B^c$, and thus $B subset.eq overline(cal(O))^c$. Then, $cal(O)$ and $overline(cal(O))^c$ are disjoint open neighborhoods of $A$, $B$ respectively so $X$ normal.
+]
 
 #definition("Separable")[
   A space $X$ is called _separable_ if it contains a countable dense subset.
@@ -339,6 +474,10 @@ $ This is called the "nested neighborhood property" of normal spaces.]
 
 #example[Every metric space is first countable.]
 
+#proposition[
+  Every 2nd countable space is separable.
+]
+
 #definition("Convergence")[
   Let ${x_n} subset.eq X$. Then, we say $x_n -> x$ in $cal(T)$ if for every neighborhood $cal(U)_x$, there exists an $N$ such that $forall n >= N$, $x_n in cal(U)_x$.
 ]
@@ -347,7 +486,17 @@ $ This is called the "nested neighborhood property" of normal spaces.]
 
 #proposition[Let $(X, cal(T))$ be Hausdorff. Then, all limits are unique.]
 
+#proof[
+  Suppose otherwise, that $x_n ->$ both $x$ and $y$. If $x eq.not y$, then since $X$ Hausdorff there are disjoint neighborhoods $cal(U)_x, cal(U)_y$ containing $x, y$. But then $x_n$ cannot be on both $cal(U)_x$ and $cal(U)_y$ for sufficiently large $n$, contradiction.
+]
+
 #proposition[Let $X$ be 1st countable and $E subset.eq X$. Then, $x in overline(E)$ $<=>$ there exists ${x_j} subset.eq E$ such that $x_j -> x$.]
+
+#proof[
+  ($=>$) Let $cal(B)_x = {B_j}$ be a base for $X$ at $x in overline(E)$. Wlog, $B_j supset.eq B_(j+1)$ for every $j >= 1$ (by replacing with intersections, etc if necessary). Hence, $B_j sect E eq.not nothing$ for every $j$. Let $x_j in B_j sect E$, then by the nesting property $x_j -> x$ in $cal(T)$.
+
+  ($impliedby$) Suppose otherwise, that $x in.not overline(E)$. Let ${x_j} in E_j$. Then, $overline(E)^c$ open, and contains $x$. Then, $overline(E)^c$ a neighborhood of $x$ but does not contain any $x_j$ so $x_j arrow.r.not x$.
+]
 
 == Continuity and Compactness
 
@@ -390,6 +539,10 @@ $ We say that the topology $cal(T)(S)$ generated by $S$ is the _weak topology_ f
   Let $K$ compact be contained in a Hausdorff space $X$. Then, $K$ closed in $X$.
 ]
 
+#proof[
+  We show $K^c$ open. Let $y in K^c$. Then for every $x in K$, there exists disjoint open sets $cal(U)_(x y), cal(O)_(x y)$ containing $y, x$ respectively. Then, it follows that ${cal(O)_(x y)}_(x in K)$ an open cover of $K$, and since $K$ compact there must exist some finite subcover, $K subset.eq union.big_(i=1)^N cal(O)_(x_i y)$. Let $E := sect.big_(i=1)^N cal(U)_(x_i y)$. Then, $E$ is an open neighborhood of $y$ with $E sect cal(O)_(x_i y) = nothing$ for every $i = 1, dots N$. Thus, $E subset.eq sect.big_(i=1)^N cal(O)_(x_i y)^c = (union.big_(i=1)^N cal(O)_(x_i y))^c subset.eq K^c$ so since $y$ was arbitrary $K^c$ open.
+]
+
 #definition("Sequential Compactness")[
   We say $(X, cal(T))$ _sequentially compact_ if every sequence in $X$ has a converging subsequence with limit contained in $X$.
 ]
@@ -398,8 +551,19 @@ $ We say that the topology $cal(T)(S)$ generated by $S$ is the _weak topology_ f
   Let $(X, cal(T))$ second countable. Then, $X$ compact $<=>$ sequentially compact.
 ]
 
+#proof[
+($=>$) Let ${x_k} subset.eq X$ and put $F_n := overline({x_k | k >= n})$. Then, ${F_n}$ defines a sequence of closed and nested subsets of $X$ and, since $X$ compact, $sect.big_(n=1)^infinity F_n$ nonempty. Let $x_0$ in this intersection. Since $X$ 2nd and so in particular 1st countable, let ${B_j}$ a (wlog nested) countable base at $x_0$. $x_0 in F_n$ for every $n >= 1$ so each $B_j$ must intersect some $F_n$. Let $n_j$ be an index such that $x_n_j in B_j$. Then, if $cal(U)$ a neighborhood of $x_0$, there exists some $N$ such that $B_j subset.eq cal(U)$ for every $j >= N$ and thus ${x_n_j} subset.eq B_N subset.eq cal(U)$, so $x_n_j -> x_0$ in $X$.
+
+($impliedby$) Remark that since $X$ second countable, every open cover of $X$ certainly has a countable subcover by intersecting a given cover with our countable basis. So, assume we have a countable cover $X subset.eq union.big_(n=1)^infinity cal(O)_n$ and suppose towards a contradiction that no finite subcover exists. Then, for every $n >= 1$, there exists some $m(n) >= n$ such that $cal(O)_(m(n)) \\ union.big_(i=1)^n cal(O)_i eq.not nothing$. Let $x_n$ in this set for every $n >= 1$. Since $X$ sequentially compact, there exists a convergent subsequence ${x_n_k} subset.eq {x_n}$ such that $x_n_k -> x_0$ in $X$, so there exists some $cal(O)_N$ such that $x_0 in cal(O)_N$. But by construction, $x_n_k in.not cal(O)_N$ if $n_k >= N$, and we have a contradiction.
+]
+
 #theorem[If $X$ compact and Hausdorff, $X$ normal.]
 
+#proof[
+  We show that any closed set $F$ and any point $x in.not F$ can be separated by disjoint open sets. Then, the proof in the more general case follows.
+
+  For each $y in X$, $X$ is Hausdorff so there exists disjoint open neighborhoods $cal(O)_(x y)$ and $cal(U)_(x y)$ of $x, y$ respectively. Then, ${cal(U)_(x y) | y in F}$ defines an open cover of $F$. Since $F$ closed and thus, being a subset of a compact space, compact, there exists a finite subcover $F subset.eq union.big_(i=1)^N cal(U)_(x y_(i))$. Put $cal(N) := sect.big_(i=1)^N cal(O)_(x y_i)$. This is an open set containing $x$, with $cal(N) sect union.big_(i=1)^N cal(U)_(x y_(i)) eq nothing$ hence $F$ and $x$ separated by $cal(N), union.big_(i=1)^N cal(U)_(x y_i)$.
+]
 == Connected Topological Spaces
 
 #definition("Separate")[
@@ -416,6 +580,10 @@ $ We say that the topology $cal(T)(S)$ generated by $S$ is the _weak topology_ f
   Let $f : X-> Y$ continuous. Then, if $X$ connected, so is $f(X)$.
 ]
 
+#proof[
+  Suppose otherwise, that $f(X) = cal(O)_1 union.sq cal(O)_2$ for nonempty, open, disjoint $cal(O)_1, cal(O)_2$. Then, $X = f^(-1)(cal(O)_1) union.sq f^(-1)(cal(O)_2)$, and each of these inverse images remain nonempty and open in $X$, so this a contradiction to the connectedness of $X$.
+]
+
 #remark[
   On $RR$, $C subset.eq RR$ connected $<=>$ an interval $<=>$ convex.
 ]
@@ -428,6 +596,22 @@ $ We say that the topology $cal(T)(S)$ generated by $S$ is the _weak topology_ f
   $X$ has IVP $<=>$ $X$ connected.
 ]
 
+#proof[
+  ($impliedby$) If $X$ connected, $f(X)$ connected in $RR$ hence an interval.
+
+  ($=>$) Suppose otherwise, that $X = cal(O)_1 union.sq cal(O)_2$. Then define the function $f : X -> RR$ by $x |-> cases(
+    1 "if" x in cal(O)_2,
+    0 "if" x in cal(O)_1
+  )$. Then, for every $A subset.eq RR$, $
+  f^(-1) (A) = cases(
+    nothing & "if" {0, 1} subset.not.eq A,
+    cal(O)_1 & "if" 0 in A,
+    cal(O)_2 & "if" 1 in A,
+    X & "if" {0, 1} subset.eq A
+  ),
+  $ which are all open sets, hence $f$ continuous. But $f(X) = {0, 1}$ which is not an interval, hence the IVP fails and so $X$ must be connected.
+]
+
 #definition("Arcwise/Path Connected")[
   $X$ _arc connected/path connected_ if $forall x, y in X$, there exists a continuous function $f : [0, 1] -> X$ such that $f(0) = x, f(1) = y$.
 ]
@@ -435,9 +619,16 @@ $ We say that the topology $cal(T)(S)$ generated by $S$ is the _weak topology_ f
   Arc connected $=>$ connected.
 ]
 
+#proof[
+  Suppose otherwise, $X = cal(O)_1 union.sq cal(O)_2$. Let $x in cal(O)_1, y in cal(O)_2$ and define a continuous function $f:[0, 1] -> X$ such that $f(0) = x$ and $f(1) = y$. Then, $f^(-1) (cal(O)_i)$ each open, nonempty and disjoint for $i = 1,2 $, but $
+  f^(-1)(cal(O)_1) union.sq f^(-1)(cal(O)_2) = [0, 1],
+  $ a contradiction to the connectedness of $[0, 1]$.
+]
+
 == Urysohn's Lemma and Urysohn's Metrization Theorem
 
-#lemma("Urysohn's")[Let $A, B subset.eq X$ closed and disjoint subsets of a normal space $X$. Then, $forall [a, b] subset.eq RR$, there exists a continuous functions $f : [a, b]-> RR$ such that $f(X) subset.eq [a, b]$, $f|_A = a$ and $f|_B = b$.]
+We present the main lemma of this section first, but need more tools before proving it.
+#lemma("Urysohn's")[Let $A, B subset.eq X$ closed and disjoint subsets of a normal space $X$. Then, $forall [a, b] subset.eq RR$, there exists a continuous function $f : [a, b]-> RR$ such that $f(X) subset.eq [a, b]$, $f|_A = a$ and $f|_B = b$.]<lemma_urysohns>
 
 #remark[We have a partial converse of this statement as well:]
 
@@ -462,22 +653,68 @@ b & "if" x in (union.big_(lambda in Lambda) cal(O)_lambda)^c \
 inf{lambda in Lambda | x in cal(O)_lambda} & "else"
   ).
   $ Then, $f$ continuous.
+]<lemma_urysohns_1>
+
+#proof[
+  We claim $f^(-1) (-infinity, c)$ and $f^(-1) (c, infinity)$ open for every $c in RR$. Since such sets define a subbase for $RR$, it suffices to prove continuity on these sets. We show just the first for convenience. Notice that since $f(x) in [a, b]$, if $c in (a, b)$ then $f^(-1) (-infinity, c) = f^(-1)[a, c)$, so really it suffices to show that $f^(-1)[a, c)$ open to complete the proof.
+
+  Suppose $x in f^(-1)([a, c])$ so $a <= f(x) < c$. Let $lambda in Lambda$ be such that $a < lambda < f(x)$. Then, $x in.not cal(O)_lambda$. Let also $lambda' in Lambda$ such that $f(x) < lambda' < c$. By density of $Lambda$, there exists a $epsilon > 0$ such that $f(x) + epsilon in Lambda$, so in particular $
+  overline(cal(O))_(f(x) + epsilon) subset.eq cal(O)_(lambda') => x in cal(O)_lambda',
+  $ by nesting. So, repeating this procedure, we find $
+  f^(-1)([a, c)) subset.eq union.big_(a <= lambda < lambda' < c) cal(O)_(lambda')\\overline(cal(O))_(lambda),
+  $ noticing the set on the right is open. By similar reasoning, the opposite inclusion holds and we have equality. Hence, $f$ continuous.
 ]
 
 #lemma[Let $X$ normal, $F subset.eq X$ closed, and $cal(U)$ a neighborhood of $F$. Then, for any $(a, b) subset.eq RR$, there exists a dense subset $Lambda subset.eq (a, b)$ and a normally ascending collection ${cal(O)_lambda}_(lambda in Lambda)$ such that $
 F subset.eq cal(O)_lambda subset.eq overline(cal(O))_lambda subset.eq cal(U), wide forall lambda in Lambda.
-$]
+$]<lemma_urysohns_2>
 
 #remark[
   This is essentially a generalization of the nested neighborhood property, and indeed the proof essentially just uses this property repeatedly to construct the collection ${cal(O)_lambda}$.
 ]
 
-#proof("Of Urysohn's")[
-  Let $F = A$ and $cal(U) = B^c$ as in the previous lemma. Then, there is some dense subset $Lambda subset.eq (a, b)$ and a normally ascending collection ${cal(O)_(lambda)}_(lambda in Lambda)$ such that $A subset.eq cal(O)_lambda subset.eq overline(cal(O))_lambda subset.eq B^c$ for every $lambda in Lambda$. Let $f(x)$ as in the previous previous lemma. Then, if $x in B$, $B subset.eq (union.big_(lambda in Lambda) cal(O)_lambda)^c$ and so $f(x) = b$. Otherwise if $x in A$, then $x in sect.big_(lambda in Lambda) cal(O)_lambda$ and thus $f(x) = inf{lambda in Lambda} = a$. By the first lemma, $f$ continuous, so we are done.
+#proof[
+  Without loss of generality, we assume $(a, b) =(0, 1)$, for the two intervals are homeomorphic, i.e. the function $f : (0, 1) -> RR, f(x) := a(1 -x) + b x$ is continuous, invertible with continuous inverse and with $f(0) = a, f(1) = b$ so a homeomorphism. 
+
+  Let $
+  Lambda := {m/(2^n) | m, n in NN | 1 <= m <= 2^(n-1)} = union.big_(n in NN) underbrace({m/2^n | m in NN 1 <= m <= 2^(n-1)}, =: Lambda_n),
+  $ which is clearly dense in $(0, 1)$. We need now to define our normally ascending collection. We do so by defining on each $Lambda_1$ and proceding inductively. 
+
+  For $Lambda_1$, since $X$ normal, let $cal(O)_(1\/2)$ be such that $F subset.eq cal(O)_(1\/2) subset.eq overline(cal(O))_(1\/2) subset.eq cal(U)$, which exists by the nested neighborhood property.
+
+  For $Lambda_2 = {1/4, 3/4}$, we use the nested neighborhood property again, but first with $F$ as the closed set and $cal(O)_(1\/2)$ an open neighborhood of it, and then with $overline(cal(O))_(1\/2)$ as the closed set and $cal(U)$ an open neighborhood of it. In this way, we find $
+  underbrace(F subset.eq cal(O)_(1\/4) subset.eq overline(cal(O))_(1\/4) subset.eq cal(O)_(1\/2), "nested nbhd") subset.eq overbrace(overline(cal(O))_(1\/2) subset.eq cal(O)_(3\/4) subset.eq overline(cal(O))_(3\/4) subset.eq cal(U), "nested nbhd").
+  $ 
+
+  We repeat in this manner over all of $Lambda$, in the end defining a normally ascending collection ${cal(O)_(lambda)}_(lambda in Lambda)$.
+]
+
+#proof([(Of Urysohn's Lemma, @lemma_urysohns)])[
+  Let $F = A$ and $cal(U) = B^c$ as in the previous lemma @lemma_urysohns_2. Then, there is some dense subset $Lambda subset.eq (a, b)$ and a normally ascending collection ${cal(O)_(lambda)}_(lambda in Lambda)$ such that $A subset.eq cal(O)_lambda subset.eq overline(cal(O))_lambda subset.eq B^c$ for every $lambda in Lambda$. Let $f(x)$ as in the previous previous lemma, @lemma_urysohns_1. Then, if $x in B$, $B subset.eq (union.big_(lambda in Lambda) cal(O)_lambda)^c$ and so $f(x) = b$. Otherwise if $x in A$, then $x in sect.big_(lambda in Lambda) cal(O)_lambda$ and thus $f(x) = inf{lambda in Lambda} = a$. By the first lemma, $f$ continuous, so we are done.
 ]
 
 #theorem("Urysohn's Metrization Theorem")[
   Let $X$ be a second countable topological space. Then, $X$ is metrizable (that is, there exists a metric on $X$ that induces the topology) if and only if $X$ normal.
+]
+
+#proof[
+  ($=>$) We have already showed, every metric space is normal.
+
+  ($impliedby$) Let ${cal(U)_n}$ be a countable basis for $cal(T)$ and put $
+  A := {(n,m) in NN times NN | overline(cal(U))_n subset.eq cal(U)_m}.
+  $ By Urysohn's lemma, for each $(n, m) in A$ there is some continuous function $f_(n,m) : X -> RR$ such that $f_(n, m)$ is $1$ on $cal(U)_(m)^c$ and $0$ on $overline(cal(U))_n$ (these are disjoint closed sets). For $x, y in X$, define $
+  rho(x, y) := sum_((n, m) in A) 1/(2^(n +m)) |f_(n, m) (x) - f_(n, m) (y)|.
+  $ The absolute valued term is $<= 2$, so this function will always be finite. Moreover, one can verify that it is indeed a metric on $X$. It remains to show that it induces the same topology; it suffices to compare bases of the two.
+
+  Let $x in cal(U)_m$. We wish to show there exists $B_rho (x, epsilon) subset.eq cal(U)_m$. ${x}$ is closed in $X$ being normal, so there exists some $n$ such that $
+  {x} subset.eq cal(U)_n subset.eq overline(cal(U))_n subset.eq cal(U)_m,
+  $ so $(n, m) in A$ and so $f_(n,m) (x) = 0$. Let $epsilon = 1/(2^(n+m))$. Then, if $rho(x, y) < epsilon$, it must be $
+  1/(2^(n + m)) &> sum_((n',m') in A) 1/(2^(n' + m')) |f_(n', m') (x) - f_(n',m')(y)| \ 
+  & >= 1/2^(n+m) |underbrace(f_(n,m) (x), = 0) - f_(n, m) (y)| \ 
+  &= 1/(2^(n + m)) |f_(n, m) (y)|,
+  $ so $abs(f_(n, m) (y)) < 1$ and thus $y in.not cal(U)_m^c$ so $y in cal(U)_m$. It follow that $B_rho (x, epsilon) subset.eq cal(U)_m$, and so every open set in $X$ is open with respect to the metric topology.
+
+  Conversely, if $B_rho (x, epsilon)$ some open ball in the metric topology, then notice that $y |-> rho(x, y)$ for fixed $y$ a continuous function, and thus $(rho(x, dot))^(-1) (-epsilon, epsilon)$ an open set in $cal(T)$ containing $x$. But this set also just equal to $B_rho (x, epsilon)$, hence $B_rho (x, epsilon)$ open in $cal(T)$. We conclude the two topologies are equal, completing the proof.
 ]
 
 #remark[
@@ -507,6 +744,10 @@ We tacitly assume the conditions of the theorem in the following lemmas.
 #lemma[For every $F subset.eq X$ closed, and every $x_0 in F^c$, there exists a neighborhood $cal(U)(x_0)$ such that $F sect cal(U) = nothing$ and $forall epsilon > 0$ there is some $h in cal(A)$ such that $h < epsilon$ on $cal(U)$, $h > 1 - epsilon$ on $F$, and $0 <= h <= 1$ on $X$.
 
 In particular, $cal(U)$ is _independent_ of choice of $epsilon$.
+]
+
+#proof[
+  
 ]
 
 #lemma[
