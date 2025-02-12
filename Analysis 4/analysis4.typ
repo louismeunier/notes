@@ -887,3 +887,122 @@ As we saw on homework, any two norms on a finite dimensional space are equivalen
 
   (c) Consider $overline(B)(0, 1) subset.eq X$. Let $T$ be an isomorphism $X -> RR^n$. Then, for $x in overline(B)(0, 1)$, $||T x|| <= ||T|| < infinity$, so $T(overline(B)(0, 1))$ is a bounded subset of $RR^n$, and since $T$ and its inverse continuous, $T(overline(B)(0, 1))$ closed in $RR^n$. Hence, $T(overline(B)(0, 1))$ closed and bounded hence compact in $RR^n$, so since $T^(-1)$ continuous $T^(-1) (T (overline(B)(0, 1))) = overline(B)(0, 1)$ also compact, in $X$.
 ]
+
+#theorem("Riesz's")[
+  If $X$ is an nvs, then $overline(B)(0, 1)$ is compact if and only if $X$ if finite dimensional.
+]<thm_rieszs>
+
+#lemma("Riesz's")[
+  Let $Y subset.neq X$ be a closed nvs (and $X$ a nvs). Then for every $epsilon > 0$, there exists $x_0 in X$ with $||x_0|| = 1$ and such that $
+  ||x_0 - y||_X > epsilon forall y in Y.
+  $
+]
+#proof[
+Fix $epsilon > 0$. Since $Y subset.neq X$, let $x in Y^c$. $Y$ closed so $Y^c$ open and hence there exists some $r > 0$ such that $B(x, r) sect Y = nothing$. In other words, $
+inf {||x - y'|| | y' in Y} > r > 0.
+$ Let then $y' in Y$ be such that $
+r < ||x - y_1|| < epsilon^(-1) r,
+$ and take $
+x_0 := (x - y_1)/(||x - y_1||_X).
+$ Then, $x_0$ a unit vector, and for every $y in Y$, $
+x_0 - y &= (x - y_1)/(||x - y_1||) - y \ 
+&= 1/(||x - y_1||) [x - y_1 - y ||x - y_1|| ] \ 
+&= 1/(||x - y_1||) [x - y'],
+$ where $y' = y_1 + y ||x - y_1|| in Y$, since it is closed under vector addition. Hence $
+||x_0 - y|| = 1/(||x - y_1||) ||x - y'|| > epsilon/r ||x - y'|| > epsilon,
+$ for every $y in Y$.
+]
+
+#proof[(Of @thm_rieszs)
+($impliedby$) By thre previous corollary.
+
+
+($=>$) Suppose $X$ infinite dimensonal. We will show $B:= overline(B)(0, 1)$ not compact.
+
+_Claim:_ there exists ${x_i}_(i=1)^infinity subset.eq B$ such that $||x_i - x_j|| > 1/2$ if $i eq.not j$.
+
+We proceed by induction. Let $x_1 in B$. Suppose ${x_1, dots, x_n} subset.eq B$ are such that $||x_i - x_j|| > 1/2$ . Let $X_n = "span"{x_1, dots, x_n}$, so $X_n$ finite dimensional hence $X_n subset.neq X$. By the previous lemma (taking $epsilon = 1/2$) there is then some $x_(n+1) in B$ such that $||x_1 - x_(n+1)|| >1/2$ for every $i = 1, dots, n$. We can thus inductively build such a sequence ${x_i}_(i=1)^infinity$. Then, every subsequence of this sequence cannot be Cauchy so $B$ is not sequentially compact and thus $B$ is not compact.
+]
+
+== Open Mapping and Closed Graph Theorems
+
+#definition([$T$ open])[
+  If $X, Y$ toplogical spaces and $ T :X -> Y$ a linear operator, $T$ is said to be _open_ if for every $cal(U) subset.eq X$ open, $T(cal(U))$ open in $Y$.
+
+  In particular if $X, Y$ are metric spaces (or nvs), then $T$ is open iff the image of every open ball in $X$ containes an open ball in $Y$, i.e. $forall x in X, r > 0$ there exists $r' > 0$ such that $T(B_X (x, r)) supset.eq B_Y (T x, r')$. Moreover, by translating/scaling appropriately, it suffices to prove for $x = 0, r = 1$.
+]
+
+#theorem("Open Mapping Theorem")[
+  Let $X, Y$ be Banach spaces and $T : X -> Y$ a bounded linear operator. If $T$ is surjective, then $T$ is open.
+]
+
+#proof[
+Its enough to show that there is some $r > 0$ such that $T (B_X (0, 1)) supset.eq B_Y (0, r)$.
+
+_Claim:_ $exists c > 0$ such that $overline(T(B_X (0, 1))) supset.eq B_Y (0, 2 c)$. 
+
+Put $E_n = n dot overline(T(B_X (0, 1)))$ for $n in NN$. Since $T$ surjective, $union.big_(n=1)^infinity E_n = Y$. Each $E_n$ closed, so by the Baire Category Theorem there exists some index $n_0$ such that $E_n_0$ has nonempty interior, i.e. $
+"int"(overline(T(B_X (0, 1)))) eq.not nothing,
+$ where we drop the index by homogeneity. Pick then $c > 0$ and $y_0 in Y$ such that $B_Y (y_0, 4 c) subset.eq overline(T(B_X (0, 1)))$. We claim then that $B_Y (-y_0, 4 c) subset.eq overline(T(B_X (0, 1)))$ as well. Indeed, if $B_Y (y_0, 4 c) subset.eq overline(T(B_X (0, 1)))$, then $forall tilde(y) in Y$ with $||y_0 - tilde(y)||_Y < 4 c$, 
+// TODO not sure about this partial
+Then, $||-y_0 + tilde(y)||_Y < 4 c$ so $- tilde(y) in B_Y (-y_0, 4 c)$. But $tilde(y) =lim_(n->infinity) T(x_n)$ and so $- tilde(y) = lim_(n->infinity) T(- x_n)$. Since ${-x_n} subset.eq B_X (0, 1)$, this implies $- tilde(y) in overline(T(B_X (0, 1)))$ hence the "subclaim" holds.
+
+Now, for any $tilde(y) in B_Y (0, 4 c)$, $||tilde(y)|| <= 4 c$ so $
+tilde(y) = y_0 underbrace(- y_0 + tilde(y), in B_Y (-y_0, 4 c)) = overbrace(y_0 + tilde(y), in B(y_0, 4 c)) - y_0.
+$ Therefore, $
+B_Y (0, 4c) &= B_Y (y_0 - y_0, 4 c) \ 
+& subset.eq B_Y (y_0, 4 c) + B_Y (-y_0, 4c) \ 
+& overline(T(B_X (0, 1))) + overline(T(B_X (0, 1))) = 2 overline(T(B_X (0, 1))),
+$ (where summation of two sets is the vector addition of all the elements in the sets), hence $B_Y (0, 2 c) subset.eq overline(T(B_X (0, 1)))$.
+
+We claim next that $T(B_X (0, 1)) supset.eq B_Y (0, c)$. Choose $y in Y$ with $||y||_Y <c$. By the first claim, $B_Y (0, c) subset.eq overline(T(B_X (0, 1/2)))$, so for every $epsilon > 0$ there is some $z in X$ with $||z||_X < 1/2$ and $||y - T z||_Y < epsilon$.
+// TODO is this by continuity?
+Let $epsilon = c/2$ and $z_1 in X$ such that $||z_1||_X <1/2$ and $||y - T z_1||_Y < c/2$. But the first claim can also be written as $B_Y (0, c/2) subset.eq overline(T(B_X (0, 1/4)))$ so if $epsilon = c/4$, let $z_2 in X$ such that $||z_2||_X < 1/4$ and $||(y - T z_1 ) - T z_2||_Y < c/4$. Continuing in this manner we find that $
+B_Y (0, c/(2^k)) subset.eq overline(T(B_X (0, 1/(2^(k+1))))),
+$ so exists $z_k in X$ such that $||z_k||_X < 1/(2^k)$ and $||y - T(z_1 + dots.c + z_k)||_Y < c/(2^k)$. Let $x_n = z_1 + dots.c + z_n in X$. Then ${x_n}$ is Cauchy in $X$, since $
+||x_n - x_m||_X <= sum_(k=m)^n ||z_k||_X < sum_(k=m)^n 1/2^k -> 0.
+$ Since $X$ a Banach space, $x_n -> overline(x)$ and in particular $||overline(x)|| <= sum_(k=1)^infinity ||z_k||_X < sum_(k=1)^infinity 1/(2^k) = 1$, so $overline(x) in B_X (0, 1)$. Since $T$ bounded it is continuous, so $T x_n -> T overline(x)$, so $y = T overline(x)$ and thus $B_Y (0, c) subset.eq T(B(0, 1))$.
+]
+
+#corollary[
+  Let $X, Y$ Banach and $T : X -> Y$ be bounded, linear and bijective. Then, $T^(-1)$ continuous.
+]
+
+#corollary[
+  Let $(X, ||dot||_1), (X, ||dot||_2)$ be Banach spaces. Suppose there exists $c > 0$ such that $||x||_2 <= C ||x||_1$ for every $x in X$. Then, $||dot||_1, ||dot||_2$ are equivalent.
+]
+
+#proof[
+  Let $T$ be the identity linear operator and use the previous corollary.
+]
+
+#definition([$T$ closed])[
+  If $X, Y$ are nvs and $T$ is linear, the _graph_ of $T$ is the set $
+  G(T) = {(x, T x) | x in X} subset.eq X times Y.
+  $ We then say $T$ is _closed_ if $G(T)$ closed in $X times Y$.
+]
+
+#remark[Since $X, Y$ are nvs, they are metric spaces so first countable, hence closed $<->$ contains all limit points.]
+
+What norm do we put on $X times Y$? $||(x, y)||_2 = ||x|| + ||y||$. Then if $(x_n, y_n) -> (x, y)$ in the product topology, then since the projection maps are continuous $x_n -> x, y_n -> y$ in the respective topologies on $X, Y$. On the other hand if $(x_n, y_n)$
+
+// TODO
+So, to prove $G(T)$ is closed we just need to prove that if $x_n -> x$ in $X$ and $T x_n -> y$ in $Y$, then $y = T x$.
+
+#remark[
+  If $T$ is continuous, then $G(T)$ is closed. The converse?
+]
+
+#theorem("Closed Graph Theorem")[
+  Let $X, Y$ be Banach spaces and $T : X-> Y$ linear. Then, $T$ is continuous iff $T$ is closed.
+]
+
+#proof[
+  ($=>$) Immediate.
+
+  ($impliedby$) Suppose $T$ closed and consider the function $x -> ||x||_ast$, where $||x||_ast := ||x||_X + ||T x||_Y$. Then, $T$ closed implies $(X, ||dot||_ast)$ is complete, i.e. $x_n -> x$ under $||dot||_ast$ iff $x_n -> x$ and $T x_n -> T x$. However, $||dot||_X <= ||dot||_ast$ on $X$, and so since $(X, ||dot||_X)$, $(X, ||dot||_ast)$ are both Banach spaces, by the corollary, there is $c > 0$ such that $||dot||_ast <= C ||dot||_X$, hence $
+  ||x||X + ||T x||_Y <= C ||c||_X,
+  $ and hence $
+  ||T x||_Y <= ||x||_X + ||T x||_Y <= C ||x||_X,
+  $ so $T$ is bounded and thus $T$ continuous.
+]
