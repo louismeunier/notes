@@ -677,7 +677,7 @@ $]<lemma_urysohns_2>
   Without loss of generality, we assume $(a, b) =(0, 1)$, for the two intervals are homeomorphic, i.e. the function $f : (0, 1) -> RR, f(x) := a(1 -x) + b x$ is continuous, invertible with continuous inverse and with $f(0) = a, f(1) = b$ so a homeomorphism. 
 
   Let $
-  Lambda := {m/(2^n) | m, n in NN | 1 <= m <= 2^(n-1)} = union.big_(n in NN) underbrace({m/2^n | m in NN 1 <= m <= 2^(n-1)}, =: Lambda_n),
+  Lambda := {m/(2^n) | m, n in NN | 1 <= m <= 2^(n-1)} = union.big_(n in NN) underbrace({m/2^n | m in NN, 1 <= m <= 2^(n-1)}, =: Lambda_n),
   $ which is clearly dense in $(0, 1)$. We need now to define our normally ascending collection. We do so by defining on each $Lambda_1$ and proceding inductively. 
 
   For $Lambda_1$, since $X$ normal, let $cal(O)_(1\/2)$ be such that $F subset.eq cal(O)_(1\/2) subset.eq overline(cal(O))_(1\/2) subset.eq cal(U)$, which exists by the nested neighborhood property.
@@ -739,7 +739,7 @@ We need to use the following theorem, which we'll prove later.
   Let $X$ be a compact Hausdorff space. Suppose $cal(A) subset.eq C(X)$ an algebra that separates points and contains constant functions. Then, $cal(A)$ dense in $C(X)$.
 ]
 
-We tacitly assume the conditions of the theorem in the following lemmas.
+We tacitly assume the conditions of the theorem in the following lemmas as as not to restate them.
 
 #lemma[For every $F subset.eq X$ closed, and every $x_0 in F^c$, there exists a neighborhood $cal(U)(x_0)$ such that $F sect cal(U) = nothing$ and $forall epsilon > 0$ there is some $h in cal(A)$ such that $h < epsilon$ on $cal(U)$, $h > 1 - epsilon$ on $F$, and $0 <= h <= 1$ on $X$.
 
@@ -747,11 +747,24 @@ In particular, $cal(U)$ is _independent_ of choice of $epsilon$.
 ]
 
 #proof[
-  
+Our first claim is that for every $y in F$, there is a $g_y in cal(L)$ such that $g_y (x_0) = 0$ and $g_y (y) > 0$, and moreover $0 <= g_y <= 1$. Since $cal(A)$ separates points, there is an $f in cal(A)$ such that $f(x_0) eq.not f(y)$. Then, let $
+g_y (x) := [(f(x) - f(x_0))/(||f - f(x)||_infinity)]^2.
+$ Then, every operation used in this new function keeps $g_y in cal(A)$. Moreover one readily verifies it satisfies the desired qualities. In particular since $g_y$ continuous, there is a neighborhood $cal(O)_y$ such that $g_y|_(cal(O)_y) > 0$. Hence, we know that $F subset.eq union.big_(y in F) cal(O)_y$, but $F$ closed and so compact, hence there exists a finite subcover i.e. some $n >= 1$ and finite sequence ${y_i}_(i=1)^n$ such that $F subset.eq union.big_(i=1)^n cal(O)_(y_i)$. Let for each $y_i$ $g_y_i in cal(A)$  with the properties from above, and consider the "averaged" function $
+g(x) := 1/n sum_(i=1)^n g_y_i (x) in cal(A).
+$ Then, $g(x_0) = 0$, $g > 0$ on $F$ and $0 <= g <= 1$ on all of $X$. Hence, there is some $1 > c > 0$ such that $g >= c$ on $F$, and since $g$ continuous at $x_0$ there exists some $cal(U)(x_0)$ such that $g < c/2$ on $cal(U)$, with $cal(U) sect F = nothing$. So, $0 <= g|_(cal(U)) < c/2$, and $1 >= g|_(F) >= c$. To complete the proof, we need $(0, c/2) <-> (0, epsilon)$ and $(c, 1) <=> (1 - epsilon, 1)$. By the Weierstrass Approximation Theorem, there exists some polynomial $p$ such that $p|_([0, c/2]) < epsilon$ and $p|_([c, 1]) > 1 - epsilon$. Then if we let $h(x) := (p compose g) (x)$, this is just a polynomial of $g$ hence remains if $cal(A)$, and we find $
+h|_(cal(U)) < epsilon, wide h|_(F) > 1 - epsilon, wide 0 <= h <= 1.
+$
 ]
+
 
 #lemma[
   For every disjoint closed set $A, B$ and $epsilon > 0$, there exists $h in cal(A)$ such that $h|_A < epsilon$, $h|_B > 1 - epsilon$, and $0 <= h <= 1$ on $X$.
+]
+
+#proof[
+  Let $F = B$ as in the last lemma. Let $x in A$, then there exists $cal(U)_x sect B = nothing$ and for every $epsilon > 0$, $h|_(cal(U)_x) < epsilon$ and $h|_(B) > 1 - epsilon$ and $0<= h <= 1$. Then $A subset.eq union.big_(x in A) cal(U)_x$. Since $A$ closed so compact, $A subset.eq union.big_(i=1)^N cal(U)_(x_i)$. Let $epsilon_0 < epsilon$ such that $(1 - epsilon_0/N)^N > 1 - epsilon$. For each $i$, let $h_i in cal(A)$ such that $h_i|_(cal(U)_(x_i)) < epsilon_0/N$, $h_i|_(B) > 1 - epsilon_0/N$ and $0 <= h_i <= 1$. Then, put $
+  h(x) = h_1 (x) dot h_2 (x) dots.c h_N (x) in cal(A).
+  $ Then, $0 <= h <= 1$ and $h|_B > (1 - epsilon_0/N)^N > 1 - epsilon$. Then, for every $x in A$, $x in cal(U)_x_i$ so $h_i (x) < epsilon_0/N$ and $h_i (x) <= i$ so $h(x) < epsilon_0/N$ so $h|A < epsilon_0/N < epsilon$.
 ]
 
 #proof[(Of Stone-Weierstrass) 
@@ -969,7 +982,7 @@ $ Since $X$ a Banach space, $x_n -> overline(x)$ and in particular $||overline(x
 ]
 
 #corollary[
-  Let $(X, ||dot||_1), (X, ||dot||_2)$ be Banach spaces. Suppose there exists $c > 0$ such that $||x||_2 <= C ||x||_1$ for every $x in X$. Then, $||dot||_1, ||dot||_2$ are equivalent.
+  Let $(X, ||dot||_1), (X, ||dot||_2)$ be Banach spaces. Suppose there exists $c > 0$ such that $||x||_2 <= C||x||_1$ for every $x in X$. Then, $||dot||_1, ||dot||_2$ are equivalent.
 ]
 
 #proof[
@@ -982,27 +995,113 @@ $ Since $X$ a Banach space, $x_n -> overline(x)$ and in particular $||overline(x
   $ We then say $T$ is _closed_ if $G(T)$ closed in $X times Y$.
 ]
 
-#remark[Since $X, Y$ are nvs, they are metric spaces so first countable, hence closed $<->$ contains all limit points.]
+#remark[Since $X, Y$ are nvs, they are metric spaces so first countable, hence closed $<->$ contains all limit points.
 
-What norm do we put on $X times Y$? $||(x, y)||_2 = ||x|| + ||y||$. Then if $(x_n, y_n) -> (x, y)$ in the product topology, then since the projection maps are continuous $x_n -> x, y_n -> y$ in the respective topologies on $X, Y$. On the other hand if $(x_n, y_n)$
+In the product topology, a countable base for $X times Y$ at $(x, y)$ is given by $
+{B_X (x, 1/n) times B(y, 1/m)}_(n, m in NN).
+$ Then, $G(T)$ closed iff $G(T)$ contains all limit points. How can we put a norm on $X times Y$ that generates this product topology? Let $
+||(x,y)||_1 := ||x||_X + ||y||_Y.
+$ If $(x_n, y_n) -> (x, y)$ in the product topology, then since $Pi_1, Pi_2$ continuous maps, $(x_n, y_n) -> (x, y)$ in the $||dot||_1$ topology. On the other hand if $(x_n, y_n) -> (x, y)$ in the $||dot||_1$ norm, then $
+||x_n - x||_X <= ||(x_n, y_n) - (x, y)||_1,
+$ hence since the RHS $-> 0$ so does the LHS and so $x_n -> x$ in $||dot||_X$; similar gives $y_n -> y$ in $||dot||_Y$. From here it follows that $(x_n, y_n) -> (x, y)$ in the product topology.
 
-// TODO
-So, to prove $G(T)$ is closed we just need to prove that if $x_n -> x$ in $X$ and $T x_n -> y$ in $Y$, then $y = T x$.
-
-#remark[
-  If $T$ is continuous, then $G(T)$ is closed. The converse?
+So, to prove $G(T)$ closed, we just need to prove that if $x_n -> x$ in $X$ and $T x_n -> y$, then $y = T x_n$.
 ]
+
+// What norm do we put on $X times Y$? $||(x, y)||_2 = ||x|| + ||y||$. Then if $(x_n, y_n) -> (x, y)$ in the product topology, then since the projection maps are continuous $x_n -> x, y_n -> y$ in the respective topologies on $X, Y$. On the other hand if $(x_n, y_n)$
+
+// // TODO
+// So, to prove $G(T)$ is closed we just need to prove that if $x_n -> x$ in $X$ and $T x_n -> y$ in $Y$, then $y = T x$.
+
+
+// #remark[
+//   If $T$ is continuous, then $G(T)$ is closed. The converse?
+// ]
 
 #theorem("Closed Graph Theorem")[
   Let $X, Y$ be Banach spaces and $T : X-> Y$ linear. Then, $T$ is continuous iff $T$ is closed.
 ]
 
 #proof[
-  ($=>$) Immediate.
+  ($=>$) Immediate from the above remark.
 
-  ($impliedby$) Suppose $T$ closed and consider the function $x -> ||x||_ast$, where $||x||_ast := ||x||_X + ||T x||_Y$. Then, $T$ closed implies $(X, ||dot||_ast)$ is complete, i.e. $x_n -> x$ under $||dot||_ast$ iff $x_n -> x$ and $T x_n -> T x$. However, $||dot||_X <= ||dot||_ast$ on $X$, and so since $(X, ||dot||_X)$, $(X, ||dot||_ast)$ are both Banach spaces, by the corollary, there is $c > 0$ such that $||dot||_ast <= C ||dot||_X$, hence $
-  ||x||X + ||T x||_Y <= C ||c||_X,
-  $ and hence $
-  ||T x||_Y <= ||x||_X + ||T x||_Y <= C ||x||_X,
-  $ so $T$ is bounded and thus $T$ continuous.
+($impliedby$) Consider the function $
+x |-> ||x||_ast := ||x||_X + ||T x||_Y.
+$ So by the above, $T$ closed implies $(X, ||dot||_ast)$ is complete, i.e. if $x_n -> x$ in $||dot||_ast$ in $X$ iff $x_n -> x$ in $norm(dot)_X$ and $T x_n -> T x$ in $norm(dot)_Y$. However, $||dot||_X <= norm(dot)_ast$, hence since $(X, norm(dot)_X)$ and $(X, norm(dot)_ast)$ are Banach spaces, by the corollary, there is some $C > 0$ such that $norm(dot)_ast <= C norm(dot)_X$. So, $
+norm(x)_X + norm(T x)_Y <= C norm(x)_X,
+$ so $
+norm(T x)_Y <= norm(x)_X + norm(T x)_Y <= C norm(x)_X,
+$ so $T$ bounded and thus continuous.
+  // ($impliedby$) Suppose $T$ closed and consider the function $x -> ||x||_ast$, where $||x||_ast := ||x||_X + ||T x||_Y$. Then, $T$ closed implies $(X, ||dot||_ast)$ is complete, i.e. $x_n -> x$ under $||dot||_ast$ iff $x_n -> x$ and $T x_n -> T x$. However, $||dot||_X <= ||dot||_ast$ on $X$, and so since $(X, ||dot||_X)$, $(X, ||dot||_ast)$ are both Banach spaces, by the corollary, there is $c > 0$ such that $||dot||_ast <= C ||dot||_X$, hence $
+  // ||x||X + ||T x||_Y <= C ||c||_X,
+  // $ and hence $
+  // ||T x||_Y <= ||x||_X + ||T x||_Y <= C ||x||_X,
+  // $ so $T$ is bounded and thus $T$ continuous.
+]
+
+#remark[
+  The Closed Graph Theorem simplifies proving continuity of $T$. It tells us we can assume if $x_n -> x$, ${T x_n}$ Cauchy so $exists y$ such that $T x_n -> y$ since $Y$ is Banach. So, it suffices to check that $y = T x$ to check continuity; we don't need to check convergence of $T x_n$.
+]
+
+== Uniform Boundedness Principle
+
+Recall the following consequence of the Baire Category Theorem: #theorem[
+  Let $cal(F) subset.eq C(X)$ where $(X, rho)$ a complete metric space. Suppose $cal(F)$ pointwise bounded. Then, there exists a nonempty open set $cal(O) subset.eq X$ such that there is some $M > 0$ such that $|f (x)| <= M$ for every $x in cal(O), f in cal(F)$.
+] This leads to the following result:
+
+#theorem("Uniform Boundedness Principle")[
+  Let $X$ a Banach space and $Y$ a nvs. Consider $cal(F) subset.eq cal(L)(X, Y)$. Suppose $cal(F)$ is pointwise bounded, i.e. for every $x in X$, there is some $M_x > 0$ such that $
+  norm(T x)_Y <= M_x, forall T in cal(F).
+  $ Then, $cal(F)$ is uniformly bounded, i.e. $exists M > 0$ such that $
+  ||T||_Y <= M, forall T in cal(F).
+  $
+]
+
+#proof[
+  For every $T in cal(F)$, let $f_T : X -> RR$ be given by $
+  f_T (x) = ||T x||_Y.
+  $ Since $T in cal(L)(X, Y)$, $T$ is continuous, so $x_n ->_X x => T x_n ->_Y T x$, hence $norm(T x_n)_Y -> norm(T x)_Y$ so $f_T$ continuous for each $T$ i.e. $f_T in C(X)$, so ${f_T} subset.eq C(X)$ pointwise bounded. So by the previous theorem, there is some ball $B(x_0, r) subset.eq X$ and some $K > 0$ such that $norm(T x) <= K$ for every $x in B(x_0, r)$ and $T in cal(F)$. Thus, for every $x in B(0, r)$, $
+  norm(T x) &= norm(T (x - x_0 + x_0))\
+   &<= norm(T underbrace((x - x_0), in B(x_0, r))) + norm(T x_0) \ 
+   &<= K + M_x_0, wide forall x in B(0, r), T in cal(F).
+  $ Thus, for every $x in B(0, 1)$, $
+  norm(T x) = 1/r norm(T underbrace((r x), in B(0, r))) <= 1/r (K + M_x_0) =: M,
+  $ so its clear $norm(T) <= M$ for every $T in cal(F)$.
+]
+
+#theorem("Banach-Saks-Steinhaus")[
+  Let $X$ a Banach space and $Y$ a nvs. Let ${T_n} subset.eq cal(L)(X, Y)$. Suppose for every $x in X$, $lim_(n->infinity) T_n (x)$ exists in $Y$. Then, 
+
+a. ${T_n}$ are uniformly bounded in $cal(L)(X, Y)$;\
+
+b. For $T : X -> Y$ defined by $
+T (x) := lim_(n -> infinity) T_n (x),
+$ we have $T in cal(L)(X, Y)$;\
+
+c. $norm(T) <= liminf_(n->infinity) norm(T_n)$ (_lower semicontinuity result_).
+]
+
+#proof[
+  (a) For every $x in X$, $T_n (x) -> T(x)$ so $norm(T x) < infinity$ hence $sup_n norm(T_n x) < infinity$. By uniform boundedness, then, we find $sup_n norm(T) =: C < infinity$.
+
+  (b) $T$ is linear (by linearity of $T_n$). By (a), $
+  norm(T_n x) <= C norm(x),
+  $ for every $n, x$, so $
+  norm(T x) <= C norm(x) forall x in X,
+  $ so $T$ bounded.
+
+  (c) We know $
+  norm(T_n x) <= norm(T_n) norm(x) forall x in X,
+  $ so $
+  norm(T_n x)/(norm(x)) <= norm(T_n),
+  $ so $
+  liminf_(n) norm(T_n x)/(norm(x)) = (norm(T x))/(norm(x)) <= liminf_n norm(T_n),
+  $ so by "suping" both sides, $
+  norm(T) <= liminf_(n) norm(T_n).
+  $
+]
+
+#remark[
+  - We do note have $T_n -> T$ in $cal(L)(X, Y)$ i.e. with respect to the operator norm.
+  - If $Y$ is a Banach space, then $lim_(n->infinity) T_n (x)$ exists in $Y$ $<=>$ ${T_n x}$ Cauchy in $Y$ for every $x in X$.
 ]
