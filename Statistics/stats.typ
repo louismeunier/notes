@@ -22,6 +22,7 @@
 #let mse = "MSE"
 #let MSE = "MSE"
 
+#let dby(x, n) = $dif^(#n)/(dif #x^#n)$
 // TODO
 
 #pagebreak()
@@ -423,7 +424,7 @@ $
 ]
 
 #proposition("The Delta Method (Second Order)")[
-  Suppose $sqrt(n) (X-n - mu) ->^"d" cal(N)(0, sigma^2)$ and $g'(mu) = 0$ but $g'' (mu) eq.not 0$. Then, $
+  Suppose $sqrt(n) (X_n - mu) ->^"d" cal(N)(0, sigma^2)$ and $g'(mu) = 0$ but $g'' (mu) eq.not 0$. Then, $
   n {g(X_n) - g(mu)} ->^"d" sigma^2 dot( g''(mu))/2  dot chi_((1))^2.
   $
 ]
@@ -541,7 +542,7 @@ $ Remark that if $EE_theta [hat(theta)_n] = theta$, i.e. $hat(theta)_n$ unbiased
 We will focus on the class of unbiased estimators of a real-valued parameter, $tau(theta)$, $tau : Theta -> RR$. 
 
 
-=== Uniformly Minimum Variance Unbiased Estimators (UMVUE)
+== Uniformly Minimum Variance Unbiased Estimators (UMVUE), Cramér-Rau Lower Bound (CRLB)
 
 #definition("UMVUE")[
   Let $bold(X) = (X_1, dots, X_n)^t$ be a random variable with a joint pdf/pmf given by $
@@ -588,6 +589,162 @@ $
   $ Combining (I) and (II), $
   tau' (theta) = "Cov"_theta (Tau(bold(X)), dif/(dif theta) log p_theta (bold(x))),
   $ since $"Cov"(X, Y) = EE[X Y] - EE[X]EE[Y]$, but the second of these terms vanishes by (II). Thus, $
-  [tau'(theta)^2] = Cov_theta^2 (Tau(bold(x)), dif/(dif theta) log p_theta (bold(X)))
+  [tau'(theta)^2] = Cov_theta^2 (Tau(bold(X)), dif/(dif theta) log p_theta (bold(X))).
+  $ By Cauchy-Schwarz, we find $
+  [tau'(theta)]^2  &<= "Var"_theta (Tau(bold(X))) Var_theta (dif/(dif theta) log p_theta (bold(X))) \ 
+  & <= "Var"_theta (Tau(bold(X))) EE_theta {[dif/(dif theta) log p_theta (bold(X))]^2},
+  $ the last line following by the Bartlett Identity.
+]
+
+#remark[
+  If $X_1, dots, X_n tilde^"iid" f_theta$, then $p_theta (bold(x)) = product_(i=1)^n f(x_i; theta)$, and $
+  I(theta) = EE_theta {[dif/(dif theta) log p_theta (bold(X))]^2} &= EE_theta {[sum_(i=1)^n dif/(dif theta) log f(X_i; theta)]^2} \ 
+  &= n underbrace(EE_theta {(dif/(dif theta) log f(X_1; theta))^2}, = I_1 (theta)),
+  $ so the CRLB in this case reads $
+  "Var"_theta (Tau(bold(X))) >= ([tau'(theta)]^2)/(n I_1 (theta)),
+  $ and moreover if $tau(theta) = theta$ itself,$
+  Var_theta (Tau(bold(X))) >= 1/(n I_1 (theta)).
+  $
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" "Ber"(theta)$, so $f(x; theta) = theta^x (1-theta)^(1 - x)$ for $x = 0, 1$. Then, $
+  log (f(x; theta))= x log (theta) + (1 - x) log(1 - theta)
+  $ so $
+  dif/(dif theta) log(f(x; theta)) = x/theta - (1-x)/(1-theta),
+  $ so the Fisher information in one $X_1$ is given $
+  I_1 (theta) = EE_theta {(X/theta - (1 - X)/(1 - theta))^2} = 1/(theta (1 - theta)).
+  $ For any unbiased estimator of $tau(theta) = theta$, the CRLB gives $
+  Var_theta (Tau(bold(X))) >= 1/(n I_1 (theta)) = theta(1-theta)/n.
+  $
+  Recall our estimator $hat(theta)_n = overline(X)_n$. We have that $Var_theta (overline(X)_n) = 1/n Var_theta (X_1) = (theta(1-theta))/n$.
+]
+
+#remark[
+  If $p_theta$ additionally twice differentiable in $theta$ and $EE_theta {dif/(dif theta) log p_theta (bold(X))}$ is also differentiable under the $EE_theta$, $
+  dif/(dif theta) log p_theta (bold(X)) = integral dif/(dif theta) {[dif/(dif theta) log p_theta (bold(x))] p_theta (bold(x))} dif x.
+  $ In particular, this implies $integral p''_theta (bold(x)) dif bold(x) = 0$. Then, $
+  I(theta) = EE_theta {[dif/(dif theta) log p_theta (bold(X))]^2} = - EE_theta {dif^2/(dif theta^2) p_theta (bold(X))},
+  $ making it easier to compute $I(theta)$. This follows from the fact that $
+  dif^2/(dif theta^2) log p_theta (bold(x)) = (p_theta ''(bold(x)))/(p_theta (bold(x))) - [dif/(dif theta )log p_theta (bold(x))]^2,
+  $ and so taking the expected value of both sides cancels the inner-most term by the differentiability condition of $p_theta$;
+  $
+   EE[dif^2/(dif theta^2) log p_theta (bold(x))] &= EE[(p_theta ''(bold(x)))/(p_theta (bold(x)))] - EE[[dif/(dif theta )log p_theta (bold(x))]^2] \ 
+   &=cancel( integral p''_theta (bold(x)) dif bold(x)) - I(theta).
+  $
+]
+
+#example[
+  Returning to the previous example, remark that $
+  dby(theta, 2) log (f(x; theta)) = - x/(theta^2) - (x - 1)/((1 - theta)^2),
+  $ and so $
+  EE[dby(theta, 2) log f(x; theta)] = 1/theta + 1/(1 - theta)
+  $ so $I_1 (theta) = 1/(theta (1 - theta))$ as we found before. 
+]
+
+#remark[
+  The CRLB is not a sharp bound.
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" cal(N)(mu, theta^2)$. Then, $hat(mu)_n$ the UMVUE for $mu$. If $mu$ known, then $hat(sigma)^2_n = 1/n sum_(i=1)^n (X_i - mu)^2$ is the UMVUE for $sigma^2$. If $mu$ is unknown, then $1/(n- 1)sum_(i=1)^n (X_i - overline(X)_n)^2$ would be the UMVUE for $sigma^2$.
+
+  However, if $X_i tilde^("iid") exp(beta)$, with $f(x; beta) = 1/beta e^(-x/beta)$ for $x > 0$, $S_n^2$ is not the UMVUE for $"Var"_beta (X_i) = beta^2$.
+]
+
+#theorem("Attaining the CRLB")[
+Suppose $bold(X) = (X_1, dots, X_n) tilde p_theta$. Let $Tau(bold(X))$ be unbiased for $tau(theta)$. Then, $Tau(bold(X))$ attains the CRLB if and only if $
+a(theta) { Tau(bold(x)) - tau(theta)} = dif/(dif theta) log p(bold(x); theta),
+$ for some function $a(theta)$, for every $theta in Theta$ and $bold(x)$ in the support of $p$.
+]
+
+#proof[
+  In the proof of the CRLB, the only inequality arose from using Cauchy-Schwarz with bounding the covariance of $Tau(bold(X))$ and $dif/(dif theta) log p_theta (bold(X))$. Equality in this inequality holds if and only if the terms are linearly dependent, namely if there is some function $a(theta)$ and $b(theta)$ such that $a(theta) T(bold(x)) + b(theta) = dif/(dif theta) log p_theta (bold(x))$.
+
+  On the other hand, $
+  EE_theta {a(theta) T(bold(X)) + b(theta)} = EE_theta {dif/(dif theta) log p _theta (x)} = 0 => b(theta) = - EE_theta {a(theta) T(bold(X))} = - a(theta) tau(theta),
+  $ so combining these two gives the desired linear relation.
+]
+
+#example("Exponential family")[
+  $X_i tilde^"iid" f(x; theta) = h(x) c(theta) exp{omega(theta) T_1 (x)}$, where $h$ a nonnegative function of only $x$ and $c$ a nonnegative function of only $theta$, with the support of $f$ being independent of $theta$. Then $
+  p_theta (bold(x)) = product_(i=1)^n f(x_i; theta) = [product_(i=1)^n h(x_i)] (c(theta))^n exp(omega(theta) sum_(i=1)^n T_1 (x_i)).
+  $ Taking the log: $
+  dif/(dif theta) log p_theta (bold(x))& = n c'(theta)/theta + omega'(theta) sum_(i=1)^n T_1(x_i) \ 
+  &= omega'(theta) {sum_(i=1)^n T_1 (x_i) - (-n c'(theta))/(c(theta) omega'(theta))}.
+  $ Let $
+  tau(theta) = - (c'(theta))/(c(theta) omega'(theta)).
+  $ Then, since $
+  EE_theta [dif/(dif theta) log p_theta (bold(x))] = 0,
+  $ then $
+  EE_theta [sum_(i=1)^n T_1 (X_i)] = n tau(theta),
+  $ so $
+  T(bold(X)) = 1/n sum_(i=1)^n T_1 (X_i)
+  $ is a UMVUE for $tau(theta)$ by the previous theorem.
+]
+
+#example[
+  Let $X_i tilde^"iid" "Poisson"(theta)$ so $
+  f(x; theta) = e^(-theta)/(x!) theta^x = e^(-theta)/(x!) e^(x log (theta)),
+  $  with support $x in {0, 1, dots}$. Then, we notice that with $
+  h(x) = 1/x!, c(theta) = e^(-theta), omega(theta) = log(theta), T_1 (x)  =x,
+  $ that $X_i$ in the exponential family. Then, according to the previous example, $
+  tau(theta) = - (- e^(-theta))/(e^(-theta) 1/theta) = theta,
+  $ has UMVUE $
+  T(bold(X)) = 1/(n) sum_(i=1)^n X_i = overline(X)_n.
+  $
+]
+
+#example[
+  Recall we found, for $X_i tilde^"iid" cal(U)(0, theta)$, that $hat(theta)_n := (n+1)/n X_((n))$ was an unbiased estimator but cannot obtain the CRLB since the regularity conditions are not satisfied (namely, the support of the pdfs depends on the parameter). Moreover, we found $
+  EE_(theta) {(n+1)/n X_((n))} = theta,
+  Var_theta {(n+1)/n X_((n))} = theta^2/(n(n+2)).
+  $ If we temporarily ignore that we cannot apply CRLB, we would find $
+  "CRLB" = 1/(n I_1 (theta)) = (theta^2)/n,
+  $ so our estimator actually has a "better" variance. We'll see later that this estimator actually the UMVUE.
+]
+
+== Moving Away from Unbiasedness
+
+
+We can't always find unbiased estimators; here we look for other ways for comparing different estimators.
+
+#example[
+  Let $X_i tilde^"iid" cal(N)(mu, sigma^2)$, and consider the following estimators of $sigma^2$: $
+  S_1^2 = 1/(n-1) sum_(i=1)^n (X_i - overline(X)_n)^2,\
+  S_2^2 = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2, \
+  S_3^2 = 1/(n+1) sum_(i=1)^n (X_i - overline(X)_n)^2.
+  $ One verifies these have respective means, variances #align(center, table(
+    columns: 4,
+    stroke: none,
+    "", $S_1^2$, $S_2^2$, $S_3^2$,
+    table.hline(start:0, end:4),
+    table.vline(x:1, start:0, end:4),
+    $EE$, $(n-1)/n sigma^2$, $sigma^2$, $(n-1)/(n+1) sigma^2$,
+    $Var$, $(2(n-1)sigma^4)/n^2$, $(2sigma^4)/(n-1)$, $(2(n-1))/(n+1)^2 sigma^4$
+  )). We notice then that $
+  MSE(S_3^2) < MSE(S_2^2) < MSE(S_1^2),
+  $ so despite the fact that $S_2^2$ is unbiased, it does not minimize the MSE.
+]
+
+#definition("Sufficiency")[
+ Suppose $bold(X) = (X_1, dots, X_n)$ has joint pdf (pmf) $p(bold(x); theta)$ for $theta in Theta$. A statistic $T(bold(X)) : RR^n supset.eq X -> S_T subset.eq RR^k$, $k <= n$, is _sufficient_ for $theta$ or the parametric family ${p_theta : theta in Theta}$ if the conditional distribution of $(X_1, dots, X_n)$ given $T(bold(X)) = t$ for any $theta in Theta$ and $t in S_T$ in the support such that $P_theta (t in S_T) = 1$, does not depend on $theta$. Namely, $
+ f_(bold(X)|T(bold(X))=t) (x_1, dots, x_n),
+ $ does _not_ depend on $theta$.
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" "Ber"(theta)$. Let $T(bold(X)) = sum_(i=1)^n X_i$. We know that then $T (bold(X)) tilde "Bin"(n, theta)$. We claim $T$ sufficient; we have $
+  f_theta (x_1, dots, x_n | T(bold(X)) = t) = cases(
+  1/(binom(n, t)) "if" sum_(i=1)^n x_i = t,
+  0 "else"
+  ),
+  $ which is independent of $theta$ so indeed sufficient.
+]
+
+#theorem("Neyman-Fisher Factorization Theorem")[
+  Let $bold(X) = (X_1, dots, X_n)^t$ be a random vector with a joint pdf/pnf $p_theta (bold(x)) = p(bold(x); theta)$. A statistic $T(bold(X))$ is sufficient for $theta$ if and only if there exist functions $g(dot; theta)$ and $h(dot)$ such that $
+  // p_theta (bold(x)) = (g(T(bold(x))))
+  // TODO finish
   $
 ]
