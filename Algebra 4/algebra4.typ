@@ -622,4 +622,66 @@ Let $H subset.eq G = "GL"_3 (FF_2)$ the normalizer of a Sylow-7 subgroup; then $
 psi : H -> CC^x
 $ and $
 V = "Ind"_H^G psi
-$ the induced character. Then, we know $dim(V) = 168\/21 = 8$.
+$ the induced character. Then, we know $dim(V) = 168\/21 = 8$. Let $P_7$ be some Sylow-7 subgroup. Then, we find that $
+H\/P_7 tilde.eq ZZ\/3 ZZ, 
+$ so our representation factors to $
+H ->> & ZZ\/3 ZZ -> CC^times,\
+& 1 |-> e^(2 pi i\/3).
+$ So specializing our formula we found in the previous section, we know $
+chi_V_psi (g) = 8/(hash C(g)) sum_(gamma in H sect C(g)) psi(gamma).
+$ We compute for $g$ in distinct conjugacy classes: 
+
+#align(center,
+table(columns: 3, stroke: none,
+row-gutter: .5em,
+$hash$, $C$, $chi_V_psi$,
+table.hline(start: 0, end:3),
+table.vline(x:2, start: 0, end:8),
+$1$, $1A$, $8$,
+$21$, $2A$, $0$,
+$56$, $3A$, $-1$,
+$42$, $4A$, $0$,
+$24$, $7A$, $1$,
+$24$, $7B$, $1$,
+)
+)
+
+- The case for $1A$ is simple.
+- The case for $2A$ and $4A$ are trivial since for $C = 2A, 4A$, $C sect H = nothing$, since $H$ a group of odd cardinality, and $C$ consists only of elements of even order, hence they must have empty intersection, so the summation in the character formula is over nothing.
+- For $3A$, we need to compute $3A sect H$. We know that $
+phi: H ->> ZZ\/3ZZ, 
+$ so it must be that $
+P_7 |-> 0, wide "7 elts of order 3" |-> 1, wide "7 elts of order 3" |-> 2,
+$ so $
+3A sect H = phi^(-1) (1) union.sq phi^(-1) (2).
+$  Hence, $
+chi_V_psi (3A) &= 1/7 (sum_(g in phi^(-1) (1)) psi(g) + sum_(g in phi^(-1) (2)) psi(g) ) \ 
+&= 1/7 [7 e^(2 pi i\/3) + 7 e^(4 pi i\/3)] \ 
+&= e^(2 pi i\/3) + e^(4 pi i\/3) = -1.
+$
+- For $g in 7A$, $
+chi_(V_psi) (g) = 8/(24) sum_(g in 7A sect H) psi(g).
+$ Its easy to see $psi(g) = 1$, since $g$ of order 7. So, the difficulty lies in computing the size $7A sect H$. There are certainly 6 elements of order 7 in $H$, but which are in 7A versus 7B? The key fact to notice is that, if $g in 7A, g^2, g^4 in 7A$ as well, and $g^(-1) = g^6$, $g^(3)$ and $g^5$ are in $7B$, which one verifies by checking the minimal polynomials of the two sets of elements (either $x^3+ x +1 , x^3 + x^2 + 1$). Thus, $
+chi_V_psi (g) = 1/3 (1 + 1 + 1) = 1,
+$ for both $g in 7A, 7B$.
+
+One can take the inner product $angle.l chi_V_psi, chi_V_psi angle.r$ and find that it is equal to $1$, hence this new representation is irreducible. Naming this representation $chi_4$, we find the character table so far to be (from the previous section): 
+
+#align(center,
+  table(
+    columns: 7,
+    stroke: none,
+    "size:", $1$, $21$, $56$, $42$, $24$, $24$,
+    "", $1A$, $2A$, $3A$, $4A$, $7A$, $7B$,
+    table.hline(start:0, end: 8),
+    table.vline(x: 1, start:0, end: 8),
+    $chi_1$, $1$, $1$, $1$, $1$, $1$, $1$,
+    $chi_2$, $6$, $2$, $0$, $0$, $-1$, $-1$,
+    $chi_3$, $7$, $-1$, $1$, $-1$, $0$, $0$,
+    $chi_4$, $8$, $0$, $-1$, $0$, $1$, $1$,
+    $chi_5$, $d_5$, $?$, $?$, $?$, $?$, $?$, 
+    $chi_6$, $d_6$, $?$, $?$, $?$, $?$, $?$
+  ) 
+) We know then from the general theory that we are missing two representations. We know that the sum of the squares of the dimensions should equal the cardinality of the group, so $
+168 = 1 + 36 + 49 + 64 + d_5^2 + d_6^2 => d_5^2 + d_6^2 = 18.
+$ It's not hard to see the only way this is possible is that $d_5 = 3, d_6 = 3$.

@@ -8,7 +8,7 @@
 #show: doc => conf(
   course_code: "MATH455",
   course_title: "Analysis 4",
-  subtitle: "",
+  subtitle: "Abstract Metric, Topological Spaces; Functional Analysis.",
   semester: "Winter 2025",
   professor: "Prof. Jessica Lin",
   // cute: "../analysis 3/page.png",

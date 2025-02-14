@@ -238,3 +238,14 @@ $
 ]
 
 = Delay Differential Equations
+
+A delay differential equation (DDE) is generally speaking an ODE that depends on the state of the system in the past. We'll focus on DDEs of the form $
+dot(u)(t) = f(u(t), u(t - tau)),
+$ where $u in RR^p, f : RR^p times RR^p -> RR^p$, and $tau > 0$ a fixed time delay.
+
+The "canonical" first example of a DDE is $dot(u)(t) = u(t - tau)$ for $t >= 0$. Notice that for any time $t in [0, tau]$, then, $dot(u)(t)$ depends on $u$ for times that are not given by the DDE directly. In short, then, we need to supply not just an initial value to the DDE, but a whole initial data, namely $u(t) = phi(t)$ for $t in [-tau, 0]$. 
+
+Suppose for now we take $phi equiv 1$, so we wish to solve the DDE with initial data $
+cases(dot(u)(t) = u(t - tau) & wide t > 0, u(t) = 1 & wide  - tau <= t <= 0
+).
+$
