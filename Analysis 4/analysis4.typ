@@ -446,6 +446,26 @@ $cal(B) subset.eq 2^X$ a base for a topology on $X$ $<=>$
 #proposition[
   Every metric space normal.
 ]
+
+#proof[
+  Define, for $F subset.eq X$, the function $
+  "dist"(F, x) := inf {rho(x, x') | x' in F}.
+  $ Notice that if $F$ closed and $x in.not F$, then $"dist"(F, x) > 0$ (since $F^c$ open so there exists some $B(x, epsilon) subset.eq F^c$ so $rho(x, x') >= epsilon$ for every $x' in F$). Let $F_1, F_2$ be closed disjoint sets, and define $
+  cal(O)_1 := {x in X | "dist"(F_1, x) < "dist"(F_2, x)}, \
+  cal(O)_2 := {x in X | "dist"(F_1, x) > "dist"(F_2, x)}.
+  $ Then, $F_1 subset.eq cal(O)_1, F_2 subset.eq cal(O)_2$, and $cal(O)_1 sect cal(O)_2 = nothing$. If we show $cal(O)_1, cal(O)_2$ open, we'll be done.
+
+  Let $x in cal(O)_1$ and $epsilon > 0$ such that $"dist"(F_1, x) + epsilon <= "dist"(F_2, x)$. I claim that $B(x, epsilon/5) subset.eq cal(O)_1$. Let $y in B(x, epsilon/5)$. Then, $
+  "dist"(F_2, y) &>= rho(y,y') - epsilon/5 wide "for some" y' in F_2 \ 
+  &>= rho(x, y') - rho(x, y) + epsilon/5 wide "reverse triangle inequality" \ 
+  & >= "dist"(F_2, x) - (2 epsilon)/5 \ 
+  & >= "dist"(F_1, x) + epsilon - (2 epsilon)/5 \ 
+  & >= rho(x, tilde(y)) + (2 epsilon)/5 wide "for some" tilde(y) in F_1 \ 
+  & >= rho(y, tilde(y)) - rho(y, x) + (2epsilon)/5wide "reverse triangle inequality" \
+  & >= rho(y, tilde(y)) - epsilon/5 + (2 epsilon)/5 \ 
+  & >= "dist"(F_1, y) + epsilon/5 > "dist"(F_1, y),
+  $ hence, $y in cal(O)_1$ and thus $cal(O)_1$ open. Similar proof follows for $cal(O)_2$.
+]
 // ! page 17
 // ! 01-23
 
@@ -472,7 +492,7 @@ $ This is called the "nested neighborhood property" of normal spaces.]
   - _2nd countable_ if there is a countable base for all of $cal(T)$.
 ]
 
-#example[Every metric space is first countable.]
+#example[Every metric space is first countable; for $x in X$ let $cal(B)_x = {B(x, 1/n) | n in NN}$.]
 
 #proposition[
   Every 2nd countable space is separable.

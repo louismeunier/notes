@@ -16,7 +16,7 @@
 
 #set align(left)
 
-% ! 01-06
+// % ! 01-06
 = Representation Theory
 
 == Introduction
