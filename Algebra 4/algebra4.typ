@@ -685,3 +685,117 @@ One can take the inner product $angle.l chi_V_psi, chi_V_psi angle.r$ and find t
 ) We know then from the general theory that we are missing two representations. We know that the sum of the squares of the dimensions should equal the cardinality of the group, so $
 168 = 1 + 36 + 49 + 64 + d_5^2 + d_6^2 => d_5^2 + d_6^2 = 18.
 $ It's not hard to see the only way this is possible is that $d_5 = 3, d_6 = 3$.
+
+== Tensor Products
+
+We are often interested in generating new representations from exists ones. Suppose $V_1, V_2$ are two representations.
+
+- _Direct sum:_ $
+V_1 plus.circle V_2,
+$ with character $chi_(V_1 plus.circle V_2) = chi_V_1 + chi_V_2$. 
+
+- _Hom_ representation: given by $G$ acting on $
+"Hom"_CC (V_1, V_2),
+$ given by $
+g ast T = g compose T compose g^(-1), wide g in G, T in "Hom"_CC (V_1, V_2),
+$ which had character $chi_("Hom"_CC (V_1, V_2)) = overline(chi_(V_1)) dot chi_V_2$.
+
+- _Dual_ representation: given by the action on $V_1^ast := "Hom"(V_1, CC)$ defined by $g ell = ell compose g^(-1)$. This gives $chi_(V_1^ast) = overline(chi_V_1)$ 
+
+We define now the _tensor representation_:
+
+#definition("Tensor Product")[
+  Given representations $V_1, V_2$, put $
+  V_1 times.circle V_2 = "Hom"_CC (V_1^ast, V_2).
+  $
+]
+
+Then, one readily verifies $dim(V_1 times.circle V_2) = dim(V_1) dot dim(V_2).$
+
+More concretely, let $v_1 in V_1$ and $v_2 in V_2$. Then for $ell in V_1^ast$, we can define $
+v_1 times.circle v_2 (ell) := ell(v_1) dot v_2 in V_2.
+$ One readily verifies that this definition genuinely defines an element of $"Hom"_CC (V_1^ast, V_2)$. 
+
+One notices too that $times.circle$ is _bilinear_ in both arguments, namely for any $v_1, v_1 ' in V_1$, $v_2, v_2 ' in V_2$, $lambda in CC$ and $ell in V_1^ast$, then 
+$
+(lambda v_1 + v_1 ') times.circle v_2 = lambda (v_1 times.circle v_2) + (v_1 ' times.circle v_2),
+$ and also $
+v_1 times.circle (lambda v_2 + v_2 ') = lambda (v_1 times.circle v_2) + (v_1 times.circle v_2 ').
+$ Let $e_1, dots, e_n$ a basis for $V_1$ and $f_1, dots, f_m$ a basis for $V_2$, and consider $v_1 = a_1 e_1 + dots.c + a_n e_n$, $v_2 = b_1 f_1 + dots.c + b_m f_m$ for $a_i, b_j in CC$. Then, using the bilinearity, we find $
+v_1 times.circle v_2 &= (a_1 e_1 + dots.c + a_n e_n) times.circle (b_1 f_1 + dots.c + b_m f_m) \
+&= sum a_i b_j (e_i times.circle f_j),
+$ so we find from this that the elements $e_i times.circle f_j$ for $1 <= i <= n, 1 <= j <= m$ span $V_1 times.circle V_2$ and hence define a basis.
+
+Now, $G$ acts on $V_1 times.circle V_2$ by the rule $
+g dot (v_1 times.circle v_2) = (g v_1) times.circle (g v_2).
+$ Hence, we find $
+chi_(V_1 times.circle V_2) = chi_("Hom" (V_1^ast, V_2)) = overline(chi_(V_1^ast)) dot chi_(V_2) = chi_(V_1) dot chi_V_2,
+$ using the character properties above.
+
+We can also prove this directly. Let $g in G$ and let $e_1, dots, e_n$ be a basis for $V_1$ of eigenvectors for $g$, and $f_1, dots, f_m$ a basis for $V_2$ of eigenvectors for $g$. Suppose $g dot e_i = lambda_i e_i$, $g dot f_j = mu_j f_j$, for some $lambda_i, mu_j in CC$. Then, $
+g dot (e_i times.circle f_j) = (g dot e_i) times.circle (g dot f_j) = (lambda_i e_i times.circle mu_j f_j) = (lambda_i mu_j) (e_i times.circle f_j).
+$ Hence, we find $
+tr (rho_(V_1 times.circle V_2)) (g) = sum_(i = 1, dots, n\ j = 1, dots, m) lambda_i mu_j = sum_(i=1)^n lambda_i sum_(j=1)^m mu_j = chi_(V_1) (g) dot chi_(V_2) (g).
+$
+
+#example($A_5$)[
+  Recall the character table of $A_5$,
+  #align(center,
+    table(
+      columns: 6,
+      stroke: none,
+      "", $1$, $15$, $20$, $12$, $12$,
+      "", $1A$, $2A$, $3A$, $5A$, $5B$,
+      table.hline(start: 0, end: 7),
+      table.vline(x:1, start: 0, end: 7),
+      $chi_1$, $1$, $1$, $1$,$1$, $1$,
+      $chi_2$, $4$, $0$, $1$, $-1$, $-1$,
+      $chi_3$, $5$, $1$, $-1$, $0$, $0$,
+      $chi_4$, $3$, $-1$, $0$, $1 + zeta + zeta^(-1)$, $1 + zeta^2 + zeta^(-2)$,
+      $chi_5$, $3$, $-1$, $0$, $1 + zeta^2 + zeta^(-2)$, $1 + zeta + zeta^(-1)$
+    )
+  )
+We consider various tensors of representations: 
+
+ #align(center,
+    table(
+      columns: 6,
+      stroke: none,
+      "", $1A$, $2A$, $3A$, $5A$, $5B$,
+      table.hline(start: 0, end: 7),
+      table.vline(x:1, start: 0, end: 7),
+      $V_2 times.circle V_3$, $9$, $1$, $0$, $-1$, $-1$,
+  )) which we notice to equal the character of $chi_4 plus.circle chi_5$; namely, $V_2 times.circle V_3 tilde.eq V_4 plus.circle V_5$.
+
+  Also 
+  #align(center,
+    table(
+      columns: 6,
+      stroke: none,
+      "", $1A$, $2A$, $3A$, $5A$, $5B$,
+      table.hline(start: 0, end: 7),
+      table.vline(x:1, start: 0, end: 7),
+      $V_2 times.circle V_4$, $12$, $0$, $0$, $(-1 - sqrt(5))/2$, $(-1 + sqrt(5))/2$,
+  )) from which we find $
+  V_2 times.circle V_4 tilde.eq V_3 plus.circle V_4 plus.circle V_5.
+  $
+]
+
+=== Cute Application of Representation Theory
+Suppose we are given $N$ knights, whom, after a long night of pillaging, sit at a round table to share their spoils of war. Each knight decides to split his earnings equally among his two neighbors. What happens after many iterations?
+
+The wealth distribution may be modelled as a function on $ZZ\/N ZZ$; each knight is identified with some element of $ZZ\/N ZZ$, and the wealth is given by $f : ZZ\/N ZZ -> CC$. Then, $
+f in L^2 (ZZ\/N ZZ) = plus.circle.big_(j=0)^(N-1) CC dot e^(2 pi i j x\/N).
+$ Then, "wealth distribution" can be seen as a function $T : L^2 -> L^2$ given by $
+T f(x) := 1/2 (f(x - 1) + f(x + 1)).
+$ Then, $
+T e^(2 pi i j x\/N) &= 1/2 (e^(2 pi i j (x + 1) \/N ) + e^(2 pi i j (x - 1) \/N )) \ 
+&= 1/2 (e^(2 pi i j\/N) + e^(- 2 pi i j\/N)) e^(2 pi i j x \/N) \
+&= cos(2 pi j\/N) e^(2 pi i j x \/N).
+$ Then, we may write $f = hat(f)(0) f_0 + hat(f)(1)f_1 + dots.c + hat(f)(N-1) f_(N-1)$, so $
+T f = hat(f)(0) f_0 + hat(f)(1) cos((2 pi)/N) f_1 + dots.c + hat(f)(N-1) cos((2 pi (N-1))/N) f_(N-1),
+$ and hence $
+hat(T f) (j) = hat(f)(j) cos((2 pi j)/N).
+$ Thus, $
+hat(T^M f(j)) = hat(f)(j) (cos ((2 pi)/N))^M.
+$
