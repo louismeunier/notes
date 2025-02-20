@@ -799,3 +799,28 @@ hat(T f) (j) = hat(f)(j) cos((2 pi j)/N).
 $ Thus, $
 hat(T^M f(j)) = hat(f)(j) (cos ((2 pi)/N))^M.
 $
+
+=== More General Motivation
+
+Let $X$ a "mathematical object", $G$ a group of symmetries and $V = L^2 (X) =  CC$-valued functions on $X$. We assume $X$ finite (hence $G$ finite and $V$ finite). We are interested in studying operators $T : L^2 (X) -> L^2 (X)$.
+
+Suppose $X$ a set of vertices of a graph; define for $phi in L^2 (X)$, $(T phi)(x) = sum_((y, x) "an edge") phi(y)$; $T$ the adjacent operator, extended to functions on $CC$. We claim $T$ commutes with the action of $G$; write $y tilde x$ if the vertex $y$ adjacent to the vertex $x$:
+$
+(T compose g) (phi) (x) &= T(g phi) (x) \ 
+&=  sum_(y tilde x) (g phi)(y) \ 
+&= sum_(y tilde x) phi(g^(-1) y),
+$ while on the other hand $
+(g compose T)(phi)(x) &= g (T(phi))(x) \ 
+&= T(phi)(g^(-1) x) \ 
+&= sum_(y tilde g^(-1) x) phi(y),
+$ which are equal upon change of index.
+
+Suppose $X$ the faces of a cube, and $V = L^2 (X)$. Define $
+T phi (F) = 1/4 sum_(F' "adjacent to" F) phi(F').
+$ What is the spectrum of $T$?
+
+#theorem[If $L^2 (X) = V_1 plus.circle dots.c plus.circle V_t$, where the $V_j$'s are distinct irreducible representations of $G$, then $T$ maps $V_j$ to itself, and in particular acts as a scalar on $V_j$.]
+
+#proof[
+  $T$ can be written as a $t times t$ "matrix of matrices", $(T_(i j))$, where $T_(i j) : V_j -> V_i$. Moreover, each $T_(i j) in "Hom"_G (V_j, V_i)$ (being $G$-equivariant).
+]

@@ -704,7 +704,7 @@ $ for some function $a(theta)$, for every $theta in Theta$ and $bold(x)$ in the 
   $ so our estimator actually has a "better" variance. We'll see later that this estimator actually the UMVUE.
 ]
 
-== Moving Away from Unbiasedness
+== Sufficiency - Moving Away from Unbiasedness
 
 
 We can't always find unbiased estimators; here we look for other ways for comparing different estimators.
@@ -742,9 +742,157 @@ We can't always find unbiased estimators; here we look for other ways for compar
   $ which is independent of $theta$ so indeed sufficient.
 ]
 
-#theorem("Neyman-Fisher Factorization Theorem")[
-  Let $bold(X) = (X_1, dots, X_n)^t$ be a random vector with a joint pdf/pnf $p_theta (bold(x)) = p(bold(x); theta)$. A statistic $T(bold(X))$ is sufficient for $theta$ if and only if there exist functions $g(dot; theta)$ and $h(dot)$ such that $
-  // p_theta (bold(x)) = (g(T(bold(x))))
-  // TODO finish
+#remark[
+  A sufficient statistic induces a partitioning of the sample space $Chi subset.eq RR^n$; namely, $
+    Chi = union.big_(t in S_T) Pi_t,
+  $ such that $
+    Pi_t = {bold(x) = (x_1, dots, x_n) in Chi | T(bold(x)) = t},
+  $ and $S_T$ the support of $T$.
+]
+
+#example[
+  Return to the Bernoulli example from before, and consider specifically the case when $n = 2$, so $T(bold(X)) = X_1 + X_2$ is a sufficient statistic as we showed. Then, the sample space is given by $
+    Chi = {(0,0), (0, 1), (1,0), (1, 1)},
+  $  and $T$ has support $
+    T(bold(x)) = x_1 + x_2 in {0, 1, 2} =: S_T.
+  $ This induces the partitioning $
+Chi = Pi_0 union.sq Pi_1 union.sq Pi_2 = {(0,0)} union.sq {(0, 1), (1, 0)} union.sq {(1,1)}.
   $
+]
+
+#theorem("Neyman-Fisher Factorization Theorem")[
+  Let $bold(X) = (X_1, dots, X_n)^t$ be a random vector with a joint pdf/pmf $p_theta (bold(x)) = p(bold(x); theta)$. A statistic $T(bold(X))$ is sufficient for $theta$ if and only if there exist functions $g(dot; theta)$ and $h(dot)$ such that $
+  p_theta (bold(x)) = h(bold(x)) dot g(theta, T(bold(x))),
+  $ for every $theta in Theta$ and $bold(x) in Chi$. 
+
+  Note that $g$ depends on $bold(x)$ _only_ through $T(bold(x))$, and $h$ does _not_ depend on $theta$.
+ ]
+
+#proof[We prove in the discrete case.
+
+Note that $
+f_(bold(X)|T(bold(X)) = t_(bold(x))) (bold(x)) = (P_theta (X_1 = x_1, dots, X_n = x_n, T(bold(X)) = t_(bold(x))))/(P_theta (T(bold(X)) = t_(bold(x)))),
+$ for every $bold(x)$ such that $T(bold(x)) = t_bold(x)$, and $0$ otherwise;
+$
+ = (P_theta (X_1 = x_1, dots, X_n = x_n))/(sum_(bold(y) = (y_1, dots, y_n) : T(bold(y)) = t_bold(x)) P(X_1 = y_1, dots, X_n = y_n)).
+$
+
+If $T(bold(X))$ a sufficient statistic for $theta$, then the above ratio, by definition, does not depend on $theta$; hence, putting $h(bold(x))$ to be the ratio above, it is independent of $theta$ (is only a function of the data), and if we take $g$ to be the denominator of the ratio above, then $g$ depends on the data only through $T$. Hence, we can write $p_theta (bold(x)) = h(bold(x)) dot g(t_bold(x); theta)$.
+
+Conversely, suppose $p_theta (bold(x))= g(T(bold(x)); theta) h(bold(x))$. Then, $
+f_(bold(X)|T(bold(X))=t_bold(x)) (bold(x); theta) &= (g(t_bold(x); theta) h(bold(x)))/(sum_(bold(y) : T(bold(y)) = t_bold(x)) g(T(bold(y)); theta) h(bold(y))) = (h(bold(x)))/(sum_(bold(y) : T(bold(y)) = t_bold(x)) h(bold(y))),
+$ which depends only on $bold(x)$ and hence $T(bold(X))$ a sufficient statistic.
+]
+
+#example[
+Let again $X_1, dots, X_n tilde^"iid" "Ber"(theta)$ so $
+p_theta (x_1, dots, x_n) = product_(i=1)^n theta^(x_i) (1 - theta)^(1- x_i) = theta^(sum_(i=1)^n x_i) (1 - theta)^(n - sum_(i=1)^n x_i) product_(i=1)^n bb(1){x_i in {0,1}}.
+$ for $x_i = 0, 1$.
+
+One notices that the LHS (not the product) can be written as a function of $theta$ and $sum_(i=1)^n x_i$ only, and the remaining term is independent of $theta$. Hence by the previous theorem $T(bold(X)) = sum_(i=1)^n X_i$ a sufficient statistic for $theta$.
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" cal(U)(0, theta)$, so $f(x; theta) = cases(1/theta & "if" 0 < x < theta, 0 & "else")$. Then $
+p_theta (bold(x)) &= product_(i=1)^n 1/theta bb(1)(0 < x_i < theta)\
+&= underbrace(1/(theta^n) bb(1)(0 <x_((n)) < theta}, =: g(T(bold(x); theta))) underbrace(bb(1)(0 < x_((1)) < theta), =: h(bold(x))),
+  $ so $X_((n))$ is a sufficient statistic for $theta$.
+]
+
+#remark[
+  If $T$ is a sufficient statistic for $theta$ and $T(bold(X)) = Phi(T^ast (bold(X)))$ where $Phi$ is a measurable function and $T^ast$ another statistic, then $T^ast$ is also a sufficient statistic.
+]
+
+#example[
+  In the exponential family, we claim $T(X_1, dots, X_n) = sum_(i=1)^n T_1 (X_i)$.
+]
+
+#example[
+Let $X_1, dots, X_n tilde^"iid" cal(N)(mu, sigma^2)$ and $theta = (mu, sigma^2)$ both unknown. Using the factorization theorem, we can see that $
+T(bold(X)) = (sum_(i=1)^n X_i, sum_(i=1)^n X_i^2)
+$ is a sufficient statistic for $theta$, as is $(overline(X)_n, S_n^2)$.
+]
+
+#remark[
+This does _not_ imply that say $sum_(i=1)^n X_i$ sufficient for $mu$! Namely $T$ is a sufficient statistic for the 2-dimensional parameter $theta$. We cannot simply separate the dependence.
+]
+
+#example[
+Recall the Bernoulli example once again. We claim that $
+T^ast_m (bold(X)) = (sum_(i=1)^m X_i,  sum_(i=m+1)^n X_i), wide 1 <= m <= n - 1
+)
+$ is also sufficient for $0 < theta < 1$. Clearly this is no different then just using the one-dimensional statistic $sum_(i=1)^n X_i$; we'd like to formalize how to differentiate such statistics. Namely, $sum_(i=1)^n X_i$ is called a _minimal_ sufficient statistic for $theta$.
+]
+
+// TODO midterm up to this point!
+
+#definition("Minimal Sufficient Statistic")[
+A statistic $T(bold(X))$ is a _minimal sufficient statistic_ for $theta$ iff 
+
+- $T(bold(X))$ is sufficient;
+- For any other sufficient statistic $T^ast (bold(X))$ of $theta$, $T(bold(X))$ is a function of $T^ast (bold(X))$, i.e. $
+T(bold(X)) = phi(T^ast (bold(X))),
+$ where $phi(dot)$ some measurable function, or equivalently, $forall bold(x), bold(y) in Chi subset.eq RR^n$, if $T^ast (bold(x)) = T^ast (bold(y))$ then $T(bold(x)) = T(bold(y))$.
+]
+
+#remark[
+  If $T(bold(X))$ minimally sufficient and induces a partitioning $
+  Chi = union.big_(t in S_T) Pi_t, wide Pi_t := {bold(x) in Chi : T(bold(x)) = t}
+  $ and $T^ast (bold(X))$ any sufficient statistic that induces a partitioning $
+  Chi = union.big_(t^ast in S^ast_(T^ast)) Pi^ast_(t^ast),wide Pi^ast_t^ast := {bold(x) in Chi : T^ast (bold(x)) = t^ast},
+  $ then we find that $forall t^ast in S_(T^ast)^ast$, there is some $t in S_T$ such that $Pi_(t^ast)^ast subset.eq Pi_t$; namely, the partition induced by $T(bold(X))$ is the _coarsest_ possible partition of $Chi$.
+]
+
+#theorem("Lehmann-Scheffé")[
+For a parametric family $p_theta (dot)$ (the joint pdf/pmf of $bold(X)$), suppose a statistic $T(bold(X)) = T(X_1, dots, X_n)$ is such that for every $bold(x), bold(y) in Chi subset.eq RR^n$ $T(bold(x)) = T(bold(y)) <=>  (p_theta (bold(x)))/(p_theta (bold(y)))$ does not depend on $theta$. Then, $T(bold(X))$ is a minimal sufficient statistic for $theta$.
+]
+
+#example[
+  Suppose $X_i tilde^"iid" cal(U)(0, theta)$, then $p_theta (bold(x)) = 1/(theta^n) bb(1){x_((n)) < theta} bb(1){x_((1)) > 0}$; then $T(bold(X)) = X_((n))$ is a sufficient statistic for $theta$. For any $bold(x), bold(y) in Chi$, we find $
+  (p_theta (bold(x)))/(p_theta (bold(y))) &= (bb(1){x_((n)) < theta} bb(1){x_((1)) > 0})/(bb(1){y_((n)) < theta} bb(1){y_((1)) > 0}),
+  $ which does not depend on $theta$ iff $x_((n)) = y_((n))$ iff $T(bold(x)) = T(bold(y))$ and therefore by the previous theorem $T(bold(X))$ is a minimally sufficient statistic.
+]
+
+#example[
+  If $X_i tilde^"iid" cal(N)(mu, sigma^2)$ and $theta = (mu, sigma^2)$, it can be shown that $
+  T(bold(X)) = (sum_(i=1)^n X_i, sum_(i=1)^n X_i^2)
+  $ is a minimal sufficient statistic for $theta$. Any one-to-one function of a minimally sufficient statistic also minimally sufficient, hence this implies $(overline(X)_n, S_n^2)$ is also minimally sufficient for $theta$.
+]
+
+== Completeness
+
+#definition("Completeness")[
+  Let $X$ be a random variable with a pmf/pdf belonging to a parametric family $cal(F) = {f_theta : theta in Theta}$. This family is said to be _complete_ if for any measurable function $g$ with $EE_theta [g(bold(X))] < infinity$, then $EE_theta [g(bold(X))] = 0$ for all $theta in Theta$ implies $P_theta (g(X) = 0) = 1$.
+
+  A statistic $T(bold(X)) = T(X_1, dots, X_n)$ is said to be _complete_ if the family of its distributions is complete.
+]
+
+#remark[
+  Complete and sufficient $=>$ minimal, but minimally sufficient may not be complete, as we'll see.
+]
+
+#example[
+  Let $X_i tilde^"iid" "Ber"(theta)$, then note $T(bold(X)) = sum_(i=1)^n X_i tilde "Bin"(n, theta)$. Let $g$ a measurable function. Then, $
+  0 = EE_theta [g(bold(X))]  =>  0 &= sum_(t=0)^n g(t) binom(n, t) theta^t (1 - theta)^(n - t)  \ 
+  &=cancel( (1 - theta)^n )sum_(t=0)^n g(t) binom(n, t) (overbrace((theta)/(1-theta), =: eta))^t \ 
+  &= sum_(t=0)^n g(t) binom(n, t) eta^t.
+  $ Then, this is just a polynomial in $eta$, which, being equal to zero implies all the coefficients $g(t) binom(n, t) = 0$ for every $t$ and hence $g(t) = 0$. Hence, $T(bold(X))$ is a complete statistic.
+]
+
+#example[
+  If $X tilde cal(N)(0, theta)$, the family is not complete. For instance with $g(x) := x$, $EE_theta (X) = 0$ but $g(x)$ is not identically zero. On the other hand, $T(X) = X^2$ is a complete statistic. To see this, we know $(X^2)/theta tilde chi^2_((1))$, so $
+  EE_theta (g(T)) = 0 =>0 &=  integral_(0)^infinity g(t) f_T (t; theta) dif t \ 
+  &= integral_(0)^infinity 1/(sqrt(2 pi theta)) g(t) t^(-1/2) e^(-t/(2 theta)) dif t \ 
+  &= cal(L){g(t) t^(-1/2) 1/(sqrt(2 pi theta))}.
+  $ By uniqueness of the Laplace transform, it must be that $g(t) t^(-1/2) equiv 0$ hence $g(t) = 0$ and thus $T(X) = X^2$ is a complete statistic.
+]
+
+#example[
+  In the exponential family, $sum_(i=1)^n T_1 (X_i)$ is a complete statistic.
+]
+
+Note that an unbiased estimator of a parameter of interest may not even exist. For instance, #example[
+  If $X tilde "Bin"(n, theta)$, let $tau(theta) = 1/theta$. If $delta(X)$ is an unbiased estimator of $tau(theta)$, we must have $EE_theta [delta(X)] = 1/theta$ i.e. $
+  sum_(x=0)^n delta(x) binom(n, x) theta^x (1 - theta)^(n - x) = 1/theta.
+  $ As $theta -> 0$, the left-hand side will just be $delta(0)$, while the right-hand side will diverge to $infinity$, so no such estimator exists.
 ]

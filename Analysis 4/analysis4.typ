@@ -185,7 +185,7 @@ The goal in this section is to find conditions for a sequence of functions ${f_n
 ]
 
 #lemma("Arzelà-Ascoli Lemma")[
-  Let $X$ separable and let ${f_n} subset.eq C(X)$ be pointwise bounded and equicontinuous. Then, there is a subsequence ${f_n_k}$ and a function $f$ which converges pointwise to $f$ on all of $X$.
+  Let $X$ separable and let ${f_n} subset.eq C(X)$ be pointwise bounded and equicontinuous. Then, there is a function $f$ and a  subsequence ${f_n_k}$ which converges pointwise to $f$ on all of $X$.
 ]
 
 #proof[
@@ -502,7 +502,7 @@ $ This is called the "nested neighborhood property" of normal spaces.]
 #definition("1st, 2nd Countable")[
   A topological space $(X, cal(T))$ is called 
 
-  - _1st countable_ if there is a countable base at each point
+  - _1st countable_ if there is a countable base at each point; and
   - _2nd countable_ if there is a countable base for all of $cal(T)$.
 ]
 
@@ -1138,4 +1138,158 @@ c. $norm(T) <= liminf_(n->infinity) norm(T_n)$ (_lower semicontinuity result_).
 #remark[
   - We do note have $T_n -> T$ in $cal(L)(X, Y)$ i.e. with respect to the operator norm.
   - If $Y$ is a Banach space, then $lim_(n->infinity) T_n (x)$ exists in $Y$ $<=>$ ${T_n x}$ Cauchy in $Y$ for every $x in X$.
+]
+
+== Introduction to Hilbert Spaces
+
+#definition("Inner Product")[
+  An _inner product_ on a vector space $X$ is a map $(dot, dot) : X times X -> RR$ such that for every $lambda, mu in RR$ and $x, y, z in X$,
+  - $(lambda x + mu y, z) = lambda (x, z) + mu (y, z)$;
+  - $(x, y) = (y, x)$;
+  - $(x, x) >= 0$ and $(x, x) = 0 <=> x = 0$.
+]
+
+#remark[
+  The first and second conditions combined imply that $(dot, dot)$ actually _bilinear_, namely, linear in both coordinates.
+]
+
+#remark[
+  An inner product induces a norm on a vector space by $
+  norm(x) := (x, x)^(1/2).
+  $
+]
+
+#proposition("Cauchy-Schwarz Inequality")[
+  Any inner product satisfies Cauchy-Schwarz, namely, $
+  abs((x, y)) <= norm(x) norm(y),
+  $ for every $x, y in X$.
+]
+#proof[
+Suppose first $y = 0$. Then, the right hand side is clearly 0, and by linearity $(x, y) = 0$, hence we have $0 <= 0$ and are done. Suppose then $y eq.not 0$. Then, let $z = x - ((x, y))/((y,y))y$ where $y eq.not 0$. Then, $
+0 <= norm(z)^2 &= (x - ((x, y))/((y,y))y, x - ((x, y))/((y,y))y) \ 
+&= (x,x) - ((x,y))/((y,y)) (x, y) - ((x, y))/((y,y))(y, x) + (x, y)^2/((y,y)^2) (y,y) \ 
+&= (x,x) - (2 ((x, y))^2)/((y,y))+ ((x, y)^2)/((y,y)) \ 
+&= norm(x) - ((x, y)^2)/((y,y))\ 
+&=> ((x, y)^2)/((y,y)) <= norm(x) =>  (x, y)^2 <= norm(x)^2norm(y)^2 \
+&=> |(x, y)| <= norm(x)norm(y).
+$
+]
+
+#corollary[
+  The function $norm(x) := (x,x)^(1/2)$ is actually a norm on $X$.
+]
+
+#proof[
+  By definition, $norm(x) >= 0$ and equal to zero only when $x = 0$. Also, $
+  norm(lambda x)  = (lambda x, lambda x)^(1/2) = abs(lambda)(x,x)^(1/2) = abs(lambda) norm(x).
+  $ Finally, $
+  norm(x + y)^2 &= (x + y, x + y) \
+  &= (x, x) + 2 (x, y) + (y, y) \ 
+  &= norm(x)^2  + norm(y)^2+ 2(x, y) \
+  "by Cauchy-Schwarz"wide& <=  norm(x)^2 + norm(y)^2 + 2 norm(x) norm(y) \ 
+  &= (norm(x) + norm(y))^2,
+  $ hence by taking square roots we see $norm(x + y) <= norm(x) + norm(y)$ as desired.
+]
+
+#proposition("Parallelogram Law")[
+Any inner product space satisfies the following: $
+norm(x + y)^2 + norm(x - y)^2 = 2norm(x)^2 + 2 norm(y)^2.
+$
+]
+
+#corollary[
+  $(dot, dot)$ is continuous, i.e. if $x_n -> x$ and $y_n -> y$, then $(x_n, y_n) -> (x, y)$.
+]
+
+#proof[
+  $
+  abs((x_n, y_n) - (x, y)) &= abs((x_n, y_n) - (x, y_n) + (x, y_n) - (x, y)) \ 
+  &= abs((x_n - x, y_n) + (x, y_n - y)) \ 
+  & <= abs((x_n - x, y_n)) + abs((x, y_n - y)) \ 
+  "(Cauchy-Schwarz)"wide & <= underbrace(norm(x_n - x), -> 0)underbrace(norm(y_n), <= M) + norm(x) underbrace(norm(y_n - y), -> 0) -> 0.
+  $
+]
+
+#definition("Hilbert Space")[
+A _Hilbert Space_ $H$ is a complete inner product space, namely, it is complete with respect to the norm induced by the inner product.
+]
+
+#example[
+  1. $ell^2$, the space of square-summable real-valued sequences, equipped with inner product $(x, y) = sum_(i=1)^infinity x_i y_i$.
+  2. $L^2$, with inner product $(f, g) = integral f(x) g(x) dif x$.
+]
+
+#definition("Orthogonality")[
+  We say $x, y$ _orthogonal_ and write $x perp y$ if $(x, y) = 0$. If $M subset.eq H$, then the _orthogonal complement_ of $M$, denoted $M^perp$, is the set $
+  M^perp = {y in H | (x, y) = 0,  forall x in M}.
+  $
+]
+
+#remark[
+  $M^perp$ is always a closed subspace of $H$. If $y_1, y_2 in M^perp$, then for every $x in M$, $
+  (x, alpha y_1 + beta y_2) = alpha (x, y_1) + beta (x, y_2) = 0,
+  $ so $M^perp$ a subspace.
+
+  If $y_n -> y$ in the norm on $H$ and ${y_n} subset.eq M^perp$, then using the continuity of $(dot, dot)$, we know that for every $x in M$, $(x, y_n) -> (x, y)$. But the $(x, y_n) = 0$ for every $n$ and thus $(x, y) = 0$ so $y in M^perp$, hence $M^perp$ closed.
+]
+
+#proposition[
+  If $M subset.neq H$ is a closed subspace, then every $x in H$ has a unique decomposition $
+x = u + v, wide u in M, v in M^perp.
+  $ Hence, we may write $H = M plus.circle M^perp$. Moreover, $
+  norm(x - u) = inf_(y in M) norm(x - y), wide norm(x - v) = inf_(y in M^perp) norm(x - y).
+  $
+]
+#proof[
+Let $x in H$. If $x in M$, we're done with $u = x, v = 0$. Else, if $x in.not M$, then we claim that there is some $u in M$ such that $norm(x - u) = inf_(y in M) norm(x - y) =: delta > 0$. By definition of the infimum, there exists a sequence ${u_n} subset.eq M$ such that $
+norm(x - u_n)^2 <= delta^2 + 1/n.
+$ Let $overline(x) := u_m - x$, $overline(y) = u_n - x$. By the Parallelogram Law, $
+norm(overline(x) - overline(y))^2 + norm(overline(x) + overline(y))^2 = 2 norm(overline(x))^2 + 2 norm(overline(y))^2
+$ hence $
+norm(u_m - u_n)^2 + norm(u_m + u_n - 2 x)^2 = 2 norm(u_m - x)^2 + 2 norm(u_n - x)^2.
+$ Now, the second term can be written $
+norm(u_m + u_n - 2 x)^2  = 4 norm((u_m + u_n)/2  - x)^2,
+$ hence we find $
+norm(u_m - u_n)^2 = 2 norm(u_m-x)^2 + 2 norm(u_n - x)^2 - 4 norm((u_m + u_n)/2  - x)^2.
+$ Recall that $M$ a subspace, hence $1/2 (u_m + u_n) in M$ so $norm(x - 1/2 (u_m + u_n)) >= delta$ as defined before. Thus, we find that by our choice of ${u_n}$, $
+norm(u_m - u_n)^2 &<= 2( delta^2 + 1/m) + 2(delta^2 + 1/n) - 4 delta^2 = 2/m + 2/n,
+$ and thus, by making $m, n$ sufficiently large we can make $norm(u_m - u_n)$ arbitrarily small. Hence, ${u_n} subset.eq M$ are Cauchy. $H$ is complete, hence the ${u_n}$'s converge, and thus since $M$ closed, $
+u_n -> u in M.$ Then, we find $
+norm(x - u) &<=  norm(x - u_n) + norm(u_n - u) \ 
+& <= underbrace((delta^2 + 1/n)^(1/2), -> delta) + underbrace(norm(u_n - u), -> 0) -> delta. 
+$ But also, $u in M$ and thus $norm(x - y) >= delta$, and we conclude $norm(x - u) = delta = inf_(y in M) norm(x - y)$.
+
+Next, we claim that if we define $v = x - y$, then $v in M^perp$. Consider $y in M$, $t in RR$, then $
+norm(x - underbrace((u - t y), in M))^2 &= norm(v + t y)^2 = norm(v)^2 + 2 t (v, y) + t^2 norm(y)^2.
+$ Then, notice that the map $
+t |-> norm(v + t y)^(2)
+$ is minimized when $t = 0$, since $norm(x - z)$ for $z in M$ is minimized when $z = u$, as we showed in the previous part, so equivalently $norm(x - (u  - t y))^2$ minimized when $t = 0$.
+Thus, 
+$
+0 = partial/(partial t) norm(v + t y)^(2)|_(t=0) &=  partial/(partial t) [norm(v)^2 + 2 t (v, y) + t^2 norm(y)^2]_(t=0) \ 
+&= (2 (v, y) + 2 t norm(y)^2)_(t = 0) = (v, y) \
+&=> (v, y) = 0 forall y in M => v in M^perp.
+$ So, $x = u + v$ and $u in M, v in M^perp$. For uniqueness, suppose $x = u_1 + v_1 = u_2 + v_2$. Then, $u_1 - u_2 = v_2 - v_1$, but then $
+norm(v_2 - v_1)^2 = (v_2 - v_1, v_2 - v_1) = (v_2 - v_1, u_2 - u_1) = 0,
+$ so $v_2 = v_1$ so it follows $u_2 = u_1$ and uniqueness holds.
+]
+
+#definition([Dual of $H$])[
+  The _dual_ of $H$, denoted $H^ast$, is the set $
+  H^ast := {f : H -> RR | f "continuous and linear"}.
+  $ On this space, we may equip the operator norm $
+  norm(f)_(H^ast) = norm(f) = sup_(x in H) (abs(f (x)))/(norm(x)_H) = sup_(norm(x) <= 1) abs(f(x)).
+  $
+]
+
+#example[
+  For $y in H$, let $f_y : H -> RR$ be given by $f_y (x) = (x, y)$. By CS, $
+  norm(f_y)_(H^ast) &= sup_(norm(x) <= 1) (x, y)  <= sup_(norm(x) <= 1) norm(x) norm(y)  <= norm(y).
+  $ Also, if $y eq.not 0$, then $
+  f_y (y/(norm(y))) = (y/(norm(y)), y) = norm(y).
+  $ Thus, $norm(f_y)_(H^ast) = norm(y)_(H)$. It turns out all such functionals are of this form.
+]
+
+#theorem("Riesz Representation for Hilbert Spaces")[
+  If $f in H^ast$, there exists a unique $y in H$ such that $f(x) = (x, y)$ for every $x in X$.
 ]
