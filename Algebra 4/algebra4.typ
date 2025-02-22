@@ -315,7 +315,7 @@ $
 
   We look now at the centers of the two rings, since they are (in general) noncommutative. Namely, $
   Z(CC[G]) = {sum lambda_g g | (sum lambda_g g) theta = theta (sum lambda_g g) forall theta in CC[G]}.
-  $ Since multiplication in $CC$ is commutative and "factors through" internal multiplication, it follows that $sum lambda_g g n Z(CC[G])$ iff it commutes with every group element, i.e. $
+  $ Since multiplication in $CC$ is commutative and "factors through" internal multiplication, it follows that $sum lambda_g g in Z(CC[G])$ iff it commutes with every group element, i.e. $
   (sum lambda_g g) h = h (sum lambda_g g) & <=> sum_g (lambda_g h^(-1) g h) = sum_g lambda_g g \
   & <=> sum_g lambda_(h^(-1) g h) g = sum_g lambda_g g \ 
   & <=> lambda_(h^(-1) g h) = lambda_g forall g in G.
@@ -403,13 +403,13 @@ $
 == Fourier Analysis on Non-Abelian Finite Groups
 
 When $G$ abelian, recall that $CC[G]$ was a commutative ring isomorphic to $plus.circle.big_(chi in hat(G)) CC$. More generally, we find an isomorphism $
-Phi : CC[G] -> plus.circle_(j=1)^h "End"_CC(V_j) tilde.eq  plus.circle_(j=1)^h "M"_(d_j times d_j) (CC),
-$ where $h = h(G)$, $V_j$ enumerate the irreducible representations of $G$, and $d_j := dim_CC(V_j)$.
+Phi : CC[G] -> plus.circle_(j=1)^h "End"_CC (V_j) tilde.eq  plus.circle_(j=1)^h "M"_(d_j times d_j)  (CC),
+$ where $h = h(G)$, $V_j$ enumerate the irreducible representations of $G$, and $d_j := dim_CC (V_j)$.
 
 #definition("Fourier Transform")[
   Given a function $f : G -> CC$, denote by $
   theta_f = sum_(g in G) f(g) g
-  $ its corresponding element in $CC[G]$. Then, ots corresponding image under $Phi$ in $plus.circle.big "End"(V_j)$ is called the _Fourier transform_ of $f$, i.e. $
+  $ its corresponding element in $CC[G]$. Then, its corresponding image under $Phi$ in $plus.circle.big "End"(V_j)$ is called the _Fourier transform_ of $f$, i.e. $
   hat(f) = (T_1, dots, T_h) in plus.circle.big "End"(V_j),
   $ a $h$-tuple of matrices where $T_i$ a $d_i times d_i $matrix.
 ]
@@ -781,7 +781,7 @@ We consider various tensors of representations:
   $
 ]
 
-=== Cute Application of Representation Theory
+== Cute Applications of Representation Theory
 Suppose we are given $N$ knights, whom, after a long night of pillaging, sit at a round table to share their spoils of war. Each knight decides to split his earnings equally among his two neighbors. What happens after many iterations?
 
 The wealth distribution may be modelled as a function on $ZZ\/N ZZ$; each knight is identified with some element of $ZZ\/N ZZ$, and the wealth is given by $f : ZZ\/N ZZ -> CC$. Then, $
@@ -819,8 +819,171 @@ Suppose $X$ the faces of a cube, and $V = L^2 (X)$. Define $
 T phi (F) = 1/4 sum_(F' "adjacent to" F) phi(F').
 $ What is the spectrum of $T$?
 
-#theorem[If $L^2 (X) = V_1 plus.circle dots.c plus.circle V_t$, where the $V_j$'s are distinct irreducible representations of $G$, then $T$ maps $V_j$ to itself, and in particular acts as a scalar on $V_j$.]
+#theorem[If $V = V_1 plus.circle dots.c plus.circle V_t$, where the $V_j$'s are distinct irreducible representations of $G$, then $T$ maps $V_j$ to itself, and in particular acts as a scalar on $V_j$.]
 
 #proof[
-  $T$ can be written as a $t times t$ "matrix of matrices", $(T_(i j))$, where $T_(i j) : V_j -> V_i$. Moreover, each $T_(i j) in "Hom"_G (V_j, V_i)$ (being $G$-equivariant).
+  $T$ can be written as a $t times t$ "matrix of matrices", $(T_(i j))$, where $T_(i j) : V_j -> V_i$. Moreover, each $T_(i j) in "Hom"_G (V_j, V_i)$ (being $G$-equivariant). More specifically: 
+  
+  // $
+  // V_j arrow.r.hook^(eta_j) V -->^T V ->>^(pi_i) V_i
+  // $
+
+  #align(center)[#commutative-diagram(
+  node((0, 1), $V$),
+  node((0, 2), $V""$),
+  node((1, 0), $V_j$),
+  node((1, 3), $V_i$),
+  arr($V_j$, $V$, $eta_j$, "inj"),
+  arr($V$, $V""$, $T$),
+  arr($V""$, $V_i$, $pi_i$, "surj"),
+  arr($V_j$, $V_i$, $T_(i j)$),
+  // arr($M_1$, $M_2$, $T$),
+  // arr($R^n$, $M_1$, $phi_B_1$),
+  // arr($R^m$, $M_2$, $phi_B_2$, label-pos: right),
+  // arr($R^n$, $M_1$, $≀$, label-pos: right),
+  // arr($R^m$, $M_2$, $≀$, label-pos: left),
+  // arr($R^n$, $R^m$, $\ \ \ M_(T, B_1, B_2)$, label-pos: "below"),
+  // arr("quot", (0, 1), $tilde(phi)$, label-pos: right, "dashed"),
+  // arr($R$, "quot", $pi$),
+)]
+Where $eta_j in "Hom"_G (V_j, V)$ the inclusion map, $pi_i in "Hom"_G (V, V_i)$ the projection map (one readily verifies they are actually $G$-equivariant) and by construction $T in "Hom"_G (V, V)$; hence, $T_(i j) = pi_i T eta_j in "Hom"_(G) (V_j, V_i)$. By Schur's Lemma, then, $T_(i j) = cases(
+  0 & "if" i eq.not j,
+  lambda_i &"if" i = j
+)$.
+
+So, if $v in V_j$, $T(v) in V_j$ since $
+T(v) =& pi_1 T(v) + pi_2 T(v) + dots.c + pi_t T(v) \ 
+&= T_(1 j) v + dots.c + T_(t j) v \ 
+&= T_(j j) v = pi_j v.
+$
+]
+
+#remark[
+  More generally whenever $T : V -> V$ is linear and $V = V_1 plus.circle dots.c plus.circle V_t$, then we may write $
+  v = (v_1, dots, v_t)^t,
+  $ where $v_j in V_j$ i.e. $v = v_1 + dots.c + v_t$. In this notation, $
+  T v = mat(
+    T_(1 1), T_(1 2), dots, T_(1 t);
+    T_(2 1), T_(2 1), dots.v, T_(2 t);
+    dots.v, , , dots.v;
+  T_(t 1), T_(t 2), dots.c, T_(t t)
+  ) dot vec(v_1, v_2, dots.v, v_t),
+  $ where $T_(i j) in "Hom"(V_j, V_i)$.
+]
+
+=== Example on a cube
+Let $X = $ set of faces of a cube, and $V = L^2 (X)$ acted on by $G = S_4$, the symmetry group the cube. Let $T : V -> V$ be defined by $
+T(psi)(x) = 1/4 sum_(y tilde x) phi(y),
+$ where $y tilde x$ means $y, x$ are adjacent faces; the sum is over all faces adjacent to $x$. Notice that $T$ is $G$-equivariant
+
+We aim to decompose $L^2 (X)$ into a sum of irreducible representations. We have the character table of $S_4$;
+
+#align(center, 
+table(
+    columns: 6,
+    stroke: none,
+    table.vline(x: 1, start:0, end: 8),
+    $$, $1$, $6$, $3$, $8$, $6$,
+    $$, $1 A$, $2 A$, $2 B$, $3 A$, $4 A$,
+    table.hline(start:0, end:8),
+    $chi_1$, $1$, $1$, $1$, $1$, $1$,
+    $chi_2$, $1$, $-1$, $1$, $1$, $-1$,
+    $chi_3$, $2$, $0$, $2$, $-1$, $0$,
+    $chi_4$, $3$, $1$, $-1$, $0$, $-1$,
+    $chi_5$, $3$, $-1$, $-1$, $0$, $1$,
+    table.hline(start: 0, end: 8),
+    $L^2 (X)$, $6$, $0$, $2$, $0$, $2$
+)
+) If $chi$ the character of $L^2 (X)$ then $chi = m_1 chi_1 + dots.c + m_5 chi_5$; we determine $m_i$ by taking the inner product of $chi$ with each of the irreducible characters; whence we may write $
+L^2 (X) &= V_1 plus.circle V_3 plus.circle V_5 \ 
+&= {"constant functions"} plus.circle L^2 (X)_(+, 0) plus.circle L^2 (X)_(-)
+$
+
+We'll say a function $phi : X -> CC$ is _even_ if $phi(x) = phi(x')$ where $x'$ the face opposite of $x$. The space, call it $L^2 (X)_+$, of even functions is naturally $G$-stable; if $phi in L^2 (X)_+$ and $g in G$, then $g phi(x) = g phi(x')$ while also $phi(g^(-1)) x = g phi(x),$ $phi(g^(-1) x') = g phi(x')$, hence we find $phi(g^(-1)x) = phi(g^(-1) x')$, hence $G$ sends even functions to even functions.
+
+This space already contains constant function, so we want to consider the complementary space; $
+L^2 (X)_(+, 0)  := {phi : X -> CC | phi "even and" sum_(x in X) phi(x) = 0}.
+$
+
+Similarly, consider $L^2 (X)_(-) = $space of odd functions $ = {phi: X -> CC| phi(x') = - phi(x)}$.
+
+Our $T$ above preserves $V_1, V_3, V_5$. Namely, $
+T(bb(1)_X) = bb(1)_X,
+$ so $1$ an eigenvalue with eigenvector "1". If $phi in V_5$, $
+T(phi) = 0,
+$ so $0$ an eigenvalue with multiplicity 3. If $phi in V_3$, suppose $phi$ $a, b, c$ on adjacent faces so $a + b + c = 0$; then
+ $
+T(phi)(x) = 1/4 (a + a + c+ c) =- 1/2 b = -1/2 phi(x),
+$ so $
+T phi = -1/2 phi,
+$ hence $-1/2$ an eigenvalue with multiplicity 2.
+
+
+
+= Midterm Practice
+
+#proposition[
+  Let $G = D_8$ be the dihedral group of order 8. Write down the character table of $G$.
+]
+
+#proof[
+  We can realize $G$ as a subgroup of $S_4$ by identifying vertices of the square with numbers 1 through 4; this gives the following class equation for $G$: $
+  G &= {1} & union.sq & {(13)(24)} & union.sq  & {(1234), (1432)} & union.sq  &  {(12)(34), (14)(23)} & union.sq  &  {(24), (23)} \ 
+  &=: (1) & union.sq  & thin thin thin thin thin thin thin thin thin (2) & union.sq  &   wide thin thin thin (3)& union.sq  & wide thin thin thin thin thin thin thin thin (4) & union.sq  &  wide (5).
+  $
+  Remark that $(1) union (2) tilde.eq ZZ\/2ZZ$, and in particular is equal to the center of $G$. Hence, if we let $rho$ be a representation of $G$, we can "factor through" the center, and consider instead $
+  rho : G\/(1) union (2) -> "Aut"_CC (V).
+  $ One readily verifies that $G\/(1) union (2) tilde.eq K_4$, which is an abelian group hence every such irreducible representation is one-dimensional, and in particular there are 4 of them. In each, $chi((2)) = chi((1)) = 1$, and $chi$ is always just a second root of unity (namely either 1 or minus 1). In particular, we can choose $chi((3))$ and $chi((5))$ to be either $1$ or minus 1, then $chi((4))$ is must be equal to the product of these. This gives 4 total options; #align(center,
+    table(
+      columns: 6,
+      stroke: none,
+      table.vline(x:1, start:0, end:10),
+      $$, $(1)$, $(2)$, $(3)$, $(4)$, $(5)$,
+      table.hline(start: 0, end: 10),
+      $chi_1$, $1$, $1$, $1$, $1$, $1$,
+      $chi_2$, $1$, $1$, $1$, $-1$, $-1$,
+      $chi_3$, $1$, $1$, $-1$, $-1$, $1$,
+      $chi_4$, $1$, $1$, $-1$, $1$, $-1$,
+      $chi_5$, $2$, $-2$, $0$, $0$, $0$
+    )
+  ) The last row can either be computed via orthogonality relations, or by considering the action of $D_8$ described in Proposition 1.2.
+]
+
+#proposition[
+  Let $G$ be a finite group in which every element is conjugate 
+  to its inverse.
+  (a) Give an example of such a group. \
+  (b) Show that the character of any complex representation of such a group is real-valued (all the entries of the character table are real).
+]
+
+#proof[
+  (a) $S_n$, among others.
+
+  (b) We know $chi(g^(-1)) = overline(chi(g))$ (always). But if $g$ conjugate to $g^(-1)$, since $chi$ a class function, $chi(g^(-1)) = chi(g)$ so combining these two equalities we find $chi(g) = overline(chi(g))$, which is only possible if $chi(g)$ real, namely has no imaginary part.
+]
+
+#proposition[
+  Let $G$ a finite group and $rho : G -> "GL"_n (RR)$ a homomorphism. Show that for any integer $t >=1 $, the matrix $
+  M = sum_("order"(g) = t) rho(g)
+  $ is diagonalizable.
+]
+
+#proof[
+  There exists a $G$-equivariant inner product $(dot, dot)$ on $RR^n$ (by replacing any arbitrary inner product with an averaging over the group). Then, for any $x, y in RR^n$, we find $
+  (M x, y) &= sum_("ord"(g) = t) (rho(g) x , y) = sum_("ord"(g) = t) (x, rho(g)^(-1) y) =  (x, sum_("ord"(g) = t)  rho(g^(-1)) y) ,
+  $ but $"ord"(g) =  "ord"(g^(-1))$, so we may change indices $g-> g^(-1)$ without changing the summation, and find $
+  (M x, y)&= (x, sum_("ord"(g) = t)  rho(g) y) = (x, M y),
+  $ hence $M = M^ast$, namely $M$ self-adjoint. By the spectral theorem, it follows that $M$ diagonalizable.
+]
+
+#proposition[Let $chi$ be the character of a 2-dimensional representation of a finite group $G$, and assume that $g$ is of order $4$ for which $chi(g) = 0$. Prove that $chi(g^(2))$ is either plus or minus 2.]
+
+#proof[
+  Suppose $rho(g) = mat(a, b; c, - a)$, so $chi(g) = 0$ as needed. Then, $
+  rho(g^2) = mat(a^2 + b c, 0; 0, a^2 + b c),
+  $ so $chi(g^2) = 2( a^2 + b c)$, while also $g$ of order $4$ so $
+  I = rho(g^4) = mat((a^2 + b c)^2, 0; 0, (a^2 + b c)^2),
+  $ hence $a^2 + b c = plus.minus 1$, and thus $
+  chi(g^2) =plus.minus 2.
+  $
 ]
