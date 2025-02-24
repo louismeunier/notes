@@ -166,7 +166,6 @@ $ where $Hom_G (V, W) = {T : V -> W | T "linear and" G-"equivariant"}$.
 #proposition[
   Let $W subset.eq V$ a subspace and $pi : V -> W$ a projection. Then, $tr(pi) = dim(W)$.
 ]
-
 #theorem[If $rho : G -> "Aut"_FF (V)$ a complex representation of $G$, then $
 dim (V^G) = 1/(hash G) sum_(g in G) tr(rho(g)),
 $  where $V^G = {v in V : g v = v forall g in G}$.
@@ -186,7 +185,11 @@ $  where $V^G = {v in V : g v = v forall g in G}$.
 
 #proposition[Characters are class functions, namely constant on conjugacy classes.]
 
-#theorem[If $V_1, V_2$ are 2 representations of $G$, then $V_1 tilde.eq_G V_2 <=> chi_(V_1) = chi_(V_2)$.]
+#proof[
+  Follows from the fact that the trace of a matrix is conjugation invariant.
+]
+
+// #theorem[If $V_1, V_2$ are 2 representations of $G$, then $V_1 tilde.eq_G V_2 <=> chi_(V_1) = chi_(V_2)$.]
 
 #proposition[
   Given two representations $V, W$ of $G$, there is a natural action of $G$ on $Hom(V, W)$ given by $g ast T = g compose T compose g^(-1)$. Then, 
@@ -200,23 +203,41 @@ $  where $V^G = {v in V : g v = v forall g in G}$.
 #proposition[
   Suppose $V = V_1^(m_1) plus.circle dots.c plus.circle V_t^(m_t)$ a representation of $G$ written in irreducible form. Then,
   $
-  Hom_G (V_j, V) = CC^m_j.
+  Hom_G (V_j, V) = CC^(m_)j.
   $
 ]
 
 #proof[
-"$Hom$ is linear with respect to $plus.circle$".
+By Maschke's Theorem and Schur's Lemma combined, $
+"Hom"_G (V_j, V) &= "Hom"_G (V_j, V_1^m_1 plus.circle dots.c plus.circle V_t^(m_t)) \ 
+&= plus.circle.big_(i=1)^t "Hom"_G (V_j, V_i)^(m_i) \ 
+&= CC^(m_j)
+$
 ]
 
 #proposition[
   If $V, W$ are two representations, then so is $V plus.circle W$ with point-wise action, and $chi_(V plus.circle W) = chi_V + chi_W$.
 ]
 
+#proof[
+  We may pick an appropriate basis for $g in G$ such that $g$ acts on $V plus.circle W$ as $
+  g = mat([rho_V (g)], 0; 0, [rho_W(g)]),
+  $ where $rho_V, rho_W$ are the matrix representations of $g$ acting on $V, W$ respectively. From this, it is immediate that $tr(g) = tr(rho_V (g)) + tr(rho_W (g)) = chi_V + chi_W$.
+]
+
 #theorem[
   $chi_(Hom(V, W)) = overline(chi_V) chi_W$.
 ]
 #proof[
-  Use an eigenbasis for $V, W$ respectively to define a corresponding eigenbasis for $Hom(V, W)$ such as to write any $g in G$ as a diagonal matrix. The entries will contain an expression depending solely on the eigenvalues for $g$ acting on $V, W$.
+  Let $g in G$ and $e_1, dots, e_n$ an eigenbasis for $V$ such that $g e_i = lambda_i e_i$ and $f_1, dots, f_m$ an eigenbasis for $W$ such that $g f_j = mu_j f_j$. Then, $
+  {phi_(i)^j : V -> W | phi_(i)^j (e_ell) = f_j dot delta_(i)^ell, thin 1 <= i <= n, 1 <= j <= m}
+  $ is a basis for $"Hom"(V, W)$, upon which $g$ acts by $
+  g phi_(i)^j (g^(-1) e_ell) &= g phi_i^j (lambda_ell^(-1) e_ell) \
+  &= lambda_ell^(-1) g f_j delta_(i)^ell \ 
+  &= lambda_ell^(-1) mu_j delta_(i)^ell,
+  $ hence $
+  tr(g) = (sum_(i=1)^n lambda_ell^(-1)) (sum_(j=1)^m mu_j) = (sum_(i=1)^n overline(lambda_i)) (sum_(j=1)^m mu_j) = (overline(sum_(i=1)^n lambda_i)) (sum_(j=1)^m mu_j) = overline(chi_V (g)) chi_W (g)
+  $ where we use the fact that $lambda^(-1) = overline(lambda)$ being a root of unity, and complex conjugation is linear.
 ]
 
 #theorem("Orthogonality of Irreducible Group Characters")[
@@ -449,7 +470,7 @@ For $S_4$, we denote the conjugacy classes by $1A, 2A, 2B, 3A, 3B, 4A$ as the co
     table.hline(start: 0, end: 7),
     table.vline(x:1, start: 0, end: 7),
     $chi_1$, $1$, $1$, $1$,$1$, $1$,
-    $chi_2$, $1$, $1$, $-1$, $1$, $1$,
+    $chi_2$, $1$, $1$, $-1$, $1$, $-1$,
     $chi_3$, $2$, $2$, $0$, $-1$,$0$,
     $chi_4$, $3$, $-1$, $1$, $0$, $-1$,
     $chi_5$, $3$, $-1$, $-1$, $0$, $1$
@@ -928,7 +949,7 @@ $ hence $-1/2$ an eigenvalue with multiplicity 2.
 
 #proof[
   We can realize $G$ as a subgroup of $S_4$ by identifying vertices of the square with numbers 1 through 4; this gives the following class equation for $G$: $
-  G &= {1} & union.sq & {(13)(24)} & union.sq  & {(1234), (1432)} & union.sq  &  {(12)(34), (14)(23)} & union.sq  &  {(24), (23)} \ 
+  G &= {1} & union.sq & {(13)(24)} & union.sq  & {(1234), (1432)} & union.sq  &  {(12)(34), (14)(23)} & union.sq  &  {(24), (13)} \ 
   &=: (1) & union.sq  & thin thin thin thin thin thin thin thin thin (2) & union.sq  &   wide thin thin thin (3)& union.sq  & wide thin thin thin thin thin thin thin thin (4) & union.sq  &  wide (5).
   $
   Remark that $(1) union (2) tilde.eq ZZ\/2ZZ$, and in particular is equal to the center of $G$. Hence, if we let $rho$ be a representation of $G$, we can "factor through" the center, and consider instead $
@@ -986,4 +1007,34 @@ $ hence $-1/2$ an eigenvalue with multiplicity 2.
   $ hence $a^2 + b c = plus.minus 1$, and thus $
   chi(g^2) =plus.minus 2.
   $
+]
+
+#proposition[
+  Let $D_8$ be the dihedral group of order 8 and $Q$ the quaternion group. Show that the group rings $CC[D_8]$ and $CC[Q]$ are isomorphic, while the group rings $RR[D_8]$ and $RR[Q]$ are not.
+]
+
+#proof[
+  We know that $
+  CC[D_8] tilde.eq plus.circle.big_(j=1)^5 "End"_CC (V_j) tilde.eq plus.circle.big_(j=1)^5 "M"_(d_j) (CC),
+  $ with similar for $CC[Q]$. But recall that $D_8$ and $Q$ have "identical" character tables, namely they have the same number of irreducible complex representations with the same distribution of dimensions, hence it follows by this characterization that the group rings are isomorphic.
+]
+
+#proposition[
+  Let $D_8$ be the dihedral group on $4$ elements and $Q$ the group of quaternions. Show that the group rings $CC[D_8]$ and $CC[Q]$ are isomorphic, but the groups rings $RR[D_8]$ and $RR[Q]$ are not.
+]
+
+#proof[
+  Recall from proving that the number of irreducible representations is equal to the number of conjugacy classes of a group, we know $
+  CC[D_8] = "End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_5),
+  $ where $V_1, dots, V_5$ enumerate the irreducible representations; recall that we have four 1-dimensional representations and a final 2-dimensional representations, we find by picking bases for each $V_i$ that $
+  CC[D_8] = CC plus.circle CC plus.circle CC  plus.circle CC  plus.circle M_2 (CC).
+  $ But $Q$ has the same number of irreducible representations with the same dimensions, hence $
+  CC[Q] = CC plus.circle CC plus.circle CC  plus.circle CC  plus.circle M_2 (CC),
+  $ hence the two are isomorphic.
+
+  For $RR[D_8]$, recall that all of the representations are real-valued, so we may realize the same type of isomorphism, and fnd $
+  RR[D_8] = RR plus.circle RR plus.circle RR plus.circle RR plus.circle M_2 (RR).
+  $ However, in $Q$, all of the representations are real other than the 2-dimensional one, which cannot be realized as a 2-dimensional representation over $RR$; however, as a group ring, $
+  RR[Q] = RR plus.circle RR plus.circle RR plus.circle RR plus.circle HH,
+  $ where $HH$ the ring of Hamiltonian quaternions. This is a 4-dimensional real-vector space (namely, we can identify it as a subspace of $M_4 (RR)$ by identifying $i$ with $mat(1, 1; 1, -1)$, $j$ with $mat(-1,1;1,1)$, and $k$ with $mat(0,-1;1,0)$). Hence, these two real-valued group rings cannot be isomorphic.
 ]
