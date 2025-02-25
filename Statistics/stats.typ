@@ -643,7 +643,7 @@ $
 ]
 
 #remark[
-  The CRLB is not a sharp bound.
+  The CRLB is _not_ a sharp bound, in the sense that the UMVUE for a particular parameter may be strictly larger than the CRLB.
 ]
 
 #example[
@@ -670,7 +670,7 @@ $ for some function $a(theta)$, for every $theta in Theta$ and $bold(x)$ in the 
   $X_i tilde^"iid" f(x; theta) = h(x) c(theta) exp{omega(theta) T_1 (x)}$, where $h$ a nonnegative function of only $x$ and $c$ a nonnegative function of only $theta$, with the support of $f$ being independent of $theta$. Then $
   p_theta (bold(x)) = product_(i=1)^n f(x_i; theta) = [product_(i=1)^n h(x_i)] (c(theta))^n exp(omega(theta) sum_(i=1)^n T_1 (x_i)).
   $ Taking the log: $
-  dif/(dif theta) log p_theta (bold(x))& = n c'(theta)/theta + omega'(theta) sum_(i=1)^n T_1(x_i) \ 
+  dif/(dif theta) log p_theta (bold(x))& = n (c'(theta))/c(theta) + omega'(theta) sum_(i=1)^n T_1(x_i) \ 
   &= omega'(theta) {sum_(i=1)^n T_1 (x_i) - (-n c'(theta))/(c(theta) omega'(theta))}.
   $ Let $
   tau(theta) = - (c'(theta))/(c(theta) omega'(theta)).

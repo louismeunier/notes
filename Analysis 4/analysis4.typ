@@ -1293,3 +1293,152 @@ $ so $v_2 = v_1$ so it follows $u_2 = u_1$ and uniqueness holds.
 #theorem("Riesz Representation for Hilbert Spaces")[
   If $f in H^ast$, there exists a unique $y in H$ such that $f(x) = (x, y)$ for every $x in X$.
 ]
+
+#proof[
+  We show first existence. If $f equiv 0$, then $y = 0$. Otherwise, let $M = {x in X | f(x) = 0}$, so $M subset.neq H$. $f$ linear, so $M$ a linear subspace. $f$ is continuous, so in addition $M$ is closed. By the previous theorem, $M^perp eq.not {0}$. Let $z in M^perp$ of norm $1$.
+
+  Fix $x in H$, and define $
+  u := f(x) z - f(z) x.
+  $ Then, notice that by linearity $
+  f(u)= f(x) f(z) - f(z) f(x) = 0, 
+  $ so $u in M$. Thus, since $z in M^perp$, $(u, z) = 0$, so in particular, $
+  (u, z) = 0 &= (f(x) z - f(z) x - z) \ 
+  &= f(x)(z,z) - f(z) (x, z) \ 
+  &= f(x) norm(z)^2 - (x,  f(z) z) \
+  &= f(x) - (x, f(z) z),
+  $ hence, rearranging we find $
+  f(x) = (x, f(z) z),
+  $ and thus letting $y = f(z) z$ completes the proof of existence, noting $z$ independent of $x$.
+
+  For uniqueness, suppose $(x, y) = (x, y')$ for every $x in X$. Then, $(x, y - y') = 0$ for every $x in X$, hence letting $x = y - y'$ we conclude $(y - y', y - y') = 0$ thus $y - y' = 0$ so $y = y'$, and uniquness holds.
+]
+
+#definition("Orthonormal Set")[
+  A collection ${e_j} subset.eq H$ is _orthonormal_ if $(e_i, e_j) = delta_(i)^j$.
+]
+
+#remark[
+The following section writes notations assuming $H$ has a countable. However, for more general Hilbert spaces, all countable summations can be replaced with uncountable ones in which only countably many elements are nonzero. The theory is very similar.
+]
+
+#definition("Orthonormal Basis")[
+  A collection ${e_j} subset.eq H$ is an _orthonormal basis_ for $H$ if ${e_j}$ is an orthonormal set, and $x = sum_(j=1)^infinity (x, e_j) e_j$ for every $x in H$, in the sense that $
+  norm(x - sum_(j=1)^N (x, e_j) e_j) -> 0, wide N -> infinity.
+  $
+]
+
+#theorem("General Pythagorean Theorem")[
+  If ${e_j}_(j=1)^infinity subset.eq H$ are orthonormal and ${alpha_i}_(i=1)^infinity subset.eq RR$ are orthonormal, then for any $N$, $
+  norm(sum_(i=1)^N alpha_i e_i)^2 = sum_(i=1)^N abs(alpha_i)^2.
+  $
+]
+
+
+#proof[
+  $
+  norm(sum_(i=1)^N alpha_i e_i)^2 &= (sum_(i=1)^N alpha_i e_i,sum_(j=1)^N alpha_j e_j)  = sum_(i=1)^N sum_(j=1)^N alpha_i alpha_j underbrace((e_i, e_j), = delta_(i)^j) = sum_(i=1)^N alpha_i^2.
+  $
+]
+
+We can also #link("https://notes.louismeunier.net/Algebra%202/algebra2.pdf#page=75", "Gram-Schmidt") in infinite-dimensional Hilbert spaces. Let ${x_i} subset.eq H$. Let $
+e_1 = x_1/(norm(x_1)),
+$ and inductively, for any $n >= 2$, define $
+v_N = x_N - sum_(i=1)^(N-1) (x_N, e_i) e_i.
+$ Then, for any $N$, $"span"(v_1, dots, v_N) = "span"(e_1, dots, e_N)$, and for any $j < N$, $
+(v_N, e_j) = (x_N, e_j) - sum_(i=1)^N (x_N, e_i) (e_i, e_j) = (x_N, e_j) - (x_N, e_j) = 0.
+$ Let then $e_N = v_N/(norm(v_N))$. Then, ${e_i}_(i=1)^infinity$ will be orthonormal; we discuss how to establish when this set will actually be a basis to follow.
+
+#theorem("Bessel's Inequality")[
+  If ${e_i}_(i=1)^infinity$ are orthonormal, then for any $x in H$, $
+  sum_(i=1)^infinity abs((x, e_i))^2 <= norm(x)^2.
+  $
+]
+
+#proof[
+  We have $
+  0 &<= norm(x - sum_(i=1)^N (x, e_i) e_i)^2 \ 
+  &= (x - sum_(i=1)^N (x, e_i) e_i, x - sum_(j=1)^N (x, e_j) e_j) \ 
+  &= norm(x) - 2 sum_(i=1)^N (x, e_i)^2+ sum_(i=1)^N (x, e_i)^2 \ 
+  &= norm(x) - sum_(i=1)^N (x, e_i)^2,
+  $ so $sum_(i=1)^N (x, e_i)^2 <=  norm(x)$; letting $N -> infinity$ proves the desired inequality, since the RHS is independent of $N$.
+]
+
+#theorem[
+  If ${e_i}_(i=1)^infinity$ are orthonormal, then TFAE: 
+
+  (a) completeness: if $(x, e_i) = 0$ for every $i$, then $x = 0$, the zero vector;
+
+  (b) Parseval's identity holds: $norm(x)^2 = sum_(i=1)^infinity (x, e_i)^2$ for every $x in H$;
+
+  (c) ${e_i}_(i=1)^infinity$ form a basis for $H$, i.e. $x = sum_(i=1)^infinity (x, e_i) e_i$ for every $x in H$.
+]
+
+#proof[
+ ((a) $=>$ (c))  By Bessel's, $sum_(i=1)^infinity (x, e_i)^2 <= norm(x)^2$. So, for any $M >= N$, $
+  norm(sum_(i=N)^M (x, e_i) e_i)^2 = sum_(i=N)^M (x, e_i)^2,
+  $ which must converge to zero as $N, M -> infinity$, since the whole series converges (being bounded). Hence, ${sum_(i=1)^N (x, e_i) e_i}_(N)$ is Cauchy in $norm(dot)$ and since $H$ complete, $sum_(i=1)^N (x, e_i) e_i$ converges in $H$. Putting $y = x - sum_(i=1)^infinity (x, e_i) e_i$, we find $
+  (y, e_i) = (x, e_i ) - (x, e_i) = 0 forall i,
+  $ hence by assumption in $(a)$,  it follows that $y = 0$ so $x = sum_(i=1)^infinity (x, e_i) e_i$ and thus ${e_i}$ a basis for $H$ and $(c)$ holds.
+
+  ((c) $=>$ (b)) Since $x = sum_(i=1)^infinity (x, e_i) e_i$, then, $
+  norm(x)^2 - sum_(i=1)^N (x, e_i)^2 = norm(x - sum_(i=1)^N (x, e_i) e_i)^2 -> 0
+  $ as $N->infinity$, hence $norm(x)^2 = sum_(i=1)^infinity (x, e_i)^2$.
+
+  ((b) $=>$ (a)) If $(x, e_i) = 0$ for every $i$, then by Parseval's $norm(x)^2 = sum_(i=1)^infinity 0 = 0$ so $x = 0$.
+]
+
+#remark[
+  (a) is equivalent to $"span"(e_1, e_2, dots,)$ is _dense_ in $H$.
+]
+
+#theorem[Every Hilbert space has an orthonormal basis.]
+
+#proof[
+  Let $cal(F) = {"orthonormal subsets of" H}$. $cal(F)$ can be (partially) ordered by inclusion, as can be upper bounded by the union over the whole space. By Zorn's Lemma, there is a maximal set in $cal(F)$, which implies completeness, (a).
+]
+
+#proposition[
+  $H$ is separable iff $H$ has a countable basis.
+]
+
+#proof[
+  ($impliedby$) If $H$ has a countable basis ${e_j}$, $"span"_QQ {e_j}$ is a countable dense set.
+
+($=>$) If $H$ is separable, let ${x_n}$ be a countable dense set. Use Gram-Schmidt, to produce a countable, orthonormal set, which is dense and hence a (countable) basis for $H$.
+]
+
+#remark[
+  All this can be extended to uncountable bases.
+]
+
+== Adjoints, Duals and Weak Convergence (for Hilbert Spaces)
+
+First consider $T : H -> H$ bounded and linear. Fix $y in H$. We claim that the map $
+x |-> (T(x), y)
+$ belongs to $H^ast$, namely is bounded and linear. Linearity is clear since $T$ linear. We know by Cauchy-Schwarz that $
+abs((T(x), y)) <= norm(T (x)) norm(y) <= norm(T)norm(x) norm(y) <= C norm(x),
+$ so indeed $x |-> (T(x), y) in H^ast$. By Riesz Representation Theorem, there is some unique $z in H$ such that $
+(T(x), y) = (x, z) forall x in H.
+$
+This motivates the following.
+#definition([Adjoint of $T$])[
+  Let $T^ast : H -> H$ be defined by $
+  (T x, y) = (x, T^ast y), forall x, y in H.
+  $
+]
+
+#remark[
+  In finite dimensions, $T$ can be identified with some $n times n$ matrix, in which case $T^ast = T^t$, the transpose of $T$; namely $T x dot b = x dot T^t b$.
+]
+
+#proposition[
+  If $T in cal(L)(H):= cal(L)(H, H)$, then $T^ast in cal(L)(H)$ and $norm(T^ast) = norm(T)$.
+]
+
+#proof[
+  Linearity of $T^ast$ is clear. Also, for any $norm(y) <= 1$, $
+  norm(T^ast y)^2 = (T^ast y, T^ast y) = (T T^ast y, y) <= norm(T) norm(T^ast (y)) norm(y)
+  $ so $norm(T^ast y) <= norm(T)$ for all $norm(y) = 1$. so $norm(T^ast) <= norm(T)$ hence $T^ast in cal(L)(H)$. But also, if $x in H$ with $norm(x) = 1$, then symmetrically, $
+  norm(T x)^2 = (T x, T x) = (x, T^ast T x) <= norm(T^ast) norm(T x)
+  $ so similarly $norm(T) <= norm(T^ast)$ hence equality holds.
+]
