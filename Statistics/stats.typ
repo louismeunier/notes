@@ -391,7 +391,7 @@ $
 #definition([Big $cal(O)$, Little $cal(o)$ Notation])[
   Let ${a_n}, {b_n} subset.eq RR$ real sequences. 
   
-  - We say $a_n = cal(O)(b_n)$ if $exists 0 < c in RR$ and $N in NN$ such that $|a_n/b| <= c$ for every $n >= N$.
+  - We say $a_n = cal(O)(b_n)$ if $exists 0 < c in RR$ and $N in NN$ such that $|a_n/b_n| <= c$ for every $n >= N$.
 
   - We say $a_n = cal(o)(b_n)$ if $lim_(n->infinity) a_n/b_n = 0$.
 ]
@@ -547,7 +547,7 @@ We will focus on the class of unbiased estimators of a real-valued parameter, $t
 #definition("UMVUE")[
   Let $bold(X) = (X_1, dots, X_n)^t$ be a random variable with a joint pdf/pmf given by $
   p_theta (bold(x)) = p_theta (x_1, dots, x_n),
-  $ where $theta$ some parameter in $Theta subset.eq RR^d$. An estimator $Tau(bold(X))$ of a real valued parameter $tau(theta)$, $Theta -> RR$ is said to be a UMVUE of $tau(theta)$ if 
+  $ where $theta$ some parameter in $Theta subset.eq RR^d$. An estimator $Tau(bold(X))$ of a real valued parameter $tau(theta) : Theta -> RR$ is said to be a UMVUE of $tau(theta)$ if 
   1. $EE_theta [Tau (bold(X))] = tau(theta)$ for every $theta in Theta$;
   2. for any other unbiased estimator $Tau^ast (bold(X))$ of $tau(theta)$, we have $
   Var_theta (Tau(bold(X))) <= Var_theta (Tau^ast (bold(X))), forall  theta in Theta.
@@ -896,3 +896,91 @@ Note that an unbiased estimator of a parameter of interest may not even exist. F
   sum_(x=0)^n delta(x) binom(n, x) theta^x (1 - theta)^(n - x) = 1/theta.
   $ As $theta -> 0$, the left-hand side will just be $delta(0)$, while the right-hand side will diverge to $infinity$, so no such estimator exists.
 ]
+
+#theorem("Rao-Blackwell")[
+  Let $U(bold(X))$ be an unbiased estimator of $tau(theta)$ and let $T(bold(X))$ be a sufficient statistic for the parametric family. Set $
+  delta(t) = EE_theta [U(bold(X)) | T(bold(X)) = t], wide t in S_T.
+  $ Then, 
+
+  - $delta(T(bold(X)))$ is a statistic, i.e. only depends on $bold(X)$;
+  - $EE_theta [delta(T(bold(X)))] = tau(theta)$;
+  - $Var_theta (delta(T(bold(X)))) <= Var_theta [U(bold(X))]$.
+]
+
+#proof[
+  - $delta(T(bold(X))) = EE_theta [U(bold(X))|T(bold(X))]$ is a random variable in its own right, and is a statistic because $T(bold(X))$ is sufficient, hence conditioning on $T(bold(X))$ will result in no reliance on $theta$.
+
+  - $EE_theta [delta(T(bold(X)))] = EE_theta [EE_theta [U(bold(X))|T(bold(X))]]=EE_theta [U(bold(X))] = tau(theta)$ (using the law of total expectation), since $U(bold(X))$ is an unbiased estimator of $tau(theta)$.
+  
+  - Using the law of total variance, we find $
+    Var_theta (U(bold(X))) &= Var_theta \(underbrace(EE_theta [U(bold(X))|T(bold(X))], = delta(T(bold(X))))) + EE_theta [Var_theta (U(bold(X))|T(bold(X)))] \ 
+    &= Var_theta [delta(T(bold(X)))] + EE_theta [underbrace(Var_theta (U(bold(X))|T(bold(X))), >= 0)\] \ 
+    &>= Var_theta [delta(T(bold(X)))].  
+  $
+]
+
+#remark[
+  This theorem gives a systematic manner of improving unbiased estimators, by taking an unbiased estimator and a sufficient statistic, and "Rao-Blackwell-izing", leading to a uniform improvement in variance.
+]
+
+#theorem("Lehmann-Scheffé: Uniqueness")[
+  Let $T(bold(X))$ be a complete sufficient statistic. Let $U(bold(X)) = h(T(bold(X))),$ for a measurable function $h$, an unbiased estimator of $tau(theta)$ such that $EE_theta [U(bold(X))^2] < infinity$. Then, $U(bold(X))$ is the unique unbiased estimator of $tau(theta)$ with the smallest variance in the class of unbiased estimators of $tau(theta)$.
+]
+
+#proof[
+  By the Rao-Blackwell Theorem, it suffices to restrict attention to unbiased estimators that are only functions of $T(bold(X))$; for any other such unbiased statistic, applying Rao-Blackwell to it results in a new statistic with smaller variance.
+
+  Now, let $V(bold(X)) = h^ast (T(bold(X)))$ be any other unbiased estimator of $tau(theta)$. Then, $
+  EE_theta [V(bold(X))] = EE_theta [U(bold(X))] = tau(theta)
+  $ hence $
+  EE_theta [V(bold(X)) - U(bold(X))] = EE_theta [h^ast (T(bold(X))) - h(T(bold(X)))] = 0.
+  $ Let $g(T(bold(X))) = h^ast (T(bold(X))) - h(T(bold(X)))$; then, since $T(bold(X))$ complete, it must be that $P(g = 0) = 1$ i.e. $
+  P(h(T(bold(X))) = h^ast (T(bold(X)))) = 1,
+ $ so $U(bold(X)), V(bold(X))$ are almost surely identical, hence we indeed have uniqueness.
+]
+
+#remark[
+  This, combined with the Rao-Blackwell theorem, provides a method for obtaining the UMVUE for $tau(theta)$ starting with a complete sufficient statistic and an unbiased statistic.
+]
+
+#example[
+  Let $X_i tilde^"iid" "Ber"(theta)$, $i = 1, dots, n$ and $hat(theta)_n = overline(X)_n$. This is unbiased, and $sum_(i=1)^n X_i$ is a complete and sufficient statistic. Hence, $hat(theta)_n$ is a unbiased estimator that is a function of a complete and sufficient statistic and thus is the UMVUE for $theta$ by the Lehmann-Scheffé Theorem.
+]
+
+#example[
+ Let $X_i tilde^"iid" "Pos"(theta), i = 1, dots, n$ and $hat(theta)_n = overline(X)_n$. This is unbiased, and again $sum_(i=1)^n X_i$ is a complete sufficient statistic hence $hat(theta)_n$ is the UMVUE of $theta$.
+
+ Suppose now $tau(theta) = P_theta (X = 0) = e^(-theta)$; can we obtain a UMVUE for this (function of) a parameter? Define $
+ U(X_1) = bb(1){X_1 = 0},
+ $ which will be unbiased for $tau(theta)$. We already have a complete and sufficient statistic. Applying now the Rao-Blackwell theorem, we obtain $
+ delta(t) = EE_theta [U(X_1) | sum_(j=1)^n X_j = t].
+ $ One verifies that $
+ (X_i | sum_(j=1)^n X_j = t) tilde "Bin"(t, 1/n),
+ $ therefore $
+ delta(t) =  P_theta (X_1 = 0 | T(bold(X)) = t) = (1 - 1/n)^t.
+ $ So, $delta(T(bold(X))) = (1 - 1/n)^(sum_(i=1)^n X_i)$ is the UMVUE of $e^(-theta)$. Remark that $
+ delta(T(bold(X))) = (1 - 1/n)^(n overline(X)_n) approx e^(- overline(X)_n) "for large" n.
+ $
+]
+
+
+#example[
+  Let $X_i tilde^"iid" "Ber"(theta), i = 1, dots, n$, and suppose $tau(theta) = "Var"(X_i) = theta(1 - theta)$. Recall the UMVUE for $theta$ is $hat(theta)_n$. Note that $
+  T(bold(X)) = sum_(i=1)^n X_i tilde "Bin"(n, theta),
+  $ is complete and sufficient. We know $S_n^2 = 1/(n-1) sum_(i=1)^n (X_i - overline(X)_n)^2 = U(bold(X))$ is unbiased for $tau(theta)$. We may write $
+  U(bold(X)) &= 1/(n - 1) [sum_(i=1)^n X_i^2 - n overline(X)_n^2] \ 
+  "since" X_i in {0, 1} wide &= 1/(n-1) [sum_(i=1)^n X_i - n overline(X)_n^2] \ 
+  &= 1/(n - 1) (T(bold(X)) - (T^2 (bold(X)))/n) \ 
+  &= n/(n-1) overline(X)_n (1 - overline(X)_n)
+  $ Hence, $U(bold(X))$ a function of $T(bold(X))$, a complete sufficient statistic, and $U(bold(X))$ is unbiased, so we conclude $U(bold(X))$ the UMVUE for $tau(theta)$.
+] 
+
+== Existence of a UMVUE
+
+#definition("Unbiased Estimators of Zero")[
+  An estimator $delta(bold(X))$ satisfying $EE_theta [delta(bold(X))] = 0$ is called an _unbiased estimator of zero_.
+]
+
+// #theorem[
+//   An estimator $U(bold(X))$ of $tau(theta) = EE_theta [U(bold(X))]$
+// ]

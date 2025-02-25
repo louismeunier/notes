@@ -172,7 +172,18 @@ $  where $V^G = {v in V : g v = v forall g in G}$.
 ]
 
 #proof[
-  Let $pi = 1/(hash g) sum_(g in G) rho(g)$. Then, notice that $im (pi) = V^G$ and $pi^2 = pi$ hence a projection from $V$ onto $V^G$. Using the previous proposition and linearity of the trace completes the proof.
+  Let $pi = 1/(hash G) sum_(g in G) rho(g)$. Then, $
+  pi^2 = (1/(hash G))^2 sum_(g in G) sum_(h in G) rho (g h) \ 
+  = (1/(hash G))^2 hash G sum_(g in G) rho(g) = pi.
+  $ We show $V^G = im(pi)$. If $v in im(pi)$, then $v = pi (w)$, so for every $h in G$, $
+  rho(h) v &= 1/(hash G) sum_(g in G) rho(h g) w \ 
+  &= 1/(hash G) sum_(h g in G) rho(h g) w \ 
+  &=  pi (w) = v,
+  $ so $v in V^G$. Conversely, if $v in V^G$, then $
+  pi (v) &= 1/(hash G) sum_(g in G) rho(g) v = 1/(hash G) sum_(g in G) v = v,
+  $ so $v in im(pi)$. Hence, $pi$ a projection with image $V^G$, so we conclude $
+  dim(V^G) = tr(pi) = 1/(hash G) sum_(g in G) tr(rho(g)).
+  $
 ]
 
 == Characters
@@ -285,7 +296,9 @@ $
 ]
 
 #proof[
-  By Maschke's, $V = V_1^m_1 plus.circle dots.c plus.circle V_t^m_t$ and hence $chi_V = m_1 chi_1 + dots.c + m_t chi_t$. By orthogonality, $m_j = angle.l chi_V, chi_j angle.r$ for each $j = 1, dots, t$, hence $V$ completely determined by $chi_V$.
+  By Maschke's, $V = V_1^m_1 plus.circle dots.c plus.circle V_t^m_t$ and hence $chi_V = m_1 chi_1 + dots.c + m_t chi_t$. By orthogonality, $m_j = angle.l chi_V, chi_j angle.r$ for each $j = 1, dots, t$, hence $V$ completely determined by $chi_V$. 
+  
+  #qedhere
 ]
 
 #definition("Regular Representation")[
@@ -328,7 +341,7 @@ $
 #proof[
   Remark that $CC[G]$ has a natural ring structure, combining multiplication of coefficients in $CC$ and internal multiplication in $G$. Define a group homomorphism $
   underline(rho)  = (rho_1, dots, rho_t) : G -> "Aut"(V_1) times dots.c times "Aut"(V_t),
-  $ collecting all the irreducible representation homomorphisms into a single vector. Then, this extends naturally by linearity to a ring homomorphism $
+  $ collecting all the irreducible representation homomorphisms into a single vector. Then, this extends naturally by ($CC$-)linearity to a ring homomorphism $
   underline(rho) : CC[G] -> "End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_t).
   $ By picking bases for each $"End"_CC (V_j)$, we find that $dim_CC ("End"_CC (V_j)) = d_j^2$ hence $dim_CC ("End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_t)) = d_1^2 + dots.c + d_t^2 = hash G$, as we saw in the previous theorem. On the other hand, $dim_CC (CC[G]) = hash G$ hence the dimensions of the two sides are equal. We claim that $underline(rho)$ an isomorphism of rings. By dimensionality as $CC$-vector spaces, it suffices to show $underline(rho)$ injective.
 
@@ -343,6 +356,15 @@ $
   $ Hence, $sum lambda_g g in Z(CC[G])$ iff $lambda_(h^(-1) g h) = lambda_g$ for every $g, h in G$. It follows, then, that the induced map $g |-> lambda_g$ a class function, and thus $dim_CC (Z(CC[G])) = h(G)$.
 
   On the other hand, $dim_CC (Z("End"_CC (V_j))) = 1$ (by representing as matrices, for instance, one can see that only scalar matrices will commute with all other matrices), hence $dim_CC (Z("End"_CC (V_1) plus.circle dots.c plus.circle "End"_CC (V_t))) = t$. $underline(rho)$ naturally restricts to an isomorphism of these centers, hence we conclude justly $t = h(G)$.
+]
+
+#remark[
+  By picking bases for each irreducible representation $V_1, dots, V_t$, we can realize more concretely that $
+  CC[G] tilde.eq M_d_1 (CC) plus.circle dots.c plus.circle M_(d_t) (CC),
+  $ where $d_j := dim(V_j)$; in short, then, $CC[G]$ completely determined, as a group-ring, by 
+  - the number of conjugacy classes in $G$, $t$; and
+  - the dimension of each irreducible representation, $d_1, dots, d_t$.
+  In particular, then, there may exist two non-isomorphic groups with isomorphic group rings.
 ]
 
 == Fourier Analysis on Finite Abelian Groups
@@ -803,6 +825,8 @@ We consider various tensors of representations:
 ]
 
 == Cute Applications of Representation Theory
+
+=== The Pillaging Knights
 Suppose we are given $N$ knights, whom, after a long night of pillaging, sit at a round table to share their spoils of war. Each knight decides to split his earnings equally among his two neighbors. What happens after many iterations?
 
 The wealth distribution may be modelled as a function on $ZZ\/N ZZ$; each knight is identified with some element of $ZZ\/N ZZ$, and the wealth is given by $f : ZZ\/N ZZ -> CC$. Then, $
@@ -821,7 +845,7 @@ $ Thus, $
 hat(T^M f(j)) = hat(f)(j) (cos ((2 pi)/N))^M.
 $
 
-=== More General Motivation
+=== Functions on Mathematical Objects with Symmetry Groups
 
 Let $X$ a "mathematical object", $G$ a group of symmetries and $V = L^2 (X) =  CC$-valued functions on $X$. We assume $X$ finite (hence $G$ finite and $V$ finite). We are interested in studying operators $T : L^2 (X) -> L^2 (X)$.
 
@@ -892,10 +916,10 @@ $
   $ where $T_(i j) in "Hom"(V_j, V_i)$.
 ]
 
-=== Example on a cube
+=== Functions on a Cube
 Let $X = $ set of faces of a cube, and $V = L^2 (X)$ acted on by $G = S_4$, the symmetry group the cube. Let $T : V -> V$ be defined by $
 T(psi)(x) = 1/4 sum_(y tilde x) phi(y),
-$ where $y tilde x$ means $y, x$ are adjacent faces; the sum is over all faces adjacent to $x$. Notice that $T$ is $G$-equivariant
+$ where $y tilde x$ means $y, x$ are adjacent faces; the sum is over all faces adjacent to $x$. Notice that $T$ is $G$-equivariant; moreover we can view it as a 4-way "sharing" of the value on adjacent faces, as in the knight example but now sitting on a cube rather than a circle.
 
 We aim to decompose $L^2 (X)$ into a sum of irreducible representations. We have the character table of $S_4$;
 
