@@ -19,6 +19,7 @@
 // % ! 01-06
 = Representation Theory
 
+Recall that in studying group theory, we studied the notation of a group "acting" on a set. Representation theory studies group actions on vector spaces, which takes the notion of a group action on a set, and makes it compatible with the vector space structure. 
 == Introduction
 #definition("Linear Representation")[
   A _linear representation_ of a group $G$ is a vector space $V$ over a field $FF$ equipped with a map $G times V -> V$ that makes $V$ a $G$-set in such a way that for each $g in G$, the map $v |-> g v$ is a linear homomorphism of $V$.
@@ -186,7 +187,7 @@ $  where $V^G = {v in V : g v = v forall g in G}$.
   $
 ]
 
-== Characters
+== Characters, Orthogonality, Number of Irreducible Representations
 
 #definition[
   Let $dim (V) < infinity$ and $G$ a group. The _character_ of $V$ is the function $
@@ -380,7 +381,7 @@ $
   Denote by $hat(G) = {chi_1, dots, chi_N}$ the set of irreducible characters of $G$. Then, $hat(G)$ an orthonormal family of functions in $L^2 (G)$.
 ]
 
-We suppose for now $G$ abelian. In this case, $hash hat(G) = hash G$ so $hat(G)$ is an orthonormal basis for $L^2 (G)$ (comparing dimensions).
+We suppose for now $G$ abelian. In this case, $hash hat(G) = hash G$ so $hat(G)$ is an orthonormal basis for $L^2 (G)$ (comparing dimensions). In particular, one can prove that $hat(G)$ is abstractly isomorphic to $G$ as a group.
 
 #definition[
   Given $f in L^2 (G)$, the function $hat(f) : hat(G) -> CC$ is defined by $
@@ -1061,4 +1062,28 @@ $ hence $-1/2$ an eigenvalue with multiplicity 2.
   $ However, in $Q$, all of the representations are real other than the 2-dimensional one, which cannot be realized as a 2-dimensional representation over $RR$; however, as a group ring, $
   RR[Q] = RR plus.circle RR plus.circle RR plus.circle RR plus.circle HH,
   $ where $HH$ the ring of Hamiltonian quaternions. This is a 4-dimensional real-vector space (namely, we can identify it as a subspace of $M_4 (RR)$ by identifying $i$ with $mat(1, 1; 1, -1)$, $j$ with $mat(-1,1;1,1)$, and $k$ with $mat(0,-1;1,0)$). Hence, these two real-valued group rings cannot be isomorphic.
+]
+
+#proposition[Write down the character table of the symmetry group $G = S_4$ of the cube. Write the character of the permutation representation of $G$ acting on the $8$ vertices of the cube, and use the character table to write this character as a sum of irreducible characters.]
+
+#proposition[
+  Let $C$ be a conjugacy class in a finite group $G$. Show that the element $
+  alpha_C := sum_(g in C) g in CC[G]
+  $ belongs to the center of the complex group ring of $G$. If $rho : G -> "GL"_n (CC)$ is an irreducible representation of $G$, show that the matrix $
+  rho(alpha_C) := sum_(g in C) rho(g) in M_n (CC)
+  $ is a scalar matrix and write down the scalar in terms of the character of $rho$.
+]
+
+#proposition[
+  State Maschke's Theorem about complex finite dimensional representations of finite groups. Give a counterexample to illustrate that it can fail to be true when $G = ZZ$ is the infinite cyclic group.
+]
+
+#proposition[
+  Let $Q = {plus.minus 1, plus.minus i, plus.minus j, plus.minus k}$ be the Quaternion group of order 8. What are the dimensions of the irreducible representations of $Q$? Realize the abstract group $Q$ as a "concrete" group of matrices with complex entries.
+]
+
+#proposition[
+  Let $C_1, C_2, C_3$ be three conjugacy classes in a finite group $G$, and let $N(C_1, C_2, C_3)$ be the number of solutions to the equation $g_1 g_2 g_3 = 1$ with $g_j in C_j$ (with $1 <= j <= 3$). Show that $
+  N(C_1, C_2, C_3) =  (hash C_1 hash C_2 hash C_3)/(hash G) sum_(chi) (chi(C_1) chi(C_2) chi(C_3))/(chi(1)),
+  $ where the sum is taken over the irreducible characters $chi$ of $G$, and $chi(C_j)$ is a notation for $chi(g)$ with $g$ any element of $C_j$.
 ]
