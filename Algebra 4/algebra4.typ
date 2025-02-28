@@ -89,7 +89,7 @@ If $T$ has $1$ as an eigenvalue.
   Any representation of a finite group $G$ over $CC$ can be written as a direct sum of irreducible representations, i.e. $
   V = V_1 plus.circle dots.c plus.circle V_t,
   $ where $V_j$ irreducible.
-]
+]<thm:maschkes>
 
 #remark[
   $|G| < infinity$ essential. For instance, consider $G = (ZZ,+)$ and 2-dimensional representation given by $n |-> mat(1, n; 0, 1)$. Then, $n dot e_1 = e_1$ and $n dot e_2 = n e_1 + e_2$. We have that $CC e_1$ irreducible then. But if $v = a e_1 + e_2 in W:= V \\ CC e_1$, then $G v = (a + 1) e_1 + e_2$ so $G v - v = e_1 in W$, contradiction.
@@ -485,7 +485,8 @@ $ For a fixed probability measure $mu$, then, we wish to investigate the limitin
 
 === $S_4$
 For $S_4$, we denote the conjugacy classes by $1A, 2A, 2B, 3A, 3B, 4A$ as the conjugacy classes of elements of the form $(), (12)(34), (12), (123), (1234)$ respectively. 
-#align(center,
+
+#figure(
   table(
     columns: 6,
     stroke: none,
@@ -498,7 +499,7 @@ For $S_4$, we denote the conjugacy classes by $1A, 2A, 2B, 3A, 3B, 4A$ as the co
     $chi_4$, $3$, $-1$, $1$, $0$, $-1$,
     $chi_5$, $3$, $-1$, $-1$, $0$, $1$
   )
-)
+  ) <table:s4>
 
 $chi_1$ is the trivial representation. $chi_2$ is the sign representation given by $sigma |-> "sgn"(sigma) in {-1, 1} subset.eq CC^x$. $chi_3$ comes from noticing that $K_4 = ZZ\/2 times ZZ\/2 = 1A union.sq 2A subset.eq S_4$ gives $S_4\/K_4 tilde.eq S_3$. We then can find a new representation by composing the quotient map $pi : S_4 -> S_3$ with a representation $rho : S_3 -> "Aut"_CC (V)$. Remember that there are three irreducible representations of $S_3$. The first two are the trivial and sign, already accounted for here. The last is the unique two-dimensional representation where $chi(2A) = 0$ and $chi(3A) = -1$ (these are the conjugacy classes in $S_3$ now). Under the quotient map, then, we find that
 - since $1A, 2A$ contained in $K_4$, they are mapped to the identity in $"Aut"(CC^2)$ so have trace $2$;
@@ -1066,6 +1067,20 @@ $ hence $-1/2$ an eigenvalue with multiplicity 2.
 
 #proposition[Write down the character table of the symmetry group $G = S_4$ of the cube. Write the character of the permutation representation of $G$ acting on the $8$ vertices of the cube, and use the character table to write this character as a sum of irreducible characters.]
 
+#proof[
+See @table:s4 for the character table of $G$ (and its derivation). The character $chi_C$ of the permutation representation is given, for each conjugacy class, the number of fixed points of $G$ acting on the vertices (derived #link("https://notes.louismeunier.net/Algebra%203/algebra3.pdf#page=19", "here")): #table(
+    columns: 6,
+    stroke: none,
+    "", $1A$, $2A$, $2B$, $3A$, $4A$,
+    table.hline(start: 0, end: 7),
+    table.vline(x:1, start: 0, end: 7),
+    $chi_C$, $8$, $0$, $0$,$2$, $0$,
+  )
+  To write $chi_C$ as a sum of irreducible characters, take the inner product of $chi_C$ with each irreducible character; one should find $
+  chi_C = chi_1 + chi_2 + chi_4 + chi_5.
+  $
+]
+
 #proposition[
   Let $C$ be a conjugacy class in a finite group $G$. Show that the element $
   alpha_C := sum_(g in C) g in CC[G]
@@ -1074,12 +1089,35 @@ $ hence $-1/2$ an eigenvalue with multiplicity 2.
   $ is a scalar matrix and write down the scalar in terms of the character of $rho$.
 ]
 
+#proof[
+  If suffices to check that $alpha_C$ commutes with every $h in G$ since $CC$ is obviously commutative; we find $
+  h alpha_C h^(-1) = sum_(g in C) h g h^(-1) = sum_(tilde(g) in C) tilde(g) = alpha_C,
+  $ where the summation remains fixed under the change of indexing $tilde(g) = h g h^(-1)$, since conjugacy classes are by virtue closed under conjugation.
+
+  Next, we can view $rho(alpha_C)$ as a homomorphism $V -> V$ where $V = CC^n$ the corresponding vector space representation. In this case, the same proof as above gives that $rho(alpha_C)$ actually a $G$-equivariant homomorphism on $V$, and so by Schur's Lemma, $rho(alpha_C) = lambda I_n$ for some $lambda in CC$. To compute $lambda$, we can compute traces; on the one hand, we have $tr(lambda I_n) = n dot lambda$, while also $
+  tr(rho(alpha_C)) = sum_(g in C) tr(rho(alpha_C)) = sum_(g in C) chi(g) = hash C dot chi(C),
+  $ where $chi$ the corresponding character of $rho$, and where we use the fact that $chi$ constant on conjugacy classes. Comparing these, we conclude $lambda = (hash C dot chi(C))/n$; noting that $n = chi(1)$, then $
+  rho(alpha_C) = (hash C dot chi(C))/chi(1) I_n.
+  $
+]
 #proposition[
   State Maschke's Theorem about complex finite dimensional representations of finite groups. Give a counterexample to illustrate that it can fail to be true when $G = ZZ$ is the infinite cyclic group.
 ]
 
+#proof[
+See @thm:maschkes for the statement. The typical counter example is the two-dimensional representation of $ZZ$ given by $n |-> mat(1,n; 0, 1)$. One can show that while $CC dot e_1$ an irreducible one-dimensional subspace, there is no complementary irreducible one-dimensional space.
+]
+
 #proposition[
   Let $Q = {plus.minus 1, plus.minus i, plus.minus j, plus.minus k}$ be the Quaternion group of order 8. What are the dimensions of the irreducible representations of $Q$? Realize the abstract group $Q$ as a "concrete" group of matrices with complex entries.
+]
+
+#proof[
+  There are 4 irreducible representations of dimension 1, and a unique (faithful) irreducible representation of dimension 2 (the first four can be found by modding out the center of $Q$ which gives a homomorphism to $ZZ\/2ZZ times ZZ\/2$; the last can be found by just computing orthogonality relations).
+
+  The "concrete" realization, as a subgroup of $"GL"_2 (CC)$, is given by $1 <-> I_2$, $-1 <-> - I_2$, and $
+  i <-> mat(i, 0; 0, -i), wide j <-> mat(0, -1; 1, 0), wide k <-> mat(0, -i;-i, 0),
+  $ with $-i,-j,-k$ defined in the obvious way (this, of course, up to conjugation of every element; this certainly isn't unique).
 ]
 
 #proposition[
@@ -1087,3 +1125,38 @@ $ hence $-1/2$ an eigenvalue with multiplicity 2.
   N(C_1, C_2, C_3) =  (hash C_1 hash C_2 hash C_3)/(hash G) sum_(chi) (chi(C_1) chi(C_2) chi(C_3))/(chi(1)),
   $ where the sum is taken over the irreducible characters $chi$ of $G$, and $chi(C_j)$ is a notation for $chi(g)$ with $g$ any element of $C_j$.
 ]
+
+#proof[
+Using the notations of 3 questions ago, consider the element $alpha_C_1 alpha_C_2 alpha_C_3 in CC[G]$. One notices that the coefficient of this element corresponding to the identity in $G$ is equal to $N(C_1, C_2, C_3)$. Consider the "Fourier Transform" of $alpha_C_1 alpha_C_2 alpha_C_3$; namely the image of $
+underline(rho) = (rho_1, dots, rho_t) : CC[G] -> plus.circle.big_(i=1)^t "End"_CC (V_i).
+$
+]
+
+= Galois Theory
+
+The original motivation of Galois Theory was the study of polynomial equations and so-called "solvability by radicals". More modernly, the motivation is in the study of fields via their symmetries.
+
+One original question was with solving the cubic equation, $a x^3 + b x^2 + c x + d = 0$. We outline the proof here. Without loss of generality, one assumes $a = 1$ and $b = 0$, by dividing by $a$ (if $a = 0$, this reduces to a quadratic) and making an appropriate summation. This gives the so-called "depleted cubic" equation, we write $
+x^3 + p x + q = 0.
+$ Writing $x = u + v$, we find $
+(u + v)^3 + p (u + v) + q = 0 \ 
+=> u^3 + v^3 + 3 u v (u + v) + p (u + v) + q = 0\
+=> [u^3 + v^3 + q] + (3 u v + p)(u + v) = 0;
+$ then, if $u^3 + v^3 + q  = 0$ and $3 u v + p = 0$, we find a solution; namely, we have now a system of two equations $
+cases(u^3 + v^3 = - q,
+u v = - p/3).
+$ Cubing the second, we find $
+cases(u^3 + v^3 = - q,
+u^3 v^3 = - p^3/27
+),
+$ from which we see $u^3$ and $v^3$ are solutions to a quadratic equation $
+x^2 + q x - p^3/27 = 0;
+$ this equation is often called the "quadratic resolvent" of the cubic. Hence, by applying the quadratic formula, we know $
+u^3, v^3 = (- q plus.minus sqrt(p^2 + 4 p^3\/27))/2
+$ so $
+u, v = root(3, (- q plus.minus sqrt(p^2 + 4 p^3\/27))/2).
+$ Substituting back to our original expression, we find our general solution $
+x = root(3, (- q + sqrt(p^2 + 4 p^3\/27))/2) + root(3, (- q - sqrt(p^2 + 4 p^3\/27))/2)
+$ to the cubic equation. One notices that this should give 9 solutions (3 cube roots exists, for each cube root), and in general gives complex numbers. We'll discuss the implications of this to follow.
+
+There is a similar formula for the general quartic equation, involving square, cube, and fourth roots, with a similar method leading to a resolvent cubic. However, attempting the same method for the quintic equation leads to a resolvent sextic equation, which is clearly no help at all. We'll see that this is intimately tied to the symmetries, namely, the symmetry groups, of the roots of the respective polynomials.

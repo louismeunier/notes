@@ -852,7 +852,7 @@ Here, we will primarily work with a normed vector space (nvs). Moreover, we usua
   ||T|| = ||T||_(cal(L) (X, Y)) = sup_(x in X, \ ||x||_X <= 1) ||T x||_Y < infinity
   $ is finite. Then, we put $
   cal(L)(X, Y) := {"bounded linear operators" X -> Y}.
-  $
+  $ We'll also write $cal(L)(X) := cal(L)(X, X)$.
 ]
 
 #theorem("Bounded iff Continuous")[
@@ -1441,4 +1441,153 @@ This motivates the following.
   $ so $norm(T^ast y) <= norm(T)$ for all $norm(y) = 1$. so $norm(T^ast) <= norm(T)$ hence $T^ast in cal(L)(H)$. But also, if $x in H$ with $norm(x) = 1$, then symmetrically, $
   norm(T x)^2 = (T x, T x) = (x, T^ast T x) <= norm(T^ast) norm(T x)
   $ so similarly $norm(T) <= norm(T^ast)$ hence equality holds.
+]
+
+#proposition[
+  $(T^ast)^ast = T$.
+]
+
+#proof[
+  On the one hand, $
+  (T^ast y, x) = (y, (T^(ast))^ast x) = ((T^ast)^ast x, y)
+  $ while also $
+  (T^ast y, x) = (x, T^ast y) = (T x, y)
+  $ so $(T x, y) = ((T^ast)^ast, y)$, from which it follows that $T = T^(ast ast)$.
+]
+
+#proposition[
+  $(T + S)^ast = T^ast + S^ast$, and $(T compose S)^(ast) = S^ast compose T^ast$.
+]
+
+We'll write $N(T)$ for the nullspace/kernel of $T$, and $R(T)$ for the range/image of $T$.
+#proposition[
+  Suppose $T in cal(L)(H)$. Then, 
+  - $N(T^ast) = R(T)^perp$ (and hence, if $R(T)$ closed, $H = N(T^ast) plus.circle R(T)$);
+  - $N(T) = R(T^ast)^perp$ (and hence, if $R(T^ast)$ closed, $H = N(T) plus.circle R(T^ast)$).
+]
+
+#proof[
+$N(T^ast) = {y in H : T^ast y = 0}$, so if $y in N(T^ast)$, $(T x, y) = (x, T^ast y) = (x, 0) = 0$, which holds iff $y$ orthogonal to $T x$, and since this holds for all $x in H$, $y in R(T)^perp$.
+
+Then, if $R(T)$ closed, the by orthogonal decomposition we'll find $H = R(T) plus.circle R(T)^perp = R(T) plus.circle N(T^ast)$.
+
+The other claim follows similarly.
+]
+
+#remark[
+  Recall that $R(T)^perp$ is closed; hence $
+  (R(T)^perp)^perp = {z in H | (y, z) = 0 forall y in R(T)^perp},
+  $ and is also closed; hence $(R(T)^perp)^perp = overline(R(T))$ thus equivalently $N(T^ast)^perp = overline(R(T))$.
+]
+
+#remark[
+  By the Closed Graph Theorem, $T$ linear and bounded gives $T$ closed; namely, the graph of $T$ closed; this is _not_ the same as saying the range of $T$ closed.
+]
+
+#example[
+  Consider $C([0, 1]) subset.eq L^2 ([0, 1])$, and $T : C([0, 1]) -> L^2 ([0, 1])$ given by the identity, $T f = f$. Then, $T$ is bounded, but $R(T) = C([0, 1])$; this subspace is _not_ closed in $L^2 ([0, 1])$, since there exists sequences of continuous functions that converge to an $L^2$, but not continuous, function.
+]
+
+#remark[
+  The prior theorem is key in "solvability", especially if $T$ a differential or integral operator. If we wish to find $u$ such that $T u = f$, we need that $f in R(T)$, hence $f in N(T^ast)^perp$.
+]
+
+#example[
+Let $M subset.neq H$ a closed linear subspace. Then, $H = M plus.circle M^perp$; define the projection operator $
+P : H -> H, wide x = u + v in M plus.circle M^perp |-> u.
+$ This means, in particular, $x = P x + (id - P) x$. We claim $P in cal(L)(H)$, $norm(P) = 1$, $P^2 = P$, and $P^ast = P$.
+
+Linearity is clear. To show $P^2 = P$, write $x = P x + v$. Then, composing both sides with $P$, we find $P x = P^2 x + P v = P^2 x,$ so $P x = P^2 x$ for every $x in H$. To see the norm, we find that for every $x in H$, $
+norm(x)^2 = (x, x) &= (P x + (id - P) x, P x + (id - P) x) \ 
+&= norm(P x)^2 + 2 underbrace((P x, (id - P) x), perp) + norm((id - P) x)^2 \ 
+&= norm(P x)^2 +  norm((id - P) x)^2 >= norm(P x)^2 \
+&=> norm(P x) <= norm(x) => norm(P) <= 1,
+$ and moreover if $x in M$, $P x = x$ so $norm(P x) = norm(x)$ hence $norm(P) = 1$ indeed.
+
+Finally, the show $P$ self-adjoint, let $x, y in H$, then, $
+0 &= (P x, (id - P ) y)  =(P x, y - P y)  => (P x, y) = (P x, P y).
+$ Symmetrically, $(x, P y) = (P x, P y)$, hence $(P x, y) = (x, P y),$ and so $P = P^ast$.
+]
+
+== Introduction to Weak Convergence
+
+We let throughout $X$ be a Banach space.
+
+#definition("Weak convergence")[
+  We say ${x_n} subset.eq X$ _converges weakly_ to $x in X$, and write $
+  x_n harpoon.rt x
+  $
+
+  iff for every $f in X^ast = {f : X -> RR "bounded, linear"}$, $f(x_n) -> f(x)$.
+]
+
+#definition([Weak topology $sigma(X, X^ast)$])[
+  The weak topology $sigma(X, X^ast)$ is the weak topology induced by $
+  cal(F) = X^ast.
+  $ In particular, this is the smallest topology in which every $f$ continuous.
+]
+
+Recall that this was defined as being $tau({f^(-1) (cal(O))})$ for $cal(O)$ open in $RR$. A base for this topology is given by $cal(B) = {"finite intersections of" {f^(-1) cal(O)}}$. Namely, let $cal(B)_X := {B_(epsilon, f_1, f_2, dots, f_n) (x)}$ where $
+B_(epsilon, f_1, f_2, dots, f_n) (x) = {x' in X | abs(f_k (x') - f_k (x)) < epsilon, forall 1 <= k <= n}.
+$ So, $x_n -> x$ in $sigma(X, X^ast)$ if for every $epsilon > 0$, and ball $B_(epsilon, f_1, dots, f_m) (x)$, there is an $N$ such that for every $n >= N$, $x_n in B_(epsilon, f_1, dots, f_m) (x)$, hence for every $f in X^ast$, $abs(f(x_n) - f(x)) < epsilon$.
+
+For Hilbert spaces, by Riesz we know $f in H^ast$ can always be identified with $f(x) = (x, y)$ for some $y in H$. So, we find $x_n harpoon.rt x$ in $H$ iff for every $y in H$, $(x_n, y) -> (x, y)$.
+
+#remark[
+If $x_n -> x$ in $H$, then $(x_n, y) -> (x, y)$; so this normal convergence implies weak convergence.
+]
+
+#proposition[
+  (i) Suppose $x_n harpoon.rt x$ in $H$. Then, ${x_n}$ are bounded in $H$, and $norm(x) <= liminf_(n->infinity) norm(x_n)$.
+
+  (ii) If $y_n -> y$ (strongly) in $H$ and $x_n harpoon.rt x$ (weakly) in $H$, then $(x_n, y_n) -> (x, y)$.
+]
+
+#remark[
+  It does _not_ hold, though, that $x_n harpoon.rt x$, $y_n harpoon.rt y$ gives $(x_n, y_n) -> (x, y)$.
+]
+
+#proof[
+  (i) If $x_n harpoon.rt x$, then $
+  (x_n, x/norm(x)) -> (x, x/norm(x)) = norm(x).
+  $ By Cauchy-Schwarz, we also have $
+  abs((x_n, x/(norm(x)))) <= norm(x_n) (norm(x)/norm(x)) = norm(x_n),
+  $ hence we conclude $
+  liminf_(n->infinity) (x_n, x/(norm(x))) <= liminf_(n->infinity) norm(x_n) => norm(x) <= liminf_(n->infinity) norm(x_n).
+  $
+  To argue ${x_n}$ bounded, need the uniform boundedness principle. Let ${x_n} subset.eq H^(ast ast) = H$. By weak convergence, for every $f = f_y in H^ast$, $f |-> f(x_n) = (x_n, y) -> (x, y)$. So, $
+  sup_(n) f(x_n) <= C. 
+  $ Thus, the map $f |-> f(x_n)$ a bounded linear operator on $H^ast$, so by uniform boundedness $sup_n norm(x_n) <= C$.
+  // TODO this makes no sense
+
+  (ii) If $y_n -> y$ in $H$, $
+  abs((x_n, y_n) - (x, y)) &<= abs((x_n, y_n - y)) + abs((x_n - x, y)) \ 
+  &<= underbrace(norm(x_n), "bounded") underbrace(norm(y_n - y), -> 0) + underbrace(abs((x_n -x, y)), -> 0 "by weak") -> 0.
+  $
+]
+
+The real help of weak convergence is in the ease of achieving weak compactness;
+
+#theorem("Weak Compactness")[
+  Every bounded sequence in $H$ has a weakly convergent subsequence.
+]<thm:weakcompactness>
+
+#theorem("Helly's Theorem")[
+Let $X$ a separable normed vector space and ${f_n} subset.eq X^ast$ such that there is a constant $C > 0$ such that $abs(f_n (x)) <= C norm(X)$ for every $x in X$ and $n >= 1$. Then, there exists a subsequence ${f_n_k}$ and an $f in X^ast$ such that $f_n_k (x) -> f(x)$ for every $x in X$.
+]
+
+#proof[
+  (Of @thm:weakcompactness) Let ${x_n} subset.eq H$ be bounded and let $H_0 = overline("span"{x_1, dots, x_n, dots})$, so $H_0$ is separable, and $(H_0, (dot,dot))$ is a Hilbert space (being closed). Let $f_n in H_0^ast$ be given by $
+  f_n (x) = (x_n, x), forall x in H_0.
+  $ Then, $
+  abs(f_n (x)) <= norm(x_n) norm(x) <= C norm(x),
+  $ since ${x_n}$ bounded by assumption. By Helly's Theorem, then, there is a subsequence ${f_n_k}$ such that $f_n_k (x) -> f(x)$ for every $x in H_0$, where $f in H_0^ast$. By Riesz, then, $f(x) = (x, x_0)$ for some $x_0 in H_0^ast$. This implies $
+  (x_n_k, x) -> (x_0, x), forall x in H_0.
+  $ Let $P$ the projection of $H$ onto $H_0$. Then, for every $x in H$, $
+  (x_n_k, (id - P) x) = (x_0, (id - P) x) = 0
+  $ so for any $x in H$, $
+  lim_(k->infinity) (x_n_k, x) &= lim_(k->infinity) (x_n_k, P x + (id - P) x) \ 
+  &= lim_(k->infinity) \(x_n_k, underbrace(P x, in H_0)) \ 
+  &= (x_0, P x) = (x_0, P x + (id -P) x) = (x_0, x),
+  $ as we aimed to show.
 ]
