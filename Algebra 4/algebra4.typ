@@ -1126,12 +1126,48 @@ See @thm:maschkes for the statement. The typical counter example is the two-dime
   $ where the sum is taken over the irreducible characters $chi$ of $G$, and $chi(C_j)$ is a notation for $chi(g)$ with $g$ any element of $C_j$.
 ]
 
-#proof[
-Using the notations of 3 questions ago, consider the element $alpha_C_1 alpha_C_2 alpha_C_3 in CC[G]$. One notices that the coefficient of this element corresponding to the identity in $G$ is equal to $N(C_1, C_2, C_3)$. Consider the "Fourier Transform" of $alpha_C_1 alpha_C_2 alpha_C_3$; namely the image of $
-underline(rho) = (rho_1, dots, rho_t) : CC[G] -> plus.circle.big_(i=1)^t "End"_CC (V_i).
-$
+#proof[(A First Proof)
+The key observation is to notice that, using the notations of 3 questions ago, consider the element $alpha_C_1 alpha_C_2 alpha_C_3 in CC[G]$;one notices that the coefficient of this element corresponding to the identity in $G$ is equal to $N(C_1, C_2, C_3)$. We'd like to "pick out" this element, which we can do by taking the inner product of the element with $chi_"reg"$, the character of the regular representation; this gives on the one hand $
+ chi_"reg" (alpha_C_1 alpha_C_2 alpha_C_3) = hash G dot N(C_1, C_2, C_3).
+$ On the other hand, we know that $chi_"reg" = sum_(chi) chi(1) dot chi$, where the summation ranges over the irreducible representations of $G$; so, it suffices to find the character of $alpha_C_1 alpha_C_2 alpha_C_3$ on each representation. If $rho$ an irreducible representation with character $chi$, then using three questions ago, we find $
+chi(alpha_C_1 alpha_C_2 alpha_C_3) &= tr(rho(alpha_C_1) rho(alpha_C_2) rho(alpha_C_3)) \ 
+&= tr((hash C_1 dot chi(C_1))/(chi(1)) dot (hash C_2 dot chi(C_2))/(chi(1)) dot (hash C_3 dot chi(C_3))/(chi(1)) I_chi(1)) \ 
+&= hash C_1 hash C_2 hash C_3 (chi(C_1) chi(C_2) chi(C_3))/(chi(1)^2).
+$ Hence, we find that $
+hash G dot N(C_1, C_2, C_3) &= chi_"reg" (alpha_C_1 alpha_C_2 alpha_C_3) \
+&= sum_(chi) chi(1) chi(alpha_C_1 alpha_C) \ 
+&=hash C_1 hash C_2 hash C_3 sum_(chi)  (chi(C_1) chi(C_2) chi(C_3))/(chi(1)),
+$ giving the answer upon dividing both sides by $hash G$.
 ]
 
+#proof[(A Second Proof) Recall the isomorphism of rings $
+underline(rho) = (rho_1, dots, rho_h) : CC[G] -> plus.circle.big_(i=1)^h "End"_CC (V_i),
+$ developed earlier to find the number of irreducible characters of a group. From question 2., we know that $
+underline(rho)(alpha_C_1 alpha_C_2 alpha_C_3) &= (rho_1 (alpha_C_1) rho_1 (alpha_C_2) rho_1 (alpha_C_3), dots, rho_h (alpha_C_1) rho_h (alpha_C_2) rho_h (alpha_C_3)) \ 
+&= (hash C_1 hash C_2 hash C_3 (chi_1 (C_1) chi_1(C_2) chi_1 (C_3))/(chi_1(1) ) I_(chi_1 (1)), dots, hash C_1 hash C_2 hash C_3 (chi_h (C_1) chi_h (C_2) chi_h (C_3))/(chi_g(1) ) I_(chi_h (1))) \ 
+&=hash C_1 hash C_2 hash C_3  dot ((chi_1 (C_1) chi_1(C_2) chi_1 (C_3))/(chi_1(1) ) I_(chi_1 (1)), dots,  (chi_h (C_1) chi_h (C_2) chi_h (C_3))/(chi_g(1) ) I_(chi_h (1))),
+$ where $chi_i$ the character of $rho_i$. Restricting to the vector space structure of $CC[G]$, we know that $CC[G] tilde.eq L^2 (G)$, the space of complex-valued functions on $G$. Then, notice that $N(C_1, C_2, C_3)$ is the coefficient of $alpha_C_1 alpha_C_2 alpha_C_3$ corresponding to $1$ in the group ring, or, viewing this element as a function, call it $f$, in $L^2 (G)$, the value of $f(1)$. $L^2 (G)$ is endowed with a natural inner product, and we can find $f(1)$ by taking the inner product of $f$ with the function $delta_1 : G -> CC$ given by $delta_1 (g) = cases(1 "if" g = id, 0 "else")$, which gives $
+angle.l f, delta_1 angle.r = 1/(hash G) dot  f(1).
+$ On the other hand, there is a corresponding natural inner product on the vector space $plus.circle.big_(i=1)^h "End"_CC (V_i)$. Namely, on each space $"End"_CC (V_i)$, the natural inner product is $
+angle.l A, B  angle.r_ast := tr(A B^ast),
+$ where $B^ast$ denotes the conjugate transpose of $B$. Then, the inner product on the direct sum of the spaces is given by the sum such inner products on each component, i.e. given $A = (A_1, dots, A_h), B = (B_1, dots, B_h)$, we define $
+angle.l A, B angle.r_+ &:= sum_(i=1)^h tr(A_i B_i^ast).
+$ I claim that this inner product is "equivalent" to the original one on $L^2 (G)$. Namely, given $f_1, f_2 in L^2 (G)$, note that $rho_i (f_2)^ast = overline(rho_i (f_2)) = rho_i (f_2^(-1))$, so we find $
+angle.l underline(rho)(f_1), underline(rho)(f_2) angle.r_+ &= sum_(i=1)^h tr(rho_i (f_1) rho_i (f_2)^ast) \
+&= sum_(i=1)^h tr(rho_i (f_1) rho_i (f_2^(-1))) \ 
+&= sum_(i=1)^h tr(rho_i (f_1 f_2^(-1))) \
+&= sum_(chi) chi (f_1 f_2^(-1))
+// TODO off by a factor somewhere or other....
+$ 
+
+Finally, notice that $
+underline(rho)(delta_1) = (rho_1 (1), dots, rho_h (1)) = (I_(chi_1(1)), dots, I_(chi_h (1)))
+$
+From which we find $
+angle.l  underline(rho)(f), underline(rho)(delta_1) angle.r_+ &= sum_(i=1)^h tr(hash C_1 hash C_2 hash C_3 (chi_i (C_1) chi_i (C_2) chi_i (C_3))/(chi_i (1) ) I_(chi_i (1))) \ 
+&= sum_(chi) hash C_1 hash C_2 hash C_3 dot chi(C_1) chi(C_2) chi(C_3) 
+$
+]
 = Galois Theory
 
 The original motivation of Galois Theory was the study of polynomial equations and so-called "solvability by radicals". More modernly, the motivation is in the study of fields via their symmetries.

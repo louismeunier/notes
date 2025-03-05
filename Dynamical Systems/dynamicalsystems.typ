@@ -1,5 +1,6 @@
 // ! external
 #import "../typst/notes.typ": *
+// #import "/documents/notes/typst/notes.typ"
 #import "../typst/shortcuts.typ": *
 
 // ! configuration
@@ -239,7 +240,7 @@ $
 
 = Delay Differential Equations
 
-A delay differential equation (DDE) is generally speaking an ODE that depends on the state of the system in the past. We'll focus on DDEs of the form $
+A delay differential equation (DDE) is, broadly speaking, an ODE that depends on the state of the system in the past. We'll focus on DDEs of the form $
 dot(u)(t) = f(u(t), u(t - tau)),
 $ where $u in RR^p, f : RR^p times RR^p -> RR^p$, and $tau > 0$ a fixed time delay.
 
@@ -249,3 +250,180 @@ Suppose for now we take $phi equiv 1$, so we wish to solve the DDE with initial 
 cases(dot(u)(t) = u(t - tau) & wide t > 0, u(t) = 1 & wide  - tau <= t <= 0
 ).
 $
+One method of solution is called the "method of steps". Note that the initial data implies $
+dot(u)(t) = 1 "for" t in [0, tau],
+$ hence $u(t) =  t + 1$ on $[0, tau]$. Then, for $t in [tau, 2 tau]$, $
+dot(u)(t) = u(underbrace(t - tau, in [0, tau])) = (t - tau) + 1,
+$ so $u(t) = 1 + tau + (t - tau)(1 - tau) + 1/2 (t^2 - tau^2)$ for $t in [tau, 2 tau]$. Repeating this procedure arbitrarily results in a a piecewise solution defined on each interval of the form $[n tau, (n +1 ) tau]$ for $n in NN$. This method can be applied for more general DDEs, and will, in general, result in continuous solutions, differentiable everywhere except, in general, at the endpoints $n tau$.
+
+Another method, specifically for linear DDEs, which more related to the ODE theory, is to derive a characteristic equation. Suppose a solution of the form $u(t) =k e^(lambda t)$ to the DDE $dot(u)(t) = beta u(t - tau)$. Plugging this into the equation gives $
+k lambda e^(lambda t) = beta k e^(lambda (t - tau)) => Delta(lambda) := lambda - beta e^(- lambda tau) = 0.
+$ Solving for $lambda$ such that $Delta(lambda) = 0$ is, in general, difficult. However, one notices that if $beta > 0$, $
+lim_(lambda -> -infinity) Delta(lambda) = +infinity, wide delta(0) = - beta < 0,
+$ so by the intermediate value theorem, there exists at least one solution to the characteristic equation, and moreover, $lambda in (0, infinity)$. Similar applies for $beta < 0$.
+== DDE Linearization
+
+Suppose we have a DDE $
+dot(u)(t) = f(u(t), u(t - tau)),
+$ where $u in RR^d$ (so $f : RR^d times RR^d -> RR^d$),  with a steady-state solution $u^ast$. Then, the linearization of the DDE about $u^ast$ is given by $
+dot(v)(t) =  A v(t) + B v(t - tau), wide v(t) := u(t) - u^ast,
+$ where $A, B$ are $d times d$ matrices given by $
+A := (partial f)/(partial u)|_(u = u^ast), wide  B := (partial f)/(partial v)|_(u = u^ast).
+$ The characteristic equation of the linearization is given $
+Delta(lambda) = lambda I_d - A - B e^(-lambda tau) = 0.
+$
+
+For an example, consider the Mackey-Glass Equation, $
+dot(u)(t) = - gamma u(t) + (beta u(t - tau))/(1 + u(t - tau)^n).
+$ There are two steady states given by $
+u_1 = 0, wide u_2 = (beta/gamma - 1)^(1/n),
+$ the second only existing when $gamma/beta < 1$. In our earlier notations, we find $
+f(u, v) = -gamma u + (beta v)/(1 + v^n).
+$ Then, $f_u = - gamma$ and $f_v = beta [1 + (1 - n)v^n]/((1 + v^n)^2)$.
+
+
+= Bifurcation Theory
+
+#theorem("Implicit Function Theorem")[
+  Let $f : RR^p times RR -> RR^p$ be a $C^1$ function of $(u, mu)$ with $f(0, 0) = 0$. If $J_f = f_u (0,0)$ is invertible, then there exists $epsilon > 0$ and a smooth curve $u = G(mu)$ which is the unique solution of $f(G(mu), mu) = 0$ for $abs(mu) < epsilon$ and $norm(u) < epsilon$.
+]
+
+#corollary[
+  If $(u^ast, mu^ast)$ a hyperbolic steady state of $dot(u) = f(u, mu)$, then for some $epsilon > 0$ there is a smooth curve $u = G(mu)$ with $u^ast = G(mu^ast)$ whenever $norm(u - u^ast) < epsilon$ and $abs(mu - mu^ast) < epsilon$, such that $G(mu)$ a steady state of $dot(u) = f(u, mu)$, i.e. $f(G(mu), mu) = 0$.
+]
+
+#remark[
+  Heuristically, this means that if $J_f$ invertible, there can be no change in the number of steady states near $u^ast$ while $mu$ near $mu^ast$. Similarly, small perturbations of $J_f$ won't change the sign of the real part of the eigenvalues of $J_f$, hence stability won't change in this case. Thus, to study scenarios in which changes in $mu$ qualitatively change dynamics, we need to study non-hyperbolic steady states. We call such a scenario a "bifurcation".
+]
+
+== Canonical 1-Dimensional Bifurcations
+
+Suppose $
+dot(u) = f(u, mu), wide f : RR times RR -> RR
+$ has a fixed point at $(u, mu) = (0, 0)$ (if the fixed point is at a different point, we may simple change coordinates to move it to the origin). The following table outlines the most common bifurcation types, and conditions for the to occur, in the one-dimensional case.
+
+In the "Conditions" column, all partial derivatives are evaluated at $(0,0)$. These conditions arise naturally from a Taylor expansion of $f$ about the steady state, and considering different combinations of quantities being zero or nonzero.
+
+#table(
+stroke: none,
+columns: 4,
+row-gutter: (0em, 1em),
+"Name", "Normal Form", [Conditions$""^ast$], "Description",
+table.vline(start: 0, end: 6, x : 1),
+table.hline(start: 0, end: 4),
+"Saddle Node", $dot(u) = mu - u^2$, $f = f_u = 0, f_mu eq.not 0$, "Single s.s. branches into 2",
+"Transcritical", $dot(u) = mu u - u^2$, $f = f_u = f_mu = 0, f_(u u) eq.not 0, f_(u mu)^2 > f_(mu mu) dot f_(u u) $, "2 steady states pass through each other and change stability",
+"Supercritical Pitchfork", $dot(u) = mu u - u^3$, $ f = f_u = f_mu = f_(u u) = 0, f_(u u u ) eq.not 0, f_(mu u) eq.not 0$, "Single stable fixed point becomes unstable and two new stable fixed points are born surrounding it",
+"Subcritical Pitchfork", $dot(u) = -mu u + u^3$, "As above", "Same as above, interchanging stable and unstable"
+)
+
+#remark[
+$""^ast$ The first two conditions, $f = f_u = 0$, which appear in all the cases, are required for a bifurcation ($f = 0$ gives a steady state, $f_u = 0$ means the implicit function theorem doesn't apply). Then, $f_mu eq.not 0$ implies a saddle-node, so the requirement $f_mu = 0$ in the other cases just rule out not being a saddle-node. The other conditions from there are just technical, and arise from the Taylor expansion naturally. 
+]
+
+#table(
+  columns: 2,
+  stroke: none,
+  [#image("saddlepre.png"),
+  #image("saddlepost.png")],
+  image("sadddlebifurcation.png")
+  // TODO
+)
+
+== Bifurcations In $RR^p$
+
+In higher dimensions than 1, we have slightly more complex behaviour. From the Implicit Function Theorem, we know that if the Jacobian $J_f$ remains invertible as a parameter is varied, a steady state $u^ast (mu)$ will vary continuously with $mu$. So, the stability of the steady state may change with $mu$, but the number (locally) of steady states stays the same. For instance, this can happen in $RR^2$ if a complex conjugate pair of eigenvalues has real part changing sign. In this case, the steady state not hyperbolic, yet $J_f$ remains invertible (as long as the imaginary part of the eigenvalues remain nonzero.) This is called a "Hopf bifurcation", which we'll see more of later. Otherwise, bifurcations in $RR^2$ occur when a single real eigenvalue changes sign. We'll deal, first off, with bifurcations that involve a single eigenvalue crossing $0$ (changing sign) at a given time, which generally occurs with one-parameter systems. More generally if there are $>1$ parameters in a dynamical system, it is possible to make $k$ eigenvalues simultaneously zero, in which case we have a so-called "co-dimension $k$" bifurcation. We touch on these later.
+
+// Consider for now $mu in RR$ and $dot(u) = f(u, mu)$ for $u in RR^2$, which has a steady state $u^ast (mu^ast)$, for which the Jacobian $J_f (u(mu))$ has two eigenvalues, $
+// lambda_1 (mu^ast) = 0, wide lambda_2 (mu^ast) eq.not 0,
+// $ and suppose finally $u^ast$ independent of $mu$. If $lambda_1 (mu^ast)$ crosses $0$ at $mu = mu^ast$,
+
+#theorem("Center Manifold Theorem")[
+Consider $dot(u) = f(u)$ where $f in C^r (RR^p, RR^p)$ and $f(0) = 0$. We classify the eigenvalues $lambda$ of the Jacobian of $f$ at $0$ in the following: $
+sigma_u &:= {lambda | "Re"(lambda) > 0} \ 
+sigma_s &:= {lambda | "Re"(lambda) < 0} \ 
+sigma_c &:= {lambda | "Re"(lambda) = 0}.
+$ Denote $E^u, E^s, E^c$ the corresponding subspaces of $RR^p$ (namely the spaces spanned by the eigenvectors corresponding to eigenvalues in $sigma_u, sigma_s, sigma_c$ respectively). Then, there exist $C^r$-smooth stable, unstable manifolds $W^s, W^u$ tangential to $E^s, E^u$ at $0$, and a $C^(r-1)$-smooth manifold $W^c$ tangential to $E^c$ at $0$, with the propertie that all of these manifolds are invariant for the dynamical system.
+]
+
+#remark[
+  In this theorem, $W^s, W^u$ and $W^c$ are not the same as those discussed before, defined using $omega$-limit sets; now we require both $"Re"(lambda) eq.not 0$ _and_ stability/instability criteria.
+]
+
+We can often approximate the manifolds in the theorem by assuming that they can be written as curves that are functions of one variable, then applying an appropriate series expansion to determine coefficients. Globally, this may not work, but locally can give a good picture of the nonlinear manifold.
+
+#example[In $RR^2$, let $
+dot(x) = x y, dot(y) = -y - x^2.
+$]
+
+This system has a steady state at $(0,0)$, with  $
+J_f (0,0) = mat(0,0;0,-1),
+$ so there are two eigenvalues, $0, -1$. Moreover, this gives $E^s = "span"vec(0,1)$ and $E^c = "span"vec(1,0)$. 
+
+If $x(0) = 0$, $dot(x) = 0$ so $x = 0$ for all time, hence $W^s (0,0) = E^s$ in this case.
+
+For the nonlinear center manifold, $W^c$, suppose that locally, $W^c$ is the graph of a smooth function of $x$, $y = h(x)$, i.e. $
+W^c = {(x, h(x)) | x in RR}.
+$ To compute $h$, suppose $
+y = h(x) = sum_(j=0)^infinity c_j x^j,
+$ with the coefficients $c_j$ to be determined. By assumption, the dynamics are invariant on $h(x)$, so on the one hand $
+dot(y) = h'(x) dot(x) = h'(x) (x y) = x h'(x)h(x) 
+$ while also $
+dot(y) = - y - x^2 = - h(x) - x^2,
+$ so setting these equal, we find the relation $
+x h'(x)h(x)  = - h(x) - x^2.
+$ Equating like terms, we find $
+c_0 = c_1 = 0, wide c_2 = -1, c_3 = 0, c_4 = -2, c_5 = 0,
+$ etc. (note that we could have found the first two sooner; we know the curve must pass through the origin hence $c_0 = 0$, and we know it must be tangential to $E^c$, the $x$-axis, so its first derivative $c_1$ must also be zero). Plotting the first few terms of these curve against the actual vector field, we find:
+
+
+#align(center,
+image("firstexamplemanifold.png", width:50%)
+)
+
+Locally, its clear this curve is invariant under the dynamics of the system, and as we move further the approximation fails. This is because, away from the origin, the assumption that the unstable manifold could be represented as a curve parametrized in one variable fails.
+
+#example[
+  More generally, let $
+  dot(x) = x(mu + y), wide dot(y) = -y - x^2,
+  $ for $mu$ near $0$. Repeat the analysis of the system in the previous example (which is just this equation with $mu = 0$). (The algebra is a little more difficult, but doable.)
+]
+
+== Hopf Bifurcations
+
+The Hopf Bifurcation is most readily described by example. #example[
+  Consider the system $
+  dot(x) = mu x - omega y - a x (x^2 + y^2), wide dot(y) = omega x + mu y - a y (x^2 + y^2),
+  $ where $omega, mu, a$ are real parameters.
+]
+
+In polar coordinates, this system becomes $
+dot(r) = mu r - a r^3, wide dot(theta) = omega,
+$ from which we see that there is a unique fixed point at the origin. Here, the Jacobian (in Cartesian coordinates) is $
+J (0,0) = mat(mu, - omega; omega, mu),
+$ so eigenvalues are given by $
+lambda_(plus.minus) = mu plus.minus i omega.
+$ For $omega > 0$ (we'll only consider this case; the case $omega < 0$ is symmetrical, as we are dealing with a conjugate pair of eigenvalues), as $mu$ is varied and crosses zero, we see that the stability of the origin changes but the number of fixed points remains constant. Namely, when $mu > 0$ the origin is unstable, and vice versa.
+
+Returning to polar, we see that $dot(r) = 0$ only if either $r = 0$ or $r = sqrt(mu/a)$. $dot(theta)$ is constant, so this implies that there is a circular orbit of radius $r = sqrt(mu\/a)$ and period $2pi\/omega$, whenever $mu$ and $a$ have the same sign.
+
+For $a < 0$, this periodic orbit is unstable and the origin must be stable, so this is called a _subcritical Hopf_; for $a > 0$, the orbit is stable, the origin is unstable and we have a _supercritical Hopf_; finally, for $a = 0$, the origin is stable for $mu < 0$ and vice versa, and when $mu = 0$, everything is periodic (the phase space consists only of concentric circles).
+
+#table(
+stroke: none, align: center, columns: 3,
+image("hopf1.png"),image("hopf2.png"),image("hopf3.png"),
+"",[A subcritical Hopf bifurcation],""
+)
+// TODO bifurcation diagram.
+
+#theorem("Conditions for a Hopf Bifurcation")[
+  let $dot(x) = f(x, y, mu)$ and $dot(y) = g(x, y, mu)$ with $f(0,0,mu) = 0 = g(0,0,mu)$ for all $mu$, and Jacobian at $(0,0)$ given by $mat(0,-omega; omega,0)$, for some $omega eq.not 0$. Then, if $f_(mu x) + g_(mu y) eq.not 0$ and $a eq.not 0$, where $
+  a := 1/16 (f_(x x x) + g_(x x y) + f_(x y y) + g_(y y y)) + 1/(16 omega) (f_(x y) (f_(x x) + g_(y y)) - g_(x y) (g_(x x) + g_(y y)) - f_(x x) g_(x x) - f_(y y) g_(y y)),
+  $ then a curve of periodic orbits bifurcates from the origin into $mu < 0$ if $a (f_(x mu) + g_(y mu)) > 0$ or into $mu < 0$ if $a (f_(x mu) + g_(y mu)) < 0$.
+
+- The steady state at the origin is stable for $mu > 0$ and unstable for $mu < 0$ if $f_(mu x) + g_(mu y) < 0$, and the opposite for $f_(mu x) + g_(mu y) > 0$. 
+- The periodic orbit is stable/unstable if the origin is unstable/stable.
+- The amplitude of the periodic orbit grows according to $abs(mu)^(1\/2)$, and need not in general be circular. The period converges to $2pi/abs(omega)$ as $abs(mu) -> 0$.
+
+The bifurcation is called supercritical if the periodic orbit is stable, and subcritical if the periodic orbit is unstable.
+]
