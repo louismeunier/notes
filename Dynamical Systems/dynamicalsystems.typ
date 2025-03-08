@@ -306,29 +306,44 @@ In the "Conditions" column, all partial derivatives are evaluated at $(0,0)$. Th
 
 #table(
 stroke: none,
-columns: 4,
+columns: 5,
 row-gutter: (0em, 1em),
-"Name", "Normal Form", [Conditions$""^ast$], "Description",
-table.vline(start: 0, end: 6, x : 1),
-table.hline(start: 0, end: 4),
-"Saddle Node", $dot(u) = mu - u^2$, $f = f_u = 0, f_mu eq.not 0$, "Single s.s. branches into 2",
-"Transcritical", $dot(u) = mu u - u^2$, $f = f_u = f_mu = 0, f_(u u) eq.not 0, f_(u mu)^2 > f_(mu mu) dot f_(u u) $, "2 steady states pass through each other and change stability",
-"Supercritical Pitchfork", $dot(u) = mu u - u^3$, $ f = f_u = f_mu = f_(u u) = 0, f_(u u u ) eq.not 0, f_(mu u) eq.not 0$, "Single stable fixed point becomes unstable and two new stable fixed points are born surrounding it",
-"Subcritical Pitchfork", $dot(u) = -mu u + u^3$, "As above", "Same as above, interchanging stable and unstable"
+"Name", "Normal Form", [Conditions$""^ast$], "Description", "Graphs",
+table.vline(start: 0, end: 7, x : 1),
+table.hline(start: 0, end: 5),
+"Saddle Node", $dot(u) = mu - u^2$, $f = f_u = 0, f_mu eq.not 0$, [Single s.s. branches into 2],  [@fig:saddle],
+"Transcritical", $dot(u) = mu u - u^2$, $f = f_u = f_mu = 0, f_(u u) eq.not 0, f_(u mu)^2 > f_(mu mu) dot f_(u u) $, [2 steady states pass through each other and change stability], [@fig:trans],
+"Supercritical Pitchfork", $dot(u) = mu u - u^3$, $ f = f_u = f_mu = f_(u u) = 0, f_(u u u ) eq.not 0, f_(mu u) eq.not 0$, [Single stable fixed point becomes unstable and two new stable fixed points are born surrounding it], [@fig:pitchfork],
+"Subcritical Pitchfork", $dot(u) = -mu u + u^3$, "As above", "Same as above, interchanging stable and unstable", ""
 )
 
 #remark[
 $""^ast$ The first two conditions, $f = f_u = 0$, which appear in all the cases, are required for a bifurcation ($f = 0$ gives a steady state, $f_u = 0$ means the implicit function theorem doesn't apply). Then, $f_mu eq.not 0$ implies a saddle-node, so the requirement $f_mu = 0$ in the other cases just rule out not being a saddle-node. The other conditions from there are just technical, and arise from the Taylor expansion naturally. 
 ]
 
-#table(
-  columns: 2,
-  stroke: none,
-  [#image("saddlepre.png"),
-  #image("saddlepost.png")],
-  image("sadddlebifurcation.png")
-  // TODO
-)
+#figure(
+ grid(
+  image("saddlenodeflow.png", width: 90%),
+  image("sadddlebifurcation.png", width: 65%)
+),
+   caption: "Vector fields for a saddle node bifurcation (above) and corresponding bifurcation diagram (below)."
+  )<fig:saddle>
+
+
+#figure(
+  grid(
+    image("transcriticalflow.png", width: 80%), 
+    image("transcriticalbifurcation.png", width: 65%)
+  ), caption: "Vector fields for a transcritical bifurcation (above) and corresponding bifurcation diagram (below)."
+  )<fig:trans>
+
+  #figure(
+    grid(
+    image("pitchforkflow.png", width: 80%),
+    image("pitchforkbifurcation.png", width: 80%)
+    ),
+    caption: "Vector fields for a (supercritical) pitchfork bifurcation (above) and corresponding bifurcation diagram (below)."
+  )<fig:pitchfork>
 
 == Bifurcations In $RR^p$
 
@@ -414,7 +429,6 @@ stroke: none, align: center, columns: 3,
 image("hopf1.png"),image("hopf2.png"),image("hopf3.png"),
 "",[A subcritical Hopf bifurcation],""
 )
-// TODO bifurcation diagram.
 
 #theorem("Conditions for a Hopf Bifurcation")[
   let $dot(x) = f(x, y, mu)$ and $dot(y) = g(x, y, mu)$ with $f(0,0,mu) = 0 = g(0,0,mu)$ for all $mu$, and Jacobian at $(0,0)$ given by $mat(0,-omega; omega,0)$, for some $omega eq.not 0$. Then, if $f_(mu x) + g_(mu y) eq.not 0$ and $a eq.not 0$, where $
