@@ -1196,3 +1196,85 @@ x = root(3, (- q + sqrt(p^2 + 4 p^3\/27))/2) + root(3, (- q - sqrt(p^2 + 4 p^3\/
 $ to the cubic equation. One notices that this should give 9 solutions (3 cube roots exists, for each cube root), and in general gives complex numbers. We'll discuss the implications of this to follow.
 
 There is a similar formula for the general quartic equation, involving square, cube, and fourth roots, with a similar method leading to a resolvent cubic. However, attempting the same method for the quintic equation leads to a resolvent sextic equation, which is clearly no help at all. We'll see that this is intimately tied to the symmetries, namely, the symmetry groups, of the roots of the respective polynomials.
+
+== Field Extensions
+
+#definition("Field Extension")[
+  If $E$ and $F$ are fields, we say $E$ is an 
+  extension of $F$ if $F$ is a subfield of $E$.
+]
+
+Note that if $E$ an extension of $F$, then $E$ is also a vector space over $F$ (by "forgetting" the multiplication).
+
+#definition("Degree")[
+  The _degree_ of $E$ over $F$ is the dimension of $E$ as an $F$ vector space, often denoted $[E: F] = dim_F (E)$. We call then $E$ a _finite_ extension of $F$ if $[E:F] < infinity$.
+]
+
+#example[
+  1. Consider $E = CC$ and $F = RR$, then $[E: F] = 2$ (with, for instance, basis ${1, i}$).
+  2. Consider $E = CC$ and $F = QQ$, then $[E : C] = infinity$.
+  3. Let $F$ be any field and let $E = F[x]\/(p(x))$ where $p(x)$ irreducible, hence $E$ is a field itself. $E$ an extension of $F$, since $F$ can be realized as a subfield via the constant polynomials in $E$. Then, $[E : F] = "deg"(p(x))$.
+  4. Let $E = F(x) = "fraction field of" F[x] = {f(x)/g(x) | f, g in F[x], g eq.not 0}$. By similar reasoning to 3., this also an extension of $F$, but now $[E : F] = infinity$ (for instance, ${x^n : n in NN}$ is an infinite, linearly independent subset of $E$).
+]
+
+#theorem("Multiplicativity of Degree")[
+  Given finite extensions $K subset F subset E$, we have $
+  [K : E] = [E : F] dot [F : K].
+  $
+]
+
+#proof[
+  Put $n := [E : F], m:= [F : K]$. Let $alpha_1, dots, alpha_n$ be a basis for $E$ as an $F$-vector space and $beta_1, dots, beta_m$ a basis for $F$ as a $K$-vector space. Now, notice that if $a in E$, then $
+  a = lambda_1 alpha_1 + dots + lambda_n alpha_n,
+  $  for $lambda_i in F$. Then, $lambda_i$ may be viewed as elements of the vector space $F$ over $K$, so we may write $
+  lambda_i = lambda_(i 1) beta_1 + dots.c + lambda_(i m) beta_m,
+  $ for some $lambda_(i j) in K$. Hence, $
+  a &= (lambda_(11) beta_1 + dots.c + lambda_(1 m) beta_m) alpha_1 + (lambda_(2 1) beta_1 + dots + lambda_(2 m) beta_m) alpha_2 + dots.c + (lambda_(n 1) beta_1 + dots.c + lambda_(n m) beta_m)alpha_n \ 
+  &= sum_(1 <= i <= n) sum_(1 <= j <= m) lambda_(i j) alpha_i beta_j.
+  $ Since the representation in each basis ${alpha_i}, {beta_j}$ was unique, it must be that this representation also unique. Thus, ${alpha_i beta_j}_(1 <= i <= n \ 1 <= j <= m)$ is a $K$-basis for $E$, so $dim_(K) (E) = m dot n = dim_(F) (E) dot dim_(K) (F)$.
+]
+
+== Ruler and Compass Constructions
+
+#definition[
+  A complex number is said to be _constructible by ruler and compass_ if it can be obtained from $QQ$ by successive applications of the field operations plus extractions of square roots.
+]
+
+The set of elements constructible by ruler and compass is an extension of $QQ$ of infinite degree. Namely, each extraction of a square root can be abstractly realized as adjoining a square root of an element, say $a$, that doesn't have a rational square root to $QQ$, which forms a field extension $QQ(sqrt(alpha))$. We can repeat this process, adjoining new elements and constructing further extensions.  A number is then solvable by constructible by ruler and compass if it is contained in some field extension of $QQ$ obtained via some finite number of adjoinments of square roots.
+
+#theorem[
+  If $alpha in RR$ is the root of an irreducible cubic polynomial over $QQ$, then $alpha$ is _not_ constructible by ruler and compass.
+]
+
+#proof[
+  Suppose otherwise, that $alpha$ is constructible. Then, there exists fields $QQ subset.eq F_1 subset.eq F_2 subset.eq dots.c subset.eq F_n$ with $[F_(i+1) : F_i] = [F_1 : QQ] = 2$ for each $i$ (namely, $F_(i+1) = F_i (sqrt(a_i))$ for some $a_i$ in $F_(i)$ such that $sqrt(a_i) in.not F_(i)$). Hence, by multiplicativity we know $[F_n : Q] = 2^n$. On the other hand, if $p$ the irreducible (over $QQ$) cubic polynomial for which $alpha$ is a root, $Q(alpha) = QQ[x]\/p(x)$, so $[Q(alpha) : QQ] = 3$.
+
+  So, it must be that $F_n$ an extension of $Q(alpha)$ so $[F_n : Q(alpha)] = d in NN$, but by multiplicativity, $3 d = 2^n$ which is impossible.
+
+  #align(center)[#commutative-diagram(
+  // node((0, 1), $V$),
+  node((0, 2), $F_n$),
+  node((1, 0), $Q(alpha)$),
+  node((2, 1), $QQ$),
+  arr($QQ$, $Q(alpha)$, $3$),
+  arr($QQ$, $F_n$, $2^n$),
+  arr($Q(alpha)$, $F_n$, $d$)
+  // arr($V_j$, $V$, $eta_j$, "inj"),
+  // arr($V$, $V""$, $T$),
+  // arr($V""$, $V_i$, $pi_i$, "surj"),
+  // arr($V_j$, $V_i$, $T_(i j)$),
+  // arr($M_1$, $M_2$, $T$),
+  // arr($R^n$, $M_1$, $phi_B_1$),
+  // arr($R^m$, $M_2$, $phi_B_2$, label-pos: right),
+  // arr($R^n$, $M_1$, $≀$, label-pos: right),
+  // arr($R^m$, $M_2$, $≀$, label-pos: left),
+  // arr($R^n$, $R^m$, $\ \ \ M_(T, B_1, B_2)$, label-pos: "below"),
+  // arr("quot", (0, 1), $tilde(phi)$, label-pos: right, "dashed"),
+  // arr($R$, "quot", $pi$),
+)]
+]
+
+#example[
+  1. $p(x) = x^3 - 2$ has root $alpha = root(3, 2)$ ("duplicating the cube").
+  2. $p(x) = x^3 + 3 x + 1/2$ has root $r = cos ((2 pi )/9)$ ("trisection of the angle").
+]
