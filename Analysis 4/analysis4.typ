@@ -1573,7 +1573,7 @@ The real help of weak convergence is in the ease of achieving weak compactness;
 ]<thm:weakcompactness>
 
 #theorem("Helly's Theorem")[
-Let $X$ a separable normed vector space and ${f_n} subset.eq X^ast$ such that there is a constant $C > 0$ such that $abs(f_n (x)) <= C norm(X)$ for every $x in X$ and $n >= 1$. Then, there exists a subsequence ${f_n_k}$ and an $f in X^ast$ such that $f_n_k (x) -> f(x)$ for every $x in X$.
+Let $X$ a separable normed vector space and ${f_n} subset.eq X^ast$ such that there is a constant $C > 0$ such that $abs(f_n (x)) <= C norm(x)$ for every $x in X$ and $n >= 1$. Then, there exists a subsequence ${f_n_k}$ and an $f in X^ast$ such that $f_n_k (x) -> f(x)$ for every $x in X$.
 ]
 
 #proof[
@@ -1591,3 +1591,142 @@ Let $X$ a separable normed vector space and ${f_n} subset.eq X^ast$ such that th
   &= (x_0, P x) = (x_0, P x + (id -P) x) = (x_0, x),
   $ as we aimed to show.
 ]
+
+== Review of $L^p$ Spaces
+
+We always consider $Omega subset.eq RR^d$.
+
+#definition([$L^p (Omega)$])[
+  For $1 <= p < infinity$, define $
+  L^p (Omega) := {f : Omega -> RR | f "measurable and" integral_Omega abs(f)^p dif x < infinity},
+  $ endowed with the norm $
+  norm(f)_(L^p (Omega)) = norm(f)_p := [integral_Omega abs(f(x))^p dif x]^(1/p).
+  $ For $p = infinity$, define $
+  L^infinity (Omega) = {f : Omega -> RR | f "measurable and" exists C < infinity "s.t." abs(f) <= C "a.e."},
+  $ endowed with the norm $
+  norm(f)_(L^infinity (Omega)) = norm(f)_infinity := inf {C : abs(f) <= C "a.e."}.
+  $
+]
+
+The following are recalled but not proven here, see #link("https://notes.louismeunier.net/Analysis%203/analysis3.pdf#page=47", "here").
+
+#theorem("Holder's Inequality")[For $1 <= p,q <= infinity$ with $1/p + 1/q = 1$, then if $f in L^p (Omega), g in L^q (Omega)$, then $f g in L^(1) (Omega)$, and $
+integral abs(f g) dif x <= norm(f)_p norm(g)_q.
+$]
+#theorem("Minkowski's Inequality")[
+  For all $1 <= p <= infinity$, $norm(f + g)_p <= norm(f)_p + norm(g)_p$. In particular, $L^p (Omega)$ is a normed vector space.
+]
+
+#theorem("Riesz-Fischer Theorem")[
+  $L^p (Omega)$ is a Banach space for every $1 <= p <= infinity$.
+]
+
+#theorem[
+$C_c (RR^d)$, the space of continuous functions with compact support, simple functions, and step functions are all dense subsets of $L^p (RR^d)$, for every $1 <= p < infinity$.
+]
+
+#theorem([Separability of $L^p (Omega)$])[
+  $L^p$ is separable, for every $1 <= p < infinity$.
+]
+#proof[
+  We prove for $Omega = RR^d$. Let $
+  cal(R) := {product_(i=1)^d (a_i, b_i) | a_i, b_i in QQ},
+  $ and let $
+  cal(E) := {"finite linear combinations of" chi_R "for" R in cal(R) "with coefficients in" QQ},
+  $ where $chi_R$ the indicator function of the set $R$. Then, we claim $cal(E)$ dense in $L^p (RR^d)$.
+
+  Given $f in L^p (RR^d)$ and $epsilon > 0$, by density of $C_c (RR^d)$ there is some $f_1$ with $norm(f - f_1)_p < epsilon$. Let $"supp"(f_1) subset.eq R in cal(R)$. Now, let $delta > 0$. Write $
+  R = union_(i=1)^N R_i, wide R_i in cal(R),
+  $ such that $
+  "osc"_(R_i) (f_1) := sup_(R_i) f_1 - inf_(R_i) f_1 < delta.
+  $ Then, let $
+  f_2 (x) = sum_(i=1)^N q_i chi(R_i), wide q_i in QQ "s.t." q_i approx f_1|_(R_i),
+  $ so $
+  norm(f_2 - f_1)_infinity < delta.
+  $ Hence, $
+  norm(f_2 - f_1)_p &<= (integral_(R) abs(f_2 (x) - f_1 (x))^p dif x)^(1/p) \ 
+  &<= abs(f_1 - f_2)_(infinity) dot m(R)^(1/p) < delta dot m(R)^(1/p),
+  $ where $m$ the Lebesgue measure on $RR^d$. $delta$ was arbitrary so we may take it arbitrarily small such that $delta m(R)^(1/p) < epsilon$, hence for such a $delta$, $
+  norm(f - f_2)_p <= norm(f - f_1)_p + norm(f_1 - f_2)_p < 2 epsilon.
+  $ Now, $f_2 in cal(E)$, and thus $cal(E)$ is dense in $L^p (RR^d)$, and countable by construction, thus $L^p (RR^d)$ separable.
+]
+
+#remark[
+  $L^infinity (Omega)$ is _not_ separable, and $C_c (RR^d)$ is _not_ dense in $L^infinity (Omega)$.
+]
+
+#remark("Special Cases")[
+- If $Omega$ has finite measure, $L^p (Omega) subset.eq L^(p') (Omega)$ for every $p <= p'$.
+- $ell^p := {a = (a_n)_(n=1)^infinity | sum_(n=1)^infinity abs(a_n)^p < infinity}$ endowed with the norm $abs(a)_ell^p := (sum_(n=1)^infinity abs(a_n)^p)^(1\/p)$.
+]
+
+== $(L^p)^ast$: The Riesz Representation Theorem
+
+We are interested in functions $T : L^p (Omega) -> RR$ which is bounded and linear. For instance, let $g in L^q (Omega)$ and $f in L^p (Omega)$ where $p, q$ conjugates, and define $
+T (f) := integral_Omega f(x) g(x) dif x.
+$ This is clearly linear, and by Holders, $
+abs(T f) &= abs(integral_(Omega) f g) <= norm(f)_p norm(g)_q.
+$ so $
+abs(T (f/(norm(f)_p))) <= norm(g)_q, thin thin forall f in L^p (Omega), thin thin=> norm(T) <= norm(g)_q,
+$ and thus $T in (L^p (Omega))^ast$. Moreover, if $1 < p < infinity$, $1 < q < infinity$, let $
+f(x) = (abs(g(x))^(q - 2) g(x))/(norm(g)_q^(q-1)).
+$ Then, $
+integral_Omega abs(f(x))^p dif x &= 1/(norm(g)_q^((q - 1) p)) integral_(Omega) abs(g(x))^((q - 2) p) abs(g(x))^p dif x \ 
+&= 1/(norm(g)_q^((q - 1) p)) integral_(Omega) abs(g(x))^(q p - p) dif x.
+$ Since $1/p + 1/q = 1$, we have $q + p = p q$, so further $
+&= 1/(norm(g)_q^q) integral_(Omega) abs(g(x))^(q) dif x = 1/(norm(g)_q^q)  dot norm(g)_q^(q) = 1,
+$ so $f$ as defined indeed in $L^p (Omega)$ and moreover has $L^p$-norm of 1. In addition, $
+abs(T f) &= 1/(norm(g)_q^(q - 1)) integral_(Omega) abs(g (x)^(q - 2)) g(x) g(x) dif x \ 
+&=1/(norm(g)_q^(q - 1)) integral_(Omega) abs(g(x))^q dif x \ 
+&=1/(norm(g)_q^(q - 1)) norm(g)_q^(q) = norm(g)_q,
+$ so $norm(T) = norm(g)_q$ as desired. We have, more generally, akin to the Riesz representation theorem,
+
+
+#theorem([Riesz-Representation Theorem for $L^p (Omega)$])[
+  Let $1 <= p < infinity$. For any $T in (L^p (Omega))^ast$, there exists a unique $g in L^q (Omega)$ such that $T(f) = integral_(Omega) f(x) g(x) dif x$ with $norm(T) = norm(g)_q$.
+]<thm:rieszforlp>
+
+We'll only prove for $Omega subset.eq RR$. First: 
+#proposition[
+  Let $T, S in (L^p (Omega))^ast$. If $T = S$ on a dense subset $E subset.eq L^p (Omega)$, then $T = S$ everywhere.
+]
+
+#proof[
+  Let $f_0 in L^p (Omega)$. By density, there exists ${f_n} subset.eq E$ such that $f_n -> f$ in $L^p (Omega)$. By continuity, $T f_n -> T f_0$ and $S f_n -> S f_0$, while $T f_n = S f_n$ for every $n >= 1$, so by uniqueness of limits in $RR$, $T f_0 = S f_0$.
+]
+
+The general outline of the proof of @thm:rieszforlp is the following: 
+- prove the theorem for $f$ a step function;
+- prove the theorem for $f$ bounded and measurable;
+- conclude the full theorem by appealing to the previous proposition.
+To do this, we need first to recall the notion of _absolutely continuous functions_. Fix $[a, b] subset.eq R$ and $G : [a, b] -> RR$. $G$ is said to be absolutely continuous on $[a, b]$ if for every $epsilon > 0$ there exists a $delta > 0$ such that for every disjoint collection ${(a_k, b_k)}_(k=1)^N subset.eq [a, b]$ with $sum_(k=1)^N (a_k - b_k) < delta$, then $sum_(k=1)^N abs(G(b_k) - G(a_k)) < epsilon$.  In particular, we need the following result, proven #link("https://notes.louismeunier.net/Analysis%203/analysis3.pdf?page=79", "here"):
+
+#theorem[If $G : [a, b] -> RR$ is absolutely continuous, then $g = G'$ exists a.e. on $[a, b]$, $g in L^1 ([a, b])$, and for every $x in [a, b]$, $
+G(x) - G(a) = integral_(a)^x g(t) dif t.
+$]
+
+#proof([(Of @thm:rieszforlp with $Omega = [a, b]$)])[
+  Let $T in (L^p ([a, b]))^ast$.
+
+  _Step 1:_ Let $f$ a step function. The function $chi_[a, x) in L^p ([a, b])$; define $
+  G_T (x) := T(chi_([a, x)).
+  $ We claim $G_T$ absolutely continuous. Consider ${(a_k, b_k)}_(k=1)^N$ disjoint. Then, for every $[c, d] subset.eq [a, b],$ $
+  G_T (d) - G_T (c) = T(chi_([a, d))) - T(chi_([a, c])) = T(chi_([a, d)) - chi_([a, c))) = T(chi_[c, d)),
+  $ so $
+  sum_(k=1)^N (G_T (b_k) - G_T (a_k)) &= sum_(k=1)^N c_k dot (G_T (b_k) - G_T (a_k)), wide c_k := "sgn"(G_T (b_k) - G_T (a_k)) \ 
+  &= sum_(k=1)^N c_k dot T(chi_[a_k, b_k)) \ 
+  &= T(sum_(k=1)^N c_k chi_([a_k, b_k))) \ 
+  & <= norm(T) norm(sum_(k=1)^N c_k chi_([a_k, b_k)))_p.
+  $ By the disjointedness of the intervals, we may write $
+  integral_(a)^b abs(sum_(k=1)^N c_k chi_([a_k, b_k)))^p dif x <= sum_(k=1)^N integral_(a_k)^b_k dif x = sum_(k=1)^N (b_k - a_k).
+  $ So, $norm(sum_(k=1)^N c_k chi_([a_k, b_k)))_p = (sum_(k=1)^N (b_k - a_k))^(1/p)$, thus $
+  sum_(k=1)^N abs(G_T (b_k) - G_T (a_k)) <= norm(T) dot (sum_(k=1)^N (b_k - a_k))^(1/p).
+  $ Hence, for $epsilon > 0$, letting $delta = (epsilon/norm(T))^p$ proves absolute continuity of $G_T$. Thus, $g = G'_T$ exists and is such that $g in L^1 ([a, b])$ and $
+  G_T (x) = integral_(a)^x g(t) dif t, thin forall x in [a, b].
+  $ Hence, $
+  T(chi_([1, d))) = G_T (d) - G_T (c) &= integral_(a)^d g(t) dif t - integral_(a)^c g(t) dif t \ 
+  &= integral_(c)^d g(t) dif t  \
+  &= integral_(a)^b g(t) dot chi_([c, d)) (t) dif t.
+  $ This proves the theorem for indicator functions; by linearity of $T$ and linearity of the integral, we can repeat this procedure to find a function $g$ such that $T f = integral_(a)^b f(t) g(t) dif t$ for every step function $f$.
+]
+

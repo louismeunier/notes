@@ -1247,18 +1247,18 @@ The set of elements constructible by ruler and compass is an extension of $QQ$ o
 ]
 
 #proof[
-  Suppose otherwise, that $alpha$ is constructible. Then, there exists fields $QQ subset.eq F_1 subset.eq F_2 subset.eq dots.c subset.eq F_n$ with $[F_(i+1) : F_i] = [F_1 : QQ] = 2$ for each $i$ (namely, $F_(i+1) = F_i (sqrt(a_i))$ for some $a_i$ in $F_(i)$ such that $sqrt(a_i) in.not F_(i)$). Hence, by multiplicativity we know $[F_n : Q] = 2^n$. On the other hand, if $p$ the irreducible (over $QQ$) cubic polynomial for which $alpha$ is a root, $Q(alpha) = QQ[x]\/p(x)$, so $[Q(alpha) : QQ] = 3$.
+  Suppose otherwise, that $alpha$ is constructible. Then, there exists fields $QQ subset.eq F_1 subset.eq F_2 subset.eq dots.c subset.eq F_n$ with $[F_(i+1) : F_i] = [F_1 : QQ] = 2$ for each $i$ (namely, $F_(i+1) = F_i (sqrt(a_i))$ for some $a_i$ in $F_(i)$ such that $sqrt(a_i) in.not F_(i)$). Hence, by multiplicativity we know $[F_n : QQ] = 2^n$. On the other hand, if $p$ the irreducible (over $QQ$) cubic polynomial for which $alpha$ is a root, $QQ(alpha) = QQ[x]\/p(x)$, so $[QQ(alpha) : QQ] = 3$.
 
-  So, it must be that $F_n$ an extension of $Q(alpha)$ so $[F_n : Q(alpha)] = d in NN$, but by multiplicativity, $3 d = 2^n$ which is impossible.
+  So, it must be that $F_n$ an extension of $Q(alpha)$ so $[F_n : QQ(alpha)] = d in NN$, but by multiplicativity, $3 d = 2^n$ which is impossible.
 
   #align(center)[#commutative-diagram(
   // node((0, 1), $V$),
   node((0, 2), $F_n$),
-  node((1, 0), $Q(alpha)$),
+  node((1, 0), $QQ(alpha)$),
   node((2, 1), $QQ$),
-  arr($QQ$, $Q(alpha)$, $3$),
+  arr($QQ$, $QQ(alpha)$, $3$),
   arr($QQ$, $F_n$, $2^n$),
-  arr($Q(alpha)$, $F_n$, $d$)
+  arr($QQ(alpha)$, $F_n$, $d$)
   // arr($V_j$, $V$, $eta_j$, "inj"),
   // arr($V$, $V""$, $T$),
   // arr($V""$, $V_i$, $pi_i$, "surj"),

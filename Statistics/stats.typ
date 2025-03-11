@@ -987,3 +987,78 @@ Note that an unbiased estimator of a parameter of interest may not even exist. F
 // #theorem[
 //   An estimator $U(bold(X))$ of $tau(theta) = EE_theta [U(bold(X))]$
 // ]
+
+
+#theorem[
+  An estimator $U(bold(X))$ of $tau(theta) = EE_theta [U(bold(X))]$ is the best unbiased estimaor iff $U(bold(X))$ is uncorellated with all unbiased estimators of zero, i.e. $
+  Cov_theta (U(bold(X)), delta(bold(X))) = EE_theta [U(bold(X)) delta(bold(X))] = 0
+  $ for every $delta(bold(X))$ such that $EE_theta [delta(bold(X))] = 0$.
+]
+
+#proof[
+  (Necessity) Let $U(bold(X))$ be a UMVUE of $tau(theta)$ and $delta(bold(X))$ any unbiased estimator of zero. Then $U^ast (bold(X)) = U(bold(X)) + a delta(bold(X))$ for some nonzero $a in RR$ is also an unbiased estimator $tau(theta)$; $
+  EE_theta [U^ast (bold(X))] = EE_theta [U(bold(X))] + a EE_theta [delta(bold(X))] = EE_theta [U(bold(X))] = tau(theta).
+  $ Now, $
+  Var_theta [U^ast (bold(X))] = Var_theta [U(bold(X))] + a^2 Var_theta [delta(bold(X))] + 2 a Cov_theta [U(bold(X)), delta(bold(X))].
+  $ If this covariance term is non-zero, then we may choose some $a$ such that $
+ a^2 Var_theta [delta(bold(X))] + 2 a Cov_theta [U(bold(X)), delta(bold(X))] < 0
+  $ so $
+  a in cases(
+    (0, - 2 ("Cov"_theta (U(bold(X)), delta(bold(X))))/(Var_theta (delta(bold(X))))),
+    (- 2 ("Cov"_theta (U(bold(X)), delta(bold(X))))/(Var_theta (delta(bold(X)))), 0)
+  ),
+  $ which ever makes sense. Hence, $
+  Var_theta [U^ast (bold(X))] < Var_theta (U(bold(X))),
+  $ a contradiction to the minimality of the variance of $U(bold(X))$ hence the covariance term must be zero.
+
+  (Sufficiency) Suppose that $EE_theta [U(bold(X)), delta(bold(X))] = 0$ for every $theta$. Let $U' (bold(X))$ be any arbitrary unbiased estimator, then since $U' (bold(X)) = U(bold(X)) + (U'(bold(X)) - U(bold(X)))$, then since $(U'(bold(X)) - U(bold(X)))$ an unbiased estimator of zero, we find $
+  Var_theta [U'(bold(X))] &= Var_theta [U(bold(X))]  + Var_theta [(U'(bold(X)) - U(bold(X)))] + underbrace(2 Cov_theta [U(bold(X)), U'(bold(X)) - U(bold(X))], = 0 "by assumption") \ 
+  & >= Var_theta [U (bold(X))],
+  $ for every $theta$.
+]
+
+#remark[
+  This theorem can be used to investigate the existence of a UMVUE of $tau(theta)$, or to determine that an estimator is _not_ a UMVUE.
+]
+
+#example[
+  Let $X tilde "unif"(theta - 1/2, theta + 1/2)$ for $theta in RR$. Let $delta(X)$ be an unbiased estimator of zero. Then, $
+  0 &= EE_theta [delta(X)] = integral_(theta - 1/2)^(theta + 1/2) delta(x) dif x, wide forall theta in RR.
+  $ Hence, it must be that $delta(theta + 1/2) - delta(theta - 1/2) = 0$ (taking the derivative of the above with respect to $theta$) or moreover $delta(x) = delta(x + 1)$ for every $x in RR$. Letting now $U(X)$ be a UVMUE of $tau(theta)$, then by the previous theorem it must be that $Cov_theta (U(X), delta(X)) = 0$ for any $theta in RR$, i.e. $
+  0 &= EE_theta [U(X) delta(X)].
+  $ Hence, $U(X) delta(X)$ also an unbiased estimator of zero so also has the property that $U(x) delta(x)  = U(x + 1) delta(x + 1).$ $delta$ also unbiased for zero so $delta(x) = delta(x + 1)$, so it must be that $
+  U(x) = U(x + 1), wide forall x in RR.
+  $ But also, $U(X)$ is unbiased for $tau(theta)$, so $
+  EE_theta [U(X)] = integral_(theta - 1/2)^(theta + 1/2) U(x) dif x = tau(theta) => tau'(theta) = U(theta + 1/2) - U(theta - 1/2).
+  $ But since $U(theta + 1/2) = U(theta - 1/2)$ by the remarks above, it follows that $tau'(theta) = 0$ so $tau(theta)$ is a constant, for some $c in RR$. We conclude, thus, that there is no UMVUE for any non-constant function $tau(theta)$.
+]
+
+= Parameter Estimation
+
+== Method of Moments
+
+Let $X_1, dots, X_n tilde^"iid" f_theta$ with $theta = (theta_1, dots, theta_d) in Theta subset.eq RR^d$ such that $EE_theta [|X_i|^d] < infinity$. Let $mu_j (theta) = EE_theta [X_1^j]$ for $j = 1, dots, d$, the non-central moments. Also define $
+m_j (bold(X)) := 1/n sum_(i=1)^n X_i^j,
+$ the _non-central sample moments_. Note that $EE_theta [m_j (bold(X))] = mu_j (theta)$ and by the iid assumption, WLLN implies $m_j (bold(X)) ->^"P" mu_j (theta)$.
+
+Typically, $mu_j (theta) = h_j (theta_1, dots, theta_d)$ for some real-valued function $h_j (dot)$ for each $j = 1, dots, d$. The Method of Moments (MM) gives estimates of $theta_1, dots, theta_d$ by solving the following system of equations: $
+m_j (bold(X)) = mu_j (theta) = h_j (theta_1, dots, theta_d), wide j = 1, dots, d,
+$ and solving for each $theta_j$ as a function of the data. In general, this yields $
+hat(theta)_j (bold(X)) = g_j (m_1 (bold(X)), dots, m_d (bold(X))), wide j = 1, dots, d.
+$ These $hat(theta)_1, dots, hat(theta)_d$ are then the MM estimators of $theta_1, dots, theta_d$.
+
+#example[
+  1. Let $X_i tilde^"iid" "Ber"(theta)$. Then $mu_1 (theta) = theta$ and $m_1 (bold(X)) = 1/n sum_(i=1)^n X_i$. Setting $mu_1 = m_1$ gives that $hat(theta)_n = overline(X)_n$.
+  2. Let $X_i tilde^"iid" cal(N)(mu, sigma^2)$ with $theta = (mu, sigma^2)$. Then, $
+  cases(m_1 (bold(X)) = overline(X)_n, m_2 (bold(X)) = 1/n sum_(i=1)^n X_i^2), wide cases(
+    mu_1 (theta) = mu, mu_2 (theta) = sigma^2 + mu^2
+  )
+$ which gives a system of equations $
+  cases(
+overline(X)_n = mu,
+1/n sum_(i=1)^n X_i^2 = sigma^2 + mu^2
+  ).
+$ This yields $
+hat(mu)_n =  overline(X)_n, wide hat(sigma)_n^2 = 1/n sum_(i=1)^n X_i^2 - overline(X)_n^2 = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2.
+$
+]
