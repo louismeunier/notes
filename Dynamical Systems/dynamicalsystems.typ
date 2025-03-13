@@ -441,3 +441,23 @@ image("hopf1.png"),image("hopf2.png"),image("hopf3.png"),
 
 The bifurcation is called supercritical if the periodic orbit is stable, and subcritical if the periodic orbit is unstable.
 ]
+
+== Takens-Bogdonov Bifurcation
+
+In the previous examples, we've dealt with bifurcations that have a single parameter being varied. While this can lead to a wide range of dynamic changes in the system, there are certain dynamics and in particular certain bifurcations that are only possible if we allow multiple parameters to vary.
+
+Consider the system $
+dot(x) = y, wide dot(y) = mu_1 + mu_2 y + x^2 + x y.
+$ This has 
+- 0 steady states if $mu_1 > 0$;
+- 1 steady state at the origin $(0,0)$ if $mu_1 = 0$;
+- 2 steady states at $(plus.minus sqrt(-mu_1), 0)$ if $mu_1 < 0$,
+
+which implies a fold bifurcation occurs when $mu_1$ changes sign.
+
+We consider now different cases of $mu_1$.
+
+*[$mu_1 > 0$]*: here, we find 
+- $y > 0=>dot(x) > 0$;
+- $y < 0 => dot(x) < 0$;
+- $y = 0 => dot(x) = 0$ and $dot(y) > 0$, from which we may conclude there are not only no steady states, but also no periodic orbits.

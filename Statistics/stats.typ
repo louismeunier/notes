@@ -1000,15 +1000,15 @@ Note that an unbiased estimator of a parameter of interest may not even exist. F
   EE_theta [U^ast (bold(X))] = EE_theta [U(bold(X))] + a EE_theta [delta(bold(X))] = EE_theta [U(bold(X))] = tau(theta).
   $ Now, $
   Var_theta [U^ast (bold(X))] = Var_theta [U(bold(X))] + a^2 Var_theta [delta(bold(X))] + 2 a Cov_theta [U(bold(X)), delta(bold(X))].
-  $ If this covariance term is non-zero, then we may choose some $a$ such that $
- a^2 Var_theta [delta(bold(X))] + 2 a Cov_theta [U(bold(X)), delta(bold(X))] < 0
-  $ so $
+  $ If this covariance term is non-zero for some $theta_0$, then we may choose some $a$ such that $
+ a^2 Var_theta_0 [delta(bold(X))] + 2 a Cov_theta_0 [U(bold(X)), delta(bold(X))] < 0
+  $ i.e. $
   a in cases(
-    (0, - 2 ("Cov"_theta (U(bold(X)), delta(bold(X))))/(Var_theta (delta(bold(X))))),
-    (- 2 ("Cov"_theta (U(bold(X)), delta(bold(X))))/(Var_theta (delta(bold(X)))), 0)
+    (0, - 2 ("Cov"_theta_0 (U(bold(X)), delta(bold(X))))/(Var_theta_0 (delta(bold(X))))),
+    (- 2 ("Cov"_theta_0 (U(bold(X)), delta(bold(X))))/(Var_theta_0 (delta(bold(X)))), 0)
   ),
   $ which ever makes sense. Hence, $
-  Var_theta [U^ast (bold(X))] < Var_theta (U(bold(X))),
+  Var_theta_0 [U^ast (bold(X))] < Var_theta_0 (U(bold(X))),
   $ a contradiction to the minimality of the variance of $U(bold(X))$ hence the covariance term must be zero.
 
   (Sufficiency) Suppose that $EE_theta [U(bold(X)), delta(bold(X))] = 0$ for every $theta$. Let $U' (bold(X))$ be any arbitrary unbiased estimator, then since $U' (bold(X)) = U(bold(X)) + (U'(bold(X)) - U(bold(X)))$, then since $(U'(bold(X)) - U(bold(X)))$ an unbiased estimator of zero, we find $
@@ -1033,11 +1033,13 @@ Note that an unbiased estimator of a parameter of interest may not even exist. F
   $ But since $U(theta + 1/2) = U(theta - 1/2)$ by the remarks above, it follows that $tau'(theta) = 0$ so $tau(theta)$ is a constant, for some $c in RR$. We conclude, thus, that there is no UMVUE for any non-constant function $tau(theta)$.
 ]
 
-= Parameter Estimation
+= System Parameter Estimation
+
+This chapter is devoted to systematic manners of deriving estimators for particular statistical models.
 
 == Method of Moments
 
-Let $X_1, dots, X_n tilde^"iid" f_theta$ with $theta = (theta_1, dots, theta_d) in Theta subset.eq RR^d$ such that $EE_theta [|X_i|^d] < infinity$. Let $mu_j (theta) = EE_theta [X_1^j]$ for $j = 1, dots, d$, the non-central moments. Also define $
+Let $X_1, dots, X_n tilde^"iid" f_theta$ with $theta = (theta_1, dots, theta_d) in Theta subset.eq RR^d$ such that $EE_theta [ |X_i|^d] < infinity$. Let $mu_j (theta) = EE_theta [X_1^j]$ for $j = 1, dots, d$, the non-central moments. Also define $
 m_j (bold(X)) := 1/n sum_(i=1)^n X_i^j,
 $ the _non-central sample moments_. Note that $EE_theta [m_j (bold(X))] = mu_j (theta)$ and by the iid assumption, WLLN implies $m_j (bold(X)) ->^"P" mu_j (theta)$.
 
@@ -1045,11 +1047,14 @@ Typically, $mu_j (theta) = h_j (theta_1, dots, theta_d)$ for some real-valued fu
 m_j (bold(X)) = mu_j (theta) = h_j (theta_1, dots, theta_d), wide j = 1, dots, d,
 $ and solving for each $theta_j$ as a function of the data. In general, this yields $
 hat(theta)_j (bold(X)) = g_j (m_1 (bold(X)), dots, m_d (bold(X))), wide j = 1, dots, d.
-$ These $hat(theta)_1, dots, hat(theta)_d$ are then the MM estimators of $theta_1, dots, theta_d$.
+$ These $hat(theta)_1, dots, hat(theta)_d$ are the so-called _MM estimators_ of $theta_1, dots, theta_d$. In general, these may 1) have no solutions, 2) have a unique solution, 3) have multiple solutions.
 
 #example[
-  1. Let $X_i tilde^"iid" "Ber"(theta)$. Then $mu_1 (theta) = theta$ and $m_1 (bold(X)) = 1/n sum_(i=1)^n X_i$. Setting $mu_1 = m_1$ gives that $hat(theta)_n = overline(X)_n$.
-  2. Let $X_i tilde^"iid" cal(N)(mu, sigma^2)$ with $theta = (mu, sigma^2)$. Then, $
+  Let $X_i tilde^"iid" "Ber"(theta)$. Then $mu_1 (theta) = theta$ and $m_1 (bold(X)) = 1/n sum_(i=1)^n X_i$. Setting $mu_1 = m_1$ gives that $hat(theta)_n = overline(X)_n$.
+]
+
+#example[
+  Let $X_i tilde^"iid" cal(N)(mu, sigma^2)$ with $theta = (mu, sigma^2)$. Then, $
   cases(m_1 (bold(X)) = overline(X)_n, m_2 (bold(X)) = 1/n sum_(i=1)^n X_i^2), wide cases(
     mu_1 (theta) = mu, mu_2 (theta) = sigma^2 + mu^2
   )
@@ -1062,3 +1067,69 @@ $ This yields $
 hat(mu)_n =  overline(X)_n, wide hat(sigma)_n^2 = 1/n sum_(i=1)^n X_i^2 - overline(X)_n^2 = 1/n sum_(i=1)^n (X_i - overline(X)_n)^2.
 $
 ]
+
+#example[
+Let $X_i tilde^"iid" cal(U)(-theta, theta)$. Then, $EE_theta [X_i] = 0$, so we need to move onto to the second moment. We have $EE_theta [X_i^2] = Var_theta [X_i] = theta^2/3$. $m_2 (bold(X)) = 1/n sum_(i=1)^n X_i^2$, so we have system of equations $
+1/n sum_(i=1)^n X_i^2 = hat(theta_n)^2/3,
+$ which has solution $
+hat(theta)_n = sqrt(3/n sum_(i=1)^n X_i^2).
+$ Note that we have positive and negative roots, but ignore the negative one since $theta > 0$.
+]
+
+#example[
+  Let $X_i tilde^"iid" "Geo"(p)$, so $f(x; p) = p (1 - p)^(x-1)$ with $x = 1, 2, dots$. Then, $EE_p [X_i] = 1/p$ and $m_1 (bold(X)) = overline(X)_n$, so $
+  hat(p)_n = 1/(overline(X)_n).
+  $ #text(fill: red, "It it an unbiased estimator?")
+
+  $EE[1/overline(X)_n] = sum_(x_1=1) dots sum_(x_n = 1) 1/(1/n sum_(i=1)^n x_i) p^n (1 - p)^(x_1 + dots.c + x_n - n)$.
+
+  Suppose now $n = 1$ so $X tilde "Geo"(p)$. Assume $T(X)$ is an unbiased estimator of $p$. Then, $
+  p &= sum_(x=1)^infinity T(x) f(x; p) = sum_(x=1)^infinity T(x) p (1 - p)^(x - 1)
+  $ so it must be $T(1) = 1, T(x) = 0$ for $x >= 2$, since these are two polynomials in $p$. This is an "unreasonable" estimator.
+]
+
+== Maximum Likelihood Estimation (MLE)
+
+Let $bold(X) = (X_1,dots, X_n)^t$ have a joint pdf/pmf $p_theta (bold(x))$ for $theta in Theta subset.eq RR^d$ and $bold(x) in Chi subset.eq RR^n$.
+
+#definition("Likelihood Function")[
+  Having observed (post-experimental data) $bold(x) = (x_1, dots, x_n) in Chi$, the _likelihood function_ $
+  L_n : Theta -> [0, infinity),
+  $ is given by $
+  L_n (theta; bold(x)) = L_n (theta) := p_theta  (bold(x)).
+  $ Note that $bold(x)$ is fixed in this definition; $L_n$ a function of $theta$.
+
+  The _log-likelihood_ is then defined $ell_n (theta) := log (L_n (theta))$.
+]
+
+#remark[
+  If $X_1, dots, X_n tilde^"iid" f_theta$, then $
+  L_n (theta) = product_(i=1)^n f(x_i; theta),
+  $ so $
+  ell_n (theta) = sum_(i=1)^n log(f(x_i; theta)).
+  $
+]
+
+#remark[
+  Some texts write $L_n (theta) = c dot p_theta (bold(x))$ for some constant $c > 0$, a proportionality constant. It is not a pdf; $theta$ varies, and $bold(x)$ is fixed.
+]
+
+#remark[
+  If $T(bold(X))$ a sufficient statistic for $theta$, it contains all the necessary information needed to compute the likelihood function (by the factorization theorem).
+]
+
+#remark[
+  The _likelihood principle_ states "in light of the data $bold(x)$, the likelihood contains all the information in the data about $theta$". In addition, two likelihood functions contain the same information about $theta$ if they are proportional to each other.
+]
+
+#example[
+  Consider the following two experiments; Exp. 1: a coin was tossed 20 times and 8 heads observed. Let $X_i tilde^"iid" "Ber"(theta)$ for $i = 1, dots, 20$ and $Y = sum_(i=1)^20 X_i tilde "Bin"(20, theta)$. Then $
+  L_1 (theta) = P(Y = 8) = binom(20, 8) theta^8 (1 - theta)^12 prop theta^8 (1 - theta)^12.
+  $
+  In Exp. 2., we toss 20 coins until 8 heads are observed. So, this is a negative binomial distribution, and we find $
+  L_2 (theta) = binom(19, 7) theta^7 (1 - theta)^12 prop theta^8 (1 - theta)^12,
+  $ so $L_1 (theta), L_2 (theta)$ are both proportional to $theta^8 (1 - theta)^12$.
+
+From a a "maximum likelihood estimation point of view", both likelihoods contains the same information about $theta$.
+]
+
