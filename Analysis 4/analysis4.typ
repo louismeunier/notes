@@ -1710,7 +1710,7 @@ $]
 
   _Step 1:_ Let $f$ a step function. The function $chi_[a, x) in L^p ([a, b])$; define $
   G_T (x) := T(chi_([a, x)).
-  $ We claim $G_T$ absolutely continuous. Consider ${(a_k, b_k)}_(k=1)^N$ disjoint. Then, for every $[c, d] subset.eq [a, b],$ $
+  $ We claim $G_T$ absolutely continuous. Consider ${(a_k, b_k)}_(k=1)^N$ disjoint. Then, for every $[c, d] subset.eq [a, b],$ $,
   G_T (d) - G_T (c) = T(chi_([a, d))) - T(chi_([a, c])) = T(chi_([a, d)) - chi_([a, c))) = T(chi_[c, d)),
   $ so $
   sum_(k=1)^N (G_T (b_k) - G_T (a_k)) &= sum_(k=1)^N c_k dot (G_T (b_k) - G_T (a_k)), wide c_k := "sgn"(G_T (b_k) - G_T (a_k)) \ 
@@ -1728,5 +1728,94 @@ $]
   &= integral_(c)^d g(t) dif t  \
   &= integral_(a)^b g(t) dot chi_([c, d)) (t) dif t.
   $ This proves the theorem for indicator functions; by linearity of $T$ and linearity of the integral, we can repeat this procedure to find a function $g$ such that $T f = integral_(a)^b f(t) g(t) dif t$ for every step function $f$.
+
+_Step 2:_ Let $f$ bounded and measurable. We know that for every step function $psi$, $T psi = integral_(a)^b psi(t) g(t) dif t$ (with the $g$ as "found" in step 1). So, $
+abs(T f - integral_(a)^b psi(t) g(t)) &= abs(T (f - psi) - integral_(a)^b (f(t) - psi(t))g(t) dif t) \ 
+&<= norm(T) norm(f - psi)_(p) + integral_(a)^b abs(f(t) - psi(t)) abs(g(t)) dif t.
+$ Then, since $g in L^1 ([a, b])$, for every $epsilon > 0$ there is some $delta > 0$ such that if $E$ a set of measure less than $delta$, $integral_(E) abs(g(t)) dif t < epsilon$. Fix $epsilon > 0$ and $delta > 0$ such that this holds; let $delta < epsilon$ if necessary wlog. Since $f$ bounded and measurable, there is some step function $psi$ such that $abs(f - psi) < delta$ on $E subset.eq [a, b]$, and that $m(E^c) < delta$ and $abs(psi) <= norm(f)_infinity$. Hence, $
+norm(f - psi)_p^p &= integral_(E) abs(f - psi)^p + integral_(E^c) abs(f - psi)^p \ 
+&<= delta^p dot m(E) + (2 norm(f)_infinity)^p m(E^c) \ 
+&<= delta^p |b - a| + (2 norm(f)_infinity)^p delta.
+$ Also, $
+integral_(a)^b abs(f - psi) abs(g) dif t &<= integral_(E) delta dot abs(g) dif t + integral_(E^c) 2 norm(f)_infinity abs(g) dif t \ 
+&<= delta norm(g)_1 + 2 norm(f)_infinity epsilon.
+$ All together then, $
+abs(T f - integral_(a)^b f(t) g(t) dif t) &<= norm(T) (delta^p |b - a| + (2 norm(f)_infinity)^p delta)^(1/p) + delta norm(g)_1 + 2 norm(f)_infinity epsilon \ 
+& < C(norm(f)_infinity, norm(g)_1, a, b, norm(T)) dot epsilon^(1/p),
+$ where $C$ a constant. The LHS does not depend on $epsilon$, hence taking the limit $epsilon -> 0^+$, we conclude $
+T f = integral_a^b f(t) g(t) dif t.
+$ Note that all simple functions are bounded and measurable, so the necessary property also holds for $f$ simple. 
+
+ We need now to show $g in L^q ([a, b])$ and $norm(g) = norm(T)$.
+
+- Case 1: $p > 1$ so $q < infinity$. Let $g_n := cases(
+g & "if" abs(g) <= n,
+0 & "o.w."
+)$ and $f_n := cases(
+  abs(g)^(q - 1) "sgn"(g) & "if" abs(g) <= n,
+  0 & "o.w."
+)$. Then, $
+norm(g_n)_q^q &= integral_({abs(g) <= n}) abs(g)^q dif t \ 
+&= integral_({abs(g) <= n}) f_n dot g_n dif t \ 
+&= integral_({abs(g) <= n}) f_n g dif t \ 
+&= T f_n <= norm(T) norm(f_n)_p,
+$ since $f_n$ bounded and measurable so Step 2 applies. Also, $
+norm(f_n)_p^p &= integral_({abs(g) <= n}) abs(g)^((q - 1)p) dif t \ 
+&= integral_({abs(g) <= n}) abs(g)^q dif t = norm(g_n)_q^q.
+$ All together then, $
+norm(g_n)_q^q <= norm(T) norm(g_n)_q^(q\/p) => norm(g_n)_q^(q(1 - 1/p)) = norm(g_n)_q <= norm(T).
+$ By construction, $abs(g_n)^q -> abs(g)^q$ a.e. and monotonely, so by the monotone convergence theorem, $
+norm(g_n)_q -> norm(g)_q,
+$ so $norm(g)_q <= norm(T)$ and so $g in L^q ([a, b])$. From here, as in the example at the beginning of this section, one can show equality by chosing $f$ appropriately.
+
+- Case 2: $p = 1$ so $q = infinity$. We claim that $norm(g)_infinity = sup_(norm(f)_1 = 1,\ f "bdd") integral f g$. Let $epsilon > 0 $ and $A subset.eq [a, b]$ such that $abs(g) >= norm(g)_infinity - epsilon$ on $A$ where $m(A) > 0$. Let $
+f(x) = chi_A/m(A) "sgn"(g).
+$ Then, $f$ bounded and $norm(f)_1 = 1$. So, $
+integral f g = 1/m(A) integral_(A) abs(g) >= 1/m(A) integral_A (norm(g)_infinity - epsilon) = norm(g)_infinity - epsilon,
+$ hence we have proven $<=$ of our claim. By Holder, $
+sup_(norm(f) = 1) integral f g <= norm(f)_1 norm(g)_infinity = norm(g)_infinity,
+$ so $>=$ holds and the claim is proven. Thus, $
+norm(g)_infinity = sup_(norm(f) = 1 ,\ f "bdd") T f <= norm(T) norm(f)_1 = norm(T),
+$ so in particular $g in L^infinity ([a, b])$. For the other inequality, $
+abs(T f) = abs(integral f g dif t) <= norm(f)_1 norm(g)_infinity,
+$ hence $
+norm(T) <= norm(g)_infinity
+$ so $norm(g)_infinity = norm(T)$ as we aimed to show.
+
+
+_Step 3:_ We need to show $T f = integral_a^b f g dif t$ for every $f in L^p ([a, b])$. Simple functions are dense in $L^p ([a, b])$, and since $T f = integral_(a)^b f g dif t$ for every simple function $f$, we conclude $T f  = integral_(a)^b f g dif t$ for every $f in L^p ([a, b])$ by the previous density lemma.
+
+Moreover, $g$ is unique because if $
+integral_(a)^b f g = integral_(a)^b f g',
+$ then $
+integral_(a)^b f (g - g') = 0,
+$ for every $f in L^p$. Let $f(t) in "sgn"(g - g')$, then $
+0 = integral_(a)^b abs(g - g') dif t => g = g' "a.e.".
+$ So, $g$ uniquely defined up to a set of measure 0 so $g = g'$ in $L^q$.
 ]
 
+#proof(([(Of RRT if $omega = RR$)]))[
+  Fix $T in (L^p (RR))^ast$. Then, $T|_([-N, N]) in (L^p ([-N, N]))^ast$ for every $N >= 1$, and $norm(T|_([-N,N])) <= norm(T)$. Then, by RRT on $[-N, N]$, there is a $g_N in L^q ([-N, N])$ such that $T f = integral_(-N)^N f g_N dif t$. By uniqueness, $g_(N+1)|_([-N,N]) = g_N$. Define $
+  g(t) := g_N (t), wide t in [-N, N].
+  $ So, $g_N (t) -> g(t)$ pointwise and $abs(g_N (t))^q -> abs(g (t))^q$ pointwise and monotonely. By monotone convergence, then, $integral_RR abs(g_N)^q dif t -> integral_(RR) abs(g)^q dif t$. So, $g in L^q (RR)$ since $norm(g_N)_(L^q ([-N, N])) <= norm(T)$ for every $N >= 1$. Let $f_N (t) = f(t) chi_[-N, N]$. Then, $f_N -> f$ in $L^p (RR)$ so $T f_N -> T f$. So also $
+  T f_N = integral_(-N)^N f_N  g_N = integral_(-N)^N f(t) g_N (t) dif t = integral_(RR) f g_N dif t -> T f,
+  $ if we take by convention the $g_N$'s to be zero outside of $[-N, N]$. But also, $f in L^p (RR)$ and $g_N -> g$ in $L^q (RR)$, so applying Holder's to the quantity $integral_RR f g_N$, we know $
+  integral_RR f g_N -> integral_RR f g,
+  $  hence equating the two $
+  T f = integral_RR f g,
+  $ for every $f in L^p (RR)$. A similar proof to the previous gives the necessary norm identity.
+]
+
+#proof(([(Of RRT for general $Omega subset.eq RR$)]))[
+  If $T in (L^p (Omega))^ast$, let $hat(T) in (L^p (RR))^ast$ given by $hat(T) f = T (f |_Omega)$. Then by the previous case there is $hat(g) in L^q (RR)$ such that $hat(T) (f) = integral f hat(g)$. Let $g = hat(g)|_(Omega)$, then $T f = integral_Omega f g$.
+]
+
+So, RRT gives us that for $p in [1, infinity]$, $(L^p (Omega))^ast tilde L^q (Omega)$, and that $norm(f)_p = sup_(g in L^q \ norm(g)_q = 1) abs(integral f g)$.
+
+In particular, if $p  = 1$, $
+norm(f)_(L^1) = integral f "sgn" f(x) dif x = sup_(norm(g)_infinity = 1) integral f g.
+$
+
+What, though, is $(L^infinity)^ast$. Certainly, $L^1 (Omega) subset.eq (L^infinity (Omega))^ast$ since for $f in L^infinity$, $T f = integral f g dif x$ with $g in L^1$, which is bounded by Holders. However, it turns out that this inclusion is a strict one. Consider for instance $
+T f := f(0), wide T : L^infinity ([-1,1]) -> RR.
+$ Then, certainly $abs(T f) <= norm(f)_infinity$ so $T in (L^infinity)^ast$. However, there is no function $g$ such that $f (0) = integral f(t) g(t) dif t$.
