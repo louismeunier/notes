@@ -1709,7 +1709,7 @@ $]
   Let $T in (L^p ([a, b]))^ast$.
 
   _Step 1:_ Let $f$ a step function. The function $chi_[a, x) in L^p ([a, b])$; define $
-  G_T (x) := T(chi_([a, x)).
+  G_T (x) := T(chi_([a, x))).
   $ We claim $G_T$ absolutely continuous. Consider ${(a_k, b_k)}_(k=1)^N$ disjoint. Then, for every $[c, d] subset.eq [a, b],$ $,
   G_T (d) - G_T (c) = T(chi_([a, d))) - T(chi_([a, c])) = T(chi_([a, d)) - chi_([a, c))) = T(chi_[c, d)),
   $ so $
