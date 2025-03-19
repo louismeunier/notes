@@ -1133,3 +1133,76 @@ Let $bold(X) = (X_1,dots, X_n)^t$ have a joint pdf/pmf $p_theta (bold(x))$ for $
 From a a "maximum likelihood estimation point of view", both likelihoods contains the same information about $theta$.
 ]
 
+#remark[
+  In the discrete case, $L_n (theta)$ is the probability of observing $bold(x)$, given distribution with parameter $theta$; in particular, if $L_n (theta_1) > L_n (theta_2)$, this means we were more likely to observe our data if the parameter value was $theta_1$ rather than $theta_2$. A "similar" interpretation can be made in the continuous case.
+]
+
+#definition("Maximum Likelihood Estimation")[
+  Given $bold(x) = (x_1, dots, x_n)$, $hat(theta)_n = hat(theta)(x_1, dots, x_n)$ is called a _maximum likelihood estimate_ (MLE) of $theta$ if it maximizes $L_n (theta)$ or equivalently $ell_n (theta)$. I.e.,  $hat(theta)_n (bold(x)) = "argmax"_(theta in Theta) L_n (theta)$.
+
+  If $hat(theta)_n$ exists and $hat(theta)_n : Chi -> Theta$ is measurable, then $hat(theta) (X_1, dots, X_n)$ is called the _maximum likelihood estimator_ of $theta$.
+]
+
+#example[
+  Let $X_i tilde^"iid" "Poisson"(theta)$, then $
+  L_n (theta) = product_(i=1)^n f(x_i; theta) = product_(i=1)^n e^(-theta) (theta^(x_i))/(x_i !),
+  $ then $
+  ell_n (theta) = -sum_(i=1)^n ln(x_i !) - n theta + n overline(x)_n ln (theta).
+  $ Then, $
+  (dif ell_n (theta))/(dif theta) = - n + (n overline(x)_n)/(theta) = 0 => overline(x)_n = theta => hat(theta)_n = overline(x)_n.
+  $ Moreover, since $
+  (dif^2 (ell_n (theta)))/(dif theta^2) = - (n overline(x)_n)/(theta^2) < 0,
+  $ it follows that $hat(theta)_n = overline(x)_n$ is the maximum likelihood estimate of $theta$.
+]
+
+#remark[
+  1. MLE of $theta$ may or may not exist over $Theta$, when $Theta$ is open. It always exists over the closure of $Theta$.
+  2. If $Theta$ is finite, the certainly $Theta = overline(Theta)$ and the MLE always exists and can be computed by comparing the values of $L_n (theta)$ (or $ell_n (theta)$) over $Theta$.
+  3. If $L_n (theta)$ or $ell_n (theta)$ is differentiable on $Theta^(circle.tiny)$, then possible candidates for the MLE are values of $theta in Theta^(circle.tiny)$ that satisfy the so-called "likelihood equations" or "score equations", $
+  (dif ell_n (theta))/(dif theta) = 0. wide ast.circle
+  $  If $ell_n (theta)$ not differentiable (or in particular not everywhere differentiable), then extrema may occur at non-differentiability or even discontinuity points of $ell_n (theta)$. So, its crucial to analyze the entire likelihood function to find its maximum.
+]
+
+#example[
+  Let $X_i tilde^"iid" cal(U)(0, theta)$ so $f(x; theta) = 1/(theta) bb(1){0 < x < theta}$. Then, $
+  L_n (theta) = product_(i=1)^n 1/(theta) bb(1){0 < x_i < theta} = 1/theta^n bb(1){x_((1)) > 0}dot  bb(1){theta > x_((n))}.
+  $ Then, $L_n (theta)$ is strictly decreasing on $(x_((n)), infinity)$ and equal to zero on $(0, x_((n)))$. Hence, the MLE of $theta$ is $hat(theta)_n (x_1, dots, x_n) = x_((n))$.
+]
+
+#example[
+  Let $X_i tilde^"iid" cal(U)(theta - 1/2, theta + 1/2)$, then $
+  L_n (theta) = product_(i=1)^n bb(1){theta - 1/2 < x_i < theta + 1/2} = bb(1){x_((n)) - 1/2 < theta < x_((1)) + 1/2}.
+  $ So, any choice of $hat(theta)_n in [x_((n)) - 1/2, x_((1)) + 1/2]$ is an MLE of $theta$, for instance $(x_((1)) + x_((n)))/2$ (the midpoint). In short, the MLE is _not_ unique in this case.
+]
+
+#example[
+  Let $X_i tilde^"iid" cal(N)(mu, sigma^2)$, with $theta = (mu, sigma^2) in RR times RR^+$. Then $
+  L_n (theta) = (1/sqrt(2 pi sigma^2))^n exp(-1/(2 sigma^2) sum_(i=1)^n (x_i - mu)^2), 
+  $ so its more convenient to consider $
+  ell_n (theta) = - n/2 ln (sigma^2) - 1/(2 sigma^2) sum_(i=1)^n (x_i - mu)^2 + "const. indep. of" theta.
+  $ Then, the likelihood equatiosn give $
+  cases(
+    (partial ell_n (theta))/(partial mu) = 1/(sigma^2) sum_(i=1)^n (x_i - mu)  = 0,
+    (partial ell_n (theta))/(partial sigma^2) = - n/(2 sigma^2) + 1/(2 sigma^4) sum_(i=1)^n (x_i - mu)^2 = 0
+  ).
+  $ The first equation gives $
+  hat(mu)_n = overline(x)_n,
+  $ and so the second gives $
+  hat(sigma)_n^2 = 1/n sum_(i=1)^n (x_i - overline(x)_n)^2.
+  $ Then, we find $
+  (partial^2 ell_n (theta))/(partial theta^2) = -mat(n/(sigma^2), 0; 0, n/(2 sigma^4)) < 0,
+  $ a negative-definite matrix, hence $hat(theta)_n = (overline(x)_n, 1/n sum_(i=1)^n (x_i - overline(x)_n)^2)$ is the MLE of $theta = (mu, sigma^2)$.
+]
+
+#example[
+  Let $X_i tilde^"iid" "Gamma"(alpha, beta)$ with $theta = (alpha, beta)$, with pdf $f(x; theta) = 1/(Gamma (alpha) beta^alpha) x^(alpha - 1) exp(-x/beta)$  for $x > 0$. Then $
+  L_n (theta) = [Gamma(alpha) beta^alpha]^(-n) (product_(i=1)^n x_i)^(alpha - 1) exp(-sum_(i=1)^n x_i/beta),
+  $ so $
+  ell_n (theta) = - n log(Gamma(alpha)) - n alpha log(beta) + (alpha - 1) sum_(i=1)^n log(x_i) + "const indep of" theta.
+  $ The likelihood equations: $
+  (partial ell_n (theta))/(partial theta) = 0 => cases(
+    (partial ell_n (theta))/(partial alpha) = -n log(beta) - (n Gamma'(alpha))/(Gamma(alpha)) + sum_(i=1)^n log(x_i) = 0\
+    (partial ell_n (theta))/(partial beta) = - (n alpha)/(beta) + sum_(i=1)^n x_i/beta^2 = 0.
+  )
+  $
+]

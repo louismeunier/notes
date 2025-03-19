@@ -1572,9 +1572,9 @@ The real help of weak convergence is in the ease of achieving weak compactness;
   Every bounded sequence in $H$ has a weakly convergent subsequence.
 ]<thm:weakcompactness>
 
-#theorem("Helly's Theorem")[
+#theorem("Helley's Theorem")[
 Let $X$ a separable normed vector space and ${f_n} subset.eq X^ast$ such that there is a constant $C > 0$ such that $abs(f_n (x)) <= C norm(x)$ for every $x in X$ and $n >= 1$. Then, there exists a subsequence ${f_n_k}$ and an $f in X^ast$ such that $f_n_k (x) -> f(x)$ for every $x in X$.
-]
+]<thm:helleys>
 
 #proof[
   (Of @thm:weakcompactness) Let ${x_n} subset.eq H$ be bounded and let $H_0 = overline("span"{x_1, dots, x_n, dots})$, so $H_0$ is separable, and $(H_0, (dot,dot))$ is a Hilbert space (being closed). Let $f_n in H_0^ast$ be given by $
@@ -1803,7 +1803,7 @@ $ So, $g$ uniquely defined up to a set of measure 0 so $g = g'$ in $L^q$.
   integral_RR f g_N -> integral_RR f g,
   $  hence equating the two $
   T f = integral_RR f g,
-  $ for every $f in L^p (RR)$. A similar proof to the previous gives the necessary norm identity.
+  $ for every $f in L^p (RR)$. A similar proof to the previous gives the necessary norm identity.\
 ]
 
 #proof(([(Of RRT for general $Omega subset.eq RR$)]))[
@@ -1819,3 +1819,153 @@ $
 What, though, is $(L^infinity)^ast$. Certainly, $L^1 (Omega) subset.eq (L^infinity (Omega))^ast$ since for $f in L^infinity$, $T f = integral f g dif x$ with $g in L^1$, which is bounded by Holders. However, it turns out that this inclusion is a strict one. Consider for instance $
 T f := f(0), wide T : L^infinity ([-1,1]) -> RR.
 $ Then, certainly $abs(T f) <= norm(f)_infinity$ so $T in (L^infinity)^ast$. However, there is no function $g$ such that $f (0) = integral f(t) g(t) dif t$.
+
+== Weak Convergence in $L^p (Omega)$
+
+#definition([Weak convergence in $L^p (Omega)$])[
+  Let $Omega subset RR^d$, $p in [1, infinity)$ and $q$ its conjugate. Then, we say $f_n -> f$ _weakly_ in $L^p (Omega)$, and write $
+  f_n harpoon.rt_(L^p (Omega)) f,
+  $ if for every $g in L^q (Omega)$, $
+  lim_(n->infinity) integral_(Omega) f_n g dif x = integral f g dif x.
+  $
+] 
+
+#remark[
+  Weak limits are unique; suppose otherwise that $f_n harpoon.rt f, overline(f)$. Let $g = "sgn"(f - overline(f)) dot abs(f - overline(f))^(p - 1)$, which is in $L^q (Omega)$. So, $
+  lim_(n) integral g f_n dif x = integral g f dif x = integral g overline(f) dif x,
+  $ by assumption, so $
+  0 = integral_(Omega) g (f - overline(f)) dif x = integral abs(f - overline(f))^p dif x,
+  $ hence $f = overline(f)$ a.e. (and so equal as elements of $L^p (Omega)$).
+]
+
+#remark[
+  Many of the properties of weakly convergent sequences in a Hilbert space carry over to this setting.
+]
+
+#proposition[
+  Let $Omega subset.eq RR^d$. 
+
+  (i) If $p in (1, infinity)$, $f_n harpoon.rt_(L^(Omega)) f$, then ${f_n} subset.eq L^p (Omega)$ are bounded, and moreover $norm(f)_p <= liminf_(n) norm(f_n)_p$.
+
+  (ii) If $p in [1, infinity)$ and $f_n harpoon.rt_(L^p (Omega)) f, g_n ->_(L^p (Omega)) g$, then $lim_(n->infinity) integral g_n f_n dif x = integral g f dif x$.
+]
+
+#proof[
+  Identical to Hilbert space proofs; replace usage of Cauchy-Schwarz with Holder's.
+]
+
+#remark[
+  In (i), $p in (1, infinity)$, since $L^p$ "reflexive" in this case, i.e. $(L^p)^(ast ast) = L^p$ (just as we had in the Hilbert space case). We don't have this property for $p = 1$.
+]
+
+#remark[
+  A related notion of convergence is called _weak$""^ast$ convergence_, written $f_n harpoon.rt^ast_(L^p (Omega)) f$; we say this holds if for every $g in L^q (Omega)$ such that $(L^q)^ast = L^p$, then $integral f_n g dif x -> integral f g dif x$. So if $p in (1, infinity)$, weak convergence = weak$""^ast$ convergence, by Riesz.
+]
+
+#remark[
+  There are many equivalent notions to weak convergence.
+]
+
+#theorem("Equivalent Weak Convergence")[
+  Let $p in (1, infinity)$. Suppose ${f_n} subset.eq L^p (Omega)$ are bounded and $f in L^p$. Then, $f_n harpoon.rt_(L^p (Omega)) f$ iff
+
+  - for any $g in G subset.eq L^q (Omega)$ such that $overline("span"(G))= L^q (Omega)$, then $lim_(n->infinity) integral f_n g = integral f g$;
+  - $forall A subset.eq Omega$ measurable with finite measure, then $lim_(n->infinity) integral_A f_n dif x = integral_(A) f dif x$;
+  - if $d = 1$ and $Omega = [a, b]$, then $lim_(n->infinity) integral_(a)^x f_n dif x = integral_(a)^x f dif x$ for every $x in [a, b]$.
+  - $f_n -> f$ pointwise a.e..
+  // TODO
+]
+
+#remark[Some of these notions extend to $p = 1$, but we state in the $p > 1$ case for simplicity.]
+
+#theorem("Radon-Riesz")[
+  Let $p in (1, infinity)$. Suppose $f_n harpoon.rt_(L^p (Omega)) f$, then $f_n ->_(L^p (Omega)) f$ iff $lim_(n->infinity) norm(f_n)_p = norm(f)_p$.
+
+  Alternatively, there exists a subsequence ${f_n_k}$ such that $f_n_k -> f$ in $L^p (Omega)$ iff  $liminf_(n->infinity) norm(f_n)_p = norm(f)_p$.
+]
+
+#proof[
+($=>$) If $f_n ->_(L^p (Omega)) f$ then $norm(f_n)_p -> norm(f)_p$ by triangle inequality.
+
+The converse, ($impliedby$), is hard.
+]
+
+#theorem("Weak Compactness")[
+  Let $p in (1, infinity)$, then every bounded sequence in $L^p (Omega)$ has a weakly convergent subsequence, with limit in $L^p (Omega)$.
+]
+
+#proof[
+  Let ${f_n} subset.eq L^p (Omega)$ be bounded.
+  $p in (1, infinity)$ so so is $q$, and in particular $L^q (Omega)$ is separable. Let $T_n in (L^q (Omega))^ast$ be given by $T_n (g) := integral f_n g dif x$ for $g in L^q (Omega)$. Then, $norm(T_n) = norm(f_n)_p <= C$. So, $
+  sup_(n) abs(T_n (g)) <= norm(T_n) norm(g)_q <= C norm(g)_q.
+  $ By Helley's Theorem (@thm:helleys), there exists a subsequence ${T_n_k}$ and $T subset.eq (L^q (Omega))^ast$ such that $lim_(k->infinity) T_n_k (g) = T(g)$ for every $g in L^q (Omega)$. By Riesz, there exists some $f in L^p (Omega)$ such that $T (g) = integral f g dif x$, and hence $
+  lim_(k) integral f_n_k g dif x = integral f g dif x,
+  $ for every $g in L^q (Omega)$, so $f_n_k harpoon.rt_(L^p (Omega)) f$.
+]
+
+== Convolution and Mollifiers
+
+#definition("Convolution")[
+  $
+  (f ast g) (x) :=  integral_(RR^d) f(x - y) g(y) dif y = integral_(RR^d) f(y) g(x - y) dif y.
+  $
+]
+
+#proposition("Properties of Convolution")[\
+  a. $(f ast g) ast h = f ast (g ast h)$ (convolution is associative)\
+  b. Let $tau_z f(x) := f(x - z)$ be the $z$-translate of $x$ which centers $f$ at $z$. Then, $
+  tau_z (f ast g) = (tau_z f) ast g = f ast (tau_z g).
+  $\
+  c. $"supp"(f ast g) subset.eq overline({x + y | x in "supp"(f), y in "supp"(g)})$.
+]
+
+#proof[
+  (a) Assuming all the necessary integrals are finite, we can change order of integration, $
+  ((f ast g) ast h )(x) &= (integral f(y) g(x - y) dif y) ast h(x) \ 
+  &= integral integral f(y) g(x - z - y) dif y \, h(z) dif z \
+  &= integral integral f(y) g(x - y - z) h(z) dif z dif y  wide (y' = x - y )\ 
+  &= integral integral f(x - y') g(y' - z) h(z) dif z dif y' \ 
+  &= integral f(x - y')  (g convolve h)(y') dif y' = (f convolve (g convolve h)) (x).
+  $
+
+  (b) For the first equality, $
+tau_z (f ast g) (x) &= tau_z integral f(x - y) g(y) dif y \ 
+    &= integral f(x - z - y) g(y) dif y \
+    &= integral (tau_z f(x - y)) g(y) dif y = ((tau_z f) convolve g)(x).
+  $ The second follows from a change of variables in the second line.
+
+  (c) We'll show that $A^c subset.eq ("supp"(f ast g))^c$ where $A$ the set as defined in the proposition. Let $x in A^c$, then if $y in "supp"(g)$, $x - y in.not "supp"(f)$ so $f(x - y) = 0$; else if $y in.not "supp"(g)$ it must be $g(y) = 0$. So, if $x in A^c$, it must be that $
+  integral f(x - y) g(y) dif y = integral_("supp"(g)) underbrace(f(x - y), = 0)g(y)  dif y+ integral_("supp"(g)^c) f(x - y) underbrace(g(y), = 0) dif y  = 0.
+  $
+]
+
+We've been rather loose with finiteness of the convolutions so far. To establish this, we need the following result.
+
+#theorem("Young's Inequality")[
+  Let $f in L^1 (RR^d), g in L^p (RR^d)$ for any $p in [1, infinity]$. Then, $
+  norm(f ast g)_p <= norm(f)_1 norm(g)_p,
+  $ hence $f ast g in L^p (RR^d)$.
+]
+
+#proof[
+Suppose first $p = infinity$, then $
+(f ast g)(x) = integral f(y) g(x - y) dif y <= norm(g)_infinity integral abs(f(y)) dif y = norm(g)_infinity norm(f)_1,
+$ for every $x in RR^d$, so passing to the $L^infinity$-norm, $
+norm(f ast g)_infinity <= norm(f)_1 norm(g)_infinity.
+$
+
+Suppose now $p = 1$. Then, $
+norm(f ast g)_1 = integral abs(integral f(x - y) g(y) dif y) dif x.
+$ Let $F(x, y) = f(x - y) g(y)$, then for almost every $y in RR^d$, $
+integral abs(F(x, y)) dif x &= integral abs(g(y)) abs(f(x - y)) dif x \
+&=  abs(g(y)) integral abs(f(x - y)) dif x\
+&= abs(g(y)) norm(f)_1.
+$ Applying Tonelli's Theorem, we have then $
+integral.double abs(F(x, y)) dif y dif x &= integral.double abs(F(x, y)) dif x dif y = integral abs(g(y)) norm(f)_1 dif y = norm(f)_1 norm(g)_1,
+$ (so really $F in L^1 (RR^d) times L^1 (RR^d)$), hence all together $
+norm(f convolve g)_1 = integral abs(integral F(x, y) dif y) dif x <= integral.double abs(F(x, y)) dif y dif x = norm(f)_1 norm(g)_1.
+$
+#remark[
+  It also follows that for a.e. $x in RR^d$, $integral abs(F(x, y)) dif y < infinity$, i.e. $integral abs(f(x - y) g(y)) dif y < infinity$. Moreover, since if $g in L^p (Omega)$ then $abs(g)^p in L^1 (Omega)$, a similar argument gives that for every almost $x in RR^d$, $ integral abs(f(x - y)) abs(g(y))^p dif y < infinity$.
+]
+]
