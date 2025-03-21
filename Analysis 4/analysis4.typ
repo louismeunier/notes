@@ -1789,12 +1789,12 @@ Moreover, $g$ is unique because if $
 integral_(a)^b f g = integral_(a)^b f g',
 $ then $
 integral_(a)^b f (g - g') = 0,
-$ for every $f in L^p$. Let $f(t) in "sgn"(g - g')$, then $
+$ for every $f in L^p$. Let $f(t) = "sgn"(g - g')$, then $
 0 = integral_(a)^b abs(g - g') dif t => g = g' "a.e.".
 $ So, $g$ uniquely defined up to a set of measure 0 so $g = g'$ in $L^q$.
 ]
 
-#proof(([(Of RRT if $omega = RR$)]))[
+#proof(([(Of RRT if $Omega = RR$)]))[
   Fix $T in (L^p (RR))^ast$. Then, $T|_([-N, N]) in (L^p ([-N, N]))^ast$ for every $N >= 1$, and $norm(T|_([-N,N])) <= norm(T)$. Then, by RRT on $[-N, N]$, there is a $g_N in L^q ([-N, N])$ such that $T f = integral_(-N)^N f g_N dif t$. By uniqueness, $g_(N+1)|_([-N,N]) = g_N$. Define $
   g(t) := g_N (t), wide t in [-N, N].
   $ So, $g_N (t) -> g(t)$ pointwise and $abs(g_N (t))^q -> abs(g (t))^q$ pointwise and monotonely. By monotone convergence, then, $integral_RR abs(g_N)^q dif t -> integral_(RR) abs(g)^q dif t$. So, $g in L^q (RR)$ since $norm(g_N)_(L^q ([-N, N])) <= norm(T)$ for every $N >= 1$. Let $f_N (t) = f(t) chi_[-N, N]$. Then, $f_N -> f$ in $L^p (RR)$ so $T f_N -> T f$. So also $
@@ -1845,7 +1845,7 @@ $ Then, certainly $abs(T f) <= norm(f)_infinity$ so $T in (L^infinity)^ast$. How
 #proposition[
   Let $Omega subset.eq RR^d$. 
 
-  (i) If $p in (1, infinity)$, $f_n harpoon.rt_(L^(Omega)) f$, then ${f_n} subset.eq L^p (Omega)$ are bounded, and moreover $norm(f)_p <= liminf_(n) norm(f_n)_p$.
+  (i) If $p in (1, infinity)$, $f_n harpoon.rt_(L^p (Omega)) f$, then ${f_n} subset.eq L^p (Omega)$ are bounded, and moreover $norm(f)_p <= liminf_(n) norm(f_n)_p$.
 
   (ii) If $p in [1, infinity)$ and $f_n harpoon.rt_(L^p (Omega)) f, g_n ->_(L^p (Omega)) g$, then $lim_(n->infinity) integral g_n f_n dif x = integral g f dif x$.
 ]
@@ -1966,6 +1966,118 @@ $ (so really $F in L^1 (RR^d) times L^1 (RR^d)$), hence all together $
 norm(f convolve g)_1 = integral abs(integral F(x, y) dif y) dif x <= integral.double abs(F(x, y)) dif y dif x = norm(f)_1 norm(g)_1.
 $
 #remark[
-  It also follows that for a.e. $x in RR^d$, $integral abs(F(x, y)) dif y < infinity$, i.e. $integral abs(f(x - y) g(y)) dif y < infinity$. Moreover, since if $g in L^p (Omega)$ then $abs(g)^p in L^1 (Omega)$, a similar argument gives that for every almost $x in RR^d$, $ integral abs(f(x - y)) abs(g(y))^p dif y < infinity$.
+  It also follows that for a.e. $x in RR^d$, $integral abs(F(x, y)) dif y < infinity$, i.e. $integral abs(f(x - y) g(y)) dif y < infinity$. Moreover, since if $g in L^p (Omega)$ then $abs(g)^p in L^1 (Omega)$, a similar argument gives that for almost every $x in RR^d$, $ integral abs(f(x - y)) abs(g(y))^p dif y < infinity$.
 ]
+Suppose now $1 < p < infinity$. For a.e. $x in RR^d$, $integral abs(g(y))^p abs(f(x - y)) dif y < infinity$, so $g in L^p (RR^d)$ implies for a.e. $x in RR^d$, $|g(dot)|^p abs(f(x - dot)) in L^1 (RR^d)$ as a function of $dot$. This further implies $g(y) f^(1/p) (x - y) in L^p (RR^d, dif y)$. Also, if $f in L^1 (RR^d)$, then $f^(1/q) in L^q (RR^d)$. All together then, $
+integral abs(f(x - y)) abs(g(y)) dif y &= integral overbrace(abs(f^(1/q) (x - y)), q)underbrace(abs(f^(1/p) (x - y)) abs(g(y)) dif y, p) \ 
+"Holder's" wide &<= (integral abs(f(x - y)) dif y)^(1/q) (integral abs(f(x - y)) abs(g(y))^p dif y)^(1/p),
+$ hence, raising both sides to the $p$, $
+abs((f convolve g )(x))^p <= norm(f)_1^(p/q) dot (abs(f) convolve abs(g)^p)(x)
+$ and integrating both sides $
+integral abs((f ast g) (x))^p dif x <= norm(f)_1^(p/q) integral (underbrace(abs(f), in L^1 (RR^d)) ast underbrace(abs(g)^p, in L^1 (RR^d))) (x) dif x.
+$ Hence, we can bound the right-hand term using the previous case for $p = 1$, and find $
+integral abs((f ast g) (x))^p dif x &<= norm(f)_1^(p/q) norm(f)_1 norm(g^p)_1 \
+&= norm(f)_1^(p/q + 1) norm(g)_p^p \ 
+&= norm(f)_1^((p + q)/q) norm(g)_p^p \ 
+((p + q)/q = p) wide &= norm(f)_1^p norm(g)_p^p,
+$ so raising both sides to $1/p$, we conclude $
+norm(f ast g)_p <= norm(f)_1 norm(g)_p.
+$
+]
+
+#proposition[
+  If $f in L^1 (RR^d)$ and $g in C^1 (RR^d)$ with $abs(partial_(x_i) g)in L^infinity (RR^d)$ for $i = 1, dots, d$, then $(f ast g) in C^1 (RR^d)$ and moreover $
+  partial_(x_i) (f ast g) = f ast (partial_x_i g).
+  $
+]
+
+#remark[
+  There are many different conditions we can place on $f, g$ to make this true; most basically, we need $abs((partial_i g) ast f) < infinity$.
+]
+
+#proof[
+$
+(partial)/(partial x_i) (integral f(y) g(x - y) dif y) &= integral underbrace(f(y), in L^1 (RR^d)) underbrace(partial_i g(x - y), in L^infinity (RR^d)) dif y < infinity,
+$ citing the previous theorem for the finiteness; the dominated convergence theorem allows us to pass the derivative inside.
+]
+
+#remark[This also follows for the gradient; namely $gradient (f ast g) = f ast (gradient g)$ with a component-wise convolution.]
+
+Consider the function $
+rho(x) = cases( C exp(-1/(1 - abs(x)^2)) & "if" abs(x) <= 1, 0 & "o.w."),
+$ where $C  = C(d)$ a constant such that $integral_(RR^d) rho(x) dif x = 1$. Then, note that $rho in C^infinity_c (RR^d)$ (infinitely differentiable with compact support). Let now $
+rho_(epsilon) (x) := 1/(epsilon^d) rho(x/epsilon).
+$ Notice that $rho_epsilon (x)$ is supported on $B(0, epsilon)$, but $
+integral_(RR^d) rho_epsilon (x) dif x = 1/(epsilon^d) integral_(RR^d) rho(x/epsilon) dif x = 1/epsilon^d dot epsilon^d dot integral_(RR^d) rho(y) dif y = 1,
+$ for every $epsilon$, by making a change of variables $y = x/epsilon$. We'll be interested in the convolution $
+f_epsilon (x) := (rho_epsilon convolve f) (x)
+$ for some function $f$. $rho_epsilon$ is often called a "convolution kernel". In particular, it is a "good kernel", namely has the properties:
+- $integral_(RR^d) rho_epsilon (y) dif y = 1$;
+- $integral_(RR^d) abs(rho_epsilon (y)) dif y <= M$ for some finite $M$;
+- $forall delta > 0$, $integral_({abs(y) > delta}) abs(rho_epsilon (y)) dif y ->_(epsilon -> 0) 0.$
+
+The second condition is trivially satisfied in this case since our kernel is nonnegative. The last also follows easily since $rho_epsilon$ has compact support; more generally, this imposes rapid decay conditions on the tails of good kernels.
+
+Since $rho_(epsilon) in C_c^infinity (RR^d)$, for "reasonable" $f$, $f_epsilon = rho_epsilon convolve f in C^infinity (RR^d)$ by the previous proposition. In fact, we'll see that in many contexts $f_epsilon -> f$ as $epsilon -> 0$ in some notion of convergence. So, $f_epsilon$ provides a good, now smooth, approximation to $f$.
+
+#proposition[
+  Suppose $f in L^infinity (RR^d)$ and $f_epsilon$ is well-defined. Then, if $f$ is continuous at $x$, then $f_(epsilon) (x) -> f(x)$ as $epsilon -> 0$. 
+  
+  If $f in C(RR^d)$, then $f_epsilon -> f$ uniformly on compact sets.
+]
+
+#proof[
+ $f$ continuous at $x$ gives that for every $eta > 0$ there exists a $delta > 0$ such that $abs(f(y) - f(x))< eta$  whenver $abs(x - y) < delta$. Then $
+ abs(f_epsilon (x) - f(x)) &= abs(integral rho_epsilon (y) f(x - y) dif y - f(x) underbrace(integral rho_epsilon (y) dif y, = 1)) \ 
+ &= abs(integral rho_epsilon (y) (f(x - y) - f(x)) dif y) \ 
+ &<= integral_({abs(y) <= delta}) abs(f(x  - y) - f(x)) abs(rho_epsilon (y)) dif y + integral_({abs(y) > delta}) abs(f(x - y) - f(x)) abs(rho_epsilon (y)) dif y \ 
+ (#stack(spacing: .3em, text(size: 8pt, "cnty in first argument"),[#text(size: 8pt, [$L^infinity$-bound in second])]))
+   wide & <= integral_({abs(y) <= delta}) eta abs(rho_epsilon (y)) dif y + 2 norm(f)_infinity integral_(abs(y) > delta) abs(rho_epsilon (y)) dif y \ 
+   & <= eta dot M + 2 norm(f)_infinity integral_({abs(y)> delta}) abs(rho_epsilon)
+ $ for $epsilon -> 0$, by using the second property of good kernels for the first bound. By the last property, the right-most term $->0$ as $epsilon -> 0$; moreover, then, $
+ lim_(epsilon -> 0) abs(f_epsilon (x) - f(x)) <= C eta 
+ $ for some $C$ and every $eta > 0$, and thus $f_epsilon (x) -> f(x)$ as $epsilon -> 0$.
+
+ Now, if $f in C(RR^d)$ fix a subset $K subset.eq RR^d$ compact. Hence, $norm(f)_(L^infinity (K)) <infinity$ and $f$ uniformly continuous on $K$ since $K$ compact; so the modulus continuity is uniform for all $x in K$, so for $delta > 0$ and for every $x in K$, $
+ integral_({abs(y) <= delta}) abs(f(x - y) - f(x)) abs(rho_epsilon (y)) dif y <= C eta.
+ $ Also, using the bound on $f$, we may write the second integral in the argument above as $
+ integral_(epsilon > abs(y) > delta) abs(f(x - y) - f(x)) abs(rho_epsilon (y)) dif y <= norm(f)_(L^infinity (K + B_epsilon)) integral_({abs(y) > delta}) abs(rho_epsilon (y)) dif y ->_(epsilon -> 0) 0
+ $ where we take $K$ slighly larger as $K + B_epsilon$, which is still compact. So, since this held for all $x in K$, $
+ max_(x in K) abs(f_epsilon (x) - f(x)) ->_(epsilon -> 0) 0.
+ $
+
+ _Note that we proved the first for general good kernels but the second only in our constructed one_.
+]
+
+#remark[
+  This pointwise convergence result is why "good kernels" are called "approximations to the identity".
+]
+
+#remark[
+  If $f in C_c (RR^d)$, then $"supp"(f_epsilon) subset.eq overline("supp" (f) + B(0, epsilon))$; so, $f_epsilon$ is compactly supported if $f$ is. Hence in this case $f_epsilon -> f$ uniformly on $RR^d$.
+]
+
+#theorem("Weierstrass Approximation Theorem")[
+Let $[a, b] subset.eq RR$ and let $f in C([a, b])$. Then for every $eta > 0$, there exists a polynomial $P_N (x)$ of degree $N$ such that $
+  norm(P_N - f)_(L^infinity ([a, b])) < eta.
+$ That is, polynomials are dense in $C([a, b])$.
+]
+
+#proof[
+  Extend $f$ to be continuous with compact support on all of $RR$ in whatever convenient way, such that $"supp"(f) subset.eq [-M, M]$ for some sufficiently large $M > 0$. Consider now $
+  K_epsilon (x) := 1/(sqrt(epsilon)) e^(- (pi x^2)/epsilon),
+  $  noting that $
+  integral_(-infinity)^infinity K_epsilon (x) dif x = integral_(-infinity)^infinity 1/(sqrt(epsilon)) e^(- (pi x^2)/epsilon) dif x = 1,
+  $ which is clear by a change of variables $y = sqrt(2 pi)/(sqrt(epsilon)) x$. As a consequence, $integral_(-infinity)^infinity abs(K_epsilon (x)) dif x = 1 < infinity$, since $K_epsilon >= 0$. Finally, $
+  integral_(abs(x) > delta) abs(K_epsilon (x)) dif x &= integral_(abs(x) > delta)1/(sqrt(pi)) e^(-(pi x^2)/epsilon) dif x \ 
+  &= integral_(abs(y) > sqrt(2 pi)/(sqrt(epsilon)) delta) e^(-(y^2)/2)/(sqrt(2 pi)) dif y \ 
+  #text(size: 9pt, [since $abs(y) >= 1$ here for suff. small $epsilon$]) wide & <=  integral_(abs(y) > sqrt(2 pi)/(sqrt(epsilon)) delta) abs(y)/(sqrt(2 pi)) e^(-(y^2)/2)/(sqrt(2 pi)) dif y \
+  &<= C  e^(-(y^2)/2)#vbar(2em)_(thin sqrt(2 pi)/(sqrt(epsilon)) delta)^(thin infinity) ->_(epsilon -> 0) 0.
+  $  So, $K_epsilon$ is a good kernel, and so $(f ast K_epsilon) (epsilon) ->_(epsilon -> 0) f$ uniformly in $[a, b]$ by our last remark. In particular, for $eta>0$ there is some $epsilon_0 > 0$, $
+  abs((f ast K_epsilon_0) - f)_(L^infinity ([a, b])) < eta/2.
+  $ We claim now that there is a polynomial $P_N$ such that $norm(P_N - (f ast K_epsilon_0))_(L^infinity ([ a, b])) < eta/2$. Recall that $e^x = sum_(n=0)^infinity (x^n)/(n!)$, which converges uniformly on compact sets. So, there exists a polynomial $S_N$ (from truncating this sum) such that $norm(K_epsilon_0 - S_N)_(L^infinity ([-M, M])) < eta/(4 norm(f)_infinity M)$. Thus, $
+  abs(f ast K_epsilon_0 (x) - f ast S_n (x)) &<=  abs(integral f(x - y) (K_epsilon_0 (y) - S_N (y)) dif y) \
+  "supp"(f) subset [-M, M] wide &<=integral_(-M)^M abs(f(x - y)) abs(K_epsilon_0 (y) - S_N (y)) dif y \ 
+  &<= 2 M norm(f)_infinity eta/(4 M norm(f)_infinity) =  eta/2,
+  $ for every $x$. Let $P_N (x) = (f ast S_n) (x)$, which we see to be a polynomial.
 ]

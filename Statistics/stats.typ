@@ -1033,7 +1033,7 @@ Note that an unbiased estimator of a parameter of interest may not even exist. F
   $ But since $U(theta + 1/2) = U(theta - 1/2)$ by the remarks above, it follows that $tau'(theta) = 0$ so $tau(theta)$ is a constant, for some $c in RR$. We conclude, thus, that there is no UMVUE for any non-constant function $tau(theta)$.
 ]
 
-= System Parameter Estimation
+= Systematic Parameter Estimation
 
 This chapter is devoted to systematic manners of deriving estimators for particular statistical models.
 
@@ -1190,7 +1190,7 @@ From a a "maximum likelihood estimation point of view", both likelihoods contain
   $ and so the second gives $
   hat(sigma)_n^2 = 1/n sum_(i=1)^n (x_i - overline(x)_n)^2.
   $ Then, we find $
-  (partial^2 ell_n (theta))/(partial theta^2) = -mat(n/(sigma^2), 0; 0, n/(2 sigma^4)) < 0,
+  (partial^2 ell_n (theta))/(partial theta^2)#vbar(2em)_(thin theta = hat(theta)_n) = -mat(n/(hat(sigma)^2), 0; 0, n/(2 hat(sigma)^4)) < 0,
   $ a negative-definite matrix, hence $hat(theta)_n = (overline(x)_n, 1/n sum_(i=1)^n (x_i - overline(x)_n)^2)$ is the MLE of $theta = (mu, sigma^2)$.
 ]
 
@@ -1198,11 +1198,81 @@ From a a "maximum likelihood estimation point of view", both likelihoods contain
   Let $X_i tilde^"iid" "Gamma"(alpha, beta)$ with $theta = (alpha, beta)$, with pdf $f(x; theta) = 1/(Gamma (alpha) beta^alpha) x^(alpha - 1) exp(-x/beta)$  for $x > 0$. Then $
   L_n (theta) = [Gamma(alpha) beta^alpha]^(-n) (product_(i=1)^n x_i)^(alpha - 1) exp(-sum_(i=1)^n x_i/beta),
   $ so $
-  ell_n (theta) = - n log(Gamma(alpha)) - n alpha log(beta) + (alpha - 1) sum_(i=1)^n log(x_i) + "const indep of" theta.
+  ell_n (theta) = - n log(Gamma(alpha)) - n alpha log(beta) + (alpha - 1) sum_(i=1)^n log(x_i) -1/beta sum_(i=1)^n x_i.
   $ The likelihood equations: $
   (partial ell_n (theta))/(partial theta) = 0 => cases(
     (partial ell_n (theta))/(partial alpha) = -n log(beta) - (n Gamma'(alpha))/(Gamma(alpha)) + sum_(i=1)^n log(x_i) = 0\
     (partial ell_n (theta))/(partial beta) = - (n alpha)/(beta) + sum_(i=1)^n x_i/beta^2 = 0.
   )
+  $ This gives $
+  cases(
+    0 = (Gamma'(hat(alpha)))/(Gamma(hat(alpha))) + log (hat(beta)) - 1/n sum_(i=1)^n log(x_i),
+    hat(beta) = overline(x)_n/hat(alpha)
+  ),
+  $ which gives $hat(beta)$ as a function of $hat(alpha)$. Plugging this expression into the first, we find $
+  log(hat(alpha)) - (Gamma'(hat(alpha)))/(Gamma(hat(alpha))) + 1/n sum_(i=1)^n log (x_i) - log(overline(x_n)) = 0,
+  $ which does not have a nice closed form. So, we must resort to numerical methods to approximate $hat(theta)_n$.
+]
+
+#example("Newton-Raphson")[
+  One way to numerically approximate MLEs (and more generally approximate roots of functions) such as in the previous example, is to approximate via linear functions. For instance, suppose we are interested in solving $
+  (partial ell_n (theta))/(partial theta) = ell'_n (theta) = 0.
+  $ The Newton-Raphson starts with some initial guess $theta^((0))$, and is then defined inductively. Given $theta^((t))$, an approximation of $theta$, the $t+1$-st iteration performs the following approximation to obtain $theta^((t+1))$, by Taylor exanding, $
+  ell'_n (theta^((t))) + ell''_n (theta^((t))) [theta^((t+1)) - theta^((t))] = 0,
+  $ implying $
+  theta^((t+1)) = theta^((t)) - [ell''_n (theta^((t)))]^(-1) ell_n (theta^((t))),
+  $ where in the general case $ell'_n (theta)$ a $d times 1$ vector and $ell''_n (theta)$ a $d times d$ matrix. In general, this procedure need not converge to the true value; typically, one stops after some "proximity standard" is met, e.g. if for some fixed allowance $epsilon > 0$, one may chooes to stop once $norm(theta^((t+1)) - theta^((t))) < epsilon$.
+]
+
+#example[
+  Let $X_i tilde^"iid" "Ber"(theta)$ for $0 < theta < 1$. Then, $
+  L_n (theta) &= theta^(sum_(i=1)^n x_i) (1 - theta)^(n - sum_(i=1)^n x_i)\
+  => ell_n (theta) &=  n overline(x)_n log(theta)  + n (1 - overline(x)_n) log(1 - theta)\
+  => (dif ell_n (theta))/(dif theta) &= (n overline(x)_n)/(theta) - (n (1 - overline(x)_n))/(1 - theta) = 0=> hat(theta)_n = overline(x)_n,
+  $
+  while also,
+  $
+  (dif^2 ell_n (theta))/(dif theta^2) = - (n overline(x)_n)/(theta^2) - (n (1 - overline(x)_n))/(1 - theta) < 0,
+  $ so $hat(theta)_n = overline(x)_n$ is the unique maximizer of $ell_n (theta)$ when $0 < overline(x)_n < 1$.
+
+  If $overline(x)_n = 0$, then $L_n (theta) = (1 - theta)^n$ is strictly decreasing in $theta$, with unique maximizer at $0$; but $0$ is not in our parameter space. Similarly if $overline(x)_n = 1$, then $L_n (theta) = theta^n$ is maximized at $theta = 1$ which is again not in our parameter space. Combining these facts, the MLE indeed $hat(theta)_n = overline(x)_n$. 
+  
+  When $theta in (0,1)$, the probability of $overline(x)_n = 0$ or $overline(x)_n = 1$ goes to zero as $n -> infinity$, exponentially.
+]
+
+=== Properties of MLE
+
+#theorem("Invariance Property")[
+  If $hat(theta)_n$ the MLE of $theta$, then for any function $tau(theta)$, the MLE of $tau(theta)$ is $hat(tau(theta)) = tau(hat(theta))$.
+]
+
+#theorem("Large Sample Behaviour")[
+  Under the regularity conditions from the CRLB theorem, then 
+  - $hat(theta)_n$ is a consistent estimator of the parameter of interest;
+  - $hat(theta)_n$, properly cscaled and centeralized, is asymptotically normal.
+]
+
+= Bayesian Estimation
+
+Let $bold(X) = (X_1, dots, X_n) tilde p_theta (dot)$ be data distributed according to some parametrically indexed joint pdf. In Bayesian inference, the parameter $theta$ is also treated as a random variable, with a pdf/pmf $pi(theta)$, called the _prior distribution_ of $theta$. Then, for post-experimental (observed) data $bold(x) = (x_1, dots, x_n)$, then we write $
+p_theta (x_1, dots, x_n) = p_theta (bold(x)) = p(bold(x) | theta),
+$ i.e. treated as a conditional distribution of $X|theta$.
+
+By Baye's theorem, where $p_X (bold(x))$ the marginal pdf/pmf of $bold(X)$, $
+pi(theta | bold(x)) = (p(bold(x) | theta) pi(theta))/(p_(bold(X)) (bold(x))) = (p_theta (bold(x)) pi(theta))/(integral_(Theta) p_theta (bold(x)) pi(theta) dif theta),
+$  where $Theta$ the entire parameter space (i.e., support of $pi$). Hence, the so-called _posterior distribution_, $pi(theta|bold(x))$, is proportional $
+pi(theta|bold(x)) prop p_theta (bold(x)) pi(theta).
+$
+$pi(theta)$ is purely based on our "prior" belief/knowledge of $theta$; $pi(theta|bold(x))$ reflects the "updated" knowledge about $theta$ given some data $bold(x)$.
+
+Recall that $Var_pi (theta) >= EE_theta [Var(theta|bold(X))]$; so, the prior variance of $theta$ is at least as big as the expected posterior variance.
+
+#definition("Loss Function")[
+  Given data $bold(X) = (X_1, dots, X_n)$, a _loss function_ $L(delta(bold(X)), theta)$ is a measure of loss ("penatly") when $theta$ is estimated by some function $delta(bold(X))$; for instance, $L(delta(bold(X)), theta) = (delta(bold(X)) - theta)^2$.
+]
+
+#definition("Baye's Risk")[
+  Given a loss function $L$, _Baye's Risk_ of $delta(bold(X))$ is the function $
+  R(delta) := EE_pi {EE_(bold(X)|theta) [L(delta(bold(X)), theta)]}.
   $
 ]

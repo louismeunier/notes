@@ -1252,6 +1252,7 @@ The set of elements constructible by ruler and compass is an extension of $QQ$ o
   So, it must be that $F_n$ an extension of $Q(alpha)$ so $[F_n : QQ(alpha)] = d in NN$, but by multiplicativity, $3 d = 2^n$ which is impossible.
 
   #align(center)[#commutative-diagram(
+    node-padding: (40pt, 40pt),
   // node((0, 1), $V$),
   node((0, 2), $F_n$),
   node((1, 0), $QQ(alpha)$),
@@ -1498,7 +1499,7 @@ For the second claim, note that by definition, automorphisms of $E\/F$ are const
   If $f(x)$ is an irreducible polynomial in $F[x]$ which has a root in $E$, then $f(x)$ splits completely into linear factors in $E[x]$.
 
   More generally for non-Galois groups, if an extension has this property, we say $E\/F$ is normal.
-]
+]<thm:onnormality>
 
 #proof[
   Let $r in E$ be a root of $f(x)$. Let ${r_1, dots, r_n}$ be the orbit of $r$ under the action of $G$ and consider the polymomial $
@@ -1635,7 +1636,7 @@ $ In particular, $F$ is the collection of roots of the polynomial of $x^(p^n) - 
 
 With this in mind, then, for a fixed prime $p$ and integer $n >= 1$, let $F$ be the splitting field of the polynomial $x^(p^n) - x$ over $FF_p$. We claim that $F$ has cardinality $p^n$.
 
-Note that $x^(p^n) - x$ has distinct roots in any extension of $FF_p$. Since $f'(x) = -1$ (in the extension), we know that $"gcd"(f(x), f'(x)) = 1$ // TODO why?
+Note that $x^(p^n) - x$ has distinct roots in any extension of $FF_p$. Since $f'(x) = -1$ (in the extension), we know that $"gcd"(f(x), f'(x)) = 1$ 
 so there are no multiple roots. Hence, $hash F >= p^n$. Conversely, note that the set of roots of $x^p^n - x$ is itself a field; // TODO 
 so, $hash F <= p^n$ and thus $hash F = p^n$.
 
@@ -1665,4 +1666,88 @@ From the general theory, we also know that $"Aut"(F\/FF^p) <= [F : FF^p] = n$, a
 
 #example[
   Let $q = 8 = 2^3$, then $F = FF_2 [x]\/(x^3+x+1)$ a (really, _the_) field of cardinality $8$. By the theory we've developed here, we also know that $F$ the splitting field of the polynomial $x^8 - x$ over $FF_2$.
+]
+
+== Generalization of Galois
+
+Here, we aim to extend some of the definitions from previous sections to apply to field extensions of infinite degree.
+
+#definition("Normal")[
+  An extension $E\/F$ is said to be _normal_ if every irreducible polynomial in $F[x]$ with a root in $E$ splits into linear factors in $E[x]$.
+]
+
+#theorem[If $E\/F$ Galois, then $E$ is normal over $F$.]
+
+#proof[In the finite case this was proven @thm:onnormality.]
+
+We can present a (partial) converse to this statement subject to some technicality.
+
+#definition("Separable")[
+  An extension $E\/F$ is _separable_ if every irreducible polynomial with a root in $E$ has no multiple roots in $E$.
+]
+
+#proposition[
+  If $"char"(F) = 0$, every extension of $F$ is separable.
+]
+
+#proof[
+  Let $f(x)$ be irreducible in $F[x]$. Suppose $f(x) = (x - r)^e g(x)$ in $E[x]$. Then, $
+  f'(x) = e (x - r)^(e - 1) g(x) + (x - r)^e g'(x).
+  $ Then, observe that if $e > 1$, then $r$ still a root of $f'(x)$. In particular, then $r$ a root of $"gcd"(f(x), f'(x)) in F[x]$. 
+  
+  Suppose now $"char"(F) = 0$. Write $
+  f(x) = a_n x^n + a_(n-1) x^(n-1) + dots.c + a_1 x + a_0, wide a_i in F,
+  $ so $
+  f'(x) = n a_n x^(n - 1) + (n - 1) a_(n-1)x^(n-2) + dots.c + a_1.
+  $ Then, $gcd(f, f')$ must divide $f$. But $f$ irreducible, so it must be that $gcd(f, f') = 1$ or $f$; clearly $f$ cannot divide $f'$ since $f'$ has degree $n-1$ and $f$ has degree $n$, and thus $gcd(f, f') = 1$ from which we conclude from our observations above that $f$ cannot have any multiple roots.
+]
+
+#remark[
+We implicitly used the assumption on the characteristic of the field when taking the derivative; in particular, since $"char"(F)  = 0$, taking the derivative only reduced the degree by 1, namely, $n eq.not 0$. If, say, $"char"(F) = p$, then for instance the polynomial of degree $p$, $f(x) = x^p$, has derivative $f'(x) = p x^(p - 1) = 0$, of degree $0$. In this case, we find $gcd(f, f') = f$.
+]
+
+#theorem[If $E\/F$ is finite Galois, then it is separable.]
+
+#theorem[
+  If $E\/F$ is a finite, normal and separable, then $E\/F$ is Galois.
+]
+
+#proof[
+  Recall our proof of $hash"Aut"(E\/F) <= [E:F]$; the proof of this theorem is identical to that one, but replacing certain inequalities with equalities using the extra hypotheses of normality and separability.
+
+  We'll prove by induction the more general statement $hash"Hom"_F (K, E) = [K: F]$, where $F subset.eq K subset.eq E$, inducting on the degree of $K$ over $F$.
+
+  Put $n := [K : F]$. If $n = 1$, then $"Hom"_F (K, E) = "Hom"_F (F, E) = {id}$ so this is trivial.
+
+  Suppose the case for $n-1$. Suppose firstly that $K = F(alpha) = F[x]\/p(x)$ where $p(alpha) = 0$ and $p(x)$ irreducible over $F$ with $deg(p) = [K : F]$. Then, $
+  "Hom"_F (K, E) = "Hom"_F (F(alpha), E) = {"roots of" p(x) "in" E},
+  $  since any homomorphism is constant on $F$ so determined by $alpha$. Namely, we try to construct a ring homomorphism $
+  phi : F[x]\/p(x) -> E
+  $ or equivalently, $phi : F[x] -> E$ such that $p in ker(phi)$; hence $p(phi(x)) = 0$.
+
+  By normality and separability, $hash {"roots of" p(x) "in" E} = "deg"(p(x)) = [K : F]$.
+
+  Suppose now more generally that $K = F(alpha_1, dots, alpha_(t)) = F(alpha_1, dots, alpha_(t - 1)) (alpha_t) =: K_(t - 1) (alpha_t)$, such that $K_(t-1) subset.neq K$ (else, would be done). By assumption, $[K_(t - 1) :F] < [K : F] = n$ so our induction hypothesis applies and we know $hash"Hom"_F (K_(t - 1), E) = [K_(t - 1): F].$ We need now to show that there are exactly $[K : K_(t-1)]$ extensions of $phi_0 : K_(t - 1) -> E$ for each $phi_0 in "Hom"_F (K_(t - 1), E)$.
+
+  Let $p(x)$ be the minimal polynomial of $alpha_t$ over $K_(t - 1)$ so $"deg" p(x) = [K : K_(t - 1)]$ and we can identify $K = K_(t - 1)[x]\/(p(x))$. If $phi|_(K_(t - 1)) = phi_0$, then since $p(alpha_t) = 0$, $
+  phi(p(alpha_t)) = p^(phi_0) (phi(alpha_t)) = 0;
+  $ for, if $
+  p(x) = a_m x^m + dots.c + a_1 x + a_0,
+  $ with $a_i in K_(t - 1)$, then we denote $
+  p^(phi_0) (x) = phi_0 (a_m) x^m + dots.c + phi_0 (a_1) x + phi_0 (a_0),
+  $ i.e. $p$ with the coefficients evaluted on $phi_0$. Then, $phi_0 (a_i) in E$ so $p^(phi_0) (x) in E[x]$. So, $phi(alpha_t)$ a root of $p^(phi_0) (x)$ in $E[x]$.
+  
+   We claim $p^(phi_0) (x)$ splits into distinct linear factors in $E[x]$. It suffices to prove that $p^(phi_0)$ has a single root in $E$. We know $p(x)$ has a root in $E$, namely $alpha_t$, so $p(x)|g(x)$  where $g(x)$ the minimal polynomial of $alpha_t$ over $F$. By normality and separability, $g$ splits into linear factors over $E$, and thus $p^(phi_0)|g^(phi_0)$. But $g$ has coefficients in $F$ so $g^(phi_0) = g$ thus $p^(phi_0)|g$. so $p^(phi_0) (x)$ has exactly $[K : K_(t-1)]$ roots. Thus, we can conclude $
+   hash"Hom"_(F) (K, E) &= hash"Hom"_F (K_(t - 1), E) times hash {"extensions" phi "of" phi_0 : K_(t- 1) -> F} \ 
+   &= [K_(t - 1) : F] [K : K_(t - 1)] = [K : F],
+   $ so taking $K = E$, we conclude $
+   hash"Hom"_F (E, E) = hash"Aut"(E\/F) = [E : F].
+   $
+]
+// TODO what the fuck is going on here?
+
+This motivates the following definition generalization, with the benefit that it works for infinite degree extensions.
+
+#definition("Galois Extension")[
+  An extension $E\/F$ is said to be _Galois_ if it is normal and separable over $F$.
 ]
