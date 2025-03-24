@@ -461,3 +461,32 @@ We consider now different cases of $mu_1$.
 - $y > 0=>dot(x) > 0$;
 - $y < 0 => dot(x) < 0$;
 - $y = 0 => dot(x) = 0$ and $dot(y) > 0$, from which we may conclude there are not only no steady states, but also no periodic orbits.
+
+In short, generally boring behaviour.
+
+[$mu_1 < 0$] We find $
+J_f (plus.minus sqrt(- mu_1), 0) = mat(0, 1; plus.minus 2 sqrt(- mu_1), mu_2 plus.minus sqrt(-mu_1)),
+$  which has eigenvalues satisfying $
+- lambda(mu_2 + x - lambda) - 2 x = 0 \ 
+=> lambda^2 - (mu_2 + x) lambda - 2x = 0.
+$ For a steady state bifurcation, we'd need $mu_2 = 0$ and thus $mu_1 = 0$, so not possible; thus no other bifurcations can occur then the one we already have. Hence, we have $
+lambda_(plus.minus) = ((mu_2 + x) plus.minus sqrt((mu_2 + x)^2 + 8 x))/(2).
+$ For the point $x = (sqrt(-mu_1), 0)$, $x > 0$ so $lambda_+ > 0 > lambda_-$, so we the steady state is a saddle point for every $mu_2$.
+
+For $x = (-sqrt(-mu_1), 0)$, if $mu_2 = sqrt(-mu_1)$ then $mu_2 + x = 0$, so $lambda_(plus.minus) = plus.minus i sqrt(2) (-mu_1)^(1\/4)$, so we have a pair of complex conjugate eigenvalues.
+
+For $mu_2 approx sqrt(-mu_1)$, then $(mu_2+x)^2 + 8 x approx 8 x < 0$, so again a pair of complex conjugate eigenvalues, with $
+"Re"(lambda_(plus.minus)) approx (mu_2 + x)/2 = 1/2 (sqrt(mu_2) - sqrt(-mu_1)),
+$ which is negative if $mu_2 < sqrt(-mu_1)$ (hence stable) and positive if $mu_2 > sqrt(-mu_1)$ (hence unstable). So in particular, $"Re"(lambda_(plus.minus))$ changes sign when $mu_2 = sqrt(-mu_1)$, at which point we see we have a Hopf bifurcation.
+
+#align(center,
+image(
+  "takensbfn.png",
+  width: 60%
+)
+)
+
+// TODO 
+// ! Rest of the bifrucation; how do the things appear?
+
+= Maps

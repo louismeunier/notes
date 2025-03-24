@@ -1399,7 +1399,7 @@ The set of elements constructible by ruler and compass is an extension of $QQ$ o
 
 === A Thorough Example
 // #example[
-  Consider now $F = QQ$ and $E = QQ(root(3, 2), zeta)$ where $zeta^3 = 1$ (but is not 1) so $zeta$ satsfies the quadratic equation $x^2 + x + 1$; so, we can realize $QQ(root(3, 2), zeta) subset CC$. Moreover, note that $[QQ(root(3, 2), zeta): QQ] = 6$; we have as basis ${1, root(3, 2), root(3, 2)^2, zeta, zeta root(3, 2), zeta root(3, 2)^2}$. 
+  Consider now $F = QQ$ and $E = QQ(root(3, 2), zeta)$ where $zeta^3 = 1$ (but is not 1) so $zeta$ satisfies the quadratic equation $x^2 + x + 1$; so, we can realize $QQ(root(3, 2), zeta) subset CC$. Moreover, note that $[QQ(root(3, 2), zeta): QQ] = 6$; we have as basis ${1, root(3, 2), root(3, 2)^2, zeta, zeta root(3, 2), zeta root(3, 2)^2}$. 
 
   Alternatively, one can use the multiplicativity of the degree to deduce this number; this "sequence of extensions" is visualized below.
 
@@ -1579,7 +1579,7 @@ Noting that, by virtue, this process terminates after finitely many iterations s
 == Properties of a Splitting Field
 
 #theorem[
-  If $f(x) in F[x]$ and $E, E'$ are splitting field of $f(x)$ over $F$, then $E$ and $E'$ are isomorphic as extensions of $F$ i.e. there is an isomorphisms of fields between $E$ and $E'$ that is contant on $F$.
+  If $f(x) in F[x]$ and $E, E'$ are splitting fields of $f(x)$ over $F$, then $E$ and $E'$ are isomorphic as extensions of $F$ i.e. there is an isomorphisms of fields between $E$ and $E'$ that is contant on $F$.
 ]
 
 #proof[
@@ -1737,17 +1737,75 @@ We implicitly used the assumption on the characteristic of the field when taking
   p^(phi_0) (x) = phi_0 (a_m) x^m + dots.c + phi_0 (a_1) x + phi_0 (a_0),
   $ i.e. $p$ with the coefficients evaluted on $phi_0$. Then, $phi_0 (a_i) in E$ so $p^(phi_0) (x) in E[x]$. So, $phi(alpha_t)$ a root of $p^(phi_0) (x)$ in $E[x]$.
   
-   We claim $p^(phi_0) (x)$ splits into distinct linear factors in $E[x]$. It suffices to prove that $p^(phi_0)$ has a single root in $E$. We know $p(x)$ has a root in $E$, namely $alpha_t$, so $p(x)|g(x)$  where $g(x)$ the minimal polynomial of $alpha_t$ over $F$. By normality and separability, $g$ splits into linear factors over $E$, and thus $p^(phi_0)|g^(phi_0)$. But $g$ has coefficients in $F$ so $g^(phi_0) = g$ thus $p^(phi_0)|g$. so $p^(phi_0) (x)$ has exactly $[K : K_(t-1)]$ roots. Thus, we can conclude $
+   We claim $p^(phi_0) (x)$ splits into distinct linear factors in $E[x]$. It suffices to prove that $p^(phi_0)$ has a single root in $E$, by normality. 
+
+  //  We know $p(x)$ has a root in $E$, namely $alpha_t$, so $p(x)|g(x)$ where $g$ the minimal polynomial of $alpha_t$ over $F$. By normality, $g$ separates into linear factors in $E[x]$, which are distinct by separability. The coefficients of $g$ are in $F$, so $g^(phi_0) (x) = g(x)$, since $phi_0$ on each coefficient is the identity. So, $p^(phi_0) (x)|g^(phi_0) (x) = g(x)$, so $g$ can also be seen as a polynomial in $K_(t - 1) [x]$ hence $p^(phi_0) (x)$ splits into linear factors in $E$ // TODO
+   
+   We know $p(x)$ has a root in $E$, namely $alpha_t$, so $p(x)|g(x)$  where $g(x)$ the minimal polynomial of $alpha_t$ over $F$. By normality and separability, $g$ splits into linear factors over $E$, and thus $p^(phi_0)|g^(phi_0)$. But $g$ has coefficients in $F$ so $g^(phi_0) = g$ thus $p^(phi_0)|g$. so $p^(phi_0) (x)$ has exactly $[K : K_(t-1)]$ roots. Thus, we can conclude $
    hash"Hom"_(F) (K, E) &= hash"Hom"_F (K_(t - 1), E) times hash {"extensions" phi "of" phi_0 : K_(t- 1) -> F} \ 
    &= [K_(t - 1) : F] [K : K_(t - 1)] = [K : F],
    $ so taking $K = E$, we conclude $
    hash"Hom"_F (E, E) = hash"Aut"(E\/F) = [E : F].
    $
 ]
-// TODO what the fuck is going on here?
+// TODO what the fuck is going on here? rewrite better proof for this .
 
 This motivates the following definition generalization, with the benefit that it works for infinite degree extensions.
 
 #definition("Galois Extension")[
   An extension $E\/F$ is said to be _Galois_ if it is normal and separable over $F$.
+]
+
+In summary we've proven the following:
+#theorem[
+  If $E\/F$ is a finite extension, then TFAE: 
+  1. $hash "Aut"(E\/F) = [E : F]$;
+  2. $E$ is normal and separable over $F$;
+  3. $E$ is the (a) splitting field of a separable polynomial over $F$.
+]
+
+#proposition[
+  If $E\/F$ is a Galois extension and $K$ is any subfield of $E$ containing $F$, then $E\/K$ is also Galois.
+]
+#proof[
+This is immediate from 3. of the previous theorem, and from 2.; if $alpha in E$, $E\/F$ is normal and separable so there is a polynomial $f(x) in F[x]$ which is irreducible, splits into distinct linear factors in $E$, and satisfies $f(alpha) = 0$. Let $g(x)$ be the minimal polynomial of $alpha$ over $K$ so $g(x) in K[x]$, $g(alpha) = 0$ and $g$ irreducible. So, $f(x) in K[x]$ as well so it must be by minimality that $g|f$, in $K[x]$. So, it must be that $g$ splits into distinct linear factors in $E[x]$ since $f$ does. Hence, $E\/K$ normal and separable.
+
+Another way of seeing this is the following, using part 1. Let $G = "Gal"(E\/F)$ and $X = "Hom"_F (K, E)$. We saw last time that $hash X = [K : F]$. We have a natural action of $G$ on $X$; if $phi in X$ and $sigma in G$, then define $
+sigma ast phi := sigma compose phi.
+$ It turns out that $X$ actually a transitive $G$-set. Previously, we showed that any $phi : K -> E$ extends to a map $tilde(phi) : E -> E$; then if $phi_1, phi_2 : K -> E$, let $sigma = tilde(phi)_1compose tilde(phi)_2^(-1)$. By the orbit-stabilizer theorem, then, we find that $
+hash X dot hash "Stab"_G (id : K -> E) = hash G.
+$ We know $hash X = [K : F]$ and $hash G = [E : F]$. Moreover, the elements of $G$ that fix $id : K -> E$ are precisely the number of elements that fix $K$, hence $hash "Aut"(E\/K)$; so, rearranging, we find $
+hash "Aut"(E\/K) = [E:F]/[K:F],
+$ which is equal to $[E : K]$ by multiplicativity.
+]
+
+#remark[
+  Note that $K$ need not be Galois over $F$ in this setup.
+]
+
+#theorem[
+  The map $K |-> "Gal"(E\/K)$ is an injection from ${"subfields" F subset K subset E} -> {"subgroups of" "Gal"(E\/F)}$.
+]
+
+#proof[
+  We can show there exists a left-inverse to this map, namely, given $H = "Gal"(E\/K)$, how can you recover $K$ from $H$? Let $K = E^H$.
+]
+
+#corollary[
+  If $E\/F$ is finite Galois, then there are finitely many fields $F subset K subset E$.
+]
+#proof[
+  $"Gal"(E\/F)$ is a finite group so has finitely many subgroups. From the previous theorem, then since the map from subfields to subgroupsis injective there are at most $hash {"subgroups"}$ distinct subfields.
+]
+
+#corollary[
+  If $E\/F$ is any finite separable extension, then there are finitely many subfields $F subset K subset E$.
+]
+
+#proof[
+  If $E$ is separable, $E$ is generated by $alpha_1, dots, alpha_t$ where the $alpha_j$ is the root of a separable polynomial $g_j (x) in F[x]$. Let $tilde(E)$ be the splitting field of $g_1 (x) dots.c g_j (x)$. Then, $tilde(E)\/F$ Galois, and $E subset tilde(E)$, hence by the previous corollary there are finitely many fields $F subset K subset tilde(E)$ and thus those $K$ which are also subsets of $E$ is less than this finite number.\
+]
+
+#remark[
+  $E\/F$ separable is essential in this corollary. Consider $F = FF_p (u, v)$ where $u, v$ two indeterminates. Let $E = F(u^(1\/p), v^(1\/p))$. Then, $K_alpha = F(u^(1\/p) + alpha v^(1\/p))$ for $alpha in F$ are distinct subfields of $E$ containing $F$.
 ]
