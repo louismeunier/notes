@@ -2081,3 +2081,112 @@ $ That is, polynomials are dense in $C([a, b])$.
   &<= 2 M norm(f)_infinity eta/(4 M norm(f)_infinity) =  eta/2,
   $ for every $x$. Let $P_N (x) = (f ast S_n) (x)$, which we see to be a polynomial.
 ]
+
+#theorem[
+  Let $f in L^p (RR^d)$ with $p in [1, infinity)$. Then $f_epsilon ->_(L^p (RR^d)) f$.
+]
+#proof[
+  Since $f in L^p (RR^d)$, for every $eta > 0$ there is a $tilde(f) in C_c (RR^d)$ such that $norm(f - tilde(f))_p < eta$. Since $tilde(f) in C_c (RR^d)$, by the previous theorem dealing with mollifiers and uniform convergence, $tilde(f)_epsilon -> tilde(f)$ uniformly. In particular, we have $norm(tilde(f)_epsilon - tilde(f))_p ->_(p) 0$, hence $
+  norm(f - f_epsilon)_p <= norm(f_epsilon - tilde(f)_epsilon)_p + norm(tilde(f)_epsilon - tilde(f))_p + norm(tilde(f) - f)_p.
+  $ We've dealt with the second two bounds. For the first, $
+  norm(f_epsilon - tilde(f)_epsilon)_p &= norm((f - tilde(f)) convolve rho_epsilon)_p \
+  ("Young's") wide &<= norm(rho_epsilon)_1 norm(f - tilde(f))_p = norm(f - tilde(f))_p,
+  $ so $
+  norm(f - f_epsilon)_p <= 2 norm(f - tilde(f))_p + norm(tilde(f)_epsilon - tilde(f))_p < 3 eta.
+  $
+]
+
+#corollary[
+  $C_c^infinity (RR^d)$ dense in $L^p (RR^d)$.
+]
+#proof[
+  We showed $tilde(f)_epsilon$ approximates $f$ in $L^p (RR^d)$, and by construction $tilde(f)_epsilon$ is smooth with compact support.
+]
+
+== Strong Compactness in $L^p (RR^d)$
+
+We saw that for $p in (1, infinity)$, ${f_n} subset L^p (Omega)$, that any bounded sequence admits a weakly converging subsequence, $f_n_k harpoon.rt_(L^p) f$. In addition, if the norms also converge i.e. $lim_(n -> infinity) norm(f_n)_p = norm(f)_p$, then we actually have strong convergence $f_n_k ->_(L^p) f$.
+
+We provide now a strong compactness result in $L^p$, akin to Arzelà-Ascoli.
+#theorem("Strong Compactness")[
+  Let ${f_n} subset.eq L^p (RR^d)$ for $p in [1, infinity)$ s.t. \
+  i. $exists C > 0$ s.t. $norm(f_n)_p < C forall n$, i.e. ${f_n}$ uniformly bounded in $L^p$;\
+  ii. $lim_(abs(h) -> 0) norm(f_n - tau_h f_n)_p = 0$ uniformly in $h$, i.e. for every $eta > 0$, there exists $delta > 0$ such that if $abs(h) < delta$, $integral abs(f_n (x) - f_n (x - h))^p dif x < eta^p$ _for every_ $n$;\
+
+  Then, for any $Omega subset.eq RR^d$ with finite measure, there exists a subsequence ${f_n_k}$ such that $f_n_k ->_(L^p (Omega)) f$.
+]
+
+#proof[
+  Recall that $L^p (Omega)$ is a complete metric space, so TFAE:
+  1. sequential compactness;
+  2. totally bounded (& complete);
+  3. compact.
+
+  Let $cal(F) = {f in L^p (RR^d) "satisfying" "i.", "ii."}$ and fix $Omega subset.eq RR^d$ with finite measure. We aim to show that $cal(F)|_(Omega)$ is sequentially compact in $L^p (Omega)$ (with no regard to whether the limit lives in $cal(F)_Omega$); equivalently, we wish to show $cal(F)|_(Omega)$ is precompact in $L^p (Omega)$ i.e. $overline(cal(F)|_(Omega))$ is compact. Since $overline(cal(F)|_(Omega))$ is a complete metric space, to prove the result it suffices to show that $cal(F)|_(Omega)$ is totally bounded (recall: for every $delta > 0$, $cal(F)|_(Omega) subset.eq union.big_(i=1)^N B_(L^p (Omega)) (g_i, delta)$). We'll do this using mollifiers and AA to do this.
+
+  _Step 1:_ Fix $eta$, $delta$ as in ii. in the statement of the theorem, and let $f in cal(F)$. Then, for every $epsilon < delta$, we claim $
+  norm((rho_epsilon convolve f) - f)_(L^p (RR^d)) < eta.
+  $ We have $
+  abs((rho_epsilon convolve f)(x) - f(x)) &= abs(integral_(B_epsilon) rho_epsilon (y) f(x - y) dif y - f(x) integral rho_epsilon (y) dif y ) \ 
+  & <= integral_(B_epsilon) rho_epsilon (y) abs(f(x - y) - f(x)) dif y \
+  &= integral_(B_epsilon) rho_epsilon^(1/q) (y) rho_epsilon^(1/p) (y) abs(f(x - y) - f(x)) dif y \ 
+  "(Holder's)" wide&<= (integral rho_epsilon (y) abs(f(x - y) - f(x))^p dif y)^(1\/p) underbrace((integral rho_epsilon (y) dif y)^(1\/q), = 1),
+  $ and hence $
+  integral abs((rho_epsilon convolve f) (x) - f(x))^p dif x &<= integral.double rho_epsilon (y) abs(f(x - y) - f(x))^p dif y dif x \ 
+  ("Tonelli's") wide &= integral_(B_epsilon) rho_epsilon (y) underbrace(integral abs(f(x - y) - f(x))^p dif x, epsilon < delta => eta^p) dif y \ 
+  &< eta^p underbrace(integral_(B_epsilon) rho_epsilon (y) dif y, = 1) = eta^p,
+  $ hence $norm((rho_epsilon convolve f) (x) - f(x))_p < eta$.
+
+  _Step 2:_ We first claim that there exists some $C_epsilon$ such that for any $f in cal(F)$, $
+  norm(rho_epsilon convolve f)_infinity <= C_epsilon norm(f)_p, wide (1)
+  $ and that for any $x_1, x_2 in RR^d$, $
+  abs((rho_epsilon convolve f)(x_1) - (rho_epsilon convolve f) (x_2)) <= C_epsilon norm(f)_p abs(x_1 - x_2). wide (2)
+  $ In particular, this shows that _for $epsilon$ fixed_, $(rho_epsilon convolve f)$ satisfy hypothesis of AA. Remark that the first is a uniform boundedness type condition for $rho_epsilon convolve f$, and the second is a uniform Lipschitz bound.
+
+  For the first claim (1), $
+  abs((rho_epsilon convolve f) (x)) &= abs(integral rho_epsilon (x - y) f(y) dif y) \ 
+  "(Holder's)"wide&<= (integral rho_epsilon^q (x - y) dif y)^(1/q) dot norm(f)_p \ 
+  &= norm(rho_epsilon)_q norm(f)_p,
+  $ so we have the bound with $C_epsilon := norm(rho_epsilon)_q$ since the bound is independent of $x$.
+  #remark[
+    One can explicitly compute $norm(rho_epsilon)_q$, and realize that it will in general depend explicitly on $epsilon$.
+  ]
+  For the second statement (2), we find that $gradient (rho_epsilon convolve f) = (gradient rho_epsilon) convolve f$ since the RHS is finite, because $
+  (gradient rho_epsilon convolve f)(x) = integral gradient rho_epsilon (x - y) f(y) dif y <= norm(gradient rho_epsilon)_q norm(f)_p.
+  $ So, $
+  norm(gradient (rho_epsilon convolve f))_infinity <= underbrace(norm(gradient rho_epsilon)_q, =: C_epsilon) norm(f)_p.
+  $ By the mean-value theorem then, we have all together $
+  norm((rho_epsilon convolve f)(x_1) - (rho_epsilon convolve f)(x_2)) &<= norm(gradient (rho_epsilon convolve f))_infinity abs(x_1 - x_2) \ 
+  &<= C_epsilon norm(f)_p abs(x_1 - x_2).
+  $ This proves (2).
+  
+  _Step 3:_ Next, we claim that for $eta > 0$ and fixed $epsilon < eta$ and $Omega subset.eq RR^d$ with finite measure, there exists $E subset.eq Omega subset.eq RR^d$ such that $E$ is bounded, i.e. $E subset.eq B(0, M)$ where $M$ sufficiently large, and moreover that $norm(f)_(L^p (Omega\\E)) < eta$ for every $f in cal(F)$.
+
+  We have that $
+  norm(f)_(L^p (Omega\\E)) <= norm(f - (rho_epsilon convolve f))_(L^p (RR^d)) + norm(rho_epsilon convolve f)_(L^p (Omega\\E)).
+  $ By the very first step of the proof, the first term is $< eta$, so this is bounded by $
+  &< eta + (integral_(Omega\/E) abs(rho_epsilon convolve f)^p dif x)^(1\/p) \ 
+  & < eta + norm(rho_epsilon convolve f)_(infinity) |Omega\\E|^(1/p) \ 
+  & < eta + C_epsilon norm(f)_p abs(Omega\\E)^(1/p).
+  $ $C_epsilon$ finite and $norm(f)_p$ upper bounded uniformly over $cal(F)$, so it suffices to construct $E$ with the measure of $Omega\\E$ sufficiently small, so we can get $norm(f)_(L^p (Omega\\E)) < 2 eta$.
+
+  _Step 4:_ Fix $eta > 0$. We claim $cal(F)|_(Omega)$ is totally bounded. Let $epsilon < delta$ then let $
+  cal(H) := (rho_epsilon convolve cal(F))|_(overline(E)) = {rho_epsilon convolve f|_(E) : f in cal(F)}.
+  $ $E subset.eq Omega subset.eq RR^d$ is bounded implies $overline(E)$ is compact. So by Step 2., we showed $(rho_epsilon convolve cal(F))$ satisfies hypotheses of AA on $overline(E)$. Hence, $cal(H)$ is precompact in $C(overline(E))$. Thus, since we have uniform convergence we certainly have $L^p$ convergence thus $cal(H)$ also precompact in $L^p (overline(E))$. Thus, for $eta > 0$, there exists ${overline(g)_i} subset.eq L^p (overline(E))$ such that $
+  cal(H) subset.eq union.big_(i=1)^N B_(L^p (overline(E))) (overline(g)_i, eta). wide star.filled
+  $ Let $g_i : Omega -> RR$ be given by $
+  g_i (x) = cases(overline(g)_i & "on" E, 0 & "on" Omega\\E).
+  $ Then, we claim $cal(F)|_(Omega) subset.eq union.big_(i=1)^N B_(L^p (Omega)) (g_i, 3 eta)$. If $f in cal(F)$ by $star.filled$, there is an $i$ such that $norm(rho_epsilon convolve f - overline(g)_i)_(L^p (overline(E))) < eta$. But also, $
+  norm(f - g_i)_(L^p (Omega))^p &= integral_(Omega\\E) abs(f)^p dif x + integral_(overline(E)) abs(f - overline(g)_i)^p dif x \ 
+  &= norm(f)_(L^p (Omega\\E)) + integral_(overline(E)) abs(f - overline(g)_i)^p dif x\
+  "(Step 3.)" wide &<= eta^p + integral_(overline(E)) abs(f - overline(g)_i)^p dif x.
+  $ Recall $(a + b)^(1/p) <= a^(1/p )+ b^(1/p)$. Applying this bound to the above, we find $
+  norm(f - g_i)_(L^p (Omega)) &<= eta + norm(f - overline(g)_i)_(L^p (overline(E))) \ 
+  &<=eta + underbrace(norm(f - f ast rho_epsilon)_(L^p (RR^d)), < eta "by Step 1.") +underbrace(norm((f ast rho_epsilon) - overline(g)_i)_(L^p (overline(E))), < eta "by" star.filled) \ 
+  & <= 3 eta.
+  $ Hence, $cal(F)|_(Omega) subset.eq union.big_(i=1)^N B(g_i, 3 eta)$, thus $cal(F)|_(Omega)$ is sequentially compact so any sequence in $cal(F)$ has a converging subsequence, which proves the theorem.
+]
+
+#remark[
+  This can be extended to $L^p (RR^d)$ with some conditions.
+]

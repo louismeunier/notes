@@ -284,7 +284,7 @@ X_((1)) <= X_((2)) <= dots.c <= X_((n)),
 $ where $X_((i))$ the $i$th largest of $X_1, dots, X_n$.
 ]
 
-#definition("Related Functions of Order Statistcs")[
+#definition("Related Functions of Order Statistics")[
  The _sample range_ is defined $
 R_n := X_((n)) - X_((1)).
 $ The _sample median_ is defined $
@@ -990,7 +990,7 @@ Note that an unbiased estimator of a parameter of interest may not even exist. F
 
 
 #theorem[
-  An estimator $U(bold(X))$ of $tau(theta) = EE_theta [U(bold(X))]$ is the best unbiased estimaor iff $U(bold(X))$ is uncorellated with all unbiased estimators of zero, i.e. $
+  An estimator $U(bold(X))$ of $tau(theta) = EE_theta [U(bold(X))]$ is the best unbiased estimator iff $U(bold(X))$ is uncorellated with all unbiased estimators of zero, i.e. $
   Cov_theta (U(bold(X)), delta(bold(X))) = EE_theta [U(bold(X)) delta(bold(X))] = 0
   $ for every $delta(bold(X))$ such that $EE_theta [delta(bold(X))] = 0$.
 ]
@@ -1252,14 +1252,14 @@ From a a "maximum likelihood estimation point of view", both likelihoods contain
   - $hat(theta)_n$, properly cscaled and centeralized, is asymptotically normal.
 ]
 
-= Bayesian Estimation
+== Bayesian Estimation
 
 Let $bold(X) = (X_1, dots, X_n) tilde p_theta (dot)$ be data distributed according to some parametrically indexed joint pdf. In Bayesian inference, the parameter $theta$ is also treated as a random variable, with a pdf/pmf $pi(theta)$, called the _prior distribution_ of $theta$. Then, for post-experimental (observed) data $bold(x) = (x_1, dots, x_n)$, then we write $
-p_theta (x_1, dots, x_n) = p_theta (bold(x)) = p(bold(x) | theta),
+p_theta (x_1, dots, x_n) = p_theta (bold(x)) = p(bold(x)|theta),
 $ i.e. treated as a conditional distribution of $X|theta$.
 
 By Baye's theorem, where $p_X (bold(x))$ the marginal pdf/pmf of $bold(X)$, $
-pi(theta | bold(x)) = (p(bold(x) | theta) pi(theta))/(p_(bold(X)) (bold(x))) = (p_theta (bold(x)) pi(theta))/(integral_(Theta) p_theta (bold(x)) pi(theta) dif theta),
+pi(theta|bold(x)) = (p(bold(x)|theta) pi(theta))/(p_(bold(X)) (bold(x))) = (p_theta (bold(x)) pi(theta))/(integral_(Theta) p_theta (bold(x)) pi(theta) dif theta),
 $  where $Theta$ the entire parameter space (i.e., support of $pi$). Hence, the so-called _posterior distribution_, $pi(theta|bold(x))$, is proportional $
 pi(theta|bold(x)) prop p_theta (bold(x)) pi(theta).
 $
@@ -1274,5 +1274,61 @@ Recall that $Var_pi (theta) >= EE_theta [Var(theta|bold(X))]$; so, the prior var
 #definition("Baye's Risk")[
   Given a loss function $L$, _Baye's Risk_ of $delta(bold(X))$ is the function $
   R(delta) := EE_pi {EE_(bold(X)|theta) [L(delta(bold(X)), theta)]}.
+  $ I.e., heuristically, the first nested expected value averages the loss of the estimator $delta(bold(X))$ over all data $bold(X)$ given parameter $theta$, then the second averages over all $theta$'s.
+]
+
+#definition("Baye's Estimator")[
+  The _Baye's estimator_ is defined $
+  hat(delta)(bold(X)) := "argmin"_(delta in sans(D)) R(delta),
+  $ where $sans(D)$ the collection of all possible estimators; i.e. the estimator that minimizes Baye's Risk.
+]
+
+In the continuous case, we may write, where $Theta$ the parameter space and $Chi$ the support of $delta$, $
+R(delta) &= integral_(Theta) [integral_(Chi) L(delta(bold(x)), theta) p_theta (bold(x)) dif bold(x) ] pi(theta) dif theta \ 
+&=integral_(Chi) [integral_(Theta) L(delta(bold(x)), theta) pi(theta|bold(x)) dif theta] p_bold(X) (bold(x)) dif x.
+$ The outside integral is independent of $theta$, so it suffices to minimize the inner (bracketed) integral, hence $
+hat(delta)(bold(X)) = "argmin"_(delta in sans(D)) {integral_(Theta) L(delta(bold(X)); theta) pi(theta|bold(x)) dif theta}.
+$ This expression is called the _posterior expected loss_. For instance if $L(delta, theta) = (delta - theta)^2$, then $
+hat(delta)(bold(X)) = "argmin"_(delta in sans(D)) {integral_(Theta) (delta(bold(X)) - theta)^2 pi(theta|bold(x)) dif theta}.
+$ Recalling that the minimizer of $EE[(X - a)^2]$ is $a = EE[X]$, we readily find that $
+hat(delta)(bold(X)) = EE_(theta|bold(X)=bold(x)) [theta|bold(X)=bold(x)],
+$ called the _posterior mean_.
+
+Similarly, if we take the absolute value loss function $L(delta, theta) = abs(delta - theta)$, then we'd find $hat(delta)(bold(X)) = $ _posterior median_.
+
+#example[
+  Let $X_i tilde^"iid" "Ber"(theta)$ and assume a Beta prior for $theta$, namely $theta tilde pi(theta) = "Beta"(alpha, beta)$, where $alpha, beta$ are so-called "hyperparameters" (namely, they are known), so $
+  pi(theta) = Gamma(alpha + beta)/(Gamma(alpha) Gamma(beta)) theta^(alpha - 1) (1 - theta)^(beta - 1).
+  $ We aim to find the Baye's estimator of $theta$ under the square loss. We have $
+  pi(theta|bold(x)) &prop p_theta (bold(x)) pi(theta) \ 
+  &= theta^(sum_(i=1)^n x_i) (1 - theta)^(n- sum_(i=1)^n x_i) Gamma(alpha + beta)/(Gamma(alpha) Gamma(beta)) theta^(alpha - 1) (1 - theta)^(beta - 1) \ 
+  &= Gamma(alpha + beta)/(Gamma(alpha) Gamma(beta)) theta^(n overline(x)_n + alpha - 1) (1 - theta)^(n - n overline(x)_n + beta - 1),
+  $ so in particular one observes $theta|bold(X)=bold(x) tilde "Beta"(n overline(x)_n + alpha, n - n overline(x)_n + beta)$. Thus, using the known mean of a Beta distribution, $
+  hat(delta)(bold(X)) &= EE_(theta|bold(X)) [theta|bold(X)] \
+  &= (n overline(X)_n +alpha)/(n overline(X)_n +alpha + n - n overline(X)_n + beta)\
+   &= (n overline(X)_n + alpha)/(n + alpha + beta) \ 
+   &= n/(n + alpha + beta) overline(X)_n + (alpha + beta)/(n + alpha + beta) alpha/(alpha + beta),
+  $ where we notice this a convex combination of $overline(X)_n$, the MLE, and $alpha/(alpha + beta)$, the prior mean.
+]
+
+
+== Large Sample Properties
+
+Let $cal(F) = {f_theta : theta in Theta subset.eq RR^d}$ and $X tilde f_(theta_0)$ for some $theta_0 in Theta$. Let $X_1, dots, X_n tilde^"iid" f_theta_0$. Let $hat(theta)_n (bold(X)) = "argmax"_(theta in Theta) L_n (theta)$. Assuming we obtained the MLE by solving the likelihood equations $(partial ell_n (theta))/(partial theta) = 0$. Under certain regularity conditions, we find $
+hat(theta)_n ->^"P" theta, wide sqrt(n) (hat(theta)_n - theta_0) ->^"d" cal(N)_d (0, I_1^(-1) (theta_0)),
+$ where $I_1 (theta)$ the _Fisher information matrix_ given by $
+I_1 (theta) = EE_theta {[(partial log (f(x; theta)))/(partial theta)] dot [(partial log (f(x; theta)))/(partial theta)]^t}.
+$ Before proceeding we need some tools. $
+EE_(theta_0) {log (f(bold(X); theta_0))/f(bold(X); theta)}
+$ is called the _Kullback-Leibler_ distance between $f(bold(x); theta)$ and $f(bold(x); theta_0)$. 
+
+#proposition[
+  The Kullback-Leibler distance is strictly positive for $theta eq.not theta_0$ and equal for $theta = theta_0$.
+]
+
+#proof[
+  We may write, by Jensen's inequality $
+= - EE_theta_0 {log (f(bold(X); theta))/(f(bold(X); theta_0))} >= - log EE_theta_0 { (f(bold(X); theta))/(f(bold(X); theta_0))} = - log integral f(bold(x); theta)/cancel(f(bold(x); theta_0)) cancel(f(bold(x); theta_0)) dif bold(x)  = - log 1 = 0.
   $
 ]
+
