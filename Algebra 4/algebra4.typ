@@ -1785,7 +1785,7 @@ $ which is equal to $[E : K]$ by multiplicativity.
 
 #theorem[
   The map $K |-> "Gal"(E\/K)$ is an injection from ${"subfields" F subset K subset E} -> {"subgroups of" "Gal"(E\/F)}$.
-]
+]<thm:injectionsidegal>
 
 #proof[
   We can show there exists a left-inverse to this map, namely, given $H = "Gal"(E\/K)$, how can you recover $K$ from $H$? Let $K = E^H$.
@@ -1808,4 +1808,41 @@ $ which is equal to $[E : K]$ by multiplicativity.
 
 #remark[
   $E\/F$ separable is essential in this corollary. Consider $F = FF_p (u, v)$ where $u, v$ two indeterminates. Let $E = F(u^(1\/p), v^(1\/p))$. Then, $K_alpha = F(u^(1\/p) + alpha v^(1\/p))$ for $alpha in F$ are distinct subfields of $E$ containing $F$.
+]
+
+#theorem("Primitive Element Theorem")[
+  If $E\/F$ is finite and separable, then there exists an $alpha in E$ such that $E = F(alpha) = F[alpha] tilde.eq F[x]\/(p_alpha (x))$, where $p_alpha (x)$ is the minimal polynomial of $alpha$ in $E\/F$.
+]
+
+#proof[
+  If the ground field $F$ is finite, then the result is clear because then $E$ is also finite, so $E^times$ is cyclic so finitely generated.
+
+  Suppose then $F$ infinite. We know $E = F(alpha_1, dots, alpha_n)$; we proceed by induction by $n$. If $n = 1$ we're done. Suppose $n = 2$, and let $E = F(alpha, beta)$. Consider $E_t := F(alpha + t beta)$ where $t in F$, which is an extension of $F$ and a subfield of $E$. There are infinitely many $t$'s, but by the previous theorem can only be finitely many $E_t$'s. In particular, there must be $t_1, t_2 in F$ such that $E_t_1 = E_t_2$, namely $
+  E_0 := F(alpha + t_1 beta) = F(alpha + t_2 beta).
+  $ Then, $alpha + t_1 beta, alpha + t_2 beta in E_0$, so in particular $(t_1 - t_2) beta in E_0$ (by subtracting), and by construction $t_1 eq.not t_2$, so we can divide out and conclude $beta in E_0$. So, subtracting $t_1 dot beta$ from $alpha + t_1 beta$, we conclude $alpha, beta in E_0$, so $E_0 supset E$, but the converse was by construction, so we conclude $E_0 = E$.
+
+  Suppose the case for $n$ and let $E = F(alpha_1, dots, alpha_(n+1))$. We may rewrite this as $F(alpha_1, dots, alpha_(n)) (alpha_(n+1))$. Applying the induction hypothesis, we find this equal to $E = F(beta)(alpha_(n+1)) = F(beta, alpha_(n+1))$, and so applying the $n = 2$ case, we are done.
+]
+
+#remark[
+  The separability assumption is key in the statement. Consider $F = FF_p (u, v)$ and $E = FF_p (u^(1/p), v^(1/p))$, an extension of degree $p^2$ over $F$. We claim there is no primitive element. Suppose $alpha in E$ is such that $alpha = R(u^(1/p), v^(1/p)) = f(u^(1/p), v^(1/p))/g(u^(1/p), v^(1/p))$. then, $alpha^p = f(u, v)/g(u, v) in F$, so $[F(alpha) : F] = 1$ or $p$ for every $alpha in E$. In particular, this means $F(alpha) eq.not E$. Hence, the primitive element theorem doesn't apply; there are infinitely many distinct subfields.
+
+  We glossed over the computation of the degree. Note that $u^(1/p)$ satisfies the polynmoial $x^p - u$ which is irreducible. $v^(1/p)$ satisfies $x^p - v$, which we claim has no roots in $F(u^(1/p))$. If $v = R(u^(1/p), v)^p = R(u, v^p)$, which is impossible so $v$ not a $p$th power in $F(u^(1\/p))$. So, $[F(u^(1/p), v^(1/p)) : F] = p^2$ by multiplicativity.
+]
+
+We use this theorem to prove the converse of @thm:injectionsidegal.
+
+#proposition[
+  $[E : E^H] = hash H$.
+]
+#proof[
+  By the primitive element theorem, $E = E^H (alpha)$ for some $alpha in E$. Consider $H alpha =$ orbit of $alpha$ under $H$ $={alpha_1, dots, alpha_n}$. We claim $hash H alpha = hash H$. It must be that $"Stab"_H (alpha) = {1}$, since if $g alpha = alpha$, $alpha in E^H$ which contradicts our construction. From the orbit-stabilizer theorem, we conclude the claim.
+
+  Consider then $p(x) = (x - alpha_1)dots.c (x - alpha_n) in E^H [x]$, which is in this space since upon expansion each of the coefficients are fixed under $H$. $p(alpha) = 0$; moreover, we claim $p(alpha)$ is irreducible over $E^H$. $H$ acts transitively on the roots of the polynomial, by design, so it must be irreducible; if it weren't, then there would be two (or more) orbits of the roots of the polynomial.
+
+  Thus, we conclude $[E : E^H] = "deg"(p) = n = hash H$.
+]
+
+#corollary[
+  $H = "Gal"(E\/E^H)$.
 ]
