@@ -2190,3 +2190,152 @@ We provide now a strong compactness result in $L^p$, akin to Arzelà-Ascoli.
 #remark[
   This can be extended to $L^p (RR^d)$ with some conditions.
 ]
+
+= Introduction to Fourier Analysis
+
+References are Folland, Chapter 8 and _Fourier Analysis_ by Stein & Sharkarchi.
+
+== Fourier Series
+
+We will denote the torus $TT = [0, 1) tilde.eq RR\/ZZ$ (with $1$ identified back with $0$), and specifically complex-valued functions on the torus $
+L^2 (TT) = {f : TT -> CC thin thin thin #vbar(2em) thin thin thin integral_(0)^1 abs(f(x))^2 dif x < infinity},
+$ where now $abs(dot)$ the modulus (i.e. $abs(a + b i)^2 = a^2 + b^2$). Equivalently, $f : TT -> CC$ can be identified with $tilde(f) : RR -> CC$ which is periodic.
+
+#proposition[
+  The function $L^2 (TT) times L^2 (TT) -> CC$ $
+  (f, g) = integral_(0)^1 f(x) overline(g(x)) dif x
+  $ is an inner product on $L^2 (TT)$. In particular, $(L^2 (TT), (dot,dot))$ a Hilbert space.
+]
+
+#proof[
+  For $CC$-valued functions, we need to check: 
+  - linearity in the first variable: for $alpha in CC$, $
+  (alpha f + h, g) =integral_(0)^1 (alpha f + h) overline(g) dif x = alpha (f, g) + (h, g)
+  $ by linearity of the integral;
+  - conjugate symmetry: $
+  integral_0^1 f(x) overline(g(x)) dif x &= integral_(0)^1 ("Re"(f) + i"Im"(f))("Re"(g) - i"Im"(g)) dif x \ 
+  &=: integral_(0)^1 (a  + i b)(c - i d) dif x \ 
+  &= integral_(0)^1 (a c + b d) + i (b c -  a d) dif x \
+  &= integral_(0)^1 (a c + b d ) - i (a d - b c) dif x\
+  &= overline(integral_(0)^1 g overline(f) dif x) = overline((g, f));
+  $
+  - $f$ inner product with $f$ properties:  $
+  (f, f) &= integral_(0)^1 f(x) overline(f(x)) dif x = integral_(0)^1 abs(f(x))^2 dif x = norm(f)_(L^2 (TT))^2 >= 0, = 0 "iff" f equiv 0.
+  $
+  We know $L^2 (TT)$ is complete, so $L^2 (TT)$ a Hilbert space with this inner product since it induces the same norm as the usual norm $L^2$-norm.
+]
+
+#theorem[
+  Let $e_n (x) := e^(2 pi i n x)$ for $n in ZZ$. Then, ${e_n}_(n in ZZ)$ is an orthonormal basis of $L^2 (TT)$.
+]
+
+#proof[
+  For orthonormality, if $n eq.not m$, $
+  (e_n, e_m) &= integral_(0)^1 e^(2 pi i n x) e^(- 2 pi i m x) dif x \ 
+  &= integral_(0)^1 e^(2 pi i (n - m) x) dif x \ 
+  &= 1/(2pi i (n - m)) e^(2 pi i (n - m) x ) thin #vbar(2em)_(thin 0)^(thin 1) \
+  &= 1/(2 pi i (n - m)) [e^(2 pi i (n - m)) - 1] \ 
+  &= 1/(2 pi i (n - m)) [underbrace(cos (2 pi (n - m)), = 1) + underbrace(i sin (2 pi (n - m)), = 0) - 1] = 0,
+  $ and if $n = m$, $
+  (e_n, e_n) = integral_(0)^1 abs(e^(2 pi i n x))^2 dif x = integral_(0)^1 1 dif x = 1.
+  $ To prove its a basis, we use Stone-Weierstrass. $TT$ is compact; let $
+  cal(A) := {sum_(n=-N)^N alpha_n e_n : alpha_n in CC, N in NN}.
+  $ Notice $e_n e_m = e^(2 pi i (n + m) x) = e_(n + m)$, and $e_0 = 1$, so this family stays closed under multiplication (and clearly addition and scalar multiplication by definition), so is an algebra which contains constant functions. Also, if $x_1 eq.not x_2$ and $x_1, x_2 in [0, 1)$, then if $n eq.not 0$, $e_n (x_1) = e^(2 pi i n x_1) eq.not e^(2 pi i n x_2) = e_n (x_2)$, so $cal(A)$ separates points. By (complex) Stone-Weierstrass, then we know $cal(A)$ is dense in $C(TT, CC)$ with respect to $norm(dot)_infinity$. We know $C(TT, CC)$ is dense in $L^2 (TT)$ (by some mollifier argument, for example) with respect to $norm(dot)_(L^2 (TT))$. So, $
+  f(x) = lim_(N->infinity) sum_(n=-N)^N alpha_n e_n (x),
+  $ with the limit taken in the sense of $L^2 (TT)$.
+]
+
+Recall that in Hilbert spaces, TFAE:
+- ${e_n}$ are a basis, i.e. $f = sum_(n=-infinity)^infinity alpha_n e_n = sum_(n=-infinity)^infinity (f, e_n) e_n$, in $L^2 (TT)$;
+- if $(f, e_n) = 0$ for every $n$, $f equiv 0$ (completeness);
+- $norm(f)_(L^2 (TT))^2 = sum_(n=-infinity)^infinity abs((f, e_n))^2$ (Parseval's).
+With this in mind, we define:
+
+#definition("Fourier Series")[
+Let $
+hat(f)(n) := (f, e_n) = integral_0^1 f(x) e^(- 2 pi i n x) dif x.
+$ Then, the _complex Fourier series_ is defined by $
+sum_(n=-infinity)^infinity hat(f)(n) e^(2 pi i n x).
+$
+]
+
+#remark[
+  A Fourier series can be defined for any periodic function, while we only do so for $1$-periodic here. If $f$ were $L$-periodic, we'd define $
+  hat(f)_L (n) := 1/L integral_(0)^L f(x) e^((-2 pi i n x)/L) dif x,
+  $ with complex Fourier series $sum_(n=-infinity)^infinity hat(f)_L (n) e^((2 pi i n x)/L)$.
+]
+
+#remark[
+  We can also make Fourier series to be real-valued, with sines and cosines, of the form $
+  A_0 + sum_(n=1)^infinity [A_n cos ((2 n pi x)/L) + B_n sin((2 n pi x)/L)],
+  $ for some $A_n, B_n$ also given by inner products.
+]
+
+What conditions do we need on $f$ to make this series converge? In the general $L^2$-theory, we just need $f in L^2 (TT)$. By Parseval's, $
+norm(f)_(L^2 (TT))^2 = sum_(n=-infinity)^infinity abs(hat(f)(n))^2.
+$ So, the operator $hat(dot) : L^2 (TT) -> ell^2 (CC)$. Note that this implies $lim_(n->infinity) abs(hat(f)(n))^2 = 0,$ so also $lim_(n->infinity) abs(f(n)) = 0$. This proves the following proposition:
+
+#proposition("Riemann-Lebesgue Lemma")[
+  If $f in L^2 (TT)$, $
+  lim_(n->infinity) abs(hat(f)(n)) = 0.
+  $
+]
+
+#remark[
+  This result in _very_ useful, particularly for the real Fourier Series. In particular, it tells us statements such as $
+  lim_(n->infinity) integral_(0)^1 f(x) sin(2n pi x) dif x = 0,
+  $ with similar for the cosine term. These are so-called "oscillatory integrals".
+]
+
+While the $L^2 (TT)$-theory is very useful for Hilbert space interpretation, we are really concerned with the partial sums $
+S_N (x) = sum_(n=-N)^N hat(f)(n) e^(2 pi i n x),
+$ and ways it might converge. We may rewrite by definition $
+S_N (x) &= sum_(n=-N)^N (integral_(0)^1 f(y) e^(- 2pi i n y) dif y) e^(2 pi i n x) \ 
+("because finite sum") wide &= integral_(0)^1 f(y) sum_(n=-N)^N e^(2 pi i n (x - y)) dif y \ 
+(convolve "just over" [0, 1)) wide &= (f ast D_N) (x), wide D_N (x) := sum_(n=-N)^N e^(2 pi i n x).
+$ So in short, $
+S_N (x) = (f ast D_N) (x),
+$ where $D_N (x)$ is called the _Dirichlet kernel_. Let's look at some of its properties.
+
+$
+D_N (x) &= 1 + sum_(n=1)^N [e^(2 pi i n x) + e^(- 2pi i n x)] ,
+$ so $
+integral_(0)^1 D_N (x) dif x = integral_(0)^1 1 dif x + underbrace(sum_(n=1)^N integral_(0)^1 ("some periodic functions"), = 0) = 1, 
+$ by periodicity. However, $D_N (x)$ is not actually a good kernel; one can show that $integral_(0)^1 abs(D_n (x)) dif x >= C log N$ as $N->infinity$.
+
+#theorem("Pointwise Convergence")[
+  Let $f in L^2 (TT)$ and suppose $f$ is Lipschitz continuous at $x_0$. Then, $
+  S_N (x_0) -> f(x_0).
+  $
+]
+#proof[
+  Left as an exercise. 
+] 
+
+Note that $
+  D_N (x) &= sum_(n=-N)^N e^(2pi i n x) \
+  &= sum_(n=0)^(2 N) e^(2 pi i (n - N) x) \ 
+  &= e^( - 2 pi i N x) sum_(n=0)^(2N) (e^(2 pi i x))^n \ 
+  &= e^(- 2 pi i N x) ((1 - e^(2 pi i (2N + 1 ))x)/(1 - e^(2 pi i x))) wide "(geometric series)" \ 
+  &= (e^(-2 pi i N x) - e^(2 pi i (N + 1) x))/(1 - e^(2 pi i x)) dot (e^(- 2 pi i x/2))/(e^(- 2 pi i x/2))\
+  &= (e^(- 2pi i (N + 1/2) x) - e^(2 pi i (N+ 1/2) x))/(e^(- 2 pi i x/2)- e^(2 pi i x/2)) \ 
+  &= (sin(2pi (N+ 1/2) x))/(sin(2 pi x/2)).
+$
+
+#theorem("Uniform convergence")[
+  If $f in C^2 (TT)$, then $S_N (x) -> f(x)$ uniformly on $TT$.
+]
+
+#proof[
+  Exercise.
+]
+
+#remark[
+  In fact, we see that $hat(f)(n) = integral_(0)^1 f(x) e^(- 2pi i n x) dif x$ is well-defined whenever $f in L^1 (TT)$. So, we can view $
+  hat(dot) : L^1 (TT) -> ell^infinity (CC).
+  $
+]
+
+#remark[
+  All the prior results can be extended to $f in L^1 (TT)$, via density.
+]

@@ -571,7 +571,7 @@ $ whenever the right-hand side is finite.
 Let $Tau(bold(X))$ be such that $Var_theta (Tau(bold(X))) < infinity$ and $EE_theta [Tau(bold(X))] = tau(theta)$ for every every $theta in Theta$. Then if $0 < EE_theta [(dif/(dif theta) log(p_theta (bold(x))))^2] < infinity$ for every $theta in Theta$, then the Cramér-Rao Lower Bound (CRLB) holds: $
 Var_theta (Tau(bold(X))) >= [tau'(theta)]^2/(EE_theta [(dif/(dif theta) log p_theta (bold(x)))^2]), wide forall theta in Theta.
 $
-]
+ ]<thm:crlb>
 
 #remark[
   The quantity $
@@ -1312,15 +1312,26 @@ Similarly, if we take the absolute value loss function $L(delta, theta) = abs(de
 ]
 
 
-== Large Sample Properties
+== Large Sample Properties of MLE
 
-Let $cal(F) = {f_theta : theta in Theta subset.eq RR^d}$ and $X tilde f_(theta_0)$ for some $theta_0 in Theta$. Let $X_1, dots, X_n tilde^"iid" f_theta_0$. Let $hat(theta)_n (bold(X)) = "argmax"_(theta in Theta) L_n (theta)$. Assuming we obtained the MLE by solving the likelihood equations $(partial ell_n (theta))/(partial theta) = 0$. Under certain regularity conditions, we find $
+
+Let $cal(F) = {f_theta : theta in Theta subset.eq RR^d}$ and $X tilde f_(theta_0)$ for some $theta_0 in Theta$. Throughout, we'll assume the following regularity conditions about the distribution:
+
+- *R0*: $Theta$ is either open, or contains an open set such $N$ such that $theta_0$ an interior point of $N$
+- *R1*: The pdf/pmf $f_theta$ has a common support $Chi$ for all $theta in N$ and is identifiable in $theta$ for every $x in Chi$. That is, for every $theta_1, theta_2 in N$, $f(x; theta_1) = f(x; theta_2)$ for every $x in Chi$ iff $theta_1 = theta_2$
+- *R2*: $f_theta $ is thrice differentiable in $theta$ for almost every $x in Chi$
+- *R3*: There exists functions $M_i (x)$ for $i = 1, 2, 3$ (possibly depending on $theta_0$) such that for every $theta in N$, $
+abs((partial f(x; theta))/(partial theta_i)) < M_1 (x), wide abs((partial^2 f(x; theta))/(partial theta_i partial theta_j)) < M_2 (x), wide abs((partial^3 f(x; theta))/(partial theta_i partial theta_j partial theta_k)) < M_3 (x)
+$ for every $x in Chi$, such that the integral of each $M_i$ over $Chi$ is finite
+- *R4*: for all $theta in N$, $I_1 (theta)  > 0$ is a positive definite matrix, as defined below
+
+ Let $X_1, dots, X_n tilde^"iid" f_theta_0$. Let $hat(theta)_n (bold(X)) = "argmax"_(theta in Theta) L_n (theta)$. Assume we obtained the MLE by solving the likelihood equations $(partial ell_n (theta))/(partial theta) = 0$. Under R0 - R4, we find $
 hat(theta)_n ->^"P" theta, wide sqrt(n) (hat(theta)_n - theta_0) ->^"d" cal(N)_d (0, I_1^(-1) (theta_0)),
 $ where $I_1 (theta)$ the _Fisher information matrix_ given by $
 I_1 (theta) = EE_theta {[(partial log (f(x; theta)))/(partial theta)] dot [(partial log (f(x; theta)))/(partial theta)]^t}.
 $ Before proceeding we need some tools. $
 EE_(theta_0) {log (f(bold(X); theta_0))/f(bold(X); theta)}
-$ is called the _Kullback-Leibler_ distance between $f(bold(x); theta)$ and $f(bold(x); theta_0)$. 
+$ is called the _Kullback-Leibler_ (KL) distance between $f(bold(x); theta)$ and $f(bold(x); theta_0)$. 
 
 #proposition[
   The Kullback-Leibler distance is strictly positive for $theta eq.not theta_0$ and equal for $theta = theta_0$.
@@ -1332,3 +1343,85 @@ $ is called the _Kullback-Leibler_ distance between $f(bold(x); theta)$ and $f(b
   $
 ]
 
+#lemma[
+  $P(ell_n (theta) < ell_n (theta_0)) -> 1$ for every $theta eq.not theta_0$.
+]<lem:logineq>
+
+#proof[
+  $
+  1/n [ell_n (theta) - ell_n (theta_0)] &= 1/n sum_(i=1)^n log ((f(x_i; theta))/(f(x_i; theta_0))) ->^"a.s." EE_theta_0 [log ((f(X_1; theta))/(f(X_1; theta_0)))] < 0,
+  $ using the strong law of large numbers and the properties of the KL distance.
+]
+
+#theorem[
+  Under the regularity conditions, 
+  1. $EE_theta [(partial log (f(X; theta)))/(partial theta)] = 0$ for every $theta in Theta$;
+  2. $EE_theta [(partial^2 log f(X; theta))/(partial theta^2)] = - EE_theta [[(partial log f(X; theta))/(partial theta)] dot [(partial log f(X; theta))/(partial theta)]^t] = - I(theta)$ for every $theta in Theta$;
+  3.  for $d = 1$ i.e. $Theta subset.eq RR$, $EE_theta_0 [(partial log f(X; theta))/(partial theta)]$ is a strictly decreasing function of $theta$ in a small neighborhood of $theta_0$.
+
+  These first two are the so-called _Bartlett Identities_.
+]
+
+#proof[
+1., 2., were already proven in the discussion following the CRLB theorem, @thm:crlb. For 3., note $EE_theta_0 [(partial log f(X; theta))/(partial theta)#vbar(2em)_(thin theta = theta_0)] = 0$. Using the regularity conditions, $
+partial/(partial theta)( EE_theta_0 [(partial log f(X; theta))/(partial theta)])#vbar(2em)_(thin theta = theta_0) EE_(theta_0) [(partial^2 log f(X; theta))/(partial theta^2)#vbar(2em)_(thin theta = theta_0)] = - I(theta_0) < 0,
+$ since $I(theta_0)$ a positive definite matrix. Hence, since $EE_theta_0 [(partial log f(X; theta))/(partial theta)]$, as a function of $theta$, is decreasing at $theta = theta_0$, so strictly decreasing in some neighborhood of $theta_0$.
+]
+
+#theorem[
+Under the regularity conditions, there exists a sequence $hat(theta)_n = hat(theta)_n (bold(X))$ such that 
+1. $ell'_n (hat(theta)_n) = 0$;
+2. $hat(theta)_n ->^"a.s." theta_0$.
+]
+#proof[
+By the previous theorem, for a sufficiently small $epsilon > 0$, by SLLN $
+cases(1/n ell'_n (theta_0 - epsilon), 1/n ell'_n (theta_0 + epsilon)) ->^"a.s." cases(
+  EE_(theta_0) [(partial log f(X; theta))/(partial theta) #vbar(2em)_(thin theta = theta_0 - epsilon)] > 0,
+  EE_(theta_0) [(partial log f(X; theta))/(partial theta) #vbar(2em)_(thin theta = theta_0 + epsilon)] < 0
+).
+$ Therefore for large $n$, $ell'_n (theta_0 + epsilon) < 0 < ell'_n (theta_0 - epsilon)$. For large $n$ we had by the lemma as well that $ell_n (theta_0 + epsilon), ell_n (theta_0 - epsilon) < ell_n (theta_0)$ a.s., thus by the intermediate value theorem there is some $hat(theta)_n in (theta_0 - epsilon, theta_0 + epsilon)$ such that $ell'_n (hat(theta)_n) = 0$. Since $epsilon$ arbitrary, we also get $hat(theta)_n ->^"a.s." theta_0$.
+]
+
+#remark[
+  This result gives asymptotic existence of a sequence of "consistent" roots $hat(theta)_n$ of $ell'_n (theta) = 0$. For a given set of roots of $ell'_n (theta) = 0$, its consistency must be verified individually, unless it is unique, in which case it is consistent.
+]
+
+#theorem("Asymptotic Normality")[
+  Under the regularity conditions, $
+  sqrt(n) (hat(theta)_n - theta_0) ->^"d" cal(N)(0, I_1^(-1) (theta_0)).
+  $
+]
+#proof[
+  We have that $ell'_n (hat(theta)_n) = 0$ Then, $
+  0 = ell'_n (hat(theta)_n) = ell'_n (theta_0) + ell''_n (theta_0) (hat(theta)_n - theta_0) + (ell'''_n (tilde(theta)_n) (hat(theta)_n - theta_0)^2)/2,
+  $ where $tilde(theta)_n$ is between $theta_0$ and $hat(theta)_n$. Hence, $
+  sqrt(n) (hat(theta)_n - theta_0) = (ell'_n (theta_0)\/sqrt(n))/(-1/n ell''_n (theta_0) - 1/(2 n) ell'''_n (tilde(theta)_n) (hat(theta)_n - theta_0)). wide star.filled
+  $ Now, by CLT and the Bartlett identities, $
+  (ell'_n (theta_0))/sqrt(n)  ->^"d" cal(N) (0, I_1 (theta_0)).
+  $ By WLLN and Bartlett, $
+  - 1/n ell''_n (theta_0) ->^"P" - EE_(theta_0) [(partial^2 f(X_1; theta))/(partial theta^2)#vbar(2em)_(thin theta = theta_0)] = I_1 (theta_0).
+  $ Finally, by R3, $
+  abs(1/n ell'''_n (tilde(theta)_n)) &= 1/n abs(sum_(i=1)^n (partial^3 log f(X_i; theta))/(partial theta^3)thin#vbar(3em)_(thin theta = tilde(theta)_n)) \ 
+  &<= 1/n sum_(i=1)^n M_3 (X_i) ->^"P" EE_(theta_0) [M_3 (X_i)],
+  $ so in particular $
+  1/n ell'''_n (tilde(theta)_n) = cal(o)_p (1).
+  $ Thus, combining all these convergences via Slutsky's theorem in $star.filled$, we find $
+  sqrt(n) (hat(theta)_n - theta_0) ->^"d" cal(N)(0, I_1^(-1) (theta_0)).
+  $
+]
+
+#remark[
+  The MLE is Fisher-Efficient as its asymptotic variance approaches the CRLB.
+]
+
+= Confidence Interval
+
+A standard approach to representing uncertainty in point estimation is to report a "confidence interval" for a parameter of interest.
+
+Let $bold(X) = (X_1, dots, X_n ) tilde^"iid" f_theta$ be our "data" and $bold(x) = (x_1, dots, x_n)^t$ be our "observed data".
+
+#definition("Interval Estimator/Confidence Interval")[
+  Let $L(bold(X)), U(bold(X))$ be two statistics such that $L(bold(x)) < U(bold(x))$ for every $bold(x) in Chi$. A random interval $(L(bold(X)), U(bold(X)))$  is called an _interval estimator/confidence interval_ with confidence level $1 - alpha$ with $0 < alpha < 1$ if $
+  P(L(bold(X)) <= theta <= U(bold(X))) = 1 - alpha.
+  $ The _post-experimental confidence interval_ is given $(L(bold(x)), U(bold(x)))$ for given data $bold(x)$.
+]
