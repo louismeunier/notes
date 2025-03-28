@@ -2273,7 +2273,7 @@ $
 
 What conditions do we need on $f$ to make this series converge? In the general $L^2$-theory, we just need $f in L^2 (TT)$. By Parseval's, $
 norm(f)_(L^2 (TT))^2 = sum_(n=-infinity)^infinity abs(hat(f)(n))^2.
-$ So, the operator $hat(dot) : L^2 (TT) -> ell^2 (CC)$. Note that this implies $lim_(n->infinity) abs(hat(f)(n))^2 = 0,$ so also $lim_(n->infinity) abs(f(n)) = 0$. This proves the following proposition:
+$ So, the operator $hat(dot) : L^2 (TT) -> ell^2 (CC)$. Note that this implies $lim_(n->infinity) abs(hat(f)(n))^2 = 0,$ so also $lim_(n->infinity) abs(hat(f)(n)) = 0$. This proves the following proposition:
 
 #proposition("Riemann-Lebesgue Lemma")[
   If $f in L^2 (TT)$, $
@@ -2310,6 +2310,18 @@ $ by periodicity. However, $D_N (x)$ is not actually a good kernel; one can show
 ]
 #proof[
   Left as an exercise. 
+  
+  // !
+  // $f$ Lipschitz so in particular it is continuous. Let $epsilon > 0$ and $delta > 0$ such that $abs(x - y_0) < delta => abs(f(x) - f(y_0)) < epsilon$, and let $C$ be a Lipschitz constant. Then,
+  // $
+  // abs(S_N (x_0) - f(x_0)) &= abs((f ast D_N) (x_0) - f(x_0)) \ 
+  // &= abs(integral_(0)^1 D_N (y) f(x_0 - y) dif y - integral_(0)^1 D_N (y) f(x_0) dif y ) wide "since" D_N "integrates to" 1 \ 
+  // &= abs(
+  //   integral_(0)^1 D_N (y) (f(x_0 - y) - f(x_0)) dif y
+  // )\
+  // &<= integral_(abs(y) < delta) abs(D_N (y)) abs(f(x_0 - y) - f(x_0)) dif y + C integral_(abs(y) >= delta) abs(D_N (y)) abs(y) dif y\
+  // & <= epsilon integral_(abs(y) < delta) abs(D_N (y)) + 2 C integral_(y >= delta) abs(D_N (y)) y dif y\
+  // $
 ] 
 
 Note that $

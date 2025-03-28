@@ -1846,3 +1846,112 @@ We use this theorem to prove the converse of @thm:injectionsidegal.
 #corollary[
   $H = "Gal"(E\/E^H)$.
 ]
+
+In particular, this establishes the following maps: $
+{#stack(spacing: .5em, "subfields", $F subset K subset E$)} #stack(spacing: .2em, $arrow.r.long^(K |-> "Gal"(E\/K))$, $arrow.l.long_(E^H arrow.l.bar H)$) {#stack(spacing: .5em, "subgroups", $H subset G$)}
+$
+and in particular,
+#theorem("Galois Correspondance")[
+  These two maps are mutually inverse bijections.
+]
+
+In particular, there is a partial ordering on both of these sets by inclusion, and these maps respect this ordering; namely, $
+F subset K_1 subset K_2 subset E => "Gal"(E\/K_1) supset "Gal"(E\/K_2),
+$ and similarly $
+H_1 subset H_2 subset G => E^(H_1) supset E^(H_2).
+$ Namely, we say the Galois correspondance is "inclusion reversing".
+
+
+=== Computational Example
+// #example[
+  Let $F = QQ$ and $E$ be the splitting field of $x^4 - 2$. Let $r = root(4,2)$ and $E_0 = QQ(root(4, 2))$ so $x^4 - 2 in E_0 [x]$. Moreover, we automatically gain another root, $- root(4, 2) in E_0$, so this polynomial factors $
+  x^4 - 2 = (x - root(4, 2))(x + root(4, 2))(x^2 + sqrt(2)),
+  $ where here we are formally defining $sqrt(2) = (root(4, 2))^2$; this is no further reducible, so we need to adjoin another element. Let $E = E_0 [x]\/(x^2 + sqrt(2))$. Note that then $sqrt(-sqrt(2)) = i root(4, 2) = i r$; namely, we can view $E = E_0 (i r) = E_0 (i)$. So, we have 
+
+#align(center,
+    commutative-diagram(
+      node-padding: (30pt, 30pt),
+      node((3,0), $QQ$),
+      node((2,0), $QQ(r)$),
+      node((1,0), $E=QQ(r,i)$),
+      arr($QQ$, $QQ(r)$, $4$, label-pos:right),
+      arr($QQ(r)$, $E=QQ(r,i)$, $2$, label-pos:right),
+      arr($QQ$, $E=QQ(r,i)$, $8$, curve: 45deg)
+    )
+)
+  Then, there are $4$ roots in $E$ of $x^4 - 2$, namely $plus.minus root(4, 2), plus.minus i root(4, 2)$, and moreover $sigma in "Gal"(E\/QQ)$ is determined by $(sigma(r), sigma(i))$ where $sigma(r)$ can map to any root and $sigma(i)$ can map to $i$ or $-i$.
+
+  Consider the automorphism $sigma(root(4, 2)) = i root(4, 2)$, $sigma(i) = i$. Then, $sigma$ acts on the set of roots as a $4$-cycle. Another is $tau(root(4, 2)) = root(4, 2)$, $tau(i) = - i$. Then, $tau$ swaps $plus.minus root(4, 2)$. In particular, $sigma, tau$ then generated the entire group, from which we readily see that $"Gal"(E\/QQ) tilde.eq D_8$.
+
+  Let us relabel $"Gal"(E\/QQ) = {1, r, r^2, r^3, D_1, D_2, V, H}$ in the familiar way, and explore all the possible subfields on $E$. By the Galois correspondance, we can begin by loooking at the list of all subgroups by inclusion:
+  #align(center,
+    commutative-diagram(
+      node-padding: (30pt, 30pt),
+      node((3,0),${1,r,r^2,r^3}$),
+      node((3,1), ${1, V, H, r^2}$),
+      node((3,-1),${1,D_1, D_2, r^2}$),
+      node((2,0), ${1,r^2}$),
+      node((2,-2), ${1,D_1}$),
+      node((2,-1), ${1,D_2}$),
+      node((2,1),${1,V}$),
+      node((2,2),${1,H}$),
+      node((1,0), ${1}$),
+      node((4,0), $D_8$),
+      arr($D_8$, ${1,r,r^2,r^3}$, ""),
+      arr($D_8$, ${1, V, H, r^2}$, ""),
+      arr($D_8$, ${1,D_1, D_2, r^2}$, ""),
+      arr(${1,r,r^2,r^3}$, ${1,r^2}$,""),
+      arr(${1, V, H, r^2}$, ${1,r^2}$,""),arr(${1,D_1, D_2, r^2}$, ${1,r^2}$,""),
+      arr(${1,D_1, D_2, r^2}$, ${1,D_1}$, ""),
+      arr(${1,D_1, D_2, r^2}$, ${1,D_2}$, ""),
+      arr(${1, V, H, r^2}$, ${1,V}$, ""),
+      arr(${1, V, H, r^2}$, ${1,H}$, ""),
+      arr(${1,D_1}$, ${1}$, ""),
+      arr(${1,D_2}$, ${1}$, ""),
+      arr(${1,r^2}$, ${1}$, ""),
+      arr(${1,V}$, ${1}$, ""),
+      arr(${1,H}$, ${1}$, ""),
+    )
+  )
+
+  _This is the so-called "lattice" of subgroups of $D_8$_. For each such subgroup $H subset D_8$, we can compute $E^H$ and find the following picture;
+
+#align(center,
+    commutative-diagram(
+      node-padding: (45pt, 40pt),
+      node((4,0), $QQ$),
+
+
+      node((3,-1), $QQ(sqrt(2))$),
+      node((3,0), $QQ(i)$),
+      node((3,1), $QQ(sqrt(-2))$),
+      node((0,0), $E$),
+
+      node((2,0), $QQ(i, sqrt(2))$),
+      node((2,-2), $QQ(root(4,2))$),
+      node((2,-1), $QQ(i root(4, 2))$),
+
+      node((2,1), $QQ((1 + i) root(4, 2))$),
+      node((2,2), $QQ((1- i) root(4, 2))$),
+
+
+      arr($QQ$, $QQ(sqrt(2))$, $2$),
+      arr($QQ$, $QQ(i)$, $2$),
+      arr($QQ$, $QQ(sqrt(-2))$, $2$, label-pos: right),
+      arr($QQ(sqrt(2))$, $QQ(i, sqrt(2))$, $2$),
+      arr($QQ(i)$, $QQ(i, sqrt(2))$, $2$),
+       arr($QQ(sqrt(-2))$, $QQ(i, sqrt(2))$, $2$, label-pos: right),
+       
+
+       arr($QQ(sqrt(2))$, $QQ(root(4, 2))$, $2$),
+        arr($QQ(sqrt(2))$, $QQ(i root(4, 2))$, $2$),
+        arr($QQ(sqrt(-2))$, $QQ((1 + i) root(4, 2))$, $2$, label-pos: right),
+        arr($QQ(sqrt(-2))$, $QQ((1- i) root(4, 2))$, $2$, label-pos: right),
+
+        arr($QQ(root(4, 2))$, $E$, $2$),
+        arr($QQ(i root(4, 2))$, $E$, $2$),
+        arr($QQ(i, sqrt(2))$, $E$, $2$),
+        arr($QQ((1 + i) root(4, 2))$, $E$, $2$),
+        arr($QQ((1- i) root(4, 2))$, $E$, $2$)
+    )
+  )

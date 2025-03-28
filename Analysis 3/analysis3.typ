@@ -223,7 +223,7 @@ union.big_(n=1)^infinity A_n subset.eq union.big_(n=1, i = 1)^infinity I_(n, i)\
 $
 and as $epsilon$ arbitrary, the statement follows.
 
-4. We prove first for $I = [a, b]$. For any $epsilon > 0$, set $I_1 = (a - epsilon, b + epsilon)$; then $I subset.eq I_1$ so $m^ast (I) lt.eq ell(I_1) = (b - 1) + 2 epsilon$ hence $m^ast (I) lt.eq b - a = ell(I)$. Conversely, let ${I_n}$ be any open-interval convering of $I$ (wlog, each of finite length; else the statement holds trivially). Since $I$ compact, it can be covered by finitely many of the $I_n$'s, say ${I_n}_(n=1)^N$, denoting $I_n = (a_n, b_n)$ (with relabelling, etc). Moreover, we can pick the $a_n, b_n$'s such that $a_1 < a, b_N > b$, and generally $a_n < b_(n-1) forall 2 <= n <= N$. Then, $
+4. We prove first for $I = [a, b]$. For any $epsilon > 0$, set $I_1 = (a - epsilon, b + epsilon)$; then $I subset.eq I_1$ so $m^ast (I) lt.eq ell(I_1) = (b - 1) + 2 epsilon$ hence $m^ast (I) lt.eq b - a = ell(I)$. Conversely, let ${I_n}$ be any open-interval covering of $I$ (wlog, each of finite length; else the statement holds trivially). Since $I$ compact, it can be covered by finitely many of the $I_n$'s, say ${I_n}_(n=1)^N$, denoting $I_n = (a_n, b_n)$ (with relabelling, etc). Moreover, we can pick the $a_n, b_n$'s such that $a_1 < a, b_N > b$, and generally $a_n < b_(n-1) forall 2 <= n <= N$. Then, $
 sum_(n=1)^infinity ell(I_n) gt.eq sum_(n=1)^N ell(I_n) &= b_1 - a_1 + sum_(n=2)^N (b_n - a_n)\
 & >= b_1 - a_1 + sum_(n=2)^N (b_n - b_(n-1)) \
 &= b_N - a_1 >= b- 1 = ell(I),
