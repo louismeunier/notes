@@ -1351,7 +1351,7 @@ The set of elements constructible by ruler and compass is an extension of $QQ$ o
 ]
 
 #theorem[
-  If $E\/F$ is any finite extension of fields, then $hash "Aut"(E\/F) <= [E : F]$.
+  If $E\/F$ is any finite extension of fields, then $hash"Aut"(E\/F) <= [E : F]$.
 ]
 
 #proof[
@@ -1759,7 +1759,7 @@ This motivates the following definition generalization, with the benefit that it
 In summary we've proven the following:
 #theorem[
   If $E\/F$ is a finite extension, then TFAE: 
-  1. $hash "Aut"(E\/F) = [E : F]$;
+  1. $hash"Aut"(E\/F) = [E : F]$;
   2. $E$ is normal and separable over $F$;
   3. $E$ is the (a) splitting field of a separable polynomial over $F$.
 ]
@@ -1774,8 +1774,8 @@ Another way of seeing this is the following, using part 1. Let $G = "Gal"(E\/F)$
 sigma ast phi := sigma compose phi.
 $ It turns out that $X$ actually a transitive $G$-set. Previously, we showed that any $phi : K -> E$ extends to a map $tilde(phi) : E -> E$; then if $phi_1, phi_2 : K -> E$, let $sigma = tilde(phi)_1compose tilde(phi)_2^(-1)$. By the orbit-stabilizer theorem, then, we find that $
 hash X dot hash "Stab"_G (id : K -> E) = hash G.
-$ We know $hash X = [K : F]$ and $hash G = [E : F]$. Moreover, the elements of $G$ that fix $id : K -> E$ are precisely the number of elements that fix $K$, hence $hash "Aut"(E\/K)$; so, rearranging, we find $
-hash "Aut"(E\/K) = [E:F]/[K:F],
+$ We know $hash X = [K : F]$ and $hash G = [E : F]$. Moreover, the elements of $G$ that fix $id : K -> E$ are precisely the number of elements that fix $K$, hence $hash"Aut"(E\/K)$; so, rearranging, we find $
+hash"Aut"(E\/K) = [E:F]/[K:F],
 $ which is equal to $[E : K]$ by multiplicativity.
 ]
 
@@ -1955,3 +1955,65 @@ $ Namely, we say the Galois correspondance is "inclusion reversing".
         arr($QQ((1- i) root(4, 2))$, $E$, $2$)
     )
   )
+
+  === Complements of Galois Correspondance
+
+  #proposition[
+    If $sigma in "Gal"(E\/F)$ and $F subset K subset E$, $sigma K = {sigma x | x in K}$ is also a subfield of $E\/F$. Moreover, if $H$ corresponds to $K$ under the Galois correspondance, then $sigma H sigma^(-1)$ corresponds to $sigma K$ under the correspondance.
+  ]
+
+  #theorem[
+    Given $F subset K subset E$, TFAE:
+    1. $sigma K = K$ for every $sigma in "Gal"(E\/F)$;
+    2. $K$ is Galois over $F$;
+    3. $"Gal"(E\/K)$ is a normal subgroup of $"Gal"(E\/F)$.
+  ]
+
+  #proof[
+    (1. $=>$ 3.) Let $H = "Gal"(E\/K)$. $sigma K = K$ for all $sigma in G = "Gal"(E\/F)$ implies, under the Galois correspondance, $sigma H sigma^(-1) = H$ for every $sigma in G$ so in particular $H$ normal in $G$.
+
+    (1., 3., $=>$ 2.) Restriction gives a homomorphism $eta: "Gal"(E\/F) -> "Aut"(K\/F)$. We have that $ker(eta) = {sigma : sigma "fixes" K "pointwise"} = "Gal"(E\/K)$ hence by the isomorphism theorem $ "Gal"(E\/F)\/"Gal"(E\/K) arrow.hook "Aut"(K\/F)$. Counting the size of the LHS, we readily find $
+    hash ("Gal"(E\/F)\/"Gal"(E\/K)) = [E: F]/[E : K] = [K : F],
+    $ while $hash"Aut"(K\/F) <= [K: F]$, so it must be that equality is achieved i.e. $hash"Aut"(K\/F) = [K : F]$, and in particular we find the isomorphism $
+    "Gal"(E\/F)\/"Gal"(E\/K) tilde.eq "Gal"(K\/F).
+    $
+
+    Other directions left as an exercise.
+  ]
+
+
+== Radical Extensions
+
+#definition("Radical Extension")[
+  An extension $E\/F$ is called a _radical extension_ if there exists an integer $n >= 1$ and element $a in F$ such that $E = F[root(n, a)]$. I.e., assuming $x^n - a$ irreducible in $F[x]$, then $E = F[x]\/(x^n - a)$.
+]
+
+#definition("Tower of Radicals")[
+  A _tower of radical extensions_ $E\/F$ is a sequence of extensions $
+  F = E_0 subset E_1 subset E_2 subset dots.c subset E_n = E,
+  $ where for each $i = 1, dots, n$, $E_i$ is a radical extension of $E_(i - 1)$ i.e. $E_(i) = E_(i-1) (root(n_i, a_i))$ where $a_i in E_(i - 1)$ and $n_i >= 1$ an integer.
+]
+
+A classical question in Galois theory is whether every finite extension of $QQ$ is contained in a tower of radical extensions; another way of phrasing this is given a polynomial $f(x) in QQ[x]$, can its roots be expressed in terms of radicals?
+
+Recall that we said an element $alpha in CC$ is _constructible_ if it is contained in a tower of quadratic extensions. We saw that not every algebraic number $alpha$ was constructible by showing that if $[QQ(alpha) : QQ] = 3$, $alpha$ is not constructible since any tower of quadratic extensions had to have a degree of a power of $2$ over $QQ$. We'd like to similarly find some kind of invariant of a general radical extension. However, the degree of such an extension is too crude, without enough structure. Rather, we'll look at properties of the corresponding automorphism group of such extensions.
+
+=== Automorphism Groups of Radical Extensions
+
+Let $E = F(a^(1\/n))$ a radical extension. What can we say about $"Aut"(E\/F)$? In general, it may be trivial (For instance $QQ(root(3,2))\/QQ$). What conditions do we need to put on $F$ for $F(a^(1\/n)) subset$ splitting field of $x^n - a$?
+
+Given a single root $a^(1\/n)$, then notice that every other root of the form $zeta^k a^(1\/n)$ for $k = 0, dots, n - 1$ where $zeta$ a primitive $n$th root of unity. Hence, we have the following:
+
+#theorem[
+  Suppose $F$ contains $n$ distinct $n$th roots of unity, and let $mu_n (F) := {x in F^times | x^n = 1} tilde.eq ZZ\/n ZZ$ be the group of such elements. Then, $F(a^(1\/n))$ is Galois with abelian Galois group. Moreover, this group is canonical a subgroup of $mu_n (F)$.
+]
+
+#proof[
+  Define the map $
+  eta: "Aut"(E\/F) -> mu_n (F), wide sigma |-> sigma(a^(1\/n))/(a^(1\/n)).
+  $ This is a group homomorphism. Moreover, we claim $eta$ injective. If $sigma in ker(eta)$, then $eta(sigma) = 1$ so $sigma(a^(1\/n)) = a^(1\/n)$ so $sigma = id$ on $E$. 
+  
+  $im(eta) tilde.eq "Gal"(E\/F)$.
+
+  // TODO
+]

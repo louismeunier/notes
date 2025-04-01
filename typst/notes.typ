@@ -1,5 +1,6 @@
 // ! setup
 #import "@preview/ctheorems:1.1.2": *
+#import "@preview/fontawesome:0.4.0": *
 // ! font sizes
 #let fontsizes = (
   normal: 12pt,
@@ -30,6 +31,7 @@
   semester: none,
   professor: none,
   author: "Louis Meunier",
+  cute: none,
   // abstract: [],
   doc,
 ) = {
@@ -40,18 +42,20 @@
   // if cute != none {
   //   // set align(center)
   //  figure(
-  //     image(cute, width: 40%)
+  //     image(cute, width: 100%)
   //   ) 
   // }
   // set align(left)
+  // fa-icon("cat")
   text(12pt, "\n\nBased on lectures from "+ semester + " by " + professor + ".")
-  text(12pt, "\nNotes by " + author)
+  text(12pt, "\nNotes by " + text(link("https://notes.louismeunier.net", author)))
 
   set par(
     first-line-indent: 1em,
     leading: 0.8em,
     linebreaks: "simple"
   )
+  // text(font: "Font Awesome 6 Free Solid", "cat")
   // let count = authors.len()
   // let ncols = calc.min(count, 3)
   // grid(
@@ -70,23 +74,26 @@
   // ]
 
   v(2em)
+  set text(size: fontsizes.small)
   outline(indent: 1em)
-  
+
   set page(
     margin: 1.5cm,
     footer-descent: 60%
   )
 
   set text(
-    font: "Linux Libertine",
+    font: "TeXGyrePagellaX",
     size: fontsizes.normal
   )
-  // #show raw: set text(font: "Palatino")
-  show link: set text(fill: solarized.cyan)
+  show math.equation: set text(font: "TeX Gyre Pagella Math") 
+  show raw: set text(font: "TeX Gyre Pagella Math") 
+
+  show link: set text(fill: gray)
   show link: underline
 
   set align(left)
-  show: thmrules.with(qed-symbol: $square.small.filled$)
+  show: thmrules.with(qed-symbol: $square.filled$)
 
   // ! headers
   set heading(numbering: "1.1")
@@ -97,14 +104,23 @@
     size: fontsizes.section,
     weight: "bold",
     if (it.numbering != none) {
-      par(leading: 0em, counter(heading).display(it.numbering) + h(.5em) + smallcaps(it.body) +"\n")
+      par(leading: 0em, first-line-indent: 0em, $section$ + counter(heading).display(it.numbering) + h(.5em) + smallcaps(it.body) +"\n")
     } else {
-      par(leading: 0em, it.body + [.]+"\n")
+      par(leading: 0em, first-line-indent: 0em, it.body + [.]+"\n")
     }
   )
   
   show heading.where(
     level: 2
+  ): it => text(
+    size: fontsizes.subsection,
+    weight: "semibold",
+    // style: "italic",
+    par(leading: 0em, first-line-indent: 0em, $section$ +counter(heading).display(it.numbering) + h(.5em) + it.body)
+    // it.numbering + h(.5em) + it.body + [.],
+  )
+  show heading.where(
+    level: 3
   ): it => text(
     size: fontsizes.subsection,
     weight: "semibold",
@@ -138,49 +154,53 @@
 
 // ! theorems
 #let thmsettings = (
-  inset: (top: 0.6em, left: .5em, right: .5em, bottom: 0.8em),
+  inset: (top: 0.6em, left: .5em, right: .5em, bottom: 0.82em),
   base_level: 1
 )
 
 #let theorem = thmbox(
   "theorem", // identifier
-  text($arrow.curve$+"Theorem", fill:solarized.red), // head
+  text($arrow.hook$+"Theorem", fill:solarized.red), // head
   fill: solarized.gray,
   inset: thmsettings.inset,
   // stroke: 1pt
-  base_level: thmsettings.base_level
+  base_level: thmsettings.base_level,
+  supplement: "Thm."
 )
 
 #let lemma = thmbox(
   "lemma", // identifier
-  text($arrow.curve$+"Lemma", fill:solarized.orange), // head
+  text($arrow.hook$+"Lemma", fill:solarized.orange), // head
   fill: solarized.gray,
   inset: thmsettings.inset,
-  base_level: thmsettings.base_level
+  base_level: thmsettings.base_level,
+  supplement: "Lem."
 )
 
 #let proposition = thmbox(
   "proposition", // identifier
-  // $arrow.curve$+" Proposition",
-  text($arrow.curve$ + "Proposition", fill:solarized.magenta), // head
+  // $arrow.hook$+" Proposition",
+  text($arrow.hook$ + "Proposition", fill:solarized.magenta), // head
   fill: solarized.gray,
   inset: thmsettings.inset,
-  base_level: thmsettings.base_level
+  base_level: thmsettings.base_level,
+  supplement: "Prop."
   // stroke: 1pt
 )
 
 #let corollary = thmbox(
   "corollary",
-  // $arrow.curve$+" Corollary",
-  text($arrow.curve$+"Corollary", fill:solarized.orange), // head
+  // $arrow.hook$+" Corollary",
+  text($arrow.hook$+"Corollary", fill:solarized.orange), // head
   fill: solarized.gray,
   inset: thmsettings.inset,
-  base_level: thmsettings.base_level
+  base_level: thmsettings.base_level,
+  supplement: "Cor."
 )
 
 #let definition = thmbox(
   "definition",
-  // $arrow.curve$+" Definition",
+  // $arrow.hook$+" Definition",
   text($arrow.hook$ + "Definition", fill: solarized.blue),
   fill: solarized.gray,
   inset: thmsettings.inset,
@@ -200,6 +220,16 @@
   "Remark",
   stroke: none,
   inset: (top: 0.4em, left: .5em, right: .5em, bottom: 0.6em),
+  base_level: 1
+)
+
+
+#let axiom = thmbox(
+  "axiom",
+  "Axiom",
+  base_level: 0,
+  fill: solarized.gray,
+  inset: thmsettings.inset,
 )
 
 #let proof = thmproof("proof", 
@@ -209,6 +239,7 @@
     style: "oblique", 
     weight: "regular"
   ),
+  
   inset: (top: 0em, left: 2.8em, right: 1.4em),
   separator: [#h(0.1em). #h(0.2em)],
 )

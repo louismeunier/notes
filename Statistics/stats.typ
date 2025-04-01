@@ -1416,12 +1416,73 @@ $ Therefore for large $n$, $ell'_n (theta_0 + epsilon) < 0 < ell'_n (theta_0 - e
 
 = Confidence Interval
 
+== Interpretations
 A standard approach to representing uncertainty in point estimation is to report a "confidence interval" for a parameter of interest.
 
 Let $bold(X) = (X_1, dots, X_n ) tilde^"iid" f_theta$ be our "data" and $bold(x) = (x_1, dots, x_n)^t$ be our "observed data".
 
 #definition("Interval Estimator/Confidence Interval")[
-  Let $L(bold(X)), U(bold(X))$ be two statistics such that $L(bold(x)) < U(bold(x))$ for every $bold(x) in Chi$. A random interval $(L(bold(X)), U(bold(X)))$  is called an _interval estimator/confidence interval_ with confidence level $1 - alpha$ with $0 < alpha < 1$ if $
+  Let $L(bold(X)), U(bold(X))$ be two statistics such that $L(bold(x)) < U(bold(x))$ for every $bold(x) in Chi$. A random interval $(L(bold(X)), U(bold(X)))$  is called an _interval estimator/confidence interval (CI)_ with confidence level $1 - alpha$ with $0 < alpha < 1$ if $
   P(L(bold(X)) <= theta <= U(bold(X))) = 1 - alpha.
   $ The _post-experimental confidence interval_ is given $(L(bold(x)), U(bold(x)))$ for given data $bold(x)$.
+]
+It is _wrong_ to say that $(L(bold(x)), U(bold(x)))$ captures $theta$ with probability $1 - alpha$; this interval either includes $theta$ or not (basically, it captures $theta$ with probability 0 or 1). How do we then interpret $(L(bold(x)), U(bold(x)))$, for a given $alpha$? If we were to repeat our experiment (i.e. collect data under the same conditions) and compute similar confidence intervals for $theta$, we expect $100 times (1 - alpha) %$ of those (post-experimental) intervals to capture $theta$.
+
+== Construction of CI's
+
+#definition("Pivotal Quantity (PQ)")[
+A random function $Q(bold(X),theta)$ is called a _pivotal quantity (PQ)_ if its distribution does not depend on $theta$, and $Q$ is only a function of $bold(X)$ and $theta$ (i.e. of no other unknown parameter).
+]
+
+Once/if we have a PQ, we proceed as follows to obtain a CI with confidence $1 - alpha$:
+
+1. find constants $c_1, c_2$ such that $P(c_1 <= Q(bold(X); theta) <= c_2) = 1 -alpha$;
+2. having $c_1, c_2$, solve the inequality from 1. with respect to $theta$ to get something of the form $P(L(bold(X)) <= theta <= U(bold(X))) = 1 - alpha$.
+
+When $Q$ is monotone with respect to $theta$, then inverting the inequality in 1. is easier. Otherwise, the resulting interval could be the union of several intervals. Further, for a parameter family, there may not exist a PQ, or there may exist many PQs. In this second case, we choose a PQ based of a sufficient statistic.
+
+#example[
+  Let $X_i tilde^"iid" cal(N)(mu, sigma^2), i = 1, dots, n$, where $sigma$ known. We seek a confidence interval for $mu$. Recall the UMVUE for $mu$ is $overline(X)_n$. Then, a PQ is given by $
+  Q(bold(X); mu) = (sqrt(n) (overline(X)_n - mu))/(sigma) tilde cal(N)(0,1).
+  $ Next, we seek $a, b$ such that $
+  P(a <= (sqrt(n) (overline(X)_n - mu))/(sigma) <= b) = 1 - alpha.
+  $ Suppose we know $a, b$. Solving the inequality for $mu$, we find $
+  P(overline(X)_n - (b sigma)/(sqrt(n)) <= mu <= overline(X)_n - (a sigma)/(sqrt(n))) = 1 - alpha.
+  $ Thus, our $100 times (1 - alpha) percent$ CI for $mu$ is $
+  (overline(X)_n - (b sigma)/(sqrt(n)), overline(X)_n - (a sigma)/(sqrt(n))).
+  $ What are $a, b$ then? We find that the length of this interval is $ell (bold(X); a, b) = ((b - a)sigma)/(sqrt(n))$; we'd like to minimize this length (or in general the expected length, since in general this length is random). Suppose $b = b(a)$ (which it will be from our restriction above). Then, $
+  dif/(dif a) ell (bold(X); a, b ) = ((dif b)/(dif a) - 1) sigma/(sqrt(n)) = 0 => (dif b)/(dif a) = 1 => b(a) = a + c,
+  $ for a constant $c$. Putting $Phi, phi$ to be the CDF, PDF respectively of the standard norm, we know $Phi(b) - Phi(a) = 1 - alpha$. Taking the derivative, we find $
+  phi(b) (dif b)/(dif a) - phi(a) = 0 => (dif b)/(dif a) = phi(a)/phi(b),
+  $ and thus all together, $phi(a) = phi(b)$. Thus, by symmetry of $phi$, it must be that $a = plus.minus b$. We take then $a = - z_(alpha\/2), b = z_(alpha\/2)$ such that $P(Z >= z_(alpha\/2)) = alpha\/2, Z tilde cal(N)(0,1)$ so our CI becomes $
+(overline(X)_n - z_(alpha\/2) sigma/sqrt(n), overline(X)_n + z_(alpha\/2) sigma/(sqrt(n))).
+  $
+]
+
+#example[
+  In the same setup as the previous, but with $sigma^2$ unknown, a PQ is given by $
+  Q(bold(X); mu) = (sqrt(n) (overline(X)_n - mu))/(S_n) tilde t(n-1).
+  $ Following similar work to the previous, we find $
+  (overline(X)_n - t_((n - 1, alpha\/2)) S_n/sqrt(n), overline(X)_n + t_((n-1, alpha\/2)) S_n/(sqrt(n)))
+  $ to be the shortest CI for $mu$ with unknown $sigma$, where $t_((n-1, alpha\/2))$ the analgous quantile of the appropriate $t$ distribution.
+]
+
+#example[
+  In the same setup, with both $(mu, sigma^2)$ unknown, $
+  Q(bold(X); sigma^2) = ((n - 1)S_n^2)/(sigma^2) tilde chi_((n-1))^2
+  $ is a PQ for $sigma^2$ now. This distribution is no longer symmetric as in the previous two cases; we choose now $
+  P(chi_((n-1,alpha\/2))^2 <= ((n - 1) S_n^2)/(sigma^2) <= chi_((n-1, 1 - alpha\/2))^2) = 1 - alpha,
+  $ where $
+  P(Z <= chi_((n-1,alpha\/2))^2) = alpha/2 = P(Z >= chi_((n-1, 1 - alpha\/2))^2), wide Z tilde chi_((n-1))^2.
+  $ This ends up with confidence interval $
+  (((n-1) S_n^2)/(chi_((n-1, 1 - alpha\/2))^2), ((n-1) S_n^2)/(chi_((n-1,alpha\/2))^2)).
+  $ What would be the confidence interval with $mu$ known?
+]
+
+#example[
+  If $X_i$ an iid sample from a population with unknown mean $mu$ and known variance $sigma^2$ with $EE[X^4] < infinity$, by CLT $(sqrt(n) (overline(X)_n - mu))/sigma ->^"d" cal(N)(0,1)$. For large $n$, then, this gives an "approximate" PQ for the unknown family, so the previous analysis can be applied to find an "approximate" confidence interval for $mu$. Similarly if $sigma$ unknown, $(sqrt(n) (overline(X)_n - mu))/(S_n) ->^"d" cal(N)(0,1)$ from which again we can use the confidence interval for when $X_i$ normal to find an "approximate" interval in this general case.
+]
+
+#example[
+  Suppose we have two independent iid samples $X_i tilde^"iid" cal(N)(mu_1, sigma_1^2), i = 1, dots, m$ and $Y_i tilde^"iid" cal(N)(mu_2, sigma_2^2)$ with $sigma_1^2 = sigma_2^2 = sigma^2$, and we seek a CI for the difference $mu_1 - mu_2$.
 ]

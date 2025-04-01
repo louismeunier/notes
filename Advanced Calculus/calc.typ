@@ -15,6 +15,7 @@
 
 #pagebreak()
 
+% ! 01-07
 = Differentiation
 
 For a function $f : (a, b) -> RR$, $f$ differentiable at $x_0 in (a, b)$  if $L := lim_(h -> 0) (f(x_0 + h) - f(x_0))/h$ exists, and write $f'(x_0) = L$. Equivalently, $f'(x_0)$ exists and is equal to $L$ if $
@@ -37,6 +38,7 @@ Let $Omega subset RR^n$ a connected, open set. We call such a set a _domain_ to 
   We write then $D f(x_0) := L$.
 ]
 
+// TODO I prefer to proof of theorem 2.1 in Spivak
 #proof[
 Suppose $L_1, L_2 : RR^n -> RR^m$ are two linear maps such that $dagger$ holds. Fix $epsilon > 0$ and let $delta > 0$ such that $dagger$ holds for both $L_1, L_2$ with $epsilon/2$. Then, for $x$ such that $0 < ||x - x_0|| < delta$, then $
 ||(L_1 - L_2) (x - x_0)|| &<= ||f(x) - f(x_0) - L_1 (x - x_0)|| + ||f(x) - f(x_0) - L_2 (x - x_0)|| \
@@ -76,3 +78,5 @@ $ by linearity, and since $epsilon$ arbitrary, it must be that $L_1 = L_2$.
   lim_(h->0) (f_j (x_0 + h e_i) - f_j (x_0))/(h) = a_(j i)
   $ for each $i, j$. The LHS limit is simply $(partial f_j)/(partial x_i) (x_0)$, completing the proof.
 ]
+
+% ! 01-09

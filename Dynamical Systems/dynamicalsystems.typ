@@ -490,3 +490,39 @@ image(
 // ! Rest of the bifrucation; how do the things appear?
 
 = Maps
+
+Given a function $f : U -> U$ for some subset $U subset.eq RR^n$, a map is defined by the iteration $x_(n+1) = f(x_n)$ for $n in NN$, with some initial condition $x_0 in U$.
+
+== Linearization
+
+A fixed point of a map satisfies $f(x^ast) = x^ast$; so in particular, $f^n (x^ast) = x^ast$ for every $n >= 1$. Let $y_n = x_n - x^ast$ so $
+y_(n + 1) &= f(x^ast + y_n) - x^ast \
+&= [f(x^ast) + J_f (x^ast) y_n + cal(O)(2)] - x^ast \ 
+&= J_f (x^ast)y_n + cal(O)(2),
+$ hence, the linearization of the map is given by $y_(n+1) = J_f (x^ast) y_n$. Suppose $(lambda, v)$ an eigenpair of $J_f (x^ast)$. Then, let $y_0 = v$; then, $
+y_1 = J_f v = lambda v => y_2 = lambda^2 v => dots.c => y_n = lambda^n v.
+$ In particular, then, we see that if $abs(lambda) >  1$, $abs(y_n) -> infinity$, while if $abs(lambda) < 1$, $abs(y_n) -> 0$. With this in mind, then, we say that $x^ast$ _unstable_ if $abs(lambda) > 1$ for any eigenvalue $lambda$ of the Jacobian at $x^ast$, and _stable_ if $abs(lambda) < 1$ for every eigenvalue $lambda$. Remark this is quite different than the stability requirements for a linear ODE, which looks at whether at an eigenvalue is positive or negative. In particular, this analysis works for both real and complex eigenvalues, where we take in the latter case $abs(dot)$ to be the modulus of the eigenvalue.
+
+#definition("Hyperbolic")[
+  A fixed point $x^ast$ of a map is _hyperbolic_ if $abs(lambda) eq.not 1$ for every eigenvalue $lambda$ of the Jacobian $J_f (x^ast)$.
+]
+
+We have then analogous definitions of the linear stable, unstable, and centre manifolds for maps as in the ODE case, as well as: $
+W^s (x^ast) := {x | f^n (x) -> x^ast}, wide W^u (x^ast) := {x | Gamma^- (x) exists, f^n (x) -> x^ast}.
+$ 
+
+#theorem("Stable Manifold")[
+  Suppose $x^ast = 0$ a hyperbolic fixed point for the map $x_(n+1) = f(x_n)$ where $f$ a diffeomorphism. Then, $y_(n + 1) = J_f (0) y_n$ has stable, unstable manifolds $E^s, E^u$ which are tangential to the stable, unstable nonlinear manifolds $W^s, W^u$ of $x^ast = 0$.
+]
+
+== Bifurcations
+
+#theorem("Centre Manifold Theorem")[]
+
+== Period Doubling Bifurcation
+
+== Naimark-Sacker Bifurcation
+
+== Sharkovski's Theorem
+
+== Shilnikov/Homoclinic Bifurcation

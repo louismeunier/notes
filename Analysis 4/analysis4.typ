@@ -947,7 +947,7 @@ As we saw on homework, any two norms on a finite dimensional space are equivalen
 #proof[
 Fix $epsilon > 0$. Since $Y subset.neq X$, let $x in Y^c$. $Y$ closed so $Y^c$ open and hence there exists some $r > 0$ such that $B(x, r) sect Y = nothing$. In other words, $
 inf {||x - y'|| | y' in Y} > r > 0.
-$ Let then $y' in Y$ be such that $
+$ Let then $y_1 in Y$ be such that $
 r < ||x - y_1|| < epsilon^(-1) r,
 $ and take $
 x_0 := (x - y_1)/(||x - y_1||_X).
@@ -1577,6 +1577,14 @@ Let $X$ a separable normed vector space and ${f_n} subset.eq X^ast$ such that th
 ]<thm:helleys>
 
 #proof[
+ This is essentially a specialization of the Arzelà-Ascoli lemma. To apply it, we need $X$ separable (done), the sequence to be pointwise bounded (done), and the sequence to be equicontinuous. To verify this last one, we know that $
+ norm(f_n (x)) <= C norm(x) => norm(f_n) <= C, forall n >= 1,
+ $ hence by linearity, for any $x, y in X$, $
+ norm(f_n (x) - f_n (y)) <= C norm(x - y), forall n >= 1,
+ $ so in particular ${f_n}$ uniformly Lipschitz, thus equicontinuous.
+]
+
+#proof[
   (Of @thm:weakcompactness) Let ${x_n} subset.eq H$ be bounded and let $H_0 = overline("span"{x_1, dots, x_n, dots})$, so $H_0$ is separable, and $(H_0, (dot,dot))$ is a Hilbert space (being closed). Let $f_n in H_0^ast$ be given by $
   f_n (x) = (x_n, x), forall x in H_0.
   $ Then, $
@@ -1724,7 +1732,7 @@ $]
   $ Hence, for $epsilon > 0$, letting $delta = (epsilon/norm(T))^p$ proves absolute continuity of $G_T$. Thus, $g = G'_T$ exists and is such that $g in L^1 ([a, b])$ and $
   G_T (x) = integral_(a)^x g(t) dif t, thin forall x in [a, b].
   $ Hence, $
-  T(chi_([1, d))) = G_T (d) - G_T (c) &= integral_(a)^d g(t) dif t - integral_(a)^c g(t) dif t \ 
+  T(chi_([c, d))) = G_T (d) - G_T (c) &= integral_(a)^d g(t) dif t - integral_(a)^c g(t) dif t \ 
   &= integral_(c)^d g(t) dif t  \
   &= integral_(a)^b g(t) dot chi_([c, d)) (t) dif t.
   $ This proves the theorem for indicator functions; by linearity of $T$ and linearity of the integral, we can repeat this procedure to find a function $g$ such that $T f = integral_(a)^b f(t) g(t) dif t$ for every step function $f$.
