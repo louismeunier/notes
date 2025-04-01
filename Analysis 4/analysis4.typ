@@ -2359,3 +2359,122 @@ $
 #remark[
   All the prior results can be extended to $f in L^1 (TT)$, via density.
 ]
+
+== Introduction to the Fourier Transform
+
+#definition("Fourier Transform")[
+  Let $f : RR -> CC$. Then, for any $zeta in RR$, define $
+  hat(f)(zeta) := integral_(RR) f(x) e^(-2 pi i zeta x) dif x.
+  $
+]
+
+#remark[
+  If $f in L^1 (RR)$, $
+  abs(hat(f)(zeta)) <= integral_(-infinity)^infinity abs(f(x)) underbrace(abs(e^(-2 pi i zeta x)), =1) dif x = norm(f)_(L^1 (RR))
+  $ so in particular, $hat(f) in L^infinity (RR)$. Moreover, $
+ abs(hat(f)(zeta + h) - hat(f)(zeta)) &= abs(integral_(RR) f(x) e^(-2 pi i (zeta + h) x) - f(x) e^(-2 pi i zeta x) dif x) \ 
+ &= abs(integral_(RR) f(x) e^(-2 pi i zeta x) (e^(-2 pi i h x )-1)) \ 
+ &<= integral_(RR) abs(f(x)) abs(e^(-2 pi i h x) - 1) dif x.
+  $ We have that $
+  lim_(h -> 0) abs(e^(-2 pi i h x) - 1) = 0
+  $ for a.e. $x in RR$, and $
+  integral_(RR) abs(f(x)) abs(e^(-2 pi i h x - 1)) dif x <= 2 integral_(RR) abs(f(x)) dif x = 2 norm(f)_(L^1 (RR)),
+  $ so we can apply dominated convergence theorem to find $
+  lim_(h -> 0) abs(hat(f)(zeta + h) - hat(f)(zeta)) <= integral_(RR) abs(f(x)) underbrace(lim_(h -> 0) abs(e^(-2 pi i h x) - 1), = 0) dif x  = 0,
+  $ so $hat(f) in C(RR)$.
+]
+
+#proposition("Properties of the Fourier Transform")[
+  Let $f in L^1 (RR)$ and $g in L^1 (RR)$. Then,\
+  a. $hat(tau_y f) (zeta) = e^(-2 pi i zeta y) hat(f)(zeta)$, and $tau_eta hat(f)(zeta) = hat(e^(2pi i eta (dot)) f(dot)) (zeta)$;\
+  b. $hat(f convolve g) = hat(f)dot hat(g)$;\
+  c. $integral_(RR) f(x) hat(g)(x) dif x = integral_(RR) hat(f)(x) g(x) dif x$.
+]
+
+#proof[
+a. A change of variables gives $
+hat(tau_y f) (zeta) = integral_(RR) f(x - y) e^(-2 pi i zeta x) dif x = e^(-2pi i zeta y) integral_(RR) f(x) e^(-2 pi i zeta x) dif x = e^(-2 pi i zeta y) hat(f)(zeta).
+$ Similarly, $
+tau_eta hat(f)(zeta) = integral_(RR) f(x) e^(-2 pi i (zeta - eta) x) dif x = integral_(RR) f(x) e^(2 pi i eta x) dot e^(-2 pi i zeta x) dif x = hat(e^(2 pi i eta (dot)) f(dot))(zeta). 
+$
+
+b. First, by Young's inequality $f convolve g in L^1 (RR)$ so this makes sense. Moreover, since $f, g in L^1 (RR)$, everything we need to be finite is finite, so we can apply Fubini's theorem to find $
+hat(f convolve g)(zeta) &= integral (integral f(x - y) g(y) dif y) e^(-2 pi i zeta x) dif x \
+&= integral (integral f(x - y) e^(-2 pi i zeta x) dif x) g(y) dif y \ 
+&= integral (integral f(x -y) e^(-2 pi i zeta (x - y)) dif x) e^(- 2 pi zeta y) g(y) dif y \ 
+&= (integral f(x) e^(- 2pi i zeta x) dif x) (integral g(y) e^(-2 pi i zeta y) dif y) = hat(f) (zeta) dot hat(g) (zeta),
+$ where we "multiply by 1" in the second to last line to change variables in the appropriate way.
+
+c. We can apply Fubini's again, $
+integral f(x) hat(g)(x)  dif x &=  integral f(x) (integral g(y) e^(-2 pi i x y) dif y) dif x \
+&= integral g(y) (integral f(x) e^(- 2pi i x y) dif x )dif y \ 
+&= integral g(y) hat(f)(y) dif y.
+$
+]
+
+#lemma[
+  Let $f(x) = e^(- pi a x^2)$ for $a > 0$. Then, $
+  hat(f)(zeta) = 1/sqrt(a) e^(- pi (zeta^2)/a).
+  $
+]
+
+#proof[
+  First, note that $
+  hat(dif/(dif x) f) (zeta) &= integral_(-infinity)^infinity f' (x) e^(-2 pi i zeta x) dif x \ 
+  &= f(x) e^(- 2pi i zeta x) thin #vbar(2em)_(thin x = -infinity)^(thin infinity)  - integral_(-infinity)^infinity f(x) (- 2 pi i zeta) e^(- 2 pi i zeta x) dif x.
+  $ Specifying $f(x) = e^(-2 pi a x^2)$, this becomes $
+  &= e^(- pi a x^2) dot e^(- 2pi i zeta x)  thin #vbar(2em)_(thin x = -infinity)^(thin infinity) - integral_(-infinity)^infinity e^(- pi a x^2) (-2 pi i zeta) e^(-2 pi i zeta x) dif x \ 
+  &= 2 pi i zeta  dot integral_(-infinity)^infinity e^(- pi a x^2) e^(-2 pi i zeta x) dif x = 2pi i zeta dot hat(f)(zeta).
+  $ On the other hand, $
+  dif/(dif zeta) hat(f)(zeta) &= dif/(dif zeta) (integral_(-infinity)^infinity f(x) e^(-2 pi i zeta x) dif x)\ 
+  &= integral_(-infinity)^infinity f(x) (-2 pi i x) e^(-2 pi i zeta x) dif x,
+  $ assuming finiteness; indeed, $
+  abs(integral_(-infinity)^infinity e^(- pi a x^2) (- 2 pi x) e^(-2 pi i zeta x) dif x) &<= C integral_(-infinity)^infinity abs(x) e^(- pi a x^2) dif x\
+  &= 2 C integral_(0)^infinity x e^(- pi a x^2) dif x = C e^(- pi a x^2) #vbar(2em)_(thin 0)^( thin infinity) < infinity,
+  $ so our differentiation was valid. Thus, combining these two, $
+  dif/(dif zeta) hat(f)(zeta) &= integral_(-infinity)^infinity - 2 pi i x f(x) e^(-2 pi i zeta x) dif x \
+  &= integral_(-infinity)^infinity i (- 2 pi x e^(- pi a x^2)) e^(-2 pi i zeta x) dif x \ 
+  &= integral_(-infinity)^infinity i/a f'(x)  e^(- 2 pi i zeta x) dif x \ 
+  &= i/a 2 pi i zeta hat(f)(zeta) \
+&=> dif/(dif zeta) hat(f)(zeta) = - (2pi)/a zeta hat(f)(zeta). 
+  $ Thus, $
+  dif/(dif zeta) (e^((pi zeta^2)/a) hat(f)(zeta)) = e^((pi zeta^2)\/a) (-(2 pi)/a zeta hat(f)(zeta)) + (2 pi zeta)/a  e^((pi zeta^2)\/a) hat(f)(zeta) = 0,
+  $ and thus $e^((pi zeta^2)/a) hat(f)(zeta)$ is constant in $zeta$ so $e^((pi zeta^2)/a) hat(f)(zeta) = hat(f)(0) = integral_(-infinity)^infinity e^(- pi a x^2) dif x = 1/sqrt(a)$. Thus, $hat(f)(zeta) = 1/sqrt(a) e^(- (pi zeta^2)/a)$.
+]
+
+With this, we are ready to define the inverse Fourier transform;
+
+#definition("Inverse Fourier Transform")[
+  If $f in L^1 (RR)$, then $
+  caron(f)(x) := integral_(RR) f(zeta) e^(2 pi i zeta x) dif zeta = hat(f(- dot))(x).
+  $
+]
+
+#remark[By similar computations to before, $f in L^1 (RR)$ implies $caron(f) in L^infinity (RR) sect C(RR)$.]
+
+#remark[
+  One would hope $caron(hat(f)) = f$. However, if we check, naively, $
+  caron(hat(f))(x) &= integral (integral f(x) e^(-2 pi i zeta y) dif y) e^(2 pi i zeta x) dif zeta;
+  $ however the integral may not be finite in general, i.e. we cannot switch the integrals for free. We must be more careful, in short.
+]
+
+#theorem("Fourier Inversion")[
+If $f in L^1 (RR)$ and $hat(f) in L^1 (RR)$, then $f$ agrees almost everywhere with $f_0in C(RR)$, and $caron(hat(f)) = hat(caron(f)) = f_0$.
+]
+
+#proof[
+  Let $epsilon > 0$ and $x in RR$. Let $phi(zeta) := e^(2 pi i x zeta) e^(- pi epsilon zeta^2)$. Then, $
+  hat(f)(y) &= integral phi(zeta) e^(-2 pi i y zeta) dif zeta\
+  &= integral e^(2 pi i x zeta) e^(- pi epsilon zeta^2) e^(- 2 pi i y zeta) dif zeta\
+  &= hat(e^(2 pi i x (dot)) e^(-pi epsilon (dot)^2))(y)\
+  &= tau_x hat(e^(- pi epsilon (dot)^2)) (y) \
+  &= tau_x (1/sqrt(epsilon) e^(- (pi y^2)/epsilon)) \
+  &= 1/(sqrt(epsilon)) e^(- pi/epsilon (y - x)^2).
+  $ Since $integral f hat(phi) dif y = integral hat(f) phi dif y$, we find $
+  integral f(y) 1/sqrt(epsilon) e^(- pi/epsilon (x - y)^2) &= integral hat(f)(y) phi(y) dif y.
+  $ Let $K_epsilon (y) := 1/sqrt(epsilon) e^(- pi/epsilon y^2)$. Recall that this is the good kernel that we used in the proof of the Weierstrass Approximation Theorem. In particular, the formula equation above can be written $
+  (f ast K_epsilon) (x) = integral hat(f)(y) e^(2 pi i x y) e^(- pi epsilon y^2) dif y. wide ast.circle
+  $ Recall that if $f$ is continuous at $x$ and compactly-supported, then $lim_(epsilon -> 0) abs((f ast K_epsilon) (x) - f(x)) = 0$. This implies that for every $f in L^1 (RR)$ $lim_(epsilon -> 0) norm((f ast K_epsilon) - f)_1 = 0$. So, taking $epsilon -> 0$ in $ast.circle$, $f(x) =_(L^1 (RR)) lim_(epsilon -> 0) integral hat(f)(y) e^(2 pi i x y) e^(- pi epsilon y^2) dif y$. $hat(f) in L^1 (RR)$, so by DCT we can pass the limit inside, so $
+  f(x) =_(L^1 (RR)) integral hat(f)(y) e^(2 pi i x y) dif y = caron(hat(f)) (x).
+  $ This equality in $L^1 (RR)$ thus gives $caron(hat(f)) = f$ a.e.. A similar proof follows for showing $hat(caron(f)) = f$ a.e. by replacing $e^(2 pi i x)$ with $e^(-2 pi i x)$ everywhere it appears. Since $(hat(caron(f))), (caron(hat(f)))$ are continuous by our remarks earlier, it follows that $f$ is equal to a continuous function almost everywhere.
+]
