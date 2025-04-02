@@ -2009,13 +2009,20 @@ Given a single root $a^(1\/n)$, then notice that every other root of the form $z
 ]
 
 #proof[
-  Define the map $
-  eta: "Aut"(E\/F) -> mu_n (F), wide sigma |-> sigma(a^(1\/n))/(a^(1\/n)).
-  $ This is a group homomorphism. Moreover, we claim $eta$ injective. If $sigma in ker(eta)$, then $eta(sigma) = 1$ so $sigma(a^(1\/n)) = a^(1\/n)$ so $sigma = id$ on $E$. 
-  
-  $im(eta) tilde.eq "Gal"(E\/F)$.
+  If $sigma in F(a^(1\/n))$, then $sigma(a^(1\/n))$ must map to some other element which, raising to the $n$, equals $a$ itself. Then, since $F$ contains $n$ distinct $n$th roots of unity, then we know moreover that $
+  sigma(a^(1\/n)) = zeta_sigma dot a^(1\/n),
+  $ where $zeta_sigma in mu_n (F)$ a root of unity. Moreover, then, this root of unity completely determines the action of $sigma$ so we may define a map $
+  eta : "Aut"(F(a^(1\/n))) -> mu_n (F), wide sigma |-> zeta_sigma, thin thin "where" sigma(a^(1\/n)) = zeta_sigma dot a^(1\/n).
+  $ Then, one verifies that this is a group homomorphism, and if $sigma in ker(eta)$, then it must be that $zeta_sigma = 1$ so $sigma = id_("Aut")$ hence $eta$ an injection. Thus, $"Aut"(F(a^(1\/n)))$ can be realized as a subgroup of $mu_n (F)$, which is abstractly isomorphic to $ZZ\/n ZZ$, which is abelian thus $"Aut"(F(a^(1\/n)))$ itself abelian.
 
-  // TODO
+  Finally, $F(a^(1\/n))\/F$ can be viewed as the splitting field of $f(x) := x^n - a$ over $F$, since it contains all of the roots of $f$, and is minimally generated. Thus, the extension is Galois after all.
+  // Define the map $
+  // eta: "Aut"(E\/F) -> mu_n (F), wide sigma |-> sigma(a^(1\/n))/(a^(1\/n)).
+  // $ This is a group homomorphism. Moreover, we claim $eta$ injective. If $sigma in ker(eta)$, then $eta(sigma) = 1$ so $sigma(a^(1\/n)) = a^(1\/n)$ so $sigma = id$ on $E$. 
+  
+  // $im(eta) tilde.eq "Gal"(E\/F)$.
+
+  // // TODO
 ]
 
 === Some Group Theory
