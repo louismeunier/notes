@@ -2005,7 +2005,7 @@ Let $E = F(a^(1\/n))$ a radical extension. What can we say about $"Aut"(E\/F)$? 
 Given a single root $a^(1\/n)$, then notice that every other root of the form $zeta^k a^(1\/n)$ for $k = 0, dots, n - 1$ where $zeta$ a primitive $n$th root of unity. Hence, we have the following:
 
 #theorem[
-  Suppose $F$ contains $n$ distinct $n$th roots of unity, and let $mu_n (F) := {x in F^times | x^n = 1} tilde.eq ZZ\/n ZZ$ be the group of such elements. Then, $F(a^(1\/n))$ is Galois with abelian Galois group. Moreover, this group is canonical a subgroup of $mu_n (F)$.
+  Suppose $F$ contains $n$ distinct $n$th roots of unity, and let $mu_n (F) := {x in F^times | x^n = 1} tilde.eq ZZ\/n ZZ$ be the group of such elements. Then, $F(a^(1\/n))$ is Galois with abelian Galois group. Moreover, this group is canonically a subgroup of $mu_n (F)$.
 ]
 
 #proof[
@@ -2016,4 +2016,76 @@ Given a single root $a^(1\/n)$, then notice that every other root of the form $z
   $im(eta) tilde.eq "Gal"(E\/F)$.
 
   // TODO
+]
+
+=== Some Group Theory
+
+#definition("Solvable")[A finite group $G$ is said to be _solvable_ if there is a sequence of subgroups $
+{1} subset G_1 subset G_2 subset dots.c subset G_n = G,
+$ such that:
+1. $G_(i-1) triangle.l G_i$ ($G_(i-1)$ normal in $G_i$) for each $i = 1, dots, n$;
+2. $G_i\/G_(i-1)$ is abelian for each $i = 1, dots, n$.
+]
+
+#remark[
+  A given $G_i$ need not be normal in the whole $G$, just $G_(i+1)$.
+]
+
+#example[
+1. Any abelian group is solvable, ${1} triangle.l G$
+2. $S_3$ is solvable, ${1} triangle.l A_3 triangle.l S_3$
+3. $S_4$ is solvable, ${1} triangle.l V:={(), (12)(34), (13)(24), (14)(23)} tilde.eq ZZ\/2ZZ times ZZ\/2ZZ triangle.l A_4 triangle.l S_4$, with $
+S_4\/A_4 = ZZ\/2ZZ, wide A_4\/V = ZZ\/3ZZ.
+$
+4. $S_5$ is not solvable; the only normal subgroup is $A_5$, and $A_5$ contains no normal subgroups (indeed, then, $A_5$ also not solvable).
+]
+
+We'll assume throughout that the remainder that $"char"(F) = 0$. The main theorem we'd like to get at:
+
+#theorem[If $E\/F$ is a tower of radical extensions, then it is contained in a Galois extension $tilde(E)\/F$ with solvable Galois group.]<thm:radicalsolvable>
+
+Namely, one can "detect" if a given field extension is a tower of radical extensions by checking if it can be embedded in a Galois extension with solvable Galois group.
+
+#proposition[
+  If $G$ is a solvable group, then any quotient $overline(G)$ of $G$ is solvable.
+]
+
+#proof[
+  Write $
+  1 triangle.l G_1 triangle.l G_2 triangle.l dots.c triangle.l G_n = G.
+  $ For $overline(G)$ to be a quotient of $G$ means in particular that there is a surjective map $eta : G ->> overline(G)$. Then, simply take the restriction of $eta$ to each subgroup $G_i$, call this $eta_i : G_i ->> overline(G)_i$, i.e. $overline(G)_i = eta(G_i)$. Then, $eta$ induces a homomorphism $
+  overline(eta)_i : G_i\/G_(i-1) -> overline(G)_i\/overline(G)_(i-1), wide a G_(i-1) |-> eta(a)overline(G)_(i-1).
+  $ One readily verifies that this map surjective. Thus, $overline(G)_i\/overline(G)_(i-1)$ is the image of a surjective map of an abelian group and thus abelian itself.
+
+In particular, we have the following picture:
+  #align(center, commutative-diagram(
+    node-padding: (8pt, 35pt),
+    node((0,0), ${1}$), node((0,1), $triangle.l$), node((0,2), $G_1$),node((0,3), $triangle.l$),
+    node((0,4), $G_2$),node((0,5), $triangle.l$), node((0,6), $dots.c$),node((0,7), $triangle.l$), node((0,8), $G_(n-1)$),node((0,9), $triangle.l$), node((0,10), $G_(n) = G$),
+    node((1,0), ${1}$), node((1,1), $triangle.l$),  node((1,2), $overline(G)_1$),node((1,3), $triangle.l$),
+    node((1,4), $overline(G)_2$), node((1,5), $triangle.l$), node((1,6), $dots.c$), node((1,7), $triangle.l$), node((1,8), $overline(G)_(n-1)$), node((1,9), $triangle.l$), node((1,10), $overline(G)_(n)$),
+    arr($G_1$, $overline(G)_1$, $eta_1$, "surj"),
+    arr($G_2$, $overline(G)_2$, $eta_2$, "surj"),
+    arr($G_(n-1)$, $overline(G)_(n-1)$, $eta_(n-1)$, "surj"),
+    arr($G_(n) = G$, $overline(G)_(n)$, $eta$, "surj"),
+  )
+  )
+]
+
+#proof([(Of @thm:radicalsolvable)])[
+  Suppose $F = E_0 subset E_1 subset dots.c subset E_n = E$ where $E_i = E_(i-1) (a_i^(1\/n))$ for $a_i in E_(i-1)$. We prove by induction on $n$.
+
+  For $n = 1$, $E = F(alpha)$ with $alpha^m = a in F$. Let $tilde(E)$ be the splitting field of $x^m - a$, i.e. $tilde(E) = F(zeta, alpha) = F(zeta)(alpha)$. Then, we have the tower $
+  F subset F(zeta) subset F(zeta)(alpha).
+  $ Then, denoting $sigma_a in "Gal"(F(zeta)\/F)$ which maps $zeta |-> zeta^a$ (for $a in (ZZ\/m ZZ)^times$), one readily verifies $sigma_a compose sigma_b = sigma_(a b)$ so in particular we obtain an injection $
+  "Gal"(F(zeta)\/F) arrow.hook (ZZ\/m ZZ)^times.
+  $ This gives in particular $"Gal"(F(zeta)\/F)$ abelian. Then, since $zeta in F(zeta)$, it follows that $"Gal"(F(zeta, alpha)\/F(zeta))$ is also abelian, being a subgroup of $ZZ\/m ZZ$ (more concretely, as the group of $m$th roots of unity) as well. Finally, $"Gal"(F(alpha, zeta)\/F)$ is abelian too since it is a splitting field.
+
+  Let $G_1 = "Gal"(F(zeta, alpha)\/F(zeta))$  and $G = "Gal"(F(zeta, alpha)\/F)$. We claim $G_1$ normal in $G$. Indeed, $
+  F(zeta, alpha)^(G_1) = F(zeta)
+  $ is Galois over $F$, and 
+  // since $G_1$ abelian and $G\/G_1 subset (ZZ\/m ZZ)^times$ 
+  since under the Galois correspondance $
+  G <-> F, wide G_1 <-> F(zeta), wide 1 <-> F(zeta, alpha), 
+  $ and since $F(zeta)\/F$ is Galois, the corresponding Galois group $G_1$ is normal in $G$, and so again by the correspondance $G\/G_1 = "Gal"(F(zeta)\/F) subset (ZZ\m ZZ)^times$. Thus, $F(alpha) subset F(alpha, zeta)$ which is Galois with solvable Galois group, thus proving the base case.
 ]
