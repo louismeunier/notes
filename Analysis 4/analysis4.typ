@@ -2459,7 +2459,7 @@ With this, we are ready to define the inverse Fourier transform;
 ]
 
 #theorem("Fourier Inversion")[
-If $f in L^1 (RR)$ and $hat(f) in L^1 (RR)$, then $f$ agrees almost everywhere with $f_0in C(RR)$, and $caron(hat(f)) = hat(caron(f)) = f_0$.
+If $f in L^1 (RR)$ and $hat(f) in L^1 (RR)$, then $f$ agrees almost everywhere with some $f_0in C(RR)$, and $caron(hat(f)) = hat(caron(f)) = f_0$.
 ]
 
 #proof[
@@ -2477,4 +2477,62 @@ If $f in L^1 (RR)$ and $hat(f) in L^1 (RR)$, then $f$ agrees almost everywhere w
   $ Recall that if $f$ is continuous at $x$ and compactly-supported, then $lim_(epsilon -> 0) abs((f ast K_epsilon) (x) - f(x)) = 0$. This implies that for every $f in L^1 (RR)$ $lim_(epsilon -> 0) norm((f ast K_epsilon) - f)_1 = 0$. So, taking $epsilon -> 0$ in $ast.circle$, $f(x) =_(L^1 (RR)) lim_(epsilon -> 0) integral hat(f)(y) e^(2 pi i x y) e^(- pi epsilon y^2) dif y$. $hat(f) in L^1 (RR)$, so by DCT we can pass the limit inside, so $
   f(x) =_(L^1 (RR)) integral hat(f)(y) e^(2 pi i x y) dif y = caron(hat(f)) (x).
   $ This equality in $L^1 (RR)$ thus gives $caron(hat(f)) = f$ a.e.. A similar proof follows for showing $hat(caron(f)) = f$ a.e. by replacing $e^(2 pi i x)$ with $e^(-2 pi i x)$ everywhere it appears. Since $(hat(caron(f))), (caron(hat(f)))$ are continuous by our remarks earlier, it follows that $f$ is equal to a continuous function almost everywhere.
+]
+
+So far, all we've worked with is $f in L^1 (RR)$, which results in $hat(f) in L^infinity (RR)$. Really, we'd like to extend the Fourier transform to be $L^2 (RR)$, since this is a nice Hilbert space. To do so, we need the following:
+
+#theorem("Plancherel's Theorem")[
+Let $f in L^1 (RR) sect L^2 (RR)$. Then $hat(f) in L^2 (RR)$ and $norm(f)_(L^2 (RR)) = norm(hat(f))_(L^2 (RR))$.
+]
+
+#remark[
+  One can view Plancherel's Theorem as a type of continuous analog of Parseval's identity for Fourier Series.
+]
+
+#proof[
+  Let $f(x) in L^1 (RR) sect L^2 (RR)$, and put $g(x) := overline(f(-x))$, noting that then $g in L^1 (RR) sect L^2 (RR)$ as well. Put $
+  w(x) := (f ast g)(x).
+  $ By Young's, $
+  norm(w)_(L^1 (RR)) &<= norm(f)_(L^1 (RR)) norm(g)_(L^1 (RR)) < infinity
+  $ so $w in L^1 (RR)$.
+
+  We claim $w$ continuous at $0$. For $h$ sufficiently small, we find $
+  abs(w(h) - w(0)) &= abs(integral_(RR) f(h - y) g(y) dif y - integral_RR f(-y) g(y) dif y) \
+  &= abs(integral_(RR) (f(h - y) - f(-y)) g(y) dif y) \ 
+  &<= norm(f(h - dot) - f(-dot))_(L^2 (RR)) norm(g)_(L^2 (RR))\
+  &<= norm(tau_h f - f)_(L^2 (RR)) norm(g)_(L^2 (RR)).
+  $ Let $tilde(f) in C_c (RR)$ such that $norm(f - tilde(f))_(L^2 (RR)) < eta$ for some small $eta > 0$. Then we further bound $
+  norm(tau_h f - f)_(L^2 (RR)) &<= norm(tau_h f - tau_h tilde(f))_(L^2 (RR)) + norm(tau_h tilde(f) - tilde(f))_(L^2 (RR)) + norm(tilde(f) - f)_(L^2 (RR))\
+  "(since norm translation invariant)" wide &= 2norm(tilde(f) - f)_(L^2 (RR)) + norm(tau_h tilde(f) - tilde(f))_(L^2 (RR)) \ 
+  &<= 2 eta + norm(tau_h tilde(f) - tilde(f))_(L^2 (RR)).
+  $ Now, $tilde(f) in C_c (RR)$ and thus is uniformly continuous hence $abs(tau_h tilde(f) (x) - tilde(f) (x)) -> 0$ uniformly on $RR$ hence $norm(tau_h tilde(f) - tilde(f))_(L^2 (RR)) -> 0$ as well, as $h -> 0$. Finally, since $norm(g)_(L^2 (RR))$ finite, we conclude indeed $w$ continuous at $0$.
+
+  Next, notice that $hat(w) = hat(f)dot hat(g)$, and $
+  hat(g)(zeta) = hat(overline(f(-dot)))(zeta) &= integral_RR overline(f(-x)) e^(-2pi i x zeta) dif x\
+  &= integral_(RR) overline(f(-x) e^(2 pi i x zeta)) dif x \ 
+  &= overline(integral_(RR) f(-x) e^(2pi i x zeta) dif x) \ 
+  &= overline(integral_(RR) f(x) e^(-2pi i x zeta) dif x)\
+  &= overline(hat(f) (zeta)),
+  $ so $
+  hat(w) = hat(f) dot overline(hat(f)) = abs(hat(f))^2 >= 0.
+  $ Recall our good kernel from the Weierstrass Approximation Theorem, $K_epsilon (y) = 1/(sqrt(epsilon)) e^(-pi/epsilon y^2) = hat(e^(- pi epsilon (dot)^2))$. So, $
+  integral hat(w)(y) e^(-pi epsilon y^2) dif y &= integral w(y) 1/sqrt(epsilon) e^(- (pi y^2)\/epsilon) dif y \ 
+  &= integral w(y) K_epsilon (y) dif y \ 
+  "(by symmetry)"wide&= integral w(y) K_epsilon (-y) dif y \
+  &= (w convolve K_epsilon)(0).
+  $ On the LHS, $hat(w) >= 0$ so $hat(w) (y) e^(- pi epsilon y^2) arrow.tr_(epsilon -> 0^+) hat(w)(y)$ so by monotone convergence, $integral hat(w) e^(- pi epsilon y^2) ->_(epsilon -> 0) integral hat(w)(y) dif y$. On the other hand, we claim $(w ast K_epsilon)(0) ->_(epsilon -> 0) w(0)$ (this isn't immediate from the fact that $K_epsilon$ is a good kernel because we don't know a priori that $w$ (essentially) bounded). Supposing this claim holds, this implies $integral hat(w)(y) dif y = w(0)$, hence $
+  integral hat(w)(y) dif y = integral |hat(f)(y)|^2 dif y &= w(0) \
+  &= (f ast g)(0) \ 
+  &= integral f(y) overline(f(0-(-y))) dif y\
+  &= integral |f(y)|^2 dif y,
+  $ which precisely means $norm(hat(f))_(L^2 (RR)) = norm(f)_(L^2 (RR))$.
+
+   To prove the claim of $(K_epsilon ast w)(0)->w(0)$, let $eta > 0$. Since $w$ continuous at $0$, there is a $delta > 0$ such that $|y| < delta => |w(y) - w(0)| < eta$. Then, $
+   abs(integral w(0 - y) K_epsilon (y) dif y - w(0)) &= abs(integral (w(-y) - w(0)) K_epsilon (y) dif y) \ 
+   &<= eta integral_(abs(y) < delta)  K_epsilon (y) dif y + integral_(abs(y) > delta) abs(w(0)) K_epsilon (y) dif y + integral_(abs(y) > delta) abs(w(-y)) K_epsilon (y) dif y \ 
+   &<= eta dot 1 + underbrace(|w(0)|, #stack(spacing: .3em, [$w$ cnts at 0], [so this finite])) dot underbrace(integral_(abs(y) > delta) K_epsilon (y) dif y, ->_(epsilon -> 0) 0 "since good kernel") + integral_(abs(y) > delta) abs(w(-y)) K_epsilon (y) dif y .
+   $ It remains to show the last term $->0$. We have $
+   integral_(abs(y) > delta) |w(-y)| K_epsilon (y) dif y &<= integral_(|y| > delta) |w(-y)| 1/(sqrt(epsilon)) e^(- pi (delta^2)/epsilon) dif y \ 
+   &<= underbrace(1/sqrt(epsilon) e^(-pi (delta^2)/epsilon), -> 0 "as" epsilon -> 0) dot norm(w)_(L^1 (RR)) -> 0.
+   $ This completes the proof.
 ]
