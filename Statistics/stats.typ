@@ -1414,7 +1414,7 @@ $ Therefore for large $n$, $ell'_n (theta_0 + epsilon) < 0 < ell'_n (theta_0 - e
   The MLE is Fisher-Efficient as its asymptotic variance approaches the CRLB.
 ]
 
-= Confidence Interval
+= Confidence Intervals
 
 == Interpretations
 A standard approach to representing uncertainty in point estimation is to report a "confidence interval" for a parameter of interest.
@@ -1484,5 +1484,72 @@ When $Q$ is monotone with respect to $theta$, then inverting the inequality in 1
 ]
 
 #example[
-  Suppose we have two independent iid samples $X_i tilde^"iid" cal(N)(mu_1, sigma_1^2), i = 1, dots, m$ and $Y_i tilde^"iid" cal(N)(mu_2, sigma_2^2)$ with $sigma_1^2 = sigma_2^2 = sigma^2$, and we seek a CI for the difference $mu_1 - mu_2$.
+  Suppose we have two independent iid samples $X_i tilde^"iid" cal(N)(mu_1, sigma_1^2), i = 1, dots, m$ and $Y_i tilde^"iid" cal(N)(mu_2, sigma_2^2)$ with $sigma_1^2 = sigma_2^2 = sigma^2$, and we seek a CI for the difference $mu_1 - mu_2$. Let $
+  S_("pooled")^2 = 1/(m + n - 2) {sum_(i=1)^m (X_i - overline(X)_m)^2 + sum_(i=1)^n (Y_i - overline(Y)_n)^2}.
+  $ Then, $((m + n - 2) S_"pooled"^2)/(sigma^2) tilde chi_(m+n-2)^2$. Under these conditions, we have that $
+  (overline(X)_m - overline(Y)_n - (mu_1 - mu_2))/(S_"pooled" sqrt(1/m + 1/n)) tilde t(m+n-2).
+  $
+  This can then be used to approximate the confidence interval. If the distributions are not known, we can use CLT to approximate as in the previous cases with one sample.
+]
+
+#example[
+  Let $X_i tilde^"iid" "Ber"(theta)$ and consider the point estimator $hat(theta)_n = overline(X)_n$. This is consistent by WLLN, and so by CLT and Slutsky's, $
+  (hat(theta)_n - theta)/(sqrt(hat(theta)_n (1 - hat(theta)_n)\/n)) ->^"d" cal(N)(0, 1).
+  $ Using this as a PQ, this results in a two-sided CI $
+  (hat(theta)_n - z_(alpha\/2) dot sqrt((hat(theta)_n (1- hat(theta)_n))/n), hat(theta)_n + z_(alpha\/2) dot  sqrt((hat(theta)_n (1- hat(theta)_n))/n)).
+  $
+]
+
+#example[
+  If $X_i, Y_j, i = 1, dots, m, j = 1, dots, n$ are two iid, independent samples from two Bernoulli distributions with parameters $theta_1, theta_2$, then as $m, n -> infinity$ (with $m\/n -> rho$), $
+  ((hat(theta)_1 - theta_1) - (hat(theta)_2 - theta_2))/(sqrt(hat(theta)_1 (1 - hat(theta)_1)\/m + hat(theta)_2 (1 - hat(theta)_2)\/n)) ->^"d" cal(N)(0,1),
+  $ where $hat(theta)_1 = overline(X)_m, hat(theta)_2 = overline(Y)_n$.
+]
+
+#example[
+  #text(fill: red, size: 20pt, "Know This!")
+  Suppose $X_i$ are iid from a parametric model $f(dot, theta)$ with $theta$ unknown and $hat(theta)_n$ be the MLE of $theta$. Assuming the regularity conditions R1-R4, recall $
+  (sqrt(n) (hat(theta)_n - theta))/(sqrt(I_1 (hat(theta)_n)^(-1))) ->^"d" cal(N)(0, 1).
+  $ In practice, $I_1 (theta)$ is estimated either with $I_1 (hat(theta)_n)$ or the so-called "empirical Fisher", given by $
+  1/n sum_(i=1)^n (partial/(partial theta) log(f(x_i; theta))thin#vbar(2em)_(thin theta = hat(theta)_n))^2.
+  $  Then, this gives approximate CI given by $
+  (hat(theta)_n - z_(alpha\/2) dot sqrt(1/n dot hat([I_1 (theta)])^(-1)), hat(theta)_n + z_(alpha\/2) dot sqrt(1/n dot hat([I_1 (theta)])^(-1))).
+  $
+]
+
+== Hypothesis Testing
+
+Consider a partitioning of the parameter space $Theta = Theta_0 union Theta_1$. Rather than esimating $theta$, the goal is to decided, based on the data, whether the unknown $theta$ lies in $Theta_0$ or $Theta_1$.
+
+#definition("Hypotheses")[
+  For a parametric family $cal(F) = {f(dot; theta) | theta in Theta subset RR}$, set $
+  cal(H)_0 : theta in Theta_0 wide cal(H)_1 : theta in Theta_1,
+  $ such that $Theta = Theta_0 union Theta_1$ and $Theta_0 sect Theta_1 = nothing$.
+]
+
+#definition("Test")[
+  A statistical procedure that is used to decide whether to reject $cal(H)_0$ in favour of the alternative $cal(H)_1$ or not reject the null hypothesis $cal(H)_0$ is called a _statistical test procedure_ or simply a _test_.
+
+  A test defines a partition of the sample space $Chi$ into two regions, $cal(R) union.sq cal(R)^c$. The hypotheses $cal(H)_0$ is then reject in favour of $cal(H)_1$ depending on where the data $X_1, dots, X_n$ or a suitably chosen statistic $T(X_1, dots, X_n)$ falls into a so-called "rejection region", $cal(R)$, of $Chi$. Formally, we may write the test as $
+  phi.alt (T(bold(X))) = cases(1 ("reject" cal(H)_0) & "if" T(bold(X)) in cal(R), 0 & "if" T(bold(X)) in cal(R)^c).
+  $
+]
+
+#definition("Types of Error")[
+_Type I error_  is made if $cal(H)_0$ is rejected when $cal(H)_0$ is true. _Type II error_ is made if $cal(H)_0$ is not rejected when $cal(H)_1$ is true.
+]
+
+#definition[
+  Given a statistical test $phi.alt$ with a rejection region $cal(R)$,the _power function_ of the test is defined as $
+  pi(theta) = EE_theta [phi.alt (T(bold(X)))] = P_theta ("rejecting" cal(H)_0) = P_theta (T(bold(X)) in cal(R)).
+  $
+] Then, $
+alpha(phi.alt) := P("type I error") = P_cal(H)_0 (T(bold(X)) in cal(R))\
+beta(phi.alt) := P("type II error") = P_(cal(H)_1) (T(bold(X)) in cal(R)^c).
+$
+
+#definition("Size")[
+  The _size_ of a statistical test is defined $
+  overline(alpha) = sup_(theta in cal(H)_0) pi(theta) = sup_(theta in cal(H)_0) [P_theta [T(bold(X)) in cal(R)]].
+  $
 ]
