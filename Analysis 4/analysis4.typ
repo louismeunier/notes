@@ -2130,7 +2130,7 @@ We provide now a strong compactness result in $L^p$, akin to Arzelà-Ascoli.
   2. totally bounded (& complete);
   3. compact.
 
-  Let $cal(F) = {f in L^p (RR^d) "satisfying" "i.", "ii."}$ and fix $Omega subset.eq RR^d$ with finite measure. We aim to show that $cal(F)|_(Omega)$ is sequentially compact in $L^p (Omega)$ (with no regard to whether the limit lives in $cal(F)_Omega$); equivalently, we wish to show $cal(F)|_(Omega)$ is precompact in $L^p (Omega)$ i.e. $overline(cal(F)|_(Omega))$ is compact. Since $overline(cal(F)|_(Omega))$ is a complete metric space, to prove the result it suffices to show that $cal(F)|_(Omega)$ is totally bounded (recall: for every $delta > 0$, $cal(F)|_(Omega) subset.eq union.big_(i=1)^N B_(L^p (Omega)) (g_i, delta)$). We'll do this using mollifiers and AA to do this.
+  Let $cal(F) = {f in L^p (RR^d) "satisfying" "i.", "ii."}$ and fix $Omega subset.eq RR^d$ with finite measure. We aim to show that $cal(F)|_(Omega)$ is sequentially compact in $L^p (Omega)$ (with no regard to whether the limit lives in $cal(F)_Omega$); equivalently, we wish to show $cal(F)|_(Omega)$ is precompact in $L^p (Omega)$ i.e. $overline(cal(F)|_(Omega))$ is compact. Since $overline(cal(F)|_(Omega))$ is a complete metric space, to prove the result it suffices to show that $cal(F)|_(Omega)$ is totally bounded (recall: for every $delta > 0$, $cal(F)|_(Omega) subset.eq union.big_(i=1)^N B_(L^p (Omega)) (g_i, delta)$). We'll do this using mollifiers and AA.
 
   _Step 1:_ Fix $eta$, $delta$ as in ii. in the statement of the theorem, and let $f in cal(F)$. Then, for every $epsilon < delta$, we claim $
   norm((rho_epsilon convolve f) - f)_(L^p (RR^d)) < eta.

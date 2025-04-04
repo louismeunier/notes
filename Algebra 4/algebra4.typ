@@ -1827,7 +1827,7 @@ $ which is equal to $[E : K]$ by multiplicativity.
 #remark[
   The separability assumption is key in the statement. Consider $F = FF_p (u, v)$ and $E = FF_p (u^(1/p), v^(1/p))$, an extension of degree $p^2$ over $F$. We claim there is no primitive element. Suppose $alpha in E$ is such that $alpha = R(u^(1/p), v^(1/p)) = f(u^(1/p), v^(1/p))/g(u^(1/p), v^(1/p))$. then, $alpha^p = f(u, v)/g(u, v) in F$, so $[F(alpha) : F] = 1$ or $p$ for every $alpha in E$. In particular, this means $F(alpha) eq.not E$. Hence, the primitive element theorem doesn't apply; there are infinitely many distinct subfields.
 
-  We glossed over the computation of the degree. Note that $u^(1/p)$ satisfies the polynmoial $x^p - u$ which is irreducible. $v^(1/p)$ satisfies $x^p - v$, which we claim has no roots in $F(u^(1/p))$. If $v = R(u^(1/p), v)^p = R(u, v^p)$, which is impossible so $v$ not a $p$th power in $F(u^(1\/p))$. So, $[F(u^(1/p), v^(1/p)) : F] = p^2$ by multiplicativity.
+  We glossed over the computation of the degree. Note that $u^(1/p)$ satisfies the polynomial $x^p - u$ which is irreducible. $v^(1/p)$ satisfies $x^p - v$, which we claim has no roots in $F(u^(1/p))$. If $v = R(u^(1/p), v)^p = R(u, v^p)$, which is impossible so $v$ not a $p$th power in $F(u^(1\/p))$. So, $[F(u^(1/p), v^(1/p)) : F] = p^2$ by multiplicativity.
 ]
 
 We use this theorem to prove the converse of @thm:injectionsidegal.
@@ -2095,4 +2095,64 @@ In particular, we have the following picture:
   since under the Galois correspondance $
   G <-> F, wide G_1 <-> F(zeta), wide 1 <-> F(zeta, alpha), 
   $ and since $F(zeta)\/F$ is Galois, the corresponding Galois group $G_1$ is normal in $G$, and so again by the correspondance $G\/G_1 = "Gal"(F(zeta)\/F) subset (ZZ\m ZZ)^times$. Thus, $F(alpha) subset F(alpha, zeta)$ which is Galois with solvable Galois group, thus proving the base case.
+
+  Suppose the claim for $n-1$. We have $
+  #stack(
+    spacing: .6em,
+    dir: ttb,
+    $E_(n-1) subset E_n = E_(n-1) (beta)$, $#h(-7em)#rotate(90deg)[$subset$]$,  $#h(-7em)tilde(E)_(n-1)$  ),
+  $ where $beta^m = b in E_(n-1)$. By the induction hypothesis, $tilde(E)_(n-1)\/F$ is solvable.
+
+  Let ${b_1, dots, b_t}$ be the orbit of $b$ under $"Gal"(tilde(E)_(n-1)\/F)$ and let $
+  g(x) := (x^m - b_1)(x^m - b_2) dots.c (x^m - b_t).
+  $ Then, $g in F[x]$, since it's coefficients are fixed under $"Gal"(tilde(E)_(n-1)\/F)$. Let $tilde(E)_(n)$ be the splitting field of $g(x)$ over $F$. In particular, we can write $
+  tilde(E)_n = tilde(E)_(n-1) (root(m, b_1), root(m, b_2), dots, root(m, b_t), zeta),
+  $ where $zeta$ an $m$th root of unity. Then, we can view this as the following tower of extensions:
+  #align(center,
+  commutative-diagram(
+    node((2,0), $tilde(E)_(n-1)$),
+    node((1,0), $tilde(E)_(n-1) (zeta)$),
+    node((0,0), $tilde(E)_(n-1) (zeta, root(m, b_1), root(m, b_2), dots, root(m, b_t))$),
+    arr($tilde(E)_(n-1)$, $tilde(E)_(n-1) (zeta)$, $subset (ZZ\/m ZZ)^times$, label-pos: right),
+    arr($tilde(E)_(n-1) (zeta)$, $tilde(E)_(n-1) (zeta, root(m, b_1), root(m, b_2), dots, root(m, b_t))$, $H$, label-pos: right),
+  )
+  )
+  Then, we find that similar to the base case, $"Gal"(tilde(E)_(n-1) (zeta)\/tilde(E)_(n-1)) subset (ZZ\/m ZZ)^times$, and if we put $H = "Gal"(tilde(E)_n\/tilde(E)_(n-1))$, automorphisms here are determined by how they act on an $t$ tuple of $m$th roots, and thus $
+  H subset.eq ZZ\/m ZZ times  dots.c times ZZ\/m ZZ,
+  $ so in particular $H$ abelian and $H triangle.l G := "Gal"(tilde(E)_n \/tilde(E)_(n-1))$, and so that $G\/H subset (ZZ\/m ZZ)^times$. Thus, we find that $G$ is solvable and normal in $"Gal"(tilde(E)_n\/F)$ and so $"Gal"(tilde(E)_n\/F)\/G$ is solvable thus $"Gal"(tilde(E)_n\/F)$ is solvable.
+
+]
+
+#theorem[If $f(x) in F[x]$ is solvable by radicals, then $"Gal"(f)$ is a solvable group (where $"char"(F) = 0$).]
+
+#proof[
+  If $f(x)$ is solvable, then $E$ the splitting field of $F$ is contained in a tower of radical extensions. Therefore, $E$ is contained in a solvable extension of $F$, say $tilde(E)$; $
+  F subset E subset tilde(E).
+  $ If $G = "Gal"(E\/F)$, then, $G$ is a quotient of $tilde(E)\/F$ and thus $G$ is solvable.
+]
+
+#theorem[
+  If $f(x)$ is a quintic polynomial and $"Gal"(f) = S_5$, then $f(x)$ is not solvable by radicals.
+]
+
+To show this theorem not vacuous, we first show that there exists such a polynomial, with $F = QQ$.
+
+#proposition[Let $G$ be a transitive subgroup of $S_5$ containing a transposition. Then, $G = S_5$.]
+
+#proof[
+  $G$ transitive implies $5|hash G$ by orbit-stabilizer // TODO,
+  so we can assume WLOG that $sigma = (12345) in G$ and $tau = (12) in G$. Conjugating $tau$ by $sigma, sigma^2, sigma^3, sigma^4$, we further find $(23),(34), (45), (51) in G$. Further conjugating $tau$ by $(23)$ we find $(13) in G$. We can then conjugate this element by $sigma$, and repeat, and ultimately find al the transpositions are in $G$. Since such elements generate $S_5$, we conclude $G = S_5$. 
+]
+
+#proposition[
+  Let $f(x)$ be a polynomial of degree $5$ satisfying:
+  1. $f(x)$ is irreducible over $QQ$;
+  2. $f(x)$ has exactly three real roots.
+  Then, $"Gal"(f) = S_5$.
+]
+
+#proof[
+  Let $r_1, dots, r_5$ the roots of $f$ and so $E = QQ(r_1, dots, r_5)$ the splitting field of $f$. We want to show that there exists an automorphism of order 2 that acts on the roots as a transposition, since then by the previous proposition we'd be done since condition 1. ensures $"Gal"(E\/QQ)$ is transitive acting on the roots.
+  
+  We can embed $E subset CC\/RR$. The only automorphisms of $CC\/RR$ are the identity and complex conjugation. Then, restricting complex conjugation to $E\/QQ$, we find a automorphism of order 2, and since 3 of the roots are real, this conjugation will leave them fixed, hence we are indeed done.
 ]
