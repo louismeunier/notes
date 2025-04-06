@@ -263,7 +263,7 @@ By scaling & translating, openness of an operator is equivalent to proving $T(B_
   If ${e_n} subset H$ orthonormal, TFAE:
   1. if $(x, e_i) = 0$ for every $i$, $x = 0$;
   2. _Parseval's identity_ holds, $norm(x)^2 = sum_(i=1)^infinity (x, e_i)^2$, for every $x in H$;
-  3. ${e_i}$ for a basis for $H$, that is $x = sum_(i=1)^infinity (x, e_i) e_i$ for every $x in H$.
+  3. ${e_i}$ a basis for $H$, that is $x = sum_(i=1)^infinity (x, e_i) e_i$ for every $x in H$.
 ]
 #theorem[$H$ is separable (has a countable dense subset) iff $H$ has a countable basis.]
 
