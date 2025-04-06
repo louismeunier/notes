@@ -183,7 +183,7 @@
 #v(2em)
 #outline(title: none, fill: none)
 
-= Linear Operators (Open Mapping; Closed Graph; Uniform Boundedness)
+= Linear Operators
 
 #definition[For $X, Y$ normed vector spaces, $cal(L)(X, Y) := {T : X -> Y | norm(T) := sup_(x in X) (norm(T x)_Y)/(norm(x)_X) < infinity}$]
 
