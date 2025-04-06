@@ -1108,9 +1108,7 @@ Recall the following consequence of the Baire Category Theorem: #theorem[
 
 a. ${T_n}$ are uniformly bounded in $cal(L)(X, Y)$;\
 
-b. For $T : X -> Y$ defined by $
-T (x) := lim_(n -> infinity) T_n (x),
-$ we have $T in cal(L)(X, Y)$;\
+b. For $T : X -> Y$ defined by $T (x) := lim_(n -> infinity) T_n (x),$ we have $T in cal(L)(X, Y)$;\
 
 c. $norm(T) <= liminf_(n->infinity) norm(T_n)$ (_lower semicontinuity result_).
 ]
@@ -2082,7 +2080,7 @@ $ That is, polynomials are dense in $C([a, b])$.
   #text(size: 9pt, [since $abs(y) >= 1$ here for suff. small $epsilon$]) wide & <=  integral_(abs(y) > sqrt(2 pi)/(sqrt(epsilon)) delta) abs(y)/(sqrt(2 pi)) e^(-(y^2)/2)/(sqrt(2 pi)) dif y \
   &<= C  e^(-(y^2)/2)#vbar(2em)_(thin sqrt(2 pi)/(sqrt(epsilon)) delta)^(thin infinity) ->_(epsilon -> 0) 0.
   $  So, $K_epsilon$ is a good kernel, and so $(f ast K_epsilon) (epsilon) ->_(epsilon -> 0) f$ uniformly in $[a, b]$ by our last remark. In particular, for $eta>0$ there is some $epsilon_0 > 0$, $
-  abs((f ast K_epsilon_0) - f)_(L^infinity ([a, b])) < eta/2.
+  norm((f ast K_epsilon_0) - f)_(L^infinity ([a, b])) < eta/2.
   $ We claim now that there is a polynomial $P_N$ such that $norm(P_N - (f ast K_epsilon_0))_(L^infinity ([ a, b])) < eta/2$. Recall that $e^x = sum_(n=0)^infinity (x^n)/(n!)$, which converges uniformly on compact sets. So, there exists a polynomial $S_N$ (from truncating this sum) such that $norm(K_epsilon_0 - S_N)_(L^infinity ([-M, M])) < eta/(4 norm(f)_infinity M)$. Thus, $
   abs(f ast K_epsilon_0 (x) - f ast S_n (x)) &<=  abs(integral f(x - y) (K_epsilon_0 (y) - S_N (y)) dif y) \
   "supp"(f) subset [-M, M] wide &<=integral_(-M)^M abs(f(x - y)) abs(K_epsilon_0 (y) - S_N (y)) dif y \ 
@@ -2119,7 +2117,7 @@ We provide now a strong compactness result in $L^p$, akin to Arzelà-Ascoli.
 #theorem("Strong Compactness")[
   Let ${f_n} subset.eq L^p (RR^d)$ for $p in [1, infinity)$ s.t. \
   i. $exists C > 0$ s.t. $norm(f_n)_p < C forall n$, i.e. ${f_n}$ uniformly bounded in $L^p$;\
-  ii. $lim_(abs(h) -> 0) norm(f_n - tau_h f_n)_p = 0$ uniformly in $h$, i.e. for every $eta > 0$, there exists $delta > 0$ such that if $abs(h) < delta$, $integral abs(f_n (x) - f_n (x - h))^p dif x < eta^p$ _for every_ $n$;\
+  ii. $lim_(abs(h) -> 0) norm(f_n - tau_h f_n)_p = 0$ uniformly in $n$, i.e. for every $eta > 0$, there exists $delta > 0$ such that if $abs(h) < delta$, $integral abs(f_n (x) - f_n (x - h))^p dif x < eta^p$ _for every_ $n$;\
 
   Then, for any $Omega subset.eq RR^d$ with finite measure, there exists a subsequence ${f_n_k}$ such that $f_n_k ->_(L^p (Omega)) f$.
 ]
@@ -2186,7 +2184,7 @@ We provide now a strong compactness result in $L^p$, akin to Arzelà-Ascoli.
   g_i (x) = cases(overline(g)_i & "on" E, 0 & "on" Omega\\E).
   $ Then, we claim $cal(F)|_(Omega) subset.eq union.big_(i=1)^N B_(L^p (Omega)) (g_i, 3 eta)$. If $f in cal(F)$ by $star.filled$, there is an $i$ such that $norm(rho_epsilon convolve f - overline(g)_i)_(L^p (overline(E))) < eta$. But also, $
   norm(f - g_i)_(L^p (Omega))^p &= integral_(Omega\\E) abs(f)^p dif x + integral_(overline(E)) abs(f - overline(g)_i)^p dif x \ 
-  &= norm(f)_(L^p (Omega\\E)) + integral_(overline(E)) abs(f - overline(g)_i)^p dif x\
+  &= norm(f)_(L^p (Omega\\E))^p + integral_(overline(E)) abs(f - overline(g)_i)^p dif x\
   "(Step 3.)" wide &<= eta^p + integral_(overline(E)) abs(f - overline(g)_i)^p dif x.
   $ Recall $(a + b)^(1/p) <= a^(1/p )+ b^(1/p)$. Applying this bound to the above, we find $
   norm(f - g_i)_(L^p (Omega)) &<= eta + norm(f - overline(g)_i)_(L^p (overline(E))) \ 
