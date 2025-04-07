@@ -228,3 +228,8 @@
 !*Analysis*4*Summary
 !*Analysis*4*Summary/*.pdf
 !*Analysis*4*Summary/*.typ
+
+# Stats Summary
+!*Statistics*Summary
+!*Statistics*Summary/*.pdf
+!*Statistics*Summary/*.typ

@@ -1268,7 +1268,7 @@ $pi(theta)$ is purely based on our "prior" belief/knowledge of $theta$; $pi(thet
 Recall that $Var_pi (theta) >= EE_theta [Var(theta|bold(X))]$; so, the prior variance of $theta$ is at least as big as the expected posterior variance.
 
 #definition("Loss Function")[
-  Given data $bold(X) = (X_1, dots, X_n)$, a _loss function_ $L(delta(bold(X)), theta)$ is a measure of loss ("penatly") when $theta$ is estimated by some function $delta(bold(X))$; for instance, $L(delta(bold(X)), theta) = (delta(bold(X)) - theta)^2$.
+  Given data $bold(X) = (X_1, dots, X_n)$, a _loss function_ $L(delta(bold(X)), theta)$ is a measure of loss ("penalty") when $theta$ is estimated by some function $delta(bold(X))$; for instance, $L(delta(bold(X)), theta) = (delta(bold(X)) - theta)^2$.
 ]
 
 #definition("Baye's Risk")[
@@ -1519,7 +1519,7 @@ When $Q$ is monotone with respect to $theta$, then inverting the inequality in 1
 
 == Hypothesis Testing
 
-Consider a partitioning of the parameter space $Theta = Theta_0 union Theta_1$. Rather than esimating $theta$, the goal is to decided, based on the data, whether the unknown $theta$ lies in $Theta_0$ or $Theta_1$.
+Consider a partitioning of the parameter space $Theta = Theta_0 union Theta_1$. Rather than esimating $theta$, the goal is to decide, based on the data, whether the unknown $theta$ lies in $Theta_0$ or $Theta_1$.
 
 #definition("Hypotheses")[
   For a parametric family $cal(F) = {f(dot; theta) | theta in Theta subset RR}$, set $
