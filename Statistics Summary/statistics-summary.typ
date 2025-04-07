@@ -257,6 +257,9 @@ If working with iid rv's, then the denominator becomes $n I_1 (theta)$ where $I_
 #theorem("Neyman-Fisher Factorization")[
 A statistic $T(bold(X))$, $bold(X) tilde p_theta (dot)$ is called _sufficient_ for $theta$ if the conditional distribution of $bold(X)$ given $T(bold(X)) = t$ is independent of $theta$. $T(bold(X))$ is sufficient iff there are functions $h(dot), g(dot; theta)$ such that $p_theta (bold(x)) = h(bold(x)) g(T(bold(x)), theta)$.
 ]
+
+#theorem[Any one-to-one function of a sufficient statistic is still sufficient.]
+
 #theorem("Minimal Sufficiency")[
   A sufficient statistic is minimal if it is a function of every other sufficient statistic. For a parametric $p_theta (dot)$, suppose $T(bold(x)) = T(bold(y)) <=> (p_theta (bold(x)))/(p_theta (bold(y)))$ does not depend on $theta$. Then, $T(bold(X))$ is minimally sufficient.
 ]
@@ -324,11 +327,17 @@ A statistic $T(bold(X))$, $bold(X) tilde p_theta (dot)$ is called _sufficient_ f
 ]
 
 
-
-
-
-
-
 = Confidence Intervals and Hypothesis Testing
 
+
 = Some MLEs and Such To Remember
+
+#table(
+  columns: 5,
+  "Distribution", "Sufficient Statistic", "UMVUE", "ME", "MLE",
+  [Exponential,\ $f(x, theta) = h(x) c(theta) exp(omega(theta) T_1 (x))$], $sum_(i=1)^n T_1 (X_i)$, $1/n sum_(i=1)^n T_1 (X_i)$, $$, $$,
+  $"Poisson"(lambda)$, $f(sum_(i=1)^n X_i)$, $overline(X)_n$, $$, $overline(X)_n$,
+  $cal(U)(0, theta)$, $$, $(n+1)/n X_((n))$, $$, $$, 
+  [$cal(N)(mu, sigma^2)$ \ $mu, sigma^2$ unknown], $(sum_(i=1)^n X_i, sum_(i=1)^n X_i^2)$, $$, $$, $$,
+  $"Ber"(theta)$, $sum_(i=1)^n X_i$, $$, $$, $$, $$
+)

@@ -2025,7 +2025,7 @@ Given a single root $a^(1\/n)$, then notice that every other root of the form $z
   // // TODO
 ]
 
-=== Some Group Theory
+=== Solvable Groups and the Main Theorem of Galois
 
 #definition("Solvable")[A finite group $G$ is said to be _solvable_ if there is a sequence of subgroups $
 {1} subset G_1 subset G_2 subset dots.c subset G_n = G,
@@ -2123,7 +2123,7 @@ In particular, we have the following picture:
 
 ]
 
-#theorem[If $f(x) in F[x]$ is solvable by radicals, then $"Gal"(f)$ is a solvable group (where $"char"(F) = 0$).]
+#theorem("Main Theorem of Galois")[If $f(x) in F[x]$ is solvable by radicals, then $"Gal"(f)$ is a solvable group (where $"char"(F) = 0$).]<thm:galoismain>
 
 #proof[
   If $f(x)$ is solvable, then $E$ the splitting field of $F$ is contained in a tower of radical extensions. Therefore, $E$ is contained in a solvable extension of $F$, say $tilde(E)$; $
@@ -2156,3 +2156,52 @@ To show this theorem not vacuous, we first show that there exists such a polynom
   
   We can embed $E subset CC\/RR$. The only automorphisms of $CC\/RR$ are the identity and complex conjugation. Then, restricting complex conjugation to $E\/QQ$, we find a automorphism of order 2, and since 3 of the roots are real, this conjugation will leave them fixed, hence we are indeed done.
 ]
+
+We prove now a converse of @thm:galoismain:
+
+#theorem[Every solvable extension of $F$ is constructible by radicals.]
+
+#proof[
+  We remark first:
+  1. It is enough to show this for abelian $E\/F$, since $E$ solvable so $F subset E_1 subset dots.c subset E_n = E$, and each quotient abelian. So if we can prove for each "subextension", we're done.
+  2. We can assume $F$ contains the $n$th roots of unity where $n = [E : F]$ by just adjoining them if not.
+
+  Now, we can view $E$ as an $F$-linear representation of $G= "Gal"(E\/F)$. Since $G$ abelian, we know each of its irreducible representations are one-dimensional. We can write then $
+  E = plus.circle_(chi in hat(G)) E[chi],\ wide hat(G) = "Hom"(G, F^ast), wide E[chi] = {v in E | sigma v = chi(sigma) v forall sigma in G},
+  $ since we can identify one dimensional representations with maps into $F^times$ (where we are crucially using that $F$ contains enough roots of unity). 
+
+  We claim $dim_F E[chi] <= 1$.  Suppose $v in E[chi]$ and $v eq.not 0$, and let $w in E[chi]$. We claim they differ by a scalar. Consider $w/v in E$. For any $sigma in G$ $
+  sigma(w/v) = sigma(w)/sigma(v) = (chi(sigma) w)/(chi(sigma) v) = w/v,
+  $ hence $w/v in E^G = F$ so $w = lambda v$ for some $lambda in F$. It follows that $E[chi] = F dot v$, so $E[chi]$ has dimension (at most) 1.
+
+  Let us compare now dimension on each side; on the one hand, $
+  dim_F E = [E : F] = hash G = n,
+  $ while $
+  dim_F plus.circle.big_chi E[chi] = sum_(i=1)^n dim_F E[chi] <= hash hat(G) =  n,
+  $ so equality must actually be attained, and in particular each $E[chi]$ must have dimension one (i.e. every irreducible component 'appears' precisely once). Thus, we find that $E$ is isomorphic to the regular representation of $G$, namely $F[G]$, as a representation of $G$.
+
+  #remark[This is in fact always true for abelian extensions, for general, not necessarily abelian $G$.]
+  For each $chi in hat(G)$, let $y_chi in E[chi]$ be a basis (generator), so $
+  E = F(y_chi : chi in hat(G)).
+  $ For any $sigma in G$, then $
+  sigma(y_chi^n) = sigma(y_chi)^n = (chi(sigma) dot y_chi)^n = chi(sigma)^n dot y_chi^n = y_chi^n,
+  $ since $chi(sigma)$ some $n$th root of unity, since $G$ abelian. So, $y_chi^n =: a_chi in E^G = F$, and thus $y_chi = a_chi^(1/n)$ and in particular $
+  E = F(a_chi^(1\/n) : chi in hat(G)),
+  $ completing the proof.
+  ]
+
+  === Solution to the Cubic, Revisted
+
+  Recall we can write any cubic with distinct roots (over $QQ$) as $x^3 + p x + q = (x - r_1) (x - r_2)(x - r_3)$ with $G subset S_3$ the Galois group of $E = QQ(r_1, r_2, r_3)$, which acts transitively on the roots so either $ZZ\/3 ZZ$ or $S_3$. We have $
+  QQ -^2 K -^(ZZ\/3 ZZ) E.
+  $ Let $sigma = (r_1 r_2 r_2)$. We want to diagonalize $sigma$. It should have eigenvalues $1, zeta$ or $zeta^2$ where $zeta$ a primitive 3rd root of unity. Consider $v_1 = r_1 + zeta r_2 + zeta^2 r_3$, then $sigma v_1 = zeta^2 v_1$ and $v_2 = r_1 + zeta^2 r_2 + zeta r_3$, then $sigma v_2 = zeta v_2$. So, these two vectors are eigenvectors. There are a plethora of eigenvectors with eigenvalue 1, such as the symmetric functions on $r_1, r_2, r_3$. Then, we find in particular that $
+  v_1^3, v_2^3 in E^sigma (zeta) = K (zeta),
+  $ and so $
+  r_1 + zeta r_2 + zeta^2 r_3 = root(3, A), wide r_1 + zeta^2 r_2 + zeta r_3 = root(3, B),
+  $ where $A, B in K(zeta)$. We don't like $zeta$ here; if we add these two, we find $
+  2 r_1 - r_2 - r_3 = root(3, A) + root(3, B).
+  $ In particular, recall that in our "depleted cubic", the sum of the roots equals zero, so this simplifies $
+  3 r_1 = root(3, A) + root(3, B) => r_1 = root(3, A/27) + root(3, B/27).
+  $
+  
+  // The symmetric functions of $r_1, r_2, r_3$ are fixed under $ZZ\/3 ZZ$. $r_1 + r_2 + r_3$ actually equals 
