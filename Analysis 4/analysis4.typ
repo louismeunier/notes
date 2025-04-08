@@ -2534,3 +2534,103 @@ Let $f in L^1 (RR) sect L^2 (RR)$. Then $hat(f) in L^2 (RR)$ and $norm(f)_(L^2 (
    &<= underbrace(1/sqrt(epsilon) e^(-pi (delta^2)/epsilon), -> 0 "as" epsilon -> 0) dot norm(w)_(L^1 (RR)) -> 0.
    $ This completes the proof.
 ]
+
+With these, we can extend the definition of $hat(f)$  to $f in L^2 (RR)$.
+
+Let $f in L^2 (RR)$. Then, there are ${f_k} subset.eq C_c^infinity (RR)$ such that $f_k -> f$ in $L^2 (RR)$. Since ${f_k} subset.eq C_c^infinity (RR)$, $f_k in L^1 (RR) sect L^2 (RR)$. Moreover, ${f_k}$ in $L^2 (RR)$, so by Plancherel's, $
+  norm(f_j - f_k)_(L^2 (RR)) &= norm(hat(f_j - f_k))_(L^2 (RR)) = norm(hat(f_j) - hat(f)_k)_(L^2 (RR)).
+  $ So in particular, ${hat(f)_k}$ also Cauchy in $L^2 (RR)$ so by completeness converges. Thus, we simply define the Fourier transform of $f$ as the limit of these, namely,
+#definition([Fourier Transform on $L^2 (RR)$])[
+  Let $f in L^2 (RR)$ and ${f_k} subset.eq C_c^infinity (RR)$ such that $f_k -> f$ in $L^2 (RR)$. Then, we define the Fourier transform of $f$ to be
+  $
+  hat(f)(zeta) := lim_(j->infinity) hat(f)_j (zeta),
+  $ with the limit taken in $L^2 (RR)$.
+]
+
+It's not obvious that this well-defined a priori. Let $f_k, f'_k$ be two sequences in $C_c^infinity (RR)$ converging to $f$ in $L^2 (RR)$, and suppose $hat(f)_k -> hat(f), hat(f')_k -> hat(f)'$ in $L^2 (RR)$. We need to show that $hat(f) = hat(f)'$ in $L^2 (RR)$. Since $f_k, f'_k -> f$ in $L^2 (RR)$, $
+norm(f_k - f'_k)_2 -> 0,
+$ so also by Plancherel's, $
+norm(hat(f)_k - hat(f')_k)_2 -> norm(hat(f) - hat(f'))_2 =  0.
+$
+
+Denote by $C_0 (RR) := {f in C(RR) | lim_(|x| -> infinity) |f(x)| = 0}$.
+
+#proposition[
+  1. If $x f(x) in L^1 (RR)$, $hat(f) in C^1 (RR)$ and $partial_zeta hat(f)(zeta) = hat((-2 pi i (dot)) f(dot))(zeta)$
+  2. If $f in C^1 (RR) sect C_0 (RR)$ and $partial_x f in L^1 (RR)$, then $hat(partial_x f)(zeta) = (2pi i zeta) hat(f)(zeta)$
+  3. If $f in L^1 (RR)$, then $hat(f) in C_0 (RR)$ ("Riemann-Lebesgue" type result)
+]
+
+#proof[
+  We prove only 3. If $f in L^1 (RR)$, let ${g_n} subset.eq C^1 (RR) sect C_c (RR)$ such that $g_n -> f$ in $L^1 (RR)$. Then, $g'_n$ are compactly supported and continuous so $g'_n in L^1 (RR)$. Thus, $hat(g'_n) in L^infinity (RR)$. By 2., $hat(g'_n)(zeta) = (2pi i zeta) hat(g_n)(zeta) in L^infinity (RR)$. Thus is only possible if $hat(g)_n in C_0 (RR)$.
+
+  Since $norm(g_n - f)_1 -> 0$, $
+  norm(hat(g_n) - hat(f))_infinity = sup_zeta abs(integral (g_n (x) - f(x)) e^(-2 pi i zeta x) dif x) <= norm(g_n - f)_(1) -> 0,
+  $ so $hat(g_n) -> hat(f)$ in $L^infinity$. Finally, for any $n, $ $
+  lim_(|zeta| -> infinity) abs(hat(f)(zeta)) <= underbrace(lim_(|zeta| -> infinity) abs(hat(g)_n (zeta)), =0) + norm(hat(f) - hat(g)_n)_(infinity).
+  $ Sending then $n -> infinity$, we know that $norm(hat(f) - hat(g)_n)_infinity -> 0$, completing the proof.
+]
+
+#remark[Properties 1., 2. here can be extended to $f in L^2 (RR)$ and $partial_x f in L^2 (RR)$, but require more delicate mollifying arguments. 3., however, does not extend.]
+
+#remark[
+  Why is it important to extend $hat(f)(zeta)$ to $f in L^2 (zeta)$? One reason is the analysis of Sobolev Spaces.
+]
+
+The final topic we'll cover is how we can relate Fourier Series to the Fourier Transform.
+
+#theorem[
+  If $f in L^1 (RR)$, then there exists $P f : TT -> CC$ defined by $
+  P f (x) = sum_(k in ZZ) tau_k f(x) = sum_(k in ZZ) f(x - k)
+  $ (that is, we tacitly claim this summation converges pointwise a.e. and in $L^1 (TT)$), and $
+  norm(P f)_(L^1 (TT)) <= norm(f)_(L^1 (RR)).
+  $ Also, for every $k in ZZ$, $
+  hat(f)(k) = hat(P f) (k),
+  $ where the first $hat(dot)$ is the Fourier transform on $RR$ and the second on $TT$.
+]
+
+#proof[
+  Let $Q = [-1/2, 1/2)$ so $RR = union.sq.big_(j in ZZ) Q +j$. Then, $
+  integral_RR |f(x)| dif x &= sum_(j in ZZ) integral_(Q + j) |f(x)| dif x\
+  &=  sum_(j in ZZ) integral_(Q) underbrace(|f(x - j)|, >= 0) dif x\
+  ("Tonelli's") wide &= integral_(Q) sum_(j in ZZ) |f(x - j)| dif x.
+  $ Thus, $
+  integral_Q sum_(j in ZZ) tau_j f(x) dif x <= integral_Q sum_(j in ZZ) |f(x - j)|  dif x = norm(f)_(L^1 (RR)).
+  $ So, $P f$ as defined above has $
+  norm(P f)_(L^1 (TT)) <= norm(f)_(L^1 (RR)),
+  $ and also $P f$ is finite a.e.. Hence, the sum in question defining $P f (x)$ converges a.e.. Moreover, $
+  hat(P f) (k) &= integral_(Q) underbrace(sum_(j in ZZ) f(x - j), in L^1 (Q)) e^(-2 pi i k x) dif x \
+  ("By Fubini") wide &=  sum_(j in ZZ) integral_(Q) f(x - j) e^(-2 pi i k x) dif x  \
+  &= sum_(j in ZZ) integral_(Q - j) f(x) underbrace(e^(-2 pi i k (x + j)),  #stack(spacing: .3em, $= e^(- 2pi i k x)$, [since $e^(- 2pi i k j ) = 1$])) dif x \
+  & = integral_RR f(x) e^(-2 pi i k x) dif x = hat(f)(k).
+  $
+]
+
+This series $P f$ is called the _periodization_ of $f$.
+
+#theorem("Poisson Summation Formula")[
+  Let $f in C(RR)$ such that there are $C, epsilon > 0$ such that $abs(f(x)) <= C (1+  abs(x))^(-(1 + epsilon))$ (so namely $f in L^1 (RR)$) and similarly $abs(hat(f)(zeta)) <= C (1 + abs(zeta))^(-(1 + epsilon))$. Then, $
+  sum_(k in ZZ) f(x + k) = sum_(k in ZZ) hat(f)(k) e^(2pi i k x),
+  $ where both series converge absolutely and uniformly on $TT$. In particular, if $x = 0$, $
+  sum_(k in ZZ) f(k) = sum_(k in ZZ) hat(f)(k).
+  $
+]
+
+#remark[By the last remark, $hat(f)(k) = hat(P f)(k)$. So, this theorem says "periodized $f$" = $P f =$ "Fourier series of $P f$".]
+
+#proof[
+  Fix $x in RR$ then $
+  abs(sum_(k in ZZ) f(x + k )) &<= sum_(k in ZZ) abs(f(x + k)) \
+  &<= integral_(RR) abs(f(x + y)) dif y \
+  &<= integral_(RR) C/((1 + |x+y|)^(1+epsilon)) dif y\
+  &= integral_(RR) C/((1 + |y|)^(1+epsilon)) dif y\
+  &= -C/(1 + |y|)^epsilon thin #vbar(2em)_(thin y= - infinity)^(thin infinity) <= C,
+  $ hence the series absolutely converges, and since our bound is independent of $x$, it also converges uniformly. Since $S_N (x) := sum_(k=-N)^N f(x + k)$ is continuous for each $N$ and $S_N -> P f$ uniformly, $P f$ itself is continuous, in $C(TT)$ so thus also in $L^2 (TT)$. Thus, by Hilbert space theory, $
+  P f (x) = sum_(k in ZZ) hat(P f)(k) e^(2pi i k x),
+  $ in $L^2 (TT)$. By the last result, $hat(P f) (k) = hat(f)(k)$, thus $
+  P f (x) = sum_(k in ZZ) hat(f) (k) e^(2 pi i k x).
+  $ Finally, by the same computation as before, $sum_(k in ZZ) hat(f)(k) e^(2 pi i k x)$ will also converge absolutely and uniformly as well, call it $tilde(P)f(x)$. Thus, we claim $tilde(P)f = P f$. Indeed, $P f$ is continuous, and $tilde(P) f = lim_(N -> infinity) sum_(k=-N)^N hat(f)(k) e^(2pi i k x)$ so $tilde(P)f$ also continuous. So, $
+  hat(S)_N (x) ->_(L^2 (TT)) P f(x)\
+  hat(S)_N (x) ->_"uniform" tilde(P)f(x),
+  $ and $P f, tilde(P)f$ are both continuous hence $P f equiv tilde(P) f$. Thus, indeed $P f = sum hat(f)(k)e^(2pi i k x)$ as we aimed to show.
+]
