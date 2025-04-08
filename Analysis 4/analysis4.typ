@@ -1134,7 +1134,7 @@ c. $norm(T) <= liminf_(n->infinity) norm(T_n)$ (_lower semicontinuity result_).
 ]
 
 #remark[
-  - We do note have $T_n -> T$ in $cal(L)(X, Y)$ i.e. with respect to the operator norm.
+  - We do not necessarily have $T_n -> T$ in $cal(L)(X, Y)$ i.e. with respect to the operator norm.
   - If $Y$ is a Banach space, then $lim_(n->infinity) T_n (x)$ exists in $Y$ $<=>$ ${T_n x}$ Cauchy in $Y$ for every $x in X$.
 ]
 
@@ -2044,7 +2044,7 @@ Since $rho_(epsilon) in C_c^infinity (RR^d)$, for "reasonable" $f$, $f_epsilon =
  lim_(epsilon -> 0) abs(f_epsilon (x) - f(x)) <= C eta 
  $ for some $C$ and every $eta > 0$, and thus $f_epsilon (x) -> f(x)$ as $epsilon -> 0$.
 
- Now, if $f in C(RR^d)$ fix a subset $K subset.eq RR^d$ compact. Hence, $norm(f)_(L^infinity (K)) <infinity$ and $f$ uniformly continuous on $K$ since $K$ compact; so the modulus continuity is uniform for all $x in K$, so for $delta > 0$ and for every $x in K$, $
+ Now, if $f in C(RR^d)$ fix a subset $K subset.eq RR^d$ compact. Hence, $norm(f)_(L^infinity (K)) <infinity$ and $f$ uniformly continuous on $K$ since $K$ compact; so the modulus of continuity is uniform for all $x in K$, so for $delta > 0$ and for every $x in K$, $
  integral_({abs(y) <= delta}) abs(f(x - y) - f(x)) abs(rho_epsilon (y)) dif y <= C eta.
  $ Also, using the bound on $f$, we may write the second integral in the argument above as $
  integral_(epsilon > abs(y) > delta) abs(f(x - y) - f(x)) abs(rho_epsilon (y)) dif y <= norm(f)_(L^infinity (K + B_epsilon)) integral_({abs(y) > delta}) abs(rho_epsilon (y)) dif y ->_(epsilon -> 0) 0

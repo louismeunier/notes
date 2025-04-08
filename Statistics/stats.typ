@@ -1544,12 +1544,82 @@ _Type I error_  is made if $cal(H)_0$ is rejected when $cal(H)_0$ is true. _Type
   pi(theta) = EE_theta [phi.alt (T(bold(X)))] = P_theta ("rejecting" cal(H)_0) = P_theta (T(bold(X)) in cal(R)).
   $
 ] Then, $
-alpha(phi.alt) := P("type I error") = P_cal(H)_0 (T(bold(X)) in cal(R))\
-beta(phi.alt) := P("type II error") = P_(cal(H)_1) (T(bold(X)) in cal(R)^c).
+alpha(phi.alt) := P("type I error") = P("rejecting" cal(H)_0 "when" theta in Theta_0) = P_cal(H)_0 (T(bold(X)) in cal(R))\
+beta(phi.alt) := P("type II error") = P("not rejecting" cal(H)_0 "when" theta in Theta_1) = P_(cal(H)_1) (T(bold(X)) in cal(R)^c).
 $
 
 #definition("Size")[
   The _size_ of a statistical test is defined $
-  overline(alpha) = sup_(theta in cal(H)_0) pi(theta) = sup_(theta in cal(H)_0) [P_theta [T(bold(X)) in cal(R)]].
+  overline(alpha) = sup_(theta in cal(H)_0) pi(theta)  = sup_(theta in cal(H)_0) [P_theta [T(bold(X)) in cal(R)]].
   $
+]
+
+Systematically, then, given a _significance level_ $0 < alpha < 1$, we then venture to find a test $phi.alt$ amont all possible tests for which $overline(alpha) <= alpha$, such that $beta_(phi.alt)$, the probability of type II error, is minimized.
+
+#definition("Uniformly Most Powerful (UMP) Test")[
+  A statistical test $phi.alt$ of size $alpha$ is a _UMP_ test if $beta(phi.alt) <= beta(phi.alt^ast)$ for every $theta in cal(H)_1$, where $phi.alt^ast$ is any other test of size $alpha$, that is, a test that minimizes type II error given it is of size $alpha$.
+]
+
+#definition("Simple Hypotheses")[
+  In a _simple hypothesis_, we simply have $Theta_0 = {theta_0}, Theta_1 = {theta_1}$, where $theta_0, theta_1$ are known, with hypotheses $
+  cal(H)_0 : theta = theta_0, wide cal(H)_1 : theta = theta_1.
+  $ Namely, we are just testing if $theta = theta_0$ or $theta_1$.
+]
+
+#theorem("Neyman-Pearson Lemma")[
+  Let $
+  phi.alt (bold(X)) = cases(1 & "if" p(bold(X); theta_1) > k dot p (bold(X); theta_0), 
+    0 & "if" p(bold(X); theta_1) < k dot p(bold(X); theta_0)
+  ),
+  $ (and if equal, either reject or not) for some $k > 0$ such that $P_cal(H)_0 ("rejecting" cal(H)_0) = alpha$. Then, $phi.alt$ is the UMP test in the class of all tests $phi.alt^ast$ at the same level $alpha$, namely $beta_(phi.alt) <= beta_(phi.alt^ast)$.
+]
+
+#proof[
+  Let $phi.alt^ast$ be any other test of level $alpha$ with power $pi^ast$.  Since $0 <= phi.alt^ast <= 1$, then $
+  [phi.alt (bold(x)) - phi.alt^ast (bold(x))] dot [p(bold(x); theta_1) - k dot p(bold(x); theta_0)] >= 0, forall bold(x) in Chi,
+  $ thus $
+  integral_Chi [phi.alt(bold(x)) - phi.alt^ast (bold(x))] dot [p(bold(x); theta_1) - k dot p(bold(x); theta_0)] dif bold(x) >= 0.
+  $ Thus, $
+  EE_(theta_1) [phi.alt (bold(X))] - EE_(theta_1) [phi.alt^ast (bold(X))] - k {EE_theta_0 [phi.alt (bold(X))] - EE_(theta_0) [phi.alt^ast (bold(X))]} >= 0.
+  $ Since $phi.alt$ of size $alpha$, the last inequality implies $
+  EE_(theta_1) [phi.alt (bold(X))] - EE_(theta_1) [phi.alt^ast (bold(X))] - k {alpha - EE_(theta_0) [phi.alt^ast (bold(X))]} >= 0.
+  $ $phi.alt^ast$ is also of size $alpha$, so $alpha - EE_(theta_0) [phi.alt^ast (bold(X))] >= 0$. Thus, $
+  EE_(theta_1) [phi.alt (bold(X))] - EE_(theta_1) [phi.alt^ast (bold(X))] >= 0,
+  $ and thus $
+  beta_(phi.alt) <= beta_(phi.alt^ast).
+  $
+]
+
+Thus, according to the lemma, the UMP test has the rejection region $
+cal(R) = {bold(x) in Chi : (p(bold(x); theta_1))/(p(bold(x); theta_0)) > k},
+$ where $k$ is as in the lemma i.e. such that $P("rejection" cal(H)_0 "when it is true") = P_(theta_0) (bold(X) in cal(R)) <= alpha$. The ratio $p(bold(X); theta_1)/p(bold(X); theta_0)$ is called the _likelihood ratio statistic_. In practice, we fix a specified upper bound $alpha$ for the probability of type I error (which specific value we choose often depends on the specific application).
+
+#example[
+  Let $X_i tilde^"iid" cal(N)(mu, 1)$ where $mu in {0, 1}$. The hypotheses of interest are $
+  cal(H)_0 : mu = mu_0 = 0, wide cal(H)_1 : mu = mu_1 = 1.
+  $ We wish to find an optimal test with $alpha = 0.01$. The likelihood ratio statistic: $
+  (p(bold(x); mu_1))/(p(bold(x); mu_2)) = dots.c = exp(n overline(x)_n - n\/2).
+  $ By the NP lemma, $
+  cal(R) = {bold(x) : exp(n overline(x)_n - n\/2) > k} = {bold(x) : overline(x)_n > k^ast},
+  $ where $k^ast := 1/2 + (ln k)/n$. How large do we need to take $k^ast$? We want $
+  P("rejection" cal(H)_0 "when true") = P(overline(X)_n > k^ast | mu = 0 ) = alpha = 0.01.
+  $ Since $(overline(X)_n | mu = 0) tilde cal(N)(0, 1\/n)$ (i.e. under the null hypothesis), we can rewrite $
+  0.01 = P(underbrace(sqrt(n) overline(X)_n, tilde cal(N)(0, 1)) > sqrt(n) k^ast | mu = 0\) = P(Z > z_(0.01)), wide Z tilde cal(N)(0, 1).
+  $ Thus, it must be $sqrt(n) k^ast = z_(0.01) = 2.326$ (using a standard Normal table), and thus $k^ast = 2.326/sqrt(n)$.
+
+  All together, then, at significance level $alpha = 0.01$, the optimal test rejects the null $cal(H)_0$ in favour of $cal(H)_1$ if $overline(x)_n > (2.326)/sqrt(n)$; this value is called the _critical value_.
+]
+
+#example("Type II Error")[
+  With the same setup as before, what is the probability of Type II error? We compute $
+  beta(phi.alt) = P("not rejecting" cal(H)_0 | mu in Theta_1) = P(overline(X)_n <= 2.326/sqrt(n) | mu = 1).
+  $ Under the alternative, $overline(X)_n tilde cal(N)(1, 1\/n)$, so $
+  beta_phi.alt = P(sqrt(n)(overline(X)_n - 1) <= 2.326 - sqrt(n) | mu = 1) = Phi(2.326 - sqrt(n)),
+  $ where $Phi$ the CDF of the standard Normal distribution. In particular, $beta_phi.alt -> 0$ as $n -> infinity$.
+]
+
+#definition("Likelihood Ratio (LR) Statistic")[
+  The _likelihood ratio (LR) statistic_ of $bold(X)$ is given  $
+  lambda_n (bold(X)) := (sup_(theta in Theta_0) L_n (theta_0))/(sup_(theta in Theta) L_n (theta)) = (L_n (hat(theta)_("MLE", cal(H)_0)))/(L_n (hat(theta)_("MLE"))),
+  $ where $L_n$ the likelihood function of $bold(X)$.
 ]
