@@ -1374,7 +1374,7 @@ The set of elements constructible by ruler and compass is an extension of $QQ$ o
   0 = phi(g(alpha_(n+1))) &= phi(lambda_(d_2)) phi(alpha_(n+1))^(d_2) + dots.c + phi(lambda_1) phi(alpha_(n+1)) + phi(lambda_0).
   $ However, note that $lambda_(d_2)$ not in $F$ so $phi$ not constant on the $lambda_i$'s, as in the previous case. However, we can write then $
   = phi_0 (lambda_(d_2)) phi(alpha_(n+1))^(d_2) + dots.c + phi_0 (lambda_1) phi(alpha_(n+1)) + phi_0(lambda_0),
-  $ so $phi(alpha_(n+1))$ is a root of the polynomial "$phi_0 (g(x)) in M[x]$", by which we mean the polynommial $g(x)$ with the coefficients evaluated on $phi_0$. There are at most $d_2$ choices of roots of this new polynomial, hence at most $d_2$ choices for $phi(alpha_(n+1))$. Thus, we find $
+  $ so $phi(alpha_(n+1))$ is a root of the polynomial "$phi_0 (g(x)) in M[x]$", by which we mean the polynomial $g(x)$ with the coefficients evaluated on $phi_0$. There are at most $d_2$ choices of roots of this new polynomial, hence at most $d_2$ choices for $phi(alpha_(n+1))$. Thus, we find $
   hash "Hom"_(F) (E, M) <= d_1 dot d_2 = [E : F],
   $ by multiplicativity of the degrees.
 ]
@@ -2167,7 +2167,7 @@ We prove now a converse of @thm:galoismain:
   2. We can assume $F$ contains the $n$th roots of unity where $n = [E : F]$ by just adjoining them if not.
 
   Now, we can view $E$ as an $F$-linear representation of $G= "Gal"(E\/F)$. Since $G$ abelian, we know each of its irreducible representations are one-dimensional. We can write then $
-  E = plus.circle_(chi in hat(G)) E[chi],\ wide hat(G) = "Hom"(G, F^ast), wide E[chi] = {v in E | sigma v = chi(sigma) v forall sigma in G},
+  E = plus.circle.big_(chi in hat(G)) E[chi],\ wide hat(G) = "Hom"(G, F^ast), wide E[chi] = {v in E | sigma v = chi(sigma) v forall sigma in G},
   $ since we can identify one dimensional representations with maps into $F^times$ (where we are crucially using that $F$ contains enough roots of unity). 
 
   We claim $dim_F E[chi] <= 1$.  Suppose $v in E[chi]$ and $v eq.not 0$, and let $w in E[chi]$. We claim they differ by a scalar. Consider $w/v in E$. For any $sigma in G$ $
@@ -2205,3 +2205,82 @@ We prove now a converse of @thm:galoismain:
   $
   
   // The symmetric functions of $r_1, r_2, r_3$ are fixed under $ZZ\/3 ZZ$. $r_1 + r_2 + r_3$ actually equals 
+
+  Similarly, we can study the quartic equation. We have the chain of normal subgroups $
+  S_4 triangle.r A_4 triangle.r V (triangle.r {1, tau} triangle.r) triangle.r  1, 
+  $ namely $S_4$ solvable. Let $f(x)$ be quartic and $E$ the splitting field of $f$, assuming $"Gal"(f) = S_4$. By this chain of normal subgroups above and the Galois correspondance, we should find a corresponding sequence of subfields fixed by the corresponding subgroups $
+  QQ subset K subset L subset L' subset E.
+  $ By looking at the degrees, the first would append a square root, the second a cube root, and the last two another two square roots.
+
+  Consider $V triangle.l S_4$. We know $L$ Galois over $QQ$, and so $"Gal"(L\/QQ) = S_4\/V = S_3$. This seems to imply we can reduce our quartic to a cubic! Suppose $f$ factors $
+  f(x) = (x - r_1)(x - r_2)(x-r_3)(x-r_4).
+  $ We seek a polynomial $g(x) in QQ[x]$ such that the splitting field of $g$ is $L$. In particular, we wish to find an element in $E$ that is fixed under $V$ but not globally fixed by $S_4$. Consider $r := r_1 r_2 + r_3 r_4$. It is fixed under $V$, but under the action of $S_4$ can map to $r_1 r_3 + r_2 r_4$ and $r_1 r_4 + r_2 r_3$, so in particular $r$ has 3 Galois conjugates. The minimal polynomial of $r$ (namely, the "cubic resolvent") can be written $
+  g(x) = (x - (r_1 r_2 + r_3 r_4))(x - (r_1 r_3 + r_2 r_4))(x - (r_1 r_4 + r_2 r_3)) in E^(S_4) [x] = QQ[x].
+  $ Let us assume $f(x) = x^4 + a x^2 + b x + c$ where $a, b, c in QQ$. We wish then to find the coefficients of $g$ in terms of $a, b, c$. $
+  g(x) = x^3 - (r_1 r_2 + r_3 r_4 + r_1 r_3 + r_2 r_4 + r_1 r_4 + r_2 r_3) x^2 + dots.c
+  $ The quadratic term is the pairwise product, which we see to be equal to $a$ (namely the second symmetric function) so $g(x) = x^3 - a x^2 + dots.c$. The remaining terms can be found with a little more work, but ultimately are polynomials in $a, b, c$.
+
+=== Back to Constructible Numbers
+
+Recall that we showed that if a number $alpha$ is constructible by ruler and compass, then $[QQ(alpha) : QQ] = 2^t$ for some $t >= 0$. Let $f(x)$ be any irreducible polymomial of degree 8 over $QQ$. Assume that $f(x)$ has a Galois group $S_8$. Then, $[QQ(alpha) : QQ] = 8$, but we claim $alpha$ not solvable. Under the Galois correspondance, we have the following setup then: 
+
+
+#align(center)[#commutative-diagram(
+  node-padding: (40pt, 40pt),
+  node((0,0), $S_7$),
+  node((0,2), $QQ(alpha)$),
+  arr($S_7$, $QQ(alpha)$, "", "bij"),
+  node((2,0), $S_8$),
+  node((2,2), $QQ$),
+  arr($S_8$, $QQ$, "", "bij"),
+  arr($QQ$, $QQ(alpha)$, $8$),
+  node((1,1), $K$),
+  node((1,0), $H$),
+  arr($S_8$, $H$, "2", "dashed"),
+  arr($H$, $S_7$, "4", "dashed"),
+  arr($QQ(alpha)$, $K$, "", "dashed"),
+   arr($K$, $QQ$, "", "dashed"),
+   arr($K$, $H$, "",  "bij", "dashed"),
+
+  // node((0, 1), $V$),
+  // node((0, 2), $V""$),
+  // node((1, 0), $V_j$),
+  // node((1, 3), $V_i$),
+  // arr($V_j$, $V$, $eta_j$, "inj"),
+  // arr($V$, $V""$, $T$),
+  // arr($V""$, $V_i$, $pi_i$, "surj"),
+  // arr($V_j$, $V_i$, $T_(i j)$),
+  // // arr($M_1$, $M_2$, $T$),
+  // // arr($R^n$, $M_1$, $phi_B_1$),
+  // // arr($R^m$, $M_2$, $phi_B_2$, label-pos: right),
+  // // arr($R^n$, $M_1$, $≀$, label-pos: right),
+  // // arr($R^m$, $M_2$, $≀$, label-pos: left),
+  // // arr($R^n$, $R^m$, $\ \ \ M_(T, B_1, B_2)$, label-pos: "below"),
+  // // arr("quot", (0, 1), $tilde(phi)$, label-pos: right, "dashed"),
+  // // arr($R$, "quot", $pi$),
+)]
+
+// Assume that $f(x)$ has precisely $6$ real roots so $"Gal"(f)$ contains an 8-cycle $(12345678)$
+
+
+In particular, if $QQ(alpha)$ were constructible, then we should be able to "insert" an intermediary field $K$ such that it has a Galois group $H$ such that $S_8 supset H supset S_7$. But this is not possible:
+
+#proposition[
+  For $n >= 4$, $S_(n-1)$ is a maximal subgroup of $S_n$.
+]
+
+#proof[
+  If such a subgroup existed, $H subset S_n$, then $S_n$ acts on $S_n\/H$ which implies a map $S_n ->> S_t$ for some  $t < n$.
+]
+
+
+This leads to an improved theorem: 
+
+#theorem[$alpha$ is constructible by ruler and compass if and only if $QQ(alpha)$ is contained in a Galois $E\/QQ$ with $hash"Gal"(E\/QQ) = 2^t$.]
+
+
+Indeed, this suggests the following theorem: 
+
+#theorem[Every group of cardinality $p^t$ is solvable where $p$ prime.]
+
+Indeed, such a group must have nontrivial center $Z(G)$. From here, one can proceed by induction on $G\/Z(G)$, which will now be a group of a smaller prime power.
