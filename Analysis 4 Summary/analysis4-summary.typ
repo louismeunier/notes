@@ -6,7 +6,7 @@
 #let conf = (
   course_code: "MATH455",
   course_title: "Analysis 4",
-  subtitle: "Summary",
+  subtitle: "Functional Analysis - Summary",
   semester: "Winter 2025",
   professor: "Prof. Jessica Lin",
   author: "Louis Meunier"
@@ -451,4 +451,18 @@ $]
 
 #theorem("Plancherel's Theorem")[
   If $f in L^1 (RR) sect L^2 (RR)$, then $hat(f) in L^2 (RR)$ and $norm(f)_2 = norm(hat(f))_2$.
+]
+
+#remark[
+  Using this, one extends the Fourier Transform to $f in L^2 (RR)$ by taking a sequence of smooth, compactly supporting functions approximating $f$ in $L^2$, and taking the limit of the Fourier transforms in $L^2 (RR)$.
+]
+
+#theorem[
+  If $f in L^1 (RR)$, $hat(f) in C_0 (RR)$, the space of continuous functions with $|f(x)| -> 0$ as $|x| -> infinity$.
+]
+
+#theorem("Poisson Summation Formula")[
+Let $f in C(RR)$ be such that $abs(f(x)) <= C(1+abs(x))^(-(1+epsilon))$ and $abs(hat(f)(zeta)) <= C (1 +|zeta|)^(-(1+epsilon))$ for some constants $C, epsilon > 0$. Then, for every $x in RR$, $
+sum_(k in ZZ) f(x + k) = sum_(k in ZZ) hat(f)(k) e^(2pi i k x).
+$
 ]

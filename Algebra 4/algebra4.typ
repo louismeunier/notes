@@ -2239,7 +2239,7 @@ Recall that we showed that if a number $alpha$ is constructible by ruler and com
   arr($S_8$, $H$, "2", "dashed"),
   arr($H$, $S_7$, "4", "dashed"),
   arr($QQ(alpha)$, $K$, "", "dashed"),
-   arr($K$, $QQ$, "", "dashed"),
+   arr((1,1), (2,2), [], "dashed"),
    arr($K$, $H$, "",  "bij", "dashed"),
 
   // node((0, 1), $V$),

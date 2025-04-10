@@ -1114,7 +1114,7 @@ c. $norm(T) <= liminf_(n->infinity) norm(T_n)$ (_lower semicontinuity result_).
 ]
 
 #proof[
-  (a) For every $x in X$, $T_n (x) -> T(x)$ so $norm(T x) < infinity$ hence $sup_n norm(T_n x) < infinity$. By uniform boundedness, then, we find $sup_n norm(T) =: C < infinity$.
+  (a) For every $x in X$, $T_n (x) -> T(x)$ so $norm(T x) < infinity$ hence $sup_n norm(T_n x) < infinity$. By uniform boundedness, then, we find $sup_n norm(T_n) =: C < infinity$.
 
   (b) $T$ is linear (by linearity of $T_n$). By (a), $
   norm(T_n x) <= C norm(x),
@@ -1316,7 +1316,7 @@ $ so $v_2 = v_1$ so it follows $u_2 = u_1$ and uniqueness holds.
 ]
 
 #remark[
-The following section writes notations assuming $H$ has a countable. However, for more general Hilbert spaces, all countable summations can be replaced with uncountable ones in which only countably many elements are nonzero. The theory is very similar.
+The following section writes notations assuming $H$ has a countable basis. However, for more general Hilbert spaces, all countable summations can be replaced with uncountable ones in which only countably many elements are nonzero. The theory is very similar.
 ]
 
 #definition("Orthonormal Basis")[
@@ -1532,7 +1532,7 @@ $ So, $x_n -> x$ in $sigma(X, X^ast)$ if for every $epsilon > 0$, and ball $B_(e
 For Hilbert spaces, by Riesz we know $f in H^ast$ can always be identified with $f(x) = (x, y)$ for some $y in H$. So, we find $x_n harpoon.rt x$ in $H$ iff for every $y in H$, $(x_n, y) -> (x, y)$.
 
 #remark[
-If $x_n -> x$ in $H$, then $(x_n, y) -> (x, y)$; so this normal convergence implies weak convergence.
+If $x_n -> x$ in $H$, then $(x_n, y) -> (x, y)$; so this "normal" (we say "strong") convergence implies weak convergence.
 ]
 
 #proposition[
@@ -1662,8 +1662,8 @@ $C_c (RR^d)$, the space of continuous functions with compact support, simple fun
 ]
 
 #remark("Special Cases")[
-- If $Omega$ has finite measure, $L^p (Omega) subset.eq L^(p') (Omega)$ for every $p <= p'$.
-- $ell^p := {a = (a_n)_(n=1)^infinity | sum_(n=1)^infinity abs(a_n)^p < infinity}$ endowed with the norm $abs(a)_ell^p := (sum_(n=1)^infinity abs(a_n)^p)^(1\/p)$.
+- If $Omega$ has finite measure, $L^p (Omega) subset.eq L^(p') (Omega)$ for every $p >= p'$.
+- $ell^p := {a = (a_n)_(n=1)^infinity | sum_(n=1)^infinity abs(a_n)^p < infinity}$ endowed with the norm $abs(a)_(ell^p) := (sum_(n=1)^infinity abs(a_n)^p)^(1\/p)$.
 ]
 
 == $(L^p)^ast$: The Riesz Representation Theorem
@@ -1736,7 +1736,7 @@ $]
   $ This proves the theorem for indicator functions; by linearity of $T$ and linearity of the integral, we can repeat this procedure to find a function $g$ such that $T f = integral_(a)^b f(t) g(t) dif t$ for every step function $f$.
 
 _Step 2:_ Let $f$ bounded and measurable. We know that for every step function $psi$, $T psi = integral_(a)^b psi(t) g(t) dif t$ (with the $g$ as "found" in step 1). So, $
-abs(T f - integral_(a)^b psi(t) g(t)) &= abs(T (f - psi) - integral_(a)^b (f(t) - psi(t))g(t) dif t) \ 
+abs(T f - integral_(a)^b f(t) g(t)) &= abs(T (f - psi) - integral_(a)^b (f(t) - psi(t))g(t) dif t) \ 
 &<= norm(T) norm(f - psi)_(p) + integral_(a)^b abs(f(t) - psi(t)) abs(g(t)) dif t.
 $ Then, since $g in L^1 ([a, b])$, for every $epsilon > 0$ there is some $delta > 0$ such that if $E$ a set of measure less than $delta$, $integral_(E) abs(g(t)) dif t < epsilon$. Fix $epsilon > 0$ and $delta > 0$ such that this holds; let $delta < epsilon$ if necessary wlog. Since $f$ bounded and measurable, there is some step function $psi$ such that $abs(f - psi) < delta$ on $E subset.eq [a, b]$, and that $m(E^c) < delta$ and $abs(psi) <= norm(f)_infinity$. Hence, $
 norm(f - psi)_p^p &= integral_(E) abs(f - psi)^p + integral_(E^c) abs(f - psi)^p \ 
@@ -2309,6 +2309,16 @@ $ so $
 integral_(0)^1 D_N (x) dif x = integral_(0)^1 1 dif x + underbrace(sum_(n=1)^N integral_(0)^1 ("some periodic functions"), = 0) = 1, 
 $ by periodicity. However, $D_N (x)$ is not actually a good kernel; one can show that $integral_(0)^1 abs(D_n (x)) dif x >= C log N$ as $N->infinity$.
 
+
+Note too that $
+  D_N (x) &= sum_(n=-N)^N e^(2pi i n x) \
+  &= sum_(n=0)^(2 N) e^(2 pi i (n - N) x) \ 
+  &= e^( - 2 pi i N x) sum_(n=0)^(2N) (e^(2 pi i x))^n \ 
+  &= e^(- 2 pi i N x) ((1 - e^(2 pi i (2N + 1 ))x)/(1 - e^(2 pi i x))) wide "(geometric series)" \ 
+  &= (e^(-2 pi i N x) - e^(2 pi i (N + 1) x))/(1 - e^(2 pi i x)) dot (e^(- 2 pi i x/2))/(e^(- 2 pi i x/2))\
+  &= (e^(- 2pi i (N + 1/2) x) - e^(2 pi i (N+ 1/2) x))/(e^(- 2 pi i x/2)- e^(2 pi i x/2)) \ 
+  &= (sin(2pi (N+ 1/2) x))/(sin(2 pi x/2)).
+$ This form leads nicely to the following results.
 #theorem("Pointwise Convergence")[
   Let $f in L^2 (TT)$ and suppose $f$ is Lipschitz continuous at $x_0$. Then, $
   S_N (x_0) -> f(x_0).
@@ -2329,16 +2339,6 @@ $ by periodicity. However, $D_N (x)$ is not actually a good kernel; one can show
   // & <= epsilon integral_(abs(y) < delta) abs(D_N (y)) + 2 C integral_(y >= delta) abs(D_N (y)) y dif y\
   // $
 ] 
-
-Note that $
-  D_N (x) &= sum_(n=-N)^N e^(2pi i n x) \
-  &= sum_(n=0)^(2 N) e^(2 pi i (n - N) x) \ 
-  &= e^( - 2 pi i N x) sum_(n=0)^(2N) (e^(2 pi i x))^n \ 
-  &= e^(- 2 pi i N x) ((1 - e^(2 pi i (2N + 1 ))x)/(1 - e^(2 pi i x))) wide "(geometric series)" \ 
-  &= (e^(-2 pi i N x) - e^(2 pi i (N + 1) x))/(1 - e^(2 pi i x)) dot (e^(- 2 pi i x/2))/(e^(- 2 pi i x/2))\
-  &= (e^(- 2pi i (N + 1/2) x) - e^(2 pi i (N+ 1/2) x))/(e^(- 2 pi i x/2)- e^(2 pi i x/2)) \ 
-  &= (sin(2pi (N+ 1/2) x))/(sin(2 pi x/2)).
-$
 
 #theorem("Uniform convergence")[
   If $f in C^2 (TT)$, then $S_N (x) -> f(x)$ uniformly on $TT$.
@@ -2462,7 +2462,7 @@ If $f in L^1 (RR)$ and $hat(f) in L^1 (RR)$, then $f$ agrees almost everywhere w
 
 #proof[
   Let $epsilon > 0$ and $x in RR$. Let $phi(zeta) := e^(2 pi i x zeta) e^(- pi epsilon zeta^2)$. Then, $
-  hat(f)(y) &= integral phi(zeta) e^(-2 pi i y zeta) dif zeta\
+  hat(phi)(y) &= integral phi(zeta) e^(-2 pi i y zeta) dif zeta\
   &= integral e^(2 pi i x zeta) e^(- pi epsilon zeta^2) e^(- 2 pi i y zeta) dif zeta\
   &= hat(e^(2 pi i x (dot)) e^(-pi epsilon (dot)^2))(y)\
   &= tau_x hat(e^(- pi epsilon (dot)^2)) (y) \
@@ -2470,9 +2470,9 @@ If $f in L^1 (RR)$ and $hat(f) in L^1 (RR)$, then $f$ agrees almost everywhere w
   &= 1/(sqrt(epsilon)) e^(- pi/epsilon (y - x)^2).
   $ Since $integral f hat(phi) dif y = integral hat(f) phi dif y$, we find $
   integral f(y) 1/sqrt(epsilon) e^(- pi/epsilon (x - y)^2) &= integral hat(f)(y) phi(y) dif y.
-  $ Let $K_epsilon (y) := 1/sqrt(epsilon) e^(- pi/epsilon y^2)$. Recall that this is the good kernel that we used in the proof of the Weierstrass Approximation Theorem. In particular, the formula equation above can be written $
+  $ Let $K_epsilon (y) := 1/sqrt(epsilon) e^(- pi/epsilon y^2)$. Recall that this is the good kernel that we used in the proof of the Weierstrass Approximation Theorem. In particular, the formula above can be written $
   (f ast K_epsilon) (x) = integral hat(f)(y) e^(2 pi i x y) e^(- pi epsilon y^2) dif y. wide ast.circle
-  $ Recall that if $f$ is continuous at $x$ and compactly-supported, then $lim_(epsilon -> 0) abs((f ast K_epsilon) (x) - f(x)) = 0$. This implies that for every $f in L^1 (RR)$ $lim_(epsilon -> 0) norm((f ast K_epsilon) - f)_1 = 0$. So, taking $epsilon -> 0$ in $ast.circle$, $f(x) =_(L^1 (RR)) lim_(epsilon -> 0) integral hat(f)(y) e^(2 pi i x y) e^(- pi epsilon y^2) dif y$. $hat(f) in L^1 (RR)$, so by DCT we can pass the limit inside, so $
+  $ Recall that if $f$ is continuous at $x$ and compactly-supported, then $lim_(epsilon -> 0) abs((f ast K_epsilon) (x) - f(x)) = 0$. This implies that for every $f in L^1 (RR)$ $lim_(epsilon -> 0) norm((f ast K_epsilon) - f)_1 = 0$, by an approximation argument by $C_c (RR)$. So, taking $epsilon -> 0$ in $ast.circle$, $f(x) =_(L^1 (RR)) lim_(epsilon -> 0) integral hat(f)(y) e^(2 pi i x y) e^(- pi epsilon y^2) dif y$. $hat(f) in L^1 (RR)$, so by DCT we can pass the limit inside, so $
   f(x) =_(L^1 (RR)) integral hat(f)(y) e^(2 pi i x y) dif y = caron(hat(f)) (x).
   $ This equality in $L^1 (RR)$ thus gives $caron(hat(f)) = f$ a.e.. A similar proof follows for showing $hat(caron(f)) = f$ a.e. by replacing $e^(2 pi i x)$ with $e^(-2 pi i x)$ everywhere it appears. Since $(hat(caron(f))), (caron(hat(f)))$ are continuous by our remarks earlier, it follows that $f$ is equal to a continuous function almost everywhere.
 ]
