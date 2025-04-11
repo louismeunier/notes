@@ -1553,10 +1553,16 @@ If $x_n -> x$ in $H$, then $(x_n, y) -> (x, y)$; so this "normal" (we say "stron
   $ hence we conclude $
   liminf_(n->infinity) (x_n, x/(norm(x))) <= liminf_(n->infinity) norm(x_n) => norm(x) <= liminf_(n->infinity) norm(x_n).
   $
-  To argue ${x_n}$ bounded, need the uniform boundedness principle. Let ${x_n} subset.eq H^(ast ast) = H$. By weak convergence, for every $f = f_y in H^ast$, $f |-> f(x_n) = (x_n, y) -> (x, y)$. So, $
-  sup_(n) f(x_n) <= C. 
-  $ Thus, the map $f |-> f(x_n)$ a bounded linear operator on $H^ast$, so by uniform boundedness $sup_n norm(x_n) <= C$.
-  // TODO this makes no sense
+  To argue ${x_n}$ bounded, we need the uniform boundedness principle. We can view ${x_n} subset.eq H^(ast ast)$ by the canonical association $x_n^(ast ast) : f |-> f(x_n)$. Since $f in H^ast$, there is a $y$ such that $f(dot) = (dot, y)$; label $f = f_y$. Then, for every $f in H^ast$, $
+  x_n^(ast ast) (f_y) = f_y (x_n) = (x_n, y) -> (x, y),
+  $ by weak convergence. Hence, it must be that $sup_(n) |x_n^(ast ast) f| = sup_n |f_y (x_n)| < infinity$ for every $f in H^ast$, namely ${x_n^(ast ast)}$ is a pointwise-bounded family of functions. Thus, by uniform boundedness, there is a $C > 0$ such that $|x_n^(ast ast) f| <= C ||f||$  for every $f in H^ast$ and $n >= 1$. In particular, if we take $f(dot) := (dot, x_n)$, we know by Riesz that $||f|| = ||x_n||$ on the one hand, so for every $n >= 1$, $
+  C||f|| = C ||x_n|| >= |x_n^(ast ast) f| = |(x_n, x_n)| = norm(x_n)^2 => norm(x_n) <= C,
+  $ completing the claim of boundedness.
+  
+  // Let ${x_n} subset.eq H^(ast ast) = H$. By weak convergence, for every $f = f_y in H^ast$, $f |-> f(x_n) = (x_n, y) -> (x, y)$. So, $
+  // sup_(n) f(x_n) <= C. 
+  // $ Thus, the map $f |-> f(x_n)$ a bounded linear operator on $H^ast$, so by uniform boundedness $sup_n norm(x_n) <= C$.
+  // // TODO this makes no sense
 
   (ii) If $y_n -> y$ in $H$, $
   abs((x_n, y_n) - (x, y)) &<= abs((x_n, y_n - y)) + abs((x_n - x, y)) \ 
@@ -2634,6 +2640,3 @@ This series $P f$ is called the _periodization_ of $f$.
   hat(S)_N (x) ->_"uniform" tilde(P)f(x),
   $ and $P f, tilde(P)f$ are both continuous hence $P f equiv tilde(P) f$. Thus, indeed $P f = sum hat(f)(k)e^(2pi i k x)$ as we aimed to show.
 ]
-
-= A Review
-

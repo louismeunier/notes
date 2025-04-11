@@ -313,7 +313,7 @@ By scaling & translating, openness of an operator is equivalent to proving $T(B_
   2. (Riesz-Fischer Theorem) $L^p (Omega)$ is a Banach space for every $1 <= p <= infinity$;
   3. $C_c (RR^d)$, simple functions, and step functions are all dense in $L^p (RR^d)$ for every finite $p$;
   4. $L^p (Omega)$ is separable for every finite $p$;
-  5. If $Omega subset RR^d$ has finite measure, then $L^p (Omega) subset L^p' (Omega)$ for every $p <= p'$;
+  5. If $Omega subset RR^d$ has finite measure, then $L^p (Omega) subset L^p' (Omega)$ for every $p >= p'$;
   6. If $f in L^p (Omega) sect L^q (Omega)$ for $1 <= p <= q <= infinity$, then $f in L^r (Omega)$ for every $r in [p, q]$.
 ]
 
@@ -465,4 +465,8 @@ $]
 Let $f in C(RR)$ be such that $abs(f(x)) <= C(1+abs(x))^(-(1+epsilon))$ and $abs(hat(f)(zeta)) <= C (1 +|zeta|)^(-(1+epsilon))$ for some constants $C, epsilon > 0$. Then, for every $x in RR$, $
 sum_(k in ZZ) f(x + k) = sum_(k in ZZ) hat(f)(k) e^(2pi i k x).
 $
+]
+
+#remark[
+  In words, this means the _periodization_ (the LHS) of $f$ equals the Fourier series of $f$.
 ]
