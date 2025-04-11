@@ -2284,3 +2284,83 @@ Indeed, this suggests the following theorem:
 #theorem[Every group of cardinality $p^t$ is solvable where $p$ prime.]
 
 Indeed, such a group must have nontrivial center $Z(G)$. From here, one can proceed by induction on $G\/Z(G)$, which will now be a group of a smaller prime power.
+
+=== The Fundamental Theorem of Algebra
+
+We apply some of the ideas from before to proving 
+
+#theorem[$CC$ is algebraically closed.]
+
+We'll assume the following facts:
+1. Every polynomial of odd degree in $RR[x]$ has a root in $RR$ (by intermediate value theorem); thus every odd degree extension of $RR$ is _trivial_.
+2. Every quadratic equation in $CC[x]$ has a root in $CC$ (from the quadratic formula).
+
+#proof[
+  Let $K$ be a finite extension of $CC$ and $K'$ the Galois closure of $K$ over $RR$:
+
+  #align(center)[
+// https://t.yw.je/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQBpAchAF9T0mXPkIoATBWp0mrdhz4CQGbHgJEJxKQxZtEIAML6FglSPWkxWmbpAAlW8aVDVo5OVKaa22XoBij5WE1FDJPaR12ABk+KRgoAHN4IlAAMwAnCABbJHcQHAgkABYaACMYMCgkAFoAZlzGejLGAAVnMz00rHiACxwQL2t2AGUAAgAKMQA9HABKR3SspDI8gsQxflSM7MRc-KXS8srEOo2QBe2JFaQagYi9MXmtopo944OK6sKATlufEGyaA0mq1TMEQJ0en1Tucci9VjcQGUPogqgA2XLeGwAcUeix2cKQl0x7CxAH1yLjtrtVgBWd5HWr1LBgGxQCA4HBxSlIOlXNb06p1X42B6A5ms9mcyq8Si8IA
+#align(center, commutative-diagram(
+  node((0, 1), [$K'$]),
+  node((0, 2), [$K$]),
+  node((1, 2), [$CC$]),
+  node((2, 2), [$RR$]),
+  node((1, 0), [$F$]),
+  node((1, 1), [#text(fill: gray,$L$)]),
+  arr((0, 1), (1, 0), [$S$], curve: -30deg, label-pos: right),
+  arr((0, 2), (1, 2), []),
+  arr((0, 1), (0, 2), [], curve: 30deg),
+  arr((1, 2), (2, 2), [$2$]),
+  arr((1, 0), (2, 2), [$m$], curve: -49deg, label-pos: right),
+  arr((0, 1), (2, 2), [$G$], curve: -60deg),
+  arr((0, 1), (1, 2), [$G_0$]),
+  arr((0, 1), (1, 1), [], curve: -30deg, "dotted"),
+  arr((1, 1), (1, 2), [#text(fill: gray, "2")], curve: -30deg, "dotted"),
+))
+  ]
+
+Let $G$ be the Galois group of $K'$ over $RR$. Then, $hash G = 2^t m$ for some $m$ odd, so by the Sylow theorems, $G$ has a subgroup of cardinality $2^t$, call it $S$, and let $F = (K')^S$ be the corresponding field extension over $RR$. Then, $[F : RR] = m$, which is odd. By the previous remarks, $F = RR$, and thus $S$ must equal $G$ and in particular $hash G = 2^t$. 
+
+Let $G_0 := "Gal"(K'\/CC)$, then $hash G_0 = 2^(t - 1)$. If $G_0$ is nontrivial, then it contains a subgroup $G_(00)$ if index $2$ in $G_0$. Let $L = (K')^(G_(00))$ be the corresponding field. Then, $L$ is a quadratic extension of $CC$, which doesn't exist and thus we have a contradiction, i.e. $L = CC$. Thus, it must be that $G_0$ is trivial, and hence $K' = CC$. 
+]
+
+
+=== Systematic Computation of Galois Groups
+
+
+Consider a polynomial $f$ in variables $x_1, dots, x_r$ over $QQ$, where $G:="Gal"(f)subset.eq S_n$. Define the _resolvent_ of $f$ as $
+R(x_1, dots, x_n) := product_(sigma in S_n) (r_1 x_(delta 1) + r_2 x_(delta 2) + dots.c + r_n x_(delta n)).
+$ This polynomial lives in $E^G [x_1, dots, x_n] = QQ[x_1, dots, x_n]$. This polynomial factors, in $QQ[x_1, dots, x_n]$, into $
+R(x_1, dots, x_n) = R_1 R_2 dots R_t.
+$
+ There is a natural action of $S_n$ on these factors.
+#theorem[
+  $G = "Stab"_(S_n) (R_1)$.
+]
+#proof[
+We may write $
+R(x_1, dots, x_n) = product_(Sigma in S_n\/G) (product_(sigma in Sigma) (underbrace(r_1 x_(sigma 1) + dots.c r_n x_(sigma n), #stack(spacing: .8em,[irreducible over $QQ$]))),
+$ and the stabilizer of $R_1$ is $G$.
+]
+
+There are more efficient ways, particularly over finite field. Suppose $f(x) in FF_p [x]$. Then, recall that $x^p - x$ has as factors every element in $FF_p$. Then, $
+"gcd"(f(x), x^p - x) = product_(f(r) = 0) (x - r).
+$ This still isn't necessarily easy, but one can begin by rewriting $x^p -x$  mod $f(x)$; one begins by writing $x^p = x(x^((p-1)/2))^2$ mod $f(x)$. Then, one proceeds by computing via the Euclidean algorithm, which will be on the order of about $log(p)$ (?).
+
+Given some $f in QQ[x]$, then, one can, through manipulation, place $f in ZZ[x]$ (by clearing denominators, etc). Then, one can consider $f mod p in ZZ\/p ZZ[x]$ for various $p$ to study its roots using the above algorithm.
+
+=== "The Converse Problem of Galois Theory"
+
+One natural converse to our work above is whether given a group $G$, does there exist an extension $E\/QQ$ with $"Gal"(E\/QQ) = G$? This is still very much open, but the following holds:
+
+#theorem[For any finite group $G$, there exists $E\/F$ with $[F : QQ] < infinity$ with $"Gal"(E\/F) = G$.]
+
+The idea is to:
+
+1. Embed $G subset S_n$ (Lagrange), and suppose wlog $n$ prime.
+2. We see $E\/QQ$ is an extension with Galois group $S_n$.
+3. Let $F = E^G$, then by Galois correspondance $"Gal"(E\/F) = G$.
+
+
+
+// then look at $QQ(x_1. dots, x_n)^G$, where $x_1, dots, x_n$ are indeterminates. For instance, it turns out $QQ(x_1, dots, x_n)^(S_n) = QQ(sigma_1, dots, sigma_n)$, where $sigma_i$ enumerate the elementary symmetry polynomials in $x_j$'s. The latt
