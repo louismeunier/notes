@@ -6,7 +6,7 @@
 #show: doc => conf(
   course_code: "MATH357",
   course_title: "Statistics",
-  subtitle: "",
+  subtitle: "Parametric Inference, UMVUEs, Sufficiency, Completeness; Systematic Parameter Estimation, MLE, Bayesian Estimation; Confidence Intervals, Hypothesis Testing.",
   semester: "Winter 2025",
   professor: "Prof. Abbas Khalili",
   doc
@@ -1349,7 +1349,7 @@ $ is called the _Kullback-Leibler_ (KL) distance between $f(bold(x); theta)$ and
 
 #proof[
   $
-  1/n [ell_n (theta) - ell_n (theta_0)] &= 1/n sum_(i=1)^n log ((f(x_i; theta))/(f(x_i; theta_0))) ->^"a.s." EE_theta_0 [log ((f(X_1; theta))/(f(X_1; theta_0)))] < 0,
+  1/n [ell_n (theta) - ell_n (theta_0)] &= 1/n sum_(i=1)^n log ((f(X_i; theta))/(f(X_i; theta_0))) ->^"a.s." EE_theta_0 [log ((f(X_1; theta))/(f(X_1; theta_0)))] < 0,
   $ using the strong law of large numbers and the properties of the KL distance.
 ]
 
@@ -1364,7 +1364,7 @@ $ is called the _Kullback-Leibler_ (KL) distance between $f(bold(x); theta)$ and
 
 #proof[
 1., 2., were already proven in the discussion following the CRLB theorem, @thm:crlb. For 3., note $EE_theta_0 [(partial log f(X; theta))/(partial theta)#vbar(2em)_(thin theta = theta_0)] = 0$. Using the regularity conditions, $
-partial/(partial theta)( EE_theta_0 [(partial log f(X; theta))/(partial theta)])#vbar(2em)_(thin theta = theta_0) EE_(theta_0) [(partial^2 log f(X; theta))/(partial theta^2)#vbar(2em)_(thin theta = theta_0)] = - I(theta_0) < 0,
+partial/(partial theta)( EE_theta_0 [(partial log f(X; theta))/(partial theta)])#vbar(2em)_(thin theta = theta_0) EE_(theta_0) =  [(partial^2 log f(X; theta))/(partial theta^2)#vbar(2em)_(thin theta = theta_0)] = - I(theta_0) < 0,
 $ since $I(theta_0)$ a positive definite matrix. Hence, since $EE_theta_0 [(partial log f(X; theta))/(partial theta)]$, as a function of $theta$, is decreasing at $theta = theta_0$, so strictly decreasing in some neighborhood of $theta_0$.
 ]
 
@@ -1560,6 +1560,8 @@ Systematically, then, given a _significance level_ $0 < alpha < 1$, we then vent
   A statistical test $phi.alt$ of size $alpha$ is a _UMP_ test if $beta(phi.alt) <= beta(phi.alt^ast)$ for every $theta in cal(H)_1$, where $phi.alt^ast$ is any other test of size $alpha$, that is, a test that minimizes type II error given it is of size $alpha$.
 ]
 
+
+=== Simple-Simple Hypothesis Testing
 #definition("Simple Hypotheses")[
   In a _simple hypothesis_, we simply have $Theta_0 = {theta_0}, Theta_1 = {theta_1}$, where $theta_0, theta_1$ are known, with hypotheses $
   cal(H)_0 : theta = theta_0, wide cal(H)_1 : theta = theta_1.
@@ -1618,8 +1620,72 @@ $ where $k$ is as in the lemma i.e. such that $P("rejection" cal(H)_0 "when it i
   $ where $Phi$ the CDF of the standard Normal distribution. In particular, $beta_phi.alt -> 0$ as $n -> infinity$.
 ]
 
+=== Likelihood Ratio Statistic
+
+We now discuss more complex hypotheses, such as $cal(H)_0 : theta >= theta_0, cal(H)_1 : theta < theta_0$.
+
 #definition("Likelihood Ratio (LR) Statistic")[
   The _likelihood ratio (LR) statistic_ of $bold(X)$ is given  $
   lambda_n (bold(X)) := (sup_(theta in Theta_0) L_n (theta_0))/(sup_(theta in Theta) L_n (theta)) = (L_n (hat(theta)_("MLE", cal(H)_0)))/(L_n (hat(theta)_("MLE"))),
   $ where $L_n$ the likelihood function of $bold(X)$.
+]
+
+If well-defined, $lambda_n (bold(X)) <= 1$.
+Heuristically, if $cal(H)_0$ were true, then $lambda_n (bold(X)) approx 1$, and conversely. A test based on the LR is given by then $
+phi.alt (bold(X)) := cases(
+  1 & "if" lambda_n (bold(X)) < C,
+  0 & "if" lambda_n (bold(X)) > C
+),
+$ for some $C in [0, 1]$ to be determined. This implies rejection region $
+cal(R) = {bold(x) in Chi : lambda_n (bold(x)) < C}.
+$
+
+For a given $alpha in (0, 1)$, we choose $C_alpha$ (if exists) such that $
+sup_(theta in Theta_0) P (lambda_n (bold(X)) < C_alpha) <= alpha.
+$ 
+
+#proposition[
+  Under the regularity conditions R1 - R4, for large $n$ $
+  -2 log (lambda(bold(X))) = 2 [sup_(theta in Theta) I_n (theta) - sup_(theta in Theta_0) I_n (theta)] approx chi_((d))^2,
+  $ where $d := dim(Theta) - dim(Theta_0)$.
+]
+
+Thus, the critical value is given by the quantile $C_alpha^ast >= chi_((d; alpha))^2$ where $C^ast_alpha = - 2 ln(C_alpha)$.
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" cal(N)(mu, sigma^2)$ where both parameters unknown, and we test $
+  cal(H)_0 : mu = mu_0, wide cal(H)_1 : mu eq.not mu_0.
+  $ The likelihood function is given by $
+  L_n (mu, sigma^2) = 1/(sqrt(2pi sigma^2)^n) exp{-1/(2sigma^2) sum_(i=1)^n (x_i - mu)^2}.
+  $ We have that $
+Theta = {(mu, sigma^2) | mu in RR, sigma^2 > 0}, wide Theta_0 = {(mu, sigma^2) | mu=mu_0, sigma^2 > 0}.
+  $ We find the MLEs. The log-likelihood function is $
+  ell_n (mu, sigma^2) = -n/2 ln(2pi) - n/2 ln(sigma^2) - 1/(2 sigma^2) sum_(i=1)^n (x_i - mu)^2,
+  $ which readily gives $
+  hat(mu)_n = overline(x)_n, wide hat(sigma)_n^2 = (n-1)/n s_n^2.
+  $ Under the null, $mu = mu_0$, so in this case the only parameter to estimate is $sigma^2$ and we find $
+  tilde(sigma)_n^2 = 1/n sum_(i=1)^n (x_i - mu_0)^2 = (n-1)/n s_n^2 + (overline(x)_n - mu_0)^2.
+  $ Then, the LR statistic is given by $
+  lambda_n (bold(X)) = ((hat(sigma)_n^2)/(tilde(sigma)_n^2))^(n\/2) = (1/(1 + 1/(n-1) T^2))^(n\/2), wide T := sqrt(n) (overline(X)_n - mu_0)/S_n tilde t(n-1).
+  $ Thus, we reject the null iff $
+  lambda_n (bold(X)) < C <=> |T| > k,
+  $ $k$ a function of $C$, ie our rejection region is $
+  cal(R) = {bold(x) in Chi : abs(sqrt(n) (overline(x)_n - mu_0)/(s_n)) > k},
+  $ for some $k > 0$. Then, for a given $alpha$, we need $
+  P(|T| > k | mu = mu_0) = alpha,
+  $ and since $T tilde t(n-1)$ we need the quantile $k = t(n-1; alpha\/2)$.
+]
+
+#example[
+  Let $X_1, dots, X_n tilde^"iid" cal(N)(mu, sigma^2)$ where both are unknown and we wish to test $
+  cal(H)_0 : sigma^2 = sigma_0^2, wide cal(H)_1 : sigma^2 eq.not sigma_0^2.
+  $ Here $
+  Theta = {(mu, sigma^2) : mu in RR, sigma^2 > 0}, wide Theta_0 = {(mu, sigma^2) : mu in RR, sigma^2 = sigma_0^2}.
+  $ The MLE under the entire $Theta$ is the same as the previous example. Under the null hypothesis, the MLE for $mu$ stays the same (sample mean), and now $sigma^2 = sigma_0^2$ is known. Then $
+  lambda_n (bold(X)) = dots.c = (hat(sigma)_n^2/sigma_0^2)^(n\/2) e^(n/2) e^(-n/2 (sigma_n^2)/(sigma_0^2))
+  $
+
+
+
+  #text(fill: red, size: 18pt, "Do this example!")
 ]

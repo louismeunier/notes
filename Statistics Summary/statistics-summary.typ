@@ -329,6 +329,17 @@ A statistic $T(bold(X))$, $bold(X) tilde p_theta (dot)$ is called _sufficient_ f
 
 = Confidence Intervals and Hypothesis Testing
 
+// TODO ci's
+
+#theorem("Neyman-Pearson Lemma")[
+Let $
+phi.alt (bold(X)) := cases(1 & "if" p(bold(X); theta_1) > k dot p(bold(X);theta_0),
+0 & "if"   "if" p(bold(X); theta_1) < k dot p(bold(X);theta_0)
+),
+$ and either if equal, where $k$ is such that $P_(cal(H)_0) ("rejecting" cal(H)_0) = alpha$. Then, $phi.alt$ is the UMP test in the class of all tests at significance level $alpha$.
+]
+
+#remark[If simple-simple, _always_ use this lemma!]
 
 = Some MLEs and Such To Remember
 

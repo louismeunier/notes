@@ -2634,3 +2634,6 @@ This series $P f$ is called the _periodization_ of $f$.
   hat(S)_N (x) ->_"uniform" tilde(P)f(x),
   $ and $P f, tilde(P)f$ are both continuous hence $P f equiv tilde(P) f$. Thus, indeed $P f = sum hat(f)(k)e^(2pi i k x)$ as we aimed to show.
 ]
+
+= A Review
+
