@@ -807,7 +807,7 @@ p_theta (bold(x)) &= product_(i=1)^n 1/theta bb(1)(0 < x_i < theta)\
 ]
 
 #example[
-  In the exponential family, we claim $T(X_1, dots, X_n) = sum_(i=1)^n T_1 (X_i)$.
+  In the exponential family, we claim $T(X_1, dots, X_n) = sum_(i=1)^n T_1 (X_i)$ a sufficient statistic.
 ]
 
 #example[
@@ -1070,7 +1070,7 @@ $
 
 #example[
 Let $X_i tilde^"iid" cal(U)(-theta, theta)$. Then, $EE_theta [X_i] = 0$, so we need to move onto to the second moment. We have $EE_theta [X_i^2] = Var_theta [X_i] = theta^2/3$. $m_2 (bold(X)) = 1/n sum_(i=1)^n X_i^2$, so we have system of equations $
-1/n sum_(i=1)^n X_i^2 = hat(theta_n)^2/3,
+1/n sum_(i=1)^n X_i^2 = hat(theta)_n^2/3,
 $ which has solution $
 hat(theta)_n = sqrt(3/n sum_(i=1)^n X_i^2).
 $ Note that we have positive and negative roots, but ignore the negative one since $theta > 0$.
@@ -1079,9 +1079,16 @@ $ Note that we have positive and negative roots, but ignore the negative one sin
 #example[
   Let $X_i tilde^"iid" "Geo"(p)$, so $f(x; p) = p (1 - p)^(x-1)$ with $x = 1, 2, dots$. Then, $EE_p [X_i] = 1/p$ and $m_1 (bold(X)) = overline(X)_n$, so $
   hat(p)_n = 1/(overline(X)_n).
-  $ #text(fill: red, "It it an unbiased estimator?")
+  $ 
+  
+  #text(fill: red, [
+    Is this an unbiased estimator? One readily computes $
+    EE[hat(p)_n] &= sum_(x_1, dots, x_n = 1)^infinity n/(sum_i x_i) p^n (1 - p)^(sum_(i) x_i - n) \
+    (u := sum_(i) x_i) wide &= n (p/(1-p))^n sum_(u=n)^infinity C_u ((1-p)^u)/u ,
+    $ where $C_u = hash$ ways to write $u >= n$ as a sum of $n$ elements $x_1, dots, x_n$ where each at least 1 = $binom(u-1, u-n)$. This probably isn't equal to $1/p$, but I'm not sure how to reduce it.
+    ])
 
-  $EE[1/overline(X)_n] = sum_(x_1=1) dots sum_(x_n = 1) 1/(1/n sum_(i=1)^n x_i) p^n (1 - p)^(x_1 + dots.c + x_n - n)$.
+  // $EE[1/overline(X)_n] = sum_(x_1=1) dots sum_(x_n = 1) 1/(1/n sum_(i=1)^n x_i) p^n (1 - p)^(x_1 + dots.c + x_n - n)$.
 
   Suppose now $n = 1$ so $X tilde "Geo"(p)$. Assume $T(X)$ is an unbiased estimator of $p$. Then, $
   p &= sum_(x=1)^infinity T(x) f(x; p) = sum_(x=1)^infinity T(x) p (1 - p)^(x - 1)
@@ -1249,7 +1256,7 @@ From a a "maximum likelihood estimation point of view", both likelihoods contain
 #theorem("Large Sample Behaviour")[
   Under the regularity conditions from the CRLB theorem, then 
   - $hat(theta)_n$ is a consistent estimator of the parameter of interest;
-  - $hat(theta)_n$, properly cscaled and centeralized, is asymptotically normal.
+  - $hat(theta)_n$, properly scaled and centeralized, is asymptotically normal.
 ]
 
 == Bayesian Estimation
@@ -1294,6 +1301,12 @@ $ Recalling that the minimizer of $EE[(X - a)^2]$ is $a = EE[X]$, we readily fin
 hat(delta)(bold(X)) = EE_(theta|bold(X)=bold(x)) [theta|bold(X)=bold(x)],
 $ called the _posterior mean_.
 
+#theorem("Baye's Estimator for Mean-Squared Risk")[
+ Under the risk function $L(delta, theta) = (delta(bold(X)) - theta)^2$, the Baye's estimator is $
+ delta_"Bayes" (bold(X)) = EE_(theta|bold(X)) [theta|bold(X)].
+ $
+]
+
 Similarly, if we take the absolute value loss function $L(delta, theta) = abs(delta - theta)$, then we'd find $hat(delta)(bold(X)) = $ _posterior median_.
 
 #example[
@@ -1317,19 +1330,19 @@ Similarly, if we take the absolute value loss function $L(delta, theta) = abs(de
 
 Let $cal(F) = {f_theta : theta in Theta subset.eq RR^d}$ and $X tilde f_(theta_0)$ for some $theta_0 in Theta$. Throughout, we'll assume the following regularity conditions about the distribution:
 
-- *R0*: $Theta$ is either open, or contains an open set such $N$ such that $theta_0$ an interior point of $N$
-- *R1*: The pdf/pmf $f_theta$ has a common support $Chi$ for all $theta in N$ and is identifiable in $theta$ for every $x in Chi$. That is, for every $theta_1, theta_2 in N$, $f(x; theta_1) = f(x; theta_2)$ for every $x in Chi$ iff $theta_1 = theta_2$
-- *R2*: $f_theta $ is thrice differentiable in $theta$ for almost every $x in Chi$
+- *R0*: $Theta$ is either open, or contains an open set such $N$ such that $theta_0$ an interior point of $N$;
+- *R1*: The pdf/pmf $f_theta$ has a common support $Chi$ for all $theta in N$ and is identifiable in $theta$ for every $x in Chi$. That is, for every $theta_1, theta_2 in N$, $f(x; theta_1) = f(x; theta_2)$ for every $x in Chi$ iff $theta_1 = theta_2$;
+- *R2*: $f_theta $ is thrice differentiable in $theta$ for almost every $x in Chi$;
 - *R3*: There exists functions $M_i (x)$ for $i = 1, 2, 3$ (possibly depending on $theta_0$) such that for every $theta in N$, $
 abs((partial f(x; theta))/(partial theta_i)) < M_1 (x), wide abs((partial^2 f(x; theta))/(partial theta_i partial theta_j)) < M_2 (x), wide abs((partial^3 f(x; theta))/(partial theta_i partial theta_j partial theta_k)) < M_3 (x)
-$ for every $x in Chi$, such that the integral of each $M_i$ over $Chi$ is finite
-- *R4*: for all $theta in N$, $I_1 (theta)  > 0$ is a positive definite matrix, as defined below
+$ for every $x in Chi$, such that the integral of each $M_i$ over $Chi$ is finite;
+- *R4*: for all $theta in N$, $I_1 (theta)  > 0$ is a positive definite matrix, as defined below.
 
- Let $X_1, dots, X_n tilde^"iid" f_theta_0$. Let $hat(theta)_n (bold(X)) = "argmax"_(theta in Theta) L_n (theta)$. Assume we obtained the MLE by solving the likelihood equations $(partial ell_n (theta))/(partial theta) = 0$. Under R0 - R4, we find $
-hat(theta)_n ->^"P" theta, wide sqrt(n) (hat(theta)_n - theta_0) ->^"d" cal(N)_d (0, I_1^(-1) (theta_0)),
+ Let $X_1, dots, X_n tilde^"iid" f_theta_0$. Let $hat(theta)_n (bold(X)) = "argmax"_(theta in Theta) L_n (theta)$. Assume we obtained the MLE by solving the likelihood equations $(partial ell_n (theta))/(partial theta) = 0$. Under R0 - R4, we show $
+hat(theta)_n ->^"P" theta, wide sqrt(n) (hat(theta)_n - theta_0) ->^"d" cal(N)(0, I_1^(-1) (theta_0)),
 $ where $I_1 (theta)$ the _Fisher information matrix_ given by $
 I_1 (theta) = EE_theta {[(partial log (f(x; theta)))/(partial theta)] dot [(partial log (f(x; theta)))/(partial theta)]^t}.
-$ Before proceeding we need some tools. $
+$ Before proceeding we need some tools. The function (of $theta$, with $theta_0$ fixed) $
 EE_(theta_0) {log (f(bold(X); theta_0))/f(bold(X); theta)}
 $ is called the _Kullback-Leibler_ (KL) distance between $f(bold(x); theta)$ and $f(bold(x); theta_0)$. 
 
@@ -1439,7 +1452,7 @@ Once/if we have a PQ, we proceed as follows to obtain a CI with confidence $1 - 
 1. find constants $c_1, c_2$ such that $P(c_1 <= Q(bold(X); theta) <= c_2) = 1 -alpha$;
 2. having $c_1, c_2$, solve the inequality from 1. with respect to $theta$ to get something of the form $P(L(bold(X)) <= theta <= U(bold(X))) = 1 - alpha$.
 
-When $Q$ is monotone with respect to $theta$, then inverting the inequality in 1. is easier. Otherwise, the resulting interval could be the union of several intervals. Further, for a parameter family, there may not exist a PQ, or there may exist many PQs. In this second case, we choose a PQ based of a sufficient statistic.
+When $Q$ is monotone with respect to $theta$, then inverting the inequality in 1. is easier. Otherwise, the resulting interval could be the union of several intervals. Further, for a parametric family, there may not exist a PQ, or there may exist many PQs. In this second case, we choose a PQ based of a sufficient statistic.
 
 #example[
   Let $X_i tilde^"iid" cal(N)(mu, sigma^2), i = 1, dots, n$, where $sigma$ known. We seek a confidence interval for $mu$. Recall the UMVUE for $mu$ is $overline(X)_n$. Then, a PQ is given by $

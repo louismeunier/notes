@@ -277,6 +277,10 @@ A statistic $T(bold(X))$, $bold(X) tilde p_theta (dot)$ is called _sufficient_ f
 #remark[Combine these two theorems to systematically construct UMVUEs starting from an (arbitrary) unbiased estimator and a complete and sufficient statistic.]
 
 
+#theorem("Existence of a UMVUE")[
+  An estimator $U(bold(X))$ of $tau(theta) = EE[U(bold(X))]$ is the best unbiased estimator iff $"Cov"(delta(bold(X)), U(bold(X))) = 0$ for every estimator $delta(bold(X))$ such that $EE[delta(bold(X))] = 0$.
+] 
+
 = Systematic Parameter Estimation
 
 #definition("Method of Moments")[
@@ -344,11 +348,13 @@ $ and either if equal, where $k$ is such that $P_(cal(H)_0) ("rejecting" cal(H)_
 = Some MLEs and Such To Remember
 
 #table(
-  columns: 5,
-  "Distribution", "Sufficient Statistic", "UMVUE", "ME", "MLE",
-  [Exponential,\ $f(x, theta) = h(x) c(theta) exp(omega(theta) T_1 (x))$], $sum_(i=1)^n T_1 (X_i)$, $1/n sum_(i=1)^n T_1 (X_i)$, $$, $$,
-  $"Poisson"(lambda)$, $f(sum_(i=1)^n X_i)$, $overline(X)_n$, $$, $overline(X)_n$,
-  $cal(U)(0, theta)$, $$, $(n+1)/n X_((n))$, $$, $$, 
-  [$cal(N)(mu, sigma^2)$ \ $mu, sigma^2$ unknown], $(sum_(i=1)^n X_i, sum_(i=1)^n X_i^2)$, $$, $$, $$,
-  $"Ber"(theta)$, $sum_(i=1)^n X_i$, $$, $$, $$, $$
+  columns: 4,
+  "Distribution", "Sufficient Statistic", "UMVUE", "MLE",
+  [Exponential,\ $f(x, theta) = h(x) c(theta) exp(omega(theta) T_1 (x))$], $sum_(i=1)^n T_1 (X_i)$, $1/n sum_(i=1)^n T_1 (X_i)$, $$,
+  $"Poisson"(lambda)$, $f(sum_(i=1)^n X_i)$, $overline(X)_n$, $overline(X)_n$,
+  $cal(U)(0, theta)$, $X_((n))$, $(n+1)/n X_((n))$, $$, 
+  [$cal(N)(mu, sigma^2)$ \ $mu, sigma^2$ unknown], $(sum_(i=1)^n X_i, sum_(i=1)^n X_i^2)$, $(overline(X)_n, S_n^2)$, $(overline(X)_n, (n-1)/n S_n^2)$,
+  $"Ber"(theta)$, $sum_(i=1)^n X_i$, $overline(X)_n$, $overline(X)_n$
 )
+
+#remark[Recall that any one-to-one function of a (minimal) sufficient statistic is still a (minimal) sufficient statistic.]

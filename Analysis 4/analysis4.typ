@@ -2066,7 +2066,9 @@ Since $rho_(epsilon) in C_c^infinity (RR^d)$, for "reasonable" $f$, $f_epsilon =
 ]
 
 #remark[
-  If $f in C_c (RR^d)$, then $"supp"(f_epsilon) subset.eq overline("supp" (f) + B(0, epsilon))$; so, $f_epsilon$ is compactly supported if $f$ is. Hence in this case $f_epsilon -> f$ uniformly on $RR^d$.
+  If $f in C_c (RR^d)$, then $"supp"(f_epsilon) subset.eq overline("supp" (f) + B(0, epsilon))$; so, $f_epsilon$ is compactly supported if $f$ is. Hence in this case $f_epsilon -> f$ uniformly on $RR^d$. More generally, there are many different restrictions one can place on the last claim, such as compact support of $f$, uniform continuity of $f$, compact support of the kernel, lack of compact support for the kernel but an $L^infinity$ bound on $f$, etc. In practice, the proofs are all the same, with different bounds; namely one finds something of the form $
+  |f_epsilon (x) - f(x)| <= underbrace(integral_(|y| < delta) (dots), #stack(spacing: .2em, "small by", "(uniform) continuity")) + underbrace(integral_(|y| >= delta) (dots), #stack(spacing: .2em, "small by", "compact support, etc"))
+  $
 ]
 
 #theorem("Weierstrass Approximation Theorem")[
@@ -2313,7 +2315,7 @@ $
 D_N (x) &= 1 + sum_(n=1)^N [e^(2 pi i n x) + e^(- 2pi i n x)] ,
 $ so $
 integral_(0)^1 D_N (x) dif x = integral_(0)^1 1 dif x + underbrace(sum_(n=1)^N integral_(0)^1 ("some periodic functions"), = 0) = 1, 
-$ by periodicity. However, $D_N (x)$ is not actually a good kernel; one can show that $integral_(0)^1 abs(D_n (x)) dif x >= C log N$ as $N->infinity$.
+$ by periodicity. However, $D_N (x)$ is not actually a good kernel; one can show that $integral_(0)^1 abs(D_N (x)) dif x >= C log N$ as $N->infinity$.
 
 
 Note too that $
@@ -2382,7 +2384,7 @@ $ This form leads nicely to the following results.
   $ We have that $
   lim_(h -> 0) abs(e^(-2 pi i h x) - 1) = 0
   $ for a.e. $x in RR$, and $
-  integral_(RR) abs(f(x)) abs(e^(-2 pi i h x - 1)) dif x <= 2 integral_(RR) abs(f(x)) dif x = 2 norm(f)_(L^1 (RR)),
+  integral_(RR) abs(f(x)) abs(e^(-2 pi i h x) - 1) dif x <= 2 integral_(RR) abs(f(x)) dif x = 2 norm(f)_(L^1 (RR)),
   $ so we can apply dominated convergence theorem to find $
   lim_(h -> 0) abs(hat(f)(zeta + h) - hat(f)(zeta)) <= integral_(RR) abs(f(x)) underbrace(lim_(h -> 0) abs(e^(-2 pi i h x) - 1), = 0) dif x  = 0,
   $ so $hat(f) in C(RR)$.
@@ -2480,10 +2482,10 @@ If $f in L^1 (RR)$ and $hat(f) in L^1 (RR)$, then $f$ agrees almost everywhere w
   (f ast K_epsilon) (x) = integral hat(f)(y) e^(2 pi i x y) e^(- pi epsilon y^2) dif y. wide ast.circle
   $ Recall that if $f$ is continuous at $x$ and compactly-supported, then $lim_(epsilon -> 0) abs((f ast K_epsilon) (x) - f(x)) = 0$. This implies that for every $f in L^1 (RR)$ $lim_(epsilon -> 0) norm((f ast K_epsilon) - f)_1 = 0$, by an approximation argument by $C_c (RR)$. So, taking $epsilon -> 0$ in $ast.circle$, $f(x) =_(L^1 (RR)) lim_(epsilon -> 0) integral hat(f)(y) e^(2 pi i x y) e^(- pi epsilon y^2) dif y$. $hat(f) in L^1 (RR)$, so by DCT we can pass the limit inside, so $
   f(x) =_(L^1 (RR)) integral hat(f)(y) e^(2 pi i x y) dif y = caron(hat(f)) (x).
-  $ This equality in $L^1 (RR)$ thus gives $caron(hat(f)) = f$ a.e.. A similar proof follows for showing $hat(caron(f)) = f$ a.e. by replacing $e^(2 pi i x)$ with $e^(-2 pi i x)$ everywhere it appears. Since $(hat(caron(f))), (caron(hat(f)))$ are continuous by our remarks earlier, it follows that $f$ is equal to a continuous function almost everywhere.
+  $ This equality in $L^1 (RR)$ thus gives $caron(hat(f)) = f$ a.e.. A similar proof follows for showing $hat(caron(f)) = f$ a.e. by replacing $e^(2 pi i x)$ with $e^(-2 pi i x)$ everywhere it appears. Since $hat(caron(f)), caron(hat(f))$ are continuous by our remarks earlier, it follows that $f$ is equal to a continuous function almost everywhere.
 ]
 
-So far, all we've worked with is $f in L^1 (RR)$, which results in $hat(f) in L^infinity (RR)$. Really, we'd like to extend the Fourier transform to be $L^2 (RR)$, since this is a nice Hilbert space. To do so, we need the following:
+So far, all we've worked with is $f in L^1 (RR)$, which results in $hat(f) in L^infinity (RR)$. Really, we'd like to extend the Fourier transform to act on $L^2 (RR)$, since this is a nice Hilbert space. To do so, we need the following:
 
 #theorem("Plancherel's Theorem")[
 Let $f in L^1 (RR) sect L^2 (RR)$. Then $hat(f) in L^2 (RR)$ and $norm(f)_(L^2 (RR)) = norm(hat(f))_(L^2 (RR))$.
@@ -2543,7 +2545,7 @@ Let $f in L^1 (RR) sect L^2 (RR)$. Then $hat(f) in L^2 (RR)$ and $norm(f)_(L^2 (
 
 With these, we can extend the definition of $hat(f)$  to $f in L^2 (RR)$.
 
-Let $f in L^2 (RR)$. Then, there are ${f_k} subset.eq C_c^infinity (RR)$ such that $f_k -> f$ in $L^2 (RR)$. Since ${f_k} subset.eq C_c^infinity (RR)$, $f_k in L^1 (RR) sect L^2 (RR)$. Moreover, ${f_k}$ in $L^2 (RR)$, so by Plancherel's, $
+Let $f in L^2 (RR)$. Then, there are ${f_k} subset.eq C_c^infinity (RR)$ such that $f_k -> f$ in $L^2 (RR)$. Since ${f_k} subset.eq C_c^infinity (RR)$, $f_k in L^1 (RR) sect L^2 (RR)$. So, by Plancherel's, $
   norm(f_j - f_k)_(L^2 (RR)) &= norm(hat(f_j - f_k))_(L^2 (RR)) = norm(hat(f_j) - hat(f)_k)_(L^2 (RR)).
   $ So in particular, ${hat(f)_k}$ also Cauchy in $L^2 (RR)$ so by completeness converges. Thus, we simply define the Fourier transform of $f$ as the limit of these, namely,
 #definition([Fourier Transform on $L^2 (RR)$])[
@@ -2553,7 +2555,7 @@ Let $f in L^2 (RR)$. Then, there are ${f_k} subset.eq C_c^infinity (RR)$ such th
   $ with the limit taken in $L^2 (RR)$.
 ]
 
-It's not obvious that this well-defined a priori. Let $f_k, f'_k$ be two sequences in $C_c^infinity (RR)$ converging to $f$ in $L^2 (RR)$, and suppose $hat(f)_k -> hat(f), hat(f')_k -> hat(f)'$ in $L^2 (RR)$. We need to show that $hat(f) = hat(f)'$ in $L^2 (RR)$. Since $f_k, f'_k -> f$ in $L^2 (RR)$, $
+It's not obvious that this is well-defined a priori. Let $f_k, f'_k$ be two sequences in $C_c^infinity (RR)$ converging to $f$ in $L^2 (RR)$, and suppose $hat(f)_k -> hat(f), hat(f)'_k -> hat(f)'$ in $L^2 (RR)$. We need to show that $hat(f) = hat(f)'$ in $L^2 (RR)$. Since $f_k, f'_k -> f$ in $L^2 (RR)$, $
 norm(f_k - f'_k)_2 -> 0,
 $ so also by Plancherel's, $
 norm(hat(f)_k - hat(f')_k)_2 -> norm(hat(f) - hat(f'))_2 =  0.
