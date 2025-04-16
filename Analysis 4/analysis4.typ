@@ -1015,6 +1015,10 @@ $ Since $X$ a Banach space, $x_n -> overline(x)$ and in particular $||overline(x
   Let $X, Y$ Banach and $T : X -> Y$ be bounded, linear and bijective. Then, $T^(-1)$ continuous.
 ]
 
+#proof[
+  Let $cal(U) subset.eq X$ open. Then, $(T^(-1))^(-1) (cal(U)) = T(cal(U))$ is open since $T$ surjective, so $T^(-1)$  continuous.
+]
+
 #corollary[
   Let $(X, ||dot||_1), (X, ||dot||_2)$ be Banach spaces. Suppose there exists $c > 0$ such that $||x||_2 <= C||x||_1$ for every $x in X$. Then, $||dot||_1, ||dot||_2$ are equivalent.
 ]
