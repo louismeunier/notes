@@ -335,6 +335,16 @@ A statistic $T(bold(X))$, $bold(X) tilde p_theta (dot)$ is called _sufficient_ f
 
 // TODO ci's
 
+#definition("Pivotal Quantity")[
+  A random function $Q = Q(bold(X); theta)$ is called a _pivotal quantity_ (PQ) for a distribution if its distribution is independent of $theta$.
+]
+
+#remark[
+  Given a _confidence level_ $alpha$, we wish to find $L(bold(X)), U(bold(X))$ such that $P(L <= theta <= U) =  1 - alpha$. Supposing we have a PQ $Q$, first find constants $c_1, c_2$ (which will by virtue be independent of $theta$) such that $
+  P(c_1 <= Q(bold(X); theta) <= c_2) = 1 - alpha.
+  $ Invert/solve then $Q$ for $bold(X)$ to find $L(bold(X)), U(bold(X))$ as functions $c_1, c_2$.
+]
+
 #theorem("Neyman-Pearson Lemma")[
 Let $
 phi.alt (bold(X)) := cases(1 & "if" p(bold(X); theta_1) > k dot p(bold(X);theta_0),
@@ -345,16 +355,33 @@ $ and either if equal, where $k$ is such that $P_(cal(H)_0) ("rejecting" cal(H)_
 
 #remark[If simple-simple, _always_ use this lemma!]
 
+#definition("Likelihood Ratio Statistic")[
+  The _likelihood ratio statistic_ (LR) is the quantity $
+  lambda_n (bold(X)) := (L_n (hat(theta)_("MLE", cal(H)_0)))/(L_n (hat(theta)_("MLE"))).
+  $ A test based on LR is $
+  phi(bold(X)) = cases(
+1 & "if" lambda_n (bold(X)) < C ,
+0 & "else"
+  ), wide C "s.t." P(lambda_n (bold(X)) < C) = alpha.
+  $
+]
+
+#remark[This test should be used when the hypotheses are not simple-simple.]
+
 = Some MLEs and Such To Remember
 
 #table(
   columns: 4,
-  "Distribution", "Sufficient Statistic", "UMVUE", "MLE",
+  // row-gutter: .5em,
+  inset: .6em,
+  [*Distribution*], [*Sufficient Statistic*], [*UMVUE*], [*MLE*],
   [Exponential,\ $f(x, theta) = h(x) c(theta) exp(omega(theta) T_1 (x))$], $sum_(i=1)^n T_1 (X_i)$, $1/n sum_(i=1)^n T_1 (X_i)$, $$,
   $"Poisson"(lambda)$, $f(sum_(i=1)^n X_i)$, $overline(X)_n$, $overline(X)_n$,
-  $cal(U)(0, theta)$, $X_((n))$, $(n+1)/n X_((n))$, $$, 
+  $cal(U)(0, theta)$, $X_((n))$, $(n+1)/n X_((n))$, $X_((n))$, 
   [$cal(N)(mu, sigma^2)$ \ $mu, sigma^2$ unknown], $(sum_(i=1)^n X_i, sum_(i=1)^n X_i^2)$, $(overline(X)_n, S_n^2)$, $(overline(X)_n, (n-1)/n S_n^2)$,
-  $"Ber"(theta)$, $sum_(i=1)^n X_i$, $overline(X)_n$, $overline(X)_n$
+  $"Ber"(theta)$, $sum_(i=1)^n X_i$, $overline(X)_n$, $overline(X)_n$,
+  $f(x; theta) = e^(-(x-theta)), x >= theta$, $X_((1))$, $X_((1)) - 1/n$, $X_((1))$,
+  $theta e^(-theta x)$, $sum_(i=1)^n X_i$, $(n-1)\/sum_(i)^n X_i$, $1\/overline(X)_n$
 )
 
 #remark[Recall that any one-to-one function of a (minimal) sufficient statistic is still a (minimal) sufficient statistic.]

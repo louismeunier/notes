@@ -1519,15 +1519,16 @@ When $Q$ is monotone with respect to $theta$, then inverting the inequality in 1
   $ where $hat(theta)_1 = overline(X)_m, hat(theta)_2 = overline(Y)_n$.
 ]
 
-#example[
-  #text(fill: red, size: 20pt, "Know This!")
+#example(text(fill: red, size: 15pt, "Know This!"))[
   Suppose $X_i$ are iid from a parametric model $f(dot, theta)$ with $theta$ unknown and $hat(theta)_n$ be the MLE of $theta$. Assuming the regularity conditions R1-R4, recall $
   (sqrt(n) (hat(theta)_n - theta))/(sqrt(I_1 (hat(theta)_n)^(-1))) ->^"d" cal(N)(0, 1).
   $ In practice, $I_1 (theta)$ is estimated either with $I_1 (hat(theta)_n)$ or the so-called "empirical Fisher", given by $
-  1/n sum_(i=1)^n (partial/(partial theta) log(f(x_i; theta))thin#vbar(2em)_(thin theta = hat(theta)_n))^2.
+  hat(I_1 (theta)) =: 1/n sum_(i=1)^n (partial/(partial theta) log(f(x_i; theta))thin#vbar(2em)_(thin theta = hat(theta)_n))^2.
   $  Then, this gives approximate CI given by $
   (hat(theta)_n - z_(alpha\/2) dot sqrt(1/n dot hat([I_1 (theta)])^(-1)), hat(theta)_n + z_(alpha\/2) dot sqrt(1/n dot hat([I_1 (theta)])^(-1))).
   $
+
+  #text(fill: red, [What does $hat(I_1 (theta))$ converge to in probability as $n -> infinity$?])
 ]
 
 == Hypothesis Testing
@@ -1613,7 +1614,7 @@ $ where $k$ is as in the lemma i.e. such that $P("rejection" cal(H)_0 "when it i
   Let $X_i tilde^"iid" cal(N)(mu, 1)$ where $mu in {0, 1}$. The hypotheses of interest are $
   cal(H)_0 : mu = mu_0 = 0, wide cal(H)_1 : mu = mu_1 = 1.
   $ We wish to find an optimal test with $alpha = 0.01$. The likelihood ratio statistic: $
-  (p(bold(x); mu_1))/(p(bold(x); mu_2)) = dots.c = exp(n overline(x)_n - n\/2).
+  (p(bold(x); mu_1))/(p(bold(x); mu_0)) = dots.c = exp(n overline(x)_n - n\/2).
   $ By the NP lemma, $
   cal(R) = {bold(x) : exp(n overline(x)_n - n\/2) > k} = {bold(x) : overline(x)_n > k^ast},
   $ where $k^ast := 1/2 + (ln k)/n$. How large do we need to take $k^ast$? We want $
@@ -1697,8 +1698,5 @@ Theta = {(mu, sigma^2) | mu in RR, sigma^2 > 0}, wide Theta_0 = {(mu, sigma^2) |
   $ The MLE under the entire $Theta$ is the same as the previous example. Under the null hypothesis, the MLE for $mu$ stays the same (sample mean), and now $sigma^2 = sigma_0^2$ is known. Then $
   lambda_n (bold(X)) = dots.c = (hat(sigma)_n^2/sigma_0^2)^(n\/2) e^(n/2) e^(-n/2 (sigma_n^2)/(sigma_0^2))
   $
-
-
-
   #text(fill: red, size: 18pt, "Do this example!")
 ]

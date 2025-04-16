@@ -1300,7 +1300,7 @@ $ so $v_2 = v_1$ so it follows $u_2 = u_1$ and uniqueness holds.
   $ Then, notice that by linearity $
   f(u)= f(x) f(z) - f(z) f(x) = 0, 
   $ so $u in M$. Thus, since $z in M^perp$, $(u, z) = 0$, so in particular, $
-  (u, z) = 0 &= (f(x) z - f(z) x - z) \ 
+  (u, z) = 0 &= (f(x) z - f(z) x ,z) \ 
   &= f(x)(z,z) - f(z) (x, z) \ 
   &= f(x) norm(z)^2 - (x,  f(z) z) \
   &= f(x) - (x, f(z) z),

@@ -323,7 +323,7 @@ $ Suppose $f_n, f in L^1 (A)$ for $m(A) < infinity$. Then, $f_n -> f$ in $L^1$ i
 
 #theorem("Tonelli's")[
   Let $f >= 0 : RR^2 -> overline(RR)$ be $cal(M)^2$-measurable. Then, $
-  integral_RR^2 f = integral_RR (integral_RR f(x, y) dif x) dif y = integral_RR (integral_RR f(x, y) dif y) dif x.
+  integral_(RR^2) f = integral_RR (integral_RR f(x, y) dif x) dif y = integral_RR (integral_RR f(x, y) dif y) dif x.
   $
 ]
 
