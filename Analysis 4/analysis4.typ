@@ -1232,7 +1232,7 @@ A _Hilbert Space_ $H$ is a complete inner product space, namely, it is complete 
   (x, alpha y_1 + beta y_2) = alpha (x, y_1) + beta (x, y_2) = 0,
   $ so $M^perp$ a subspace.
 
-  If $y_n -> y$ in the norm on $H$ and ${y_n} subset.eq M^perp$, then using the continuity of $(dot, dot)$, we know that for every $x in M$, $(x, y_n) -> (x, y)$. But the $(x, y_n) = 0$ for every $n$ and thus $(x, y) = 0$ so $y in M^perp$, hence $M^perp$ closed.
+  If $y_n -> y$ in the norm on $H$ and ${y_n} subset.eq M^perp$, then using the continuity of $(dot, dot)$, we know that for every $x in M$, $(x, y_n) -> (x, y)$. But then $(x, y_n) = 0$ for every $n$ and thus $(x, y) = 0$ so $y in M^perp$, hence $M^perp$ closed.
 ]
 
 #proposition[
@@ -1297,7 +1297,7 @@ $ so $v_2 = v_1$ so it follows $u_2 = u_1$ and uniqueness holds.
 ]
 
 #proof[
-  We show first existence. If $f equiv 0$, then $y = 0$. Otherwise, let $M = {x in X | f(x) = 0}$, so $M subset.neq H$. $f$ linear, so $M$ a linear subspace. $f$ is continuous, so in addition $M$ is closed. By the previous theorem, $M^perp eq.not {0}$. Let $z in M^perp$ of norm $1$.
+  We show first existence. If $f equiv 0$, then $y = 0$. Otherwise, let $M = {x in X | f(x) = 0} = f^(-1) ({0})$, so $M subset.neq H$. $f$ linear, so $M$ a linear subspace. $f$ is continuous, so in addition $M$ is closed. By the previous theorem, $M^perp eq.not {0}$. Let $z in M^perp$ of norm $1$.
 
   Fix $x in H$, and define $
   u := f(x) z - f(z) x.

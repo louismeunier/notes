@@ -194,6 +194,8 @@
   3. $((n-1) S_n^2)/sigma^2 tilde chi_((n-1))^2$;
   4. If $Z tilde cal(N)(0, 1)$ and $V tilde chi_((nu))^2$, $Z/(sqrt(V\/nu)) tilde t(nu)$. In particular, $
   (overline(X)_n - mu)/sqrt(S_n^2\/n) = (sqrt(n) (overline(X)_n - mu))/(S_n) tilde t(n - 1).
+  $ Similarly, if $Y_j tilde cal(N)(tilde(mu), tilde(sigma)^2), j = 1, dots, m$ another independent normal sample, then $
+  (overline(X)_n - overline(Y)_m - (mu - tilde(mu)))/(S_"pooled" sqrt(1/n + 1/m)) tilde t(m + n - 2), wide S_"pooled"^2 := ((n-1) S_n^2 + (m-1) S_m^2)/(m+n-2).
   $
   5. If $U tilde chi_((m))^2, V tilde chi_((n))^2$ are independent rv's, then $(U\/m)/(V\/n) tilde F(m, n)$.
 ]
@@ -208,7 +210,7 @@
 
 #theorem("Convergence Theorems")[
 1. (Slutsky's) If $X_n ->^"d" X$ and $Y_n ->^"P" a$, then $X_n + Y_n ->^"d" X + a$, $X_n Y_n ->^"d" a X$ and, if $a eq.not 0$, $X_n\/Y_n ->^"d" X\/a$.
-2. (Continuous Mapping Theorem) If $X_n ->^"P, d" X$ and $g$ continuous on a set $C$ where $P(X in C) = 1$, then $g(X_n) ->^"P,d" g(X)$. 
+2. (Continuous Mapping Theorem) If $X_n ->^(P, d) X$ and $g$ continuous on a set $C$ where $P(X in C) = 1$, then $g(X_n) ->^(P,d) g(X)$. 
 3. (WLLN) If $X_i$ iid rv's with mean $mu$ and finite second moment, $overline(X)_n ->^"P" mu$.
 4. (First-Order Delta Method) If $sqrt(n) (X_n - mu) ->^"d" V$ and $g$ a function such that $g'$ exist and is nonzero at $x= mu$, then $
 sqrt(n) (g(X_n) - g(mu)) ->^"d" g'(mu) dot V.
@@ -234,7 +236,7 @@ $
 #definition("Qualities of Estimators")[
 1. The _bias_ of an estimator $hat(theta)$ of $theta$ is defined $"Bias"(hat(theta)) = EE_theta [hat(theta)] - theta$. $hat(theta)$ is _unbiased_ if it has zero bias.
 2. The _mean-squared error_ (MSE) is defined $"MSE"(hat(theta)) = EE[(hat(theta) - theta)^2]$.
-3. We say $hat(theta)$ _unbiased_ if $hat(theta) ->^"P" theta$
+3. We say $hat(theta)$ _unbiased_ if $hat(theta) ->^"P" theta$.
 ]
 
 #theorem("Cramer-Rau Lower Bound")[
@@ -261,13 +263,13 @@ A statistic $T(bold(X))$, $bold(X) tilde p_theta (dot)$ is called _sufficient_ f
 #theorem[Any one-to-one function of a sufficient statistic is still sufficient.]
 
 #theorem("Minimal Sufficiency")[
-  A sufficient statistic is minimal if it is a function of every other sufficient statistic. For a parametric $p_theta (dot)$, suppose $T(bold(x)) = T(bold(y)) <=> (p_theta (bold(x)))/(p_theta (bold(y)))$ does not depend on $theta$. Then, $T(bold(X))$ is minimally sufficient.
+  A sufficient statistic is minimal if it is a function of every other sufficient statistic. For a parametrized pdf $p_theta (dot)$, suppose $T(bold(x)) = T(bold(y)) <=> (p_theta (bold(x)))/(p_theta (bold(y)))$ does not depend on $theta$. Then, $T(bold(X))$ is minimally sufficient.
 ]
 
 #definition("Completeness")[An estimator $hat(theta)$ is called _complete_ if $EE[g(hat(theta))] = 0$ for every $theta$ implies $g = 0$ (a.s.).]
 
 #theorem("Rao-Blackwell")[
-  Let $U(bold(X))$ be unbiased for $tau(theta)$ and $T(bold(X))$ sufficient, and define $delta(t) := EE_theta [U(bold(X)) | T(bold(X))] = t$. Then $delta(bold(X))$ is unbiased for $tau(theta)$, and has smaller variance then $U(bold(X))$.
+  Let $U(bold(X))$ be unbiased for $tau(theta)$ and $T(bold(X))$ sufficient, and define $delta(t) := EE_theta [U(bold(X)) | T(bold(X))= t]$. Then $delta(bold(X))$ is unbiased for $tau(theta)$, and has smaller variance then $U(bold(X))$.
 ]
 
 #theorem("Lehmann-Scheffé")[
@@ -326,8 +328,10 @@ A statistic $T(bold(X))$, $bold(X) tilde p_theta (dot)$ is called _sufficient_ f
 ]
 
 #remark[So, given $p_theta$ and $pi(theta)$, the typical steps to finding $hat(delta)(bold(X))$ are: 
-1. compute $p_theta (bold(x)) pi(theta)$, and deduce the distribution of $(theta|bold(X))$;
-2. hopefully the distribution found in (i) has a well-known mean, which is then equal to the Baye's estimator $hat(delta)(bold(X))$ by the previous theorem.
+1. compute $p_theta (bold(x)) pi(theta)$, and deduce the distribution of $(theta|bold(X))$; if deducing is not possible, one will have to compute the full proportionality constant i.e. $
+pi(theta|bold(x)) = (p(bold(x)|theta) pi(theta))/(p(bold(x))) = (p(bold(x)|theta) pi(theta))/(integral_(Theta) p(bold(x)|theta) pi(theta) dif theta).
+$
+2. hopefully the distribution found in (i) has a well-known mean, which is then equal to the Baye's estimator $hat(delta)(bold(X))$ by the previous theorem; else, one in general would have to solve $EE_(theta|bold(X)) [theta|bold(X)]$.
 ]
 
 
@@ -345,6 +349,14 @@ A statistic $T(bold(X))$, $bold(X) tilde p_theta (dot)$ is called _sufficient_ f
   $ Invert/solve then $Q$ for $bold(X)$ to find $L(bold(X)), U(bold(X))$ as functions $c_1, c_2$.
 ]
 
+#remark[
+  The general technique to find PQs is to start with a minimal sufficient statistic, and transform its distribution to be independent of $theta$ and moreover to be one for which we have easy access to its quantiles (typically chi-squared, since many statistics involve exponentials so its often possible to rescale such into chi-squareds).
+]
+
+#remark[
+  If not possible to find (or just difficult) to find an exact confidence interval, one can just appeal to CLT and compute an approximate CI using normal-distribution theory.
+]
+
 #theorem("Neyman-Pearson Lemma")[
 Let $
 phi.alt (bold(X)) := cases(1 & "if" p(bold(X); theta_1) > k dot p(bold(X);theta_0),
@@ -359,7 +371,7 @@ $ and either if equal, where $k$ is such that $P_(cal(H)_0) ("rejecting" cal(H)_
   The _likelihood ratio statistic_ (LR) is the quantity $
   lambda_n (bold(X)) := (L_n (hat(theta)_("MLE", cal(H)_0)))/(L_n (hat(theta)_("MLE"))).
   $ A test based on LR is $
-  phi(bold(X)) = cases(
+  phi.alt (bold(X)) = cases(
 1 & "if" lambda_n (bold(X)) < C ,
 0 & "else"
   ), wide C "s.t." P(lambda_n (bold(X)) < C) = alpha.
@@ -368,6 +380,11 @@ $ and either if equal, where $k$ is such that $P_(cal(H)_0) ("rejecting" cal(H)_
 
 #remark[This test should be used when the hypotheses are not simple-simple.]
 
+#theorem[
+  Under the regularity conditions, $-2 log(lambda(bold(X))) approx^(d) chi_(d)^2$, where $d := dim(Theta) - dim(Theta_0)$.
+]
+
+#remark[Sometimes its hard to manipulate/solve the necessary condition $P(lambda_n (bold(X)) < C) = alpha$ explicitly for what $C$ should be. This theorem says that you can take $C = exp(-(chi_(d, alpha)^2)/2)$ to find an approximate test.]
 = Some MLEs and Such To Remember
 
 #table(

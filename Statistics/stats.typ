@@ -428,7 +428,7 @@ $
 
 #proposition("The Delta Method (Second Order)")[
   Suppose $sqrt(n) (X_n - mu) ->^"d" cal(N)(0, sigma^2)$ and $g'(mu) = 0$ but $g'' (mu) eq.not 0$. Then, $
-  n {g(X_n) - g(mu)} ->^"d" sigma^2 dot( g''(mu))/2  dot chi_((1))^2.
+  n {g(X_n) - g(mu)} ->^"d" sigma^2 dot (g''(mu))/2  dot chi_((1))^2.
   $
 ]
 #proof[
@@ -592,10 +592,10 @@ $
   $ Combining (I) and (II), $
   tau' (theta) = "Cov"_theta (Tau(bold(X)), dif/(dif theta) log p_theta (bold(x))),
   $ since $"Cov"(X, Y) = EE[X Y] - EE[X]EE[Y]$, but the second of these terms vanishes by (II). Thus, $
-  [tau'(theta)^2] = Cov_theta^2 (Tau(bold(X)), dif/(dif theta) log p_theta (bold(X))).
+  [tau'(theta)]^2 = Cov_theta^2 (Tau(bold(X)), dif/(dif theta) log p_theta (bold(X))).
   $ By Cauchy-Schwarz, we find $
   [tau'(theta)]^2  &<= "Var"_theta (Tau(bold(X))) Var_theta (dif/(dif theta) log p_theta (bold(X))) \ 
-  & <= "Var"_theta (Tau(bold(X))) EE_theta {[dif/(dif theta) log p_theta (bold(X))]^2},
+  & = "Var"_theta (Tau(bold(X))) EE_theta {[dif/(dif theta) log p_theta (bold(X))]^2},
   $ the last line following by the Bartlett Identity.
 ]
 
@@ -798,7 +798,7 @@ One notices that the LHS (not the product) can be written as a function of $thet
 #example[
   Let $X_1, dots, X_n tilde^"iid" cal(U)(0, theta)$, so $f(x; theta) = cases(1/theta & "if" 0 < x < theta, 0 & "else")$. Then $
 p_theta (bold(x)) &= product_(i=1)^n 1/theta bb(1)(0 < x_i < theta)\
-&= underbrace(1/(theta^n) bb(1)(0 <x_((n)) < theta}, =: g(T(bold(x); theta))) underbrace(bb(1)(0 < x_((1)) < theta), =: h(bold(x))),
+&= underbrace(1/(theta^n) bb(1)(x_((n)) < theta}, =: g(T(bold(x)), theta)) underbrace(bb(1)(0 < x_((1))), =: h(bold(x))),
   $ so $X_((n))$ is a sufficient statistic for $theta$.
 ]
 
@@ -823,7 +823,6 @@ This does _not_ imply that say $sum_(i=1)^n X_i$ sufficient for $mu$! Namely $T$
 #example[
 Recall the Bernoulli example once again. We claim that $
 T^ast_m (bold(X)) = (sum_(i=1)^m X_i,  sum_(i=m+1)^n X_i), wide 1 <= m <= n - 1
-)
 $ is also sufficient for $0 < theta < 1$. Clearly this is no different then just using the one-dimensional statistic $sum_(i=1)^n X_i$; we'd like to formalize how to differentiate such statistics. Namely, $sum_(i=1)^n X_i$ is called a _minimal_ sufficient statistic for $theta$.
 ]
 
@@ -1085,7 +1084,9 @@ $ Note that we have positive and negative roots, but ignore the negative one sin
     Is this an unbiased estimator? One readily computes $
     EE[hat(p)_n] &= sum_(x_1, dots, x_n = 1)^infinity n/(sum_i x_i) p^n (1 - p)^(sum_(i) x_i - n) \
     (u := sum_(i) x_i) wide &= n (p/(1-p))^n sum_(u=n)^infinity C_u ((1-p)^u)/u ,
-    $ where $C_u = hash$ ways to write $u >= n$ as a sum of $n$ elements $x_1, dots, x_n$ where each at least 1 = $binom(u-1, u-n)$. This probably isn't equal to $1/p$, but I'm not sure how to reduce it.
+    $ where $C_u = hash$ ways to write $u >= n$ as a sum of $n$ elements $x_1, dots, x_n$ where each at least 1 = $binom(u-1, u-n)$. This probably isn't equal to $1/p$, but I'm not sure how to reduce it. If one takes $n = 1$, however, this becomes $
+    EE[hat(p)_1] &= (p/(1-p)) sum_(u=1)^infinity ((1-p)^u)/u = p/(1-p) log(1/p),
+    $ using the Taylor series expansion of $log(x)$. Graphically, one sees while this is equal to $p$ for some values of $p$ (namely 1 and $approx .137$), it certainly isn't for general $p in (0, 1)$.
     ])
 
   // $EE[1/overline(X)_n] = sum_(x_1=1) dots sum_(x_n = 1) 1/(1/n sum_(i=1)^n x_i) p^n (1 - p)^(x_1 + dots.c + x_n - n)$.
@@ -1164,7 +1165,7 @@ From a a "maximum likelihood estimation point of view", both likelihoods contain
 
 #remark[
   1. MLE of $theta$ may or may not exist over $Theta$, when $Theta$ is open. It always exists over the closure of $Theta$.
-  2. If $Theta$ is finite, the certainly $Theta = overline(Theta)$ and the MLE always exists and can be computed by comparing the values of $L_n (theta)$ (or $ell_n (theta)$) over $Theta$.
+  2. If $Theta$ is finite, then certainly $Theta = overline(Theta)$ and the MLE always exists and can be computed by comparing the values of $L_n (theta)$ (or $ell_n (theta)$) over $Theta$.
   3. If $L_n (theta)$ or $ell_n (theta)$ is differentiable on $Theta^(circle.tiny)$, then possible candidates for the MLE are values of $theta in Theta^(circle.tiny)$ that satisfy the so-called "likelihood equations" or "score equations", $
   (dif ell_n (theta))/(dif theta) = 0. wide ast.circle
   $  If $ell_n (theta)$ not differentiable (or in particular not everywhere differentiable), then extrema may occur at non-differentiability or even discontinuity points of $ell_n (theta)$. So, its crucial to analyze the entire likelihood function to find its maximum.
@@ -1228,7 +1229,7 @@ From a a "maximum likelihood estimation point of view", both likelihoods contain
   ell'_n (theta^((t))) + ell''_n (theta^((t))) [theta^((t+1)) - theta^((t))] = 0,
   $ implying $
   theta^((t+1)) = theta^((t)) - [ell''_n (theta^((t)))]^(-1) ell_n (theta^((t))),
-  $ where in the general case $ell'_n (theta)$ a $d times 1$ vector and $ell''_n (theta)$ a $d times d$ matrix. In general, this procedure need not converge to the true value; typically, one stops after some "proximity standard" is met, e.g. if for some fixed allowance $epsilon > 0$, one may chooes to stop once $norm(theta^((t+1)) - theta^((t))) < epsilon$.
+  $ where in the general case $ell'_n (theta)$ a $d times 1$ vector and $ell''_n (theta)$ a $d times d$ matrix. In general, this procedure need not converge to the true value; typically, one stops after some "proximity standard" is met, e.g. if for some fixed allowance $epsilon > 0$, one may choose to stop once $norm(theta^((t+1)) - theta^((t))) < epsilon$.
 ]
 
 #example[
@@ -1330,7 +1331,7 @@ Similarly, if we take the absolute value loss function $L(delta, theta) = abs(de
 
 Let $cal(F) = {f_theta : theta in Theta subset.eq RR^d}$ and $X tilde f_(theta_0)$ for some $theta_0 in Theta$. Throughout, we'll assume the following regularity conditions about the distribution:
 
-- *R0*: $Theta$ is either open, or contains an open set such $N$ such that $theta_0$ an interior point of $N$;
+- *R0*: $Theta$ is either open, or contains an open set $N$ such that $theta_0$ an interior point of $N$;
 - *R1*: The pdf/pmf $f_theta$ has a common support $Chi$ for all $theta in N$ and is identifiable in $theta$ for every $x in Chi$. That is, for every $theta_1, theta_2 in N$, $f(x; theta_1) = f(x; theta_2)$ for every $x in Chi$ iff $theta_1 = theta_2$;
 - *R2*: $f_theta $ is thrice differentiable in $theta$ for almost every $x in Chi$;
 - *R3*: There exists functions $M_i (x)$ for $i = 1, 2, 3$ (possibly depending on $theta_0$) such that for every $theta in N$, $
@@ -1347,7 +1348,7 @@ EE_(theta_0) {log (f(bold(X); theta_0))/f(bold(X); theta)}
 $ is called the _Kullback-Leibler_ (KL) distance between $f(bold(x); theta)$ and $f(bold(x); theta_0)$. 
 
 #proposition[
-  The Kullback-Leibler distance is strictly positive for $theta eq.not theta_0$ and equal for $theta = theta_0$.
+  The Kullback-Leibler distance is strictly positive for $theta eq.not theta_0$ and equal to zero for $theta = theta_0$.
 ]
 
 #proof[
@@ -1424,7 +1425,7 @@ $ Therefore for large $n$, $ell'_n (theta_0 + epsilon) < 0 < ell'_n (theta_0 - e
 ]
 
 #remark[
-  The MLE is Fisher-Efficient as its asymptotic variance approaches the CRLB.
+  The MLE is so-called "Fisher-Efficient" as its asymptotic variance approaches the CRLB.
 ]
 
 = Confidence Intervals
@@ -1489,7 +1490,7 @@ When $Q$ is monotone with respect to $theta$, then inverting the inequality in 1
   P(Z <= chi_((n-1,alpha\/2))^2) = alpha/2 = P(Z >= chi_((n-1, 1 - alpha\/2))^2), wide Z tilde chi_((n-1))^2.
   $ This ends up with confidence interval $
   (((n-1) S_n^2)/(chi_((n-1, 1 - alpha\/2))^2), ((n-1) S_n^2)/(chi_((n-1,alpha\/2))^2)).
-  $ What would be the confidence interval with $mu$ known?
+  $ #text(fill: red, [What would be the confidence interval with $mu$ known?])
 ]
 
 #example[
