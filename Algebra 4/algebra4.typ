@@ -96,7 +96,7 @@ If $T$ has $1$ as an eigenvalue.
 ]
 
 #remark[
-  $|CC|$ essential. Suppose $F = ZZ\/3 ZZ$ and $V = F e_1 plus.circle F e_2 plus.circle F e_3$, and $G = S_3$ acts on $V$ by permuting the basis vectors $e_i$. Then notice that $F (e_1 + e_2 + e_3)$ an irreducible subspace in $V$. Let $W = F (w)$ with $w := a e_1 + b e_2 + c e_3$ be any other $G$-stable subspace. Then, by applying $(123)$ repeatedly to $w$ and adding the result, we find that $(a + b + c) (e_1 + e_2 + e_3) in W$. Similarly, by applying $(12), (23), (13)$ to $w$, we find $(a - b) (e_1 - e_2), (b - c) (e_2 - e_3), (a - c) (e_1 - e_3)$ all in $W$. It must be that at least one of $a - b, a - c, b - c$ nonzero, else we'd have $w in F (e_1 + e_2 + e_3)$. Assume wlog $a - b eq.not 0$. Then, we may apply $(a - b)^(-1)$ and find $e_1 - e_2 in W$. By applying $(23), (13)$ to this vector and scaling, we find further $e_2 - e_3$ and $e_1 - e_3 in W$. But then, $
+  $CC$ essential. Suppose $F = ZZ\/3 ZZ$ and $V = F e_1 plus.circle F e_2 plus.circle F e_3$, and $G = S_3$ acts on $V$ by permuting the basis vectors $e_i$. Then notice that $F (e_1 + e_2 + e_3)$ an irreducible subspace in $V$. Let $W = F (w)$ with $w := a e_1 + b e_2 + c e_3$ be any other $G$-stable subspace. Then, by applying $(123)$ repeatedly to $w$ and adding the result, we find that $(a + b + c) (e_1 + e_2 + e_3) in W$. Similarly, by applying $(12), (23), (13)$ to $w$, we find $(a - b) (e_1 - e_2), (b - c) (e_2 - e_3), (a - c) (e_1 - e_3)$ all in $W$. It must be that at least one of $a - b, a - c, b - c$ nonzero, else we'd have $w in F (e_1 + e_2 + e_3)$. Assume wlog $a - b eq.not 0$. Then, we may apply $(a - b)^(-1)$ and find $e_1 - e_2 in W$. By applying $(23), (13)$ to this vector and scaling, we find further $e_2 - e_3$ and $e_1 - e_3 in W$. But then, $
   2 (e_1 - e_2) + 2 (e_1 - e_3) = e_1 + e_2 + e_3 in W,
   $ so $F (e_1 + e_2 + e_3)$ a subspace of $W$, a contradiction. 
 ]
@@ -215,7 +215,7 @@ $  where $V^G = {v in V : g v = v forall g in G}$.
 #proposition[
   Suppose $V = V_1^(m_1) plus.circle dots.c plus.circle V_t^(m_t)$ a representation of $G$ written in irreducible form. Then,
   $
-  Hom_G (V_j, V) = CC^(m_)j.
+  Hom_G (V_j, V) = CC^(m_j).
   $
 ]
 
@@ -233,7 +233,7 @@ $
 
 #proof[
   We may pick an appropriate basis for $g in G$ such that $g$ acts on $V plus.circle W$ as $
-  g = mat([rho_V (g)], 0; 0, [rho_W(g)]),
+  g = mat([rho_V (g)], 0; 0, [rho_W (g)]),
   $ where $rho_V, rho_W$ are the matrix representations of $g$ acting on $V, W$ respectively. From this, it is immediate that $tr(g) = tr(rho_V (g)) + tr(rho_W (g)) = chi_V + chi_W$.
 ]
 
@@ -329,7 +329,7 @@ $
 Write $V_"reg" = V_1^(m_1) plus.circle dots.c plus.circle V_t^m_t$. We'll show $m_j = d_j$ for each $j = 1, dots, t$. We find $
 m_j &= angle.l chi_"reg", chi_j angle.r \ 
 &= 1/(hash G)  sum_(g in G) overline(chi_"reg" (g)) chi_j (g) \ 
-&= 1/(hash G) hash G chi_j (id) = chi_j (id) = d_j,
+&= 1/(hash G) hash G dot chi_j (id) = chi_j (id) = d_j,
 $ since the trace of the identity element acting on a vector space is always the dimension of the space. In particular, then $
 hash G = dim_CC (V_"reg") &= dim_CC (V_1^d_1 plus.circle dots.c plus.circle V_t^(d_t)) \ 
 &= d_1 dot dim_CC (V_1) + dots.c + d_t dot dim_CC (V_t) \ 
@@ -664,7 +664,7 @@ $ where $Z(g) = {b in G | b g = g b}$ the centralizer of $G$, where $hash Z(g) =
 === Back to $"GL"_3 (FF_2)$
 
 Let $H subset.eq G = "GL"_3 (FF_2)$ the normalizer of a Sylow-7 subgroup; then $hash H = 21$ ($8$ Sylow-7 subgroups, $168/8 = 21$). Let $
-psi : H -> CC^x
+psi : H -> CC^times
 $ and $
 V = "Ind"_H^G psi
 $ the induced character. Then, we know $dim(V) = 168\/21 = 8$. Let $P_7$ be some Sylow-7 subgroup. Then, we find that $
@@ -835,23 +835,30 @@ The wealth distribution may be modelled as a function on $ZZ\/N ZZ$; each knight
 f in L^2 (ZZ\/N ZZ) = plus.circle.big_(j=0)^(N-1) CC dot e^(2 pi i j x\/N).
 $ Then, "wealth distribution" can be seen as a function $T : L^2 -> L^2$ given by $
 T f(x) := 1/2 (f(x - 1) + f(x + 1)).
-$ Then, $
-T e^(2 pi i j x\/N) &= 1/2 (e^(2 pi i j (x + 1) \/N ) + e^(2 pi i j (x - 1) \/N )) \ 
+$ Namely, we can view iterating $T$ as iteratively distributing wealth, so $T^M f(x)$ would be the wealth associated to knight $x$ after $M$ distributions. To understand this operator, we can analyze how it acts on a basis for $L^2 (ZZ\/N ZZ)$; we know this is simply given by $f_j (x) := e^(2pi i j x\/N)$ where $j = 0, dots, N - 1$. 
+ Then, $
+ T f_j (x) = T e^(2 pi i j x\/N) &= 1/2 (e^(2 pi i j (x + 1) \/N ) + e^(2 pi i j (x - 1) \/N )) \ 
 &= 1/2 (e^(2 pi i j\/N) + e^(- 2 pi i j\/N)) e^(2 pi i j x \/N) \
 &= cos(2 pi j\/N) e^(2 pi i j x \/N).
-$ Then, we may write $f = hat(f)(0) f_0 + hat(f)(1)f_1 + dots.c + hat(f)(N-1) f_(N-1)$, so $
+$ Then, we may write the Fourier series expansion of $f$ as  $f = hat(f)(0) f_0 + hat(f)(1)f_1 + dots.c + hat(f)(N-1) f_(N-1)$, so the Fourier expansion of $T f$ is given by $
 T f = hat(f)(0) f_0 + hat(f)(1) cos((2 pi)/N) f_1 + dots.c + hat(f)(N-1) cos((2 pi (N-1))/N) f_(N-1),
 $ and hence $
 hat(T f) (j) = hat(f)(j) cos((2 pi j)/N).
-$ Thus, $
-hat(T^M f(j)) = hat(f)(j) (cos ((2 pi)/N))^M.
-$
+$ Then, iterating $T$ (distributing wealth) $M$ times, one finds that $
+hat(T^M f(j)) = hat(f)(j) (cos ((2 pi j)/N))^M,
+$ for each $j = 0, dots, N-1$. Letting $M -> infinity$, this term will go to zero unless $j = 0$, in which case $lim_(M -> infinity) hat(T^M f) (0) = hat(f)(0)$. 
+
+What does this mean? This means that in the limiting wealth distribution, call it $T^"lim" f$, the only Fourier coefficient that survives is the one associated to the constant function 1, namely, $
+ hat(T^lim f) (0)= hat(f)(0).
+$ So, we find in particular for every $x in ZZ\/N ZZ$, by the Fourier inversion formula, that $
+T^lim f (x) &= sum_(j=0)^(N-1) hat(T^lim f)(j) dot f_j = hat(f)(0) = 1/N sum_(y=0)^(N-1) f(y).
+$ I.e., the limiting wealth distribution of every knight $x$ is simply the average of what they all started with, so this splitting profit completely equalized the wealth around the table. How equitable!
 
 === Functions on Mathematical Objects with Symmetry Groups
 
 Let $X$ a "mathematical object", $G$ a group of symmetries and $V = L^2 (X) =  CC$-valued functions on $X$. We assume $X$ finite (hence $G$ finite and $V$ finite). We are interested in studying operators $T : L^2 (X) -> L^2 (X)$.
 
-Suppose $X$ a set of vertices of a graph; define for $phi in L^2 (X)$, $(T phi)(x) = sum_((y, x) "an edge") phi(y)$; $T$ the adjacent operator, extended to functions on $CC$. We claim $T$ commutes with the action of $G$; write $y tilde x$ if the vertex $y$ adjacent to the vertex $x$:
+Suppose for instance $X$ a set of vertices of a graph; define for $phi in L^2 (X)$, $(T phi)(x) = sum_((y, x) "an edge") phi(y)$; $T$ the adjacent operator, extended to functions on $CC$. We claim $T$ commutes with the action of $G$; write $y tilde x$ if the vertex $y$ adjacent to the vertex $x$:
 $
 (T compose g) (phi) (x) &= T(g phi) (x) \ 
 &=  sum_(y tilde x) (g phi)(y) \ 
@@ -920,7 +927,7 @@ $
 
 === Functions on a Cube
 Let $X = $ set of faces of a cube, and $V = L^2 (X)$ acted on by $G = S_4$, the symmetry group the cube. Let $T : V -> V$ be defined by $
-T(psi)(x) = 1/4 sum_(y tilde x) phi(y),
+T(psi)(x) = 1/4 sum_(y tilde x) psi(y),
 $ where $y tilde x$ means $y, x$ are adjacent faces; the sum is over all faces adjacent to $x$. Notice that $T$ is $G$-equivariant; moreover we can view it as a 4-way "sharing" of the value on adjacent faces, as in the knight example but now sitting on a cube rather than a circle.
 
 We aim to decompose $L^2 (X)$ into a sum of irreducible representations. We have the character table of $S_4$;
@@ -948,7 +955,7 @@ $
 
 We'll say a function $phi : X -> CC$ is _even_ if $phi(x) = phi(x')$ where $x'$ the face opposite of $x$. The space, call it $L^2 (X)_+$, of even functions is naturally $G$-stable; if $phi in L^2 (X)_+$ and $g in G$, then $g phi(x) = g phi(x')$ while also $phi(g^(-1)) x = g phi(x),$ $phi(g^(-1) x') = g phi(x')$, hence we find $phi(g^(-1)x) = phi(g^(-1) x')$, hence $G$ sends even functions to even functions.
 
-This space already contains constant function, so we want to consider the complementary space; $
+This space already contains constant functions, so we want to consider the complementary space; $
 L^2 (X)_(+, 0)  := {phi : X -> CC | phi "even and" sum_(x in X) phi(x) = 0}.
 $
 
@@ -1035,15 +1042,15 @@ $ hence $-1/2$ an eigenvalue with multiplicity 2.
   $
 ]
 
-#proposition[
-  Let $D_8$ be the dihedral group of order 8 and $Q$ the quaternion group. Show that the group rings $CC[D_8]$ and $CC[Q]$ are isomorphic, while the group rings $RR[D_8]$ and $RR[Q]$ are not.
-]
+// #proposition[
+//   Let $D_8$ be the dihedral group of order 8 and $Q$ the quaternion group. Show that the group rings $CC[D_8]$ and $CC[Q]$ are isomorphic, while the group rings $RR[D_8]$ and $RR[Q]$ are not.
+// ]
 
-#proof[
-  We know that $
-  CC[D_8] tilde.eq plus.circle.big_(j=1)^5 "End"_CC (V_j) tilde.eq plus.circle.big_(j=1)^5 "M"_(d_j) (CC),
-  $ with similar for $CC[Q]$. But recall that $D_8$ and $Q$ have "identical" character tables, namely they have the same number of irreducible complex representations with the same distribution of dimensions, hence it follows by this characterization that the group rings are isomorphic.
-]
+// #proof[
+//   We know that $
+//   CC[D_8] tilde.eq plus.circle.big_(j=1)^5 "End"_CC (V_j) tilde.eq plus.circle.big_(j=1)^5 "M"_(d_j) (CC),
+//   $ with similar for $CC[Q]$. But recall that $D_8$ and $Q$ have "identical" character tables, namely they have the same number of irreducible complex representations with the same distribution of dimensions, hence it follows by this characterization that the group rings are isomorphic.
+// ]
 
 #proposition[
   Let $D_8$ be the dihedral group on $4$ elements and $Q$ the group of quaternions. Show that the group rings $CC[D_8]$ and $CC[Q]$ are isomorphic, but the groups rings $RR[D_8]$ and $RR[Q]$ are not.
@@ -1113,7 +1120,7 @@ See @thm:maschkes for the statement. The typical counter example is the two-dime
 ]
 
 #proof[
-  There are 4 irreducible representations of dimension 1, and a unique (faithful) irreducible representation of dimension 2 (the first four can be found by modding out the center of $Q$ which gives a homomorphism to $ZZ\/2ZZ times ZZ\/2$; the last can be found by just computing orthogonality relations).
+  There are 4 irreducible representations of dimension 1, and a unique (faithful) irreducible representation of dimension 2 (the first four can be found by modding out the center of $Q$ which gives a homomorphism to $ZZ\/2ZZ times ZZ\/2 ZZ$; the last can be found by just computing orthogonality relations).
 
   The "concrete" realization, as a subgroup of $"GL"_2 (CC)$, is given by $1 <-> I_2$, $-1 <-> - I_2$, and $
   i <-> mat(i, 0; 0, -i), wide j <-> mat(0, -1; 1, 0), wide k <-> mat(0, -i;-i, 0),
@@ -2483,7 +2490,7 @@ The idea is to:
   Moreover, since $f$ of degree 4, $[QQ(r_1) : QQ] = 4$, so we have two options for the Galois group. Consider the map $r_1 |-> r_3$. One verifies that this is a 4-cycle acting on the roots of $f$, from which it follows that $"Gal"(QQ(r_1)\/QQ) = ZZ\/4ZZ$.
 
 
-  _Note that, more generally, $QQ(sqrt(d))$ a quadratic extension of $QQ$ and we adjoin an additional elements $sqrt(a + b sqrt(d)),sqrt(a - b sqrt(d))$, that we have the relation $sqrt(a + b sqrt(d))dot sqrt(a - b sqrt(d)) = sqrt(a^2 - b^2 d)$ so if in particular $a^2 - b^2 d$ a perfect square in $QQ$ or $QQ(sqrt(d))$, then we are in a similar situation to the above._
+  _Note that, more generally, if $QQ(sqrt(d))$ a quadratic extension of $QQ$ and we adjoin additional elements $sqrt(a + b sqrt(d)),sqrt(a - b sqrt(d))$, that we have the relation $sqrt(a + b sqrt(d))dot sqrt(a - b sqrt(d)) = sqrt(a^2 - b^2 d)$ so if in particular $a^2 - b^2 d$ a perfect square in $QQ$ or $QQ(sqrt(d))$, then we are in a similar situation to the above._
 
   
   // Consider the tower #align(center,
@@ -2521,37 +2528,105 @@ The idea is to:
 ]
 
 #proof[
-  Let $H_1$ be the subgroup of $S_12$ consisting of $S_3 times S_3 times S_3 times S_3$ (acting disjointly on $1,2, 3; 4, 5, 6;$ etc) times $S_4$, with $S_4$ acting on ${1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}$ by identifying $1 <-> 4 <-> 7 <-> 10$ etc. (namely, if $1 |-> 4$ then $2 |-> 5$ and $3 |-> 6$ etc) (??). Then, $hash H_1 = (hash S_3)^4 dot hash S_4 = (3!)^4 4!$. Similarly, let $H_2$ be the same constructing interchanging $S_4$ with $S_3$ wherever they appear.
+  Let $H_1$ be the subgroup of $S_12$ consisting of $S_3 times S_3 times S_3 times S_3$ (acting disjointly on $1,2, 3; 4, 5, 6;$ etc) times $S_4$, with $S_4$ acting on ${1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}$ by identifying $1 <-> 4 <-> 7 <-> 10$ etc. (namely, if $1 |-> 4$ then $2 |-> 5$ and $3 |-> 6$ etc) (??). Then, $hash H_1 = (hash S_3)^4 dot hash S_4 = (3!)^4 4!$. Similarly, let $H_2$ be the same construction interchanging $S_4$ with $S_3$ wherever they appear.
 
   To try to construct degree polynomials with such Galois groups, we can appeal to the method of question 3 by beginning with an irreducible polynomial of degree 12 over $QQ$ with Galois group equal to $S_12$ (which may be hard to do who knows), let $E\/QQ$ be its splitting field, and let $F = E^(H_i)$. Then, $F$ Galois over $E$ with Galois group $H_i$. By Proposition 3.3, every (finite degree) Galois extension is a splitting field, so there is some polymomial $g(x) in F[x]$ with Galois group $H_i$.
+]
+
+#remark[
+  The following questions are all connected, aimed at culminating with the final proposition.
 ]
 
 #proposition[
   Let $G$ be a transitive subgroup of the symmetric group $S_n$ on $n$ letters, and let $H$ be a normal subgroup of $G$. Show that the action of $G$ on the set $X := {1, dots, n}$ induces a natural action of $G$ on the set $X_H := {H x : x in X}$ of sets of $X$ consisting of the orbits for $H$ in $X$. Use this to conclude that all the $H$-orbits in $X$ have the same cardinality. Give an example to illustrate the failure of this conclusion when $H$ is not assumed to be normal in $G$.
 ]
 
+#proof[
+  Define the action $ast$ on $X_H$ by $
+  g ast H x = g H x = H (g x),
+  $  the second equality following from normalcy ie $g H = H g$ for every $g in G$. This is a group action; the composition axioms are clear. Moreover, we need to show it is well-defined, ie the definition is independent of choice of orbit representative $x$. Suppose $H x = H y$. Then, $y in H x$ so there is some $h in H$ such that $y = h x$. Then, on the one hand, $
+  g ast H x = H (g x),
+  $ while also $
+  g ast H y = g ast H (h x) = H (g h x).
+  $ By normalcy, $g h g^(-1) = tilde(h) in H$ so $
+  H (g h x) = H tilde(h) g x = H (g x),
+  $ so this indeed well-defined. Thus, we conclude $hash H x = hash H y$ for any $x, y in X$ since by transitivity of $G$ there is some $g in G$ such that $g x = y$ so $g H x = H y$ hence $hash H x = hash H y$.
 
+  For a counterexample when $H$ not assumed to be normal, we have that $D_8$ a transitive subgroup of $S_4$ and $H:= angle.l (13) angle.r$ a (not normal) subgroup of $D_8$ (viewed as "D1" reflection), while $H dot 1 = {1, 3}$ and $H dot 2 = {2}$.
+  
+  // TODO something is not right above... at least i'm not sure. Does this imply the action is necessarily transitive?
+  // Then, $1 ast H x = H x$, and for $g, h in G$, $
+  // (g h) ast H x = H (g h x)   = g ast (h ast H x),
+  // $ so this a well-defined group action. Moreover, it is transitive, since given orbits $H x$ and $H y$, since $G$ transitive acting on $X$ there is a $g in G$ such that $g x= y$ hence $g^(-1) x = y$, so $
+  // g ast H x = H  g^(-1)x
+  // $
+]
 
 #proposition[Let $p$ be a prime number. Show that any non-trivial normal subgroup of a transitive subgroup of $S_p$ also acts transitively on ${1, dots, p}$.]
 
+#proof[
+We have $X = union.big.sq_(H x in X_H) H x$, and since by the previous question each $H x$ has the same cardinality, $
+p = hash X = hash X_H dot hash (H dot 1),
+$ which since $p$ prime would imply either $hash X_H = p$ or $1$. In the former case, this implies $hash (H dot x) = 1$ for every $x in X$ which is only possible if $H$ trivial, so we must be the latter case, in which case $hash (H x) = p$ so in particular the orbit $H x$ is all of $X$ so $H$ acts transitively on $X$ as well.
+]
+
 #proposition[
   Show that any transitive subgroup of $S_p$ contains a non-trivial Sylow $p$ subgroup of cardinality $p$.
+]
+
+#proof[
+Let $G$ be such a subgroup. By transitivity and orbit-stabilizer, we know $hash G = hash X dot hash "Stab"_G (1) = m p$ so $p|hash G$. Moreover, $hash G|p!$ since $G subset S_p$, so we may write $hash G = p dot t$ where $p divides.not t$, i.e. the highest power of $p$ in $hash G$ is 1. By Sylow theorems, there is a Sylow $p$-subgroup of cardinality $p$ in $G$.
 ]
 
 #proposition[
   Let $G$ be a transitive subgroup of $S_p$ and let $H$ be a non-trivial normal subgroup of $G$. Show that any Sylow $p$-subgroup of $G$ is also contained in $H$.
 ]
 
+#proof[
+  By 4.9, $H$ also transitive so by 4.10 there is certainly _a_ Sylow $p$-subgroup in $H$, call it $P$. This must also be then a Sylow $p$-subgroup of $G$. By the second Sylow theorem, any two Sylow $p$ sub-groups are conjugate, so for any other Sylow $p$-subgroup $P_1 subset G$, $P_1 = g P g^(-1)$ for some $g in G$. But since $H$ normal in $G$, $g P g^(-1)$ remains in $H$ so $P_1 subset H$ as well, thus any Sylow $p$-subgroup of $G$ is also a subgroup of $H$.
+]
+
 #proposition[
   Show that any transitive solvable subgroup of $S_p$ contains a _unique_ Sylow $p$ subgroup, and hence is contained in the normalizer of its Sylow $p$-subgroup.
 ]
 
-#proposition[
-  After identifyiing $X := {1, dots, p}$ with $ZZ\/p ZZ$, show that the normalizer of the Sylow $p$-subgroup generated by the cyclic permutation $T : x |-> x + 1$ is the group of affine linear transformations of the form $x |-> a x + b$ with $a in (ZZ\/p ZZ)^times$ and $b in ZZ\/p ZZ$.
+#proof[
+Write ${1} = G_0 triangle.l G_1 triangle.l dots.c triangle.l G_t = G subset S_p$. Since $G$ transitive and $G_(t-1) triangle.l G$, by 4.9, $G_(t-1)$ itself transitive. Then, $G_(t - 2)$ is a normal subgroup of $G_(t-1)$ so $G_(t-2)$ also transitive, etc, thus each $G_(i)$ transitive, being a normal subgroup of a transitive subgroup of $S_p$. Then, by 4.11, any Sylow $p$-subgroup of $G$ is contained in $G_(t-1)$, and thus arguing inductively we find that any Sylow $p$-subgroup of $G$ contained in $G_(i)$. In particular, any subgroup Sylow $p$-subgroup is contained in $G_1$, but by solvability $G_1$ abelian. So, since any two Sylow $p$-subgroups $P_1, P_2$ are conjugate ie $P_1 = g P_2 g^(-1)$ for some $g in G$, and since both $P_1, P_2 subset G_1$, it must be that $P_1 = P_2$ since $g P_2 g^(-1) = g g^(-1) P_2 = P_2$ (with the multiplication occuring in $G_1$ now). Thus, we conclude that there is only one such Sylow-$p$ subgroup in the top level $G$.
+
+Hence, $G subset N(P)$ (in $S_p$). // TODO I think thats what they mean.
+// by the previous question every Sylow-$p$ subgroup of $G$ is also contained in $G_(t-1)$. Then, since $G_(t - 1)$ normal in $G$ and $G$ transitive,
+
 ]
 
 #proposition[
-  Show that any transitive solvable subgroup of $S_p$ is conjugate to a subgroup of the group of affine linear transformations of cardinality $p(p-1)$ described in 13.
+  After identifying $X := {1, dots, p}$ with $ZZ\/p ZZ$, show that the normalizer of the Sylow $p$-subgroup generated by the cyclic permutation $T : x |-> x + 1$ is the group of affine linear transformations of the form $x |-> a x + b$ with $a in (ZZ\/p ZZ)^times$ and $b in ZZ\/p ZZ$.
+]
+
+#proof[
+Let $P = angle.l T angle.r$ be the relevant Sylow $p$-subgroup. Let $sigma in N(P)$, so by assumption there is an $a in X$ such that $sigma T sigma^(-1) = T^a$ ($T^a = T compose dots.c compose T$). Then, for any $x in X$, $(sigma T) x = (T^a sigma) x$; the LHS becomes $
+sigma (x + 1),
+$ while the RHS becomes $
+sigma(x) + a,
+$ so in short $
+sigma(x + 1) = sigma(x) + a,
+$ for any $x in X$. Let $b := sigma(0)$, then $
+sigma(1) &= b + a\
+ sigma(2) &=  sigma(1) + a + a = b  + 2 a\
+ &dots.down\
+ sigma(x) &= a x +  b,
+$ with the final form following by induction if you like. Thus, $sigma$ indeed acts as an affine linear transformation, noting that $a, b$ were dependent only on $sigma$, and that it suffices to look at $sigma T$ since $T$ generates $P$. 
+
+Precisely, this says $N(P)$ is contained in the group of affine linear transformations, so one need show the converse inclusion. This is clear enough.
+]
+
+#proposition[
+  Show that any transitive solvable subgroup of $S_p$ is conjugate to a subgroup of the group of affine linear transformations of cardinality $p(p-1)$ described in 4.13.
+]
+
+#proof[
+By 4.12, there is a unique sylow $tilde(P)$ subgroup in $G$ and that $G subset tilde(N):= N(tilde(P))$ in $S_p$. With $P$ the sylow $p$-subgroup from 4.13, we know $tilde(P) = g P g^(-1)$ for some $g in S_p$. I claim the normalizers are $tilde(N), N := N(P)$ are also conjugate by $g$. Let $sigma in N$ and $tilde(h) in tilde(P)$, so $g sigma g^(-1) in g N g^(-1)$ and also there is an $h in P$ such that $tilde(h) = g h g$. Then, $
+(g sigma g^(-1)) tilde(h) (g sigma g^(-1))^(-1) &= g sigma g^(-1) g h g g sigma^(-1) g^(-1) = g sigma h sigma^(-1) g^(-1).
+$ Since $sigma in N$, $sigma h sigma^(-1) in P$ and thus $g sigma h sigma^(-1) g^(-1) in tilde(P)$. So in short, $g sigma g^(-1) in tilde(N)$ indeed thus $g N g^(-1) subset tilde(N)$. A similar computation shows the other inclusion. Thus, $G$ a subgroup of $tilde(N) = g N g^(-1)$ i.e. is conjugate to a subgroup of $N = {a x + b | a in (ZZ\/p ZZ)^times, b in ZZ\/p ZZ}$, as we aimed to show.
 ]
 
 #proposition[
@@ -2560,6 +2635,22 @@ The idea is to:
     ]
 ]
 
+#proof[
+$(=>)$ The main theorem of Galois theory tells us that under these hypotheses, $G:="Gal"(f)$ is solvable. Moreover, since $deg(f) = p$ prime, $G subset S_p$. $G$ acts transitively on the $p$-sized set of roots of $f$, so $G$ a transitive solvable subgroup of $S_p$, so by 4.14, is conjugate to a subgroup of $N$. Let $r_1, r_2$ be any two distinct roots of $f$ and let $H = "Gal"(E\/F(r_1, r_2))$ where $E$ the splitting field of $E$ over $F$. Then, this group also conjugate to a subgroup of $N$, which fixes two elements $r_1, r_2$. I claim $H$ must be trivial. A typical element of $H$ can be realized as an affine linear action (up to conjugation, but whatever) $sigma : x |-> a x + b$. $sigma r_1 = r_1, sigma r_2 = r_2$ so thus $
+a r_1 + b = r_1, wide a r_2 + b = r_2.
+$ This gives a system of linear equations.Canceling $b$, we find $
+r_1 (1 - a) = r_2 (1 - a).
+$ Here we have two cases: if $a = 1$, then $b$ must equal zero so we have the trivial element which must be in $H$ anyways. Else, $1 - a$ is invertible hence $r_1 = r_2$, a contradiction to the distinctness of the roots. Thus, the only possibility is $H = {1}$ i.e. $"Gal"(E\/F(r_1, r_2)) = {1}$, which is only possible if $E = F(r_1, r_2)$, as we aimed to show.
+
+($impliedby$) Now $F(r_1, r_2)\/F$ the splitting field of $f$, and still $G := "Gal"(f)$ a transitive subgroup of $S_p$. It suffices to show that $G$ is solvable.
+
+ By general theory $[F(r_1, r_2) : F] <= p (p -1)$ since it arises from $F$ from the adjoinment of two roots of $f$, hence $hash G <= p (p - 1)$. By transitivity, $p | hash G$, so thus $G$ has a sylow $p$-subgroup, and moreover it must be unique by the bound on the cardinality of $G$. So, $G subset N(P)$, the normalizer of its sylow $p$-subgroup in $S_p$; namely, $P$ is normal in $G$. By the previous questions, then, $G$ conjugate to a subgroup of the affine linear subgroup, call it $N$, of cardinality $p(p-1)$ in $S_p$, the normalizer of $P_p := angle.l (12dots.c p) angle.r$ in $S_p$. Then, remark that $
+ N\/P_p tilde.eq (ZZ\/p ZZ)^times,
+ $ and thus $G\/P$ conjugate to a subgroup of $(ZZ\/p ZZ)^times$, and is thus abelian. Hence, we have a chain $1 triangle.l P triangle.l G$ with $G\/P$ abelian and $P tilde.eq ZZ\/p ZZ$ abelian, thus $G$ solvable, from which it follows $f$ solvable by radicals.
+]
+
+
+#remark[Everything that appears after this is just miscellanea.]
 
 #proposition[Compute the sum $
 1 - 1/2 + 1/4 - 1/5 + 1/7 - 1/8 + dots.c = sum_(n=1)^infinity a_n/n,
@@ -2575,11 +2666,11 @@ $ where $a_n := cases(
   $ and $zeta := e^(2pi i\/3)$ a primitive third root of unity. Then, we should be able to find complex scalars $lambda_0, lambda_1, lambda_2$ such that $
   a_n = lambda_0 chi_0 (n) + lambda_1 chi_1 (n) + lambda_2 chi_2 (n).
   $ Taking inner products of both sides wrt $chi_k$ for each $k$ yields $
-  lambda_k = (a_n, chi_k) &= a_0 chi_k (0) + a_1 chi_k (1) + a_2 chi_k (2) = zeta^k - zeta^(-k),
+  lambda_k = (a_n, chi_k) &=1/3 (a_0 chi_k (0) + a_1 chi_k (1) + a_2 chi_k (2)) = (zeta^k - zeta^(-k))/2,
   $ so in particular, $
   lambda_0 &= 0\
-  lambda_1 &= zeta - zeta^(-1)\
-  lambda_2 &= zeta^2 - zeta^(-2) = - lambda_1.
+  lambda_1 &=( zeta - zeta^(-1))/3\
+  lambda_2 &= (zeta^2 - zeta^(-2))/3 = - lambda_1.
   $ Hence, we find $
   sum_(n=1)^infinity a_n/n &=lambda_1 [sum_(n=1)^infinity ((zeta)^n)/n - sum_(n=1)^infinity ((zeta^(2))^n)/n]\
   &= lambda_1 [- log(1 - zeta) + log(1 - zeta^2)] \ 
@@ -2589,8 +2680,8 @@ $ where $a_n := cases(
   &= lambda_1 [log(-1) + log(e^(4 pi i\/3))]\
   &= lambda_1 [i pi + 4 pi i\/3]\
   &= lambda_1 dot 7/3 pi i \
-  &= 7\/3 pi i [zeta - zeta^(-1)]\
-  &= 7\/3 pi i dot i sqrt(3) = - (7sqrt(3))/3.
+  &= 7\/9 dot pi i [zeta - zeta^(-1)]\
+  &= 7\/9 dot pi i dot i sqrt(3) = - (7sqrt(3))/9.
   $ We used above that:
   - $- log(1 - x) = sum_(n=1)^infinity x^n/n$
   - $zeta = e^(2 pi i \/3) = 1/2 + (i sqrt(3))/2$.
