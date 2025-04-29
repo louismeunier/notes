@@ -157,8 +157,14 @@ $ where $Hom_G (V, W) = {T : V -> W | T "linear and" G-"equivariant"}$.
 ]
 
 #corollary[
-  Given a general representation $V = plus.circle.big_(j=1)^t V_j^(m_j)$, $
+  Given a general representation $V = plus.circle.big_(j=1)^t V_j^(m_j)$, where $V_j$'s are the irreducible representations of $G$, $
   m_j = dim_CC Hom_G (V_j, V).
+  $
+]
+
+#proof[
+$
+  dim("Hom"_G (V_j, V))  &= dim ("Hom"_G (V_j, plus.circle.big_(i=1)^t V_i^m_i)) =  sum_(i=1)^t m_i dot underbrace(dim(Hom_G (V_j, V_i)), = delta_(i)^j) =  m_j
   $
 ]
 
@@ -167,6 +173,11 @@ $ where $Hom_G (V, W) = {T : V -> W | T "linear and" G-"equivariant"}$.
 #proposition[
   Let $W subset.eq V$ a subspace and $pi : V -> W$ a projection. Then, $tr(pi) = dim(W)$.
 ]
+
+#proof[
+Since $V$ finite dimensional, we may find a decomposition $V = W plus.circle W^perp$. Taking a basis ${v_1, dots, v_t}$ for $W$ and ${v_(t+1), dots, v_n}$ for $W^perp$, respectively, we find a basis ${v_1, dots, v_n}$ for $V$, in which $pi(v_i) = cases(0 & 1 <= i <= t, 1 t < i <= n)$ so $tr(pi) = t = dim(V)$.
+]
+
 #theorem[If $rho : G -> "Aut"_FF (V)$ a complex representation of $G$, then $
 dim (V^G) = 1/(hash G) sum_(g in G) tr(rho(g)),
 $  where $V^G = {v in V : g v = v forall g in G}$.
@@ -212,6 +223,10 @@ $  where $V^G = {v in V : g v = v forall g in G}$.
   $
 ]
 
+#proof[
+  The fact this well-defined simply follows from the well-definedness of the actions of $G$ on $V, W$ respectively (namely, writing $g compose$ and $compose g^(-1)$ are more formally $rho_W (g) compose$ and $compose rho_V (g^(-1))$).
+]
+
 #proposition[
   Suppose $V = V_1^(m_1) plus.circle dots.c plus.circle V_t^(m_t)$ a representation of $G$ written in irreducible form. Then,
   $
@@ -234,7 +249,7 @@ $
 #proof[
   We may pick an appropriate basis for $g in G$ such that $g$ acts on $V plus.circle W$ as $
   g = mat([rho_V (g)], 0; 0, [rho_W (g)]),
-  $ where $rho_V, rho_W$ are the matrix representations of $g$ acting on $V, W$ respectively. From this, it is immediate that $tr(g) = tr(rho_V (g)) + tr(rho_W (g)) = chi_V + chi_W$.
+  $ since $V, W$ both $G$-stable, where $rho_V, rho_W$ are the matrix representations of $g$ acting on $V, W$ respectively. From this, it is immediate that $tr(g) = tr(rho_V (g)) + tr(rho_W (g)) = chi_V + chi_W$.
 ]
 
 #theorem[
@@ -266,14 +281,14 @@ angle.l chi_i, chi_j angle.r &= 1/(hash G) sum_(g in G) overline(chi_i (g)) chi_
 &= 1/(hash G) sum_(g in G) chi_(Hom(V_i, V_j)) (g) \ 
 &= dim_CC (Hom (V_i, V_j)^G) \ 
 &= cases(
-  dim_CC (CC) i =j\
-  dim_CC (0) i eq.not j
+  dim_CC (CC) & i =j\
+  dim_CC (0) & i eq.not j
 ) = delta_i^j.
 $
 ]
 
 #corollary[
-  $chi_1, dots, chi_t$ orthonormal vectors in $L^2 (G)$.
+  $chi_1, dots, chi_t$ are orthonormal vectors in $L^2 (G)$.
 ]
 
 #corollary[
@@ -306,18 +321,20 @@ $
   Define $
   V_"reg" &:=  CC[G] "with left mult."\ 
   &tilde.eq L^2 (G) "with" (g ast f)(x) := f(g^(-1) x),
-  $ the "regular representation" of $G$.
+  $ the "regular representation" of $G$. 
+  
+  Notice this is a $hash G$-dimensional vector space with basis elements ${g : g in G}$, with an additional multiplication structure (namely, $CC[G]$ a ring, which is generally noncommutative unless $G$ abelian). 
 ]
 
 #proposition[
-  $chi_"reg" (g) = cases(hash G & "if" g = id \ 0 "else" )$.
+  $chi_"reg" (g) = cases(hash G & "if" g = id, 0 & "else" )$.
 ]
 #proof[
   If $g = id$, then $g$ simply acts as the identity on $V_"reg"$ and so has trace equal to the dimension of $V_"reg"$, which has as basis just the elements of $G$ hence dimension equal to $hash G$. If $g eq.not id$, then $g$ cannot fix any basis vector, i.e. any other element $h in G$, since $g h = h <=> g = id$. Hence, $g$ permutes every element in $G$ with no fixed points, hence its matrix representation in the standard basis would have no 1s on the diagonal hence trace equal to zero.
 ]
 
 #theorem[
-  Every irreducible representation of $V$, $V_j$, appears in $V_"reg"$ at least once, specifically, with multiplicity $dim _CC (V_j)$. Specifically, $
+  Every irreducible representation of $V$, $V_j$, appears in $V_"reg"$ at least once, specifically, with multiplicity $dim _CC (V_j)$. Namely, $
   V_"reg" = V_1^(d_1) plus.circle dots.c plus.circle V_t^(d_t),
   $ where $d_j := dim_CC (V_j)$.
 
@@ -365,7 +382,7 @@ $
   $ where $d_j := dim(V_j)$; in short, then, $CC[G]$ completely determined, as a group-ring, by 
   - the number of conjugacy classes in $G$, $t$; and
   - the dimension of each irreducible representation, $d_1, dots, d_t$.
-  In particular, then, there may exist two non-isomorphic groups with isomorphic group rings.
+  In particular, then, there may exist two non-isomorphic groups with isomorphic group rings. Namely, if two groups of equal size have the same number of conjugacy classes and the same dimension of each irreducible representation, they will have isomorphic complex group rings.
 ]
 
 == Fourier Analysis on Finite Abelian Groups
@@ -1053,7 +1070,7 @@ $ hence $-1/2$ an eigenvalue with multiplicity 2.
 // ]
 
 #proposition[
-  Let $D_8$ be the dihedral group on $4$ elements and $Q$ the group of quaternions. Show that the group rings $CC[D_8]$ and $CC[Q]$ are isomorphic, but the groups rings $RR[D_8]$ and $RR[Q]$ are not.
+  Let $D_8$ be the dihedral group on $4$ elements and $Q$ the group of quaternions. Show that the group rings $CC[D_8]$ and $CC[Q]$ are isomorphic, but the group rings $RR[D_8]$ and $RR[Q]$ are not.
 ]
 
 #proof[
@@ -1142,7 +1159,7 @@ chi(alpha_C_1 alpha_C_2 alpha_C_3) &= tr(rho(alpha_C_1) rho(alpha_C_2) rho(alpha
 &= hash C_1 hash C_2 hash C_3 (chi(C_1) chi(C_2) chi(C_3))/(chi(1)^2).
 $ Hence, we find that $
 hash G dot N(C_1, C_2, C_3) &= chi_"reg" (alpha_C_1 alpha_C_2 alpha_C_3) \
-&= sum_(chi) chi(1) chi(alpha_C_1 alpha_C) \ 
+&= sum_(chi) chi(1) chi(alpha_C_1 alpha_C_2 alpha_C_3) \ 
 &=hash C_1 hash C_2 hash C_3 sum_(chi)  (chi(C_1) chi(C_2) chi(C_3))/(chi(1)),
 $ giving the answer upon dividing both sides by $hash G$.
 ]
@@ -1316,7 +1333,7 @@ The set of elements constructible by ruler and compass is an extension of $QQ$ o
 ]
 
 #remark[
-  Note that an automorphism is a bijection $E -> E$ which is a homomorphism of rings. In particular, any homomorphism $phi : E -> E$ is automatically injective, so if $[E : F] < infinity$, $phi$ injective $<=> phi$ surjective. Hence we need not specify this condition in the definition above.
+  Note that an automorphism is a bijection $E -> E$ which is a homomorphism of rings. In particular, any homomorphism $phi : E -> E$ is automatically injective, so if $[E : F] < infinity$, $phi$ injective $<=> phi$ surjective. This is because, assuming $phi(x) = 0$, then if $x eq.not 0$, $1 = phi(1) = phi(x)phi(x^(-1)) = 0$, which is impossible unless $0 = 1$, so $x = 0$. Hence, we need not specify this condition of bijectivity in the definition above.
 ]
 
 #corollary[
@@ -1814,7 +1831,7 @@ $ which is equal to $[E : K]$ by multiplicativity.
 ]
 
 #remark[
-  $E\/F$ separable is essential in this corollary. Consider $F = FF_p (u, v)$ where $u, v$ two indeterminates. Let $E = F(u^(1\/p), v^(1\/p))$. Then, $K_alpha = F(u^(1\/p) + alpha v^(1\/p))$ for $alpha in F$ are distinct subfields of $E$ containing $F$.
+  $E\/F$ separable is essential in this corollary. Consider $F = FF_p (u, v)$ the field of rational functions in $u, v$, two indeterminates. Let $E = F(u^(1\/p), v^(1\/p))$. Then, $K_alpha = F(u^(1\/p) + alpha v^(1\/p))$ for $alpha in F$ are distinct subfields of $E$ containing $F$. This extension not separable because $x^p - u = (x  - u^(1\/p))^p$ is irreducible over $F$ but has $u^(1\/p)$ as a $p$-fold repeated root.
 ]
 
 #theorem("Primitive Element Theorem")[
@@ -2001,7 +2018,7 @@ $ Namely, we say the Galois correspondance is "inclusion reversing".
 == Radical Extensions
 
 #definition("Radical Extension")[
-  An extension $E\/F$ is called a _radical extension_ if there exists an integer $n >= 1$ and element $a in F$ such that $E = F[root(n, a)]$. I.e., assuming $x^n - a$ irreducible in $F[x]$, then $E = F[x]\/(x^n - a)$.
+  An extension $E\/F$ is called a _radical extension_ if there exists an integer $n >= 1$ and element $a in F$ such that $E = F(root(n, a))$. I.e., assuming $x^n - a$ irreducible in $F[x]$, then $E = F[x]\/(x^n - a)$.
 ]
 
 #definition("Tower of Radicals")[
@@ -2136,6 +2153,24 @@ In particular, we have the following picture:
   H subset.eq ZZ\/m ZZ times  dots.c times ZZ\/m ZZ,
   $ so in particular $H$ abelian and $H triangle.l G := "Gal"(tilde(E)_n \/tilde(E)_(n-1))$, and so that $G\/H subset (ZZ\/m ZZ)^times$. Thus, we find that $G$ is solvable and normal in $"Gal"(tilde(E)_n\/F)$ and so $"Gal"(tilde(E)_n\/F)\/G$ is solvable thus $"Gal"(tilde(E)_n\/F)$ is solvable.
 
+#align(center, commutative-diagram(
+  node-padding: (35pt, 35pt),
+  node((-1,1), [$tilde(E)_n$ #text(size: 6pt, $= tilde(E)_(n-1) (b_1^(1\/m), dots, b_t^(1\/m))$)]),
+  node((1,0), [$E_n$ #text(size: 6pt, $= E_(n-1) (b^(1\/m))$)]),
+  node((2,0), $E_(n-1)$),
+  node((3,0), $F$),
+  node((1,1), $tilde(E)_(n-1)$),
+  node((0,2), $tilde(E)_(n-1)(zeta)$),
+  arr((3,0), (2,0), ""),
+  arr((3,0), (1,1), text(size: 6pt, "Galois + Solvable"), label-pos: right),
+  arr((3,0), (-1,1), "", curve: 65deg),
+  arr((2,0), (1,0), ""),
+  arr((1,0), (-1,1), ""),
+  arr((2,0), (1,1), ""),
+  arr((1,1), (-1,1), ""),
+  arr((1,1), (0,2), text(size: 6pt, $subset (ZZ\/m ZZ)^times$),label-pos: right),
+  arr((0,2), (-1,1), "")
+))
 ]
 
 #theorem("Main Theorem of Galois")[If $f(x) in F[x]$ is solvable by radicals, then $"Gal"(f)$ is a solvable group (where $"char"(F) = 0$).]<thm:galoismain>
@@ -2402,7 +2437,15 @@ The idea is to:
 ]
 
 #proof[
-  Denote by $E$ the splitting field of $f$ over $F$. Since $f(x)\/(x-r)$ remains irreducible in $F(r)$, $E$ is also the splitting field of $f(x)\/(x-r)$ over $F(r)$. Let $r_1 eq.not r_3, r_2 eq.not r_4$ be four roots of $f(x)$ in $E\/F$. Since $"Gal"(f(x)\/(x-r))$ acts transitively on the set of roots minus $r$ of $f$, pick $phi in "Gal"(f(x)\/(x-r))$ // TODO :(
+  Denote by $E$ the splitting field of $f$ over $F$. Let $r_1 eq.not r_3$ and $r_2 eq.not r_4$ be four roots of $f$ in $E$. Since $"Gal"(E\/F)$ acts transitively on the roots, let $phi$ such that $phi(r_1) = r_2$. We know then $phi(r_3)$ some other root of $f$, not equal to $r_2$ since $r_1 eq.not r_3$. Then, $f(x)\/(x - r_2)$ remains irreducible in $F(r_2)\/F$, hence $"Gal"(E\/F(r_2))$ acts transitively on the set of roots of $f$, minus $r_2$. So, let $psi$ in this group such that $psi(phi(r_3)) = r_4$. Then, $psi$ will fix $r_2$, thus $
+  psi compose phi (r_1) = psi(r_2) = r_2, wide psi compose phi (r_3) = r_4,
+  $ and $psi compose phi in "Gal"(E\/F)$, completing the proof of double transitivity.
+  // Then, since by assumption $f(x)/(x-r_2)$ remains irreducible in $F(r_2)$, $"Gal"(E\/F(r_2))$ acts transitively on the roots of $f$, setminus $r_2$. So, let $psi$ such that $psi(r_3) = r_4$. Then, $
+  // phi^(-1) compose psi compose phi (r_1) = phi^(-1) (psi(r_2)) = phi^(-1) r_2 = r_1
+  // $
+  
+  
+  // Since $f(x)\/(x-r)$ remains irreducible in $F(r)$, $E$ is also the splitting field of $f(x)\/(x-r)$ over $F(r)$. Let $r_1 eq.not r_3, r_2 eq.not r_4$ be four roots of $f(x)$ in $E\/F$. Since $"Gal"(f(x)\/(x-r))$ acts transitively on the set of roots minus $r$ of $f$, pick $phi in "Gal"(f(x)\/(x-r))$ // TODO :(
 ]
 
 #proposition[
@@ -2693,10 +2736,132 @@ $ where $a_n := cases(
   &= lambda_1 [i pi + 4 pi i\/3]\
   &= lambda_1 dot 7/3 pi i \
   &= 7\/9 dot pi i [zeta - zeta^(-1)]\
-  &= 7\/9 dot pi i dot i sqrt(3) = - (7sqrt(3))/9.
+  &= 7\/9 dot pi i dot i sqrt(3) = - (7sqrt(3))/9 pi.
   $ We used above that:
   - $- log(1 - x) = sum_(n=1)^infinity x^n/n$
   - $zeta = e^(2 pi i \/3) = 1/2 + (i sqrt(3))/2$.
 
   #text(fill: red, "I did this myself, I don't know if its fully correct. The logic is right at the very least.")
+]
+
+#proposition[
+Let $n > 1$ and $s in RR$ the (unique) positive real $n$-th root of $2$. Prove that ${a_0 + a_1 s + dots.c + a_(n-1) s^(n-1) : a_i in QQ}$ is a field, and find the inverse of $(1 + root(3, 2))$ as a linear combination of powers of $root(3, 2)$.
+]
+
+#proof[
+  This set can be viewed as $QQ(s) = QQ[x]\/(x^n - 2)$ so a field, since $x^n - 2$ irreducible over $QQ$ (how do you show this?).
+
+  Then, with $s = root(3, 2)$, $
+  1/(1 + s) = 1/(1 + s) dot (1 - s + s^2)/(1 - s+s^2) = 1/3 (1 - s + s^2).
+  $ Alternatively, $
+  1/(1 + s) &= sum_(k=0)^infinity (-s)^k \
+  &=underbrace( 1 - s + s^2, =: A_s) underbrace(- s^3 + s^4 - s^5,= - 2 A_s) + underbrace(s^6 - s^7 + s^8, = 4 A_s) + dots.c\
+  &= A_s sum_(k=0)^infinity (-2)^k = 1/3 A_s = 1/3 (1 - s + s^2).
+  $
+]
+
+#proposition[
+Let $f(x) in F[x]$ be an irreducible polynomial over a field $F$. If $E$ an extension of $F$ whose degree is relatively prime to the degree of $f(x)$, show that $f(x)$ remains irreducible in $E[x]$.
+]
+
+#proof[
+  Let $p$ an irreducible factor of $f$ in $E[x]$, say of degree $r$. Let $alpha$ a root of $p$. Let $F(alpha) = F[x]\/(f(x))$, and similarly consider $E(alpha)$. Then, $[E(alpha) : E] dot [E : F] = [E(alpha) : F(alpha)] dot [F(alpha) : F]$ so $r dot [E : F] = n dot [E(alpha) : F(alpha)]$. Then, $n | r dot [E : F]$, but $n$ relatively prime to $[E : F]$ so $n | r$, implying $p = f$ so $f$ remains irreducible in $E[x]$.
+]
+
+#proposition[
+  Let $f(x)$, $n >= 5$, over $F$ such that $"Gal"(f\/F) = S_n$, and let $r$ be a root of $f$ in its splitting field. Show that there are no proper subextensions of $F(r)\/F$.
+]
+
+#proof[
+  Let $E$ the splitting field of $f$ over $F$, and suppose $F subset K subset F(r)$. Since $[F(r) : F] = n$ and $[E : F] = n!$, we have in particular $"Gal"(E\/F(r)) = S_(n-1)$. Then, $"Gal"(E\/K)$ a subgroup of $S_(n)$ which contains $S_(n-1)$ as a subgroup, i.e. $S_(n-1) subset "Gal"(E\/K) subset S_n$. No such subgroup exists, as $S_(n-1)$ maximal in $S_n$.
+]
+
+#proposition[
+  Let $f(x)$ irreducible, sextic polynomial over $F$ with Galois group $S_6$. Show that the splitting field $E$ contains an element $alpha$ such that 
+  - $F(alpha)$ of degree $6$ over $F$;
+  - $F(alpha)$ is not isomorphic to $F[x]\/(f(x))$.
+]
+
+#proof[
+  Let $H subset S_6$ be the "exceptional" copy of $S_5$ in $S_6$ that doesn't arise from fixing an element. Let $K = E^(H)$. By the primitive element theorem, there is an $alpha in K$ such that $K = F(alpha)$. Then, $[F(alpha) : F] = [E : F]/[E : F(alpha)] = (6!)/(5!) = 6$. $F(alpha)$ not isomorphic to $F(x)\/(f(x))$ since this field isomorphic to $E^(H')$ where $H'$ a copy of $S_5$ in $S_6$ that fixes a root, and while $H' tilde.eq H$, they are not equal in $S_6$ so by the Galois correspondance these two fields aren't isomorphic.
+]
+
+#proposition[
+  Let $K = QQ(sqrt(d))$ a quadratic extension of $QQ$. Does there exist an extension $E\/QQ$ with $"Gal"(E\/QQ) = ZZ\/4 ZZ$ and $K subset E$?
+]
+
+#proof[
+  Let $E = K(sqrt(r + s sqrt(d)))$ for some $r, s$ tbd. The minimal polynomial of this square root over $K$ is $x^2 - r + s sqrt(d)$. Over $QQ$, though, we have $f(x) = (x^2 - (r + s sqrt(d)))(x^2 - (r - s sqrt(d))) = x^4 - 2 r x^2 + r^2 - s^2 d$. (Alternatively, $ ((x^2 - r)/s)^2 - d$ has the root satisfying it, then just monify it.) Then, $EE\/QQ$ is Galois if and only if $r - s sqrt(d)$ is a square in $E$ namely $alpha^2 = r - s sqrt(d) in E$. We claim that such an $alpha$ not in $K$. Indeed, if it were, then we could apply $tau in "Gal"(K\/QQ)$ such that $tau sqrt(d) = - sqrt(d)$ thus this would imply $r + s sqrt(d) = tau(alpha^2) = (tau alpha)^2$ namely $r + s sqrt(d)$ a square in $K$, which we took by definition to not be the case.
+
+  Next, we claim $alpha/sqrt(r + s sqrt(d)) in K$. We show this by showing this element fixed by $sigma in "Gal"(E\/K)$ where $sigma sqrt(r + s sqrt(d)) = - sqrt(r + s sqrt(d))$. Then, under this automorphism, $alpha |-> - alpha$, thus this ratio maps to $- alpha\/ (- sqrt(r + s sqrt(d))) = alpha\/sqrt(r + s sqrt(d))$ so it is indeed fixed thus in $K$.
+
+  Hence, $(r + s sqrt(d))/(r - s sqrt(d)) = beta^2$ for $beta in K$. Simplifying, we find $(r + s sqrt(d))(r - s sqrt(d))$ a square in $K$, equal to $r^2 - d s^2$. Hence, we must have that $r^2 - d s^2$ a square in $K^times$.
+
+  We consider then two cases:
+
+  1. $r^2 - d s^2 = t^2$ for $t in QQ^times$
+  2. $r^2 - d^2 = d t^2$ for $t in QQ^times$
+
+  We can write $E = QQ(sqrt(r + s sqrt(d)), - sqrt(r + s sqrt(d)), sqrt(r - s sqrt(d)), - sqrt(r - s sqrt(d))) =: QQ(r_1, dots, r_4)$.
+
+  Now, $
+  r_1 r_3 = cases(
+    t & "case 1",
+    sqrt(d) t & "case 2"
+  ), wide r_1 r_4 = - r_1 r_3 = cases(
+   - t & "case 1",
+    - sqrt(d) t & "case 2"
+  ).
+  $
+
+  We try to compute the respective automorphisms groups in each case.
+
+  _Case 1:_ If $phi(r_1) = r_2$, then $sqrt(d)$ is fixed thus $phi(r_2) = phi(r_1)$, so $phi(r_3) = r_4$ and $phi(r_4) = r_3$ (by the relation above). 
+
+  If $phi(r_1) = r_3$, then $phi(r_2) = r_4$ (since $r_2 = - r_1$) and $phi(r_3) = t/phi(r_1) = t/r_3 = r_1$ so $phi(r_4) = r_2$.
+
+  If $phi(r_1) = r_4$, then $phi(r_2) = r_3$ and $phi(r_3) = t/phi(r_1) = t/r_4 = - t/r_1 = - r_3 = r_2$. In short, every automorphism of order 2 so $"Gal"(E\/QQ) = ZZ\/2 ZZ times ZZ\/2 ZZ$.
+
+  _Case 2:_ Consider the case $phi(r_1) = r_3$. Then $phi(r_2) = r_4$ while $phi(r_3) = phi(sqrt(d) t)/phi(r_1) = -(sqrt(d) t)/r_3 = -r_1 = r_2$, using the fact that $phi(sqrt(d) t) = phi((r_1^2 - r)/s) = (r_3^2 - r)/s = - sqrt(d) t$. In particular, $phi$ is of order 4, so it must be that $"Gal"(E\/QQ) = ZZ\/4 ZZ$.
+
+  So, $QQ(sqrt(r + s sqrt(d)))$ is a Galois extension with cyclic Galois group iff $r^2 - s^2 d = d t^2$ for some $t in QQ^times$.
+]
+
+#remark[Practice final.]
+
+#proposition[]
+#proof[
+  (a) $QQ(root(3, 2))\/QQ$, (b) $FF_2 (t^(1\/2))\/FF_2 (t)$, (c) $FF_2 (t^(1\/6))\/FF_2(t)$
+]
+#proposition[]
+#proof[
+Done in class.
+]
+#proposition[]
+#proof[
+  Done in class.
+]
+#proposition[]
+#proof[
+Let $g(x) = (x - (r_1 r_2 + r_3 r_4)) (x - (r_1 r_3 + r_2 r_4)) (x - (r_1 r_4 + r_2 r_3))$, then $g(x) = x^3 - (s_1 + s_2 + s_3) x^2 + (s_1 s_2 + s_2 s_3 + s_1 s_3) x - s_1 s_2 s_3$ with the coefficients fixed by $S_4$ so $g in F[x]$ indeed.
+]
+#proposition[]
+#proof[
+This is a homework assignment; show that the operator is $G$-equivariant (using the fact that $f$ a class function), and conclude by Schur's that it is a scalar matrix. Find the scalar by taking traces of both sides.
+]
+#proposition[]
+#proof[
+  (a) There are two non-conjugate copies of $S_4$ in $G := "GL"_3 (FF_2)$, so take $X_1, X_2$ to be $G\/S_4$ for each copy of $S_4$ then $hash X_1 = 168/24 = 7$.
+
+  (b) Show that the characters are equal by computing the number of fixed points some $g$ has acting on $X_i$.
+
+  (c) Take $E^H$ for each copy $H$ of $S_4$. Then, since the copies aren't conjugate, the resulting fields won't be isomorphic.
+]
+#proposition[]
+#proof[
+(a) $a_0 eq.not 0$ ($=>$ derivative test, $impliedby$ if $a = 0$, $0$ a multiple root)
+
+(b) The set of roots is closed under addition, so fixing $n$ distinct roots $r_1, dots, r_n$, any other root of the form $a_1 r_1 + dots.c + a_n r_n$ which can be expressed "vectorally" as $(a_1, dots, a_n)$.
+
+(c) Since $f(x)\/x$ irreducible over $FF_p$, $FF_p (alpha) = FF_p [x]\/(f(x)\/x)$ a finite field extension of $FF_p$, where $alpha$ a root of $f(x)\/x$. Every finite extension of $FF_p$ of degree $m$ is Galois, with cyclic Galois group isomorphic to $ZZ\/m ZZ$, so in particular $FF_p (alpha)$ Galois and thus normal and separable over $FF_p$, and thus $f$ attains all its roots in $FF_p (alpha)$ since it attained one. Thus, $FF_p (alpha)$ the splitting field of $f$ and thus its Galois group is $ZZ\/p^(n - 1) ZZ$.
 ]
