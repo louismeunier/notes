@@ -2154,7 +2154,7 @@ In particular, we have the following picture:
   $ so in particular $H$ abelian and $H triangle.l G := "Gal"(tilde(E)_n \/tilde(E)_(n-1))$, and so that $G\/H subset (ZZ\/m ZZ)^times$. Thus, we find that $G$ is solvable and normal in $"Gal"(tilde(E)_n\/F)$ and so $"Gal"(tilde(E)_n\/F)\/G$ is solvable thus $"Gal"(tilde(E)_n\/F)$ is solvable.
 
 #align(center, commutative-diagram(
-  node-padding: (35pt, 35pt),
+  node-padding: (45pt,45pt),
   node((-1,1), [$tilde(E)_n$ #text(size: 6pt, $= tilde(E)_(n-1) (b_1^(1\/m), dots, b_t^(1\/m))$)]),
   node((1,0), [$E_n$ #text(size: 6pt, $= E_(n-1) (b^(1\/m))$)]),
   node((2,0), $E_(n-1)$),
@@ -2827,7 +2827,7 @@ Let $f(x) in F[x]$ be an irreducible polynomial over a field $F$. If $E$ an exte
   So, $QQ(sqrt(r + s sqrt(d)))$ is a Galois extension with cyclic Galois group iff $r^2 - s^2 d = d t^2$ for some $t in QQ^times$.
 ]
 
-#remark[Practice final.]
+#remark[The following are from #link("https://www.math.mcgill.ca/darmon/courses/algebra4/prac.pdf", "here.")]
 
 #proposition[]
 #proof[
@@ -2845,11 +2845,20 @@ Done in class.
 #proof[
 Let $g(x) = (x - (r_1 r_2 + r_3 r_4)) (x - (r_1 r_3 + r_2 r_4)) (x - (r_1 r_4 + r_2 r_3))$, then $g(x) = x^3 - (s_1 + s_2 + s_3) x^2 + (s_1 s_2 + s_2 s_3 + s_1 s_3) x - s_1 s_2 s_3$ with the coefficients fixed by $S_4$ so $g in F[x]$ indeed.
 ]
-#proposition[]
-#proof[
-This is a homework assignment; show that the operator is $G$-equivariant (using the fact that $f$ a class function), and conclude by Schur's that it is a scalar matrix. Find the scalar by taking traces of both sides.
+#proposition[
+// Let $G$ a finite group, 
 ]
-#proposition[]
+#proof[
+This was a homework assignment; show that the operator is $G$-equivariant (using the fact that $f$ a class function), and conclude by Schur's that it is a scalar matrix. Find the scalar by taking traces of both sides.
+]
+
+#proposition[
+// Let $G = "GL"_3 (FF_2)$.
+
+// (a) Construct two transitive $G$-sets $X_1, X_2$ of cardinality $7$.\
+// (b) Show that the linear permutation representations $CC[X_1], CC[X_2]$ are isomorphic as representations of $G$.\
+// (c) Let $E\/F$ a Galois extension with Galois group $G$. Show that $E$ contains two subextensions of $F$ of degree 7 over $F$ which are not isomorphic to each other.
+]
 #proof[
   (a) There are two non-conjugate copies of $S_4$ in $G := "GL"_3 (FF_2)$, so take $X_1, X_2$ to be $G\/S_4$ for each copy of $S_4$ then $hash X_1 = 168/24 = 7$.
 
@@ -2857,7 +2866,14 @@ This is a homework assignment; show that the operator is $G$-equivariant (using 
 
   (c) Take $E^H$ for each copy $H$ of $S_4$. Then, since the copies aren't conjugate, the resulting fields won't be isomorphic.
 ]
-#proposition[]
+#proposition[
+  // Let $F$ be a field of prime characteristic $p$. A polynomial in $F[x]$ is said to be _linear_ if it is of the form $
+  // f(x) = a_n x^(p^n) + a_(n-1) x^(p^(n-1)) + dots.c + a_1 x^p + a_0 x, wide a_i in F.
+  // $
+  // (a) Give a necessary and sufficient condition for $f$ to be separable.\
+  // (b) When $f(x)$ is separable, show that the Galois group is a subgroup of $"GL"_n (FF_p)$ where $FF_p$ the field of $p$ elements.\
+  // (c) Suppose that $F = FF_p$, and that $f(x)\/x$ is irreducible. What is the Galois group of $f$?
+]
 #proof[
 (a) $a_0 eq.not 0$ ($=>$ derivative test, $impliedby$ if $a = 0$, $0$ a multiple root)
 
