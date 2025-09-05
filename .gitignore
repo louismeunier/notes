@@ -233,3 +233,18 @@
 !*Statistics*Summary
 !*Statistics*Summary/*.pdf
 !*Statistics*Summary/*.typ
+
+# Advanced PDEs
+!*AdvancedPDEs
+!*AdvancedPDEs/*.pdf
+!*AdvancedPDEs/*.typ
+
+# Nonlinear Optimization
+!*Nonlinear*Optimization
+!*Nonlinear*Optimization/*.pdf
+!*Nonlinear*Optimization/*.typ
+
+# Numerical Analysis
+!*Numerical*Analysis
+!*Numerical*Analysis/*.pdf
+!*Numerical*Analysis/*.typ
