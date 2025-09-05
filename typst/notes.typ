@@ -1,5 +1,5 @@
 // ! setup
-#import "@preview/ctheorems:1.1.2": *
+#import "@preview/ctheorems:1.1.3": *
 #import "@preview/fontawesome:0.4.0": *
 // ! font sizes
 #let fontsizes = (
@@ -7,7 +7,7 @@
   section: 14pt,
   subsection: 12pt,
   large: 20pt,
-  small: 8pt
+  small: 8pt,
 )
 // ! colours
 #let solarized = (
@@ -21,7 +21,7 @@
   cyanlight: rgb("#d4ecea"),
   green: rgb("#859900"),
   base2: rgb("#eee8d5"),
-  gray: rgb("#f2f2f2")
+  gray: rgb("#f2f2f2"),
 )
 
 #let conf(
@@ -37,23 +37,23 @@
 ) = {
   v(4em)
   set align(left)
-  text(25pt, course_code, weight:"bold") + text(25pt, " - " + course_title)
-  text(12pt, "\n"+subtitle)
+  text(25pt, course_code, weight: "bold") + text(25pt, " - " + course_title)
+  text(12pt, "\n" + subtitle)
   // if cute != none {
   //   // set align(center)
   //  figure(
   //     image(cute, width: 100%)
-  //   ) 
+  //   )
   // }
   // set align(left)
   // fa-icon("cat")
-  text(12pt, "\n\nBased on lectures from "+ semester + " by " + professor + ".")
+  text(12pt, "\n\nBased on lectures from " + semester + " by " + professor + ".")
   text(12pt, "\nNotes by " + text(link("https://notes.louismeunier.net", author)))
 
   set par(
     first-line-indent: 1em,
     leading: 0.8em,
-    linebreaks: "simple"
+    linebreaks: "simple",
   )
   // text(font: "Font Awesome 6 Free Solid", "cat")
   // let count = authors.len()
@@ -79,15 +79,17 @@
 
   set page(
     margin: 1.5cm,
-    footer-descent: 60%
+    footer-descent: 60%,
   )
 
-  set text(
-    font: "TeXGyrePagellaX",
-    size: fontsizes.normal
-  )
-  show math.equation: set text(font: "TeX Gyre Pagella Math") 
-  show raw: set text(font: "TeX Gyre Pagella Math") 
+  // TODO update if want to
+
+  // set text(
+  //   font: "TeXGyrePagellaX",
+  //   size: fontsizes.normal,
+  // )
+  // show math.equation: set text(font: "TeX Gyre Pagella Math")
+  // show raw: set text(font: "TeX Gyre Pagella Math")
 
   show link: set text(fill: gray)
   show link: underline
@@ -99,40 +101,44 @@
   set heading(numbering: "1.1")
 
   show heading.where(
-    level: 1
-  ): it =>text(
+    level: 1,
+  ): it => text(
     size: fontsizes.section,
     weight: "bold",
     if (it.numbering != none) {
-      par(leading: 0em, first-line-indent: 0em, $section$ + counter(heading).display(it.numbering) + h(.5em) + smallcaps(it.body) +"\n")
+      par(
+        leading: 0em,
+        first-line-indent: 0em,
+        $section$ + counter(heading).display(it.numbering) + h(.5em) + smallcaps(it.body) + "\n",
+      )
     } else {
-      par(leading: 0em, first-line-indent: 0em, it.body + [.]+"\n")
-    }
+      par(leading: 0em, first-line-indent: 0em, it.body + [.] + "\n")
+    },
   )
-  
+
   show heading.where(
-    level: 2
+    level: 2,
   ): it => text(
     size: fontsizes.subsection,
     weight: "semibold",
     // style: "italic",
-    par(leading: 0em, first-line-indent: 0em, $section$ +counter(heading).display(it.numbering) + h(.5em) + it.body)
+    par(leading: 0em, first-line-indent: 0em, $section$ + counter(heading).display(it.numbering) + h(.5em) + it.body),
     // it.numbering + h(.5em) + it.body + [.],
   )
   show heading.where(
-    level: 3
+    level: 3,
   ): it => text(
     size: fontsizes.subsection,
     weight: "semibold",
     // style: "italic",
-    par(leading: 0em, first-line-indent: 0em, counter(heading).display(it.numbering) + h(.5em) + it.body)
+    par(leading: 0em, first-line-indent: 0em, counter(heading).display(it.numbering) + h(.5em) + it.body),
     // it.numbering + h(.5em) + it.body + [.],
   )
 
   // ! this is the footer
   set page(footer: context [
     #let elems = query(
-      selector(heading).before(here())
+      selector(heading).before(here()),
     )
     #let subsection = elems.last().body
     #let num = counter(heading).display(elems.last().numbering)
@@ -140,11 +146,12 @@
     #text(num, size: fontsizes.small)
     #text(subsection, size: fontsizes.small)
     #h(1fr)
-    #text(counter(page).display(
-      "1",
-      // both: true,
-    ),
-    size: fontsizes.small
+    #text(
+      counter(page).display(
+        "1",
+        // both: true,
+      ),
+      size: fontsizes.small,
     )
   ])
 
@@ -155,47 +162,47 @@
 // ! theorems
 #let thmsettings = (
   inset: (top: 0.6em, left: .5em, right: .5em, bottom: 0.82em),
-  base_level: 1
+  base_level: 1,
 )
 
 #let theorem = thmbox(
   "theorem", // identifier
-  text($arrow.hook$+"Theorem", fill:solarized.red), // head
+  text($arrow.hook$ + "Theorem", fill: solarized.red), // head
   fill: solarized.gray,
   inset: thmsettings.inset,
   // stroke: 1pt
   base_level: thmsettings.base_level,
-  supplement: "Thm."
+  supplement: "Thm.",
 )
 
 #let lemma = thmbox(
   "lemma", // identifier
-  text($arrow.hook$+"Lemma", fill:solarized.orange), // head
+  text($arrow.hook$ + "Lemma", fill: solarized.orange), // head
   fill: solarized.gray,
   inset: thmsettings.inset,
   base_level: thmsettings.base_level,
-  supplement: "Lem."
+  supplement: "Lem.",
 )
 
 #let proposition = thmbox(
   "proposition", // identifier
   // $arrow.hook$+" Proposition",
-  text($arrow.hook$ + "Proposition", fill:solarized.magenta), // head
+  text($arrow.hook$ + "Proposition", fill: solarized.magenta), // head
   fill: solarized.gray,
   inset: thmsettings.inset,
   base_level: thmsettings.base_level,
-  supplement: "Prop."
+  supplement: "Prop.",
   // stroke: 1pt
 )
 
 #let corollary = thmbox(
   "corollary",
   // $arrow.hook$+" Corollary",
-  text($arrow.hook$+"Corollary", fill:solarized.orange), // head
+  text($arrow.hook$ + "Corollary", fill: solarized.orange), // head
   fill: solarized.gray,
   inset: thmsettings.inset,
   base_level: thmsettings.base_level,
-  supplement: "Cor."
+  supplement: "Cor.",
 )
 
 #let definition = thmbox(
@@ -204,15 +211,15 @@
   text($arrow.hook$ + "Definition", fill: solarized.blue),
   fill: solarized.gray,
   inset: thmsettings.inset,
-  base_level: thmsettings.base_level
+  base_level: thmsettings.base_level,
 )
 
 #let example = thmbox(
   "example",
-  $ast.circle$+" Example",
+  $ast.circle$ + " Example",
   fill: solarized.cyanlight,
   inset: thmsettings.inset,
-  base_level: thmsettings.base_level
+  base_level: thmsettings.base_level,
 )
 
 #let remark = thmbox(
@@ -220,7 +227,7 @@
   "Remark",
   stroke: none,
   inset: (top: 0.4em, left: .5em, right: .5em, bottom: 0.6em),
-  base_level: 1
+  base_level: 1,
 )
 
 
@@ -232,14 +239,15 @@
   inset: thmsettings.inset,
 )
 
-#let proof = thmproof("proof", 
+#let proof = thmproof(
+  "proof",
   text(
     smallcaps("Proof"),
-    // highlight("Proof", fill: white, stroke: black, top-edge: "cap-height", extent: 3pt), 
-    style: "oblique", 
-    weight: "regular"
+    // highlight("Proof", fill: white, stroke: black, top-edge: "cap-height", extent: 3pt),
+    style: "oblique",
+    weight: "regular",
   ),
-  
+
   inset: (top: 0em, left: 2.8em, right: 1.4em),
   separator: [#h(0.1em). #h(0.2em)],
 )
