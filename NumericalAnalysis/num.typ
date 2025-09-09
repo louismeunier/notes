@@ -54,7 +54,7 @@ In general, the goal of interpolation is, given a function $f(x)$ on $[a, b]$ an
 ]
 
 
-We switch notation for convention's sake to $n + 1$ points $x_j$. Our goal is the optimization problem $ min_(x_j) max_(x in [a, b]) abs(product_(j) (x - x_j)), $ the only term in the error bound above that we have control over. Remark that we can expand the product term: $ product_(j) (x - x_j) = x^n - r(x), $ where $r(x) in PP_(n)$. So, really, we equivalently want to solve the problem $ min_(r in PP_(n)) norm(x^(n + 1) - r(x))_infinity, $ namely, what $n$-degree polynomial minimizes the max difference between $x^(n + 1)$?
+We switch notation for convention's sake to $n + 1$ points $x_j$. Our goal is the optimization problem $ min_(x_j) max_(x in [a, b]) abs(product_(j) (x - x_j)), $ the only term in the error bound above that we have control over. Remark that we can expand the product term: $ product_(j) (x - x_j) = x^(n+1) - r(x), $ where $r(x) in PP_(n)$. So, really, we equivalently want to solve the problem $ min_(r in PP_(n)) norm(x^(n + 1) - r(x))_infinity, $ namely, what $n$-degree polynomial minimizes the max difference between $x^(n + 1)$?
 
 
 #theorem("De la Vallé-Poussin Oscillation Theorem")[
@@ -62,6 +62,31 @@ We switch notation for convention's sake to $n + 1$ points $x_j$. Our goal is th
 
 ]
 
+#definition("Chebyshev Polynomial")[
+  The _degree $n$ Chebyshev polynomial_, defined on $[-1, 1]$, is defined by $ T_n (x) := cos(n cos^(-1) (x)). $
+]
 
+#remark[The fact that $T_n$ actually is a polynomial follows from the double angle formula for $cos$, which says $ cos((n + 1) theta) = 2 cos(theta) cos(n theta) - cos((n - 1) theta). $ In the context of $T_n$, this implies that for any $n >= 1$, the recursive formula $ T_(n + 1) (x) = 2 x T_n (x) - T_(n - 1) (x). $ This formula with a simple induction argument proves that each $T_n$ a polynomial, with for instance $T_0 (x) = 1, T_1 (x) = x, T_2 (x) = 2x^2 - 1$ and so on.]
 
+#proposition[
+  ${T_n}$ are orthogonal with respect to the inner product given by $ (f, g) := integral_(-1)^1 f(x) g(x) omega_2 (x) dif x, $ where $omega_2 (x) := (1 - x^2)^(1\/2)$.
+]
 
+#remark[
+  Defining similar _weight_ functions by $omega_n (x) := (1 - x^n)^(1\/n)$, one can derive a more general class of polynomials called _Geigenbauer polynomials_, which are respectively orthogonal with respect to $integral dot dot omega_n$.
+]
+
+#proposition([Some Properties of $T_n$])[
+  - $abs(T_n (x)) <= 1$ on $[-1, 1]$
+  - The roots of $T_n (x)$ are the $n$ points $ xi_j := cos(((2 j - 1) pi)/(2n)), wide j = 1, dots, n. $
+  - For $n >= 1$, $abs(T_n (x))$ is maximal on $[-1, 1]$ at the $n + 1$ points $ eta_j := cos((j pi)/n), wide j = 0, dots, n, $ with $T_n (eta_j) = (-1)^j$.
+]
+
+Note too that $T_(n + 1) (x)$ has leading coefficient $2^(n)$, which can be seen by the recursive formula above; define the _normalized_ Chebyshev polynomials by $hat(T)_(n+1) (x) := 2^(-n) T_(n + 1) (x)$. Thus, we may write $ hat(T)_(n + 1) (x) = x^(n + 1) - r_n (x), $ with $r_n (x) in PP_n$. It follows for one that $ max_(x in [-1, 1]) |x^(n + 1) - r_n (x)| = 2^(-n). $ Moreover, we know that at the $n + 2$ points $eta_j$, we have $ hat(T)_(n + 1) (eta_j) = 2^(-j) (-1)^j = eta_j^(n + 1) - r_n (eta_j). $ Namely, because of the inclusion of $(-1)^j$ term, this means that $hat(T)_(n + 1) (x)$ oscillates sign between the $eta_j$ points, which fulfils the condition stated in the Oscillation Theorem. Thus, these observations readily imply the following result, settling our original question on optimizing locations of interpolation points for Lagrange interpolation:
+#theorem([Optimal Approximation of $x^(n + 1)$ in $PP_n$])[
+  The optimal approximation of $x^(n + 1)$ in $PP_n$ on $[-1, 1]$ with respect to the $L^infinity$ norm is given by $ r_n (x) := x^(n + 1) - 2^(-n) T_(n + 1) (x). $ Thus, the optimal Lagrange interpolation points are the $n + 1$ roots of $x^(n + 1) - r_n (x)$, namely $xi_j = cos(((2j + 1) pi)/(2n + 2))$ for $j = 0, dots, n$.
+]
+
+#remark[
+  This, and previous results, were stated over $[-1, 1]$. A linear change of coordinates transforming any closed interval to $[-1, 1]$ readily leads to analgous results.
+]

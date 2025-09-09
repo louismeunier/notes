@@ -84,12 +84,12 @@
 
   // TODO update if want to
 
-  // set text(
-  //   font: "TeXGyrePagellaX",
-  //   size: fontsizes.normal,
-  // )
-  // show math.equation: set text(font: "TeX Gyre Pagella Math")
-  // show raw: set text(font: "TeX Gyre Pagella Math")
+  set text(
+    font: "TeX Gyre Pagella",
+    size: fontsizes.normal,
+  )
+  show math.equation: set text(font: "TeX Gyre Pagella Math")
+  show raw: set text(font: "TeX Gyre Pagella Math")
 
   show link: set text(fill: gray)
   show link: underline
@@ -163,6 +163,7 @@
 #let thmsettings = (
   inset: (top: 0.6em, left: .5em, right: .5em, bottom: 0.82em),
   base_level: 1,
+  padding: (top: 0pt, bottom: -4pt),
 )
 
 #let theorem = thmbox(
@@ -173,6 +174,7 @@
   // stroke: 1pt
   base_level: thmsettings.base_level,
   supplement: "Thm.",
+  padding: thmsettings.padding,
 )
 
 #let lemma = thmbox(
@@ -182,6 +184,7 @@
   inset: thmsettings.inset,
   base_level: thmsettings.base_level,
   supplement: "Lem.",
+  padding: thmsettings.padding,
 )
 
 #let proposition = thmbox(
@@ -192,6 +195,7 @@
   inset: thmsettings.inset,
   base_level: thmsettings.base_level,
   supplement: "Prop.",
+  padding: thmsettings.padding,
   // stroke: 1pt
 )
 
@@ -202,6 +206,7 @@
   fill: solarized.gray,
   inset: thmsettings.inset,
   base_level: thmsettings.base_level,
+  padding: thmsettings.padding,
   supplement: "Cor.",
 )
 
@@ -212,6 +217,7 @@
   fill: solarized.gray,
   inset: thmsettings.inset,
   base_level: thmsettings.base_level,
+  padding: thmsettings.padding,
 )
 
 #let example = thmbox(
@@ -219,6 +225,7 @@
   $ast.circle$ + " Example",
   fill: solarized.cyanlight,
   inset: thmsettings.inset,
+  padding: thmsettings.padding,
   base_level: thmsettings.base_level,
 )
 
@@ -228,6 +235,7 @@
   stroke: none,
   inset: (top: 0.4em, left: .5em, right: .5em, bottom: 0.6em),
   base_level: 1,
+  padding: thmsettings.padding,
 )
 
 
@@ -243,6 +251,19 @@
   "proof",
   text(
     smallcaps("Proof"),
+    // highlight("Proof", fill: white, stroke: black, top-edge: "cap-height", extent: 3pt),
+    style: "oblique",
+    weight: "regular",
+  ),
+
+  inset: (top: 0em, left: 2.8em, right: 1.4em),
+  separator: [#h(0.1em). #h(0.2em)],
+)
+
+#let solution = thmproof(
+  "solution",
+  text(
+    smallcaps("Solution"),
     // highlight("Proof", fill: white, stroke: black, top-edge: "cap-height", extent: 3pt),
     style: "oblique",
     weight: "regular",

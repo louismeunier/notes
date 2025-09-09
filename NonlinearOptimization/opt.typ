@@ -212,3 +212,56 @@ Let $f : RR^n -> RR$ be $C^2$ and $overline(x) in RR^n$. By Taylor's, we can app
   1. $f$ convex $<=>$ $A >= 0$;
   2. $f$ strongly convex $<=>$ $A > 0$.
 ]
+
+#theorem("Convex Optimization")[
+  Let $f : RR^n -> RR$ be convex and continuous, $X subset RR^n$ convex (and nonempty), and consider the optimization problem $ min f(x) "s.t." x in X wide (star). $
+  Then, the following hold:
+  1. $overline(x)$ is a global minimizer of $(star)$ $<=>$ $overline(x)$ is a local minimizer of $(star)$
+  2. $"argmin"_X f$ is convex (possibly empty)
+  3. $f$ is strictly convex $=> "argmin"_X f$ has at _most_ one element
+  4. $f$ is strongly convex and differentiable, and $X$ closed, $=>$ $"argmin"_X f$ has _exactly_ one element
+]
+
+#proof[
+  (1., $=>$) Trivial. (1., $impliedby$) Let $overline(x)$ be a local minimizer of $f$ over $X$, and suppose towards a contradiction that there exists some $hat(x) in X$ such that $f(hat(x)) < f(overline(x))$. By convexity of $f, X$, we know for $lambda in (0, 1)$, $lambda overline(x) + (1 - lambda) hat(x) in X$ and $ f(lambda overline(x) + (1 - lambda) hat(x)) <= lambda f(overline(x)) + (1 - lambda) f(hat(x)) < f(overline(x)). $ Letting $lambda -> 1^-$, we see that $lambda overline(x) + (1 - lambda) hat(x) -> overline(x)$; in particular, for any neighborhood of $overline(x)$ we can construct a point which strictly lower bounds $f(overline(x))$, which contradicts the assumption that $overline(x)$ a local minimizer.
+
+  (2.) and (3.) are left as an exercise.
+
+  (4.) We know that $f$ is strictly convex and level-bounded. By (3.) we know there is at most one minimizer, so we just need to show there exists one. Take $c in RR$ such that $"lev"_c (f) inter X eq.not nothing$ (which certainly exists by taking, say, $f(x)$ for some $x in X$). Then, notice that $(star)$ and $ min_(x in "lev"_c f inter X) f(x) wide (star star) $ have the same solutions i.e. the same set of global minimizers (noting that this remains a convex problem). Since $f$ continuous and $"lev"_c f inter X$ compact and nonempty, $f$ attains a minimum on $"lev"_c f inter X$, as we needed to show.
+]
+
+#remark[
+  Note that level sets of convex functions are convex, this is left as an exercise.
+]
+
+== Matrix Norms
+
+We denote by $RR^(m times n)$ the space of real-valued $m times n$ matrices (i.e. of linear operators from $RR^n -> RR^m$).
+
+#proposition("Operator Norms")[
+  Let $norm(dot)_ast$ be a norm on $RR^m$ and $RR^n$, resp. Then, the map $ RR^(m times n) in.rev A |-> norm(A)_ast := sup_(x in RR^n, \ norm(x)_ast eq.not 0) norm(A x)_(ast)/(norm(x)_ast) in RR $ is a norm on $R^(m times n)$. In addition, $ norm(A)_ast = sup_(norm(x)_ast = 1) norm(A x)_ast = sup_(norm(x)_ast <= 1) norm(A x)_ast. $
+]
+
+#proof[
+  We first note that all of these $sup$'s are truely $max$'s since they are maximizing continuous functions over compact sets.
+
+  Let $A in RR^(m times n)$. The first "In addition" equality follows from positive homogeneity, since $x/(norm(x)_ast)$ a unit vector. For the second, note that "$<=$" is trivial, since we are supping over a larger (super)set. For "$>=$", we have for any $x$ with $norm(x)_ast <=1$, $ norm(A x)_ast = norm(x)_(ast) norm(A x/(norm(x)_ast))_ast <= norm(A x/(norm(x)_ast)). $ Supping both sides over all such $x$ gives the result.
+
+  We now check that $norm(dot)_ast$ actually a norm on $RR^(m times n)$.
+  1. $norm(A)_ast = 0 <=> sup_(norm(x)_ast = 1) norm(A x)_ast = 0 <=> norm(A x)_ast = 0 forall norm(x)_ast = 1 <=> A x = 0 forall norm(x)_ast = 1 <=> A = 0$
+  2. For $lambda in RR, A in RR^(m times n)$, $norm(lambda A)_ast = sup norm(lambda A x)_ast = |lambda| dot sup norm(A x)_ast = |lambda| norm(A)_ast$
+  3. For $A, B in RR^(m times n)$, $norm(A + B)_ast <= norm(A)_ast + norm(B)_ast$ using properties of sups of sums
+]
+
+#proposition[
+  Let $A = (a_(i j))_(i=1, dots, m\ j = 1, dots, n) in RR^(m times n)$, then:
+  1. $norm(A)_1 = max_(j=1)^n sum_(i=1)^m abs(a_(i j))$
+  2. $norm(A)_2 = sqrt(lambda_(max) (A^T A)) = sigma_max (A)$
+  3. $norm(A)_infinity = max_(i=1)^m sum_(i=1)^n |a_(i j)|$
+]
+
+#proposition[
+  Let $norm(dot)_ast$ be a norm on $RR^n, RR^m$, and $RR^p$. For $A in RR^(m times n)$ and $B in RR^(n times p)$,
+  1. $norm(A x)_ast <= norm(A)_ast dot norm(x)_ast$
+  2. $norm(A B)_ast <= norm(A)_ast dot norm(B)_ast$
+]

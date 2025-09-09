@@ -86,4 +86,8 @@ In terms of initial conditions, if $u$ is specified on some hypersurface $S$, we
 
 #example("Geodesics")[
   For an invertible matrix $g = (g^(i j))$, solve $ sum_(i j) g^(i j) (partial u)/(partial x_i) (partial u)/(partial x_j) = 0. $
+]<ex:geo>
+
+#solution([(To @ex:geo)])[
+
 ]
