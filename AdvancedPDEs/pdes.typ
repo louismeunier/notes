@@ -145,6 +145,58 @@ We can do even better:
   The problem (1) is equivalent to one in the same form as the previous lemma, but with $A_j$ and $B$ independent of $t$ (and $Y$ now of 1 higher dimension).
 ]
 
+This last one is easy; we just introduce an additional component to $Y$ such that $partial_t Y = 1$, and subtract the initial conditions from our original $B$.
+
+We recall/state several facts on $C^omega$ functions of multiple variables we'll need.
+
+#proposition("i")[
+  We say $f in C^omega$ near $x_0$ if there exists a cube $Omega := {x in RR^n : |x_j - x_j^0| < r, 1 <= j <= n}$, $r > 0$, such that the series $ sum_(alpha) 1/(alpha!) (partial^alpha f)(x_0) (x - x_0)^alpha $ converges to $f(x)$ for all $x in Omega$.
+
+  On compact subsets of $Omega$, convergence is absolute and uniform; in particular, we can differentiate the summation term-by-term.
+]
+
+#proposition("ii")[
+  Let $f(x) = sum a_alpha (x - x_0)^alpha$ converge near $x_0$, and suppose $x$ a $C^omega$ function of $xi$, i.e. $x = sum b_beta (xi - xi_0)^beta$, $x(xi_0) = x_0$. Then, $F(xi) := f(x(xi))$ will be analytic near $xi_0$, and moreover, the power series for $F$ is obtained by substitution, and can be written $ F(xi) = sum_(gamma) c_gamma (xi - xi_0)^gamma, $ where the coefficients $c_gamma = c_gamma (a_alpha, b_beta)$ are polynomials in $a_alpha, b_beta$, with non-negative coefficients.
+]
+
+#proposition("iii")[
+  Given $M > 0, r > 0$, the function $ f(x) := (M r)/(r - (x_1 + dots + x_n)) $ is analytic on the rectangle ${x | max_j |x_j| < r/n}$, and moreover $ f(x) = M sum_(k=0)^infinity (x_1 + dots.c + x_n)^k/(r^k) = M sum_(alpha) (|alpha|! x^alpha)/(alpha! r^(|alpha|)). $
+]
+
+#remark[This is just a geometric series, with the second equality just a rewriting using the multinomial theorem.]
+
+#proposition("iv")[
+  We say that $A := sum a_alpha (x - x_0)^alpha$ _majorizes_ $B := sum b_alpha (x - x_0)^alpha$ if $a_alpha > |b_alpha|$ for all $alpha$. In this case, if $A$ converges absolutely at some $x$, then so does $B$.
+]
+
+#remark[
+  This is just the comparison test in several variables.
+]
+
+#proposition("v")[
+  Suppose $sum_alpha a_alpha x^alpha$ converges in some rectangle ${x | max_j |x_j| < R}$. Then, there exists a geometric series, as in (iii), that majorizes $sum_alpha a_alpha x^alpha$.
+]
+
+#proof[
+  Let $0 < r < R$ fixed. Then, $sum a_alpha r^(|alpha|)$ converges, and thus there exists $M > 0$ such that $|a_alpha r^(|alpha|)| <= M$ for all $alpha$. Rearranging, this implies $ |a_alpha| <= M/(r^(|alpha|)) <= (M |alpha|!)/(r^(|alpha|) alpha!), $ where we used the fact that $|alpha|! >= alpha!$.
+]
+
+We return to the proof of Cauchy-Kovaleskaya. Using our lemmas, we are reduced to solving the system $ (1) wide partial_t y_m = sum_(i=1)^(n - 1) sum_(ell=1)^N a^i_(m, ell) (x, Y) partial_i y_ell + b_m (x, Y), wide 1 <= m <= N, \
+Y(x, 0) = 0. $
+
+In particular, we will construct a power series for each $y_m$ component, and prove that it converges. Namely, we write $ y_m = sum_(alpha, j) c_m^(alpha j) x^alpha t^j. $ Substituting this form into (1), the right-hand side becomes $ sum_(i, j, alpha) P_m^(alpha j) ((c_k^(beta k))_(k <= j), "coeff. of" A_i, B) x^alpha t^j, $ where $P_m^(alpha j)$ are polynomials with nonnegative coefficients, as in (ii). The left-hand side becomes $ sum_(alpha, j) (j + 1) c_m^(alpha, j + 1) x^alpha t^j. $ Matching coefficients, this gives the recursive formula $ c_(m)^(alpha j + 1) = 1/(j + 1) P_(m)^(alpha j) ((c_k^(beta k))_(k <= j), "coeff. of" A_i, B). $ This can be solved explicitly, giving $ c_m^(alpha j) = Q_m^(alpha j) ("coeff. of" A_i, B), $ where $Q_m^(alpha j)$ a polynomial with nonnegative coefficients.
+
+This defines, assuming convergence, the power series of each $y_m$. The key-step to proving convergence is the following; we construct another Cauchy problem $ (1') wide partial_t tilde(Y) = sum_(j=1)^(n - 1) tilde(A)_j (x, tilde(Y)) partial_j tilde(Y) + tilde(B)(x, tilde(Y)),\
+tilde(Y)(x, 0) = 0, $ with $tilde(A)_j, tilde(B)$ chosen such that \
+$tilde(("i"))$: $(1')$ has a $C^omega$ solution near $(x, t) = (0, 0)$;\
+$tilde(("ii"))$: the Taylor series of $tilde(A)_i$, $tilde(B)$ majorize those of $A_i, B$ respectively.
+
+Assuming we can do this we'll be done. We claim that a solution to $(1')$ will majorize our constructed solution to $(1)$, which would imply our desired result (namely, that this solution converges). Indeed, we have that since each $Q_(m)^(alpha j)$ has nonnegative coefficients, $ |c_m^(alpha j)| = |Q_m^(alpha j) ("coeff." A_i, B)| <= Q_m^(alpha j) ("coeff." tilde(A)_i, tilde(B))= tilde(c)_m^(alpha j), $ and thus $sum tilde(c)_m^(alpha j) x^alpha t^j$ majorizes $sum c_m^(alpha j) x^(alpha) t^alpha$, and thus the former converges near the origin.
+
+We proceed then to construction $tilde(A)_j, tilde(B)$ for $(1')$ and its conditions to hold. By (v) above, there exists $M > 0$ and $r > 0$ such that the series for each $A_i$ and $B$ are majorized by the (geometric) series for $ (M r)/(r - (x_1 + dots.c + x_(n - 1) - (y_1 + dots.c + y_N))). $ Thus, chosen in this way, consider our candidate $(1')$ as $ partial_t y_m = (M r)/(r - sum_(i=1)^(n - 1) x_i - sum_(j=1)^N y_j) (sum_(i=1)^(n - 1) sum_(j=1)^N partial_i y_(j) + 1), wide y_m (x, 0) = 0, $ for each $1 <= m <= N$, noting that by choice of $M, r$, $tilde("(ii)")$is satisfied, so we just need to show that this has a $C^omega$ solution.
+
+Remark that this system is completely symmetric under permutation of the $x_j, y_m$ variables, and thus if we find a solution $u = u(s, t)$ to the system $ (1'') wide partial_t u = (M r)/(r - s - N u) (N (n - 1) partial_(s) u + 1 ), wide u(s, 0) = 0, $ where $(s, t) in RR^2$, then setting $ y_j = u(x_1 + dots.c + x_n, t), wide j = 1, dots, N, $ gives a solution to $(1')$. But $(1'')$ is just a quasilinear system, in $RR^2$, which we know how to handle. Indeed, it has characteristic equations (using $tau$ as our "characteristic" parameter) $ (dif t)/(dif tau) = n - s - N u, wide (dif s)/(dif tau) = - M r (N - 1), wide (dif u)/(dif tau) = M r\
+t(0) = 0, s(0) = sigma, u(0) = 0, $ using $sigma$ as our parametrization variable along $tau = 0$. Solving this system, one readily finds $ t(tau) = 1/2 M r N (n - 2) tau^2 + alpha tau, wide s(tau) = -M r (N - 1) tau + sigma, wide u(tau) = M r tau, $ where $alpha$ an arbitrary constant. Inverting these to solve for $tau(s, t), sigma(s, t)$ and plugging into $u$ (indeed, $u$ only depends on $tau$ so it suffices to solve for this parameter), readily yields $ u(s, t) = (r - s - sqrt((r - s)^2 - 2 M r N t))/(M n). $ This is analytic in $(s, t)$ near the origin (indeed, we can avoid any blow-ups in the higher derivatives of $sqrt(dots)$), and thus $u in C^(omega)$. "Changing variables" to $u(x_1 + dots + x_n, t)$ will not change this analyticity, and so we have finished our proof. #h(1fr) $square.filled$
 
 
 

@@ -4,6 +4,10 @@
 
 #import "@preview/cetz:0.2.2"
 
+#import "@preview/algorithmic:1.0.5"
+#import algorithmic: algorithm-figure, style-algorithm
+#show: style-algorithm
+
 // ! configuration
 #show: doc => conf(
   course_code: "MATH378",
