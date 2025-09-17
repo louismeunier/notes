@@ -105,7 +105,7 @@ Remark that if $u$ were a $C^r$ solution for $r >= k$, we can compute $ partial_
 
 #example[
   1. $partial_x partial_t u = 0$, $u(x, 0) = phi_0 (x)$, $partial_t u(x, 0) = phi_1 (x)$ does not have unique solutions, and in fact the initial conditions dictate that $phi_1$ must be constant (which is already problematical). Moreover, $u(x, t) := phi_0 (x) + f(t)$, with $f$ any $C^1$ function with $f(0) = phi_1$, is a valid solution.
-  2. $partial_x^2 u - partial_t u = 0$ dictates that $phi_0'' (x) = phi_1 (x)$, so we can't choose arbitrary initial conditions again.
+  2. $partial_x^2 u - partial_t u = 0$ dictates that $phi_0 '' (x) = phi_1 (x)$, so we can't choose arbitrary initial conditions again.
 ]
 
 We enforce then this condition in the following:
@@ -139,6 +139,7 @@ First, we can rewrite $(1)$ a couple of times:
   ), $
   where $Y$ a vector $(y_(alpha j))_(|alpha| + j <= k)$, $A_j (x, t, Y)$ matrix-valued, $B(t, x, Y)$ vector valued, $partial_j equiv partial_(x_j)$, and $Phi$ determined by $phi_j$.
 ]
+The proof is notationally difficult, but not conceptually; one need just to show that if $y_00$ the first (lexicographically) component of a solution $Y$ to this system, then $y_00$ satisfies the original PDE.
 
 We can do even better:
 #lemma[
@@ -146,6 +147,13 @@ We can do even better:
 ]
 
 This last one is easy; we just introduce an additional component to $Y$ such that $partial_t Y = 1$, and subtract the initial conditions from our original $B$.
+
+#example("Transforming a PDE into \"Cauchy form\" ")[
+  Consider the special case of a PDE $ u_(t t) = f(u_(x x), u_(x t)), \
+  u(x, 0) = phi_0 (x), wide u_t (x, 0) = phi_1 (x), $ where we assume $f, phi_0, phi_1 in C^infinity$ for convenience of notation. In the notation of the previous two lemmas, we have $ Y = (y_00, y_10, y_01, y_20, y_11, y_02). $ Computing the partials of each of these entries: $ partial_t y_00 = \"partial_t u\" = y_01, wide partial_t y_10 = y_11, wide partial_t y_01 = y_02, \
+  partial_t y_20 = \"y_21\" = partial_x y_11, wide partial_t y_11 = partial_x y_02, wide partial_t y_02 = f_1 partial_x y_11 + f_2 partial_x y_02, $ noting that in the second line, we used the assumed smoothness of the solutions to interchange the order of the derivatives, and for the last partial, we directly used the statement of the PDE. The initial conditions follow similarly, $ y_00 (x, 0) = phi_0 (x), wide y_10 (x, 0) = phi'_0 (x), wide y_01 (x, 0) = phi_1 (x) \
+  y_20 (x, 0) = phi''_0 (x), wide y_11 (x, 0) = phi'_1 (x), wide y_02 (x, 0) = f(phi''_1 (x), phi'_1 (x)), $ where we again use the PDE directly to compute the final initial condition.
+]
 
 We recall/state several facts on $C^omega$ functions of multiple variables we'll need.
 
@@ -191,12 +199,67 @@ tilde(Y)(x, 0) = 0, $ with $tilde(A)_j, tilde(B)$ chosen such that \
 $tilde(("i"))$: $(1')$ has a $C^omega$ solution near $(x, t) = (0, 0)$;\
 $tilde(("ii"))$: the Taylor series of $tilde(A)_i$, $tilde(B)$ majorize those of $A_i, B$ respectively.
 
-Assuming we can do this we'll be done. We claim that a solution to $(1')$ will majorize our constructed solution to $(1)$, which would imply our desired result (namely, that this solution converges). Indeed, we have that since each $Q_(m)^(alpha j)$ has nonnegative coefficients, $ |c_m^(alpha j)| = |Q_m^(alpha j) ("coeff." A_i, B)| <= Q_m^(alpha j) ("coeff." tilde(A)_i, tilde(B))= tilde(c)_m^(alpha j), $ and thus $sum tilde(c)_m^(alpha j) x^alpha t^j$ majorizes $sum c_m^(alpha j) x^(alpha) t^alpha$, and thus the former converges near the origin.
+Assuming we can do this we'll be done. We claim that a solution to $(1')$ will majorize our constructed solution to $(1)$, which would imply our desired result (namely, that this solution converges). Indeed, we have that since each $Q_(m)^(alpha j)$ has nonnegative coefficients, $ |c_m^(alpha j)| = |Q_m^(alpha j) ("coeff." A_i, B)| <= Q_m^(alpha j) ("coeff." tilde(A)_i, tilde(B))= tilde(c)_m^(alpha j), $ and thus $sum tilde(c)_m^(alpha j) x^alpha t^j$ majorizes $sum c_m^(alpha j) x^(alpha) t^alpha$, and thus the latter converges near the origin.
 
 We proceed then to construction $tilde(A)_j, tilde(B)$ for $(1')$ and its conditions to hold. By (v) above, there exists $M > 0$ and $r > 0$ such that the series for each $A_i$ and $B$ are majorized by the (geometric) series for $ (M r)/(r - (x_1 + dots.c + x_(n - 1) - (y_1 + dots.c + y_N))). $ Thus, chosen in this way, consider our candidate $(1')$ as $ partial_t y_m = (M r)/(r - sum_(i=1)^(n - 1) x_i - sum_(j=1)^N y_j) (sum_(i=1)^(n - 1) sum_(j=1)^N partial_i y_(j) + 1), wide y_m (x, 0) = 0, $ for each $1 <= m <= N$, noting that by choice of $M, r$, $tilde("(ii)")$is satisfied, so we just need to show that this has a $C^omega$ solution.
 
 Remark that this system is completely symmetric under permutation of the $x_j, y_m$ variables, and thus if we find a solution $u = u(s, t)$ to the system $ (1'') wide partial_t u = (M r)/(r - s - N u) (N (n - 1) partial_(s) u + 1 ), wide u(s, 0) = 0, $ where $(s, t) in RR^2$, then setting $ y_j = u(x_1 + dots.c + x_n, t), wide j = 1, dots, N, $ gives a solution to $(1')$. But $(1'')$ is just a quasilinear system, in $RR^2$, which we know how to handle. Indeed, it has characteristic equations (using $tau$ as our "characteristic" parameter) $ (dif t)/(dif tau) = n - s - N u, wide (dif s)/(dif tau) = - M r (N - 1), wide (dif u)/(dif tau) = M r\
 t(0) = 0, s(0) = sigma, u(0) = 0, $ using $sigma$ as our parametrization variable along $tau = 0$. Solving this system, one readily finds $ t(tau) = 1/2 M r N (n - 2) tau^2 + alpha tau, wide s(tau) = -M r (N - 1) tau + sigma, wide u(tau) = M r tau, $ where $alpha$ an arbitrary constant. Inverting these to solve for $tau(s, t), sigma(s, t)$ and plugging into $u$ (indeed, $u$ only depends on $tau$ so it suffices to solve for this parameter), readily yields $ u(s, t) = (r - s - sqrt((r - s)^2 - 2 M r N t))/(M n). $ This is analytic in $(s, t)$ near the origin (indeed, we can avoid any blow-ups in the higher derivatives of $sqrt(dots)$), and thus $u in C^(omega)$. "Changing variables" to $u(x_1 + dots + x_n, t)$ will not change this analyticity, and so we have finished our proof. #h(1fr) $square.filled$
 
+#remark[
+  This theorem gives absolutely _no_ description as to how solutions to a given PDE behave with respect to their initial Cauchy data. For ODEs, under mild assumptions, we can guarantee continuous dependence on solution on initial conditions; we have no such result for PDEs under the current assumptions, for any reasonable notion of "continuity" for spaces of functions.
+]
+
+#example("from Hadamard")[
+  Consider Laplace's equation in $RR^2$ with specified initial conditions on a line: $ partial_1^2 u + partial_2^2 u = 0,\
+  u(x_1, 0) = 0, wide partial_2 u(x_1, 0) = phi_k (x_1) := k e^(-sqrt(k)) sin(k x_1), $ with $k in NN$. The line $x_2 = 0$ is clearly non-characteristic for the PDE. The unique $C^omega$ solution is given by (which can be found using characteristics) $ u_k (x_1, x_2) = e^(-sqrt(k)) sin(k x_1) sinh(k x_2). $
+
+  Now, remark that as $k -> infinity$, the initial data $phi_k -> 0$ uniformly in $x_1$. However, the solution, for $x_2 eq.not 0$, as $k -> infinity$
+  - grows in amplitude (because of the $sin$ term)
+  - oscillates increasingly rapidly (because of the $sinh$ term),
+  so in particular, $u_k$ will diverge for $x_2 eq.not 0$. The unique solution for the limiting initial data $lim_(k -> infinity) phi_k (x_1) = 0$, though, is the trivial solution. So, there is clearly no "continuity" (in some vague, heuristic sense) in this situtation.
+]
+
+= The Laplacian/Laplace's Equation
+
+== Preliminaries: Review of the Fourier Transform, Distributions
+
+Recall that the Fourier transform of a function $f in L^1 (RR^n)$ (which we'll write as $L^1$ when the underlying space is clear) is defined by $ hat(f) (xi) := integral_(RR^n) e^(-2 pi i x dot xi) f(x) dif x. $
+We'll state some properties of $hat(f)$ here, mostly without proof. Note first that by passing absolute values under the integral, we have the trivial bound $norm(hat(f))_infinity <= norm(f)_1$, so in general the Fourier transform will live in $L^infinity$. We'll see some isntances below where we can do better.
+
+#theorem[For $f, g in L^1$, $hat(f convolve g) = hat(f) dot hat(g)$.]
+
+#proposition[
+  Let $f in L^1$. Then:
+  1. if we define $f_a (dot) := f(dot + a)$ as the translate of $f$ by a vector $a in RR^n$, then $ hat(f_a) (xi) = e^(2 pi a dot xi) hat(f) (xi); $
+  2. if $T$ a linear invertible map on $RR^n$, then $ hat(f compose T) (xi) = |det T|^(-1) hat(f)((T^(-1))^ast xi); $
+  in particular, the Fourier transform commutes with orthogonal linear transformations.
+]
+
+#definition("Schwartz Class")[
+  The _Schwartz Class_ of functions is defined $ cal(S) = cal(S)(RR^n) := {u in C^infinity (RR^n) | sup_(x in RR^n) |x^(beta) partial^alpha u| < infinity, forall "multiindices" beta, alpha}. $
+  In other words, it is the space of smooth functions decay faster at infinity than any polynomial can grow.
+]
 
 
+#theorem[$cal(S)$ is dense in $L^1$, and functions in $cal(S)$ are uniformly continuous.]
+
+#proposition[
+  Let $f in cal(S)$. Then:
+  1. $hat(f) in C^infinity$ and $partial^beta hat(f) = hat((-2 pi i x )^beta f)$;
+  2. $hat(partial^beta f) (xi) = (2pi i xi)^beta hat(f) (xi)$.
+]
+
+#corollary[
+  $f in cal(S) => hat(f) in cal(S)$
+]
+
+#theorem("Riemann-Lebesgue Lemma")[
+  Let $f in L^1$; then, $hat(f)$ is continuous and $hat(f) (xi) -> 0$ as $norm(xi) -> infinity$.
+]
+
+#theorem("Gaussian to Gaussian")[
+  Let $f(x) = e^(-pi a |x|^2)$, then $hat(f)(xi) = a^(-n\/2) e^(-pi |xi|^2\/a)$.
+]
+
+#theorem[If $f, g in cal(S)$, then $integral f hat(g) = integral hat(f) g$.]

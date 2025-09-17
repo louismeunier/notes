@@ -32,7 +32,7 @@ In general, the goal of interpolation is, given a function $f(x)$ on $[a, b]$ an
 ]
 
 #proof[
-  We define the following $n-1$ degree "fundamental polynomials" associated to ${x_j}$, $ ell_j (x) equiv product_(1 <= i <= n \ i eq.not j) (x - x_i)/(x_j - x_i), wide j = 1, dots, n. $ Then, one readily verifes $ell_j (x_i) = delta_(i j)$, and that the distinctness of the nodes guarantees the denominator in each term of the product is nonzero. Define $ P(x) = sum_(j = 1)^n f(x_j) ell(x), $ which, being a linear combination of $n-1$ degree polynomials is also in $PP_(n-1)$. Moreover, $ P(x_i) = sum f(x_j) delta_(i, j) = f(x_i), $ as desired.
+  We define the following $n-1$ degree "fundamental polynomials" associated to ${x_j}$, $ ell_j (x) equiv product_(1 <= i <= n \ i eq.not j) (x - x_i)/(x_j - x_i), wide j = 1, dots, n. $ Then, one readily verifes $ell_j (x_i) = delta_(i j)$, and that the distinctness of the nodes guarantees the denominator in each term of the product is nonzero. Define $ P(x) = sum_(j = 1)^n f(x_j) ell_j (x), $ which, being a linear combination of $n-1$ degree polynomials is also in $PP_(n-1)$. Moreover, $ P(x_i) = sum f(x_j) delta_(i, j) = f(x_i), $ as desired.
 
   For uniqueness, suppose $overline(P)$ another $n-1$ degree polynomial satisfying the conditions of the theorem. Then, $q(x) equiv P(x) - overline(P)(x)$ is also a degree $n-1$ polynomial with $q(x_i) = 0$ for each $i = 1, dots n$. Hence, $q$ a polynomial with more distinct roots than its degree, and thus it must be identically zero, hence $P = overline(P)$, proving uniqueness.
 ]
@@ -90,3 +90,57 @@ Note too that $T_(n + 1) (x)$ has leading coefficient $2^(n)$, which can be seen
 #remark[
   This, and previous results, were stated over $[-1, 1]$. A linear change of coordinates transforming any closed interval to $[-1, 1]$ readily leads to analgous results.
 ]
+
+= Fourier Transform
+
+Recall that the Fourier transform of a (Lebesgue) measurable function $u(x)$ on $RR$ is defined $ (cal(F)u )(xi) = hat(u)(xi) = integral_RR e^(-i xi x) u(x) dif x. $
+
+#theorem[
+  Let $u in L^2 (RR)$. Then,
+  1. $hat(u) in L^2$
+  2. the _inversion_ formula holds, ie $u(x) = integral_RR hat(u) (xi) e^(i xi x) dif x = (cal(F)^{-1} u) (x)$
+  3. $norm(hat(u))_2 = sqrt(2 pi) norm(u)_2$
+  4. for $u in L^2, v in L^1$, $u convolve v in L^2$, and $hat(u convolve v) = hat(u) hat(v)$.
+]
+
+#theorem("Further Properties of Fourier Transform")[
+  Let $u, v in L^2$. Then,
+  1. $cal(F)$ is linear over $RR$
+  2. $cal(F)(u (dot + x_0)) (xi) = e^(i xi x_0) hat(u) (x_0)$
+  3. $cal(F)(e^(i xi_0 x) u(x)) (xi) = hat(u) (xi - x_0)$
+  4. If $c eq.not 0$, $cal(F)(u (c dot)) (xi) = (hat(u) (xi/c))/c$
+  5. $cal(F)(overline(u)) (xi) = overline(hat(u)(-xi))$
+  6. if $u_x$ exists and is in $L^2$, then $ cal(F)(u_x) (xi) = i xi hat(u)(xi). $ By extension, if $partial_alpha u in L^2$, then $hat(partial_alpha u) (xi) = (i xi)^alpha hat(u) (xi)$
+  7. $(cal(F)^(-1) u) (xi) = 1/(2pi) hat(u)(-xi)$.
+]
+
+In a sense, 6. implies a duality between the smoothness of $u(x)$ and rapid decay (as $abs(xi) -> infinity$) of $hat(u)(x)$; 7. indicates that the same analogy holds switching the roles of $u$ and $hat(u)$. We make this more precise.
+#definition("Bounded Variation")[
+  We say a function $u$ on $RR$ is of _bounded variation_ or write $in "BV"$ if there exists a constant $M$ such that for any finite integer $m$ and collection of points $x_0 < x_1 < dots < x_m$, $ sum_(j=1)^m |u(x_j) - u(x_(j-1))| <= M. $
+]
+In a sense, this notion of $"BV"$ captures a notion of "limited oscillation".
+
+#theorem[
+  Let $u in L^2$. Then:
+  1. If $u$ has $p - 1$ continuous derivatives in $L^2$ and its $p$th derivative is in BV, then $ hat(u)(xi) = cal(O)(|xi|^(- p - 1)). $
+  2. If $u$ has infinitely many derivatives all in $L^2$, then $ hat(u)(xi) = cal(O)(|xi|^(-M)), wide forall M >= 1. $
+]
+
+== Discrete Fourier Transform
+
+Let $h > 0$ be a _step size_. Let $x_j = j h$ for $j in ZZ$. We write $v = {v_j}_(j in ZZ)$ for discrete approximations of a function $u$ on the grid ${x_j}_(j in ZZ)$, i.e. $v_j approx u(x_j)$.
+
+The $ell^2_h$ norm is defined for such $v$ by $ norm(v)_2 := [h sum_(j in ZZ) |v_j|^2]^(1\/2). $
+Then, $ell^2_h$ is defined as the space of such sequences $v$ such that this norm is finite. analogous definitions hold for other $ell^p_h$ spaces and norms.
+
+#proposition("Nesting")[
+  $ell^p_h subset ell^q_h$ for each $q >= p$.
+]
+
+#remark[
+  Note that the analogous result to this does _not_ hold for $L^p$ spaces (unless restricted to a compact domain).
+]
+
+We define the convolution of two sequences $v, w$ by the new sequence $v convolve w$ with entries $ (v convolve w)_m = h sum_(j in ZZ) v_j w_(m - j) = h sum_(j in ZZ) v_(m - j) w_j. $ For any $v in ell^2_h$, we define too the _semi-discrete Fourier transform_ of $v$ by $ hat(v) (xi) = (cal(F)_h v)(xi) = h sum_(j in ZZ) e^(-i xi x_j) v_j, wide xi in [-pi/h, pi/h], $ where we remark that $hat(v)(xi)$ $(2pi)/h$-periodic (hence the domain restriction) and continuous.
+
+
