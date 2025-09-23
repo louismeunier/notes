@@ -143,4 +143,40 @@ Then, $ell^2_h$ is defined as the space of such sequences $v$ such that this nor
 
 We define the convolution of two sequences $v, w$ by the new sequence $v convolve w$ with entries $ (v convolve w)_m = h sum_(j in ZZ) v_j w_(m - j) = h sum_(j in ZZ) v_(m - j) w_j. $ For any $v in ell^2_h$, we define too the _semi-discrete Fourier transform_ of $v$ by $ hat(v) (xi) = (cal(F)_h v)(xi) = h sum_(j in ZZ) e^(-i xi x_j) v_j, wide xi in [-pi/h, pi/h], $ where we remark that $hat(v)(xi)$ $(2pi)/h$-periodic (hence the domain restriction) and continuous.
 
+We define the norm of $hat(v)$ by the usual $L^2$-norm, restricted to the appropriate domain: $ norm(hat(v))_2 := (integral_(-pi\/h)^(pi\/h) |hat(v)(xi)|^2 dif xi)^(1\/2), $ and $L^2_h$ the space of such functions with finite norm.
 
+#theorem[
+  If $v in ell_h^2$, then $hat(v) in L^2_h$, and we can recover $v$ from $hat(v)$ by the "inverse semi-discrete Fourier transform", i.e. $ v_j = 1/(2pi) integral_(-pi\/h)^(pi\/h) e^(i xi x_j) hat(v) (xi) dif xi. $ Also, Parseval's identity holds, i.e. $norm(hat(v))_2 = sqrt(2 pi) norm(v)_2$, as does the expected convolution identity (for $v in ell^2_h, w in ell^1_h$ for instance).
+]
+
+
+#remark[
+  Note that each wave number $xi$ is indistinguishable from $xi + (2pi j)/h$ for $j in ZZ$ on $h ZZ$; this is called _aliasing_. The cutoff $pi/h$ is called the _Nyquist Wave Number_.
+]
+
+
+
+#theorem[
+  Let $u in L^2$, sufficiently smooth, with $v in ell^2_h$ be a restriction of $u$ to $h ZZ$. Then, $ hat(v)(xi) = sum_(j in ZZ) hat(u)(xi + (2pi j)/h), wide xi in [-pi/h, pi/h]. $
+]
+
+
+== Wavelet Transform
+
+
+The heuristic idea of the wavelet transform is to construct a basis of functions which effectively compromise between localization in space and frequency; indeed, the issues related to aliasing in the discrete case are linked to the fact that localization of a function simultaneously in physical and fourier space is impossible except for the zero function.
+
+More precisely, we dictate that a wavelet $psi$ should have:
+1. non-negligible values in a limited range of space _and_ frequency;
+2. finite energy, by which we mean $ integral_(0)^infinity |hat(psi) (omega)|^2 (dif omega)/(abs(omega)) < infinity. $
+3. zero mean, i.e. $integral_(-infinity)^infinity psi(t) dif t = 0$.
+
+Note that 2., 3., imply that $psi$ has actual "frequency content" and zero mean, so $psi$ satisfying these properties must oscillate.
+
+We call such a $psi$ a the _model wavelet_, from which we will generate our desired basis by translating and scaling: $ psi_(s, tau) (t) := 1/(sqrt(s)) psi((t - tau)/s). $
+
+From this, we define $ gamma(s, tau) = integral f(t) psi_(s, tau)^(ast) (t) dif t. $ Then, one can retrieve $f$ (with appropriate properties) by the _inverse wavelet transform_ $ f(t) = integral_(RR^+) integral_(RR) gamma(s, tau) psi_(s, tau) (t) dif tau dif s. $
+
+In a sense, $gamma(s, t)$ provides a _compromise_ between space (i.e. $tau$) and frequency/scale (i.e. $s$) and energy localization.
+
+More precisely, we'd like a quantitative decay of $gamma(s, t)$ for small $s$, i.e. small frequencies, which are the problematic range. If we Taylor expand $f$ in the definition of $gamma(s, tau)$ about $s = 0$ (and taking $tau = 0$ for convenience), one notices that $ gamma(s, 0) = 1/(sqrt(s)) [sum_(p=0)^n f^((p))(0) integral t^p/(p!) psi(t\/s) dif t + cal(O)(n + 1)]. $ If we define $M_p := integral t^p psi(t) dif t$ to be the $p$th moment of $psi$, then one clearly sees that if the first $n$ moments of $psi$ are identically 0, then $ psi(s, tau) = cal(O)(s^(n + 2)), $ those providing a qualitative decay rate for these coefficients. Thus, we generally want such vanishing moments in designing "good" wavelets.

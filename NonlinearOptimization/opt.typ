@@ -133,7 +133,7 @@ We focus on the problem $ min_(x in RR^n) f(x), $ where $f : RR^n -> RR$ is cont
 
 We recall the following from Calculus:
 #theorem("Taylor's, Second Order")[
-  Let $f : D -> RR^n -> RR$ be twice continuously differentiable, then for each $x, y in D$, there is an $eta$ lying on the line between $x$ and $y$ such that $ f(y) = f(x) + gradient f(x)^T (y - x) + 1/2 (y - x)^T gradient^2 f(eta) (y - x). $
+  Let $f : D subset RR^n -> RR$ be twice continuously differentiable, then for each $x, y in D$, there is an $eta$ lying on the line between $x$ and $y$ such that $ f(y) = f(x) + gradient f(x)^T (y - x) + 1/2 (y - x)^T gradient^2 f(eta) (y - x). $
 ]
 
 #theorem("2nd-order Optimality Conitions")[
@@ -418,4 +418,176 @@ We now prove convergence of an algorithm based on the Armijo Rule:
 
 #remark[
   The proof above shows, the following: Let ${x^k}$ such that $x^(k + 1) := x^k + t_k d^k$ for $d^k in RR^n, t_k > 0$, and let $f(x^(k + 1)) <= f(x^k)$ and $x^k ->^K overline(x)$ such that $d^k = - gradient f(x^k)$, $t_k = T_A (x^k, d^k)$ for all $k in K$. Then $gradient f(overline(x)) = 0$; i.e., all of the "focus" is on the subsequence along $K$. The only time we needed the whole sequence was to use the fact that $f(x^k) -> f(overline(x))$ along the whole sequence.
+]
+
+== Newton-Type Methods
+
+=== Convergence Rates and Landau Notation
+
+
+#definition[
+  Let ${x^k in RR^n}$ converge to $overline(x)$. Then, ${x^k}$ converges:
+  1. _linearly_ to $overline(x)$ if there exists $c in (0, 1)$ such that $ norm(x^(k + 1) - overline(x)) <= c norm(x^k - overline(x)), forall k; $
+  2. _superlinearly_ to $overline(x)$ if $ lim_(k -> infinity) (norm(x^(k + 1) - overline(x)))/(norm(x^k - overline(x))) = 0; $
+  3. _quadratically_ to $overline(x)$ if there exists $C > 0$ such that $ norm(x^(k+1) - overline(x)) <= C norm(x^k - overline(x))^2, forall k. $
+]
+
+#remark[\3. $=>$ 2. $=>$ 1.]
+
+#remark[We needn't assume $x^k -> overline(x)$ for the first two definitions; their statements alone imply convergence. However, the last does not; there exists sequences with this property that do not converge.]
+
+
+#definition("Landau Notation")[
+  Let ${a_k}, {b_k}$ be positive sequences $arrow.b 0$. Then,
+  1. $a_k = cal(o)(b_k) <=> lim_(k -> infinity) a_k/b_k = 0$;
+  2. $a_k = cal(O)(b_k) <=> exists C > 0 : a_k <= C b_k$ for all $k$ (sufficiently large).
+]
+
+#remark[
+  If $x^k -> overline(x)$, then
+  1. the convergence is superlinear $<=>$ $norm(x^(k + 1) - overline(x)) = cal(o)(norm(x^k - overline(x)))$;
+  2. the convergence is quadratic $<=>$ $norm(x^(k + 1) - overline(x)) = cal(O)(norm(x^k- overline(x))^2)$.
+]
+
+=== Newton's Method for Nonlinear Equations
+
+We consider the nonlinear equation $ F(x) = 0, wide (ast) $ where $F : RR^n -> RR^n$ is smooth (continuously differentiable). Our goal is to find a numerical scheme that can determine approximate zeros of $F$, i.e. solutions to $(ast)$. The idea of Newton's method for such a problem, is, given $x^k in RR^n$, to consider the (affine) linear approximation of $F$ about $x^k$, $ F_k : x |-> F(x^k) + F' (x^k) (x - x^k), $ where $F'$ the Jacobian of $F$. Then, we compute $x^(k + 1)$ as a solution of $F_k (x) = 0$. Namely, if $F'(x^k)$ invertible, then solving for $F_k (x^(k + 1)) = 0$, we find $ x^(k + 1) = x^k - F' (x^k)^(-1) F(x^k). $ More generally, one solves $F'(x^k) d = - F(x^k)$ and sets $x^(k + 1) := x^k + d^k$.
+\
+
+Specifically, we have the following algorithm:
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Newton's Method (Local Version)")],
+    [
+      S0. Choose $x^0 in RR^n, epsilon > 0$, and set $k := 0$.\
+      S1. If $norm(F(x^k)) < epsilon$, STOP.\
+      S2. Compute $d^k$ as a solution of _Newton's equation_ $ F'(x^k) d = - F(x^k). $
+      S3. Set $x^(k + 1) := x^k + d^k$, increment $k$ and go to S1.
+    ],
+  ),
+)<tab:newtonslocal>
+
+#lemma[Let $F: RR^n -> RR^n$ be $C^1$, and $overline(x) in RR^n$ such that $F'(overline(x))$ is invertible. Then, there exists $epsilon > 0$ such that $F'(x)$ remains invertible for all $x in B_epsilon (overline(x))$, and there exists $C > 0$ such that $ norm(F'(x)^(-1)) <= C, wide forall x in B_epsilon (overline(x)). $]
+
+#proof[
+  Since $F'$ continuous at $overline(x)$, there exists $epsilon > 0$ such that $norm(F' (overline(x)) - F'(x)) <= 1/(2 norm(F' (overline(x))^(-1)))$ for all $x in B_epsilon (overline(x))$. Then, for all $x in B_epsilon (overline(x))$, $ norm(I - F' (x) F'(overline(x))^(-1)) & = norm((F' (overline(x)) - F'(x)) F'(overline(x))^(-1)) \
+                                        & <= norm(F'(overline(x)) - F'(x)) norm(F'(overline(x))^(-1)) <=1/2 < 1. $
+  By a corollary of the Banach lemma, $F'(x)$ invertible over $B_epsilon (overline(x))$, and $ norm(F'(x)^(-1)) <= norm(F'(overline(x))^(-1))/(1 - norm(I - F'(x) F'(overline(x))^(-1))) <= 2 norm(F'(overline(x))^(-1)) =: C. $
+]
+
+#remark[
+  Observe $F : RR^n -> RR^m$ is differentiable at $overline(x)$ if and only if $norm(F(x^k) - F(overline(x)) - F'(overline(x)) (x^k - overline(x))) = cal(o)(norm(x^k - overline(x)))$ for every $x^k -> overline(x)$.
+
+  This can be sharpened if $F'$ is continuous or even locally Lipschitz.
+]
+
+#lemma[
+  Let $F : RR^n -> RR$ be continuously differentiable and $x^k -> overline(x)$, then:
+  1. $norm(F(x^k) - F(overline(x)) - F'(x^k) (x^k - overline(x))) = cal(o)(norm(x^k - overline(x)))$;
+  2. if $F'$ locally Lipschitz at $overline(x)$, then $norm(F(x^k) - F(overline(x)) - F'(x^k) (x^k - overline(x))) = cal(O)(norm(x^k - overline(x))^2)$.
+]
+
+#proof[
+  1. Observe that $ norm(F(x^k) - F(overline(x)) - F'(x^k) (x^k - overline(x))) \
+    <=
+    norm(F(x^k) - F(overline(x)) - F(overline(x))(x^k - overline(x))) + norm(F'(x^k) (x^k - overline(x)) - F'(overline(x)) (x^k - overline(x))) \
+    <=norm(F(x^k) - F(overline(x)) - F(overline(x))(x^k - overline(x))) + norm(F'(x^k) - F(overline(x))) norm(x^k - overline(x)). $ The left-hand term is $cal(o)(norm(x^k - overline(x)))$ by our observations previously, and the right-hand term is as well by continuity of $F'$, thus so is the sum.
+
+  2. Let $L> 0$ be a local Lipschitz constant of $F'$ at $overline(x)$. Then, $ norm(F(x^k) - F(overline(x)) - F'(x^k) (x^k - overline(x))) &= norm(integral_(0)^1 F'(overline(x) + t (x^k - overline(x))) dif t (x^k - overline(x)) - F'(x^k) (x^k - overline(x))) \
+    &<= integral_0^1 norm(F'(overline(x) + t (x^k - overline(x))) - F'(x^k)) dif t dot norm(x^k - overline(x))\
+    &<= L integral_0^1 abs(1 - t) norm(x^k - overline(x)) dif t dot norm(x^k - overline(x)) \
+    &= L norm(x^k - overline(x))^2 integral_(0)^1 (1 - t) dif t = L/2 norm(x^k - overline(x))^2, $ which implies the result.
+]
+
+#theorem[
+  Let $F : RR^n -> RR^n$ be continuously differentiable, $overline(x) in RR^n$ such that $F(overline(x)) = 0$ and $F'(overline(x))$ is invertible. Then, there exists an $epsilon > 0$ such that for every $x^0 in B_epsilon (overline(x))$, we have:
+  1. @tab:newtonslocal is well-defined and generates a sequence ${x^k}$ which converges to $overline(x)$;
+  2. the rate of convergence is (at least) linear;
+  3. if $F'$ is locally Lipschitz at $overline(x)$, then the rate is quadratic.
+]
+
+#proof[
+  1. By the previous lemma, we know there is $epsilon_1, c > 0$ such that $norm(F'(x)^(-1)) <= c$ for all $x in B_epsilon_1 (x)$. Further, there exists an $epsilon_2 > 0$ such that $norm(F(x) - F(overline(x)) - F'(x)(x - overline(x))) <= 1/(2c) norm(x - overline(x))$ for all $x in B_(epsilon_2) (overline(x))$. Take $epsilon = min{epsilon_1, epsilon_2}$ and pick $x^0 in B_epsilon (overline(x))$. Then, $x^1$ is well-defined, since $F'(x^0)$ is invertible, and so $ norm(x^1 - overline(x)) & = norm(x^0 - F'(x^0)^(-1) F(x^0) - overline(x)) \
+                            & = norm(F'(x^0)^(-1) (F(x^0) - underbrace(F(overline(x)), = 0) - F'(x^0) (x^0 - overline(x)))) \
+                            & <= norm(F'(x^0)^(-1)) norm(F(x^0) - F(overline(x)) - F'(x^0) (x^0 - overline(x))) \
+                            & <= c dot 1/(2 c) norm(x^0 - overline(x)) \
+                            & = 1/2 norm(x^0 - overline(x)) < epsilon/2, $ so in particular, $x^1 in B_(epsilon\/2) (overline(x)) subset B_epsilon (overline(x))$. Inductively, $ norm(x^k - overline(x)) <= (1/2)^(k) norm(x^0 - overline(x)), $ for every $k in NN$. Thus, $x^k$ well-defined and converges to $overline(x)$.
+
+    2., 3. Analogous to 1., $ norm(x^(k + 1) - overline(x)) & = norm(x^k - d^k - overline(x)) \
+                                  & = norm(x^k - F'(x^k)^(-1) F(x^k) - overline(x)) \
+                                  & <= norm(F'(x^k)^(-1)) norm(F(x^k) - F(overline(x)) - F'(x^k)(x^k - overline(x))) \
+                                  & <= c norm(F(x^k) - F(overline(x)) - F'(x^k)(x^k - overline(x))). $ This final line is little $cal(o)$ of $norm(x^k - overline(x))$ or this quantity squared by the previous lemma, which proves the result depending on the assumptions of 2., 3..
+]
+
+=== Newton's Method for Optimization Problem
+
+Consider $ min_(x in RR^n) f(x), $ with $f : RR^n -> RR$ twice continuously differentiable. Recall that if $overline(x)$ a local minimizer of $f$, $gradient f(overline(x)) = 0$. We'll now specialize Newton's to $F := gradient f$:
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Newton's Method for Optimization (Local Version)")],
+    [
+      S0. Choose $x^0 in RR^n, epsilon > 0$, and set $k := 0$.\
+      S1. If $norm(gradient f(x^k)) < epsilon$, STOP.\
+      S2. Compute $d^k$ as a solution of _Newton's equation_ $ gradient^2 f (x^k) d= - gradient f(x^k). $
+      S3. Set $x^(k + 1) := x^k + d^k$, increment $k$ and go to S1.
+    ],
+  ),
+)<tab:newtonsopt>
+
+
+We then have an analogous convergence result to the previous theorem by simply applying $F := gradient f$; in particular, if $f$ thrice continuously differentiable, we have quadratic convergence.
+
+#example[
+  Let $f(x) := sqrt(x^2 + 1)$. Then $f'(x) = x/(sqrt(x^2 + 1))$, $f''(x) = 1/(x^2 + 1)^(3\/2)$. Newton's equation (i.e. @tab:newtonsopt, S2) reads in this case: $ 1/(x_k^2 + 1)^(3\/2) d = - (x_k)/(sqrt(x_k^2 + 1)). $ This gives solution $d_k = -(x_k^2 + 1)x_k,$ so $x_(k + 1) = - x_k^(3)$. Then, notice that if: $ abs(x_0) < 1 & => x_k -> 0, "quadratically" \
+     |x_0| > 1 & => x_k "diverges" \
+     |x_0| = 1 & => abs(x_k) = 1 forall k, $ so the convergence is truly local; if we start too far from $0$, we'll never have convergence.
+]
+
+We can see from this example that this truly a local algorithm. A general globalization strategy is to:
+- if Newton's equation has no solution, or doesn't provide sufficient decay, set $d^k := - gradient f(x^k)$;
+- introduce a step-size.
+
+
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Newton's Method (Global Version)")],
+    [
+      S0. Choose $x^0 in RR^n, epsilon >0, rho > 0, p > 2, beta in (0, 1), sigma in (0, 1\/2)$ and set $k := 0$\
+      S1. If $norm(gradient f(x^k)) < epsilon$, STOP\
+      S2. Determine $d^k$ as a solution of $ gradient^2 f(x^k) d = - gradient f(x^k). $ If no solution exists, or if $gradient f(x^k)^T d^k <= - rho norm(d^k)^p$, is violated, set $d^k := - gradient f(x^k)$\
+      S3. Determine $t_k > 0$ by the Armijo back-tracking rule, i.e. $ t_k := max_(ell in NN_0) {beta^ell | f(x^k + beta^ell d^k) <= f(x^k) + beta^ell sigma gradient f(x^k)^T d^k} $
+      S4. Set $x^(k + 1) := x^k + t_k d^k$, increment $k$ to $k + 1$, and go back to S1.
+    ],
+  ),
+)<tab:newtonsglob>
+
+#remark[S3. well-defined since in either choice of $d^k$ in S2., we will have a descent direction so the choice of $t_k$ in S3. is valid; i.e. $(x^k, d^k) in cal(A)_f$ for every $k$.]
+
+#theorem([Global convergence of @tab:newtonsglob])[
+  Let $f : RR^n -> RR$ be twice continuously differentiable. Then every cluster point of ${x^k}$ generated by @tab:newtonsglob is a stationary point of $f$.
+]
+
+#remark[Note that we didn't impose any invertibility condition on the Hessian of $f$; indeed, if say the hessian was nowhere invertible, then @tab:newtonsglob just becomes the gradient method with Armijo back-tracking, for which have already established this result. ]
+
+#theorem([Fast local convergence of @tab:newtonsglob])[
+  Let $f : RR^n -> RR$ be twice continuously differentiable, ${x^k}$ generated by @tab:newtonsglob. If $overline(x)$ is a cluster point of ${x^k}$ with $gradient^2 f(overline(x)) > 0$. Then:
+  1. ${x^k} -> overline(x)$ along the _whole_ sequence, so $overline(x)$ is a strict local minimizer of $f$;
+  2. for $k in NN$ sufficiently large, $d^k$ wil be determined by the Newton equation in S2;
+  3. ${x^k} -> overline(x)$ at least superlinearly;
+  4. if $gradient^2 f$ locally Lipschitz, ${x^k} -> overline(x)$ quadratically.
 ]

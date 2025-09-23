@@ -224,6 +224,8 @@ t(0) = 0, s(0) = sigma, u(0) = 0, $ using $sigma$ as our parametrization variabl
 
 == Preliminaries: Review of the Fourier Transform, Distributions
 
+=== Fourier Transform
+
 Recall that the Fourier transform of a function $f in L^1 (RR^n)$ (which we'll write as $L^1$ when the underlying space is clear) is defined by $ hat(f) (xi) := integral_(RR^n) e^(-2 pi i x dot xi) f(x) dif x. $
 We'll state some properties of $hat(f)$ here, mostly without proof. Note first that by passing absolute values under the integral, we have the trivial bound $norm(hat(f))_infinity <= norm(f)_1$, so in general the Fourier transform will live in $L^infinity$. We'll see some isntances below where we can do better.
 
@@ -263,3 +265,101 @@ We'll state some properties of $hat(f)$ here, mostly without proof. Note first t
 ]
 
 #theorem[If $f, g in cal(S)$, then $integral f hat(g) = integral hat(f) g$.]
+
+#theorem("Fourier Inversion")[
+  Define the inverse Fourier transform by $ caron(f)(x) := integral e^(2pi i xi dot x) f(xi) dif xi. $ Then, if $f in cal(S)$, $(hat(f))^caron = f$.
+]
+
+#proof("(Sketch)")[
+  For $epsilon > 0$ and $x in RR^n$, define $phi(xi) := e^(2pi i x dot xi - pi epsilon^2 |xi|^2)$. One can check that $phi in cal(S)$, and $hat(phi)(y) = g_epsilon (x - y)$, where $g_epsilon (z) := epsilon^(-n) g(z/epsilon)$ where $g(z) := e^(-pi |x|^2)$. In particular, one checks that $g_epsilon$ a "good kernel", i.e. $ g_epsilon convolve f ->_(epsilon -> 0) f $ for all $f in cal(S)$, where the convergence is uniform. Thus, $ integral e^(-pi epsilon^2 |xi|^2) e^(2pi i x dot xi) hat(f)(xi) dif xi integral phi(xi) hat(f)(xi) dif x = integral hat(phi)(xi) f(xi) dif x = g_epsilon convolve f(x). $ Taking $epsilon -> 0$ on both sides gives the result.
+]
+
+#theorem(
+  "Plancherel",
+)[The Fourier transform extends to an isometry of $L^2$ to itself, i.e. $norm(f)_2^2 = norm(hat(f))_2^2$ for all $f in cal(S)$.]
+
+#proof("(Sketch)")[
+  Define $g(x) := overline(f(-x))$, and compute $hat(g)$.
+]
+=== Distributions
+
+Let $Omega subset RR^n$ open.
+
+#definition[
+  Let ${phi_j} subset C^infinity_c (Omega)$. We will say that $phi_j -> phi$ in $C^infinity_c (Omega)$ if there exists $K subset Omega$ such that $"supp"(phi_j) subset K$ for all $j$ and $partial^alpha phi_j -> partial^alpha phi$ for all multiindices $alpha$, uniformly.
+]
+
+This defines, then, a topology on the space $C^infinity_c (Omega)$.
+
+#definition[A _distribution_ $u$ on $Omega$ is a continuous linear function on $C^infinity_c (Omega).$ I.e., $u$ continuous iff for each $phi_j -> phi$ in $C^infinity_c (Omega)$, $angle.l u, phi_j angle.r -> angle.l u, phi angle.r$, as a sequence of real numbers (where we use the bracket notation to indicate evaluation of the functional $u$ to differentiate from function evaluation).
+
+
+
+]
+
+We write $cal(D)' (Omega)$ or just $cal(D)'$ for the space of distributions on $cal(D)'$. We endow the space with the weak topology, i.e. a sequence $u_j in cal(D)'$ converges in $cal(D)'$ to another distribution $u in cal(D)'$ if $angle.l u_j, phi angle.r -> angle.l u, phi angle.r$ for every $phi in C^infinity_c (RR^n)$.
+
+#example[
+  1. Every $u in L_"loc"^1 (Omega)$ is naturally a distribution, by defining $angle.l u, phi angle.r := integral_(Omega) u phi$ (one can check continuity holds by DOM).
+  2. The _Dirac measure_, denoted $delta$, and defined by $angle.l delta, phi angle.r = phi(0)$.
+]
+
+Next, we show a fairly natural way to extend operations on functions to act on distributions. Suppose $T : C^infinity_c -> C^infinity_c$
+is continuous, and admits a "transpose" $T'$, in the sense that for any $phi, psi in C^infinity_c$, $ integral (T phi) psi = integral phi (T' psi). $ Then, the natural way to make $T$ act on distributions is by, given $u in cal(D)'$, $ angle.l T u, phi angle.r := angle.l u, T'phi angle.r. $ Then, one can verify $T: cal(D)' -> cal(D)'$ is continuous whenever $T : C^infinity_c -> C^infinity_c$ is. We discuss some particular $T$'s of interest to follow:
+
+1. $T =$ multiplication by $f in C^infinity (Omega)$; then, $T' = T$.
+2. $T = partial^alpha$; by integration by parts (boundary terms vanish since $phi$ compactly supported), $T' = (-1)^(|alpha|) partial^alpha$.
+3. If $T = sum_(|alpha| <= k) a_alpha (x) partial^alpha$ some linear differential operator, one has $T' = sum_(|alpha| <= k) (-1)^(|alpha|) partial^alpha (a^alpha dot)$.
+
+#example[The derivative of the heaviside function $H(x) := cases(0 & x < 0, 1 & x >= 0)$, as a distribution, equals the delta distribution; the $alpha$-th derivative of the $delta$  is given by $ delta^(alpha) phi = (-1)^alpha partial^alpha phi (0). $]
+
+4. (Translation) For $x in RR^n$, define $(T phi) (y) := phi_x (y) := phi(y + x)$. One checks $T' phi(y) = phi_(-x) (y)$.
+5. (Reflection) Define $(T phi) (x) := phi(-x) equiv tilde(phi).$
+6. (Convolution Product) For $u in cal(D)'; psi, phi in C^infinity_c$, define $ T_psi phi = phi convolve psi. $ Then one can check $T_psi' phi = phi convolve tilde(psi)$ (one needs to apply Fubini after changing variables in the appropriate integrals). We thus define $(u convolve psi) phi = angle.l u, tilde(psi) convolve phi angle.r$. Note that we can extend this definition to convolve $u$ with $psi$ not necessarily compactly supported, but we need some additional constraint on $u$, which we'll describe here.
+
+#definition[
+  Let $u, v in cal(D)'(Omega)$.
+  1. We say $u = v$ on $V subset.eq Omega$, open, if $angle.l u, phi angle.r = angle.l v, phi angle.r$ for every $phi in C^infinity_c (V)$.
+  2. We define $ "supp"(u) := "complement of largest subset of" Omega "on which" u = 0, $ where "$0$" the 0 functional which acts trivially. Denote by $cal(E)' (Omega) subset.neq cal(D)'(Omega)$ the set of compactly supported distributions.
+]
+
+#example[The support of the $delta$ distribution, as one would expect, ${0}$.]
+
+6'. For $u in cal(E)'$, $psi in C^infinity$ (not necessarily with compact support!) and $phi in C^infinity_c$, define then $ angle.l u convolve psi, phi angle.r := angle.l u, tilde(psi) convolve phi angle.r. $ Now that $u$ compactly supported, the expression on the right makes sense.
+
+#example("Exercises")[
+  1. Show $delta convolve psi = delta$
+  2. Show that, given $u in cal(E)'$ and $v in cal(D)'$, we can define the convolution of $u$ with $v$ by $ angle.l u convolve v, phi angle.r := angle.l v, tilde(u) convolve phi angle.r, $ i.e. this is a continuous operation.
+]
+
+7. (Tempered Distributions) Our goal here is define the Fourier transform of distributions. Recalling the "self-adjointness" of the Fourier transform we proved for Schwartz functions (that is, $integral hat(phi) psi = integral phi hat(psi)$), a natural definition would be "$angle.l hat(u), phi angle.r = angle.l u, hat(phi) angle.r$". However, this definition does not make sense if we simply assume $phi in C^infinity_c$, since $hat(phi)$ will not generally have compact support either (indeed, one can show that $phi, hat(phi)$ both have compact support only if $phi equiv 0$, but that's besides the point), so writing $u$ as acting on $hat(phi)$ doesn't make sense, since $u$ acts on $C^infinity_c$. Thus, our idea is to enlarge our space of functions upon which admissible $u$'s will act on to $cal(S)$, and put an appropriate topology on this space which will be stronger than that we've put on $C^infinity_c$. This will remedy our issue from above since $cal(S)$ stable under Fourier transform.
+
+More precisely, define a topology on $cal(S)$ by $ phi_j ->_(cal(S)) phi <=> sup_(x in RR^n) |x^alpha partial^beta (phi_j - phi) (x)| ->_(j->infinity) 0, wide forall alpha, beta, $ noting that this is stronger than the $C^infinity_c$ topology for such functions since taking $alpha equiv 0$ recovers the convergence requirement on that space. Then, define $ cal(S)' := {u : cal(S) -> RR | u "continuous"}. $
+Then, $u in cal(S)' => u|_(C^infinity_c) in cal(D)'$.
+
+#definition[
+  For $u in cal(S)'$, denote the Fourier transform of $u$ by $hat(u)$, defined by $ angle.l hat(u), phi angle.r := angle.l u, hat(phi) angle.r, $ for $phi in cal(S)$.
+]
+
+#example[
+  Show $hat(delta) = 1$; show $(partial^alpha delta)^hat = (2pi i)^(|alpha|) xi^alpha$.
+]
+
+== The Laplacian
+
+Recall $ laplace := sum_(i=1)^n partial_i^2 = gradient dot gradient = "tr"(gradient^2) $ is the _Laplacian_ or _Laplace operator_. Functions for which $laplace u = 0$ are called _harmonic._
+
+The Laplacian is a very symmetric operator, as we'll demonstrate.
+#definition[
+  We say a linear differential operator $L := sum_(|alpha| <= k) a_alpha (x) partial^alpha$ commutes with $T : RR^n -> RR^n$ if $ (L u) compose T = L(u compose T), $ for every function $u$.
+]
+
+#theorem[
+  Suppose $L$ as above commutes with all translations and rotations in $RR^n$. Then, $ L = sum_(j) b_j laplace^j, wide b_j in RR, $ that is, $L$ is a polynomial in powers of $laplace$ with constant coefficients. In particular, $laplace$ generates the ring of all linear differential operators invariant under the Euclidean group.
+]
+
+#proof[
+  First, we know that each $a_alpha$ coefficient must be constant, by translation. Indeed, for each index $alpha$, let $u$ be a function such $partial^alpha u = 1$, then if $T$ is a translation by $y in RR^n$, $ (a_alpha (x) partial^alpha u(x)) compose T = a_alpha (x + y), $ while $ a_(alpha) (x) partial^alpha (u compose T)= a_alpha (x), $ so $a_alpha (x) = a_alpha (x + y)$ for all $y$, implying constancy.
+
+  Next, notice that if we take $u in cal(S)$, then $ hat(L u) (xi) = P(xi) hat(u)(xi), $ where $P(xi)$ a polynomial in $xi$, $ P(xi) = sum_(|alpha| <= k) c_alpha (2pi i xi)^(alpha), $ using properties of derivatives interacting with $hat$. But the Fourier transform also commutes with rotations, so it must be also that $P(xi)$ rotationally invariant, i.e. $ P(xi) = P(|xi|) = sum_(j) c_j (2pi i |xi|)^j. $ Moreover, we know only even powers of $j$ are admissible since $P$ still a polynomial and $|xi| = sqrt(xi_1^2 + dots + xi_n^2)$. But remark $(2pi i |xi|)^(2 j) hat(u) = hat(laplace^j u)$, thus completing the proof.
+]
