@@ -360,7 +360,7 @@ We deal with the unconstrained problem $ min_(x in RR^n) f(x) wide (star.filled)
 
 == The Gradient Method
 
-We specialize @tab:A1 here. Specifically, we'll take $ d^k := - gradient f(x^k); $ it's know that $ (-gradient f(x^k))/(norm(gradient f(x^k))) = "argmin"_(d : norm(d) <= 1) gradient f(x^k)^T d, $ with $norm(dot)$ the $2$ norm.
+We specialize @tab:A1 here. Specifically, we'll take $ d^k := - gradient f(x^k); $ it's known that $ (-gradient f(x^k))/(norm(gradient f(x^k))) = "argmin"_(d : norm(d) <= 1) gradient f(x^k)^T d, $ with $norm(dot)$ the $2$ norm.
 
 We use a step-size rule called "Armijo rule". Choose parameters $beta, sigma in (0, 1)$. For $(x, d) in cal(A)_f$, we define our step-size rule by $ T_A (x, d) := max_(ell in NN_0) {beta^ell | underbrace(f(x + beta^ell d) <= f(x) + beta^ell sigma gradient f(x)^T d, "\"Armijo condition\"")}. $
 
@@ -627,4 +627,174 @@ The typical conditions we put on $H_(k + 1)$ as described above are:
   3. the QNE is motivated by the mean-value theorem for vector-valued functions, $ gradient f(x^(k + 1)) - gradient f(x^k) = integral_0^1 gradient^2 f(x^k + t (x^(k + 1) - x^k)) dif t dot (x^(k + 1) - x^k); $ we can think of the integrated term as an averaging of the Hessian along the line between $x^(k),x^(k + 1)$.
 ]
 
-We follow a so-called _symmetric rank-2 approach_; given $H_(k)$, we update $ H_(k + 1) = H_k + gamma u u^T + delta v v^T, wide gamma, delta in RR; u, v in RR^n. $ Note that if we put $S := u u^T$ for $u eq.not 0$, $"rank"(S) = 1$ and $S^T = S$.
+We follow a so-called _symmetric rank-2 approach_; given $H_(k)$, we update $ H_(k + 1) = H_k + gamma u u^T + delta v v^T, wide gamma, delta in RR; u, v in RR^n. wide (1) $ Note that if we put $S := u u^T$ for $u eq.not 0$, $"rank"(S) = 1$ and $S^T = S$.
+
+So, the ansatz we take is $ y^k = H_(k + 1) s^k = H_k s^k + gamma u u^T s^k + delta v v^T s^k. wide (2) $
+If $H_k > 0$ and $(y^k)^T s^k eq.not 0$, then taking $u := y^k, v:= H_k s^k,$  $gamma := 1/((y^k)^T s^k)$ and $delta := - 1/((s^k)^T H_k s^k)$ will solve (2), and gives the formula $ H^"BFGS"_(k + 1) := H_k - ((H_k s^k)(H_k s^k)^T)/((s^k)^T H_k s^k) + (y^k (y^k)^T)/((y^k)^T s^k) wide (3), $ the so-called "BFGS" formula. Another update formula that can be obtained that solves (2) is $ H_(k + 1)^("DFP") := H_k + ((y^k - H_k s^k) (y^k)^T + y^k (y^k - H_k s^k)^T)/((y^k)^T s^k) - ((y^k - H_k s^k)^T s^k)/([(h^k)^T s^k]^2) y^k (y^k)^T. $ Note that any convex combination of formulas that satisfy (2) also satisfy (2); thus, we define the so-called _Broyden class_ by the family of convex combinations of the above two formula, $ H^lambda_(k +1 ):= (1 -lambda) H_(k + 1)^"DFP" + lambda H_(k + 1)^"BFGS", wide forall lambda in [0, 1]. $
+
+Algorithmically, for $f in C^1$;
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Globalized BFGS Method")],
+    [
+      S0. Choose $x^0 in RR^n$, $H_0 in RR^(n times n)$ symmetric positive definite, $sigma in (0, 1/2)$, $rho in (sigma, 1)$, $epsilon >= 0$ and set $k := 0$.\
+      S1. If $norm(gradient f(x^k)) <= epsilon$, STOP.\
+      S2. Determine $d^k$ as a solution to the QNE, $ H_k d = - gradient f(x^k). $
+      S3. Determine $t_k>0$ such that $ f(x^k + t_k d^k) <= f(x^k) + sigma t_k gradient f(x^k)^T d^k, $ (this is just the Armijo condition), AND $ gradient f(x^k + t_k d^k)^T d^k >= rho gradient f(x^k)^T d^k, $ call the _Wolfe-Powell rule_.\
+      S4. Set $                      x^(k + 1) & := x^k + t_k d^k, \
+                                 s^k & := x^(k + 1) - x^k, \
+                                 y^k & := gradient f(x^(k + 1)) - gradient f(x^k), \
+      H_(k + 1) := H_(k + 1)^"BFGS". $
+      S5. Increment $k$ and go to S1.
+    ],
+  ),
+)<tab:BFGS>
+
+We use the _Wolfe-Powell rule_; i.e., for $f : RR^n -> RR$ differentiable, $sigma in (0, 1/2), rho in (sigma, 1)$, $ T_("WP") : cal(A)_f in.rev (x, d) |-> {t > 0 | #stack(spacing: .7em, $f(x + t d) <= f(x) + sigma t gradient f(x)^T d$, $gradient f(x + t d)^T d >= rho gradient f(x)^T d$)} subset RR_+. $
+
+#lemma[
+  For $f in C^1$ and $(x, d) in cal(A)_f$, assume that $f$ is bounded from below on ${x + t d | t > 0}$. Then, $T_"WP" (x, d) eq.not nothing$.
+]<lem:raybounded>
+#remark[Note that we didn't need any boundedness restriction for the well-definedness of the Armijo rule.]
+
+#lemma[
+  For $f in C^1$, bounded from below with $gradient f$ Lipschitz continuous on $cal(L) := "lev"_(f(x^0)) f$. Then, $T_"WP"$ restricted to $cal(A)_f sect (cal(L) times RR^n)$ is _efficient_, i.e. there exists a $theta > 0$ such that $f(x + t d) <= f(x) - theta ((gradient f(x)^T d)/(norm(gradient f(x)) norm(d)))^2$ for every $(x, d) in cal(A)_f sect (cal(L) times RR^n)$ and $t in T_("WP") (x, d)$.
+]<lem:bfgstwpefficiency>
+#remark[
+  Note that, generally $x^k$ will be in the level set at $f(x^0)$ for every $k >= 0$ when $x^k$ defined by a descent method. So in the context of this lemma, we will have the efficient bound at every iterate.
+]
+
+We turn to analyze @tab:BFGS.
+#lemma[
+  Let $y^k, s^k in RR^n$ such that $(y^k)^T s^k > 0$ and $H_k > 0$. Then, $ H_(k+1)^("BFGS") > 0. $
+]<lem:bfgspositiveness>
+
+#proof[
+  For fixed $k$, set $H_+ := H_(k + 1)$, $H := H_k$, $s := s^k$ and $y := y^k$ for notational convenience. As $H > 0$, there exists a $W > 0$ such that $W^2 = H$. Let $d in RR^n minus {0}$ and set $z := W s$, $v := W d$. Then $ d^T H_+ d & = d^T (H + (y y^T)/(y^T s) - (H s s^T H)/(s^T H s)) d \
+            & = d^T H d + d^T (y y^T)/(y^T s) d - d^t (H s s^T H)/(s^T H s)) d \
+            & = d^T H d + ((y^T d)^2)/(y^T s) - ((d^T H s)^2)/(s^T H s) \
+            & = norm(v)^2 + ((y^T d)^2)/(y^T s) - ((v^T z)^2)/(norm(z)^2) \
+            & >= norm(v)^2 + ((y^T d)^2)/(y^T s) - norm(v)^2 \
+            & = ((y^T d)^2)/(y^T s) >= 0, $ using Cauchy-Schwarz. In particular, equality (to zero) holds throughout iff $v$ and $z$ are linearly dependent and $y^T d = 0$. Suppose this is the case. In particular, there is an $alpha in RR$ for which $v = alpha z$. Then, $d = W^(-1) v = alpha W^(-1) z = alpha s$, thus $0 = d^T y = alpha s^T y$, hence $alpha$ must equal zero, since we assumed $y^T s > 0$. Thus, $d = 0$, which we also assumed wasn't the case. Thus, we can never have equality here, and thus $d^T H_+ d > 0$, and so $H_+ > 0$.
+]
+
+#lemma[
+  If in the $k$th iteration of @tab:BFGS we have $H_k > 0$ and there exists $t_k in T_"WP" (x^k, d^k)$, then $(s^k)^T y^k > 0$.
+]<lem:bfgspositivesy>
+
+#proof[
+  We have $ (s^k)^T y^k & = (x^(k + 1) - x^k)^T (gradient f(x^(k + 1)) - gradient f(x^k)) \
+  & = t_k (d^k)^T (gradient f(x^(k + 1)) - gradient f(x^k)) \
+  & >=^"WP" t_k (rho - 1) gradient f(x^k)^T d^k \
+  & = underbrace(t_k (1 - rho), > 0) underbrace((underbrace(gradient f(x^k), eq.not 0))^T H_k^(-1) gradient f(x^k), > 0) \
+  & > 0, $ since $H_k^(-1) > 0$ and $t_k > 0$ and $0< rho < 1$.
+]
+
+#theorem[
+  Let $f in C^1 (RR^n)$ and bounded from below. Then, the following hold for the iterates generated by @tab:BFGS:
+  1. $(s^k)^T y^k > 0$;
+  2. $H_k > 0$;
+  3. thus, @tab:BFGS is well-defined, i.e. at each iteration, each step generates a valid value.
+]
+
+#proof[
+  We prove inductively on $k$, with the fact that $H_0 > 0$ already establishing 2. for the base step. $H_k > 0$ implies the existence of a unique solution $d^k = - H_k^(-1) gradient f(x^k)$ to QNE. Because $gradient f(x^k) eq.not 0$, $gradient f(x^k)^T d^k < 0$ so $(x^k, d^k) in cal(A)_f$. By @lem:raybounded, there exists a $t_k in T_"WP" (x^k, d^k)$. Thus, by @lem:bfgspositivesy, $(y^k)^T s^k > 0$ and so by @lem:bfgspositiveness $H_(k + 1) > 0$. Since this holds for any $k$ this proves the result.
+]
+#theorem[Let $f : RR^n -> RR$ be continuously differentiable, and ${x^k}, {d^k}, {t_k}$ be generated by @tab:BFGS. assume that $gradient f$ is Lipschitz on $cal(L) := "lev"_(f(x^0)) f$, and that there exists a $c > 0$ such that $"cond"(H_k) := (lambda_max (H_k))/(lambda_min (H_k)) <= 1/c$ for all $k in NN$. Then every cluster point of ${x^k}$ is a stationary point of $f$.
+]
+
+#proof[
+  For all $k in NN$, $ - gradient f(x^k)^T d^k = (d^k)^T H_k d^k & >= lambda_min (H_k) norm(d^k)^2 \
+  & = lambda_min (H_k) norm(H^(-1)_k nabla f(x^k)) norm(d^k) \
+  & = (lambda_min (H_k))/(norm(H_k)) norm(H_k) norm(H^(-1)_k nabla f(x^k)) norm(d^k) \
+  &>= (lambda_min (H_k))/(lambda_max (H_k)) norm(gradient f(x^k)) norm(d^k) \
+  &= 1/("cond"(H_k)) norm(gradient f(x^k)) norm(d^k) \
+  &>= c norm(gradient f(x^k)) norm(d^k), $ and thus $- (gradient f(x^k)^T d^k)/(norm(gradient f(x^k)) norm(d^k)) >= c$ for all $k in NN$ (this is the so-called "angle condition"). Moreover, under the assumptions on $f$, the Wolfe-Powell rule (restricted to $cal(A)_f sect cal(L) times RR^n$, in which we always stay) is efficient, so by the previously established global convergence of @tab:A1, we have convergence of this algorithm as well.
+]
+#remark[We cited the convergence of @tab:A1, which we couldn't do when proving convergence of the gradient, since the step size in that case was _not_ efficient.]
+
+#remark[
+  1. The assumption that $gradient f$ is Lipschitz on $"lev"_(f(x^0)) f$ is satisfied under either of the following conditions,\
+    (i) $f in C^2$ and $norm(gradient^2 f (x))$ bounded on a convex superset of $cal(L);$\
+    (ii) $f in C^2$ and $cal(L)$ is bounded (hence compact).\
+  An example of a $C^1$ function that is not $C^2$ but still globally Lipschitz is $f(x) := 1/2 "dist"^2_C (x)$ where $C$ a convex set, and $gradient f(x) = x - P_C (x)$ where $P_C$ the projection onto $C$.
+  2. The BFGS method is regarded as one of the most robust methods for smooth, unconstrained optimization up to medium scale. For large-scale, there is a method called "limited memory BFGS". Surprisingly, BFGS can be modified to work well for nonsmooth functions with a special line search method.
+]
+
+=== Inexact Methods
+
+The local Newton's method involves finding $d^k$ such that $gradient^2 f (x^k) d^k = - gradient f(x^k)$. Quasi-Newton methods replace the Hessian with an approximation, and indirect methods further allow the flexibility to let $d^k$ approximately solve this equation (since solving this equation exactly can be costly). The goal is to find $d^k$ such that $ norm(gradient^2 f(x^k) d + gradient f(x^k))/(norm(gradient f(x^k))) <= eta_k $ for a prescribed tolerance $eta_k$. This is called the _inexact Newton's equation_.
+
+#remark[Dividing by $norm(gradient f(x^k))$ here enforces the idea that the closer $x^k$ is to a stationary point, the higher accuracy we require.]
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Local Inexact Newton's Method")],
+    [
+      S0. Choose $x^0 in RR^n, epsilon >= 0$ and set $k := 0$.\
+      S1. If $norm(gradient f(x^k)) <= epsilon$, STOP.\
+      S2. Choose $eta_k >= 0$ and determine $d^k$ such that $ norm(gradient^2 f(x^k) d + gradient f(x^k))/(norm(gradient f(x^k))) <= eta_k. $
+      S3. Set $x^(k + 1) = x^k + d^k$, increment $k$ and go to S1.
+    ],
+  ),
+)<tab:inexactnewton>
+
+#theorem[
+  Let $f : RR^n -> RR$ be $C^2$, let $overline(x)$ be a stationary point of $f$ such that $gradient^2 f(overline(x))$ is invertible. Then there exists $epsilon > 0$ such that for all $x^0 in B_epsilon (overline(x))$:
+  1. If $eta_k <= overline(eta)$ for all $k in NN$ for some $overline(eta) > 0$ sufficiently small, then @tab:inexactnewton is well-defined and generates a sequence that converges at least linearly to $overline(x)$.
+  2. If $eta_k arrow.b 0$, the rate of convergence is superlinear.
+  3. If $gradient^2 f$ is locally Lipschitz (for instance, if $f in C^3$) and $eta_k = cal(O)(norm(gradient f(x^k)))$, then the rate is quadratic.
+]
+#remark[For $eta_k = 0$, we just recover the local Newton's method. 2. and 3. strongly point their fingers at how to choose $eta_k$. 1. is theoretically important, but practically useless since $overline(eta)$ is generally unknown.]
+
+
+
+
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Globalized Inexact Newton's Method")],
+    [
+      S0. Choose $x^0 in RR^n, epsilon >= 0$, $rho > 0, p > 2$, $beta in (0, 1)$, $sigma in (0, 1/2)$ and set $k := 0$.\
+      S1. If $norm(gradient f(x^k)) <= epsilon$ STOP.\
+      S2. Choose $eta_k >= 0$ and determine $d^k$ by $ norm(gradient^2 f(x^k) d + gradient f(x^k)) <= eta_k norm(gradient f(x^k)). $ If this is not possible, or not feasible, i.e. $gradient f(x^k)^T d^k <= - rho norm(d^k)^p$ is violated, then set $d^k := - gradient f(x^k)$.\
+      S3. Determine $t_k > 0$ by Armijo, $t_k := max_{ell in NN_0} {beta^ell | f(x^k + beta^ell d^k) <= f(x^k) + beta^ell sigma gradient f(x^k)^T d^k}$.\
+      S4. Set $x^(k + 1) = x^k + t_k d^k$, increment $k$ and go to S1.
+    ],
+  ),
+)<tab:inexactnewtonglobal>
+
+#theorem[
+  Let $f : RR^n -> RR$ be $C^2$ and let ${x^k}$ be generated by @tab:inexactnewtonglobal with $eta_k arrow.b 0$. If $overline(x)$ is a cluster point of ${x^k}$ with $gradient^2 f (overline(x)) > 0$, then the following hold:
+  1. ${x^k}$ converges along the whole sequence to $overline(x)$, which is a strict locally minimizer of $f$.
+  2. For all $k$ sufficiently large, $d^k$ will be given by the inexact Newton equation.
+  3. For all $k$ sufficiently large, the full step-size $t_k = 1$ will be accepted.
+  4. The convergence is at least superlinear.
+]
+
+== Conjugate Gradient Methods for Nonlinear Optimization
+
+=== Prelude: Linear Systems
+
+Remark that, for $A > 0$ and $b in RR^n$, $ A x = b wide <=> wide x "minimizes" f(x):=1/2 x^T A x - b^T x. $
+
+#definition([$A$-conjugate vectors])[
+  Let $A > 0$ and $x, y in RR^n \\ {0}$ are called _$A$-conjugate_ if $ x^T A y = 0 $ (i.e. $x, y$ are orthogonal in the inner product induced by $A$, denoted $angle.l dot, dot angle.r_A$).
+]
+
+#lemma[
+  Let $A> 0, b in RR^n$, and $f(x) := 1/2 x^T A x - b^T x$. Let $d^0, d^1, dots, d^(n - 1)$ be (pairwise) $A$-conjugate. Let ${x^k}$ be generated by $x^(k + 1) = x^k + t_k d^k, x^0 in RR^n$, where $t_k := "argmin"_(t > 0) f(x^k + t_k d^k)$. Then, after _at most_ $n$ iterations, $x^n$ is the (unique) global minimizer $overline(x)$ ($= A^(-1) b$) of $f$. Moreover, with $g^k := gradient f(x^k)$ ($= A x^k - b$), we have $ t_k = - ((g^k)^T d^k)/((d^k)^T A d^k) > 0, $ and $(g^(k + 1))^T d^j = 0$ for all $j = 0, dots, k$.
+]

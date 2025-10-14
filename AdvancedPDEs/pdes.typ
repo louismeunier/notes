@@ -18,6 +18,7 @@
 #import "@preview/commute:0.2.0": arr, commutative-diagram, node
 
 #set align(left)
+#let boxit(arg) = box(stroke: 0.75pt, outset: 8pt, arg)
 
 #pagebreak()
 
@@ -347,9 +348,9 @@ Then, $u in cal(S)' => u|_(C^infinity_c) in cal(D)'$.
 
 == The Laplacian
 
-Recall $ laplace := sum_(i=1)^n partial_i^2 = gradient dot gradient = "tr"(gradient^2) $ is the _Laplacian_ or _Laplace operator_. Functions for which $laplace u = 0$ are called _harmonic._
+Recall $ #boxit($ laplace := sum_(i=1)^n partial_i^2 = gradient dot gradient = "tr"(gradient^2) $) $ is the _Laplacian_ or _Laplace operator_. Functions for which $laplace u = 0$ are called _harmonic._
 
-The Laplacian is a very symmetric operator, as we'll demonstrate.
+The Laplacian is a very symmetric operator, as we'll demonstrate more precisely.
 #definition[
   We say a linear differential operator $L := sum_(|alpha| <= k) a_alpha (x) partial^alpha$ commutes with $T : RR^n -> RR^n$ if $ (L u) compose T = L(u compose T), $ for every function $u$.
 ]
@@ -363,3 +364,150 @@ The Laplacian is a very symmetric operator, as we'll demonstrate.
 
   Next, notice that if we take $u in cal(S)$, then $ hat(L u) (xi) = P(xi) hat(u)(xi), $ where $P(xi)$ a polynomial in $xi$, $ P(xi) = sum_(|alpha| <= k) c_alpha (2pi i xi)^(alpha), $ using properties of derivatives interacting with $hat$. But the Fourier transform also commutes with rotations, so it must be also that $P(xi)$ rotationally invariant, i.e. $ P(xi) = P(|xi|) = sum_(j) c_j (2pi i |xi|)^j. $ Moreover, we know only even powers of $j$ are admissible since $P$ still a polynomial and $|xi| = sqrt(xi_1^2 + dots + xi_n^2)$. But remark $(2pi i |xi|)^(2 j) hat(u) = hat(laplace^j u)$, thus completing the proof.
 ]
+
+To further our discussion of the Laplacian, we recall some results from calculus.
+
+#theorem("Green's Identities")[
+  Let $Omega subset.eq RR^n$ have $S := partial Omega$ orientable and smooth, with outward unit normal given by $nu$. Denote the directional derivative in the direction $nu$ by $partial_nu$ and $dif sigma$ the induced surface measure on $S$. Let $u, v in C^2 (overline(Omega))$. Then,
+  $
+    "(G1)" & wide integral_(S) v partial_nu u dif sigma = integral_(Omega) (v laplace u - gradient u dot gradient v) dif x,\
+    "(G2)" & wide integral_(S) (v partial_nu u - u partial_nu v) dif sigma = integral_(Omega) (v laplace u - u laplace v) dif x.
+  $
+]
+#proof[
+  (G2) follows from (G1) by taking swapping the roles of $u, v$ and subtracting the results. (G1) follows from the divergence theorem applied to the vector field $v gradient u$.
+]
+
+#corollary[
+  If $u$ harmonic in $Omega$, then $ integral_(S) partial_nu u dif sigma = 0. $
+]<cor:fluxlaplace>
+
+#proof[
+  Take $v = 1$ in (G1).
+]
+
+We denote in what follows $omega_n = (2 pi^(n\/2))/(Gamma(n\/2))$ the surface area of the unit sphere $S^(n - 1)$ in $RR^n$.
+
+
+#lemma[
+  Suppose $u(x) = phi(r)$ where $r = abs(x)$, i.e. $u$ is radially symmetric. If $u$ is harmonic on $RR^n minus {0}$, then $ phi(r) = cases(
+    a + b r^(2 - n) & wide n >= 3,
+    a + b log(r) & wide n = 2,
+  ) $ for some constants $a, b$.
+]
+
+#proof[
+  Applying the chain rule, one verifies that, in polar coordinates, $ laplace u(x) = phi''(r) + (n - 1)/r phi'(r). $ Indeed, this gives rise to the so-called _radial Laplacian operator_
+  $
+    #boxit($ (dif^2)/(dif r^2) + (n - 1)/r (dif)/(dif r). $)
+  $
+  This is just an ODE in $r$, which has general solution as in the lemma.
+]
+
+#theorem("Mean Value Property of Harmonic Functions")[
+  Suppose $laplace u = 0$ in $Omega$ and for $x in Omega, r > 0$ sufficiently small such that $overline(B)_r (x) subset Omega$. Then, $u(x)$ is equal to the average of $u$ over the sphere of radius $r$ centered at $x$, i.e. $ u(x) = 1/(r^(n - 1) omega_n) integral_(S_r (x)) u(x + r y) dif sigma (y), $ where $S_r (x)$ the sphere of radius $r$ centered at $x$.
+]<thm:mvp>
+
+#proof[
+  We assume $x = 0$ by translating if necessary (which is valid since $laplace$ invariant under translations). We prove in the case $n >= 3$, and leave the two dimensional case as an exercise. Let $Omega_epsilon := B_r (0) minus B_epsilon (0)$ with $epsilon > 0$ sufficiently small. Apply (G2) to $u$ as given and $v = phi(r)$ as in the previous lemma, normalized with $a = 0, b = 1$. Then, since both $u, v$ harmonic, the RHS of (G2) is identically zero, so we are left with $ integral_(partial Omega_epsilon) v partial_nu u - u partial_nu v dif sigma = 0. $ The outward unit normal to a sphere $S_r (0)$ is given by $y/r$, so $partial_nu = 1/r sum y_i partial/(partial y_i)$. Computing the outward unit normal of $phi(r)$, we readily see $partial_nu phi (r) = (2 - n) r^(1 -n)$ on $S_r (0)$. Now, notice that $partial Omega_epsilon = S_r (0) union S^-_epsilon (0)$ (i.e. the second component of surface has opposite orientation). Splitting the integral above along both components, we get $ integral_(S_r (0)) v partial_nu u dif sigma - integral_(S_epsilon (0)) v partial_nu u dif sigma - integral_(S_r (0))u partial_nu v dif sigma + integral_(S_epsilon (0)) u partial_nu v dif sigma. $ In the two left-most integrals, since $v$ is radially symmetric, it is constant along $S_r, S_epsilon$, so we can "pull out" $v$ from each integrals; but then since $u$ harmonic, each of these integrals is identically zero from @cor:fluxlaplace. Plugging in what we computed for $partial_nu v$ and rearranging, we find what's left gives $ (2 - n) r^(1 - n) integral_(S_r (0)) u dif sigma = (2 - n) epsilon^(1-n) integral_(S_epsilon (0)) u dif sigma. $ Dividing both sides by $omega_n$, both sides form perfect averages of $u$ over their respective domains; taking $epsilon -> 0$ on the RHS, then by continuity of $epsilon$, we have convergence to $u(0)$. What's left on the LHS is precisely what we aimed to show.
+]
+
+#corollary[
+  With the same notations, hypotheses as @thm:mvp, $ n/(omega_n r^n) integral_(B_r (x)) u dif y = u(x), $ i.e. $u(x)$ is given by the average of $u$ over the _ball_ $B_r (x)$.
+]
+
+#proof[
+  This follows from writing the integral over the ball as an integral over spherical shells, and applying the theorem to each shell; the remaining terms form the normalizing constant in the ball average.
+]
+
+== The Fundamental Solution to Laplace's Equation
+
+Our goal to follow is to find a distribution $u in cal(D)'$ such that $ laplace u = delta wide "on" Omega. $
+
+
+#theorem[
+  The solution to the above problem is given by $ N(x) := cases(
+    abs(x)^(2 - n)/(omega_(n) (2 - n)) & wide n >= 3,
+    1/(2pi) log(abs(x)) & wide n = 2
+  ). $
+]
+Note that this is the same radially symmetric function "$phi$" we saw in the previous section, with $b = 0$, $a = 1/(omega_n (2 - n))$, $1/(2pi)$ for $n >=3, n = 2$ resp.. We know this function is harmonic away from the origin, so really what we have to focus on is the blow-up at the origin.
+#proof[
+  We'll prove for $n >= 3$. Our idea will be to regularize $N$ by shifting the pole at the origin, take derivatives of our regularization, and show that what results converges to $delta$. For $epsilon > 0$, define $ N^epsilon (x) := (abs(x)^2 + epsilon^2)^((2 - n)/n)/(omega_n (2 - n)). $
+  It's clear $N^epsilon -> N$ pointwise everywhere. Indeed, associating $N^epsilon, N$ with distributions in the typical sense (which is valid since they are both locally integrable), we have $N^epsilon -> N$ in $cal(D)'$ (one can see this by the fact that $|N^epsilon phi| <= |N| |phi|$, so we can apply dominated convergence to any test function $phi in C^infinity_c$). Next, one verifies $ laplace N^epsilon (x) = n/(omega_n) epsilon^2 (abs(x)^2 + epsilon^2)^(-(n + 2)/2). $ Let $psi(x) := n/omega_n (abs(x)^2 + 1)^(- (n + 2)/2)$; then one verifies $laplace N^epsilon (x) = psi_epsilon (x) := epsilon^(-n) psi(x/epsilon)$. Thus, for $phi in C^infinity_c$, we find $ angle.l laplace N^epsilon, phi angle.r = integral psi_epsilon (-x) phi(x) dif x = psi_epsilon convolve phi (0), $ using the radial symmetry of $psi$ to write as a reflection across the origin. By the following lemma:
+  #lemma[
+    Let $g in L^1$ with $a := integral g dif x$. Let $f in L^p$, $p >= 1$ (resp. $f in L^infinity$, uniformly continuous on some $V subset RR^n$). Then, $f convolve g_epsilon ->_(epsilon -> 0) a f$ in $L^p$ (resp. uniformly on $V$), where $g_epsilon (x) := epsilon^(-n) g(x/epsilon).$
+  ]
+  Using this with $g = psi$, $f = phi$, for which clearly $f$ of the "second kind", we find that $angle.l laplace N^epsilon, phi angle.r -> a phi(0).$; so, it suffices to show that the value of $a = integral psi$ is $1$. This follows by some calculus: $ integral psi(x) dif x & = integral n/omega_n (abs(x)^2 + 1)^(-(n + 2)/2) dif x \
+  & = n integral_(0)^infinity r^(n - 1)(r^2 + 1)^(- (n + 2)/2) dif r \
+  & = n/2 integral_0^infinity ((r^2)/(r^2 + 1))^((n - 2)/2) (2 r)/(r^2 + 1)^2 dif r, wide s := r^2/(r^2 + 1) \
+  &= n/2 integral_(0)^1 s^((n - 2)/2) dif s = 1. $
+]
+
+#theorem("Maximum Principle")[
+  Let $Omega subset RR^n$ open and connected. Suppose $u$ is harmonic in $Omega$, and $sup_Omega u = A < infinity$. Then, either
+  - $u(x) < A$ everywhere on $Omega$, or
+  - $u(x) = A$ everywhere on $Omega$.
+]
+
+#proof[
+  Let $S = {x in Omega | u(x) = A}$. We'll show that $S$ is both open and closed, from which it follows that $S = Omega$ or $nothing$, since $Omega$ connected, and thus the theorem follows. $S$ clearly closed, since it is equal to $u^(-1)({A})$ and $u$ continuous. For openness, let $x in S$, so $u(x) = A$. We want to show that there exists a ball $B$ centered at $x$ such that $u(x) = u(y) = A$ for all $y in B$. Suppose otherwise, that no such ball exists. Then in particular, there exists a sufficiently small $r > 0$ for which $u$ remains strictly less than $A$ on all of $B(x, r)$. But then, by the mean-value property, $ A = u(x) = n/(omega_n r^n) integral_(B(x, r)) u(y) dif y > A n/(omega_n r^n) integral_(B(x, r)) dif y = A, $ a contradiction. Thus, there exists a ball $A$ on which $u$ is constantly equal to $A$, thus $B subset S$, and so $S$ also open.
+]
+
+#corollary[With the same assumptions, suppose further $overline(Omega)$ compact, and $u$ is continuous up on $overline(Omega)$. Then, $max_(overline(Omega)) u = max_(x in partial Omega) u$.]
+
+#corollary[Suppose $overline(Omega)$ compact and $u_1, u_2$ are harmonic and equal on $partial Omega$. Then $u_1, u_2$ are equal on all of $Omega$.]
+
+#theorem("Liouville's")[
+  If $u$ is harmonic and bounded on all of $RR^n$, then $u$ is constant.
+]
+
+#proof[
+  Let $x in RR^n$ and $R > norm(x)$. By the mean-value property, $ abs(u(x) - u(0)) &= n/(R^n omega_n) abs(integral_(B(x, r)) u(y) dif y - integral_(B(0, r)) u(y) dif y) <= n/(R^n omega_n) norm(u)_infinity "vol"(D), $ where $D := B(x, R) triangle.t B(0, R)$. One verifies that $ D subset {y | R - abs(x) < abs(y) < R + abs(x)}, $ and thus $ "vol"(D) <= omega_n/n ((R + abs(x))^n - (R - abs(x))^n) = cal(O)(R^(n-1)). $ Thus, it follows that $ abs(u(x) - u(0)) <= c dot norm(u)_infinity/(R), $ where $c$ some constant independent of $R$. Thus, letting $R -> infinity$, we find that it must be that $u(x) = u(0)$, and since this holds for all $x$, $u$ must be constant.
+]
+
+== Dirichlet and Neumann Problems
+
+#let D = $#rect("D", inset: 0.2em)$
+#let N = $#rect("N", inset: 0.2em)$
+#let box(a) = $#rect(a, inset: 0.2em)$
+
+We assume that $Omega subset RR^n$ bounded and $S = partial Omega$ is $C^infinity$ (and sufficiently nice t be able to apply Green's identities). We consider the _Dirichlet problem_, $ #rect("D", inset: 0.2em) wide laplace u = f "on" Omega, u|_S = g, $ where $f, g$ are given functions, and the _Neumann problem_, $ #rect("N", inset: 0.2em) wide laplace u = f "on" Omega, u|_S = partial_nu g, $ where $nu$ the exterior outward normal to $S$.
+
+#remark[If #D has a solution it must be unique (if two solutions exist, their difference solves the equation $laplace u = 0, u|_S = 0$ which implies by the maximum principle $u =0$).]
+
+#remark[Solutions to #N are not unique, for any solution plus a constant is another solution. Moreover, solutions do not exist for arbitrary $f, g$; applying Green's identities, we find that (we assume that $Omega$ connected, but this work applies to any connected component of $Omega$) $ integral_Omega f dif x = integral_Omega laplace u dif x = integral_(S) partial_nu u dif sigma = integral_(S) g dif sigma, $ and thus $f$, $g$ must obey the integral identity that $integral_Omega f dif x = integral_S g dif sigma$.]
+
+We can reduce the study of #D to one of the following related problems, where we take either $f$ or $g$ identically zero (a similar reasoning works for #N, but we restrict our attention to the Dirichlet problem here), $ #box("D1")wide laplace v = f, v|_S = 0, wide wide #box("D2") wide laplace w = 0, v|_S = g. $
+
+Indeed, if $v, w$ solve #box("D1"), #box("D2") resp., then $u = v + w$ solves #D. Moreover, it turns out that the two are essentially equivalent.
+
+Suppose we can solve #box("D1"), and suppose $g$ has a $C^2$-extension $tilde(g)$ to $overline(Omega)$. Then, let $v$ solve $ laplace v = laplace tilde(g), v|_S = 0. $ Then, one checks $w = tilde(g) - v$ solves #box("D2").
+
+Conversely, suppose we can solve #box("D2"). Extend $f$ to be identically zero outside of $Omega$, and let $v' = f convolve N$, where $N$ the fundamental solution to the Laplacian we found earlier. Let $w$ solve $ laplace w = 0, w|_(S) = v', $ and let $v = v' - w$. Then, $ laplace v = laplace v' - laplace w = f convolve laplace N = f, $ since $laplace N = delta$ in the sense of distributions. Also, $v|_S = v'|_S - w|_(S) = v' - v' = 0$.
+
+== Green's Function for the Laplacian
+
+We assume throughout $n >= 3$ for simplicity of notation. We abuse notation to write $N(x, y) := N(x - y)$.
+
+#definition("Green's Functions")[
+  A function $G: Omega times overline(Omega) -> RR$ is called a _Green's function_ for $laplace$ on $Omega$ if
+  1. $G(x, dot) - N(x, dot)$ harmonic on $Omega$ for all $x$, and $C^0$ on $overline(Omega)$, and
+  2. $G(x, y) = 0$ for all $x in Omega, y in S$.
+]
+
+#remark[If $G$ exists, it is unique, for it solves the Dirichlet problem $laplace_y w (y) = 0$, $w|_S (y) = - N(x, y)$ for every $x in Omega$.]
+
+#theorem[If $Omega$ bounded and $S$ smooth, then $G$ exists, and for all $x in Omega$, $G$ is $C^infinity (Omega minus {x})$ as a function of $y$.]
+
+#proposition[$G(x, y) = G(y, x)$.]
+
+#proof[
+  For $x, y in Omega$, define $ u(z)= G(x, z), wide v(z) = G(y, z). $ One checks $laplace_z u = delta(x - z), laplace_z v = delta(y - z)$; applying Green's identities (which we only do formally, but can be made rigorous through proper treatment of the distributions implicitly being used), $ G(x, y) - G(y, x) & = integral_(Omega) G(x, z) delta(y - z) - G(y, z) delta(x - z) dif z \
+                    & = integral_S G(x, z) partial_nu_z G(y, z) - G(y, z) partial_(nu_z) G(x, z) dif z = 0, $ appealing to 2. in the definition of Green's functions for the final line.
+]
+
+Now, assume $G$ exists for some $Omega$, and consider again #box("D1"). Extend $G$ to $overline(Omega) times overline(Omega)$ to be zero on $partial Omega times Omega$, and extend $f$ to be zero outside of $Omega$. We claim that $ v(x) := integral_(Omega) G(x, y) f(y) dif y $ solves #box("D1"). Indeed, we may rewrite $ v(x) = integral_(Omega) N(x - y) f(y) dif y + integral_(Omega) [G(x, y) - N(x, y)] f(y) dif y, $ so $ laplace v(x) = f convolve laplace N + integral_Omega (underbrace(laplace_x (G - N), = 0)) f dif y=f convolve delta(x) = f(x), $ and clearly $v(x) = 0$ whenever $x in partial Omega$.
+
+A similar formula holds for #box("D2"), indeed $ w(x) = integral_S g(y) partial_(nu_y) G(x, y) dif y. $
+This can be shown using the previous integral formula and the remarks of the previous section linking solutions of #box("D1") and #box("D2").

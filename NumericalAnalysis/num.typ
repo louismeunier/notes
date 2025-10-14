@@ -180,3 +180,66 @@ From this, we define $ gamma(s, tau) = integral f(t) psi_(s, tau)^(ast) (t) dif 
 In a sense, $gamma(s, t)$ provides a _compromise_ between space (i.e. $tau$) and frequency/scale (i.e. $s$) and energy localization.
 
 More precisely, we'd like a quantitative decay of $gamma(s, t)$ for small $s$, i.e. small frequencies, which are the problematic range. If we Taylor expand $f$ in the definition of $gamma(s, tau)$ about $s = 0$ (and taking $tau = 0$ for convenience), one notices that $ gamma(s, 0) = 1/(sqrt(s)) [sum_(p=0)^n f^((p))(0) integral t^p/(p!) psi(t\/s) dif t + cal(O)(n + 1)]. $ If we define $M_p := integral t^p psi(t) dif t$ to be the $p$th moment of $psi$, then one clearly sees that if the first $n$ moments of $psi$ are identically 0, then $ psi(s, tau) = cal(O)(s^(n + 2)), $ those providing a qualitative decay rate for these coefficients. Thus, we generally want such vanishing moments in designing "good" wavelets.
+
+= Finite Difference (FD) Approximation
+
+Given $u in C^ell$, our goal is to approximate derivatives of $u$ by a combination of finitely many function values, i.e. $ (partial^k u)/(partial x^k)|_(x_0) = sum_(i=0)^m alpha_i u(x_i), wide k <= ell. $
+
+The vector $alpha = (alpha_i)$ is called the _finite difference stencil_. Such schemes are found by Taylor expanding about $x_0$: $ u(x) = u(x_0) + u_x (x_0) (x - x_0) + 1/2 u_(x x) (x_0) (x - x_0)^2 + cal(O)(|x - x_0|^3). $ So assuming we are given a grid of points $x_i, i = 0, dots, m$, put $overline(x)_i := x_i - x_0$; summing the above line over $i$ with $x$ evaluated on each $x_i$ gives $ sum_(i=0)^m alpha_i u(x_i) = u(x_0) (sum_(i=0)^m alpha_i) + u_x (x_0) (sum_(i=0)^m alpha_i overline(x)_i) + 1/2 u_(x x)(x_0) (sum_(i=0)^m alpha_i overline(x)_i^2) + cal(O)(sum overline(x)_i^2). $
+So, suppose we want an approximation of $u_x (x_0)$; then, we need to cancel the first and third paranthesed terms and set the second to 1; $ sum alpha_i = 0, wide sum alpha_i overline(x)_i = 1, wide sum alpha_i overline(x)_i^2 = 0. $ (Alternatively, we can just restrict this last term to be $cal(O)(|x|^2)$, or some similar consistency result.) To discuss existence/uniqueness of such schemes, we define first the _$k times m$-Vandermonde matrix_ associated to a set of points ${x_0, dots, x_m}$, $ V(x_0, dots, x_m) := mat(
+  1, dots, 1;
+  overline(x)_0, dots, overline(x)_m;
+  overline(x)_0^2, dots, overline(x)_m^2;
+  dots.v, "", dots.v;
+  overline(x)_0^k, dots, overline(x)_m^k
+). $
+
+For $k = 1$, notice that $ V alpha = vec(0, 1) $ has solution identical to our first scheme for the first derivative. Similarly, for $k = 2$, $ V alpha = vec(0, 0, 2) $ gives a stencil for the second derivative.
+
+If $m = k$, $V$ is square and so has unique solution (assuming invertibility). If $m > k$, there are multiple solutions necessarily; we can specify a solution by adding more constraints to make it square.
+
+Extending to higher-dimensions is similar, where the Taylor-expansion logic leads to extra cross terms being involved. So, for instance, in 2 dimensions, $ V = mat(
+  1, dots, 1;
+  overline(x)_0, dots, overline(x)_m;
+  overline(y)_0, dots, overline(y)_m;
+  overline(x)_0^2, dots, overline(x)_m^2;
+  overline(y)_0^2, dots, overline(y)_m^2;
+  overline(x)_0 overline(y)_0, dots, overline(x)_m overline(y)_m;
+  dots.v, "", dots.v
+). $ Of course, we aren't just restricting to approximation single derivatives in this way; for instance with the above $V$ and RHS set to $(0, 0, 0, 2, 2, 0)^t$, we obtain an approximation of the Laplacian.
+
+To apply this to numerically solving and ODE, we consider the 1-dimensional Poisson's equation with mixed boundary conditions, $ -u_(x x) = f(x), x in (0, 1) wide u(0) = a, u_x (1) = c. $
+We discretize with a uniform grid $overline(x) = (0, h, dots, n h, 1)$. On the interior points, we'll use a centered difference scheme;
+$
+  f(x_i) = - u_(x x) (x_i) =-1/(h^2) (u_(i - 1) - 2 u_i + u_(i + 1)) + cal(O)(h^2), wide 1 <= i <= n.
+$
+We know $u(x_0) = u_0 = a$ from the Dirichlet boundary condition, so on the left-hand-most-point we obtain $ -(a - 2 u_1 + u_2)/(h^2) = f(x_1). $
+For the Neumann boundary condition, we don't have access to information about "$u_(n + 2)$", so we can't directly use the centered scheme above. One idea would be to naively use a backward difference scheme, putting $ c = u_x (1) = (u_(n + 1) - u_n)/h, $ but this is of order $cal(O)(h)$, so not amazing. However, suppose we use a centered difference approximation of the first derivative here, then we'd have $ cal(O)(h^2) + (u_(n + 2) - u_n)/(2h) = c. $ Again, $u_(n + 2)$ is not defined. However, we can employ what is called a "ghost" point; assume there is some point $x_(n + 2)$, and solve for what it should be using the interior scheme. Namely, if we put $u_(n + 2) = 2h c + u_n$, then the interior scheme would say $ - (u_n - 2 u_(n+1) + u_(n + 2))/h^2 = f(x_(n + 1)), $ which implies $ - 2 (u_n - 2(u_n+1))/h^2 = f(x_(n+1)) + (2 c)/h, $ which gives now a second-order approximation.
+
+== Error, Consistency and Stability
+
+We'll discuss the results here for the specific instance of the Poisson equation, $u'' = f$, for sake of concreteness, but they hold in a more general setting. Let $U$ be a discrete approximation of $u$ (i.e., $U_i approx u(x_i)$) and $A$ a matrix for which $A U = F approx f$.
+
+#definition("Local Truncation Error (LTE)")[
+  Plug the "true" solution $hat(u) = (u_i)$ into the FD scheme, and put $tau$ for the difference vector, i.e. $ tau := A hat(u) - F. $
+]
+#definition("Global Truncation Error (GTE)")[
+  Put $E := U - hat(u)$, called the GTE. Note that $A E = - tau$.
+]
+
+#definition("Stability")[
+  Suppose we have a parametrized family of discretizations by some (maximum, say) grid size $h$, so $A^h, E^h, tau^h$ are all given. Following from the above, we know that $ norm(E^h) <= norm((A^h)^(-1)) norm(tau^h). $ we say the parametrized scheme is stable if norm((A^h)^(-1)) if bounded from above uniformly in $h$ for sufficiently small $h$.
+]
+#definition("Consistency")[
+  The scheme above is consistent if $norm(tau^h) -> 0$ as $h -> 0$.
+]
+#definition("Convergence")[
+  The scheme above converges if $norm(E^h) -> 0$ as $h->0$.
+]
+
+#theorem("Lax Equivalence")[
+  A scheme is Consistent and stable $<=>$ it is convergent.
+]
+
+= Spectral Methods
+The previous section lead to schemes that were of $cal(O)(h^p)$ error for some fixed $p$. Our schemes here lead to $cal(O)(h^p)$ error for all $p$ _if $u in C^infinity$_. Such _spectral_ methods have limited domain of application (namely linear equations, simple boundary conditions, and smooth functions), but for such problems they are very good.
