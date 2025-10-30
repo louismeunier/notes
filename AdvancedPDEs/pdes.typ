@@ -433,11 +433,11 @@ Our goal to follow is to find a distribution $u in cal(D)'$ such that $ laplace 
 ]
 Note that this is the same radially symmetric function "$phi$" we saw in the previous section, with $b = 0$, $a = 1/(omega_n (2 - n))$, $1/(2pi)$ for $n >=3, n = 2$ resp.. We know this function is harmonic away from the origin, so really what we have to focus on is the blow-up at the origin.
 #proof[
-  We'll prove for $n >= 3$. Our idea will be to regularize $N$ by shifting the pole at the origin, take derivatives of our regularization, and show that what results converges to $delta$. For $epsilon > 0$, define $ N^epsilon (x) := (abs(x)^2 + epsilon^2)^((2 - n)/n)/(omega_n (2 - n)). $
+  We'll prove for $n >= 3$. Our idea will be to regularize $N$ by shifting the pole at the origin, take derivatives of our regularization, and show that what results converges to $delta$. For $epsilon > 0$, define $ N^epsilon (x) := (abs(x)^2 + epsilon^2)^((2 - n)/2)/(omega_n (2 - n)). $
   It's clear $N^epsilon -> N$ pointwise everywhere. Indeed, associating $N^epsilon, N$ with distributions in the typical sense (which is valid since they are both locally integrable), we have $N^epsilon -> N$ in $cal(D)'$ (one can see this by the fact that $|N^epsilon phi| <= |N| |phi|$, so we can apply dominated convergence to any test function $phi in C^infinity_c$). Next, one verifies $ laplace N^epsilon (x) = n/(omega_n) epsilon^2 (abs(x)^2 + epsilon^2)^(-(n + 2)/2). $ Let $psi(x) := n/omega_n (abs(x)^2 + 1)^(- (n + 2)/2)$; then one verifies $laplace N^epsilon (x) = psi_epsilon (x) := epsilon^(-n) psi(x/epsilon)$. Thus, for $phi in C^infinity_c$, we find $ angle.l laplace N^epsilon, phi angle.r = integral psi_epsilon (-x) phi(x) dif x = psi_epsilon convolve phi (0), $ using the radial symmetry of $psi$ to write as a reflection across the origin. By the following lemma:
   #lemma[
     Let $g in L^1$ with $a := integral g dif x$. Let $f in L^p$, $p >= 1$ (resp. $f in L^infinity$, uniformly continuous on some $V subset RR^n$). Then, $f convolve g_epsilon ->_(epsilon -> 0) a f$ in $L^p$ (resp. uniformly on $V$), where $g_epsilon (x) := epsilon^(-n) g(x/epsilon).$
-  ]
+  ]<lemma:goodkernel>
   Using this with $g = psi$, $f = phi$, for which clearly $f$ of the "second kind", we find that $angle.l laplace N^epsilon, phi angle.r -> a phi(0).$; so, it suffices to show that the value of $a = integral psi$ is $1$. This follows by some calculus: $ integral psi(x) dif x & = integral n/omega_n (abs(x)^2 + 1)^(-(n + 2)/2) dif x \
   & = n integral_(0)^infinity r^(n - 1)(r^2 + 1)^(- (n + 2)/2) dif r \
   & = n/2 integral_0^infinity ((r^2)/(r^2 + 1))^((n - 2)/2) (2 r)/(r^2 + 1)^2 dif r, wide s := r^2/(r^2 + 1) \
@@ -510,4 +510,113 @@ We assume throughout $n >= 3$ for simplicity of notation. We abuse notation to w
 Now, assume $G$ exists for some $Omega$, and consider again #box("D1"). Extend $G$ to $overline(Omega) times overline(Omega)$ to be zero on $partial Omega times Omega$, and extend $f$ to be zero outside of $Omega$. We claim that $ v(x) := integral_(Omega) G(x, y) f(y) dif y $ solves #box("D1"). Indeed, we may rewrite $ v(x) = integral_(Omega) N(x - y) f(y) dif y + integral_(Omega) [G(x, y) - N(x, y)] f(y) dif y, $ so $ laplace v(x) = f convolve laplace N + integral_Omega (underbrace(laplace_x (G - N), = 0)) f dif y=f convolve delta(x) = f(x), $ and clearly $v(x) = 0$ whenever $x in partial Omega$.
 
 A similar formula holds for #box("D2"), indeed $ w(x) = integral_S g(y) partial_(nu_y) G(x, y) dif y. $
-This can be shown using the previous integral formula and the remarks of the previous section linking solutions of #box("D1") and #box("D2").
+This can be shown using the previous integral formula and the remarks of the previous section linking solutions of #box("D1") and #box("D2"). The function $partial_nu_y G(x, y)$ is called the _Poisson kernel_ of $Omega$.
+
+=== Green's Function for the Half-Space
+We let $ RR^(n+1)_+ := {(x, t) : x in RR^n, t > 0} $ denote the half-space in $RR^(n + 1)$, where we note $partial RR^(n+1)_+ = RR^(n+1) times {0}$ and where we will distinguish coordinates as $(x, t) in RR^n times RR_+$. We will show that $ G((x, t), (y, s)) := N(x - y, t - s) - N(x - y, -t - s) $ is a Green's function for $RR^(n+1)_+$. Indeed, its easy to see that $G$ harmonic in $x$, since it is a sum of harmonic functions in $x$, and also $ G((x, t), (y, 0)) = N(x - y, t) - N(x - y, -t) = 0, $ so the two properties of a Green's function are fulfilled. Indeed, one readily checks that $ u(x, t) := integral_0^infinity integral_(RR^n) G((x, t), (y, s)) f(y, s) dif y dif s $ solves the Dirichlet problem #box("D1").
+
+For the #box("D2"), we know that the outer normal derivative of $RR^(n+1)_+$ is just $- s$, and we readily compute $ - partial_s G((x, t), (y, s))thin #line(angle: 90deg, length: 2em) _(thin s = 0) = (2t)/(omega_(n + 1)) 1/(|x - y|^2 + t^2)^((n + 1)/2), $ which gives as candidate solution to #box("D2") $ u(x, t) = integral_(RR^(n)) (2 t)/(omega_(n + 1) (|x - y|^2 + t^2)^((n + 1)/2)) g(y) dif y, $ which we notice can be written as the convolution product $g convolve P_t (x)$, where $P_t (x) := (2t)/(omega_(n + 1) (|x|^2 + t^2)^((n + 1)/2))$.
+
+#theorem[
+  Suppose $g in L^1 (RR^n)$, $1 <= p <= infinity$. Then $u(x, t) = g convolve P_t (x)$ is well-defined and harmonic in $Omega = RR^(n + 1)_+$. Further, if $g$ continuous and bounded, then $u$ is continuous on all of $overline(RR^(n+1)_+)$, and $u(x, 0) = g(x)$. If $g$ simply in $L^p$ for $1 <= p < infinity$, then $u(dot, t) -> g$ in $L^p$ as $t -> 0$.
+]
+
+#proof[
+  One readily checks $P_t in L^q$ for all $1 <= q<= infinity$, which implies $g convolve P_t$ absolutely convergent; this moreover also holds by applying $laplace_x, partial_t^2$ under the integral sign, since this will only make the integral decay faster. Hence, since $G$ harmonic, it follows that $ (laplace_x + partial_t^2)u = g convolve (laplace_x + partial_t^2) P_t = 0, $ and so we indeed have a solution.
+
+  For the boundary behaviour, notice that $P_t (x) = t^(-n) P_1 (x/t)$, and so we are in position to apply @lemma:goodkernel (which directly implies the remaining results), assuming $integral P_1 (x) dif x = 1$, which we check: $ integral P_1 (x) dif x & = 2/(omega_(n + 1)) integral_0^infinity r^(n - 1)/(r^2 + 1)^((n + 1)/2) dif r \
+                         & = 1/(pi^(1/2)) (Gamma((n + 1)/2))/(Gamma(n/2)) integral_(0)^1 s^(n/2 - 1) (1 - s)^(-1/2) dif s \
+                         & = 1/(Gamma(1/2)) (Gamma((n + 1)/2))/(Gamma(n/2)) B(n/2, 1/2) = 1, $  where $B$ the Beta function, and the final simplification follows from the identity $B(s, t) = (Gamma(s) Gamma(t))/(Gamma(s + t))$.
+]
+
+#remark[This certainly does not prove uniqueness of solutions; indeed, adding $c t$ to $u$ for any constant $c$ gives another solution to #box("D2"). However, this does not contradict our earlier uniqueness theorem since $Omega$ is not bounded. However, we can sometimes guarantee uniqueness.]
+
+#theorem[
+  If $g$ continuous and vanishes at $infinity$ in $RR^(n+1)_+$, then $g convolve P_t$ is the unique solution to $#box("D2")$, and tends to zero at $infinity$ as well.
+]
+
+#proof[
+  We prove first if $g$ compactly supported, then conclude for general $g$ by an approximation argument.
+
+  Let $g$ have compact support, i.e. $g = 0$ if $|x| > a$. In particular, then, $g in L^1$, so by Young's inequality, $ norm(g convolve P_t)_infinity <= norm(g)_1 norm(P_t)_infinity <= C t^(-n), $ where $C$ some (clearly independent of $x$) constant and the final upper bound follows by direct inspection of $P_t$; thus, we see $g convolve P_t -> 0$ uniformly as $t -> 0$. This proves the result in the $t$ direction. For $0 <= t <= R$ and $|x| >2 a$, say, we see $ |u(x, t)| <= norm(g)_1 sup_(|y| < a) |P_t (x - y)| <= C R |x|^(- n - 1) ->_(|x| -> infinity) 0, $ again by inspection of $P_t$. This proves the result for $g$ compact.
+
+  For general $g in C^0$ vanishing at infinity, choose a sequence ${g_n}$ of compactly supporting functions converging uniformly to $g$. Let $u_n := g_n convolve P_t$, which we know by the previous paragraph vanishes at infinity in $overline(Omega)$. Furthermore, $ underbrace(norm(u_n - u)_infinity, "norm in" Omega) <= sup_t underbrace(norm((g_n - g) convolve P_t)_infinity, "norm in" RR^n) <= sup_t norm(g_n - g)_infinity underbrace(norm(P_t)_1, = 1) = norm(g_n - g)_infinity ->_n 0. $
+
+  To prove uniqueness, apply the maximum principle to $w = v - u$ for any two solutions $v, u$, and on rectangles of the form ${|x| < R, |t| < t_0}$. We have uniqueness in each rectangle, from which, by "growing the rectangles to infinity", we can conclude global uniqueness (in $Omega$). We leave the details as an exercise.
+]
+
+=== Green's Function for the Unit Ball
+
+Put $Omega = B = B_1 (0), S = partial B = S_1 (0)$. We will analogously construct a Green's function for the Laplacian on $Omega$ by imagining a point charge "inverted" outside the sphere for each $x in Omega$. First, an algebraic lemma;
+
+#lemma[
+  For $x, y in RR^n$, $x eq.not 0$ and $|y| = 1$, $|x - y| = ||x|^(-1) x - |x| y|$.
+]
+
+#proof[
+  $
+    |x - y|^2 & = (x - y) dot (x - y) \
+              & = |x|^2 - 2 x dot y - underbrace(|y|^2, = 1) \
+              & = ||x| y|^2 - 2 (|x|^(-1) x) dot (|x| y) + ||x|^(-1) x|^2 \
+              & = ||x|^(-1) x - |x| y|^2.
+  $
+]
+
+Recall $N(x) = (|x|^(2-n))/(omega_n (2 - n))$. Define $ G(x, y) = N(x - y) - |x|^(2 -n) N (x/(|x|^2) - y), $  which one readily sees simplifies to $ G(x, y) = 1/(omega_n (2 - n)) [ |x - y|^(2 - n) - |x/(|x|) - |x| y|^(2 -n)]. $
+From the lemma, we automatically have $G(x, y) = 0$ for any $y in S$, for then $|y| = 1$. Moreover, it's clear that $G(x, y) - N(x, y)$ harmonic, as long as $y eq.not x/(|x|^2)$, so this indeed a Green's function.
+
+We compute next the Poisson's kernel; the outward normal vector to $Omega$ is just $y$, so we compute, for $y in S$, $ P(x, y) = partial_(y) G(x, y) & = y dot gradient_y G(x, y) \
+                              & = - 1/(omega_n)[ (y dot (x - y))/(|x-y|^n) - (y dot (x - |x|^2 y))/(|x - y|^n) ] \
+                              & = 1/omega_n (1 - |x|^2)/(|x - y|^n). $
+
+#theorem[If $f in L^1(S)$ with $P$ as given, then $u(x) = integral_(S) P(x, y) f(y) dif sigma(y)$ is harmonic in $B_1(0)$.
+
+  If $f in C^0$, $u$ extends continuously to $overline(B_1(0))$ and $u|_S = f$. If $f in L^p$, then $u_r := u(r dot) ->^(r->1^-)_(L^p) f$ (i.e., $u$ converges to $f$ along "rays" to the boundary).
+]
+
+#proof[
+  We first claim the following: $ (ast) wide integral_S P(x, y) dif sigma (y) = 1 quad forall x in B \
+  (ast ast) wide lim_(r arrow.t 1) integral_(S\\V) P(r y_0, y) dif sigma(y) = 0, quad forall y_0 in S, V subset.eq S "nbhd of" y_0. $ $(ast)$ follows from the fact that $P(x, y)$ harmonic in $x$, so by the mean-value theorem, $ integral_(S) P(x, y) dif sigma(y) = omega_n P(0, y) = 1, $ by direction computation. For $(ast ast)$, note that $ P(r y_0, y) = (1 - r^2|y_0|^2)/(|r y_0 - y|^n). $ Since $y in S\\V$, $|y - y_0|$ bounded away by zero uniformly in $y$, say, $|y - y_0| > delta > 0$. Then, $ abs(r y_0 - y) >= abs(abs(y_0 - y) - |r y - y|) = |y_0 - y| + r - 1 > delta + r - 1. $ Thus, $ P(r y_0, y) <= (1 - r^2)/(delta + r - 1) ->_(r arrow.t 1) 0. $ We can pass the limit under the integral by DOM, since $S$ compact, which gives the result. Moreover, note that this limit was independent of $y_0$ and depended only on the quantity $delta$.
+
+  With this in place, suppose first $f in C^0$, so since $S$ compact, $f$ uniformly continuous, hence for all $epsilon > 0$ there exists a $delta > 0$ such that $|x - y| < delta => |f(x) - f(y)| < epsilon$. Let $V_x := {y in S | |y - x| < delta}$. Then, using $(star)$, we can bring functions independent of $y$ under the integral premultiplied by $P(x, y)$  for free, hence for any $x in S, 0 < r< 1$, $ |f(x) - u_r (x)| & = |integral_S P(r x, y) [f(x) - f(y)] dif sigma(y)| \
+  & <= abs(integral_(V_x) P(r x, y) underbrace(|f(x) - f(y)|, < epsilon) dif sigma(y)) + 2 norm(f)_infinity integral_(S\\V_x) P(r x, y) dif sigma(y) \
+  &<= epsilon + 2 norm(f)_infinity integral_(S\\V_x) P(r x, y) dif sigma(y). $ By $(ast ast)$, the last integral $-> 0$ as $r -> 1$. But recall that we showed that this limit was uniform in choice of $x$, and only depends on the size of the neighborhood $V_x$. But this was chosen by construction to be $delta$, so we can bound this latter term by $epsilon$ by taking $r$ sufficiently large, with such a choice independent of $x$. Thus, we've shown $u_r -> f$ uniformly, and since each $u_r$ continuous, $f$ must be continuous as well.
+
+  Next, suppose $f in L^p$. We'll proceed by an approximation argument by a continuous function, appealing to the previous case, and then tying everything together with generalized Youngs. Let $epsilon > 0$ and $g in C^0 (S)$ with $norm(f - g)_p <= epsilon/3$, and define $ v(x) := integral_S P(x, y) g(y) dif sigma(y). $ Then, we see that for $r$ sufficiently small, $ norm(f - u_r)_p & <= norm(f - g)_p + norm(g - v_r)_p + norm(v_r - u_r)_p \
+                  & < epsilon/3 + epsilon/3 + norm(v_r - u_r)_p, $ with the first bound clear, the second following from the previous case (uniform convergence on a compact set implies convergence in $L^p$). For the last, notice that we may write $ v_r (x) - u_r (x) & = integral P(r x, y) (f(y) - g(y)) dif y. $ The kernel $(x, y) |-> P(r x, y)$ satisfies the criteria of Young's generalized inequality for the measure space $(B, sigma)$, by $(ast ast)$ and the symmetry of the Green's function., with constant $C = 1$. Thus, we know that $norm(v_r - u_r)_p <= norm(f - g)_p <= epsilon/3$, so we are done.
+]
+
+== A Short Introduction to the Dirichlet Principle
+
+Let $Omega$ bounded, $S = partial Omega$ smooth, $u : Omega -> CC$, $u in C^1 (overline(Omega))$, and define the Dirichlet Hermitian product $ D(u, v) := integral_Omega gradient u dot overline(gradient v) dif x. $ This defines a semi-norm $D(u, u)$ (for any constant function has semi-norm 0). However, the following is a norm: $ norm(u)_((1)) := norm(u)_(H_1 (Omega)) := (D(u, u) + norm(u)_2^2)^(1/2). $  Define the space $H_1 (Omega)$ as the completion of $C^1 (overline(Omega))$ under this norm.
+
+#proposition[
+  $H_1 (Omega)$ is complete, and is the subspace of $L^2 (Omega)$ consisting of functions who's distributional derivatives are in $L^2$.
+]
+
+#proposition[
+  There exists a $C > 0$, depending on $Omega$, such that $ integral_S abs(u)^2 dif sigma <= C norm(u)_((1))^2, $ for all $u in C^1 (overline(Omega))$.
+]
+As a direct corollary of this, this implies that functions in $H_1 (Omega)$ have well-defined boundary values on $S$, and are in $L^2 (S)$.
+
+#proof[
+  #table(
+    stroke: 0pt,
+    columns: 2,
+    [Denote by $nu$ the exterior normal of $S$. Let us extend $nu$ to a constant vector field within a small neighborhood of $S$ within $Omega$, and multiply it by a cut-off function such that it is extended to a (bounded) vector field on all of $Omega$.],
+    [
+      #image("pdesvectorfield.png", width: 40%)
+    ],
+  )
+
+
+  By the divergence theorem, we may write $ integral_S abs(u)^2 dif sigma &= integral_S abs(u)^2 nu dot nu dif sigma \
+  &= integral_Omega sum_(j=1)^n (partial_j abs(u)^2 nu_j) dif x \
+  &<= sum_(j) integral_Omega [ |u partial_j overline(u) nu_j| + |overline(u) partial_j u nu_j| + abs(u)^2 abs(partial_j nu_j)] dif x \
+  &<= C' sum_(j) integral_(Omega) [ |u partial_j overline(u)| + |overline(u) partial_j u| + abs(u)^2 abs(partial_j)] , wide C' := sup_(Omega) sum_(j=1)^n (abs(nu_j) + abs(partial_j nu_j)) \
+  "(Cauchy-Schwarz)"quad &<= C' [sum_(j=1)^n 2 norm(u)_2 norm(partial_j u)_2 + n norm(u)_2^2 ] \
+  "(AM-GM)" quad &<= 2n C' norm(u)_2^2 + C' sum_(j=1)^n integral_Omega abs(partial_j u)^2 dif x \
+  &= 2n C' norm(u)^2_2 + C' D(u, u), $ hence taking $C = 2 n C'$ gives the result.
+]
+
+#definition[We further define $H_1^0 (Omega)$ to be the closure of $C_c^infinity (Omega)$ in $H_1 (Omega)$, so in particular, $f in H_1^0 (Omega) => f|_S equiv 0$.]

@@ -25,6 +25,9 @@
 
 #let impliedby = $arrow.l.double$
 
+// TODO
+#set heading(numbering: "I.1")
+
 #pagebreak()
 
 = Preliminaries
@@ -72,7 +75,7 @@ From, we immediately have the following:
 ]
 
 #proof[
-  Since $f$ continuous, $"lev"_c f$ is closed (being the inverse image of a closed set), thus $"lev"_c f$ is compact (and in particular nonempty). By Weierstrass, $f$ takes a minimimum over $"lev"_c f$, namely there is $overline(x) in "lev"_c f$ with $f(overline(x)) <= f(x) <= c$ for each $x in "lev"_c f$. Also, $f(x) > c$ for each $x in.not "lev"_c f$ (by virtue of being a level set), and thus $f(overline(x)) <= f(x)$ for each $x in RR^(n)$. Thus, $overline(x)$ is a global minimizer and so the theorem follows.
+  Since $f$ continuous, $"lev"_c f$ is closed (being the inverse image of a closed set), thus $"lev"_c f$ is compact (and in particular nonempty). By Weierstrass, $f$ takes a minimum over $"lev"_c f$, namely there is $overline(x) in "lev"_c f$ with $f(overline(x)) <= f(x) <= c$ for each $x in "lev"_c f$. Also, $f(x) > c$ for each $x in.not "lev"_c f$ (by virtue of being a level set), and thus $f(overline(x)) <= f(x)$ for each $x in RR^(n)$. Thus, $overline(x)$ is a global minimizer and so the theorem follows.
 ]
 
 == Convex Sets and Functions
@@ -82,7 +85,7 @@ From, we immediately have the following:
 ]
 
 
-#definition("Convex Fucntions")[
+#definition("Convex Functions")[
   Let $C subset RR^n$ be convex. Then, $f : C -> RR$ is called
   1. _convex (on $C$)_ if $ f(lambda x + (1 - lambda) y) <= lambda f(x) + (1 - lambda) f(y), $ for every $x, y in C$ and $lambda in (0, 1)$;
   2. _strictly convex (on $C$)_ if the inequality $<=$ is replaced with $<$;
@@ -120,7 +123,7 @@ We focus on the problem $ min_(x in RR^n) f(x), $ where $f : RR^n -> RR$ is cont
 ]
 
 #proof[
-  Assume otherwise, that there is a direciton $d in RR^n$ for which the $f'(overline(x); d) < 0$, i.e. $ lim_(t -> 0^+) (f(overline(x) + t d) - f(overline(x)))/t < 0. $ Then, for all sufficiently small $t > 0$, we must have $ f(overline(x) + t d ) < f(overline(x)). $ Moreover, since $X$ open, then for $t$ even smaller (if necessary), $overline(x) + t d$ remains in $X$, thus $overline(x)$ cannot be a local minimizer.
+  Assume otherwise, that there is a direction $d in RR^n$ for which the $f'(overline(x); d) < 0$, i.e. $ lim_(t -> 0^+) (f(overline(x) + t d) - f(overline(x)))/t < 0. $ Then, for all sufficiently small $t > 0$, we must have $ f(overline(x) + t d ) < f(overline(x)). $ Moreover, since $X$ open, then for $t$ even smaller (if necessary), $overline(x) + t d$ remains in $X$, thus $overline(x)$ cannot be a local minimizer.
 ]
 
 #theorem("Fermat's Rule")[
@@ -136,7 +139,7 @@ We recall the following from Calculus:
   Let $f : D subset RR^n -> RR$ be twice continuously differentiable, then for each $x, y in D$, there is an $eta$ lying on the line between $x$ and $y$ such that $ f(y) = f(x) + gradient f(x)^T (y - x) + 1/2 (y - x)^T gradient^2 f(eta) (y - x). $
 ]
 
-#theorem("2nd-order Optimality Conitions")[
+#theorem("2nd-order Optimality Conditions")[
   Let $X subset.eq RR^n$ open and $f : X-> RR$ twice continuously differentiable. Then, if $x$ a local minimizer of $f$ over $X$, then the Hessian matrix $gradient^2 f(x)$ is positive semi-definite.
 ]
 
@@ -247,7 +250,7 @@ We denote by $RR^(m times n)$ the space of real-valued $m times n$ matrices (i.e
 ]
 
 #proof[
-  We first note that all of these $sup$'s are truely $max$'s since they are maximizing continuous functions over compact sets.
+  We first note that all of these $sup$'s are truly $max$'s since they are maximizing continuous functions over compact sets.
 
   Let $A in RR^(m times n)$. The first "In addition" equality follows from positive homogeneity, since $x/(norm(x)_ast)$ a unit vector. For the second, note that "$<=$" is trivial, since we are supping over a larger (super)set. For "$>=$", we have for any $x$ with $norm(x)_ast <=1$, $ norm(A x)_ast = norm(x)_(ast) norm(A x/(norm(x)_ast))_ast <= norm(A x/(norm(x)_ast)). $ Supping both sides over all such $x$ gives the result.
 
@@ -282,9 +285,9 @@ We denote by $RR^(m times n)$ the space of real-valued $m times n$ matrices (i.e
   Let $A, B in RR^(n times n)$ with $norm(I - B A) < 1$ for $norm(dot)$ submultiplicative. Then, $A$ and $B$ are invertible, and $norm(B^(-1)) <= (norm(A))/(1 - norm(I - B A))$.
 ]
 
-= Descent Methods
+== Descent Methods
 
-== A General Line-Search Method
+=== A General Line-Search Method
 
 We deal with the unconstrained problem $ min_(x in RR^n) f(x) wide (star.filled). $
 #definition("Descent Direction")[
@@ -340,7 +343,7 @@ We deal with the unconstrained problem $ min_(x in RR^n) f(x) wide (star.filled)
   If $T$ is well-defined for all $C^1$-functions, we say $T$ well-defined.
 ]
 
-=== Global Convergence of @tab:A1
+==== Global Convergence of @tab:A1
 
 #definition("Efficient step-size")[
   Let $f in C^1(RR^n)$. The step-size rule $T$ is called _efficient_ for $f$ if there exists $theta > 0$ such that $ f(x + t d) <= f(x) - theta ((gradient f(x)^T d)/norm(d))^2, wide forall t in T(x, d), thin thin (x, d) in cal(A)_f. $
@@ -358,7 +361,7 @@ We deal with the unconstrained problem $ min_(x in RR^n) f(x) wide (star.filled)
   By 1., we know $ ((gradient f(x^k)^T d^k)/norm(d^k))^2 >= c^2 norm(gradient f(x^k))^2. $ Put $kappa := theta c^2$, then these two inequalities imply $ f(x^(k + 1)) <= f(x^k) - kappa dot norm(gradient f(x^k))^2. wide (ast) $ Let $overline(x)$ be a cluster point of ${x^k}$. As ${f(x^k)}$ is monotonically decreasing (by construction in the algorithm), and has cluster point $f(overline(x))$ by continuity, it follows that $f(x_k) -> f(overline(x))$ along the whole sequence. In particular, $f(x^(k + 1)) - f(x^k) -> 0$; thus, from $(ast)$, $ 0 <= kappa norm(gradient f(x^k))^2 <= f(x^(k)) - f(x^(k + 1)) -> 0, $ and thus $gradient f(x^k) -> gradient f(overline(x)) = 0$, so indeed $overline(x)$ a stationary point of $f$.
 ]
 
-== The Gradient Method
+=== The Gradient Method
 
 We specialize @tab:A1 here. Specifically, we'll take $ d^k := - gradient f(x^k); $ it's known that $ (-gradient f(x^k))/(norm(gradient f(x^k))) = "argmin"_(d : norm(d) <= 1) gradient f(x^k)^T d, $ with $norm(dot)$ the $2$ norm.
 
@@ -420,9 +423,9 @@ We now prove convergence of an algorithm based on the Armijo Rule:
   The proof above shows, the following: Let ${x^k}$ such that $x^(k + 1) := x^k + t_k d^k$ for $d^k in RR^n, t_k > 0$, and let $f(x^(k + 1)) <= f(x^k)$ and $x^k ->^K overline(x)$ such that $d^k = - gradient f(x^k)$, $t_k = T_A (x^k, d^k)$ for all $k in K$. Then $gradient f(overline(x)) = 0$; i.e., all of the "focus" is on the subsequence along $K$. The only time we needed the whole sequence was to use the fact that $f(x^k) -> f(overline(x))$ along the whole sequence.
 ]
 
-== Newton-Type Methods
+=== Newton-Type Methods
 
-=== Convergence Rates and Landau Notation
+==== Convergence Rates and Landau Notation
 
 
 #definition[
@@ -449,7 +452,7 @@ We now prove convergence of an algorithm based on the Armijo Rule:
   2. the convergence is quadratic $<=>$ $norm(x^(k + 1) - overline(x)) = cal(O)(norm(x^k- overline(x))^2)$.
 ]
 
-=== Newton's Method for Nonlinear Equations
+==== Newton's Method for Nonlinear Equations
 
 We consider the nonlinear equation $ F(x) = 0, wide (ast) $ where $F : RR^n -> RR^n$ is smooth (continuously differentiable). Our goal is to find a numerical scheme that can determine approximate zeros of $F$, i.e. solutions to $(ast)$. The idea of Newton's method for such a problem, is, given $x^k in RR^n$, to consider the (affine) linear approximation of $F$ about $x^k$, $ F_k : x |-> F(x^k) + F' (x^k) (x - x^k), $ where $F'$ the Jacobian of $F$. Then, we compute $x^(k + 1)$ as a solution of $F_k (x) = 0$. Namely, if $F'(x^k)$ invertible, then solving for $F_k (x^(k + 1)) = 0$, we find $ x^(k + 1) = x^k - F' (x^k)^(-1) F(x^k). $ More generally, one solves $F'(x^k) d = - F(x^k)$ and sets $x^(k + 1) := x^k + d^k$.
 \
@@ -524,7 +527,7 @@ Specifically, we have the following algorithm:
                                   & <= c norm(F(x^k) - F(overline(x)) - F'(x^k)(x^k - overline(x))). $ This final line is little $cal(o)$ of $norm(x^k - overline(x))$ or this quantity squared by the previous lemma, which proves the result depending on the assumptions of 2., 3..
 ]
 
-=== Newton's Method for Optimization Problem
+==== Newton's Method for Optimization Problem
 
 Consider $ min_(x in RR^n) f(x), $ with $f : RR^n -> RR$ twice continuously differentiable. Recall that if $overline(x)$ a local minimizer of $f$, $gradient f(overline(x)) = 0$. We'll now specialize Newton's to $F := gradient f$:
 #figure(
@@ -602,7 +605,7 @@ We can see from this example that this truly a local algorithm. A general global
   4. if $gradient^2 f$ locally Lipschitz, ${x^k} -> overline(x)$ quadratically.
 ]
 
-== Quasi-Newton Methods
+=== Quasi-Newton Methods
 
 
 In Newton's, in general we need to find $ d^k "solving" gradient^2 f(x^k) d = - gradient f(x^k). $ Advantages/disadvantages:\
@@ -613,7 +616,7 @@ Dealing with the second, there are two general approaches:\
 - _Indirect Methods:_ replace $gradient^2 f(x^k)^(-1)$ by $B_k$ approximating it;
 where $H_k, B_k$ reasonably computational, and other convergence results are preserved.
 
-=== Direct Methods
+==== Direct Methods
 The typical conditions we put on $H_(k + 1)$ as described above are:
 1. $H_(k + 1)$ symmetric
 2. $H_(k + 1)$ satisfies the _Quasi-Newton equation_ (QNE) $ H_(k + 1) s^k = y^k, wide wide s^k := x^(k + 1) - x^k, wide y^k := gradient f(x^(k + 1)) - gradient f(x^k) $
@@ -726,7 +729,7 @@ We turn to analyze @tab:BFGS.
   2. The BFGS method is regarded as one of the most robust methods for smooth, unconstrained optimization up to medium scale. For large-scale, there is a method called "limited memory BFGS". Surprisingly, BFGS can be modified to work well for nonsmooth functions with a special line search method.
 ]
 
-=== Inexact Methods
+==== Inexact Methods
 
 The local Newton's method involves finding $d^k$ such that $gradient^2 f (x^k) d^k = - gradient f(x^k)$. Quasi-Newton methods replace the Hessian with an approximation, and indirect methods further allow the flexibility to let $d^k$ approximately solve this equation (since solving this equation exactly can be costly). The goal is to find $d^k$ such that $ norm(gradient^2 f(x^k) d + gradient f(x^k))/(norm(gradient f(x^k))) <= eta_k $ for a prescribed tolerance $eta_k$. This is called the _inexact Newton's equation_.
 
@@ -785,9 +788,9 @@ The local Newton's method involves finding $d^k$ such that $gradient^2 f (x^k) d
   4. The convergence is at least superlinear.
 ]
 
-== Conjugate Gradient Methods for Nonlinear Optimization
+=== Conjugate Gradient Methods for Nonlinear Optimization
 
-=== Prelude: Linear Systems
+==== Prelude: Linear Systems
 
 Remark that, for $A > 0$ and $b in RR^n$, $ A x = b wide <=> wide x "minimizes" f(x):=1/2 x^T A x - b^T x. $
 
@@ -797,4 +800,236 @@ Remark that, for $A > 0$ and $b in RR^n$, $ A x = b wide <=> wide x "minimizes" 
 
 #lemma[
   Let $A> 0, b in RR^n$, and $f(x) := 1/2 x^T A x - b^T x$. Let $d^0, d^1, dots, d^(n - 1)$ be (pairwise) $A$-conjugate. Let ${x^k}$ be generated by $x^(k + 1) = x^k + t_k d^k, x^0 in RR^n$, where $t_k := "argmin"_(t > 0) f(x^k + t_k d^k)$. Then, after _at most_ $n$ iterations, $x^n$ is the (unique) global minimizer $overline(x)$ ($= A^(-1) b$) of $f$. Moreover, with $g^k := gradient f(x^k)$ ($= A x^k - b$), we have $ t_k = - ((g^k)^T d^k)/((d^k)^T A d^k) > 0, $ and $(g^(k + 1))^T d^j = 0$ for all $j = 0, dots, k$.
+]
+
+#proof[
+  The formula for $t_k$ was proven in an exercise. To prove the latter statement, note that $ (g^(k + 1))^T d^k & = (A x^(k + 1) - b)^T d^k \
+                    & = (A x^k - b + t_k A d^k)^T d^k \
+                    & = (g^k)^T d^k + t_k (d^k)^T A d^k \
+                    & = (g^k)^T d^k - (g^k)^T d^k = 0. $
+
+  Moreover, for all $i, j = 0, dots, k$ with $i eq.not j$, we have that $ (g^(i + 1) - g^i)^T d^j = (A x^(i + 1) - A x^(i))^T d^j = t_i (d^i)^T A d^j = 0, $ hence for all $j = 0, dots, k$, $ (g^(k + 1))^T d^j = (g^(j+1))^T d^j + sum_(i=j+1)^k (g^(i+1) - g^i)^T d^j = 0. $ Thus, $g^n$ is orthogonal to the $n$ linearly independent vectors ${d^0, dots, d^(n+1)}$, which implies $g^n = 0$, thus proving the conclusion.
+]
+
+We want to obtain these $A$-conjugate vectors, while simultaneously ensuring that they are descent directions at each step, i.e. that $gradient f(x^k)^T d^k < 0$ for all $k = 0, dots, n - 1$. We do this algorithmically.
+
+Assume $gradient f(x^0) eq.not 0$ (else we are done), and take $d^0 := - gradient f(x^0)$. Suppose then we have $l + 1$ $A$-conjugate vectors $d^0, dots, d^l$ with $gradient f(x^i)^T d^i < 0$ for each $i$. Suppose $ d^(l+ 1) := - g^(l + 1) + sum_(i=0)^l beta_(i l) d^i, $ where $g^(l + 1)$ is "valid" to be used since it is not in the span of ${d^0, dots, d^l}$, and ${beta_(i l)}$ are scalars to be determined. The condition $(d^(l + 1))^T A d^j = 0$ readily implies that $ beta_(j l) := ((g^(l + 1))^T A d^j)/((d^j)^T A d^j), quad j = 0, dots, l. $ Then, it follows that $(g^(l+1))^T d^(l+1) = - norm(g^(l+1))^2 < 0$, and since $g^(l+1) = gradient f(x^(l+1))$ by definition, it follows $d^(l+1)$ a descent direction. Thus, it must be that $ g^(j + 1) - g^j = A x^(j + 1) - A x^j = t_j A d^j, $ and so with $t_j > 0$, $ (g^(l+1))^T A d^j = 1/t_j (g^(l+1))^T (g^(j+1) - g^j), $ and thus $ beta_(j l) = cases(
+  0 & j = 0\, dots\, l - 1,
+  (norm(g^(j + 1))^2)/(norm(g^l)^2) & j = l
+), $ and thus our update of $d^(l+1)$ reduces to $ d^(l+1) := - g^(l+1) + beta_l d^l, wide beta_l := beta_(l l). $ In summary, this gives the following algorithm.
+
+
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "CG method for linear equations")],
+    [
+      S0. Choose $x^0 in RR^n$ and $epsilon >= 0$, set $g^0 := A x^0 - b$, $d^0 := - g^0$ and initiate $k = 0$.\
+      S1. If $norm(g^k) <= epsilon$, STOP.\
+      S2. Put $ t_k := (norm(g^k)^2)/((d^k)^T A d^k). $
+      S3. Set $ x^(k + 1) & = x^k + t_k d^k \
+      g^(k + 1) & = g^k + t_k A d^k \
+         beta_k & = norm(g^(k + 1))^2/(norm(g^k)^2) \
+      d^(k + 1) & = - g^(k + 1) + beta_k d^k. $
+      S4. Increment $k$ and go to S1.
+
+    ],
+  ),
+)<tab:CGlinear>
+
+#theorem("Convergence of CG Method")[
+  Let $A in RR^(n times n)$  be symmetric positive definite, $b in RR^n$ and $f(x) := 1/2 x^T A x - b^T x$. Then, @tab:CGlinear will produce the global miniumum $overline(x)$ of $f$ after at most $n$ interations. If $m in {0, dots, n}$ is the smallest number such that $x^m = overline(x)$, then the following hold as well:
+  $
+    (d^k)^T A d^j = 0, (g^k)^T g^j = 0, (g^k)^T d^j = 0, wide (k = 1, dots, m, j = 0, dots, k - 1),\
+    (g^k)^T d^k = - norm(g^k)^2 wide (k = 0, dots, m).
+  $
+]
+
+=== The Fletcher-Reeves Method
+
+We want to apply the same method as the previous section for non-quadratic and non-convex functions. The isue we need to resolve, though, is that the step-size rule in S2. of @tab:CGlinear is no longer appropriate. To resolve, we introduce the _Strong Wolfe-Powell rule._ Choose $sigma in (0, 1), rho in (sigma, 1)$. The strong WP rule for a differentiable $f : RR^n -> RR$ reads $ T_("SWP") : (x, d) in cal(A)_f |-> {t > 0 quad #line(angle: 90deg) quad#stack(
+    spacing: 1em,
+    [$f(x + t d) <= f(x) + sigma t gradient f(x)^T d$],
+    [$|gradient f(x + t d)^T d| <= - rho gradient f(x)^T d$],
+  )}, $ noting that clearly $T_"SWP" (x, d) subset T_"WP" (x, d)$.
+
+
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Fletcher-Reeves")],
+    [
+      S0. Choose $x^0 in RR^n$, $epsilon >= 0$, $0 < sigma < rho < 1/2$, set $d^0 := - gradient f(x^0)$ and $k = 0$.\
+      S1. If $norm(gradient f(x^k)) <= epsilon$, STOP.\
+      S2. Determine $t_k > 0$ such that $ f(x^k + t_k d^k) <= f(x^k) + sigma t_k gradient f(x^k)^T d^k, \
+      |gradient f(x^k + t_k d^k)^T d^k| <= - rho gradient f(x^k)^T d^k. $
+      S3. Set $   x^(k + 1) & = x^k + t_k d^k \
+      beta_k^"FR" & = norm(gradient f(x^(k+1)))^2/norm(gradient f(x^k))^2 \
+        d^(k + 1) & = - gradient f(x^(k + 1)) + beta_k^"FR" d^k. $
+      S4. Increment $k$ and go to S1.
+    ],
+  ),
+)<tab:fletcherreeves>
+
+#lemma[
+  Let $f : RR^n -> RR$ be $C^1$ and bounded from below and $(x, d) in cal(A)_f$. Then $T_"SWP" (x, d) eq.not nothing$.
+]
+#proof[
+  Define $phi, psi : RR -> RR$ by $ phi(t) := f(x + t d), wide psi(t) = f(x) + sigma t gradient f(x)^T d, $ noting that $psi$ affine linear with negative slope. We need to show, then, that $phi(t) <= psi(t)$ and $|phi'(t)| <= -rho phi'(0)$ for some $t > 0$. Now, $phi(0) = psi(0)$, and $phi'(0) < psi'(0)$. By Taylor's theorem, $phi(t) < psi(t)$ for all $t > 0$ sufficiently small. Define $ t^ast = min{t > 0 | phi(t) = psi(t)}. $ This exists, since $psi(t) -> - infinity$ as $t -> infinity$, and $phi(t)$ is bounded from below; for small $t$, $phi(t) < psi(t)$, so by continuity there must exist $t > 0$ for which $phi(t) = psi(t)$, so $t^ast$ well-defined. Moreover, we have then that $phi'(t^ast) >= psi'(t^ast)$, which we can see by Taylor/graphically.
+
+  Now, we consider two cases. Suppose first that $phi'(t^ast) < 0$. Then, $ |phi'(t^ast)| = - phi'(t^ast) <=- psi'(t^ast) = - sigma gradient f(x)^T d. $
+  We know $sigma < rho$, so we're done, so this is further upper bounded by $- rho gradient f(x)^T d = -rho phi'(0)$, so we're done in this case with $t^ast$.
+
+  Next, suppose $phi'(t^ast) >= 0$. $t^ast$ won't cut it in this case, but we can see that there exists $t^(ast ast) in (0, t^ast]$, by intermediate value theorem, for which $phi'(t^(ast ast)) = 0$. Since $t^ast$ the _first_ time $phi, psi$ are equal (being the minimum) and $t^(ast ast) <= t^ast$, it follows that we have $phi(t^(ast ast)) < psi(t^(ast ast))$. Also trivially, $ |phi'(t^(ast ast))| = 0 <= - rho phi'(0), $ since $phi'(0) < 0$, and thus $t^(ast ast)$ provides the appropriate $t$ value for the claims, so we're done.
+]
+
+#remark[In particular, this immediately gives the well-definedness of @tab:fletcherreeves, assuming ${x^k} times {d^k} in cal(A)_f$.]
+
+#lemma[
+  Let $f : RR^n -> RR$ be $C^1$ and bounded from below. Let ${x^k}, {d^k}$ be generated by @tab:fletcherreeves. Then, $ - sum_(j=0)^k rho^j <= (gradient f(x^k)^T d^k)/(norm(gradient f(x^k))^2) <= -2 + sum_(j=0)^k rho^j, $ for all $k in NN$.
+]
+
+#proof[
+  We induct on $k$. For $k = 0$, the claim reads $ - 1 <= - 1 <= -2 + (1) = -1, $ since $d^0 = - gradient f(x^0)$, so it holds trivially.
+
+  Suppose the claim for some fixed $k in NN$. We have $ rho gradient f(x^k)^T d^k <= gradient f(x^(k+1))^T d^k <= - rho gradient f(x^k)^T d^k $ by (S2), which implies by a little algebraic manipulation $ -1 + rho (gradient f(x^k)^T d^k)/(norm(gradient f(x^k))^2) <= -1 + (gradient f(x^(k+1))^T d^k)/(norm(gradient f(x^k))^2) <= -1 - rho (gradient f(x^k)^T d^k)/(norm(gradient f(x^k))^2). wide (star) $ In addition, by (S3), we know $ (gradient f(x^(k+1))^T d^(k + 1))/(norm(gradient f(x^(k+1)))^2) &= (gradient f(x^(k+1))^T (- gradient f(x^(k+1)) + beta_k d^k))/(norm(gradient f(x^(k+1)))^2)\
+  &= -(gradient f(x^(k+1))^T gradient f(x^(k+1)))/(norm(gradient f(x^(k+1)))^2) + beta_k (gradient f(x^(k+1))^T d^k)/(norm(gradient f(x^(k+1)))^2) \
+  &= -1 + (gradient f(x^(k + 1))^T d^k)/(norm(gradient f(x^k))^2), $ thus $
+    (gradient f(x^(k+1))^T d^(k + 1))/(norm(gradient f(x^(k+1)))^2) = -1 + (gradient f(x^(k + 1))^T d^k)/(norm(gradient f(x^k))^2) wide (star star) // ?
+  $
+  thus $  - sum_(j = 0)^(k + 1) rho^j & = -1 - sum_(j=1)^(k + 1) rho^j \
+                               & = -1 + rho (-sum_(j=0)^(k) rho^j) \
+  ("induction hypothesis")wide & <= -1 + rho (gradient f(x^(k))^T d^k)/(norm(gradient f(x^k))^2) \
+                   (star) wide & <= -1 + (gradient f(x^(k + 1))^T d^k)/(norm(gradient f(x^k))^2) wide (dagger) \
+                   (star) wide & <= -1 - rho (gradient f(x^k)^T d^k)/(norm(gradient f(x^k))^2) \
+  ("induction hypothesis")wide & <= -1 + rho sum_(j=0)^k rho^j = -2 + sum_(j=0)^(k + 1) rho^j. $
+  But by $(ast ast)$, the line $(dagger) = (gradient f(x^(k+1))^T d^(k+1))/(norm(gradient f(x^(k+1)))^2)$, so we've shown the claim.
+]
+
+#theorem[
+  Let $f : RR^n -> RR$ be $C^1$ and bounded from below, and let ${x^k}, {d^k}$ be generated by @tab:fletcherreeves. Then,
+  1. @tab:fletcherreeves is well-defined,
+  2. $gradient f(x^k)^T d^k < 0$ for all $k in NN$ (it is a descent method).
+]
+
+#proof[
+  By the previous lemma, $ (gradient f(x^k)^T d^k)/(norm(gradient f(x^k))^2) <= -2 + sum_(j=0)^k rho^j <= -2 + sum_(j=0)^infinity rho^j = -2 + 1/(1 - rho) = (2 rho - 1)/(1 - rho) < 0, $ since $rho < 1/2$. Multiplying both sides by $norm(gradient f(x^k))^2$ gives 2. Combining 2. with the previous previous lemma and the accompanying remarks, 1. follows.
+]
+
+#theorem("Al-Baali")[
+  Let $f : RR^n -> RR$ be $C^1$ and bounded from below, such that $f$ is Lipschitz on $"lev"_(f(x_0)) f$, and let ${x^k}, {d^k}$ be generated by @tab:fletcherreeves. Then, $ lim_(k -> infinity) norm(gradient f(x^k)) = 0. $
+]
+
+== Least-Squares Problems
+
+Supposing we wish to find the root of a function $F : RR^n -> RR^m$, we know that when $m = n$, then Newton's method is applicable. More generally, though, for $m eq.not n$, such methods are not available. However, we can approach this by equivalently considering the optimization problem $ min_x 1/2 ||F(x)||^2. $ Such a problem, i.e. "minimizing the square of the norm", will be considered here. Naturally, since this is now a real-valued objective function, we could just apply Newton's method to it, but we'll do things a little more interesting.
+
+=== Linear Least-Squares
+
+Suppose $F(x) = A x - b$ an affine linear function for $A in RR^(m times n), b in RR^m$; the least-squares problem just becomes $ min_x 1/2 norm(A x - b)^2. wide (dagger) $
+
+#theorem[
+  1. $overline(x)$ solves $(dagger)$ $<=>$ $overline(x)$ solves $A^T A x = A^T b$.
+  2. $(dagger)$ always has a solution.
+  3. $(dagger)$ has a unique solution $<=>$ $"rank"(A) = n$.
+]
+
+#proof[
+  1. With $f(x) := 1/2 norm(A x - b)^2$ the function of interest, one readily checks $gradient f(x) = A^T A x - A^T b$ (by chain rule, or by expanding $f$ as a "proper" quadratic) and $gradient^2 f(x) = A^T A$. Thus, since $A^T A >= 0$ always, $f$ is convex so stationary points are equivalent to minimization points, and thus we need $gradient f(x) = 0 <=> A^T A x = A^T b$.
+  2. By 1., we have a solution $<=>$ $A^T b$ in the image of $A^T A$; but this is equal to the image of $A^T$, and obviously $A^T b$ in the image of $A^T$.
+  3. Similarly to the previous, we will have a unique solution to $A^T A x = A^T b$ iff $A^T A$ has full rank $<=>$ $A$ has full rank.
+]
+
+=== Gauss-Newton for Nonlinear Least-Squares
+
+Suppose $F in C^1$. Inspired by Newton's method, we will, instead of linearizing $f(x) := 1/2 norm(F(x))^2$, we will linearize $F(x)$; plugging this linearization back into the norm squared, we expect a quadratic function. Indeed, suppose we have an iterate $x^k in RR^n$; then, the linearization of $F$ about $x^k$ is given by $ F_k (x) = F(x^k) + F'(x^k) (x - x^k). $ Then, $ q(x) := 1/2 norm(F_k (x))^2 = dots.c = 1/2 x^T (F'(x^k)^T F'(x^k)) x + [F'(x^k)^T F(x^k) - F'(x^k)^T F'(x^k) x^k]^T x + "const", $ where $"const"$ independent of $x$. Assume $F'(x^k)$ of full rank $n$. Then, $F'(x^k)^T F'(x^k) > 0$, and so by the previous section, $ x^+ in "argmin"(q) & <=> gradient q(x^+) = 0 \
+                   & <=> F'(x^k)^T F'(x^k) x^+ + F'(x^k)^T F(x^k) - F'(x^k)^T F'(x^k) x^k = 0 \
+                   & <=> x^+ = x^k underbrace(- (F'(x^k)^T F'(x^k))^(-1) F'(x^k)^T F(x^k), := d^k). $
+Thus, this inspires the Gauss-Newton Method; supposing we can find $d$ as a solution to the _Gauss-Newton Equations_ (GNE), $ F'(x^k)^T F(x^k) d = - F'(x^k)^T F(x^k), $ then we update $x^(k + 1) = x^k + d^k$. In particular, with this choice, $ gradient f(x)^T d^k = -(underbrace(F'(x^k)^T F(x)^k, = u))^T underbrace((F'(x^k)^T F'(x^k))^(-1), >= 0) (underbrace(F'(x^k)^T F(x^k), = u)) < 0, $ i.e., if $gradient f(x^k) eq.not 0$ and $F'(x^k)$ of rank $n$, then $d^k$ a descent direction.
+
+The Newton's Equation for the same function $f$ would read $ (F'(x^k)^T F'(x^k) + S(x^k)) d = - F'(x^k)^T F(x^k), $ where $ S(x^k) = sum_(i=1)^m F_i (x^k) gradient^2 F_i (x^k); $ if $S$ were zero, then this the same as the GNE (though of course, this will not hold in general).
+
+= Constrained Optimization
+
+== Optimality Conditions for Constrained Problems
+
+Consider $ min f(x) "s.t." #stack(spacing: 1em, $g_i (x) <= 0 forall i = 1, dots, m,$, $h_j (x) = 0 forall j = 1, dots, p$), $ where we will assume $f, g_i, h_j : RR^n -> RR$ are continuously differentiable. We call such a problem a _nonlinear program_. We put as before the _feasible set_ $ X := {x | g_i (x) <= 0 forall_(i=1)^m, h_j (x) = 0 forall_(j=1)^p}. $
+We'll also define the index sets $ I := {1, dots, m}, wide J := {1, dots, p}, $ and the _active indices_ for a point $overline(x)$ by $ I(overline(x)) := {i in I | g_i (overline(x)) = 0} subset I. $
+
+=== First-Order Optimality Conditions
+
+Consider the slightly more abstract problem $ min_x f(x) "s.t." x in S wide (dagger), $ with $f : RR^n -> RR$ in $C^1$ and $S subset RR^n$ closed and nonempty.
+
+#definition("Cones")[
+  A nonempty set $K subset RR^n$ is said to be a _cone_ if $ lambda v in K quad forall v in K, lambda >= 0, $ i.e. $K$ is closed under positive scalings of vectors in $K$.
+]
+
+#remark[
+  We can in fact replace $RR^n$ with any real vector space $V$, for a cone living in $V$.
+]
+
+We have that
+- any vector space;
+- the nonnegative reals;
+- $Lambda := {(x, y)^T | x, y in K, x^T y = 0}$, where $K$ a given cone;
+- and  $S_+^n := {A in RR^(n times n) | A >= 0}$ (embedded in an appropriate space of matrices)
+are all cones, for instance.
+
+#definition[
+  Let $S subset RR^n$, $overline(x) in S$. Then $ T_s (overline(x)) := {d in R^n | exists {x^k in S} -> overline(x), {t_k} arrow.b 0 "s.t." (x^k - overline(x))/(t_k) ->d} $ is called the _tangent cone of $S$ at $overline(x)$_.
+]
+
+#proposition[
+  Let $S subset RR^n$, $x in S$. Then $T_S (x)$ is a closed cone.
+]
+
+#theorem("Basic First-Order Optimality Conditions")[
+  Let $overline(x)$ be a local minimizer of $(dagger)$. Then,
+  1. $gradient f(overline(x))^T d >= 0$ for all $d in T_S (overline(x))$;
+  2. if $S$ is convex, then $gradient f(overline(x))^T (x - overline(x)) >= 0$ for all $x in S$.
+]
+
+#proof[
+  1. Let $d in T_S (overline(x))$. By definition, there exists ${x^k} subset S$ and ${t_k}arrow.b 0$ for which $(x^k - overline(x))/(t_k) -> d$. As $x^k$ feasible and $overline(x)$ a local minimizer of $f$ over $S$, $ f(x^k) - f(overline(x)) >= 0 $ for all $k$ sufficiently large. By the mean value theorem, there is for each $k$ sufficiently large a $theta_k$ on the line between $x^k$ and $overline(x)$ for which $ f(x^k) - f(overline(x)) = gradient f(theta_k)^T (x^k - overline(x)), $ so $ 0 <= (f(x^k) - f(overline(x)))/(t_k) = (gradient f(theta_k)^T (x^k - overline(x)))/(t_k) ->_k gradient f(overline(x))^T d. $
+  2. Suppose not. Then, there exists a $hat(x) in S$ such that $gradient f(overline(x))^T (hat(x) - overline(x)) < 0$. By convexity, $overline(x) + lambda (hat(x) - overline(x)) in S$ for $lambda in (0, 1)$. By mean value theorem, for every such $lambda$ there exists a $theta_lambda$ on the line between $overline(x) + lambda (hat(x) - overline(x))$ and $overline(x)$ for which $ f(overline(x) + lambda(hat(x) - overline(x))) - f(overline(x)) = lambda gradient f(theta_lambda)^T (hat(x) - overline(x)). $ By supposition, for $lambda$ sufficiently close to $0$, the right-hand side will remain negative (since $gradient f(theta_lambda) ->_(lambda -> 0) gradient f(overline(x))$), so for sufficiently small $lambda$, $ f(overline(x) + lambda (hat(x) - overline(x))) < f(overline(x)), $ and since $overline(x) + lambda (hat(x) - overline(x))$ remains feasible for all $lambda$ by covexity, this contradicts minimality.
+]
+
+#set quote(block: true)
+#show quote: set align(center)
+#show quote: set pad(x: 5em)
+
+#remark[
+  Computationally, this isn't very helpful - in practice, i.e. in trying to compute local minimizers, we'd need to compute $gradient f(overline(x))^T d$ for every $d$ in the tangent cone of a given $S$ at a given point $overline(x)$. In general, we don't know what this set looks like, and even if we did, this isn't a feasible condition to check for every such point, since it isn't easy to interpret computationally.
+  #quote(block: true, attribution: "Tim H", "You can never tell the computer what the fucking set looks like")
+]
+
+=== Farkas' Lemma
+
+#definition("Projection")[
+  Let $S subset RR^n$ be nonempty, $x in RR^n$. The _projection_ of $x$ onto $S$ is given by $ P_S (x) := "argmin"_(y in S) 1/2 norm(x - y)^2. $
+]
+#remark[
+  This is, in general, a set-valued function; it could even be empty (for instance, if $S = [0, 1)$ and $x = 2$.)
+]
+
+#proposition[
+  Let $x in RR^n, S subset RR^n$ nonempty, closed and convex. Then,
+  1. $P_S (x)$ has exactly one element, so $P_S$ can be viewed $RR^n -> S$;
+  2. $P_S (x) = x <=> x in S$;
+  3. (The Projection Theorem) $(P_S (x) - x)^T (y - P_S (x)) >= 0$ for all $y in S$.
+]
+
+#proof[
+
+  1. This follows from the fact that $S in.rev y |-> norm(x - y)_2^2$ a strongly convex function.
+  2. Clear.
+  3. Take $f(y) = 1/2 norm(x - y)^2$ in the last theorem.
 ]

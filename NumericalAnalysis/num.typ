@@ -243,3 +243,8 @@ We'll discuss the results here for the specific instance of the Poisson equation
 
 = Spectral Methods
 The previous section lead to schemes that were of $cal(O)(h^p)$ error for some fixed $p$. Our schemes here lead to $cal(O)(h^p)$ error for all $p$ _if $u in C^infinity$_. Such _spectral_ methods have limited domain of application (namely linear equations, simple boundary conditions, and smooth functions), but for such problems they are very good.
+
+
+// TODO (above)
+
+= Some Background on PDEs
