@@ -1033,3 +1033,76 @@ are all cones, for instance.
   2. Clear.
   3. Take $f(y) = 1/2 norm(x - y)^2$ in the last theorem.
 ]
+
+#lemma[
+  Let $B in RR^(ell times n)$. Then, ${B x | x in RR^n_+}$ is a nonempty, closed, convex cone.
+]
+
+#proof[
+  Convexity and cone properties are clear. Closed? // TODO better proof?
+]
+
+#theorem("Farkas' Lemma")[
+  Let $B in RR^(ell times n)$, $h in RR^n$. Then, the following are equivalent:
+  1. The system $ B^T x = h, x >= 0 $ has a solution.
+  2. $h^T d >= 0$ for all $d$ such that $B d >= 0$.
+]
+
+#remark[
+  $x >= 0$ should be understood component-wise, i.e. each component of $x$ is nonnegative.
+]
+
+#proof[
+  $(1. => 2.)$ Let $x >= 0$ such that $B^T x = h$. Then, if $d$ such that $B d >= 0$, $ h^T d = (B^T x)^T d = x^T B d >= 0. $
+
+  $(2. => 1.)$ Suppose 1. doesn't hold, i.e. $ h in.not K = {B^T x | x >= 0}, $ where $K$ a closed, convex cone as the previous lemma. Set $overline(s) = P_K (h) in K$, which is well-defined since $K$ closed and convex. Set $overline(d) = overline(s) - h eq.not 0$. Thus, by the rojection theorem, $ overline(d)^T (s - overline(s)) >= 0 $ for all $s in K$.
+
+  By taking $s = 2 overline(s) in K$, we see then that $overline(d)^T overline(s) >= 0$. Also, taking $overline(s) = 0$, this implies $-overline(d)^T overline(s) >= 0$, by which we must have $overline(d)^T overline(s) = 0$ and thus $overline(d)^T s >= 0$ for all $s in K$. By definition of $K$, $(B overline(d))^T x = overline(d)^T B^T x >= 0$ for all $x >= 0$. This implies $B overline(d) >= 0$, by taking $x$ to be each standard unit vector $e_i$.
+
+  OTOH, $ h^T overline(d) = (overline(s) - overline(d))^T overline(d) = underbrace(overline(s)^T overline(d), = 0) - norm(overline(d))^2 < 0, $ since $overline(d) eq.not 0$. This contradicts 2.
+]
+
+=== Karush-Kuhn-Tucker Conditions
+
+
+#definition("KKT Conditions")[
+  Consider the standard nonlinear program $ min f(x) "s.t." #stack(spacing: 1em, $g_i (x) <= 0 forall i = 1, dots, m,$, $h_j (x) = 0 forall j = 1, dots, p$). wide (star) $
+
+  1. The function $L : RR^n times RR^m times RR^p -> RR$ defined by $ L(x, lambda, mu) & = f(x) + sum_(i=1)^m lambda_i g_i (x) + sum_(j=1)^p mu_j h_j (x) \
+                     & = f(x) + lambda^T g(x) + mu^T h(x), $ where $lambda := (lambda_1, dots, lambda_m), g = (g_1, dots, g_m)$, $mu = (mu_1, dots, mu_p)$, $h = (h_1, dots, h_p)$, is called the _Lagrangian_ of the problem $(star)$.
+
+  2. The set of conditions $ gradient L_x (x, lambda, mu) = 0, \ h(x) = 0,\ lambda >= 0, g(x) <= 0, lambda^T g(x) = 0 $ are called the _KKT Condition_ of $(star)$.
+  3. A triple $(overline(x), overline(lambda), overline(mu))$ that satisfies the KKT conditions is called a _KKT point_ of $(star)$.
+  4. Given $overline(x)$ feasible for $(star)$, define $ M(overline(x)) = {(lambda, mu) | (overline(x), lambda, mu) "is a KKT point of" (star)}. $
+]
+
+#definition("Linearized Cone")[
+  Let $X$ be the feasible set of $(star)$ and $overline(x) in X$. The _linearized cone (of $X$) at $overline(x)$_ is given by the set $ cal(L)_X (overline(x)) := {d | #stack(spacing: .7em, $gradient g_i (overline(x))^T d <= 0 forall i in I(overline(x))$, $gradient h_j (overline(x))^T d = 0 forall j in J$) }. $
+]
+
+#definition("Abadie Constraint Qualification")[
+  Let $overline(x) in X$. We say that the _Abadie constraint qualification (ACQ)_ holds at $overline(x)$ if $T_X (overline(x)) = cal(L)_X (overline(x))$.
+]
+#remark[
+  We may represent the constraints that lead to $X$ in different ways. These different representations may lead to different linearized cones $cal(L)_X (overline(x))$, but will NOT change $T_X (overline(x))$. So, the ACQ may hold/not hold depending on how we represent $X$ for a fixed problem.
+]
+
+#theorem("KKT Conditions Under ACQ")[
+  Let $overline(x)$ be a local minimizer of $(star)$ such that ACQ holds at $overline(x)$. Then, there exist $(overline(lambda), overline(mu)) in RR^m times RR^p$ such that $(overline(x), overline(lambda), overline(mu))$ a KKT point.
+]
+
+#proof[
+  $overline(x)$ a local minimizer implies by the basic first-order optimality conditions for $(star)$ that $gradient f(overline(x))^T d >= 0$ for all $d in T_X (overline(x))$. Set $ B = mat(
+    - gradient g_i (x)^T quad (i in I(overline(x)));
+    - gradient h_j (x)^T quad (j in J);
+    gradient h_j (x)^T quad (j in J);
+  ) in RR^((|I(overline(x))| + 2 p)times n). $ Note that $d in cal(L)_X (overline(x))$ iff $B d >= 0$. By the ACQ, $gradient f(overline(x))^T d >= 0$ for all $d in cal(L)_X (overline(x))$, hence $gradient f(overline(x))^T d >= 0$ for all $d$ such that $B d >= 0$. By Farkas' Lemma (taking $B$ as defined, $h = gradient f(overline(x))$), there exists a $y = (y^1, y^2, y^3) in RR^(|I(overline(x))|) times RR^p times RR^p$ such that $B^T y = gradient f(overline(x))$ and $y >= 0$. Define $ overline(lambda) := cases(
+    y_i^1 quad & i in I(overline(x)) \
+             0 & "else"
+  ), wide overline(mu) := y^2 - y^3. $ Then, $(overline(x), overline(lambda), overline(mu))$ is a KKT point.
+]
+
+#example[
+  Consider $ min x_1^2 + x_2^2 quad "s.t." quad x_1, x_2 >= 0, x_1 x_2 = 0, $
+  with $X = {x in RR^2 | x_1, x_2 >= 0, x_1 x_2 = 0}$. Let $overline(x) = (0, 0)^T in X$. We find that $ T_X (overline(x)) = X, wide cal(L)_X (overline(x)) = RR_+^2. $ So, ACQ does not hold. However, with $overline(lambda) = 0$ and $overline(mu) = 1$, we find $nabla f(overline(x)) + overline(lambda)_1 nabla g_1(overline(x)) + overline(lambda)_2 nabla g_2 (overline(x)) + overline(mu) nabla h(overline(x)) = 0$, and we find $(overline(x), overline(lambda), overline(mu))$ is a KKT point.
+]

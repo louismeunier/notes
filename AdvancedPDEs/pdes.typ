@@ -619,4 +619,69 @@ As a direct corollary of this, this implies that functions in $H_1 (Omega)$ have
   &= 2n C' norm(u)^2_2 + C' D(u, u), $ hence taking $C = 2 n C'$ gives the result.
 ]
 
-#definition[We further define $H_1^0 (Omega)$ to be the closure of $C_c^infinity (Omega)$ in $H_1 (Omega)$, so in particular, $f in H_1^0 (Omega) => f|_S equiv 0$.]
+#definition[We further define $H_1^0 (Omega)$ to be the closure of $C_c^infinity (Omega)$ in $H_1 (Omega)$, so in particular, $f in H_1^0 (Omega) => f|_S equiv 0$ (the converse is _not_ true).]
+
+Note that the kernel of $D(u, v)$ is the set of locally constant functions; if we mod out by this kernel, we get a complete normed space under $sqrt(D(dot, dot))$, namely $ H_1 (Omega)\/{"loc. constant functions"} $ is a Banach space.
+
+We can now restate the Dirichlet problem in the context of the function spaces we've introduced. Let $g$ be a function on $S$ which is the restriction to $S$ of some function $f H_1 (Omega)$. Then, the Dirichlet problem can be formulated by finding $w$ such that $w$ is harmonic in $Omega$ and $w - f$ is in $H_1^0 (Omega)$ (namely, $(w - f)|_S equiv 0$, so $w, f$ are equal on $S$).
+
+#theorem[
+  Suppose $w in H_1 (Omega)$. Then $w$ is harmonic in $Omega$ iff it is orthogonal to $H_1^0 (Omega)$ with respect to $D(dot, dot)$.
+]
+
+#proof[
+  By one of Green's identities, for $w in C^1 (overline(Omega))$ and $v in C^infinity_c (Omega)$, $ integral_(Omega) w overline(laplace v) dif x = - integral_Omega nabla w dot overline(nabla v) dif x = - D(w, v). $ Using the fact that $C^1 (overline(Omega))$ dense in $H_1 (Omega)$ and passing limits under integrals (which is fine since $v$ compactly supported), we conclude the same statement for general $w in H_1 (Omega)$. Using the other Green's identity, we can swap the Laplacian on the first term and find that $ integral_Omega laplace w overline(v) dif x = - D(w, v). $
+  In particular, $laplace w = 0$ in the distributional sense iff $D(w, v) = 0$ for all $v in C^infinity_c (Omega)$.
+  #lemma[
+    $laplace$ is _hypo-elliptic_, i.e. if $laplace T in C^infinity$ for $T in cal(D)' (Omega)$, then $T$ is $C^infinity$.
+  ]
+  Using now that $H^0_1 (Omega)$ is the closure of $C^infinity_c (Omega)$ in $H_1 (Omega)$, and the lemma, which we won't prove, we can conclude by taking limits that $w$ harmonic in $Omega$ iff $D(w, v) = 0$ for all $v in H_1^0 (Omega)$.
+]
+
+#corollary[
+  $ H_1 (Omega)\/{"loc. constant functions"} = "Harm"(Omega) plus.circle H_1^0 (Omega), $ under $D(dot, dot)$, where $"Harm"(Omega)$ the space of harmonic function functions in $H_1 (Omega)$ (mod loc. constant functions).
+]
+
+Thus, to solve the Dirichlet problem as stated is equivalent to projecting $f$ onto the space $"Harm"(Omega)$.
+
+= Wave Equation
+
+== The Cauchy Problem - Uniqueness
+
+We study the non-elliptic linear operator $ square u = partial_t^2 u - laplace_x u, $ where $u = u(x, t)$ and $square$ is called the _D'Alembertian operator_, or simply "box". The general Cauchy problem we will study is $ cases(
+  square u = 0,
+  u(x, 0) = f(x)\, u_t (x, 0) = g(x)
+), $ for $x in RR^n$ and $0 <= t <= T$. Notice that $square$ is invariant under time reflection, so there is no loss of generality in restricting to studying $t >= 0$.
+
+For $n = 1$, one checks that a solution, for sufficiently nice $f, g$ is given by $ u(x, t) = 1/2 (f(x + t) + f(x - t)) + 1/2 integral_(x + t)^(x - t) g(z) dif z. $
+For $n >= 2$, we also have such solution representations, but they have more complicated formulations, which we will discuss later.
+
+First, we present a uniqueness theorem for general dimensions.
+
+#theorem[
+  Suppose $u in C^2$ for $0 <= t <= T$, $x in RR^n$. Suppose $u = 0 = partial_t u$ on the "ball" $ B = {(x, 0) | |x - x_0| <= t_0}, $ for some $t_0 in [0, T]$.
+  #table(
+    stroke: none,
+    columns: 2,
+    [Then, if $square u = 0$, then $u = 0$ in the region $ Omega := {(x, t) | #stack(spacing: 1em, $0 <= t <= t_0,$, $|x - x_0| <= t_0 - t$)}, $ which is a cone of height $t_0$ and circular base given by $B$ (see right).],
+    [#image("cone.png", width: 90%)],
+  )
+  // TODO I can make this image better...
+]
+
+#proof[
+  For $0 <= t <= t_0$, define $ B(t) := {x | |x - x_0| <= t_0 - t},\
+  E(t) := 1/2 integral_(B_t) [((partial u)/(partial t))^2 + |gradient_x u|^2] dif x. $
+  Remark that $E(t) >= 0$. Let us compute $(dif E)/(dif t)$ assuming $square u = 0$. Everything is sufficiently nice for us to take derivatives under the integral sign, so we find $ (dif E)/(dif t) = integral_(B_t) (partial u)/(partial t) (partial^2 u)/(partial t^2) + sum_j (partial u)/(partial x_j) (partial^2 u)/(partial t partial x_j) dif t - 1/2 integral_(partial B_t) |gradient_(x, t) u|^2 dif sigma. $ We can integrate by parts and apply the divergence theorem, to conclude $ (dif E)/(dif t) &= integral_(B_t) (partial u)/(partial t) underbrace([(partial^2 u)/(partial t^2) - sum_j (partial^2 u)/(partial x_j^2)], = square u = 0) dif x\
+  & wide + integral_(partial B_t) sum_j (partial u)/(partial x_j) (partial u)/(partial t) nu_j dif sigma \
+  & wide - 1/2 integral_(partial B_t) |gradient_(x, t) u|^2 dif sigma. \
+  &= integral_(partial B_t) sum_j (partial u)/(partial x_j) (partial u)/(partial t) nu_j dif sigma - 1/2 integral_(partial B_t) |gradient_(x, t) u|^2 dif sigma. $ We can bound the integrand in the first integral by Cauchy-Schwarz followed by AM-GM, using $|nu| = 1$: $ sum_j (partial u)/(partial x_j) (partial u)/(partial t) nu_j <= |(partial u)/(partial t)| (sum_j ((partial u)/(partial x_j))^2)^(1/2) |nu| <= 1/2 (abs((partial u)/(partial t))^2 + sum_j abs((partial u)/(partial x_j))^2) = 1/2 |gradient_(x, t) u|^2. $ But this is precisely the integrand of the second remaining integral, from which we find $(dif E)/(dif t) <= 0$. But one sees that $E(0) = 0$ and $E(t) >= 0$, so it must be that $E(t)$ identically 0 for all $t in [0, t_0]$. Again, the integrand in $E(t)$ is positive, so it follows that $gradient_(x, t) u = 0$ over for $x in B_t$ for each $t in [0, t_0]$, hence $u$ a constant, thus equal to the initial Cauchy data of 0; we see that $Omega = union.big_(t = 0)^(t_0) B_t times {t}$, so we are done.
+]
+
+#remark[
+  If we consider the time-rescaled equation $c^2 partial_t^2 u - laplace_x u = 0$, we obtain similar results, with the slope of the cone $Omega$ being $c$.
+]
+
+#remark[
+  This theorem says then that if initial data is given on $B$, then this information will "propagate" throughout the cone $Omega$, at finite speed. In particular, if we specify additional data outside of the ball $B$, the function $u$ will not "see" this data while within the cone $Omega$.
+]
