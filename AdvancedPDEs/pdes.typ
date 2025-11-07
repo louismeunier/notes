@@ -397,7 +397,7 @@ We denote in what follows $omega_n = (2 pi^(n\/2))/(Gamma(n\/2))$ the surface ar
 ]
 
 #proof[
-  Applying the chain rule, one verifies that, in polar coordinates, $ laplace u(x) = phi''(r) + (n - 1)/r phi'(r). $ Indeed, this gives rise to the so-called _radial Laplacian operator_
+  Applying the chain rule, one verifies that, in polar coordinates, $ laplace u(x) = phi''(r) + (n - 1)/r phi'(r). $ Indeed, this gives rise to the so-called _radial Laplacian operator_, or more nominally, the _Euler-Poisson operator (EP)_
   $
     #boxit($ (dif^2)/(dif r^2) + (n - 1)/r (dif)/(dif r). $)
   $
@@ -684,4 +684,89 @@ First, we present a uniqueness theorem for general dimensions.
 
 #remark[
   This theorem says then that if initial data is given on $B$, then this information will "propagate" throughout the cone $Omega$, at finite speed. In particular, if we specify additional data outside of the ball $B$, the function $u$ will not "see" this data while within the cone $Omega$.
+]
+
+== Solution of the Cauchy Problem via Spherical Means
+
+Our goal to follow is to find a closed-form solution for the solution to the equation $ cases(
+  square u = 0,
+  u(x, 0) = f(x)\, quad partial_t u (x, 0) = g(x)
+), $ where $f, g$ are of a certain regularity class that we will determine in our work, and with spacial dimension $n >= 2$. The idea will be to transform the purported solution $u$ via a series of differential, integral operators; the resulting equation will obey, in a sense, the 1-dimensional wave equation. From there, we can simplify and achieve a closed form of the solution $u$ in terms of the initial datum $f, g$ by appealing to d'Alembert's formula in 1 dimension.
+
+#definition("Spherical Mean Operator")[
+  For $phi$ on $RR^n$, define $ M_phi (x, r) := 1/(r^(n - 1) omega_n) integral_(|z - x| = r) phi(z) dif sigma (z) = 1/(omega_n) integral_(|y| = 1) phi(x + r y) dif sigma(y). $
+]
+
+#remark[
+  The second formulation is still valid for negative $r$; in particular, we see that $M_phi (x, r)$ even in $r$, i.e. $M_phi (x, r) = M_phi (x, -r)$. In addition, it's easy to check that $M_phi (x, 0) = phi(x)$, and $phi in C^k => M_phi (dot, r) in C^k$ (by direct computation, dominated convergence resp.).
+]
+
+We recall the Euler-Poisson (EP) operator; given $u(x) = phi(r)$ for $r = |x|$, then $ laplace u(x) = [dif^2/(dif r^2) + (n - 1)/r (dif)/(dif r)] phi (r), $ the bracketed term being the EP operator in question.
+
+#proposition[
+  For $phi in C^2$, $laplace_x M_phi = [dif^2/(dif r^2) + (n - 1)/r (dif)/(dif r)] M_phi$.
+]
+
+#proof[
+  Differentiating under the integral sign and applying the divergence theorem, we find that
+  $ partial_r M_phi & = 1/(omega_n) integral_(|y| = 1) sum_(i=1)^n y^i partial_(y_i) phi(x + r y) dif sigma(y) \
+  & = 1/(omega_n) integral_(|y| <= 1) r dot laplace_y phi(x + r y) dif y = 1/(r^(n-1) omega_n) integral_(|z| <= r) laplace phi(x + z) dif z. $ Thus, passing to hyperspherical coordinates, $ r^(n - 1) partial_r M_phi = 1/(omega_n) integral_0^r integral_(|y| = 1) laplace phi(x + rho y) rho^(n - 1) dif sigma(y) dif rho. $ Taking an additional derivative of this expression in $r$ then 'kills' the other integral by FTC, and what remains is $ partial_r (r^(n - 1) partial_r M_phi ) = r^(n-1) laplace M_phi (x, r). $ But the LHS is also equal to $(n - 1) r^(n - 2) partial_r M_phi + r^(n - 1) partial_r M_phi$; simplifying this equation gives the result.
+]
+
+#corollary[
+  Suppose $u in C^2$ on $RR^n times RR$, and let $M_u (x, r, t)$ be the spherical mean of $u$ in $x$ with $t$ fixed. Then, $ square u = 0 => (partial_r^2 + (n - 1)/r partial_r) M_u (x, r, t) = partial_t^2 M_u (x, r, t). $
+]<cor:squareimpliesepeqpartialt>
+
+#remark[
+  The expression here is _almost_ a wave equation in 1D, treating $r$ as a new spatial variable, if it wasn't for that pesky first derivative in $r$ term. We'll proceed now to apply an operator to $M_u$ to get rid of this term. Namely, introduce a differential operator $T = T_k$ with the property that $partial_r^2 T M_u = partial_t^2 T M_u$.
+]
+
+#lemma[
+  If $k >= 1$ and $phi in C^(k + 1) (RR)$, $ partial_r^2 (r^(-1) partial_r)^(k - 1) [r^(2k - 1) phi(r)] = (r^(-1) partial_r)^(k) [r^(2k) phi'(r)]. $
+]<lem:annoyingsquareexp>
+
+Remark that the RHS here can be writen as $ (r^(-1) partial_r)^(k -1) [2 r r^(2k - 2) phi'(r) + r^(2k - 1) phi''(r)], $ which looks a lot like the EP operator up to scaling by $r$. With this as motivation, define, for $k >= 1$, $ T_k phi(r) := (r^(-1) partial_r)^(k - 1) [r^(2k - 1) phi(r)], $ so that @lem:annoyingsquareexp reads $partial_r^2 T_k phi = T_k [phi'' + (2k)/r phi']$. Thus, remark that if we could pick $k$ such that $2k = n - 1$, we'd be in business; of course, this is only possible when $n$ is odd; this represents a dichotomy in our solution approach. For the remainder we assume that $n = 2k + 1$ is an odd space dimension.
+
+Combining @lem:annoyingsquareexp and @cor:squareimpliesepeqpartialt, then, yields the equation $ partial_t^2 T_k M_u - partial_r^2 T_k M_u = 0, $ namely, a 1D wave equation for the expression $T_k M_u$, which we know how to solve. In what proceeds, we demonstrate how we can simplify this expression to get a closed-form for $u$ itself, and moreover show that what results is actually a solution to the $n$ dimensional wave equation.
+
+#lemma[
+  $T_k phi = sum_(j=0)^(k - 1) c_j r^(j + 1) phi^((j)) (r)$, for some constants $c_j$, with in particular $ c_0 = (2k - 1) (2 k - 3) dots.c 3 dot 1. $
+]<lem:Tkexpansion>
+#proof[
+  Follows from direct computation.
+]
+
+Putting now $tilde(u) = T_((n - 1)/2) M_u$, then we find that $tilde(u)(x, r, 0) = tilde(f)(x, r) := T_((n-1)/2) M_f$ and $partial_t tilde(u)(x, r, 0) = tilde(g)(x, r) := T_((n-1)/2) M_g$ to have a fully-defined Cauchy problem for $tilde(u)$ in the $(r, t)$ variables. By D'Alembert's, $ tilde(u)(x, r, t) = 1/2 [tilde(f)(x, r + t) + tilde(f)(x, r - t)] + 1/2 integral_(r-t)^(r + t) tilde(g)(x, s) dif s. $
+
+#lemma[
+  $u(x, t) = lim_(r -> 0) (tilde(u)(x, r, t))/(c_0 r)$.
+]<lem:limitofusquare>
+#proof[
+  By @lem:Tkexpansion, $tilde(u) = c_0 r M_u + c_1 r^2 M'_u + dots.c = c_0 r M_u + cal(O)(r^2)$. But also, we know that $u(x, t) = M_u (x, 0, t)$, so that dividing both sides of $tilde(u)$ by $c_0 r$ and sending $r -> 0$, everything vanishes except the $cal(O)(r)$ term, which is equal to $M_u (x, 0, t) = u(x, t)$.
+]
+Next, we compute the RHS in this lemma by L'Hopital's and the expression we have above by D'Alembert's.
+
+Furst, recall that $M_phi (x, r)$ even in $r$, so $ tilde(f) = T_((n - 1)/2) M_f = underbrace((r^(-1) partial_r)^(k -1), "even in" r) [underbrace(r^(2k - 1), "odd in" r) underbrace(M_f, "even in" r)], $ from whence we see $tilde(f)$ odd in $r$; hence, in particular, $partial_r tilde(f)$ even in $r$. Similarly, we see that $tilde(g)$ is odd in $r$. Thus, combining the lemma, our formula, and expanding definitions $ u(x, t) &= lim_(r -> 0) 1/(2 c_0 r) 1/2 [tilde(f)(x, r + t) + tilde(f)(x, r - t)] + 1/2 integral_(r-t)^(r + t) tilde(g)(x, s) dif s \
+&= 1/(2c_0) [partial_r tilde(f)(x, r)|_(r = t) + partial_r tilde(f)(x, r)|_(r = -t) + tilde(g)(x, t) - tilde(g)(x, - t)] \
+&= 1/(c_0) [partial_r tilde(f)(x, r)|_(r = t) + tilde(g)(x, t)] \
+&= 1/(1 dot 3 dots.c (n - 2) omega_n) [partial_t (t^(-1) partial_t)^((n -3)/2) (t^(n - 2) integral_(|y| = 1) f(x + t y) dif sigma(y)) \
+  & wide wide + (t^(-1) partial_t)^((n - 3)/2) (t^(n-2) integral_(|y| = 1) g(x + t y) dif sigma(y)) ]. $
+
+Note that the RHS only depends on $f, g$ (and their derivatives), in a very explicit manner.
+
+#theorem[
+  Suppose $n$ odd and $>= 3$, and $f in C^((n + 3)/2) (RR^n),$ $g in C^((n+1)/2) (RR^n)$. Then,  $u(x, t)$ defined by $ u(x, t) = 1/(1 dot 3 dots.c (n - 2) omega_n) [partial_t (t^(-1) partial_t)^((n -3)/2) (t^(n - 2) integral_(|y| = 1) f(x + t y) dif sigma(y)) \
+    + (t^(-1) partial_t)^((n - 3)/2) (t^(n-2) integral_(|y| = 1) g(x + t y) dif sigma(y)) ] $ is a $C^2$ solution of the Cauchy problem.
+]
+
+#remark[
+  Counting derivatives in the solution formula, we readily see where the smoothness assumptions on $f, g$ come from; namely, there are $(n - 1)/2$ (resp. $(n- 3)/2$) derivatives of $f$ (resp. $g$) taken in the formula, so we'll need to take two more for $u$ to have any chance of being $C^2$, yielding the numbers stated.
+]
+
+#proof[
+  // TODO
+]
+
+#remark[
+  // TODO Huygens?
 ]

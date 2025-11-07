@@ -1106,3 +1106,139 @@ are all cones, for instance.
   Consider $ min x_1^2 + x_2^2 quad "s.t." quad x_1, x_2 >= 0, x_1 x_2 = 0, $
   with $X = {x in RR^2 | x_1, x_2 >= 0, x_1 x_2 = 0}$. Let $overline(x) = (0, 0)^T in X$. We find that $ T_X (overline(x)) = X, wide cal(L)_X (overline(x)) = RR_+^2. $ So, ACQ does not hold. However, with $overline(lambda) = 0$ and $overline(mu) = 1$, we find $nabla f(overline(x)) + overline(lambda)_1 nabla g_1(overline(x)) + overline(lambda)_2 nabla g_2 (overline(x)) + overline(mu) nabla h(overline(x)) = 0$, and we find $(overline(x), overline(lambda), overline(mu))$ is a KKT point.
 ]
+
+=== Constraint Qualifications
+
+#definition[
+  Let $overline(x)$ be a feasible point of the generic nonlinear program. We say that:
+  1. the _linear independence constraint qualification (LICQ)_ holds at $overline(x)$ if the vectors $ gradient g_i (overline(x)), i in I(overline(x)), gradient h_j (overline(x)), j in J, $ are linearly independent;
+  2. the _Mangasarian-Fromovitz CQ (MFCQ)_ holds at $overline(x)$ if the gradients $ gradient h_j (overline(x)), j in J $ are linearly independent, and there exists a $d in RR^n$ such that $ gradient g_i (overline(x))^T d < 0, i in I(overline(x)), \
+    gradient h_j (overline(x))^T d = 0, j in J. $
+]
+
+#proposition([$"LICQ" => "MFCQ"$])[
+  Let $overline(x)$ be feasible and such that LICQ holds at $overline(x)$. Then MFCQ holds at $overline(x)$.
+]
+#proof[
+  Left as an exercise.
+]
+
+#theorem("Implicit Function Theorem")[
+  Let $U subset RR^p, V subset RR^m$ open and $F : U times V -> RR^b$ continuous differentiable such that for $(overline(x), overline(y)) in U times V$, $F(overline(y), overline(z)) = 0$ and $D_y F(overline(y), overline(z)) in RR^(p times b)$ invertible. Then, there exist neighborhoods $hat(U) subset U$ and $hat(V) subset V$ and $g : hat(V) -> hat(U)$ continuously differentiable such that $ F(g(z), z) = 0
+  , forall z in hat(V), $ and $ D g(z) = -[D_y F(g(z), z)]^(-1) D_z F(g(z), z), $ and for all $(y, z) in hat(U) times hat(V)$ such that $F(y, z) = 0$, then $y = g(z)$.
+]
+
+#lemma[
+  Let $overline(x)$ be feasible such that $gradient h_j (overline(x)), j in J$ are linearly independent, and there exists $d$ such that $gradient g_i (overline(x))^T d < 0$ for $i in I(overline(x))$ and $gradient h_j (overline(x))^T d = 0$ for $j in J$. Then, there exists an $epsilon > 0$ and a $C^1$-curve $x : (- epsilon, epsilon) -> RR^n$ such that $x(t)$ feasible for all $t in [0, epsilon)$, $x(0) = overline(x)$, and $x'(0) = d$.
+]
+
+#proof[
+  Define $H : RR^p times RR -> RR^p$ by $ H_j (y, t) := h_j (overline(x) + t d + h'(overline(x))^T y), quad j = 1, dots, p. $ The equation $H(y, t) = 0$ has as solution $(overline(y), overline(t)) = (0, 0)$, as $h_j (overline(x)) = 0$ by feasibility. Moreover, $ D_y H(overline(y), overline(t)) = h'(overline(x)) h'(overline(x))^T in RR^(p times p), $ with $h'(overline(x))^T$ having linearly independent columns, hence being invertible, so all of $D_y H(overline(y), overline(t))$ is invertible. By the implicit function theorem, there exists an $epsilon > 0$ and a $C^1$-curve $y :(-epsilon, epsilon) -> RR^p$ for which $y(0) = 0$, $H(y(t), t) = 0$ for all $t in (-epsilon, epsilon)$, and $y'(t) = - [D_y H(y(t), t)]^(-1) D_t H(y(t), t)$ for all $t in (-epsilon, epsilon)$. In particular, $ y'(0) = -[D_y H(0,0)]^(-1) h'(overline(x))d = 0, $ since $h'(overline(x)) = [gradient h_j (overline(x))^T] = 0$ by assumption. Set now $x(t) = overline(x) + t d + h'(overline(x))^T y(t)$. Making $epsilon$ smaller if necessary, we see that $x : (-epsilon, epsilon) -> RR^n$ has all the desired properties:
+  - $x in C^1$ since $y in C^1$
+  - $x(0) = overline(x)$
+  - $x'(0) = d$
+  - $x(t)$ is feasible: by construction, for $t in [0, epsilon)$, $h_j (x(t)) = H_j (y(t), t) = 0$; for $i in I\\I(overline(x))$, then $g_i (overline(x))= g_i (x(0)) < 0$, then by continuity $g_i (x(t))$ will remain negative for all sufficiently small $t$; for $i in I(overline(x))$, $g_i (overline(x)) = g_i (x(0)) = 0$, and $dif/(dif t) g_i (x(0)) = gradient g_i (overline(x))^T d < 0$, which implies $g_i (x(t)) < 0$ for all $t$ sufficiently small.
+]
+
+#proposition($"MFCQ" => "ACQ"$)[
+  Let $overline(x)$ be a feasible point such that MFCQ holds at $overline(x)$; then ACQ holds.
+]
+
+#proof[
+  We only need to show $cal(L)_X (overline(x)) subset T_X (overline(x))$. Let $d in cal(L)_X (overline(x))$. By MFCQ there exists $hat(d)$ such that $gradient g_i (overline(x))^T hat(d) < 0$ for $i in I(overline(x))$ and $gradient h_j (overline(x))^T hat(d) = 0$ for all $j in J$. Set $d(delta) = d + delta hat(d)$ for all $delta > 0$. Then, $ gradient g_i (overline(x))^T d(delta) < 0, forall i in I(overline(x)), wide gradient h_j (overline(x))^T d(delta) = 0 forall j in J. $ Applying the previous lemma to $d(delta)$ yields a $C^1$-curve $x : (-epsilon, epsilon) -> RR^n$ such that $x(0) = overline(x)$, $x'(0) = d(delta)$, and $x(t)$ feasible for all $t in [0, epsilon)$. Let $t_k arrow.b 0$ and set $x^k := x(t_k)$, then $x^k$ feasible and $x^k -> overline(x)$. We see that $ d(delta) = x'(0) = lim_(k -> infinity) (x(t_k) - x(0))/(t_k) = lim_(k -> infinity) (x^k - overline(x))/(t_k) in T_X (overline(x)), $ hence for all $delta > 0$, $d(delta) in T_X (overline(x))$. Letting $delta -> 0$, $d(delta) -> d$ and thus $d in T_X (overline(x))$ as well, since $T_X (overline(x))$ closed.
+]
+
+#corollary[
+  Let $overline(x)$ be a local min of the generic nonlinear program such that MFCQ holds at $overline(x)$. Then the following hold:
+  1. $M(overline(x)) eq.not nothing$;
+  2. $M(overline(x))$ is bounded.
+]
+#proof[
+  \1. follows from the previous proposition and the related theorem for ACQ. For 2., suppose otherwise, then there exists ${(lambda^k, mu^k)} subset M(overline(x))$ for which $norm((lambda^k, mu^k)) -> infinity$. Without loss of generality, we may assume $(lambda^k, mu^k)/(norm((lambda^k, mu^k))) -> (tilde(lambda), tilde(lambda)) eq.not 0$. Since $(overline(x), lambda^k, mu^k)$ is a KKT point, we have $ 0 = (gradient f(overline(x)) + sum_(i in I(overline(x))) lambda_i^k gradient g_i (overline(x)) + sum_(j in J) mu_j^k gradient h_j (overline(x)))/(norm((lambda^k, mu^k))) -> sum_(i in I(overline(x))) tilde(lambda)_i gradient g_i (overline(x)) + sum_(j in J) tilde(mu)_j gradient h_j (overline(x)). $ If $tilde(lambda) = 0$, $tilde(mu) eq.not 0$ and thus $0 = sum_(j) tilde(mu)_j gradient h_j (overline(x))$ contradicts the linear independence of ${gradient h_j (overline(x))}$ of MFCQ.\ If $tilde(lambda) eq.not 0$, then there exists $i_0 in I(overline(x))$ such that $tilde(lambda)_(i_0) > 0$. Multiplying the above expression by $d$ from MFCQ yields $ 0 = sum_(i in I(overline(x))) overbrace(tilde(lambda)_i, >= 0) underbrace(gradient g_i (overline(x))^T d, < 0) + sum_(i in J) tilde(mu)_j overbrace(gradient h_j (overline(x))^T d, = 0) <= tilde(lambda)_(i_0) gradient g_(i_0) (overline(x))^T d < 0, $ a contradiction.
+]
+
+#corollary[
+  Let $overline(x)$ be a local minimimum of the generic nonlinear program such that LICQ holds. Then, $M(overline(x))$ is a singleton.
+]
+// TODO better?
+In summary, we have
+#align(center, table(
+  columns: 4,
+  stroke: none,
+  [], [LICQ $=>$], [MFCQ $=>$], [ACQ ],
+  [], [#rotate(90deg, $=>$)], [#rotate(90deg, $=>$)], [#rotate(90deg, $=>$)],
+  [$M(overline(x))$ is:], [a singleton], [nonempty,\ bounded], [nonempty],
+))
+
+=== Affine constraints
+
+#definition("Affine CQ")[
+  We say that the _affine CQ_ holld if all constraints are affine, i.e. there exists $a_i in RR^n, alpha_i in RR (i in I)$, $b_j in RR^n, beta_j in RR (j in J)$ such that $ g_i (x) = a_i^T x - alpha_i, wide h_j (x) = b_j^T - beta_j. $
+]
+
+
+#proposition[
+  Ket the affine CQ hold. Then, ACQ holds at every feasible point.
+]
+
+#proof[
+  Let $overline(x) in X$. As before, we only need to show $cal(L)_X (overline(x)) subset T_X (overline(x))$, then apply the previous lemma. Pick $d in cal(L)_X (overline(x))$, i.e. $a_i^T d <= 0, b_j^T d = 0$ for $i in I(overline(x)), j in J$. Let now $t_k arrow.b 0$ and $x^k := overline(x) + t_k d$. Then, $x^k -> overline(x)$ as $t_k -> 0$ and $(x^k - overline(x))/(t_k) -> d$. It remains to show that $x^k in X$ for all $k$ sufficiently large. We check the conditions for $x^k$ to be sufficient.
+
+  If $i in.not I(overline(x))$, $a_i^T overline(x) < alpha_i$, so by continuity this strict inequalities remains true replacing $overline(x)$ by $x^k$ for $k$ sufficiently large.
+
+  If $i in I(overline(x))$, $a_i^T overline(x) = alpha_i$ thus $ a_i^T x^k = a_i^T overline(x) + t_k a_i^T d <= alpha_i. $ Similar work follows for $j in J$, i.e. $b_j^T x^k = b_j^T overline(x) + t_k b_j^T d = beta_j + 0$.
+]
+
+=== Convex Problems
+
+We consider $ min f(x) "s.t." #stack(spacing: 1em, $g_i (x) <= 0, i in I$, $b_j^T x = beta_j, j in J$), $ where now we assume $f, g_i : RR^n -> RR$ are $C^1$ and convex. The feasible set $ X = {x | g_i (x) <= 0 (i in I), b_j^T x = beta_j (j in J)} $ is then convex (as per a midterm question).
+
+#theorem("KKT for Convex NLP")[
+  Let $overline(x)$ be feasible for the convex NLP above and consider the following statements:
+  1. there exists $(overline(lambda), overline(mu)) in M(overline(x))$ (i.e., $(overline(x), overline(lambda), overline(mu))$ is a KKT point);
+  2. $overline(x)$ is a (global) minimizer;
+  then, always 1. $=>$ 2., and hence if a constraint qualification holds at $overline(x)$, then 1. and 2. are equivalent.
+]
+
+#proof[
+  Let $(overline(x), overline(lambda), overline(mu))$ be a KKT point. Then for any $x in X$, $ f(x) & >=^("convexity") f(overline(x)) + gradient f(overline(x))^T (x -overline(x)) \
+  & =^("KKT") f(overline(x)) + (- sum_(i in I(overline(x))) overline(lambda)_i gradient g_i (overline(x)) - sum_(j in J) overline(mu)_j gradient h_j (overline(x)))^T (x - overline(x)) \
+  &= f(overline(x)) - sum_(i in I(overline(x))) overline(lambda)_i underbrace(gradient g_i (overline(x))^T (x - overline(x)), <= g_i (x) - g_i (overline(x)) = g_i (x)) - sum_(j in J) overline(mu)_j underbrace(gradient h_j (overline(x))^T (x - overline(x)), "= 0, feasibility") \
+  &>= f(overline(x)) - underbrace(sum_(i in I(overline(x))) overline(lambda)_i g_i (x), <= 0) >= f(overline(x)), $ which gives $overline(x)$ indeed a local min, so 2. holds. The reverse implication holding under a CQ is the very definition of a CQ.
+]
+
+#definition("Slater CQ")[
+  We say the _Slater CQ (SCQ)_ holds for the convex NLP if there exists a $hat(x)$ such that $ g_i (hat(x)) < 0, (i in I), h_j (hat(x)) = 0 (j in J). $ We call such a point a _Slater point_.
+]
+
+
+#proposition([SCQ $=>$ ACQ])[
+  Let SCQ hold for the convex NLP. Then, ACQ holds at every feasible point.
+]
+
+#proof[
+  Let $overline(x) in X$ and set $ F(overline(x)) := {d | gradient g_i (overline(x))^T d < 0, i in I, b_j^T d = 0, j in J}. $ Then, $F(overline(x)) subset T_X (overline(x))$ (_exercise_). As $T_X (overline(x))$ is closed, it follows that $overline(F(overline(x))) subset T_X (overline(x))$. We know show that $cal(L)_X (overline(x)) subset overline(F(overline(x)))$, from whence we'll be done. So, let $d in cal(L)_X (overline(x))$ and let $hat(x)$ be a Slater point. Put $hat(d) = hat(x) - overline(x)$. Then, $ gradient g_i (overline(x))^T hat(d) <= g_i (hat(x)) - g_i (overline(x)) < 0 $ for $i in I(overline(x))$, and moreover, $gradient h_j (overline(x))^T hat(d) = 0$. Define for $delta > 0$, $d(delta) := d + delta hat(d)$.  Then, $d(delta) in F(overline(x))$ for all $delta > 0$ (CHECK THIS). Let $delta -> 0$; then $d(delta) -> d in overline(F(overline(x)))$.
+]
+
+
+== Lagrangian Duality
+
+
+Consider as before the standard NLP $ min f(x) "s.t." #stack(spacing: 1em, $g_i (x) <= 0 forall i = 1, dots, m,$, $h_j (x) = 0 forall j = 1, dots, p$), wide (P) $ with $f, g_i, h_j : RR^n -> RR$ with $X = {x | g(x) <= 0, h(x) = 0} != nothing$ (we don't make smoothness assumptions just yet). The _Lagrangian_ of the problem $(P)$ is given by $ L : RR^n times RR^m times RR^p -> RR, wide L(x, lambda, mu) = f(x) + lambda^T g(x) + mu^T h(x). $
+
+=== The Dual Problem
+
+Observe that $ sup_(lambda, mu) L(x, lambda, mu) = cases(f(x) & "if" x in X, infinity & "else"). $ Then, the problem $(P)$ is really equivalent to the problem $ min_(x in RR^n) sup_(lambda in RR^m_+,\ mu in RR^p) L(x, lambda, mu) = inf_x p(x), $ where we call $p(x)$ the _primal objective_.
+A question of interest is when can we switch the order of the min and the sup?
+
+#definition("Lagrangian Dual")[
+  The _(Lagrangian) dual_ of $(P)$ is given by $ max d(lambda, mu) "s.t." lambda >= 0 wide (D) $ where $ d: RR^m times RR^p -> RR union {infinity}, wide d(lambda, mu) := inf_x L(x, lambda, mu). $ The latter is called the _dual objective_.
+]
+
+#example("LP")[
+  Consider the stanard linear program (LP) $ min_x c^T x | A x= b, x >= 0, $ with $A in RR^(m times n), b in RR^m, c in RR^n$. The Lagrangian for this problem reads $ L(x, lambda, mu) & = c^T x - lambda^T x + mu^T (b - A x) \
+                   & = (c - lambda - A^T mu)^T x + b^T mu. $ We see that $gradient_x L(x, lambda, mu) = c - lambda - A^T mu$. Note that the function $x |-> L(x, lambda, mu)$ an affine function, which takes its minimum iff $c - lambda - A^T mu = 0$, in which case $ inf_(x in RR^n) L(x, lambda, mu) = b^T mu. $ Otherwise, $ inf_(x in RR^n) L(x, lambda, mu) = - infinity. $ Thus, the dual objective in this case just reads $ d(lambda, mu) = cases(
+    b^T mu wide & c = lambda A^T mu,
+    - infinity & "else"
+  ). $ Maximizing this function is thusly equivalent to $ max_x b^T mu "s.t." A^T mu + lambda = c, lambda >= 0. $ We can incorporate $lambda$ directly into the first constraint, and get the one-variable problem $ max_mu b^T mu "s.t." A^T mu <= c. $
+]
