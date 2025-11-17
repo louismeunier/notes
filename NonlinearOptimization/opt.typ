@@ -1178,7 +1178,7 @@ In summary, we have
 
 
 #proposition[
-  Ket the affine CQ hold. Then, ACQ holds at every feasible point.
+  Let the affine CQ hold. Then, ACQ holds at every feasible point.
 ]
 
 #proof[
@@ -1241,4 +1241,125 @@ A question of interest is when can we switch the order of the min and the sup?
     b^T mu wide & c = lambda A^T mu,
     - infinity & "else"
   ). $ Maximizing this function is thusly equivalent to $ max_x b^T mu "s.t." A^T mu + lambda = c, lambda >= 0. $ We can incorporate $lambda$ directly into the first constraint, and get the one-variable problem $ max_mu b^T mu "s.t." A^T mu <= c. $
+]
+
+=== Weak snd Strong Duality
+
+#theorem("Weak Duality")[
+  Let $hat(x)$ be feasible for $(P)$ and $(hat(lambda), hat(mu))$ be feasible for $(D)$. Then, $p(hat(x)) >= d(hat(lambda), hat(mu))$.
+]
+
+#proof[
+  We have $ p(hat(x)) & = f(hat(x)) \
+            & >= f(hat(x)) + underbrace(hat(lambda)^T g(hat(x)), <= 0) + underbrace(mu^T h(hat(x)), = 0) \
+            & = L(hat(x), hat(lambda), hat(mu)) >= inf_(x in RR^n) L(x, hat(lambda), hat(mu)) = d(hat(lambda), hat(mu)). $
+]
+
+From weak duality, $overline(p) := inf_(x in X) p(x) >= sup_(lambda >= 0) d(lambda, mu) =: overline(d)$, we have the _duality gap_ $overline(p) - overline(d) >= 0$ (taking by convetion $+infinity - infinity := + infinity$.)
+
+#example("Nonzero Duality Gap")[
+  Consider $ min f(x) := cases(x^2 - 2 x wide &x >= 0, x & "else"), $ such that $g(x) := - x <= 0$. The Lagrangian reads $ L(x, lambda) := cases(
+    x^2 - (2 + lambda) x wide & x >= 0,
+    (1 - lambda) x & "else"
+  ). $ A short computation gives $ d(lambda) = cases(
+    - (2 + lambda)^2/4 wide & lambda >= 1,
+    -infinity & "else"
+  ), $ and thus $overline(d) = d(1) = -9/4$. On the other hand, the optimal value of the primal is $f(1) = -1$.
+]
+
+#theorem("Strong Duality")[
+  Consider the convex NLP $ min f(x) "s.t." g_i (x) <= 0 forall_(i=1)^m, h_j (x) = 0 forall_(j=1)^p, $ with $f, g_i : R^n -> RR$ convex and $h_j : RR^n -> RR$ affine. If Slater CQ holds, then $overline(p) = overline(d)$.
+]
+#proof[
+  This one's TOO hard :-(.
+]
+
+=== The Saddle Point Theorem
+
+#definition("Saddle Point of a Lagrangian")[
+  Let $L : RR^n times RR^m times RR^p -> RR$ be the Lagrangian of $(P)$. Then, $(overline(x), overline(lambda), overline(mu))$ is called a _saddle-point_ of $L$ if the following inequalities hold: $ L(overline(x), lambda, mu) <= L(overline(x), overline(lambda), overline(mu)) <= L(x, overline(lambda), overline(mu)), quad forall (x, lambda, mu) in RR^n times RR^m_+ times RR^p. $
+]
+
+#theorem("Saddle Point Theorem")[
+  Let $(overline(x), overline(lambda), overline(mu)) in RR^n times RR^m_+ times RR^p$. TFAE:
+  1. $(overline(x), overline(lambda), overline(mu))$ a saddle point of $L$ for $(P)$;
+  2. $overline(x)$ solves $(P)$, $(overline(lambda), overline(mu))$ solves $(D)$ and $f(overline(x)) = d(overline(lambda), overline(mu))$, i.e. the duality gap is zero.
+]
+
+#proof[
+  (1. $=>$ 2.) We see that $ L(overline(x), overline(lambda), overline(mu)) = underbrace(inf_(x in RR^n) L(x, overline(lambda), overline(mu)), = d(overline(lambda), overline(mu))) &<= sup_(lambda in RR^m_+ \ mu in RR^p) inf_(x in RR^n) L(x, overline(lambda), overline(mu)) \
+  &<= inf_(x in RR^n) sup_(lambda in RR^m_+ \ mu in RR^p) L(x, lambda, mu) \
+  &<= underbrace(sup_(lambda in RR^m_+ \ mu in RR^p) L(overline(x), lambda, mu), = p(overline(x))) = L(overline(x), overline(lambda), overline(mu)), $ using the saddle point properties in the first, last equalities. Thus equality must hold throughout, so in particular, $d(overline(lambda), overline(mu)) = p(overline(x))$; moreover $p(overline(x)) < infinity$ by the same chain of equalities so $overline(x)$ feasible for $(P)$. By definition ($overline(lambda) >= 0$) too, $(overline(lambda), overline(mu))$ feasible for $(D)$. Moreover, by weak duality, $overline(x)$ solves $(P)$ and $(overline(lambda), overline(mu))$ solves $(D)$.
+
+  (2. $=>$ 1.) Observe $ underbrace(L(overline(x), overline(lambda), overline(mu)), (a)) & <= f(overline(x)) ( = d(overline(lambda), overline(mu))) \
+  & = p(overline(x)) \
+  & = overbrace(sup_(lambda >= 0, mu) L(overline(x), lambda, mu), (c)) \
+  & = d(overline(lambda), overline(mu)) = underbrace(inf_(x) L(x, overline(lambda), overline(mu)), (b)) <= overbrace(L(overline(x), overline(lambda), overline(mu)), (d)). $ The inequalities $(b) <= (d) = (a) <= (c)$ gives the desired result.
+]
+
+== Penalty Methods
+
+Consider $ min f(x) "s.t." x in X wide (1). $ Replace $(1)$ with a sequence of unconstrained problems $ min f(x) + alpha_k r(x), wide forall k in NN, $ where $alpha_k > 0$ a _penalty parameter_, $r(x) : RR^n -> RR$ such that $r(x) >= 0$ and $r(x) = 0 <=> x in X$. The sum $f + alpha_k r$ is called the _penalty function_.
+
+=== The Quadratic Penalty Function
+
+Consider a special instance of $(1)$ given by $ min f(x) "s.t." h_j (x) = 0 forall_(j=1)^p, $ for $f, h_j : RR^n -> RR$ at least continuous. The _quadratic penalty function_ for the problem is given by $ P_alpha (x) = f(x) + alpha/2 norm(h(x))^2. $
+
+This readily gives rise to the (abstract) algorithm @tab:quadpenaltymeth.
+
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Quadratic Penalty Method")],
+    [
+      S0. Choose $alpha_0 > 0$, set $k = 0$\
+      S1. Determine $x^k in RR^n$ as a solution of $min P_(alpha_k) (x)$\
+      S2. If $h(x^k) = 0$, STOP \
+      S3. Choose $alpha_(k + 1) > alpha_k$, increment $k$ and go to S.
+    ],
+  ),
+)<tab:quadpenaltymeth>
+
+#theorem[
+  Suppose $f, h$ continuous such that the feasible set $X eq.not nothing$. Let $alpha_k arrow.t infinity$ and ${x^k}$ generated by @tab:quadpenaltymeth. Then, the following hold:
+  1. ${P_(alpha_k) (x^k)}$ is monotonically increasing;
+  2. ${norm(h(x^k))}$ is monotonically decreasing;
+  3. ${f(x^k)}$ is monotonically increasing;
+  4. $lim_k h(x^k) = 0$;
+  5. Every cluster point of ${x^k}$ is a solution of the constrained optimization problem.
+]
+
+#proof[
+  1. $P_(alpha_k) (x^k) <= P_(alpha_(k)) (x^(k+1))$ since $x^k$ minimizes $P_(alpha_k)$, and $P_(alpha_(k)) (x^(k+1))<= P_(alpha_(k+1)) (x^(k+1))$ since $alpha_(k + 1) > alpha_k$.
+  2. We have similarly that $P_(alpha_k) (x^k) <= P_(alpha_(k)) (x^(k+1))$ and $P_(alpha_(k+1)) (x^(k+1)) <= P_(alpha_(k+1)) (x^k)$, so adding these gives us $ P_(alpha_k) (x^k) + P_(alpha_(k+1)) (x^(k+1)) <= P_(alpha_k) (x^(k+1)) + P_(alpha_(k+1)) (x^k). $ Both sides of this inequality contain $f(x^k) + f(x^(k+1))$; cancelling these and multiplying by 2, we get  $ alpha_(k) norm(h(x^k))^2 + alpha_(k+1) norm(h(x^(k+1)))^2 <= alpha_(k) norm(h(x^(k+1)))^2 + alpha_(k+1) norm(h(x^(k)))^2. $ Rearraning, we get $ (alpha_k - alpha_(k+1)) (norm(h(x^k))^2 - norm(h(x^(k+1)))^2) <= 0. $ Since $alpha_k - alpha_(k+1) < 0$, we get the result.
+  3. From $P_(alpha_k) (x^k) <= P_(alpha_(k)) (x^(k+1))$, we get $ f(x^k) + alpha_k/2 norm(h(x^k))^2 <= f(x^(k+1)) + alpha_(k)/2 norm(h(x^(k+1)))^2. $ Using $norm(h(x^(k+1)))^2 <= norm(h(x^k))^2$ (from 2.) and cancelling gives $f(x^k) <= f(x^(k+1))$, as needed.
+  4. Observe that $P_(alpha_k) (x^k) = inf_(x in RR^n) P_(alpha_k) (x) <= inf_(x in X) P_(alpha_k) (x)$
+  #quote(
+    block: true,
+    attribution: "Tim H",
+    "You can't get worse from picking from a bigger set; that's what the Quebec government doesn't understand.",
+  )
+  But if $x in X$, $P_(alpha_k) (x) = f(x)$ so further $P_(alpha_k) (x^k) <= inf_X f(x) < infinity$ (since $X eq.not nothing$). Thus, we have that $ f(x^0) + alpha_k/2 norm(h(x^k))^2 <= P_(alpha_k) (x^k) < infinity. $ Letting $k -> infinity$, $alpha_k -> infinity$; but the whole sequence must be bounded, and thus $norm(h(x^k))^2$ must go to zero (so in particular $h(x^k) -> 0$).
+  5. Let $overline(x)$ a cluster point of $x^k$, supposing it converges along the whole sequence wlog. Thus, $h(overline(x)) = 0$ by continuity and 4., so in particular $overline(x) in X$. Moreover, $f(overline(x)) = lim_(k) f(x^k) <= lim_(k) P_(alpha_k) (x^k)<= inf_(X) f$ (using the bound we used in 4.). Thus, $overline(x)$ indeed a solution of the corresponding optimization problem.
+]
+
+#remark[
+  1. We used often the fact $f(x^k) <= P_(alpha_k) (x^k) <= inf_X f$; in particular if $x^k in X$, then $x^k$ solves the problem (hence why our stopping criterion is appropriate).
+  2. @tab:quadpenaltymeth, and the corresponding theorem, also apply to the more general problem $min f$ with both $h(x) = 0$ _and_ $g(x) <= 0$ (with the components of $h, g$ continuous) because this problem is equivalent to the equality-constraint problem $ min f(x) "s.t." quad h_j (x) = 0, max{g_i (x), 0} = 0. $ The corresponding (quadratic) penalty function would then be $ P_alpha (x) = f(x) + alpha/2 norm(h(x))^2 + alpha/2 sum_(i=1)^p max{g_i (x), 0}^2. $ Then, $P_alpha$ remains continuous. In fact, if $f, g_i, h_j in C^1$, so is $P_alpha$; the only stick point is in whether the function $tau mapsto max{tau, 0}^2$ is $C^1$ (indeed, without the square this is not true).
+]
+
+Our goal now is, assuming $f, h_j in C^1$ and given ${x^k}$ generated by @tab:quadpenaltymeth, to find ${mu^k}$ such that ${(x^k, mu^k)}$ converges to a KKT point.
+
+Observe that $x^k in "argmin"_X P_alpha => 0 = gradient P_(alpha_k) (x^k) = gradient f(x^k) + sum_(j=1)^p alpha_j h_j (x^k) gradient h_j (x^k)$. Put $mu_j^k := alpha_j h_j (x^k)$; these needn't be a KKT point, since we don't know if $x^k$ feasible hence we don't know if $h_j (x^k) = 0$. But it seems like $mu_j^k$ seems like a good choice.
+
+#theorem[
+  With the hypotheses of the previous remarks, let ${x^k}$ be generated by @tab:quadpenaltymeth and assume $x^k -> overline(x)$, and that LICQ holds at $overline(x)$. For $mu^k_j = alpha_j h_j (x^k)$, we have $mu^k$ converges to some $overline(mu)$ and $overline(mu) in M(overline(x))$.
+]
+
+#proof[
+  Define $A_k = h'(x^k) in RR^(p times n)$. We see that $A_k -> h'(overline(x)) =: overline(A)$ by continuity. By LICQ, $overline(A) dot overline(A)^T in RR^(p times p)$ is invertible. Thus, $A_k dot A_k^T$ is also invertible for $k$ sufficiently large, so $(A_k dot A_k^T)^(-1) -> (overline(A) dot overline(A)^T)^(-1)$ as well. Thus, $ gradient f(x^k) + sum_(j=1)^p mu_j^k gradient h_j (x^k) = 0 <=> A_k^T mu_k = - gradient f(x^k), $ and thus $ mu_k = - (A_k A_k^T)^(-1) A_k gradient f(x^k) -> - (overline(A) overline(A)^T)^(-1) overline(A) gradient f(overline(x)) =: overline(mu). $ This completes the proof, since $overline(x)$ feasible as well.
 ]
