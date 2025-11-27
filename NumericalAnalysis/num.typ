@@ -244,7 +244,28 @@ We'll discuss the results here for the specific instance of the Poisson equation
 = Spectral Methods
 The previous section lead to schemes that were of $cal(O)(h^p)$ error for some fixed $p$. Our schemes here lead to $cal(O)(h^p)$ error for all $p$ _if $u in C^infinity$_. Such _spectral_ methods have limited domain of application (namely linear equations, simple boundary conditions, and smooth functions), but for such problems they are very good.
 
+Suppose we have a discretization of a periodic domain, $x_1 = h, x_2 = 2h, dots, x_N = 2 pi$. Using finite difference, i.e. setting ansatz $u' (x_i) approx sum_j alpha_(i j) u_j$, we obtain the following classes of order of convergence:
+$ cal(O)(h^2) : u'(x_i) & approx 1/(2 h) (u_(j+1) - u_(j - 1)) & wide "3 pts" \
+cal(O)(h^4) : u'(x_i) & approx 1/(12 h) (-u_(j+2) + 8 u_(j+1) - 8 u_(j - 1) + u_(j - 2)) & wide "5 pts" \
+cal(O)(h^6) : u'(x_i) & approx 1/(60 h) (u_(j + 3) - 9 u_(j + 2) + 45 u_(j + 1) - 45 u_(j - 1) + 9 u_(j - 2) - u_(j - 3)) & wide "7 pts"\
+& dots.down & $ In the limit, we would like to use all $N = (2pi)/h$ points, which would give us _spectral_ (higher than any polynomial) order, $cal(O)(h^N) = cal(O)(h^(1\/h))$.
 
-// TODO (above)
+Recall that $ cot((n h)/2) = 2/(n h) - (n h)/6 - dots.c, $ so that $ u'(x_i) & approx 1/2 cot(h/2) [u_(j + 1) - u_(j - 1)] \
+        & - 1/2 cot((2 h)/2) [u_(j + 2) - u_(j - 2)] \
+        & + 1/2 cot((3 h)/2) [u_(j + 3) - u_(j - 3)] \
+        & - dots.c, $ as $N -> infinity$.
+
+Now, just as we could write $u = (u_(j)), w = (w_j) approx (u'(x_j))$ as vectors and then, for some fixed stencil, find a banded, sparse, circulant, Toeplitz matrix $D$ such that our FD scheme may be written $ w = D u, $ we can find a similar matrix for a spectral-type method; however, it will no longer be sparse. For, say, $N = 6$ points, we get the matrix $ D_6 = mat(
+  0, alpha_1, - alpha_2, alpha_3, - alpha_4, alpha_5;
+  - alpha_1, dots.c, "", "", "", "";
+  alpha_2, dots.c, "", "", "", "";
+  -alpha_3, dots.c, "", "", "", "";
+  alpha_4, dots.c, "", "", "", "";
+  -alpha_5, dots.c, "", "", "", 0;
+) $ where $alpha_j = 1/2 cot((j h)/2)$. How can we actually use such a $D_6$? It kind of sucks because of its far from sparse structure.
+
+// An alternative approach is via the Fourier transform. Namely, consider an ODE of the form $ (beta(x) u_x)' = f. $ Taking the Fourier transform of both
+
 
 = Some Background on PDEs
+

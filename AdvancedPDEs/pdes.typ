@@ -69,7 +69,7 @@ We consider the quasilinear first-order PDE of the form $ sum_(i=1)^n a_i (x, u)
 
 #proof[
   Locally, $S$ can be parametrized by $ (s_1, dots, s_(n-1)) |-> g(s) = (g_1 (s), dots, g_n (s)). $ Then, the "transversality condition" (about the tangency of $A$) can equivalently be written as $ det mat(partial g_1\/partial s_1, dots, partial g_1\/partial s_(n-1), a_1 (g(s)); dots.v, "", dots.v, dots.v; partial g_n\/partial s_1, dots, partial g_n\/partial s_(n-1), a_n (g(s))) eq.not 0. $
-  #remark[In the linear case, one sees that this equivalently means that the normal $nu$ of $S$ is not in $"char"_x (L)$; in particular, it is independent of the choice of initial data.]
+  #remark[In the linear case, one sees that this equivalently means that the normal $nu$ of $S$ is not in $"char"_x (L)$; in particular, it is independent of the choice of initial data, _in this case_.]
   Remark that if we write coordinates $(x_1, dots, x_n, y) in RR^(n+1)$ and define $F(x, y) = u(x) - y$, then the PDE can be written succinctly as the statement $A dot gradient F = 0$, and that the zero set $F = 0$ gives the graph of the solution $u$; hence, we essentially need that the vector field $A$ everywhere tangent to the graph of any solution. The idea of our solution is to consider $A$ "originating" at $S^ast$, and "flowing" our solution along the integral curves defined by $A$ to obtain a solution locally.
 
   The integral curves of $A$ are defined by the system of ODEs $ cases((dif x_j)/(dif t) = a_j (x, y)\, (dif y)/(dif t) = b(x, y) & ""\ x_j (s, 0) = g_j (s)\, y(s, 0) = phi(g(s))) wide j = 1, dots, n. $
@@ -77,7 +77,7 @@ We consider the quasilinear first-order PDE of the form $ sum_(i=1)^n a_i (x, u)
 ]
 
 We briefly discuss, but don't prove in detail, the fully nonlinear case, i.e. $ F(x, u, partial u) = 0, $ where we assume $F in C^2$. We approach by analogy. Putting $xi_i := (partial u)/(partial x_i)$, then we see $F$ as a function $RR^(2n + 1) -> RR$. We seek "characteristic" ODEs akin to those found for the integral curves in the quasilinear case. We naturally take, as in the previous, $(dif x_i)/(dif t) = (partial F)/(partial xi_i)$. Applying chain rule, we find that $ (dif y)/(dif t) = sum_i (partial u)/(partial x_i) (dif x_i)/(dif t) = sum_(i) xi_i (partial F)/(partial xi_i). $ Finally, if we differentiate $F = 0$ w.r.t. $x_j$, we find $ 0 = (partial F)/(partial x_j) + xi_j (partial F)/(partial y) + sum_(k) (partial F)/(partial xi_k) (partial xi_k)/(partial x_j) $ whence $ (dif xi_j)/(dif t) = sum_k (partial xi_j)/(partial x_k) (partial x_k)/(partial t) = - (partial F)/(partial x_j) - xi_j (partial F)/(partial y). $ In summary, this gives a system of $2 n +1$ ODEs in $(x, y, xi)$ variables $ (dif x_j)/(dif t) = (partial F)/(partial xi_j), wide (dif y)/(dif t) = sum_(i) xi_i (partial F)/(partial xi_i) \
-(dif xi_j)/(dif t) = -(partial F)/(partial x_j) - xi_j (partial F)/(partial y). $ After imposing a similar (but slightly more complex) transversality requirement, one can show similarly obtain a solution from this system by an inverse function theorem argument.
+(dif xi_j)/(dif t) = -(partial F)/(partial x_j) - xi_j (partial F)/(partial y). $ After imposing a similar (but slightly more complex) transversality requirement, one can similarly obtain a solution from this system by an inverse function theorem argument.
 
 In terms of initial conditions, if $u$ is specified on some hypersurface $S$, we need to lift it to $S^(ast ast) subset.eq RR^(2n + 1)$ to "encode" the information of the initial values of $u$ and its derivatives on $u$.
 
@@ -472,7 +472,7 @@ Note that this is the same radially symmetric function "$phi$" we saw in the pre
 #let N = $#rect("N", inset: 0.2em)$
 #let box(a) = $#rect(a, inset: 0.2em)$
 
-We assume that $Omega subset RR^n$ bounded and $S = partial Omega$ is $C^infinity$ (and sufficiently nice t be able to apply Green's identities). We consider the _Dirichlet problem_, $ #rect("D", inset: 0.2em) wide laplace u = f "on" Omega, u|_S = g, $ where $f, g$ are given functions, and the _Neumann problem_, $ #rect("N", inset: 0.2em) wide laplace u = f "on" Omega, u|_S = partial_nu g, $ where $nu$ the exterior outward normal to $S$.
+We assume that $Omega subset RR^n$ bounded and $S = partial Omega$ is $C^infinity$ (and sufficiently nice to be able to apply Green's identities). We consider the _Dirichlet problem_, $ #rect("D", inset: 0.2em) wide laplace u = f "on" Omega, u|_S = g, $ where $f, g$ are given functions, and the _Neumann problem_, $ #rect("N", inset: 0.2em) wide laplace u = f "on" Omega, u|_S = partial_nu g, $ where $nu$ the exterior outward normal to $S$.
 
 #remark[If #D has a solution it must be unique (if two solutions exist, their difference solves the equation $laplace u = 0, u|_S = 0$ which implies by the maximum principle $u =0$).]
 
@@ -725,7 +725,7 @@ We recall the Euler-Poisson (EP) operator; given $u(x) = phi(r)$ for $r = |x|$, 
   If $k >= 1$ and $phi in C^(k + 1) (RR)$, $ partial_r^2 (r^(-1) partial_r)^(k - 1) [r^(2k - 1) phi(r)] = (r^(-1) partial_r)^(k) [r^(2k) phi'(r)]. $
 ]<lem:annoyingsquareexp>
 
-Remark that the RHS here can be writen as $ (r^(-1) partial_r)^(k -1) [2 r r^(2k - 2) phi'(r) + r^(2k - 1) phi''(r)], $ which looks a lot like the EP operator up to scaling by $r$. With this as motivation, define, for $k >= 1$, $ T_k phi(r) := (r^(-1) partial_r)^(k - 1) [r^(2k - 1) phi(r)], $ so that @lem:annoyingsquareexp reads $partial_r^2 T_k phi = T_k [phi'' + (2k)/r phi']$. Thus, remark that if we could pick $k$ such that $2k = n - 1$, we'd be in business; of course, this is only possible when $n$ is odd; this represents a dichotomy in our solution approach. For the remainder we assume that $n = 2k + 1$ is an odd space dimension.
+Remark that the RHS here can be writen as $ (r^(-1) partial_r)^(k -1) [2 r^(2k - 2) phi'(r) + r^(2k - 1) phi''(r)], $ which looks a lot like the EP operator up to scaling by $r$. With this as motivation, define, for $k >= 1$, $ T_k phi(r) := (r^(-1) partial_r)^(k - 1) [r^(2k - 1) phi(r)], $ so that @lem:annoyingsquareexp reads $partial_r^2 T_k phi = T_k [phi'' + (2k)/r phi']$. Thus, remark that if we could pick $k$ such that $2k = n - 1$, we'd be in business; of course, this is only possible when $n$ is odd; this represents a dichotomy in our solution approach. For the remainder we assume that $n = 2k + 1$ is an odd space dimension.
 
 Combining @lem:annoyingsquareexp and @cor:squareimpliesepeqpartialt, then, yields the equation $ partial_t^2 T_k M_u - partial_r^2 T_k M_u = 0, $ namely, a 1D wave equation for the expression $T_k M_u$, which we know how to solve. In what proceeds, we demonstrate how we can simplify this expression to get a closed-form for $u$ itself, and moreover show that what results is actually a solution to the $n$ dimensional wave equation.
 
@@ -746,7 +746,7 @@ Putting now $tilde(u) = T_((n - 1)/2) M_u$, then we find that $tilde(u)(x, r, 0)
 ]
 Next, we compute the RHS in this lemma by L'Hopital's and the expression we have above by D'Alembert's.
 
-Furst, recall that $M_phi (x, r)$ even in $r$, so $ tilde(f) = T_((n - 1)/2) M_f = underbrace((r^(-1) partial_r)^(k -1), "even in" r) [underbrace(r^(2k - 1), "odd in" r) underbrace(M_f, "even in" r)], $ from whence we see $tilde(f)$ odd in $r$; hence, in particular, $partial_r tilde(f)$ even in $r$. Similarly, we see that $tilde(g)$ is odd in $r$. Thus, combining the lemma, our formula, and expanding definitions $ u(x, t) &= lim_(r -> 0) 1/(2 c_0 r) 1/2 [tilde(f)(x, r + t) + tilde(f)(x, r - t)] + 1/2 integral_(r-t)^(r + t) tilde(g)(x, s) dif s \
+First, recall that $M_phi (x, r)$ even in $r$, so $ tilde(f) = T_((n - 1)/2) M_f = underbrace((r^(-1) partial_r)^(k -1), "even in" r) [underbrace(r^(2k - 1), "odd in" r) underbrace(M_f, "even in" r)], $ which we see $tilde(f)$ odd in $r$; hence, in particular, $partial_r tilde(f)$ even in $r$. Similarly, we see that $tilde(g)$ is odd in $r$. Thus, combining the lemma, our formula, and expanding definitions $ u(x, t) &= lim_(r -> 0) 1/(2 c_0 r) 1/2 [tilde(f)(x, r + t) + tilde(f)(x, r - t)] + 1/2 integral_(r-t)^(r + t) tilde(g)(x, s) dif s \
 &= 1/(2c_0) [partial_r tilde(f)(x, r)|_(r = t) + partial_r tilde(f)(x, r)|_(r = -t) + tilde(g)(x, t) - tilde(g)(x, - t)] \
 &= 1/(c_0) [partial_r tilde(f)(x, r)|_(r = t) + tilde(g)(x, t)] \
 &= 1/(1 dot 3 dots.c (n - 2) omega_n) [partial_t (t^(-1) partial_t)^((n -3)/2) (t^(n - 2) integral_(|y| = 1) f(x + t y) dif sigma(y)) \
@@ -764,9 +764,263 @@ Note that the RHS only depends on $f, g$ (and their derivatives), in a very expl
 ]
 
 #proof[
-  // TODO
+  The fact that $u$ satisfies $square u = 0$ just follows by direct computation. For the boundary data, recall that $ u(x, t) = lim_(r -> 0) (tilde(u)(x, r, t))/(c_0 r) = 1/c_0 [partial_r (T_((n-1)/2) M_f)|_(r = t) + T_((n-1)/2) M_g|_(r = t)]. $ Recall that $T_k phi = sum_(j=0)^(k - 1) c_j t^(j + 1) phi^(j) (t)$, from which we see that $ u(x, t) & = partial_t [t M_f+ (c_1)/c_0 t^2 partial_t M_f + cal(O)(t^3) ] + t M_g + cal(O)(t^2) \
+          & = M_f + t partial_t M_f + c_1/(c_0) 2 t partial_t M_f + t M_g + cal(O)(t^2). $ In particular, at $t = 0$, all terms vanish except $M_f (x, 0)$, which is equal to $f(x)$, as required. Similarly, taking a derivative in $t$, we find $ partial_t u(x, t) = partial_t M_f + (1 + 2 (c_1)/c_0) partial_t M_g + M_g + cal(O)(t). $ Recalling that $M_phi$ even in $t$ and thus its derivative is odd in $t$, the terms involving $partial_t M_f, partial_t M_g$ vanish, so all that is left is $M_g (x, 0) = g(x)$.
+]
+
+
+=== Even Space Dimensions
+The key observation to derive an analogous formula for even space dimension is the so-called _Hadamard's Method of Descent_. Namely, if $n$ even and $u : RR^(n + 1) times RR$ is such that $square u = 0$ but $u$ independent of the final coordinate $x_(n + 1)$, then $square u$ will also be zero in $RR^(n) times RR$. Thus, we can just use the representation formula for odd dimensions, and simplify accordingly.
+
+
+#theorem[
+  Suppose $n$ even, $f in C^((n + 4)/2) (RR^n), g in C^((n + 2)/2) (RR^n)$. Then, if $u$ solves the Cauchy problem corresponding to $square$ in $RR^n$, $ u(x, t) &= 2/(1 dot 3 dots.c (n-1) omega_(n+1)) [partial_t (t^(-1) partial_t)^((n-2)/2) (t^(n-1) integral_(|y| <= 1) (f(x + t y))/(sqrt(1 - |y|^2)) dif y) \
+    & wide wide + (t^(-1) partial_t)^((n-2)/2) (t^(n-1) integral_(|y| <= 1) (g(x + t y))/(sqrt(1 - |y|^2))) dif y
+  ]. $
+]
+
+#proof[
+  By our remarks above, it suffices to show that the representation formula with our given stipulations on the dependence on $x_(n + 1)$ simplifies as given.
+
+  Namely, if we write $(y, y_(n+1)) in RR^(n + 1)$, then the integrals of interest become (splitting into two integrals over the northern/southern hemispheres, and adding together), $ integral_(|y|^2 + y_(n + 1)^2 = 1) f(x + t y) dif sigma(y, y_(n + 1)) &= 2 integral_(|y|^2 <= 1) (f(x + t y))/(sqrt(1 - |y|^2)) dif y. $ Same holds for $g$.
+]
+
+Remark that our solution formula can be interpreted in the distributional sense. Namely, if we define the distribution $Sigma_t$ by $angle.l Sigma_t, psi angle.r := 1/(omega_n) integral_(|y| = 1) psi(t y) dif sigma(y)$ and $Phi_t := 1/(omega_n) (t^(-1) partial_t)^((n-3)/2) (t^(n-2) Sigma_t)$, then $u(dot, t) = f convolve partial_t Phi_t + g convolve Phi_t$, in a distributional sense (using the evenness of the integrals in $t$).
+
+
+== Cauchy Problem for the Inhomogeneous Wave Equation
+
+Here, we study $ (star) wide cases(
+  square u = w(x, t),
+  u(x, 0) = f(x),
+  partial_t u(x, 0) = g(x)
+). $
+WLOG, we can take $f = g = 0$, since if $u_1$ solves $(star)$ with $w = 0$ and $u_2$ solves $(star)$ with $w$ given and $f = g = 0$, then $u_1 + u_2$ will solve the general problem.
+
+#theorem("Duhamel's Principle")[
+  Let $w in C^([n/2] + 1) (RR^n times RR)$ and for each $s in RR$, let $v(x, t, s)$ solve $ cases(
+    square v = 0,
+    v(x, 0, s) = 0,
+    partial_t v(x, 0, s) = w(x, s)
+  ). $ Then, $ u(x, t) = integral_(0)^t v(x, t - s, s) dif s $ solves $(star)$ with $f = g = 0$.
+]
+
+#proof[
+  Follows by direct computation.
+]
+
+== The Cauchy Problem via Fourier Transform
+
+One should review the Preliminaries on Fourier transform and distributions, and especially on Fourier transforms of tempered distributions, before proceeding.
+
+
+We work formally for now; consider as before the Cauchy problem for the wave equation $ cases(
+  square u = 0,
+  u(x, 0) = f(x)\, quad partial_t u (x, 0) = g(x)
+), $ where we do not prescribe the regularity of $f, g$ yet. Assuming it is possible to do so, take the Fourier transform of $u$ in just the spatial variables. Using derivative properties of the Fourier transform, and assuming we may integrate (in $t$) under the integral, we obtain the equation $ partial_t^2 hat(u)(xi, t) + 4pi^2 abs(xi)^2 hat(u)(xi, t) = 0, $ with initial data $hat(u)(xi, 0) = hat(f)(xi), partial_t hat(u)(xi, 0) = hat(g)(xi)$ (again assuming this makes sense). But this is just an ODE in $t$, and a simple one at that; we obtain the solution $ hat(u)(xi, t) = hat(f)(xi) cos(2 pi |xi| t) + hat(g)(xi) (sin(2 pi |xi| t))/(2 pi |xi|). $ To recuperate the original solution, we need to apply the inverse Fourier transform; the products become convolutions, and we obtain the formula $ u(dot, t) = f convolve Psi_t + g convolve Phi_t, $ where $Psi_t$ the inverse Fourier transform of $cos(dots)$, similar for $Phi$; not that (again under assumptions of being able to take derivatives under integrals) $partial_t Phi_t = Psi$. Remark the similarity of this formula with the expression we wrote down at the very end of the chapter on spherical means.
+
+However, there is a quite big technical problem; the trig. functions $hat(Phi)_t, hat(Psi)_t$ are _not_ in $L^1$, so it doesn't make sense to take their inverse Fourier transforms. We'll deal with this via distributions, and approximation. Namely, put $ hat(Phi)_t^epsilon (xi) := e^(- 2 pi |xi| epsilon) (sin(2 pi |xi| t))/(2 pi |xi|), $ for $epsilon > 0$, with similar for $hat(Psi)_t$; these are now in $L^1$, and converge uniformly to their respective functions. We will compute the inverse fourier transforms of these functions. First, note that we can rewrite $ hat(Phi)_t^epsilon (xi) = 1/(4pi i |xi|) (e^(-2 pi (epsilon - i t) |xi|) - e^(- 2pi (epsilon + i t) |xi|)) = 1/(2 i) integral_(epsilon - i t)^(epsilon + i t) e^(- 2pi s |xi|), $ so that we need to compute
+$
+  Phi^epsilon_t (x) = 1/(2 i) integral_(epsilon - i t)^(epsilon + i t) integral_(RR^n) e^(2 pi i xi dot x) e^(- 2pi s |xi|) dif xi dif s.
+$
+
+#lemma[
+  $ integral_(RR^n) e^(2 pi i xi dot x) e^(- 2pi s |xi|) dif xi = (Gamma((n+1)/2))/(pi^((n+1)/2)) s/((s^2 + |x|^2)^((n+1)/2)) $ for any $s in CC$ with positive real part.
+]<lem:annoying>
+
+Assuming this lemma, we obtain $ Phi_t^(epsilon) (x) &= (Gamma((n + 1)/2))/(pi^((n+1)/2)) 1/(2 i) integral_(epsilon - i t)^(epsilon + i t) s/((s^2 + abs(x)^2)^((n+1)/2)) dif s \
+&= (Gamma((n+1)/2))/(pi^((n+1)/2)) 1/(2 i) 1/(1 - n) [1/([(epsilon + i t)^2 + |x|^2]^((n-1)/2)) - 1/([(epsilon - i t)^2 + |x|^2]^((n-1)/2))]. $ In particular, we see that for $|t| < |x|$, that $lim_(epsilon -> 0) Phi_t^epsilon (x) -> 0$. However, we get a dichotomy in the dimension when $|t| > |x|$. Namely, if $n$ odd, we again have limiting value zero. However, if $n$ even, the parity of the denominator gives that $ Phi_t (x) & = lim_(epsilon) Phi_t^epsilon (x) \
+          & = ("sgn"(t) Gamma((n+1)/2))/(i (1 - n) pi^((n+1)/2)) 1/((-t^2 + |x|^2)^((n-1)/2)) \
+          & = ((Gamma(n+1)/2) "sgn"(t) (-1)^((n-1)/2))/((1 - n) pi^((n+1)/2)) 1/((t^2 - |x|^2)^((n-1)/2)). $ One can check by induction on $n$ that then $ Phi_t (x) = (2 "sgn"(t))/(1 dot 3 dots.c (n - 1) omega_(n+1)) (t^(-1) partial_t)^((n/2) - 1) [t^2 - |x|^2]^(-1/2), $ as we expected from the spherical means approach. Thus, we see that $ u(dot, t) = f convolve partial_t Phi_t + g convolve Phi_t, wide Phi_t = 1/(1 dot 3 dots.c (n-1)) (t^(-1) partial_t)^((n-2)/2) (t^(n-1) Gamma_t), $ where $Gamma_t$, as a distribution, is given by $ angle.l Gamma_t, phi angle.r = 1/(omega_(n+ 1)) integral_(|y| <= 1) (psi(t y))/(sqrt(1 - |y|^2)) dif y. $
+
+#proposition[If $f, g in L^2 (RR^n)$, then $u(dot, t) in L^2 (RR^n)$]
+
+#proof[
+  By Plancherel's, $hat(f), hat(g) in L^2$ as well. Thus, with $t$ fixed, $ norm(hat(u))_2 <= norm(hat(f) cos(2 pi abs(dot) t))_2 + norm(hat(g) (sin(2 pi abs(dot) t))/(2pi abs(dot)))_2 < infinity, $ thus $hat(u) in L^2$, so $u in L^2$.
+]
+We can even control the (weak) derivatives of solutions.
+#definition[
+  Put $ H_k (Omega) := {f in L^2 (Omega) | partial^alpha f in L^2 (Omega) forall |alpha| <= k}. $ Note that, using the identity $hat(partial^alpha f)(xi) = (2 pi i xi)^(alpha) hat(f) (xi)$ and Plancherel's, $ f in H_k (RR^n) <=> xi^alpha hat(f)(xi) in L^2 (RR^n) forall |alpha| <= k <=> (1 + |xi|)^k hat(f)(xi) in L^2 (RR^n). $
+]
+
+#proposition[If $f in H_k (RR^n), g in H_(k-1)(RR^n)$, then $u in H_k (RR^n times [t_0, t_1])$.]
+
+#proof[
+  Same as the previous proof, only applied to the Fourier transform of mixed partials of $u$.
+]
+
+Finally, with the interesting things out of the way, we prove the lemma we took for granted, @lem:annoying:
+
+#proof[
+  (Of @lem:annoying) First, we claim that for $beta >= 0$, $ e^(-beta) = integral_(0)^infinity (e^(-tau))/(sqrt(pi tau)) e^(-beta^2/(4 tau)) dif tau quad (dagger). $ Indeed, using the residue theorem, we see that $ integral_(-infinity)^(infinity) (e^(i beta s))/(1 + s^2) dif s = 2 pi i "Res"_(s = i) ((e(i beta s))/(1 + s^2)) = pi e^(-beta), $ and $integral_(0)^infinity e^(- (1 + s^2) tau) dif tau = 1/(1 + s^2)$, so combining these two results, we get $ e^(-beta) & = 1/pi integral_(-infinity)^(infinity) integral_(0)^infinity e^(- (1 + s^2) tau) e^(i beta s) dif tau dif s \
+  & =^"Fubini" 1/(pi) integral_(0)^infinity integral_(-infinity)^infinity (dots.c) dif s dif tau \
+  & =^(s = 2 pi sigma) 2 integral_(0)^infinity underbrace(integral_(-infinity)^(infinity) e^(i beta 2 pi sigma) e^(-4 pi^2 sigma^2 tau) e^(- tau) dif sigma, = "i.f.t of a Gausian") dif tau \
+  &= 2 integral_(0)^infinity (4 pi tau)^(-1/2) e^(- beta^2/(4 tau)) e^(- tau) dif tau\
+  &= integral_(0)^infinity (e^(-tau))/sqrt(pi tau) e^(-beta^2/(4 tau)) dif tau, $ as claimed in $(dagger)$. Next, we may rewrite the integral of interest as follows $ integral_(RR^n) e^(2 pi i x dot xi) e^(-2 pi |xi| t) dif xi & =^((dagger)) integral_(RR^n) e^(2pi i x dot xi) integral_(0)^infinity (e^(-tau))/(sqrt(pi tau)) e^(- (pi^2 |xi|^2 t^2)/(tau)) dif tau dif xi \
+  &=^"Fubini" integral_(0)^infinity (e^(- tau))/(sqrt(pi tau)) underbrace(integral_(RR^n) e^(2pi i x dot xi) e^(-(pi^2 |xi|^2 t^2)/tau) dif xi, = "i.f.t. of Gaussian") dif tau \
+  &= integral_0^infinity (e^(-tau))/(sqrt(pi tau)) (tau/(pi t^2))^(n/2) e^(- tau/t^2 |x|^2) dif tau \
+  &= 1/(pi^((n+1)/2)) 1/(t^n) integral_(0)^infinity e^(- tau(1 + (|x|^2)/t^2)) tau^((n-1)/2) dif tau \
+  &=^(sigma = (1 + (|x|^2)/t^2) tau) 1/(pi^((n+1)/2)) t/((t^2 + |x|^2)^((n+1)/2)) underbrace(integral_(0)^infinity e^(-sigma) sigma^((1-n)/2), = Gamma((n+1)/2)) dif sigma, $ which completes the proof upon simplification.
+]
+== The Fundamental Solution
+We seek to find a distribution $u$ such that $ square u = delta(x) delta(t) $ as a distribution. Taking the Fourier transform in $x$, we get an inhomogeneous ODE for $hat(u)(xi, t)$: $ partial_t^2 hat(u)(xi, t) + 4 pi^2 |xi|^2 hat(u)(xi, t) = delta(t), $ since $hat(delta) = 1$. We can solve this by solving the homogeneous problem for $t < 0, t > 0$, and imposing proper conditions at $t = 0$ such that the inhomogeneous problem holds. Namely, we know that $ hat(u)(xi, t) = cases(
+  a(xi) cos(2pi abs(xi) t) + b(xi) sin(2pi abs(xi) t) quad t < 0,
+  c(xi) cos(2 pi abs(xi) t) + d(xi) sin(2 pi abs(xi) t) quad t > 0.
+) $
+In order for the dirac distribution to appear in the second derivative of $u$, we know that we need there to be a discontinuity jump of 1 at the origin in $partial_t hat(u)$; since $ partial_t hat(u)(xi, t) = cases(
+  - 2pi abs(xi) a(xi) sin(dots) + 2pi abs(xi) b(xi) cos(dots) quad & t < 0,
+  -2pi abs(xi) c(xi) sin(dots) + 2pi abs(xi) d(xi) cos(dots) & t > 0
+), $ we need $ 1 = lim_(t -> 0^+) partial_t hat(u) - lim_(t -> 0^-) partial_t hat(u) = 2 pi abs(xi) (d(xi) - b(xi)) => 2 pi abs(xi) (d(xi) - b(xi)) = 1 quad "(i)". $ In addition, we need continuity at $0$ in $hat(u)$ so that our first derivative is only discontinuous, not a dirac itself. Namely, we need $ lim_(t -> 0^+) hat(u) = lim_(t -> 0^-) hat(u) <=> a(xi) = c(xi) quad "(ii)". $ (i), (ii) give two conditions on the coefficients $a, b, c, d$, so we need two more to determine a solution for all time. Let's just say $hat(u)$ identically zero for $t < 0$ (so that $a equiv b equiv 0$), and thus (i), (ii) imply $c(xi) equiv 0, d(xi) = 1/(2 pi abs(xi))$. In this way, we get solution $ hat(u)(xi, t) = cases(
+  0 quad & t > 0,
+  (sin(2 pi abs(xi) t))/(2 pi abs(xi)) & t < 0
+), $ which one should recognize (for $t > 0$) as our $hat(Phi)_t$ from above. Taking one more Fourier transform (which needs to be computed via a regularization, since the function above not in $L^1$), in $t$, we get $ hat(u)(xi, tau) = 1/(4 pi^2) 1/(|xi|^2 - tau^2), $ which one remarks is singular on the cone $abs(xi)^2 = tau^2$; just as before, only now we are in Fourier space. With this, we can solve, for sufficiently nice $w$, the inhomogeneous problem $square v = w$, via $ v = u convolve w, $ where $u$ the inverse Fourier transform of what we wrote above.
+
+== An Introduction to the Radon Transform
+The idea here is, akin to the method of spherical means, to reduce the $n$-dimensional wave equation to a 1-dimensional wave equation; however, this time we'll use a different integral transform, namely the Radon transform. We'll (largely formally) discuss properties of the transform relevant to our purposes first.
+
+#definition[
+  Put $cal(S)_n := {omega in RR^n : abs(omega)= 1}$. For $f in cal(S)(RR^n)$ and $(s, omega) in RR times cal(S)_n$, define the _Radon transform_ of $f$ by $ (R f)(s, omega) := integral_(x dot omega = s) f(x) dif x, $ where $dif x$ the induced hypersurface measure on the plane defined by $x dot omega = s$.
+]
+// ! motivations?
+
+#proposition[
+  For $f in cal(S)$, $rho in RR, omega in cal(S)_n$, then $ hat(R f)(rho, omega) = hat(f)(rho omega), $ where the first Fourier transform a one-dimensional Fourier transform (with $rho$ the Fourier dual of $s$) with $omega$ fixed, and the second a $n$-dimensional Fourier transform.
+]
+
+#proof[
+  This essentially boils down to the observation that we may write integration over $RR^n$ as the tensor product of integration over planes $x dot omega = s$ and integration over $s in RR$;
+  $
+    hat(f)(rho omega) & = integral_(RR^n) e^(- 2 pi i rho omega dot x) f(x) dif x \
+                      & = integral_(RR) integral_(x dot omega = s) e^(-2 pi i rho s) f(x) dif x dif s \
+                      & = integral_(RR) e^(- 2pi i rho s) R f (s, omega) dif s = hat(R f)(rho, omega).
+  $
+]
+
+#corollary[
+  For $f in cal(S)$, $R f (s, omega) = integral_(RR) e^(2 pi i s rho) hat(f)(rho omega) dif rho$.
+]
+#proof[
+  Follows immediately by Fourier inversion.
+]
+
+#proposition("Inverse Radon Transform")[
+  For $f in cal(S)$, $ f(x) = integral_(cal(S)_n) (tilde(R) f)(s, omega) dif sigma(omega), $ where the operator $tilde(R)$ defined by $ (tilde(R)f)(s, omega) := 1/2 integral_(RR) e^(2 pi i rho x dot omega) (hat(R f))(rho, omega) abs(rho)^(n - 1) dif rho. $
+]
+
+#proof[
+  By Fourier inversion, hyperspherical coordinates, and the previous proposition, we may write $ f(x) &= integral_(RR^n) e^(2 pi i x dot xi) hat(f)(xi) dif x \
+  &= integral_(cal(S)_n) integral_(RR_+) e^(2 pi i rho omega dot x) hat(f)(rho omega) rho^(n-1) dif rho dif sigma(omega) \
+  &= integral_(cal(S)_n) underbrace(integral_(0)^infinity e^(2 pi i rho x dot omega) hat(R f)(rho, omega) rho^(n - 1) dif rho dif sigma(omega), =: h(x dot omega, omega)). $ We can decompose $h$ into a sum of a symmetric and antisymmetric function (in $omega$ under the flip $omega mapsto - omega$), by $ h(x dot omega, omega) = underbrace(1/2 [h(x dot omega, omega) + h(x dot (-omega), - omega)], "symmetric") + underbrace(1/2 [h(x dot omega, omega) - h(x dot (-omega), - omega)], "antisymmetric"). $
+  Since our integration is over the sphere $cal(S)_n$, the antisymmetric term will vanish, and we are therefore left to deal with the symmetric term, which we may rewrite $ 1/2 [h(x dot omega, omega) + h(x dot (-omega), - omega)] &= 1/2 [integral_0^infinity e^(2 pi i rho x dot omega) hat(R f)(rho, omega) rho^(n-1) dif rho - integral_(0)^(-infinity) e^(2 pi i rho x dot omega) hat(R f)(rho, omega) rho^(n-1) (-rho)^(n-1)] \
+  &= 1/2 integral_(RR) e^(2 pi i rho x dot omega) hat(R f)(rho, omega) abs(rho)^(n-1) dif rho = (tilde(R)f)(s, omega), $ where we change variables in second integral $rho -> - rho$. This completes the proof.
+]
+
+Finally, we can see the connection back to the wave equation.
+#proposition[
+  For $f in cal(S)$, $R(partial_i f)(s, omega) = omega_i partial_s (R f)(s, omega)$. In particular, we see that $ R (laplace f) = partial_s^2 (R f)(s, omega), $ and moreover, if $square u = 0$, then, treating $t$ as a parameter, $ 0 = R(square u)(s, omega; t) = (partial_t^2 - partial_s^2)(R u)(s, omega; t), $ i.e., $(R u)(s, omega; t)$ satisfies a wave equation in the $t, s$ variables.
+]
+
+#proof[
+  The "In particular" statement follows by applying the main result twice in each coordinate and summing over the result. To prove the result, denote the translation $f_t (x) := f(x + t)$ for $t in RR^n$. Then, by changing coordinates, one finds that $ (R f_t)(s, omega) = (R f)(s + t dot omega, omega). $ So, since $ partial_j f (x) = lim_(t_j -> 0) 1/(t_j) [f(x + t_j e_j) - f(x)], $ then applying the Radon transform to both sides, and passing limits under integrals (valid since $f in cal(S)$), we obtain $ R (partial_j f) (s, omega) = lim_(t_j -> 0) [R(s + t_j omega_j, omega) - R f(s dot omega, omega)] = omega_j partial_s R f(s, omega). $
+]
+
+#theorem[
+  The solution to the problem $ cases(
+    square u = 0,
+    u(0, x) = f(x)\, quad partial_t u(0, x) = g(x)
+  ) $ is given by $ u(x, t) = 1/2 integral_(cal(S)_n) [(tilde(R) f) (x dot omega + t, omega) + (tilde(R) f) (x dot omega - t, omega) + integral_(x dot omega - t)^(x dot omega + t) (tilde(R) g)(s, omega) dif s] dif sigma(omega). $
 ]
 
 #remark[
-  // TODO Huygens?
+  As we'll see in the proof, we need some regularity of $f, g$ for this result to hold, but we'll not focus on them here.
+]
+
+#proof[
+  Per the previous lemma, $partial_s^2 R u = partial_t^2 R u$ for all $omega in cal(S)_n$, i.e. $R u$ satisfies a 1-dimensional wave equation, with $F(s, omega) := R u (s, omega, 0), G(s, omega) := R partial_t u(s, omega, 0)$ (treating $t$ as a parameter in the Radon transform). Hence, $ (R u) (s, omega, t) = 1/2 [F(s + t, omega) + F(s - t, omega) + integral_(s - t)^(s + t) G(s, omega) dif s], $ by D'Alembert's formula. Moreover, one has that $ F(s, omega) = R f (s, omega), wide G(s, omega) = R g (s, omega), $ where in the second equality we need to take a derivative outside of an integral sign (see our remark above; if, say, $f, g$ have compact support, then this is fine, for instance). Applying the inversion theorem for the Radon transform to the expression above, we obtain the expression stated.
+]
+
+A natural question is how this relates to the solution we found via Fourier transforms? Note that we can, as in that case, we can see a dichotomy in the behaviour of solutions with our solution formula too.
+
+Suppose first that $n$ odd; then, remember that there is a term $abs(rho)^(n - 1)$ in the definition of $tilde(R) f$; since $n$ odd, $n - 1$ even so $abs(rho)^(n - 1) = rho^(n-1)$, and we may rewrite the relevant expression in terms of the inverse Fourier transform of a perfect derivative: $ tilde(R) f (s, omega) & = 1/2 integral_(RR) e^(2 pi i rho s) hat(R f)(rho, omega) rho^(n- 1) dif rho \
+& = 1/2 ((-1)^((n-1)/2))/((2 pi)^(n-1)) integral_(RR) e^(2 pi i rho s) hat(partial_s^(n-1) R f) (rho, omega) dif rho \
+&= 1/2 ((-1)^((n-1)/2))/((2 pi)^(n-1)) partial_s^(n - 1) R f (omega, rho). $ Remark that this is a purely local expression on the initial data $f$.
+
+On the other hand, if $n$ even, then $abs(rho)^(n - 1) = "sgn"(rho) rho^(n - 1)$, and the analogous expression we get is $ tilde(R f)(s, omega) = 1/2 ((-1)^((n-2)/2))/((2 pi)^(n-1)) integral_(RR) e^(2 pi i rho s) (2 pi i rho)^(n - 1) (-i) "sgn"(rho) hat(R f) (rho, omega) dif rho, $ which isn't quite the perfect derivative term we had above. However, we can rewrite it as follows, by use of the _Hilbert transform_:
+
+#lemma[
+  For a real-valued function of one variable $phi$, define the _Hilbert transform_ of $phi$ by the Cauchy principal-valued integral transform $ (H phi) (s) := lim_(epsilon -> 0) 1/pi integral_(|t| > epsilon) (phi(s - t))/t dif t. $ Then, we have that $ hat(H phi)(rho) = - i "sgn"(rho) hat(phi)(rho). $
+]
+
+#proof[
+  // maybe
+]
+
+Assuming this, we can hence rewrite our expression above for $tilde(R f)$ by $ tilde(R f) (s, omega) = 1/2 ((-1)^((n-2)/2))/((2 pi)^(n-1)) H(partial_s^(n-1) R f)(s, omega), $ where we see now the non-locality (w.r.t. intial data) of the even-dimensional solution, for the Hilbert transform is clearly far from local.
+
+= The Heat Equation
+
+The _heat equation_ is given by $ partial_t u = laplace_x u, $ where $x in RR^n$ and $t in [0, + infinity)$. Traditionally, $u$ represents the temperature at $x in Omega subset RR^n$ at some time $t$. Namely, we would have that, physically, the rate of change in time of the total temperature in a domain $Omega$ is given by the incoming heat flux across the boundary:
+$ partial/(partial t) integral_(Omega) u(x, t) dif x &= integral_(partial Omega) arrow(J) dot (- arrow(nu)) dif sigma \
+&=^("Divergence"\ "Theorem") - integral_(Omega) arrow(gradient) dot arrow(J) dif x. $ The so-called Fourier's Law says that $arrow(J) = - c gradient u$; i.e., heat flows from warm to cold (we'll take $c = 1$). Plugging this in, this says that $ (partial)/(partial t) integral_(Omega) u(x, t) dif x = integral_Omega laplace_x u(x, t) dif x, $ which gives the heat equation upon integrating under the integral.
+
+We'll be interested in the initial value problem $ partial_t u = laplace_x u, wide u(x, 0) = f(x). $ We'll approach this via Fourier transform. Suppose $f in cal(S)(RR^n)$. Writing $hat(u)(xi, t)$ for the Fourier transform of a solution $u$ in just the spatial variable. Using derivative properties of the Fourier transform and assuming for now $u in cal(S)$, we obtain a first-order ODE for $u$, $ partial_t hat(u)(xi, t) + 4 pi^2 abs(xi)^2 hat(u)(xi, t) = 0, wide hat(u)(xi, 0) = hat(f)(xi), $ which readily has solution $ hat(u)(xi, t) = hat(f)(xi) e^(-4 pi^2 abs(xi)^2 t), $ which we see is in $cal(S)$ for all $t > 0$. Applying the inverse Fourier transform, we find $ u(x, t) = f convolve K_t (x), wide hat(K_t)(xi) := e^(- 4pi^2 abs(xi)^2 t). $ We see that $hat(K)_t (xi)$ a Gaussian, so using the stability of Gaussians under the Fourier transform, we see that $ K_t (xi) = (4 pi t)^(-n/2) e^(- abs(x)^2/(4 t)), $ a so-called Gaussian kernel. Remark that as $t -> infinity$, the graph of such a function "flattens" (symmetrically) about $x = 0$.
+
+#remark[
+  We have the properties
+  $ K_t (x) = t^(-n/2) K_1 (x/(t^(1/2))), $ and $ integral_(RR^n) K_t (x) dif x = hat(K)_t (0) = 1. $
+]
+
+Using the above remark and the the proof given for boundary behaviours for solutions of the Dirichlet problem for $laplace$, we obtain the following result.
+
+
+#theorem[
+  Suppose $f in L^p (RR^n), 1 <= p <= infinity$. Then, $ u(x, t) = f convolve K_t (x) $ solves the heat equation on $RR^(n) times (0, infinity)$. Furthermore, if $f$ is continuous and bounded, then $u$ is continuous on $RR^n times [0, infinity)$ and furthermore $u(x, 0) = f(x)$. If $f in L^p (RR^n)$, $1 <= p < infinity$, $ u(dot, t) ->^(t -> 0)_(L^p) f(dot). $
+]
+#remark[
+  Remark the similarities in this theorem and the analogue for the Dirichlet problem for the Laplacian.
+]
+#remark[$K_t (x)$ and all of its $x$ derivatives decay rapidly, so we can take derivatives under the integral sign in $u = f convolve K_t$; thus, $u in C^infinity$ for all $t > 0$; the heat flow "regularizes" initial data.]
+
+#remark[
+  Uniqueness does _not_ hold in general for the initial value problem of the heat equation; we need some conditions at infinity. This is already apparent in $n = 1$. Take any one-variable $C^infinity$ function $g(t)$, and let $ u(x, t) = sum_(k=0)^infinity (g^(k)(t))/((2k)!) x^(2 k). $ We claim $u$ solves $partial_t u - partial_x^2 u = 0$. Indeed, $ partial_t u = sum_(k=0)^infinity (g^((k+1))(t))/((2k)!) x^(2k), wide laplace u = sum_(k=0)^infinity g^((k)) (t) (x^(2k - 1))/((2 k - 2)!), $ which we see are equal by shifting indices.
+
+  Then, if we take, say, $ g(t) = cases(
+    0 quad & t = 0,
+    e^(-t^(-2)) quad & t eq.not 0
+  ), $ then one can see that $g^((k))(0) = 0$ for all $k >= 0$, so that with this $g$, $u(0, x) = 0$. So, this $u$ gives a nontrivial solution to the heat equation with $f equiv 0$ initial data, which gives a second solution to the trivial constant $0$ solution.
+
+  There are some uniqueness-related results with additional restrictions. For instance, Widder's Theorem says that if $f >= 0$, then $f convolve K_t (x)$ is the unique, nonnegative solution to the initial value problem.
+]
+
+== The Gaussian Kernel as a Fundamental Solution
+
+Again, we seek the fundamental solution to the heat equation, in order to solve the inhomogeneous equation $ partial_t u - laplace u = g. $
+
+#theorem[
+  $ K(x, t) = cases(1/(4 pi t)^(n\/2) e^(- (abs(x)^2)/(4 t)) quad & t > 0, 0 & t <= 0) $ is a fundamental solution for the heat operator.
+]
+
+#proof[
+  We know $K in L^1_"loc" (RR^n times RR)$, so given $epsilon > 0$, let $K_epsilon (x, t) = K(x, t)$ for $t > epsilon$, and 0 otherwise. By dominated convergence, $K_epsilon -> K$ in $cal(D)'$. So, all we have to show is that, for $phi in C^infinity_c (RR^n times RR)$, $ angle.l K_epsilon, - partial_t phi - laplace phi angle.r -> phi(0, 0) $ as $epsilon -> 0$. We see that $ angle.l K_epsilon, - partial_t phi - laplace phi angle.r &= integral_(epsilon)^infinity integral_(RR^n) K(x, t) [-partial_t phi - laplace phi] dif x dif t \
+  &= integral_(epsilon)^infinity integral_(RR^n) underbrace((partial_t K - laplace K), = 0 "for " t > 0) phi(x, t) dif x dif t + integral_(RR^n) K(x, epsilon) phi(epsilon, x) dif x \
+  &=^(K "even in" x) integral_(RR^n) K(-x, epsilon) phi(x, epsilon) dif x \
+  &= [K_epsilon convolve phi(dot, epsilon)](0) \
+  &= [K_epsilon convolve phi(dot, 0)](0) + [K_epsilon convolve (phi(dot, epsilon - phi(dot, 0)))](0). $ The first term $-> phi(0)$ as $epsilon -> 0$, using previous theorem, and by Young's inequality, $ [K_epsilon convolve (phi(dot, epsilon - phi(dot, 0)))](0) & <= sup_x |phi(x, epsilon) - phi(x, 0)| norm(K_epsilon)_(L^1) ->_(epsilon -> 0) 0, $ thus completing the proof.
+]
+
+#theorem("Inhomogeneous Heat Equation")[
+  If $g in L^1 (RR^n times RR)$, then $u = g convolve K$ is defined almost everywhere and is a distributional solution of $partial_t u - laplace u = g$.
+]
+
+
+== The Heat Equation in Bounded Domains
+
+#theorem[
+  Let $Omega subset RR^n$ be a bounded domain and $0 < T < infinity$. Suppose that $u$ is continuous on $overline(Omega) times [0, T]$ and that it satisfies $partial_t u - laplace u = 0$ on $Omega times (0, T).$ Then, $u$ assumes its maximum either on $Omega times {0}$ or on $partial Omega times [0, T]$.
+]
+
+#proof[
+  For $epsilon > 0$, set $ v(x, t) = u(x, t) + epsilon abs(x)^2. $ We have $ partial_t v - laplace v = partial_t (epsilon abs(x)^2) - laplace (epsilon abs(x)^2) = - epsilon 2 n < 0. $ Let $0 < T' < T$. If the max of $v$ occurs on $overline(Omega) times [0, T']$, then $partial_j v = partial_t v = 0$ and $partial_(j)^2 v <= 0$, but this contradicts the fact that $(partial_t - laplace)v < 0$. Therefore, $ max_(overline(Omega) times [0, T']) u <= max_(overline(Omega) times [0, T']) v &= max_(overline(Omega) times {0} union (partial Omega times [0, T'])) v \
+  &<= max_(Omega times {0} union (partial Omega times [0, T'])) u + epsilon max_(overline(Omega)) norm(x)^2. $
+  Letting $epsilon -> 0$ and $T' -> T$ gives the result.
 ]

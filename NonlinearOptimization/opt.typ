@@ -649,10 +649,10 @@ Algorithmically, for $f in C^1$;
       S1. If $norm(gradient f(x^k)) <= epsilon$, STOP.\
       S2. Determine $d^k$ as a solution to the QNE, $ H_k d = - gradient f(x^k). $
       S3. Determine $t_k>0$ such that $ f(x^k + t_k d^k) <= f(x^k) + sigma t_k gradient f(x^k)^T d^k, $ (this is just the Armijo condition), AND $ gradient f(x^k + t_k d^k)^T d^k >= rho gradient f(x^k)^T d^k, $ call the _Wolfe-Powell rule_.\
-      S4. Set $                      x^(k + 1) & := x^k + t_k d^k, \
-                                 s^k & := x^(k + 1) - x^k, \
-                                 y^k & := gradient f(x^(k + 1)) - gradient f(x^k), \
-      H_(k + 1) := H_(k + 1)^"BFGS". $
+      S4. Set $ x^(k + 1) & := x^k + t_k d^k, \
+            s^k & := x^(k + 1) - x^k, \
+            y^k & := gradient f(x^(k + 1)) - gradient f(x^k), \
+      H_(k + 1) & := H_(k + 1)^"BFGS". $
       S5. Increment $k$ and go to S1.
     ],
   ),
@@ -1154,7 +1154,7 @@ are all cones, for instance.
   2. $M(overline(x))$ is bounded.
 ]
 #proof[
-  \1. follows from the previous proposition and the related theorem for ACQ. For 2., suppose otherwise, then there exists ${(lambda^k, mu^k)} subset M(overline(x))$ for which $norm((lambda^k, mu^k)) -> infinity$. Without loss of generality, we may assume $(lambda^k, mu^k)/(norm((lambda^k, mu^k))) -> (tilde(lambda), tilde(lambda)) eq.not 0$. Since $(overline(x), lambda^k, mu^k)$ is a KKT point, we have $ 0 = (gradient f(overline(x)) + sum_(i in I(overline(x))) lambda_i^k gradient g_i (overline(x)) + sum_(j in J) mu_j^k gradient h_j (overline(x)))/(norm((lambda^k, mu^k))) -> sum_(i in I(overline(x))) tilde(lambda)_i gradient g_i (overline(x)) + sum_(j in J) tilde(mu)_j gradient h_j (overline(x)). $ If $tilde(lambda) = 0$, $tilde(mu) eq.not 0$ and thus $0 = sum_(j) tilde(mu)_j gradient h_j (overline(x))$ contradicts the linear independence of ${gradient h_j (overline(x))}$ of MFCQ.\ If $tilde(lambda) eq.not 0$, then there exists $i_0 in I(overline(x))$ such that $tilde(lambda)_(i_0) > 0$. Multiplying the above expression by $d$ from MFCQ yields $ 0 = sum_(i in I(overline(x))) overbrace(tilde(lambda)_i, >= 0) underbrace(gradient g_i (overline(x))^T d, < 0) + sum_(i in J) tilde(mu)_j overbrace(gradient h_j (overline(x))^T d, = 0) <= tilde(lambda)_(i_0) gradient g_(i_0) (overline(x))^T d < 0, $ a contradiction.
+  \1. follows from the previous proposition and the related theorem for ACQ. For 2., suppose otherwise, then there exists ${(lambda^k, mu^k)} subset M(overline(x))$ for which $norm((lambda^k, mu^k)) -> infinity$. Without loss of generality, we may assume $(lambda^k, mu^k)/(norm((lambda^k, mu^k))) -> (tilde(lambda), tilde(mu)) eq.not 0$. Since $(overline(x), lambda^k, mu^k)$ is a KKT point, we have $ 0 = (gradient f(overline(x)) + sum_(i in I(overline(x))) lambda_i^k gradient g_i (overline(x)) + sum_(j in J) mu_j^k gradient h_j (overline(x)))/(norm((lambda^k, mu^k))) -> sum_(i in I(overline(x))) tilde(lambda)_i gradient g_i (overline(x)) + sum_(j in J) tilde(mu)_j gradient h_j (overline(x)). $ If $tilde(lambda) = 0$, $tilde(mu) eq.not 0$ and thus $0 = sum_(j) tilde(mu)_j gradient h_j (overline(x))$ contradicts the linear independence of ${gradient h_j (overline(x))}$ of MFCQ.\ If $tilde(lambda) eq.not 0$, then there exists $i_0 in I(overline(x))$ such that $tilde(lambda)_(i_0) > 0$. Multiplying the above expression by $d$ from MFCQ yields $ 0 = sum_(i in I(overline(x))) overbrace(tilde(lambda)_i, >= 0) underbrace(gradient g_i (overline(x))^T d, < 0) + sum_(i in J) tilde(mu)_j overbrace(gradient h_j (overline(x))^T d, = 0) <= tilde(lambda)_(i_0) gradient g_(i_0) (overline(x))^T d < 0, $ a contradiction.
 ]
 
 #corollary[
@@ -1163,17 +1163,16 @@ are all cones, for instance.
 // TODO better?
 In summary, we have
 #align(center, table(
-  columns: 4,
+  columns: 6,
   stroke: none,
-  [], [LICQ $=>$], [MFCQ $=>$], [ACQ ],
-  [], [#rotate(90deg, $=>$)], [#rotate(90deg, $=>$)], [#rotate(90deg, $=>$)],
-  [$M(overline(x))$ is:], [a singleton], [nonempty,\ bounded], [nonempty],
+  [], [LICQ], [$=>$], [MFCQ], [$=>$], [ACQ ],
+  [], [#rotate(90deg, $=>$)], [], [#rotate(90deg, $=>$)], [], [#rotate(90deg, $=>$)],
+  [$M(overline(x))$ is:], [a singleton], [], [nonempty,\ bounded], [], [nonempty],
 ))
-
 === Affine constraints
 
 #definition("Affine CQ")[
-  We say that the _affine CQ_ holld if all constraints are affine, i.e. there exists $a_i in RR^n, alpha_i in RR (i in I)$, $b_j in RR^n, beta_j in RR (j in J)$ such that $ g_i (x) = a_i^T x - alpha_i, wide h_j (x) = b_j^T - beta_j. $
+  We say that the _affine CQ_ holds if all constraints are affine, i.e. there exists $a_i in RR^n, alpha_i in RR (i in I)$, $b_j in RR^n, beta_j in RR (j in J)$ such that $ g_i (x) = a_i^T x - alpha_i, wide h_j (x) = b_j^T x - beta_j. $
 ]
 
 
@@ -1362,4 +1361,157 @@ Observe that $x^k in "argmin"_X P_alpha => 0 = gradient P_(alpha_k) (x^k) = grad
 
 #proof[
   Define $A_k = h'(x^k) in RR^(p times n)$. We see that $A_k -> h'(overline(x)) =: overline(A)$ by continuity. By LICQ, $overline(A) dot overline(A)^T in RR^(p times p)$ is invertible. Thus, $A_k dot A_k^T$ is also invertible for $k$ sufficiently large, so $(A_k dot A_k^T)^(-1) -> (overline(A) dot overline(A)^T)^(-1)$ as well. Thus, $ gradient f(x^k) + sum_(j=1)^p mu_j^k gradient h_j (x^k) = 0 <=> A_k^T mu_k = - gradient f(x^k), $ and thus $ mu_k = - (A_k A_k^T)^(-1) A_k gradient f(x^k) -> - (overline(A) overline(A)^T)^(-1) overline(A) gradient f(overline(x)) =: overline(mu). $ This completes the proof, since $overline(x)$ feasible as well.
+]
+
+=== Exact Penalty Functions
+
+Consider a penalty function $P_alpha^r = f + alpha r, alpha > 0$ where $r >= 0$ and $r(x) = 0 <=> x in X$.
+
+#definition("Exactness")[
+  The penalty function $P_alpha^r$ is called _exact_ at a local minimum if there exists an $overline(alpha) > 0$ such that $overline(x)$ also a local minimum of $P_alpha^r$ for any $alpha > overline(alpha)$.
+]
+
+Consider now the standard NLP $ min f(x) "s.t." #stack(spacing: 1em, $g_i (x) <= 0 forall i = 1, dots, m,$, $h_j (x) = 0 forall j = 1, dots, p$). $ A whole class of penalty functions in the above form for the above problem is defined via $ r_q (x) = norm((max(g(x), 0), h(x)))_q, $ where for $y in RR^m$, $max(y, 0) = [max {y_i, 0}]_(i=1)^m$, i.e. component-wise maxima, $norm(dot)_q$ the usual $q$-norm, and we're writing $(x, y) in RR^(m times p)$ for shorthand. We focus on $q = 1$, which gives rise to the penalty function $ P_alpha^1 (x) = f(x) + alpha sum_(j=1)^p |h_j (x)| + alpha sum_(i=1)^m max{g_i (x), 0}. $
+
+#theorem[
+  Let $(overline(x), overline(lambda), overline(mu))$ be a KKT point for the typical convex NLP, where $f, g_i$ convex and $h_j$ affine. Then, $overline(x) in "argmin"_X P_alpha^1(x)$ for any $alpha >= norm((overline(lambda), overline(mu)))_infinity$. In particular, $P_alpha^1$ is exact if a constraint qualification holds at $overline(x)$.
+  #text(fill: red, "might need to add some constraint")
+]
+
+#proof[
+  By the KKT theorem for convex problems, $overline(x)$ is a (global) minimizer. Therefore, by the saddle-point theorem, $overline(x)$ is a global minimizer of $L(dot, overline(lambda), overline(mu))$. Thus, for all $x in RR^n, alpha >= norm((overline(lambda), overline(mu)))_infinity$, $ P_alpha^1 (overline(x)) &= f(overline(x)) + alpha underbrace(sum_(j) abs(h_j (overline(x))), = 0) + alpha sum_(j) underbrace(max(g_i (x), 0), = 0) \
+  &= f(overline(x)) \
+  &= f(overline(x)) + overline(lambda)^T g(overline(x)) + overline(mu)^T h(overline(x)) \
+  &= L(overline(x), overline(lambda), overline(mu)) \
+  & <= L(x, overline(lambda), overline(mu)) \
+  &= f(x) + sum_(i=1)^m overline(lambda)_i g_i (x) + sum_(j=1)^p overline(mu)_j h_j (x) \
+  & <= f(x) + sum_(i=1)^m overline(lambda)_i max(g_i (x), 0) + sum_(j=1)^p abs(overline(mu)_j) abs(h_j (x)) \
+  & <= f(x) + norm((overline(lambda), overline(mu)))_infinity (sum_(i=1)^m max(g_i (x), 0) + sum_(j=1)^p abs(h_j (x))) \
+  & <= f(x) + alpha (sum_(i=1)^m max(g_i (x), 0) + sum_(j=1)^p abs(h_j (x))) \
+  &= P_alpha^1 (x). $
+]
+
+#theorem[
+  Let $overline(x)$ be an isolated minimum such that MFCQ holds at $overline(x)$. Then for all $q in [1, infinity)$, there exists an $alpha_q > 0$ such that for any $alpha >= alpha_q$, then the point $overline(x)$ is a local minimimum of $P_alpha^q$, i.e. $P_alpha^q$ is exact at $overline(x)$.
+]
+
+$theta$ convex and increasing, $g : RR^n -> RR$ convex implies $theta(g)$ convex.
+
+$g(lambda x + (1 - lambda) y) <= lambda g(x) + (1 - lambda) g(y)$. $theta$ increasing thus $ theta(g(lambda x + (1 - lambda) y)) <= theta(lambda g(x) + (1 - lambda) g(y)), $ then we just apply convexity to $lambda dot g(x), (1 - lambda) dot g(y)$.
+
+== SQP Methods
+
+=== The Lagrange-Newton Method
+
+Consider $ min f(x) "s.t." h_j (x) = 0, forall_(j=1)^p, $ with $f, h_j : RR^n -> RR$ in $C^2$. Define $ Phi : RR^n times RR^p -> RR^n times RR^p, wide Phi(x, mu) = vec(gradient_x L(x, mu), h(x)), $ where $L$ the Lagrangian of the problem. Then, $(x, mu)$ a KKT point iff $Phi(x, mu) = 0$. So, we can just throw Newton methods at $Phi$ to find KKT points (note that we couldn't work with inequality constraints, since this would result in $max$'s showing up in $Phi$, which aren't differentiable). This leads to the following algorithm, which is just Newton's specialized to $Phi$.
+
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Lagrange-Newton")],
+    [
+      S0. Choose $(x^0, mu^0) in RR^n times RR^p$, set $k := 0$ \
+      S1. If $Phi(x^k, mu^k) = 0$, STOP\
+      S2. Determine $vec(Delta x^k, Delta mu^k)$ as a solution $ Phi'(x^k, mu^k) (Delta x, Delta mu) = - Phi(x^k, mu^k) $
+      S3. Set $(x^(k+1), mu^(k+1)) = (x^k, mu^k) + (Delta x^k, Delta mu^k)$, increment $k$ and go to S1.
+    ],
+  ),
+)<tab:lagrangenewton>
+
+Recall that the crucial condition for the convergence of the Newton's algorithm we discussed was invertibility of the Jacobian at the critical point.
+
+#theorem[Let $(overline(x), overline(mu)) in RR^n times RR^p$ be a KKT point, such that
+  1. LICQ holds ($gradient h_j (overline(x))$ are linearly independent), and
+  2. we have $d^T gradient_(x x)^2 L(overline(x), overline(mu)) d > 0$ for all $d eq.not 0$ such that $gradient h_j (overline(x))^T d =0, j in J$
+  Then, $Phi'(overline(x), overline(mu))$ is invertible.
+]
+
+#proof[
+  Observe that $ Phi'(x, mu) = mat(
+    gradient_(x x)^2 L(x, mu), h'(x)^T;
+    h'(x), 0
+  ). $ Let $(q, r)$ s.t. $Phi'(overline(x), overline(mu)) vec(q, r) = 0$. Then, $ gradient^2_(x x) L(overline(x), overline(mu)) q + h'(overline(x))^T r = 0, \
+  h'(overline(x))q = 0. $ Thus, $ 0 = q^T gradient_(x x) L(overline(x), overline(mu)) q + underbrace(q^T h'(overline(x))^T, = (h'(overline(x) q))^T = 0) r = q^T gradient_(x x) L(overline(x), overline(mu)) q. $ Moreover, we see that $gradient h_j (overline(x))^T q = 0$ for all $j in J$. Thus, by our second assumption, it must be that, if $q$ nonzero, $q^T gradient_(x x) L(overline(x), overline(mu)) q > 0$; this isn't the case thus it must be $q = 0$. This implies $h'(overline(x))^T r = 0$, but by MFCQ, $h'(overline(x))^T$ has linearly independent columns (the gradients of $h_j$), thus a trivial kernel so $r = 0$. So, $vec(q, r) = 0$, and thus $Phi'(overline(x), overline(mu))$ has trivial kernel so invertible.
+]
+
+#remark[
+  As in the proof above, we see that the update in S2. is equivalent to the equation (putting $H_k := gradient_(x x)^2 L(x^k, mu^k)$) $ H_k Delta x + h'(x^k)^T Delta mu & = - gradient_x L(x^k, mu^k), \
+                 h'(x^k)^T Delta x & = - h(x^k) $ In particular, if we put $mu^+ := mu^k + Delta mu$, then since $gradient_x L(x, mu) = gradient f(x) + h'(x)^T mu$, equivalently $ H_k Delta x + h'(x^k)^T mu^+ & = - gradient f(x^k), \
+  gradient h_j (x^k)^T Delta x & = - h_j (x^k), quad j in J. $
+
+  Also, consider the following (quadratic objective, affine constraint) problem:
+  $
+    wide min_(Delta x) 1/2 (Delta x)^T H_k Delta x + gradient f(x^k)^T Delta x quad "s.t." quad gradient h_j (x^k)^T Delta x + h_j (x^k) = 0, j in J.
+  $
+  The KKT conditions in this case read,
+  $ H_k Delta x + gradient f(x^k) + h'(x^k)^T mu = 0, \
+  gradient h_j (x^k)^T Delta x + h_j (x^k) = 0, j in J, $ which are precisely the conditions we wrote out above, with $mu$ (here) equal to $mu^+$ (above).
+]
+
+We want to consider the general NLPs, i.e. with inequality constraints; we'll assume our objective and constraints are $C^2$;
+$
+  (dagger) quad min f(x) "s.t." g_i (x) <= 0, i in I, quad h_j (x) = 0, j in J.
+$
+Given $(x^k, lambda^k, mu^k)$, consider $ min 1/2 (Delta x)^T H_k Delta x + gradient f(x^k)^T Delta x quad "s.t." quad gradient g_i (x^k)^T Delta x + g_i (x^k) <= 0, i in I, quad gradient h_j (x^k)^T Delta x + h_j (x^k) = 0, j in J. $ This leads to the following:
+
+#figure(
+  kind: "Code",
+  supplement: "Algorithm",
+  table(
+    columns: 1,
+    rows: 2,
+    align: left,
+    [#align(center, "Local SQP Method")],
+    [
+      S0. Choose $(x^0,lambda^0, mu^0) in RR^n times RR^m times RR^p$, set $k := 0$, and choose $H_0 in RR^(n times n)$ symmetric \
+      S1. If $(x^k, lambda^k, mu^k)$ a KKT point of the underlying NLP $(dagger)$, STOP\
+      S2. Determine $(x^(k+1), lambda^(k+1), mu^(k+1))$ of the quadratic program $ min_(x in RR^n) 1/2 (x - x^k)^T H_k (x - x^k) + gradient f(x^k)^T (x - x^k),\
+      "s.t."\ gradient g_i (x^k)^T (x - x^k) + g_i (x^k) <= 0, i in I, gradient h_j (x^k)^T (x - x^k) + h_j (x^k) = 0, j in J. $
+      S3. Choose $H_(k + 1) in RR^(n times n)$ symmetric, increment $k$, and go to S1.
+    ],
+  ),
+)<tab:sqplocal>
+
+#remark[
+  Instead of the exact choice $H_k = gradient_(x x)^2 L(x^k, lambda^k, mu^k)$, as in our derivation, one can update $H_k$ using some (modified) Newton techniques.
+]
+
+#theorem([Convergence of @tab:sqplocal])[
+  Let $(overline(x), overline(lambda), overline(mu))$ be a KKT point of $(dagger)$ such that\
+  i. (strict complementarity) $g_i (overline(x)) = 0 => overline(lambda)_i > 0$, for all $i in I$,\
+  ii. (LICQ) $gradient g_i (overline(x)), i in I(overline(x)), gradient h_j (overline(x)), j in J$ are linearly independent, and\
+  iii. (2nd order sufficient conditions) $d^T gradient_(x x)^2 L(overline(x), overline(lambda), overline(mu)) d > 0, forall d in cal(L)_X (overline(x)) \\{0}$.\
+  Then, there exists $epsilon > 0$ such that for all $(x^0, lambda^0, mu^0) in B_epsilon (overline(x), overline(lambda), overline(mu))$ such that the following hold for any sequence ${x^k, lambda^k, mu^k}$ generated by @tab:sqplocal with update $H_k := gradient_(x x)^2 L(x^k, lambda^k, mu^k)$ and such that in S2., one choose the KKT point closest to the previous iterate $(x^k, lambda^k, mu^k)$:
+  1. ${(x^k, lambda^k, mu^k)}$ well-defined and converges to $(overline(x), overline(lambda), overline(mu))$ superlinearly, and
+  2. if $gradient^2 f, gradient^2 g_i, gradient^2 h_j$ are locally Lipschitz, then the rate is quadratic.
+]
+The natural next generalization is globalizing this method, as we globalized Newton's method.
+
+=== A Globalized SQP Method
+
+Recall that globalization of the Newton's method involving introducing a step-size based on the Armijo rule. For SQP, we will introduce a step-size based on the (exact) $ell_1$-penalty function $ P_alpha^1 (x) = f(x) + alpha sum_(j=1)^p |h_j (x)| + alpha sum_(i=1)^m max{g_i (x), 0}. $
+Note $P_alpha^1$ is not generally differentiable, hence we use the directional derivative to detect descent directions.
+
+#theorem("Chain Rule for Directional Derivatives")[
+  Let $H : RR^n -> RR^m$, $G: RR^m -> RR^p$, and set $F := G compose H$. Assume that for $x in RR^m$,
+  1. $H$ is directionally differentiable at $x$,
+  2. $G$ is directionally differentiable at $H(x)$, and
+  3. $G$ is locally Lipschitz at $H(x)$.
+  Then, $F$ is directionally differentiable at $x$, and $ F'(x; d) = G'(H(x); H'(x; d)), $ for all $d in RR^n$.
+]
+
+#proof[
+  Let $d in RR^n$ and let $L > 0$ be the (local) Lipschitz constant of $G$ around $H(x)$. For $t > 0$ sufficiently small, we have $ norm((F(x + t d) - cancel(F(x)))/t - (G(H(x) + t H'(x; d)) - cancel(G(H(x))))/(t)) \
+  = norm((G(H(x + t d)) - G(H(x) + t H'(x; d)))/t) \
+  <= L norm((H(x + t d) - H(x))/t - H'(x; d)) -> 0. $ Since the term on the RHS of the first line converges to $G'(H(x); H'(x; d))$, we're done.\
+]
+
+#corollary([Directional derivative of $ell_1$-penalty])[
+  For any $alpha > 0$, the $ell_1$-penalty function is directionally differentiable, with $ (P^1_alpha)'(x; d) &= gradient f(x)^T d \
+  &wide + alpha sum_(j : h_j (x) > 0) gradient h_j (x)^T d - alpha sum_(j : h_j (x) < 0) gradient h_j (x)^T d + alpha sum_(j: h_j (x) = 0) abs(gradient h_j (x)^T d) \
+  & wide + alpha sum_(i : g_i (x) > 0) gradient g_i (x)^T d + alpha sum_(i : g_i (x) = 0) max{gradient g_i (x)^T d, 0}. $
 ]
