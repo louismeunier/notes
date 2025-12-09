@@ -8,7 +8,7 @@
 #show: doc => conf(
   course_code: "MATH580",
   course_title: "Advanced PDEs 1",
-  // subtitle: "Abstract Metric, Topological Spaces; Functional Analysis.",
+  subtitle: "Local existence theory, first order quasilinear equations; Laplace's equation; the wave equation; the heat equation.",
   semester: "Fall 2025",
   professor: "Prof. Niky Kamran",
   // cute: "../analysis 3/page.png",
@@ -50,7 +50,7 @@ Thus, the most general form of a $k$-th order PDE in independent variables $x in
 ]
 
 #definition("Characteristics")[
-  Let $L$ be a linear operator associated to a $k$th-order linear PDE. The _characteristic form_ of $L$ is the $k$th degree homogeneous polynomial defined by $ chi_L (x, xi) := sum_(|alpha| = k) a_alpha (x) xi^alpha. $ The _characteristic variety_ is defined, for a fixed $x$, as the set of $xi$ for whcih $chi_L$ vanishes, i.e. $ "char"_x (L) := {xi eq.not 0 | chi_L (x, xi) = 0}. $
+  Let $L$ be a linear operator associated to a $k$th-order linear PDE. The _characteristic form_ of $L$ is the $k$th degree homogeneous polynomial defined by $ chi_L (x, xi) := sum_(|alpha| = k) a_alpha (x) xi^alpha. $ The _characteristic variety_ is defined, for a fixed $x$, as the set of $xi$ for which $chi_L$ vanishes, i.e. $ "char"_x (L) := {xi eq.not 0 | chi_L (x, xi) = 0}. $
 ]
 #remark[
   Suppose $overline(xi) = xi_j e_j eq.not 0 in "char"_x (L)$; then since $ chi_L (x, overline(xi)) = a_(overline(alpha)) partial_(x_j)^k xi_j, wide overline(alpha) equiv k e_j, $ then it must be that $a_(overline(alpha)) = 0$ at $x$. Heuristically, one has that $L$ is not "genuinely" $k$th order in the direction of $overline(xi)$.
@@ -218,7 +218,7 @@ t(0) = 0, s(0) = sigma, u(0) = 0, $ using $sigma$ as our parametrization variabl
   Now, remark that as $k -> infinity$, the initial data $phi_k -> 0$ uniformly in $x_1$. However, the solution, for $x_2 eq.not 0$, as $k -> infinity$
   - grows in amplitude (because of the $sin$ term)
   - oscillates increasingly rapidly (because of the $sinh$ term),
-  so in particular, $u_k$ will diverge for $x_2 eq.not 0$. The unique solution for the limiting initial data $lim_(k -> infinity) phi_k (x_1) = 0$, though, is the trivial solution. So, there is clearly no "continuity" (in some vague, heuristic sense) in this situtation.
+  so in particular, $u_k$ will diverge for $x_2 eq.not 0$. The unique solution for the limiting initial data $lim_(k -> infinity) phi_k (x_1) = 0$, though, is the trivial solution. So, there is clearly no "continuity" (in some vague, heuristic sense) in this situation.
 ]
 
 = The Laplacian/Laplace's Equation
@@ -434,7 +434,7 @@ Our goal to follow is to find a distribution $u in cal(D)'$ such that $ laplace 
 Note that this is the same radially symmetric function "$phi$" we saw in the previous section, with $b = 0$, $a = 1/(omega_n (2 - n))$, $1/(2pi)$ for $n >=3, n = 2$ resp.. We know this function is harmonic away from the origin, so really what we have to focus on is the blow-up at the origin.
 #proof[
   We'll prove for $n >= 3$. Our idea will be to regularize $N$ by shifting the pole at the origin, take derivatives of our regularization, and show that what results converges to $delta$. For $epsilon > 0$, define $ N^epsilon (x) := (abs(x)^2 + epsilon^2)^((2 - n)/2)/(omega_n (2 - n)). $
-  It's clear $N^epsilon -> N$ pointwise everywhere. Indeed, associating $N^epsilon, N$ with distributions in the typical sense (which is valid since they are both locally integrable), we have $N^epsilon -> N$ in $cal(D)'$ (one can see this by the fact that $|N^epsilon phi| <= |N| |phi|$, so we can apply dominated convergence to any test function $phi in C^infinity_c$). Next, one verifies $ laplace N^epsilon (x) = n/(omega_n) epsilon^2 (abs(x)^2 + epsilon^2)^(-(n + 2)/2). $ Let $psi(x) := n/omega_n (abs(x)^2 + 1)^(- (n + 2)/2)$; then one verifies $laplace N^epsilon (x) = psi_epsilon (x) := epsilon^(-n) psi(x/epsilon)$. Thus, for $phi in C^infinity_c$, we find $ angle.l laplace N^epsilon, phi angle.r = integral psi_epsilon (-x) phi(x) dif x = psi_epsilon convolve phi (0), $ using the radial symmetry of $psi$ to write as a reflection across the origin. By the following lemma:
+  It's clear $N^epsilon -> N$ point-wise everywhere. Indeed, associating $N^epsilon, N$ with distributions in the typical sense (which is valid since they are both locally integrable), we have $N^epsilon -> N$ in $cal(D)'$ (one can see this by the fact that $|N^epsilon phi| <= |N| |phi|$, so we can apply dominated convergence to any test function $phi in C^infinity_c$). Next, one verifies $ laplace N^epsilon (x) = n/(omega_n) epsilon^2 (abs(x)^2 + epsilon^2)^(-(n + 2)/2). $ Let $psi(x) := n/omega_n (abs(x)^2 + 1)^(- (n + 2)/2)$; then one verifies $laplace N^epsilon (x) = psi_epsilon (x) := epsilon^(-n) psi(x/epsilon)$. Thus, for $phi in C^infinity_c$, we find $ angle.l laplace N^epsilon, phi angle.r = integral psi_epsilon (-x) phi(x) dif x = psi_epsilon convolve phi (0), $ using the radial symmetry of $psi$ to write as a reflection across the origin. By the following lemma:
   #lemma[
     Let $g in L^1$ with $a := integral g dif x$. Let $f in L^p$, $p >= 1$ (resp. $f in L^infinity$, uniformly continuous on some $V subset RR^n$). Then, $f convolve g_epsilon ->_(epsilon -> 0) a f$ in $L^p$ (resp. uniformly on $V$), where $g_epsilon (x) := epsilon^(-n) g(x/epsilon).$
   ]<lemma:goodkernel>
@@ -518,7 +518,7 @@ We let $ RR^(n+1)_+ := {(x, t) : x in RR^n, t > 0} $ denote the half-space in $R
 For the #box("D2"), we know that the outer normal derivative of $RR^(n+1)_+$ is just $- s$, and we readily compute $ - partial_s G((x, t), (y, s))thin #line(angle: 90deg, length: 2em) _(thin s = 0) = (2t)/(omega_(n + 1)) 1/(|x - y|^2 + t^2)^((n + 1)/2), $ which gives as candidate solution to #box("D2") $ u(x, t) = integral_(RR^(n)) (2 t)/(omega_(n + 1) (|x - y|^2 + t^2)^((n + 1)/2)) g(y) dif y, $ which we notice can be written as the convolution product $g convolve P_t (x)$, where $P_t (x) := (2t)/(omega_(n + 1) (|x|^2 + t^2)^((n + 1)/2))$.
 
 #theorem[
-  Suppose $g in L^1 (RR^n)$, $1 <= p <= infinity$. Then $u(x, t) = g convolve P_t (x)$ is well-defined and harmonic in $Omega = RR^(n + 1)_+$. Further, if $g$ continuous and bounded, then $u$ is continuous on all of $overline(RR^(n+1)_+)$, and $u(x, 0) = g(x)$. If $g$ simply in $L^p$ for $1 <= p < infinity$, then $u(dot, t) -> g$ in $L^p$ as $t -> 0$.
+  Suppose $g in L^p (RR^n)$, $1 <= p <= infinity$. Then $u(x, t) = g convolve P_t (x)$ is well-defined and harmonic in $Omega = RR^(n + 1)_+$. Further, if $g$ continuous and bounded, then $u$ is continuous on all of $overline(RR^(n+1)_+)$, and $u(x, 0) = g(x)$. If $g$ simply in $L^p$ for $1 <= p < infinity$, then $u(dot, t) -> g$ in $L^p$ as $t -> 0$.
 ]
 
 #proof[
@@ -639,12 +639,12 @@ We can now restate the Dirichlet problem in the context of the function spaces w
 ]
 
 #corollary[
-  $ H_1 (Omega)\/{"loc. constant functions"} = "Harm"(Omega) plus.circle H_1^0 (Omega), $ under $D(dot, dot)$, where $"Harm"(Omega)$ the space of harmonic function functions in $H_1 (Omega)$ (mod loc. constant functions).
+  $ H_1 (Omega)\/{"loc. constant functions"} = "Harm"(Omega) plus.circle H_1^0 (Omega), $ under $D(dot, dot)$, where $"Harm"(Omega)$ the space of harmonic functions in $H_1 (Omega)$ (mod loc. constant functions).
 ]
 
 Thus, to solve the Dirichlet problem as stated is equivalent to projecting $f$ onto the space $"Harm"(Omega)$.
 
-= Wave Equation
+= The Wave Equation
 
 == The Cauchy Problem - Uniqueness
 
@@ -691,7 +691,7 @@ First, we present a uniqueness theorem for general dimensions.
 Our goal to follow is to find a closed-form solution for the solution to the equation $ cases(
   square u = 0,
   u(x, 0) = f(x)\, quad partial_t u (x, 0) = g(x)
-), $ where $f, g$ are of a certain regularity class that we will determine in our work, and with spacial dimension $n >= 2$. The idea will be to transform the purported solution $u$ via a series of differential, integral operators; the resulting equation will obey, in a sense, the 1-dimensional wave equation. From there, we can simplify and achieve a closed form of the solution $u$ in terms of the initial datum $f, g$ by appealing to d'Alembert's formula in 1 dimension.
+), $ where $f, g$ are of a certain regularity class that we will determine in our work, and with spatial dimension $n >= 2$. The idea will be to transform the purported solution $u$ via a series of differential, integral operators; the resulting equation will obey, in a sense, the 1-dimensional wave equation. From there, we can simplify and achieve a closed form of the solution $u$ in terms of the initial datum $f, g$ by appealing to d'Alembert's formula in 1 dimension.
 
 #definition("Spherical Mean Operator")[
   For $phi$ on $RR^n$, define $ M_phi (x, r) := 1/(r^(n - 1) omega_n) integral_(|z - x| = r) phi(z) dif sigma (z) = 1/(omega_n) integral_(|y| = 1) phi(x + r y) dif sigma(y). $
@@ -725,7 +725,7 @@ We recall the Euler-Poisson (EP) operator; given $u(x) = phi(r)$ for $r = |x|$, 
   If $k >= 1$ and $phi in C^(k + 1) (RR)$, $ partial_r^2 (r^(-1) partial_r)^(k - 1) [r^(2k - 1) phi(r)] = (r^(-1) partial_r)^(k) [r^(2k) phi'(r)]. $
 ]<lem:annoyingsquareexp>
 
-Remark that the RHS here can be writen as $ (r^(-1) partial_r)^(k -1) [2 r^(2k - 2) phi'(r) + r^(2k - 1) phi''(r)], $ which looks a lot like the EP operator up to scaling by $r$. With this as motivation, define, for $k >= 1$, $ T_k phi(r) := (r^(-1) partial_r)^(k - 1) [r^(2k - 1) phi(r)], $ so that @lem:annoyingsquareexp reads $partial_r^2 T_k phi = T_k [phi'' + (2k)/r phi']$. Thus, remark that if we could pick $k$ such that $2k = n - 1$, we'd be in business; of course, this is only possible when $n$ is odd; this represents a dichotomy in our solution approach. For the remainder we assume that $n = 2k + 1$ is an odd space dimension.
+Remark that the RHS here can be written as $ (r^(-1) partial_r)^(k -1) [2 r^(2k - 2) phi'(r) + r^(2k - 1) phi''(r)], $ which looks a lot like the EP operator up to scaling by $r$. With this as motivation, define, for $k >= 1$, $ T_k phi(r) := (r^(-1) partial_r)^(k - 1) [r^(2k - 1) phi(r)], $ so that @lem:annoyingsquareexp reads $partial_r^2 T_k phi = T_k [phi'' + (2k)/r phi']$. Thus, remark that if we could pick $k$ such that $2k = n - 1$, we'd be in business; of course, this is only possible when $n$ is odd; this represents a dichotomy in our solution approach. For the remainder we assume that $n = 2k + 1$ is an odd space dimension.
 
 Combining @lem:annoyingsquareexp and @cor:squareimpliesepeqpartialt, then, yields the equation $ partial_t^2 T_k M_u - partial_r^2 T_k M_u = 0, $ namely, a 1D wave equation for the expression $T_k M_u$, which we know how to solve. In what proceeds, we demonstrate how we can simplify this expression to get a closed-form for $u$ itself, and moreover show that what results is actually a solution to the $n$ dimensional wave equation.
 
@@ -852,7 +852,7 @@ We can even control the (weak) derivatives of solutions.
 Finally, with the interesting things out of the way, we prove the lemma we took for granted, @lem:annoying:
 
 #proof[
-  (Of @lem:annoying) First, we claim that for $beta >= 0$, $ e^(-beta) = integral_(0)^infinity (e^(-tau))/(sqrt(pi tau)) e^(-beta^2/(4 tau)) dif tau quad (dagger). $ Indeed, using the residue theorem, we see that $ integral_(-infinity)^(infinity) (e^(i beta s))/(1 + s^2) dif s = 2 pi i "Res"_(s = i) ((e(i beta s))/(1 + s^2)) = pi e^(-beta), $ and $integral_(0)^infinity e^(- (1 + s^2) tau) dif tau = 1/(1 + s^2)$, so combining these two results, we get $ e^(-beta) & = 1/pi integral_(-infinity)^(infinity) integral_(0)^infinity e^(- (1 + s^2) tau) e^(i beta s) dif tau dif s \
+  (Of @lem:annoying) First, we claim that for $beta >= 0$, $ e^(-beta) = integral_(0)^infinity (e^(-tau))/(sqrt(pi tau)) e^(-beta^2/(4 tau)) dif tau quad (dagger). $ Indeed, using the residue theorem, we see that $ integral_(-infinity)^(infinity) (e^(i beta s))/(1 + s^2) dif s = 2 pi i "Res"_(s = i) ((e^(i beta s))/(1 + s^2)) = pi e^(-beta), $ and $integral_(0)^infinity e^(- (1 + s^2) tau) dif tau = 1/(1 + s^2)$, so combining these two results, we get $ e^(-beta) & = 1/pi integral_(-infinity)^(infinity) integral_(0)^infinity e^(- (1 + s^2) tau) e^(i beta s) dif tau dif s \
   & =^"Fubini" 1/(pi) integral_(0)^infinity integral_(-infinity)^infinity (dots.c) dif s dif tau \
   & =^(s = 2 pi sigma) 2 integral_(0)^infinity underbrace(integral_(-infinity)^(infinity) e^(i beta 2 pi sigma) e^(-4 pi^2 sigma^2 tau) e^(- tau) dif sigma, = "i.f.t of a Gausian") dif tau \
   &= 2 integral_(0)^infinity (4 pi tau)^(-1/2) e^(- beta^2/(4 tau)) e^(- tau) dif tau\
@@ -939,7 +939,7 @@ Finally, we can see the connection back to the wave equation.
   Per the previous lemma, $partial_s^2 R u = partial_t^2 R u$ for all $omega in cal(S)_n$, i.e. $R u$ satisfies a 1-dimensional wave equation, with $F(s, omega) := R u (s, omega, 0), G(s, omega) := R partial_t u(s, omega, 0)$ (treating $t$ as a parameter in the Radon transform). Hence, $ (R u) (s, omega, t) = 1/2 [F(s + t, omega) + F(s - t, omega) + integral_(s - t)^(s + t) G(s, omega) dif s], $ by D'Alembert's formula. Moreover, one has that $ F(s, omega) = R f (s, omega), wide G(s, omega) = R g (s, omega), $ where in the second equality we need to take a derivative outside of an integral sign (see our remark above; if, say, $f, g$ have compact support, then this is fine, for instance). Applying the inversion theorem for the Radon transform to the expression above, we obtain the expression stated.
 ]
 
-A natural question is how this relates to the solution we found via Fourier transforms? Note that we can, as in that case, we can see a dichotomy in the behaviour of solutions with our solution formula too.
+A natural question is how this relates to the solution we found via Fourier transforms? Note that we can, as in that case, see a dichotomy in the behaviour of solutions with our solution formula too.
 
 Suppose first that $n$ odd; then, remember that there is a term $abs(rho)^(n - 1)$ in the definition of $tilde(R) f$; since $n$ odd, $n - 1$ even so $abs(rho)^(n - 1) = rho^(n-1)$, and we may rewrite the relevant expression in terms of the inverse Fourier transform of a perfect derivative: $ tilde(R) f (s, omega) & = 1/2 integral_(RR) e^(2 pi i rho s) hat(R f)(rho, omega) rho^(n- 1) dif rho \
 & = 1/2 ((-1)^((n-1)/2))/((2 pi)^(n-1)) integral_(RR) e^(2 pi i rho s) hat(partial_s^(n-1) R f) (rho, omega) dif rho \
