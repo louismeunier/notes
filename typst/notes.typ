@@ -229,6 +229,16 @@
   base_level: thmsettings.base_level,
 )
 
+
+#let exercise = thmbox(
+  "exercise",
+  "Exercise",
+  fill: solarized.cyanlight,
+  inset: thmsettings.inset,
+  padding: thmsettings.padding,
+  base_level: thmsettings.base_level,
+)
+
 #let remark = thmbox(
   "remark",
   "Remark",

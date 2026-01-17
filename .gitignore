@@ -248,3 +248,23 @@
 !*Numerical*Analysis
 !*Numerical*Analysis/*.pdf
 !*Numerical*Analysis/*.typ
+
+# Complex Analysis
+!*Complex
+!*Complex/*.pdf
+!*Complex/*.typ
+
+# Machine Learning
+!*Machine*Learning
+!*Machine*Learning/*.pdf
+!*Machine*Learning/*.typ
+
+# Advanced Calculus
+!*Advanced*Calculus
+!*Advanced*Calculus/*.pdf
+!*Advanced*Calculus/*.typ
+
+# Differential Geometry
+!*DiffGeo
+!*DiffGeo/*.pdf
+!*DiffGeo/*.typ
