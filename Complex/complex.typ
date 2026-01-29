@@ -164,4 +164,59 @@ We will consider curves as defined up to equivalency in this way.
 
 #definition[
   If $gamma$ is a parametrized curve, define $ integral_(gamma) f(z) dif z := integral_0^1 f(gamma(t)) gamma'(t) dif t. $
+
+  If $gamma$ a piecewise smooth curve, i.e. $gamma$ can locally be written as $t |-> z(t) in CC$ for $t in [a_k, a_(k + 1))$ for $k = 0, dots, n-1$ for some sequence $a_k < a_(k + 1)$, then $ integral_(gamma) f(z) dif z := sum_(k=0)^(n + 1) integral_(a_k)^(a_(k + 1)) f(z(t)) z'(t) dif t. $
+]
+
+An obvious generalization holds for integration along more general intervals.
+
+
+#proposition[
+  Path integrals are independent of choice of parametrization.
+]
+
+#definition("Length of a curve")[
+  Define, for $gamma$ given by $z : I -> CC$, $ "length"(gamma) := integral_(gamma) |dif z| = integral_(I) |z'(t)| dif t. $
+]
+
+
+#proposition[
+  Let $f, g$ continuous and $alpha, beta in CC$. Then we have
+  1. Linearity:  $ integral_(gamma) (alpha f + beta g) dif z = alpha integral_(gamma) f dif z + beta integral_(gamma) g dif z. $
+  2. $ integral_(gamma) f(z) dif z = - integral_(gamma^(-)) f(z) dif z, $ where $gamma^-$ is the _reverse path_ of $gamma$.
+  3. $abs(integral_(gamma) f(z) dif z) <= sup_(z in gamma) |f(z)| "length"(gamma)$.
+]
+
+#definition("Primitive")[
+  A _primitive_ of a continuous function $f$ on a domain $Omega$ is a function $F$ such that $F' = f$ on $Omega$.
+]
+
+#proposition[
+  If $f$, continuous, has a primitive $F$ on $Omega$ and $gamma$ is a curve in $Omega$ beginning at $w_1$ and ending at $w_2$, then $ integral_(gamma) f dif z = F(w_2) - F(w_1). $
+]
+
+== Cauchy's Theorem
+#theorem("Cauchy")[
+  If $gamma$ is a closed path contained in a region $Omega subset CC$ and its interior, and $f$ is holomorphic in $Omega$, then $integral_(gamma) f(z) dif z = 0$.
+]
+
+It will take us some building to get here. In a simple case, though, we have a positive result:
+
+#corollary[
+  If $f$ has a primitive $F$ on $Omega$, then Cauchy's theorem holds for $f$ for any $gamma$ a closed path in $"int"(Omega)$
+]
+
+#proof[
+  Apply the last proposition; now, $F(w_2) = F(w_1)$, so we have the result.
+]
+
+With some more work, we can also establish the proof for $gamma$ some simple contour.
+
+#proposition("Gorsut's Lemma")[
+  Let $gamma$ be a closed triangle in $Omega$ and $f$ a holomorphic function on $Omega$. Then $integral_(gamma) f(z) dif z = 0$.
+]
+
+#proof[
+  I'll add it later.
+  // TODO
 ]

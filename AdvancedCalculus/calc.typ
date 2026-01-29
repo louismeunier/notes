@@ -191,5 +191,92 @@ Let $f : Omega subset RR^n -> RR^m$ differentiable. Remember that $D f : Omega -
 #proof[(Of Clairault's)
   It's enough to consider $n = 2$. Fix $(x, y) in Omega$, and note that for $s, t in RR$ sufficiently small, $(x + s, y + t) in Omega$ by openness. Set $ Delta(s, t) & := f(x + s, y + t) - f(x, y + t) - f(x + s, y) + f(x, y) \
               & = g_t (x + s) - g_t (x), quad g_t (u) := f(u, y + t) - f(u, y). $ By the mean-value theorem, there is some $xi_(s, t)$ between $x$ and $x + s$ suh that $ Delta (s, t) = (partial g_t)/(partial x) (xi_(s, t)) dot s = [(partial f)/(partial x)(xi_(s, t), y + t) - (partial f)/(partial x)(xi_(s, t), y)]s. quad (dagger.double) $ By assumption, $(partial f)/(partial x)$ is differentiable at $(x, y)$, so $ (partial f)/(partial x) (z_1, z_2) = (partial f)/(partial x) (x, y ) (z_1 - x) + (partial^2)/(partial x^2) (x, y)(z_2 - y) + E_1 (z_1, z_2), quad (dagger) $ where $ abs(E_1 (z_1, z_2))/(sqrt((z_1 - x)^2 + (z_2 - y)^2)) -> 0, quad "as" (z_1, z_2) -> (x, y). $
-  Evaluating $(dagger)$ at $(z_1, z_2) = (xi_(s, t), y + t)$ and $(xi_(s, t), y)$, and plugging into $(dagger.double)$ yields $ Delta (s, t) & = ((partial^2 f)/(partial y partial x)(x, y) t + E_1 (xi_(s, t), y + t) - E_1 (xi_(s, t), y)) s. $ Let $s = t$ and let $t -> 0$. We claim that $ (partial^2 f)/(partial y partial x)(x, y) = lim_(s = t-> 0) (Delta (s, t))/(s t) = (partial^2 f)/(partial x partial y)(x, y) $
+  Evaluating $(dagger)$ at $(z_1, z_2) = (xi_(s, t), y + t)$ and $(xi_(s, t), y)$, and plugging into $(dagger.double)$ yields $ Delta (s, t) & = ((partial^2 f)/(partial y partial x)(x, y) t + E_1 (xi_(s, t), y + t) - E_1 (xi_(s, t), y)) s. $ Let $s = t$ and let $t -> 0$. We claim that $ (partial^2 f)/(partial y partial x)(x, y) = lim_(s = t-> 0) (Delta (s, t))/(s t) = (partial^2 f)/(partial x partial y)(x, y). $
+  The first equality is obvious from the assumptions on the error terms. On the other hand, we can switch the order of the middle terms in $Delta (s, t)$ and write $ Delta (s, t) & = f(x + s, y + t) - f(x, y + t) - f(x + s, y) + f(x, y) \
+               & = h_s (y + t) - h_s (y), quad h_s (u) := f(x + s, u) - f(x, u). $ Repeating the same argument as above with $g_t$, we get that $ Delta (s, t) = ((partial^2)/(partial x partial y) (x, y) s + E_2 (x + s, eta_(s, t)) - E_2 (x, eta_(s, t))) t, $ where $eta_(s, t)$ lies between $y$ and $y + t$, and $ abs(E_2 (x + s, eta_(s, t))) <= abs(s^2 + t^2), quad abs(E_2 (x, eta_(s, t))) <= sqrt(s^2 + t^2). $ Setting $s = t$ here, we get $ lim_(s, t -> 0 \ s = t) Delta(s, t)/(s t) = (partial^2)/(partial x partial y) (x, y). $ This proves the claim.
 ]
+
+== Inverse Function Theorem
+
+#theorem("In 1D")[
+  If $f : (a, b) -> (c, d)$ is differentiable with $f'(x) > 0$, then there exists $g : (c, d) -> (a, b)$ differentiable such that $y = f(x) <=> x = g(y)$ (i.e. $x = g(y)$).
+]
+
+In higher dimensions, we recall some preliminaries before proving.
+
+#theorem[
+  Let $(X, d)$ a complete metric space and $f : X -> X$ a contraction mapping, with $d(f(x_2), f(x_1)) <= alpha d(x, y)$ for all $x, y in X$ for some $0 < alpha < 1$. Then, there exists a unique $x_0 in X$ such that $f(x_0) = x_0$.
+]
+
+We will write $M_n := {n times n "matrices"} tilde.equiv RR^(n^2)$, and $norm(A) := sqrt(sum_(i, j = 1)^n a_(i j)^2)$ where $A := (a_(i j)) in M_n$. We use $ "GL"(n) := {A in M_n : det(A) eq.not 0} = "det"^(-1) (RR \\ {0}), quad det : M_n -> RR. $
+Remark that since $RR\\{0}$ is open, and the map $det$ is continuous (it can be written as a polynomial in the entries $a_(i j)$'s of the matrix $A$), we know that $"GL"(n)$ an open subset of $M_n$.
+
+Consider the map $ f : "GL"(n) -> "GL"(n), quad f(A) := A^(-1). $
+
+#lemma[
+  $"GL"(n) subset M_n$ open and $f in C^k$ for all $k = 1, 2, dots$.
+]
+
+#proof[
+  We already proved the first statement in our remarks above.
+
+  Let $A(j|i)$ be $(n - 1) times (n - 1)$ matrix with its $j$th row and $i$th columns deleted, then recall $ "adj"(A) = ((-1)^(i + j) det A(j|i)). $
+  By Cramer's formula from linear algebra, $ f(A) = A^(-1) 1/("det"(A)) "adj"(A), $ which is in $C^k$ since $"det"(A)$ $C^k$ (being a polynomial in the coefficients of $A$) and $"det"(A) eq.not 0$.
+]
+
+#theorem("Inverse Function Theorem")[
+  Let $f : Omega subset RR^n -> RR^n$ be $C^1$. Let $x_0 in Omega$ and assume $D f(x_0) in "GL"(n)$. Then, there exist domains $U$ and $V$ of $x_0$ and $f(x_0)$ resp. such that $f(U) = V$ and $f|_(U)$ has a $C^1$ inverse map $f^(-1) : V -> U$. Moreover, for any $y in V$ and $x = f^(-1)(y)$, $D f^(-1) (y) = [D f(x)]^(-1)$.
+]
+
+#remark[
+  By the first lemma above, if $f in C^k$, $k >= 1$, we get the same regularity for $f^(-1)$.
+]
+
+#proof[
+  By translation, its enough to assume $x_0 = f(x_0) = y_0 = 0$ and $D f(x_0) = "Id"$ by replacing $f$ with $[D f (0)]^(-1) f$, so we have a mapping $ f : Omega -> RR^n, quad f(0) = 0, D f(0) = "Id". $
+
+  Fix $y in V$ and set $ g_y (x) := y + x - f(x), $ remark that $ g_y (x) = x <=> y = f(x), $ so it suffices to show $g_y$ as a mapping $RR^n -> RR^n$ is a contraction mapping, and $ D g_y (0) = "Id" - "Id" = 0. $ If $f in C^1 (U)$, then $g_y in C^1 (U)$ so that $D g_y in C^0 (U)$ (similar if $f in C^k => g_y in C^k$). Since $D g_0 in C^0 (U)$, there exists some $delta > 0$ sufficiently small such that $norm(D g_0 (x)) <= 1/2$, for all $x in B_delta (0)$. By mean-value theorem, there exists some $z in B_delta (0)$ such that $ norm(g_0 (x)) & = norm(g_0 (x) - underbrace(g_0 (0), = 0)) \
+                & <= norm(D g_0 (z)) norm(x) \
+                & <= norm(x)/2 < delta/2, $ which implies we can view $ g_0 : B_delta (0) -> B_(delta\/2) (0). $ It follows that $ g_y : B_delta (0)-> B_delta (0), quad forall y in B_(delta\/2) (0), $ using the fact $g_y = y + g_0$ and the triangle inequality. By MVT once again for any $x, x' in B_delta (0)$, there exists $y in B_(delta\/2) (0)$
+  // TODO I think this is wrong
+  such that $ norm(g_y (x) - g_y (x')) & = norm(g_0 (x) - g_0 (x')) \
+                           & <= norm(D g_0 (y)) norm(x - x') \
+                           & <= norm(x - x')/2 $ hence $g_y : B_delta -> B_delta$ is a contraction mapping. By the fixed-point theorem, there exists a unique point $x in B_delta (0)$ such that $g_y (x) = x <=> y = f(x).$ That is, there exists an inverse map $f^(-1) : B_(delta\/2) (0) -> B_delta (0)$. Moreover, for any $x, x' in B_delta (0)$, $ norm(x - x') & <= norm(f(x) - f(x')) + norm(g_0 (x) - g_0 (x)) \
+               & <= norm(f(x) - f(x')) + 1/2 norm(x - x'), $ i.e. $ norm(x - x') <= 2 norm(f(x) - f(x')). $ From here, we know that for $y, y' in B_(delta\/2) (0)$, $ norm(f^(-1) (y) - f^(-1) (y')) <= 2 norm(y - y') => f^(-1) in C^0 (B_(delta\/2) (0)). $
+
+  Next, we need to show that $D f^(-1)(y)$ exists for $y in B_(delta\/2) (0)$ for small $delta > 0$. Since $D f(0) in "GL"(n)$, we know $D f(x) in "GL"(n)$ if $x in B_delta (0)$ (possible after shrinking $delta > 0$). Set $ W := f^(-1) (B_(delta\/2) (0)), $ and choose $R > 0$ suff. small so that $ overline(B_(R) (0)) subset W. $
+  Since $[D f]^(-1) in C^0 (overline(B_R))$ and $overline(B_R)(0)$ is compact, $ norm([D f (x)]^(-1)) <= K, x in overline(B_r (0)). $
+  Then, given $y, y' in B_(delta\/2) (0)$ and with $x = f^(-1) (y), x' = f^(-1) (y')$, we find $ norm(f^(-1) (y) - f^(-1) (y') - [D f (x')]^(-1) (y - y'))/(norm(y - y')) &= norm(x - x' - [D f(x')]^(-1) (f(x) - f(x')))/(norm(f(x) - f(x'))) \
+  &= norm(x - x')/(norm(f(x) - f(x'))) (norm(D f(x')^(-1) (f(x) - f(x') - D f(x') (x - x'))))/(norm(x - x')) \
+  &<= 2 K norm(f(x) - f(x') - D f(x') (x - x'))/(norm(x - x')), $ which converges to zero by differentiability of $f$. This proves the claim $D f^(-1) (y) = [D f (x)]^(-1)$ where $y = f(x)$.
+]
+
+#remark[
+  The inverse function theorem is _local._ In general we can't expect to find a single global inverse. For instance, let $ f(x, y) := (e^y cos(x), e^y sin(x)). $ One easily verifies $ "det"(D f(x, y)) = e^(-y) eq.not 0. $ However, $ f(x + 2 k pi, y) = f(x, y), forall k in ZZ, $ so there is certainly no hope of a global inverse, for $f$ is not even injective.
+]
+
+
+#theorem("Implicit Function Theorem")[
+  Let $F : Omega subset RR^n_x times RR^m_y -> RR^m_y$ be a $C^k$ map. Denote $X = (x, y) in RR^n times RR^m$, and let $X_0 = (x_0, y_0) in Omega$ with $F(X_0) = 0$. Writing $F = (F_1, dots, F_m)$, assume that $ D_y F(X_0) = mat((partial F_1)/(partial y_1), dots, (partial F_1)/(partial y_m); dots.v, dots.down, dots.v; (partial F_m)/(partial y_1), dots, (partial F_m)/(partial y_m)) (X_0) $ is invertible. Then, there exist neighborhoods $U$ and $V$ of $x_0 in RR^n$ and $y_0 in RR^m$ resp. and a unique $C^k$ map $f : U -> V$ such that $ F(x, f(x)) = 0, quad forall x in U. $
+  In other words, the level set of $F$ is locally to $x_0$ the graph of some function $f$ of the same regularity as $F$.
+]
+
+#proof[
+  Define $G : Omega -> RR^n times RR^m$ by $ G(x, y) := (x, F(x, y)). $ Obviously $G$ is $C^k$. We can apply the inverse function theorem to $G$ near $X_0$; indeed, $ D G (X_0) = mat(I_(n times n), 0; D_x F (X_0), D_y F(X_0)), $ which means $ "det" D G(X_0) = "det" D_y F(X_0) eq.not 0, $ by assumption. Thus there exist neighborhoods $W_1, W_2$ of $X_0$, $(x_0, 0)$ respectively (since $(x_0, 0) = G(X_0)$) for which $G^(-1)$ exists (and is $C^k$) from $W_2 -> W_1$. Then, there are neighborhoods $U subset RR^n$ of $x_0$ and $V subset RR^m$ of $y_0$ such that $U times V subset W_1$; set $Z = G(U times V)$ (which is also open, with $Z subset W_2$). Thus we can view $ G : U times V -> Z, quad G^(-1) : Z -> U times V, $ which are both $C^k$ maps. Since $G(x, y) = (x, F(x, y))$, we know that $G^(-1) (x, w) = (x, H(x, w))$ for all $(x, w) in Z$. Here, $H : Z -> V$ is $C^k$ since $G$ is. Thus, $ (x, F(x, H(x, w))) = G(x, H(x, w)) = (x, w), $ using the definition of $G$ in the first equality and the inverse fact in the second line. Thus, it follows that $ F(x, H(x, w)) = w, quad forall (x, w) in Z, $ thus taking $f(x) := H(x, 0)$ gives the proof.
+]
+
+#corollary[
+  Let $F : Omega subset RR^n -> RR$ be a $C^k (Omega)$ function. Let $X = (x', y) in RR^(n- 1) times RR$ and suppose $(x'_0, y_0) in Omega$ with $(partial f)/(partial y) (x'_0, y_0) eq.not 0$. Then, there exist neighborhoods $U$ and $V$ of $x'_0 in RR^(n - 1)$ and $y_0 in RR$ and a unique $C^k (U)$ function $f : U -> V$ such that $ {F(x', y) = 0} = {y = f(x')}, quad (x', y) in U times V. $
+]
+
+#theorem("Morse Lemma")[
+  Let $f : Omega subset RR^n -> RR$ be a $C^k$ function with $k >= 3$. Let $0 in Omega$ be a critical point, i.e. $gradient f(0) = 0$. Assume further $f(0) = 0$ and $gradient^2 f(0)$ is invertible. There exist open sets $U, V$ of $0 in U sect V$ and $g in C^(k - 2) (U)$, $g : U -> V$ with $g^(-1) : V -> U$, $g^(-1) in C^2 (V)$, such that $ f(g(y)) = y_(ell + 1)^2 + dots.c + y_n^2 - (y_1^2 + dots.c + y_ell^2), $ for some $ell in ZZ sect [0, n]$.
+]
+
+== Taylor's Theorem in $RR^n$
+
+Let $f : Omega subset RR^n -> RR$, $f in C^(k + 1) (Omega)$. Let $x_0 in Omega$ and $|t|$ small. Consider $ g(t) := f(x_0 + t (x - x_0)/(norm(x - x_0))), quad x eq.not x_0, quad g(0) = f(x_0). $
+Since $x_0 in Omega$ and $Omega$ open, $x_0 + t (x - x_0)/(norm(x - x_0)) in Omega$ for $t$ sufficiently small. By Taylor in 1-dimension, $ g(t) & = g(0) + g'(0) t + (g''(0) t^2)/(2!) + dots.c + (g^((k))(0) t^k)/(k!) + R_k (g) (t), quad abs(R_k (g) (t))/(abs(t)^k) <= M |t| "as" t-> 0. $
+
+To get Taylor expansion for $f(x)$ around $x_0$, we set $t = abs(x - x_0)$ and apply chain rule to $g(t)$. First, we compute $g^((j)) (0)$; we get $ g(0) = f(x_0), \
+g(t) = g(norm(x - x_0)) = g(x). $ By chain rule, $ g'(0) = sum_(i=1)^n (partial f)/(partial x_i) (x_0) (x_j - x_j^0)/(norm(x - x_0)). $ Similarly, ....

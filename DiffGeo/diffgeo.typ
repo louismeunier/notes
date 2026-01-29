@@ -146,6 +146,9 @@ We'll denote the derivative of a function $f : cal(U) subset RR^n -> RR^m$ at a 
   Pick $t_0 in I$ and definte $ s : I -> RR, quad s(t) := integral_(t_0)^t norm(dot(gamma)(r)) dif r. $
   This integral exists and is bounded, and moreover, $ (dif s)/(dif t) = norm(dot(gamma)(t)) > 0, $ since $gamma$ regular. In particular, we see that $s$ is invertible on its image $tilde(I) := s(I)$, and increasing. Then, $s : I -> tilde(I)$ an orientation-preserving, $C^1$ bijection with $s' > 0$. By the inverse function theorem, $t := s^(-1) : tilde(I) -> I$ exists and has the same desired properties. Moreover, $ t'(s) = 1/(s'(t(s))) = 1/(norm(dot(gamma)(t(s)))). $ Letting $tilde(gamma) := gamma compose t$, then we see that $ norm(dot(tilde(gamma))(s)) = norm(dot(gamma) compose t(s) dot t' (s)) = 1/(norm(dot(gamma)(t(s)))) norm(dot(gamma)(t(s))) equiv 1. $
 ]
+#exercise[
+  Any two arc-length parametrizations differ by some shifting in the domain, i.e. if $gamma_i : I_i -> RR$ are two arc-length reparametrizations of a regular path $gamma : I -> RR^n$ using a change of parameters $t_i : I_i -> I$ for $i = 1, 2$, then $h := t_2^(-1) compose t_2 : I_2 -> I_1$ is a restriction of a rigid motion of $RR$; specifically $h' equiv 1$.
+]
 
 With this, we can try to define the length of a general curve $cal(C)$. Suppose $cal(C) subset EE^n$ a compact curve with boundary ${p, q}$ (so satisfies the first point of the classification theorem).
 
@@ -226,4 +229,136 @@ Let $gamma$ be a regular $C^2$-path $gamma : I -> RR^n$, there exists an orienta
 
 #exercise[
   Compute the curvature of parabola $cal(C) := {(x, y) | y = x^2} subset RR^2$ at any point.
+]
+
+
+#theorem[
+  The quantity $norm(dot.double(gamma)^perp)/norm(dot(gamma))^2$ is preserved under reparametrization.
+]
+
+#remark[
+  This is really more of a corollary of the previous proposition. Moreover, this implies that our definition of curvature is "correct" as a property of curves in $EE^n$ rather than just $RR^n$.
+]
+
+#definition[
+  Let $gamma : I -> RR^n$ a regular path. We define
+  - $T(t) := (dot(gamma)(t))/(norm(dot(gamma(t))))$, then _unit tangent_ at time $t$
+  If $gamma in C^2$,
+  - $N(t) := (dot.double(gamma)(t)^perp)/(norm(dot.double(gamma)(t)^perp))$, the _unit normal_ at time $t$
+  - the _osculating plane_ at time is the plane in $RR^n$ that contains the point $gamma(t)$ and is spanned by ${dot(gamma)(t), dot.double(gamma)(t)}$ (supposing $kappa_gamma eq.not 0$)
+  - the _osculating circle_ at time $t$ as the circle laying in the osculating plane of radius $1/(kappa(t))$ and centered at $gamma(t) + N(t)/(kappa(t))$
+  - the _evolute_ of $gamma$ is the map $ t in I |-> gamma(t) + (N(t))/(kappa(t)) = "center of oscualting circle at" t $
+]
+
+#remark[$dot.double(gamma)^perp eq.not 0 <=> kappa_gamma eq.not 0 <=> {dot(gamma), dot.double(gamma)}$ a linearly independent set.]
+
+#exercise[
+  A circle of radius $r$, i.e. the curve defined implicitly by ${x^2 + y^2 = r^2}$, has curvature $1/r$.
+]
+
+This exercise shows that the osculating circle at a point on a curve has the same curvature as the curve at that point.
+
+#exercise[
+  Suppose $n = 2$ and a curve is given _explicitly_ by $y = f(x)$ where $f : RR -> RR$ sufficiently differentiable. Compute the curvature in terms of $f$ and its derivatives. Do the same if the curve is given _implicitly_ as the set of $(x, y) in RR^2$ such that $g (x, y) = 0$ where $g : RR^2 -> RR$ sufficiently differentiable.
+]
+
+Fix now $n = 2$. Let $gamma : I -> RR^2$ be a regular $C^2$ curve and fix $t in I$. Let us assume (by changing coordinates if necessary) that $gamma(t) = 0$ and the $x$-axis is parallel to $T(t)$, i.e. $T(t) = (1, 0)$. Then, we see that we may write $ (dot.double(gamma)(t)^perp)/(norm(dot(gamma)(t))^2) = "constant" times (0,1). $ Specifically, the "constant" here is what we call the _signed curvature_ of $gamma$ at time $t$, and is computed as :
+#definition("Signed curvature")[Let $gamma$ as in the above, then the _signed curvature_ is the quantity
+  $ kappa_(gamma)^(plus.minus) (t) = 1/(norm(dot(gamma)(t))^2) (dot.double(gamma)(t) dot dot(gamma)(t)^ast)/(norm(dot(gamma)(t))), $ where we use the notation $v^ast$ as a rotation of $v = (v_1, v_2)$ by an angle of $pi/2$, counter-clockwise, i.e. $v^ast = (-v_2, v_1)$.]
+
+#exercise[
+  $kappa_(gamma)^(plus.minus) (-t) = - kappa_(gamma)^(plus.minus)(t)$.
+]
+
+#exercise[
+  Suppose $gamma(t) = (x(t), y(t))$, then show $ kappa_(gamma) = (dot(x) dot.double(y) - dot.double(x) dot(y))/((dot(x)^2 + dot(y)^2)^(3\/2)). $
+]
+
+#definition("Angle function")[
+  Let $gamma : I -> RR^2$ be a regular $C^2$ curve parametrized by arc length with basepoint $s_0 in I$. We assume wlog $s_0 = 0$ (by translating if necessary) and that $dot(gamma)(0) = (1, 0)$ (by changing coordinates). We define the _angle function_ of $gamma$ by $ theta : I -> RR, quad theta(0) = 0, theta(s) := integral_(0)^s kappa_(gamma)^(plus.minus) (u) dif u. $
+
+  In particular, $(dif theta)/(dif s) = kappa_(gamma)^(plus.minus) (s)$.
+]
+
+#remark[
+  We can view $s |-> dot(gamma)(s)$ as a new $C^1$-parametrized curve, in which case its arc length is given by $ integral_(0)^s norm(dot.double(gamma)(u)) dif u = integral_(0)^s kappa_(gamma)(u) dif u. $ So, in a sense, the $theta$ angle function is the "signed arc-length" of $dot(gamma)$, i.e. it accounts for backtracking.
+
+  Moreover, since we have an arc length parametrization, we know $dot(gamma)$ a unit vector, hence we can view the map $t |-> dot(gamma)(t)$ as a map from $I$ to the unit circle in $RR^2$. Hence, $theta$ is meant to capture the angle of this unit vector for any $t$, i.e. $dot(gamma) = (cos, sin) compose theta$.
+]
+
+#theorem("Fundamental Theorem of Plane Paths")[
+  Let $s_0 in I$ be a given base point and let $kappa : I -> RR$ be a $C^(k - 2)$ function ($2 <= k <= infinity$). Then, for each $p in RR^2$ and $theta_0 in RR$, there is a unique regular $C^k$ path $gamma : I -> RR^2$, parametrized by arc-length, such that
+  1. $kappa_(gamma)^(plus.minus) = kappa$,
+  2. $dot(gamma)(s_0) = (cos(theta_0), sin(theta_0))$,
+  3. $gamma(s_0) = p$.
+]
+
+#remark[
+  The choice of $p, theta_0$ just correspond to a translation, rotation (resp.) of $RR^2$ of our curve, i.e. this means our curve is uniquely determined up to rigid motion.
+]
+
+#remark[
+  This essentially says that, given the curvature of a curve in the plane, we can reconstruct the curve.
+]
+
+#proof[
+  We seek to find $gamma : I -> RR^2$ and $theta : I -> RR$ such that $ (dif gamma)/(dif s) = (cos theta, sin theta), gamma(s_0) = p $ and $ (dif theta)/(dif s) = kappa, theta(s_0) = theta_0. $
+  By the fundamental theorem of calculus, we know $ theta(s) = integral_(s_0)^s kappa(u) dif u + theta_0 $ is the unique solution for $theta(s)$ with the given properties, which in turn implies $ gamma(s) = (integral_(s_0)^s cos(theta(u)) dif u, integral_(s_0)^s sin(theta(u)) dif u) + p, $ which is again unique by FTC.
+]
+
+// TODO add graphic from beginning of lecture 1/22
+#remark[
+  This theorem essentially says that a curve is uniquely determined by its signed curvature. However, the same is not true if we just take the curvature. For instance, the curves given explicitly by $y = x^3$, $y = |x|^3$ have the same curvature everywhere but clearly do not described the same curves.
+]
+
+A more abstract manner of characterizing the angle function for a more general curve is as follows.
+If $gamma : I -> RR^2$ a regular, $C^2$ curve, then the angle function $theta : I -> I'$ where $I'$ some other interval of $RR$, is such that $ T = rho compose theta, $ where $rho : I' -> RR^2$ is the standard parametrization of the circle given by $rho(theta) := (cos(theta), sin(theta))$ and $T$ the unit tangent vector viewed as a map $I -> RR^2$.
+
+#exercise[
+  Show that the signed curvature of $gamma$ is preserved under rigid motion, hence is well-defined as a property of a curve in $EE^n$. (Note that the signed curvature is the derivative of the $theta$ function, hence it suffices to prove this property for $theta$)
+]
+
+== 3-Dimensional Space Paths
+
+We wish to derive an analogous "fundamental" result for curves in $RR^3$. However, we have no notion of "signed curvature" in this case. Moreover, as we'll see, we actually need a second "intrinsic" (called _torsion_) of the curve to uniquely identify it.
+
+Fix $gamma : I -> RR^3$ regular and $C^2$ and with strictly positive curvature (turns out, there's not much we can say when the curvature is 0).
+
+Define as before $ T := (dot(gamma))/(norm(dot(gamma))), quad N := (dot.double(gamma)^perp)/(norm(dot.double(gamma)^perp)) $ the unit tangent and normal vectors. Remark that $T dot N = 0$. Since we are in $RR^3$, there exists a unique third vector, which we denote $B$ and call it the _binormal_ such that ${T, N, B}$ is an orthonormal, positively oriented basis (in the sense that the matrix consisting of columns $T, N, B$ in that order is orthogonal with determinant 1) of $RR^3$, i.e. $ B := T times N. $
+The basis ${T, N, B} subset RR^3$ is called the _Frenet frame_ associated to $gamma$.
+
+We'll be interested in the dynamics of this frame, i.e. how $T, N, B$ resp. change in time. We need to additionally assume $gamma in C^3$ for this, so that we may take derivatives of $N$. We'll also assume $gamma$ is parametrized by arc-length for convenience. We find that with these assumptions, $ T = dot(gamma) \
+=> dot(T) = dot.double(gamma) = norm(dot.double(gamma)) N = kappa N. $ In addition, $ norm(B) = 1 => dot(B) dot B = 0 $ and $ B = T times N => dot(B) = dot(T) times N + T times dot(N) = kappa underbrace(N times N, = 0) + T times dot(N) => dot(B) dot T = 0, $
+hence $dot(B)$ is simultaneously orthogonal to $B$ and $T$, hence $ dot(B) = "const"(-N). $ We call this constant the _torsion_ $tau$ of $gamma$ at time $s$, which is given by $ tau := - dot(B) dot N. $
+Finally, to compute $dot(N)$, we have that $ norm(N) = 1 => dot(N) dot N = 0 \
+T dot N = 0 => 0 = dot(T) dot N + T dot dot(N) = kappa underbrace(norm(N)^2, = 1) + T dot dot(N) => T dot dot(N) = - kappa \
+B dot N = 0 => 0 = dot(B) dot N + B dot(N) = -tau + B dot dot(N) => B dot dot(N) = tau. $ This implies $ dot(N) = - kappa T + tau B. $ In summary, we can succinctly write $ vec(dot(T), dot(N), dot(B)) = mat(0, kappa, 0; - kappa, 0, tau; 0, - tau, 0) vec(T, N, B) quad quad ("The Frenet equations"). $
+
+#theorem("Fundamental Theorem of Space Paths")[
+  Let $I subset RR$ be an interval with basepoint $s_0 in I$. Suppose $tau : I -> RR$ is a $C^(k - 3)$ function and $kappa : I-> RR_(>0)$ is a $C^(k - 2)$ function (where $3 <= k <= infinity$). Then, for any initial point $p_0 in RR^3$, initial velocity $v_0 in RR^3$, and initial normal direction $n_0 in RR^3$ such that $norm(v_0) = norm(n_0) = 1$ and $v_0 dot n_0 = 1$, there is a _unique_ regular $C^k$ path $gamma : I -> RR^3$ parametrized by arc length and satisfying:
+  1. $kappa_gamma = kappa$,
+  2. $tau_gamma = tau$,
+  3. $gamma(s_0) = p_0$,
+  4. $dot(gamma)(s_0) = v_0$,
+  5. $dot.double(gamma)(s_0)/(norm(dot.double(gamma)(s_0))) = n_0$.
+]
+
+#remark[
+  The last three requirements say that this curve is uniquely defined up to rigid motion, hence unique in $EE^3$; translations will simply change the initial point $p_0$, and rotations will change the angles of $v_0, n_0$.
+]
+
+
+= Appendix
+
+
+#proposition[
+  For $u, v in RR^3$, $norm(u times v)$ is the area of the parallelogram with side $u$, $v$.
+]
+
+#proposition[
+  The one about permutations of matrix columns and their determinant.
+]
+
+#proposition[
+
 ]

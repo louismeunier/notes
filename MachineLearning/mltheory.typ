@@ -102,10 +102,14 @@ We know that the central-limit theorem states that for $z_i$ iid with variance $
 ]
 
 #definition("Sub-Gaussian")[
-  We say an r.v. $X$ is _sub-Gaussian_ if there exists $tau in RR_+$ such that $ EE[exp(s(X - EE[X]))] <= exp(tau^2 s^2), quad forall s in RR. $ We define the _sub-Gaussian norm_ by $ norm(X)_(psi_2) := inf{k >= 0 : EE[exp(X^2/k^2)] <= 2}, $ i.e. the "best" sub-Gaussian parameter for $X$.
+  We say an r.v. $X$ is _sub-Gaussian_ if there exists $tau in RR_+$ such that $ EE[exp(s(X - EE[X]))] <= exp(tau^2/2 s^2), quad forall s in RR. $ We define the _sub-Gaussian norm_ by $ norm(X)_(psi_2) := inf{k >= 0 : EE[exp(X^2/k^2)] <= 2}, $ i.e. the "best" sub-Gaussian parameter for $X$.
 ]
 #remark[
   Interpretation: $X$ has tails decaying as fast (or faster) than a Gaussian.
+]
+
+#remark[
+  _Different texts may define this differently, i.e. with/without a 2 factor under the $tau^2$. The notational advantage of this definition is that a Gaussian random variable with variance $sigma^2$ has sub-Gaussian parameter $sigma$._
 ]
 
 #proposition[
@@ -246,8 +250,8 @@ Define the _conditional risk_ given $x' in cal(X)$ by $ r(z|x') := EE_y [ell(y, 
                & = "argmax"_(z in {-1, 1}) PP(y = z | x = x') \
                & = cases(
                    1 quad & PP(y = 1 | x = x') > 1/2,
-                   -1 & PP(y = 1 | x = x') < 1/2
-                        "anything" & PP(y = 1 | x = x') = 1/2
+                   -1 & PP(y = 1 | x = x') < 1/2,
+                   "anything" & PP(y = 1 | x = x') = 1/2
                  ). $
     Putting $cal(L)(x') := PP(y = 1 | x = x')$, this implies $ cal(R)^ast = EE[min{cal(L)(x), 1 - cal(L)(x)}]. $
     2. (Regression) With $cal(Y) = RR$, $ell(y, z) = (y - z)^2$, we see that $ "argmin"_(z in RR) EE[(y - z)^2 | x = x'] & = "argmin"_(z in RR) {underbrace(EE[(y - EE[y | x= x'])^2 | x = x'], "independent of " z) \
@@ -317,4 +321,31 @@ Remark that our definition of consistency in expectation gave no guarantee over 
 
 #remark[
   This is hard to evaluate in general, but is easy to upper bound (just fix any $A$ and evaluate the inner supremum, i.e., look at the worst-case performance of the algorithm). Lower bounds are much harder to compute, since they need to hold for any possible algorithm.
+]
+
+== "No Free Lunch"
+
+_No, this section is not about SSMU shutting down Midnight Kitchen..._
+
+Here, we make clearer the remarks of the previous section in terms of performance of algorithms for arbitrarily distributed data. Namely, we show that, for a specific loss function and input/output space, for any size of data $n$, we can construct a distribution on our data such that any algorithm we can come up with will perform "poorly" (i.e. it's excess risk is bounded away from 0). Hence, there is no "free lunch", i.e no "easy algorithm" that will work without further assumptions on what our possible probability distributions could be
+
+#proposition(
+  "No Free Lunch",
+)[Consider a binary classification with $0-1$ loss and with $cal(X)$ infinite. Let $cal(P)$ be the class of all probability distributions on $cal(X) times {0, 1}$. Then, for all $n$ and for all algorithms $A$, $ sup_(p in cal(P)) {EE[cal(R)_p (A(D_n (p)))] - cal(R)^ast} >= 1/2. $]<prop:nofreelunch>
+
+#remark[
+  As we'll see in the proof, the bounds we obtain will not give any rate in $n$, asymptotic or not. Indeed, the probability distribution for each $n$ will crucially depend on a certain parameter $n$ being much larger than $n$. Indeed, we can state (but will not prove) the much stronger statement as follows.
+]
+
+#theorem("Devroye, '96")[
+  Consider the same setup as @prop:nofreelunch. Then, for any decreasing sequence $a_n -> 0$ with $a_1 <= 1/16$, then for any algorithm $A$, there exists a $p in cal(P)$ such that for all $n >= 1$, $ EE[cal(R)_p (A(D_n (p)))] - cal(R)^ast >= a_n. $
+  I.e., the supremum over $cal(P)$ has excess risk going to zero _arbitrarily slowly._
+]
+#proof[(of @prop:nofreelunch)
+  Fix $n in NN$ and assume wlog $NN subset cal(X)$ (by relabelling otherwise). Let $k in ZZ_+$, and, given a $k$-length vector $r =(r_1, dots, r_k) in {0, 1}^k$, define a joint probability distribution $p$ on $(x, y)$ such that $ PP(x = j, y = r_j) = 1/k, quad j = 1, dots, k. $
+  In particular, in this case, $y$ is a deterministic function of $x$; given $x = j$, $y = r_j$. In particular, this means $cal(R)^ast = 0$.
+
+  Denote $hat(f)_(D_n) := A(D_n (p))$ as the classifier under $p$ given by algorithm $A$, and write $S(r) := EE[cal(R)_p (hat(f)_(D_n))]$ as the expectation of the expected risk under this given probability distribution of the classifier given by the algorithm $A$ for the given vector $r in {0, 1}^k$. We aim to pick $r$ such that we maximize this quantity; if we can pick $r$ such that this quantity is larger than $1/2$, we'll be done (why?).
+
+  This is hard to do directly, so we'll instead lower bound the max probabilistically; given any distribution $q$ on ${0, 1}^k$, we certainly have $ max_(r in {0, 1}^k) S(r) >= EE_(r tilde q) [S(r)]. $ Thus, we'll design some $q$ so that this quantity on the right is large. Specifically, let $q$ be uniform on ${0, 1}^k$, i.e. each $r = (r_1, dots, r_k)$ a vector of $r_j$'s each independent, unbiased, Bernoulli r.v.'s. Then, $ EE_(r tilde q) [S(r)] = PP(hat(f)_(D_n) (x) eq.not y) = PP(hat(f)_(D_n) (x) eq.not r_x) $
 ]
