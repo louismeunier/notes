@@ -19,6 +19,8 @@
 
 #set align(left)
 #let boxit(arg) = box(stroke: 0.75pt, outset: 8pt, arg)
+#let ddot(a) = $dot.double(#a)$
+#let dddot(a) = $dot.triple(#a)$
 
 #pagebreak()
 
@@ -347,6 +349,75 @@ B dot N = 0 => 0 = dot(B) dot N + B dot(N) = -tau + B dot dot(N) => B dot dot(N)
   The last three requirements say that this curve is uniquely defined up to rigid motion, hence unique in $EE^3$; translations will simply change the initial point $p_0$, and rotations will change the angles of $v_0, n_0$.
 ]
 
+#proof[
+  Remark that the Frenet equations are a system of (9) first order ODEs with given initial condition. The Picard-Lindelhoff theorem from ODEs says that there exist unique function $T, N, B : I -> RR^3$ satisfying the equations with $T(s_0) = v_0, N(s_0) = n_0, B(s_0) = v_0 times n_0$. We need to show that these are the Frenet frame of some curve.
+
+  First, we show they are a positively oriented orthogonal basis. Indeed, remark that, using the Frenet equations, $ (dif)/(dif s) (T dot N) & = kappa (N dot N) - kappa (T dot T) + tau (T dot B) \
+  (dif)/(dif s) (T dot B) & = kappa (N dot B) - tau (T dot N) \
+  (dif)/(dif s) (N dot B) & = - kappa (T dot B) + tau (B dot B) - tau (N dot N) \
+  (dif)/(dif s) (T dot T) & = 2 kappa (T dot N) \
+  (dif)/(dif s) (N dot N) & = - 2 kappa (T dot N) + 2 tau (N dot B) \
+  (dif)/(dif s) (B dot B) & = -2 tau (N dot B). $ These are a system of ODEs for the quantities $T dot N, T dot B,$ etc with initial conditions $0,0,0, 1,1,1$. However, the system can also be solved by $T dot N equiv 0$, $T dot B equiv 0$, etc, and so by uniqueness of solutions to linear ODEs, it follows that $T dot N = 0$, etc, which proves the orthonormality. To show positive orientation, it suffices to show that $(T times N) dot B equiv 1$. This is true at the basepoint of time by choice of initial conditions, and if we take the derivative, we find $ (dif)/(dif s) ((T times N) dot B) = kappa (N times N) dot B + [(T times (- kappa T)) + T times (tau B)] dot B + (T times N) dot (- tau N), $ which we see to be equal to zero by our orthonormality proof from above. Thus, ${T, N, B}$ is indeed a positively-oriented orthonormal basis.
+
+  Finally, we need to show that there exists a unique curve with $T$ as its unit tangent (from which the remainder of the quantities $N$, etc will follow); indeed, we have $ gamma : I -> RR^3, quad gamma(s) = p_0 + integral_(s_0)^s T(u) dif u $ is the unique curve with $dot(gamma) = T$; the fact that $gamma in C^k$ follows from $T in C^(k - 1)$.
+]
+
+#exercise[
+  With the same assumptions as above, also assume $sigma : I -> RR_(> 0) in C^(k - 1)$. Then, there exists a unique $C^k$ regular path $gamma in EE^3$ such that $ norm(dot(gamma)) = sigma, quad kappa_(gamma) = kappa, quad tau_gamma = tau. $
+]
+
+We're interested in defining the torsion for more general paths in a consistent way. Let $gamma$ a regular $C^3$ curve in $RR^3$ with $kappa > 0$. Let $tilde(gamma) : tilde(I) -> RR^3$ be a arc-length reparametrization using $t: tilde(I) -> I$, and let $s = t^(-1)$, and define $ tau := tilde(tau) compose s, $ where $tilde(tau)$ the torsion of $tilde(gamma)$, as defined above.
+
+#proposition[
+  Let $gamma$ be as above. Then, $ kappa = norm(dot(gamma) times dot.double(gamma))/(norm(dot(gamma))^3), quad tau = ((dot(gamma) times ddot(gamma))/(norm(dot(gamma) times ddot(gamma))^2)) dot dddot(gamma) $
+]
+#proof[
+  We know $kappa = norm(ddot(gamma)^perp)/(norm(dot(gamma))^2)$. In $RR^3$, $norm(dot(gamma) times ddot(gamma))$ is the area of the parallelogram with sides $dot(gamma), ddot(gamma)$, or equivalently, twice the area of the triangle with base $dot(gamma)$ and height $ddot(gamma)^perp$ (the perpendicular to the base $dot(gamma)$), i.e. $ norm(dot(gamma) times ddot(gamma)) = norm(dot(gamma)) norm(ddot(gamma)^perp), $ which proves the first claim. The second claim follows from lots of careful chain rules.
+]
+
+
+#exercise[
+  Is torsion preserved by reversals? i.e., if $overline(gamma) := gamma compose overline(t)$ where $overline(t)(t) = - t$, is $tau_(overline(gamma)) (overline(t)) = tau_gamma (t)$?
+]
+// TODO the answer is yes
+#exercise[(Twisted Cubic)
+  Let $gamma : RR -> RR^3$ be given by $gamma(t) = (t, t^2, t^3)$. Show that $kappa(0) = 2, tau(0) = 3$.
+]
+
+#exercise[(Helix) Let $gamma(t) = (cos(t), sin(t), t)$. Show that $kappa equiv 1/2, tau equiv 1/2$.]
+#exercise[Find an example where $kappa equiv 1/2, tau equiv -1/2$.]
+
+== Global Theorems/Properties of Plane Curves
+Let $SS^1$ denote the unit circle in $RR^2$ centered at the origin, with global periodic parametrization $rho(t) = (cos(t), sin(t))$. Given a $C^0$ curve in $SS^1$ by $g : I -> SS^1$, a function $theta : I -> RR$ is called a _lift_ of $g$ via $rho$ if
+1. it is $C^0$
+2. $g = rho compose theta$
+
+#theorem[
+  Fix $t_0 in RR, theta_0 in RR$ such that $g(t_0) = (cos theta_0, sin theta_0)$. Then, there exists a unique lift $theta$ of $g$ such that $theta(t_0) = theta_0$.
+]
+
+If $g : RR -> SS^1$ a periodic path with period $[a, b]$, then for any lift $theta$ of $g$, $ abs(theta(b) - theta(a)) = 2 pi n, quad n in ZZ_(+), $ where $n$ the number of times the curve "goes around" $SS^1$.
+
+#theorem("Hopf's Umlanfasatz")[
+  If $cal(C) subset RR^2$ a regular closed curve periodic (with period $[a, b]$) parametrization $gamma : R -> RR^2$, then for any lift $theta$ of its tangent vector $T$ (i.e., $theta$ is an angle function), $abs(theta(b) - theta(a)) = 2 pi$.
+]
+
+We say $gamma$ is _positively/ccw oriented_ if $theta(b) - theta(a) = 2 pi$, and _negatively/cw oriented_ if $theta(b) - theta(a) = - 2 pi$.
+
+#theorem("Jordan Curve Theorem")[
+  Let $cal(C) subset RR^2$ a regular closed curve. Then, $RR^2 \\ cal(C)$ has two connected components; one bounded ("inside" of $cal(C)$) and one unbounded ("outside" of $cal(C)$).
+]
+
+We can then say $gamma$ is _positively oriented_ if $T^ast$ points inside $cal(C)$, and _negatively oriented_ if $T^ast$ points outside $cal(C)$. It turns out these different notions of orientation are equivalent.
+
+#theorem("Isoperimetric Inequality")[
+  Let $cal(C) subset RR^2$ a regular closed curve. Let $ell =$ length of $cal(C)$ and $A =$ area of inside of $cal(C)$. Then, $ 4 pi A <= ell^2, $ with equality iff $cal(C)$ is a circle.
+]
+
+#proof[(Sketch of Hopf's)
+  // TODO
+]
+
 
 = Appendix
 
@@ -356,7 +427,7 @@ B dot N = 0 => 0 = dot(B) dot N + B dot(N) = -tau + B dot dot(N) => B dot dot(N)
 ]
 
 #proposition[
-  The one about permutations of matrix columns and their determinant.
+  // The one about permutations of matrix columns and their determinant.
 ]
 
 #proposition[

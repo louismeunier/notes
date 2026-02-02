@@ -347,5 +347,230 @@ Here, we make clearer the remarks of the previous section in terms of performanc
 
   Denote $hat(f)_(D_n) := A(D_n (p))$ as the classifier under $p$ given by algorithm $A$, and write $S(r) := EE[cal(R)_p (hat(f)_(D_n))]$ as the expectation of the expected risk under this given probability distribution of the classifier given by the algorithm $A$ for the given vector $r in {0, 1}^k$. We aim to pick $r$ such that we maximize this quantity; if we can pick $r$ such that this quantity is larger than $1/2$, we'll be done (why?).
 
-  This is hard to do directly, so we'll instead lower bound the max probabilistically; given any distribution $q$ on ${0, 1}^k$, we certainly have $ max_(r in {0, 1}^k) S(r) >= EE_(r tilde q) [S(r)]. $ Thus, we'll design some $q$ so that this quantity on the right is large. Specifically, let $q$ be uniform on ${0, 1}^k$, i.e. each $r = (r_1, dots, r_k)$ a vector of $r_j$'s each independent, unbiased, Bernoulli r.v.'s. Then, $ EE_(r tilde q) [S(r)] = PP(hat(f)_(D_n) (x) eq.not y) = PP(hat(f)_(D_n) (x) eq.not r_x) $
+  This is hard to do directly, so we'll instead lower bound the max probabilistically; given any distribution $q$ on ${0, 1}^k$, we certainly have $ max_(r in {0, 1}^k) S(r) >= EE_(r tilde q) [S(r)]. $ Thus, we'll design some $q$ so that this quantity on the right is large. Specifically, let $q$ be uniform on ${0, 1}^k$, i.e. each $r = (r_1, dots, r_k)$ a vector of $r_j$'s each independent, unbiased, Bernoulli r.v.'s. Then, $ EE_(r tilde q) [S(r)] = PP(hat(f)_(D_n) (x) eq.not y) = PP(hat(f)_(D_n) (x) eq.not r_x), $ which follows from the fact that we can write $ EE[S(r)] & = EE_r [EE[cal(R)_p (hat(f)_(D_n))]] \
+           & = EE_r [ EE_p [EE_(x, y) [ell(x, hat(f)_(D_n) (y))]]] \
+           & =EE_(r, p, (x, y)) [bb(1)_(y eq.not hat(f)_(D_n) (x))] = PP(y eq.not hat(f)_(D_n) (x)), $ just by unpacking all of the definitions. Continuing from above, we can write then $ EE_(r tilde q) [S(r)] & = EE_p [PP(hat(f)_(D_n) (x) eq.not r_x) | x_(1), dots, x_n ; r_(x_1), dots, r_x_n] quad ("total expectation") \
+  &>= EE[PP(hat(f)_(D_n) (x) eq.not r_x, x eq.not x_1, dots, x_n) | x_1, dots]. $ By Baye's rule, $ PP(hat(f)_(D_n) (x) eq.not r_x, x eq.not x_1, dots, x_n | x_1, dots, x_n) = underbrace(PP(hat(f)_(D_n) (x) eq.not r_x | x eq.not x_1, dots, x_n\; x_1, dots, x_n), = 1/2) dot PP(x eq.not x_1, dots, x_n | x_1, dots, x_n), $ since, supposing we didn't observe $x$, $x$ has equal probability of being labeled $0,1$. Thus, all together, $ EE[S(r) & >= 1/2 EE[PP(x in.not {x_1, dots, x_n} | x_1, dots, x_n)] \
+          & = 1/2 PP(x in.not {x_1, dots, x_n}) \
+          & = 1/2 EE[PP(x in.not {x_1, dots, x_n} | x)] \
+          & = 1/2 EE[product_(i=1)^n PP(x eq.not x_i | x)] quad ("independence") \
+          & = 1/2 (1 - 1/k)^n. $ We have $n$ fixed; as $k -> infinity$, this quantity $-> 1/2$, proving the result.
 ]
+
+= Linear Least Squares
+
+== Framework
+_Goal:_ Consider $f_theta : cal(X) -> cal(Y) subset RR$, for some parameter $theta in Theta subset RR^d$, and minimize the empirical risk $ min_(theta in Theta) 1/n sum_(i=1)^n (y_i - f_theta (x_i))^2. $ Specifically, we'll study when $f_theta$ is linear in $theta$, but not necessarily $x$, i.e. $ f_theta (x) := sum_(i=1)^d a_i (x) theta_i = phi(x)^T theta, $ where $phi(x) = (a_1, dots, a_d)^T (x) in RR^d$. Our goal then will be to compute $ min_(theta in RR^d) {hat(cal(R)) (theta) := 1/n sum_(i=1)^n (y_i - phi(x_i)^T theta)^2}. $ or equivalently, writing $y = (y_1, dots, y_n)^T$ and $ Phi(x) = vec(dots.v, – phi(x_i)^T –, dots.v) in RR^(n times d), $ then $ hat(R)(theta) = 1/n norm(y - Phi(x) theta)^2. $
+== Ordinary Least Squares
+
+Assume $Phi$ from above has full column rank, i.e. $d <= n$ (we say the problem then is "overdetermined/underparametrized"). This implies $Phi^T Phi in RR^(d times d)$ is invertible.
+
+#proposition("OLS")[
+  When $Phi$ has rank $d$, the minimizer of what we now call the _ordinary least squares problem_ (OLS) is unique, and given by $ hat(theta) = (Phi^T Phi)^(-1) Phi^T y. $
+
+  In particular, we call the relation $ Phi^T Phi hat(theta) = Phi^T y $ the _normal equations_.
+]
+
+#proof[
+  By homework (this is just a quadratic).
+]
+
+
+== Statistical Analysis of OLS
+
+There are two main assumptions on OLS we will study:
+1. _Random design setting:_ assume both the inputs and outputs are random
+2. _Fixed design setting:_ assume the inputs are fixed, but the outputs are random. In this case, $phi$ is deterministic, and thus our goal is to minimize $ cal(R)(theta) = EE_y [1/n sum_(i=1)^n (y_i - phi(x_i)^T theta)^2]. $
+
+== Fixed Design
+We assume the following:
+1. $Phi$ is deterministic, and $hat(Sigma) := 1/n Phi^T Phi$ is invertible
+2. $exists theta_ast in RR^d$ such that $y_i = phi(x_i)^T phi_ast + epsilon_i$
+3. $epsilon_i$'s are independent with mean zero and variance $sigma^2$. We define $epsilon := (epsilon_1, dots, epsilon_n)^T in RR^n$.
+
+#proposition("Risk Decomposition of OLS - Fixed Design")[
+  Under the linear model and the assumptions above, for $theta in RR^d$, $cal(R)^ast = sigma^2$ and the excess risk is given by  $ cal(R)(theta) - cal(R)^ast = norm(theta - theta_(ast))^2_(hat(theta)) = (theta - theta_ast)^T hat(Sigma) (theta - theta_ast). $ If $hat(theta)$ a random variable, then $ EE_(hat(theta)) [cal(R)(hat(theta)) - cal(R)^ast] =underbrace(norm(EE[hat(theta)] - theta_ast)^2_(hat(Sigma)), "bias") + underbrace(EE[norm(hat(theta) - EE[hat(theta)])^2_(hat(Sigma))], "variance"). $
+]<thm:riskdecompols>
+
+#remark[Since $y$ has some noise, it makes sense to assume $hat(theta)$ could be random in its own right.]
+
+#proof[
+  Using $y = Phi theta_ast + epsilon$, we readily see $ cal(R)(theta) & = EE_y [1/n norm(y - Phi theta)_2^2] \
+  & = EE_epsilon [1/n norm(Phi (theta_ast - theta) + epsilon)^2] \
+  &= 1/n EE_epsilon [underbrace(norm(Phi (theta_ast - theta))^2_2, perp epsilon) + underbrace(norm(epsilon)_2^2, arrow.squiggly n sigma^2) + underbrace(2 (Phi (theta_ast - theta))^T epsilon, "mean zero")] \
+  &= 1/n norm(Phi (theta_ast - theta))_2^2 + sigma^2 \
+  &= sigma^2 + (theta_ast - theta)^T underbrace((Phi^T Phi)/n, = hat(Sigma)) (theta_ast - theta) \
+  &= sigma^2 + norm(theta_ast - theta)^2_(hat(Sigma)). $ It's clear that this is minimized at $theta = theta_ast$ (uniquely, since $hat(Sigma)$ invertible), which thus has risk $cal(R)_ast = sigma^2$.
+
+  Suppose now $hat(theta)$ random. Then, $ EE[cal(R)(hat(theta)) - cal(R)^ast] & = EE[norm(hat(theta) - theta_ast)_(hat(Sigma))^2 plus.minus EE[hat(theta)]] \
+  & = EE[norm(hat(theta) - EE[hat(theta)])_(hat(Sigma))^2] + underbrace(2 EE[(hat(theta) -EE[hat(theta)])^T hat(Sigma) (EE[hat(theta)] - theta_ast)], = 0) + EE[norm(EE[hat(theta)] - theta_ast)_(hat(Sigma))^2]. $
+]
+
+// TODO
+=== Statistical Properties of the OLS Estimator
+
+Recall the OLS estimator, $ hat(theta) = (Phi^T Phi)^(-1) Phi^T y = hat(Sigma)^(-1) (1/n Phi^T y), quad y = Phi theta_ast + epsilon, $ where the only randomness comes from $epsilon$.
+
+#proposition("Estimation Properties of OLS")[
+  The OLS estimator $hat(theta)$ has the following properties:
+  1. $EE[hat(theta)] = theta_ast$, i.e. $hat(theta)$ is unbiased
+  2. $"Var"(hat(theta)) = EE[(hat(theta) - theta_ast) (hat(theta) - theta_ast)^T] = (sigma^2\/n) hat(Sigma)^(-1)$, where $hat(Sigma)^(-1)$ is often called the _precision matrix_.
+]
+
+#proof[
+  Since $EE_epsilon [y] = EE[Phi theta_ast + epsilon] = Phi theta_ast$, we find $ EE[(Phi^T Phi)^(-1) Phi^T y] = (Phi^T Phi)^(-1) Phi^T Phi theta_ast = theta_ast, $ since $Phi$ is deterministic.
+
+  Next, for the variance, compute $ hat(theta) - theta_ast = (Phi^T Phi)^(-1) Phi^T epsilon, $ so that $ "Var"(hat(theta)) & = EE[(Phi^T Phi)^(-1) Phi^T epsilon ((Phi^T Phi)^(-1) Phi^T epsilon)^T] \
+                    & = EE[(Phi^T Phi)^(-1) Phi^T epsilon epsilon^T Phi (Phi^T Phi)^(-1)] \
+                    & = sigma^2 (Phi^T Phi)^(-1) Phi^T Phi (Phi^T Phi)^(-1) \
+                    & = sigma^2 (Phi^T Phi)^(-1) = sigma^2/n hat(Sigma)^(-1), $ as claimed.
+]
+
+#proposition("Risk of OLS")[
+  The excess risk of the OLS estimator is $ EE[cal(R)(hat(theta)) ] - cal(R)^ast = sigma^2 d/n. $
+]
+
+#proof[
+  We plug in the previous result to @thm:riskdecompols. We find $ EE[cal(R)(hat(theta))] - cal(R)^ast & = EE[norm(hat(theta) - theta_ast)_(hat(Sigma))^2] \
+                                      & = EE[(hat(theta) - theta_ast)^T hat(Sigma) (hat(theta) - theta^ast)] \
+                                      & = EE[tr((hat(theta) - theta_ast)^T hat(Sigma) (hat(theta) - theta^ast))] \
+                                      & = tr(EE[hat(Sigma) (hat(theta) - theta_ast) (hat(theta) - theta_ast)^T]) \
+                                      & = tr(EE[hat(Sigma) sigma^2/n hat(Sigma)^(-1)]) \
+                                      & = sigma^2/n tr(I_d) = sigma^2 d/n, $ where we use the linearity of the trace, and the fact that $tr(A B) = tr(B A)$.
+]
+
+_Observations:_
+
+- In fixed design setting, OLS thus leads to unbiased estimation with excess risk of $sigma^2 d/n$.
+- For excess risk being small compared to $sigma^2$, need $d/n$ to be small. This seems to exclude _high-dimensional problems_ where $d$ is close to $n$ (let alone $d > n$ or $d >> n$). Regularization (ridge) can help.
+
+== Ridge Least-Squares Regression
+
+When $d > n$, $Phi^T Phi$ is no longer invertible, and so the normal equations admit a whole subspace of solutions. We have two main solutions to this:
+
+1. _Dimension reduction:_ aims to replace the feature vector $phi(x)$ with another feature vector of lower dimension
+2. _Regularization:_ adds a term to the least-squares objective function, (i.e. $ell^1$-penalty, which leads to _lasso_, or $ell^2$-penalty, which leads to _ridge_)
+
+#definition("Ridge Least Squares Regression Estimator")[
+  For a regularization parameter $lambda > 0$, we define the _ridge least squares estimators_ $hat(theta)_lambda$ as the minimizer of $ min_(theta in RR^d) {1/n norm(y - Phi theta)_2^2 + lambda norm(theta)_2^2} quad "(ridge regularization)". $
+]
+
+We can express the ridge regression estimator in closed form; we don't even need $Phi^T Phi$ to be invertible as in the OLS case.
+
+#proposition[
+  With, as usual, $hat(Sigma) = 1/n Phi^T Phi in RR^(d times d)$, then $ hat(theta)_lambda = 1/n (hat(Sigma) + lambda I)^(-1) Phi^T y. $
+]
+
+#remark[In particular, when $lambda = 0$, we recover the OLS estimator assuming $hat(Sigma)$ invertible.]
+
+#proof[
+  This is essentially the same as the proof for the OLS; one recognizes that we have a quadratic in $theta$. The invertibility of $hat(Sigma) + lambda I$ follows from the fact that $hat(Sigma)$ positive semidefinite, and thus has nonnegative eigenvalues, and thus $hat(Sigma) + lambda I$ has strictly positive eigenvalues and is thus invertible.
+]
+
+=== Statistical Properties of Ridge Least Squares Estimator
+
+#proposition[The ridge least squares estimator, under the fixed-design assumptions, is equal to $hat(theta)_lambda = 1/n (hat(Sigma) + lambda I)^(-1) Phi^T y$ has excess risk $ EE[cal(R)(hat(theta)_lambda)] - cal(R)^ast = underbrace(lambda^2 theta_ast^T (hat(Sigma) + lambda I)^(-2) hat(Sigma) theta_ast, "bias") + underbrace(sigma^2/n tr(hat(Sigma)^2 (hat(Sigma) + lambda I)^(-2))., "variance") $]
+
+_Observations:_
+- The result above gives a bias/variance decomposition of the excess risk; this is related to the approximation/estimation error decomposition of the risk.
+
+The bias term is part of the approximation error - it has the main influences of $lambda$, which only effects $theta$ and is thus really a modelling assumption. The variance term captures the "noise" ($sigma^2$ only appears here), and is really about estimation error.
+
+- _Bias:_ as $lambda$ $arrow.t$, bias $arrow.t$ and is equal to zero if $lambda = 0$ (and $hat(Sigma)$ is invertible, of course). In particular, the bias grows like $lambda^2$, and as $lambda -> infinity$, the bias approximates $lambda^2 dot theta_ast^T hat(Sigma)^(-1) theta_ast$ (which is independent of $n$).
+
+- _Variance_ as $lambda$ $arrow.t$, the variance $arrow.b$ and when $lambda = 0$, the variance is $sigma^2/n$; this depends on $n$.
+
+In particular, since the excess risk is the sum of these two, we expect a kind of parabolic relationship between excess risk and $lambda$, implying the existence of some optimal $lambda$.
+
+- The quantity $tr(hat(Sigma)^2 (hat(Sigma) + lambda I)^(-2))$ is called the _degrees of freedom_, and is considered as an "implicit number of parameters".
+
+
+- As $lambda -> 0$, $hat(theta)_lambda$ converges to the OLS estimator
+
+- $lambda = 0$ is not usually the optimal choice (i.e. yielding the best excess risk); we want to bias our estimator in general
+
+=== Choice of $lambda$
+
+Can we tune $lambda$ to achieve a better bound than our OLS?
+
+#proposition("Choice of regularization parameter")[
+  Let $ lambda_ast = (sigma dot tr(hat(Sigma))^(1\/2))/(norm(theta_ast)_2 sqrt(n)). $ Then, $ EE[cal(R)(hat(theta)_(lambda_ast))] - cal(R)^ast = (sigma dot "tr"(hat(Sigma))^(1\/2) norm(theta_ast)_2)/sqrt(n). $
+]
+
+#proof[
+  Recall that the eigenvalues of $lambda I + hat(Sigma)$ are of the form $lambda + mu$ for $mu$ an eigenvalue of $hat(Sigma)$. In addition, we will need to use the fact that $tr(A B) <= lambda_max (A) tr(B)$ (special case of Holder's inequality).
+
+  We need first a bound on the eigenvalues of the matrix $(hat(Sigma) + lambda I)^(-2) lambda hat(Sigma)$. Let $mu$ be an eigenvalue of $hat(Sigma)$, so $mu + lambda$ an eigenvalue of $hat(Sigma) + lambda I$. We know $(mu + lambda)^2 >= 2 lambda mu$ (AM-GM), and hence $lambda mu (mu + lambda)^(-2) <= 1/2$ and so the eigenvalues of $(hat(Sigma) + lambda I)^(-2) lambda hat(Sigma)$ are always $<= 1/2$, i.e. $ lambda_max {(hat(Sigma) + lambda I)^(-2) hat(Sigma)} <= 1/2. $
+
+  Therefore, we can bound the bias $ "bias" = lambda theta_ast^T (hat(Sigma) + lambda I)^(-2) lambda hat(Sigma) theta_ast & <= lambda lambda_max {(hat(Sigma) + lambda I)^(-2) lambda hat(Sigma)} norm(theta_ast)_2^2 <= lambda/2 norm(theta_ast)_2^2. $
+
+  Similarly, we can bound the variance, $ "variance" = sigma^2/n tr(hat(Sigma)^2 (hat(Sigma) + lambda I)^(-2)) &= sigma^2/(n lambda) tr(hat(Sigma) [lambda hat(Sigma) (hat(Sigma) + lambda I)^(-2)]) \
+  & <= (sigma^2)/(n lambda) tr(hat(Sigma)) lambda_(max) {lambda hat(Sigma) (hat(Sigma) + lambda I)^(-2)} \
+  & <= (sigma^2)/(2 n lambda) tr(hat(Sigma)). $ Together, these imply that, for any $lambda > 0$, $ EE[cal(R)(hat(theta)_lambda)] - cal(R)_ast &= "bias" + "variance" <= lambda/2 norm(theta_ast)_2^2 + sigma^2/(2 n lambda) tr(hat(Sigma)). $ We optimize the right-hand side, which is of the form $f(lambda) = a lambda + b/lambda$. One verifies that the minimum is $lambda = sqrt(b/a)$, which has value $f(sqrt(b/a)) = 2 sqrt(a b)$. Since $a = norm(theta_ast)_2^2/2$ and $b = sigma^2/(2 n) tr(hat(Sigma))$, this implies $ lambda_ast = (sigma tr(hat(Sigma))^(1\/2))/(sqrt(n) norm(theta_ast)_2), $ as claimed, and similarly, we get the actual excess risk of $hat(theta)_(lambda_ast)$ upon plugging in the appropriate values.
+]
+
+#remark[
+  1. Let $R = max_(i in [n]) norm(phi(x_i))_2$. Then $ tr(hat(Sigma)) = sum_(j=1)^d hat(Sigma)_(j j) = 1/n sum_(i=1)^n sum_(j=1)^d (phi(x_i)_j)^2 = 1/n sum_(i=1)^n norm(phi(x_i))_2^2 <= R^2. $ Namely, the dimension $d$ of the parameter space plays no role in the excess risk, and thus $d$ could be infinite, provided $R$ and $norm(theta_ast)^2_2$ are finite (normally, $R$ grows with $d$, so need these extra assumptions).
+
+  2. We can compare this to the excess risk of the OLS estimator, which we found to be $sigma^2 d/n$. We see that
+  - With $lambda_ast$, our excess risk of ridge goes to zero as $n -> infinity$ like $1/sqrt(n)$, which is slower than that of OLS (which goes like $1/n$)
+  - However, the ridge estimator has risk proportional to $sigma$ while the OLS is proportional to $sigma^2$, i.e. OLS has a higher dependency on the noise variance
+
+  3. $lambda_ast$ involves constants we don't know, i.e. $sigma$, $norm(theta_ast)_2$ - in practice, we have to find $lambda_ast$ by trial and error.
+
+  4. $lambda_ast$ is not necessarily the best choice in the sense of minimizing the excess risk, since we found it by optimizing an upper bound of the excess risk.
+
+  5. $lambda$ is an example of a "hyperparameter" - something a user must choose. It should not be taken as an _absolute_ - rather, it should be consider as a "guide" as to how to pick $lambda$.
+]
+
+
+
+
+== Random Design Analysis
+
+Here, we assume the following:
+1. Both $x$ and $y$ are random and each pair $(x_i, y_i)$ from a probability distribution $p$ on $cal(X) times RR$
+2. $exists theta_ast in RR^d$ s.t. $y_i = phi(x_i)^T theta_ast + epsilon_i$
+3. $epsilon_i$'s are independent from $x_j$'s and each other, and are mean zero, variance $sigma^2$.
+
+
+In particular, remark that under these assumptions, $EE[y_i | x_i] = phi(x_i)^T theta_ast$.
+
+
+#proposition[
+  Under the above assumptions, for any $theta in RR^d$, we have $ cal(R)(theta) - cal(R)^ast = norm(theta - theta_ast)^2_Sigma, quad Sigma := EE[phi(x) phi(x)^T], $ and $cal(R)^ast = sigma^2$.
+]
+
+#proof[
+  $
+    cal(R)(theta) & = EE_(x, y, epsilon) [(y - theta^T phi(x))^2] \
+    & = EE[(phi(x)^T theta_ast + epsilon - theta^T phi(x))^2] \
+    &= EE[(phi(x)^T (theta_ast - theta) - epsilon)^2] \
+    &= EE[(theta - theta_ast)^T phi(x) phi(x)^T (theta - theta_ast) + epsilon^2 - 2 epsilon phi(x_0)^T (theta - theta_ast)] \
+    &= EE_x EE_epsilon [[dots.c | x]] \
+    ("independence")quad&= EE[epsilon^2] + EE[(phi(x)^T (theta - theta_ast))^2] \
+    &= sigma^2 + (theta - theta_ast)^T Sigma (theta - theta_ast).
+  $
+]
+
+
+#proposition[
+  Under the above assumptions, assume $hat(Sigma) = 1/n sum_(i=1)^n phi(x_i) phi(x_i)^T = 1/n Phi^T Phi$ is invertible. Then, the expected excess risk of the OLS estimator is given by $ sigma^2/n EE[tr(Sigma hat(Sigma)^(-1))]. $
+]
+
+#remark[
+  We see $Sigma$ as the "expected covariance matrix" and $hat(Sigma)$ as the "empirical covariance matrix"; in particular, these two were equal in the fixed-design case (as our inputs were deterministic) and thus the above quantity becomes $ sigma^2/n EE[tr(I_d)] = d/n sigma^2. $
+]
+
+#proof[
+  Recall that $hat(sigma) = 1/n hat(Sigma)^(-1) Phi^T y$, which, by assumption on the $y$'s, becomes $ hat(theta) & = 1/n hat(Sigma)^(-1) Phi^T (Phi theta_ast + epsilon) = theta_ast + 1/n hat(Sigma)^(-1) Phi^T epsilon. $ By the previous proposition, then, it follows that $ EE[cal(R)(hat(theta)) - cal(R)^ast] &= EE[(1/n hat(Sigma)^(-1) Phi^T epsilon)^T Sigma (1/n hat(Sigma)^(-1) Phi^T epsilon)] \
+  &= 1/n^2 EE[tr(Sigma (hat(Sigma)^(-1) Phi^T epsilon epsilon^T Phi hat(Sigma)^(-1)))] quad "(i)" \
+  &= sigma^2/n^2 EE[tr(Sigma hat(Sigma)^(-1) underbrace(Phi^T Phi hat(Sigma)^(-1), = n I))] quad "(ii)" \
+  &= sigma^2/n EE[tr(Sigma hat(Sigma)^(-1))]. $ In (i) we use the fact that for any real matrices $A, B$, $tr(A B) = tr(B A)$; in particular, here this case, $A B in RR$ so that $A B = tr(A B)$ (where $A, B$ are the appropriate matrices above). In (ii) we use the linearity of the trace, as well as the fact that, by conditioning on $x$ first and using independence of $epsilon, x$, we can factor out $EE[epsilon epsilon^T] = n sigma^2$.
+]
+
+=== Gaussian Design
+
+Here, we briefly study what more we can say in the case that $phi(x) tilde cal(N)(0, Sigma)$ for some $Sigma in RR^(d times d)$. We can write $ phi(x) = Sigma^(1\/2) hat(Z), quad hat(Z) tilde cal(N)(0, I_d). $
+
+Generating $n$ (independent) $hat(Z) in RR^(n times d)$, we then form the random matrix $ Z := vec(– hat(Z)_1^T –, dots.v, – hat(Z)_n^T –) in RR^(n times d). $ This gives $ Z Sigma^(1\/2) = Phi in RR^(n times d) => hat(Sigma) = 1/n Phi^T Phi = 1/n Sigma^(1\/2) Z^T Z Sigma^(1\/2). $ Thus, apply the "trace trick" from the previous proposition again, we find that $ EE[tr(Sigma hat(Sigma)^(-1))] = n EE[tr(Sigma (Sigma^(-1/2) (Z^T Z)^(-1) Sigma^(-1\/2)))] = n EE[tr((Z^T Z)^(-1))] = (n d)/(n - d - 1), $ which implies the excess risk $approx d/n sigma^2$ (this equality above uses the fact that much is known about the spectral properties of the $(Z^T Z)^(-1)$, which we won't discuss here).

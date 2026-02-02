@@ -217,6 +217,118 @@ With some more work, we can also establish the proof for $gamma$ some simple con
 ]
 
 #proof[
-  I'll add it later.
+  I'll add it later. Basically, follows from subsequent subdivision of the triangles and approximation of the total integral of $f$ over these triangles.
   // TODO
 ]
+
+#corollary[
+  If $R$ a closed rectangle and $Omega$ and $f$ holomorphic on $Omega$, then $integral_(R) f(z) dif z = 0$.
+]
+
+#proof[
+  A rectangle can be written as two triangles, with the "inner region" cancelling. // TODO: add picture with orientation.
+]
+
+
+=== Primitives
+
+
+#theorem[
+  Let $f$ be holomorphic on an open disc $Omega$. Then, $f$ has a primitive on that disc.
+]
+
+#proof[
+  Assume wlog that $Omega$ centered at the origin. Fix $z in Omega$ and let $gamma_z$ be the path that first travels horizontally from $0$ to $"Re"(z)$ along the real axis, then vertical to $z$. Define $ F(z) := integral_(gamma_z) f(w) dif w. $ We claim $F'(z) = f(z)$. Let $h in CC$ be small so that $z + h in Omega$, and consider the difference $ F(z + h) - F(z) = integral_(gamma_(z + h)) f (w) dif w - integral_(gamma_z) f(w) dif w. $
+
+  These integrals have $f$ being integrated from $0$ horizontally to $"Re"(z + h)$ then vertically to $z + h$, then, in the _opposite_ orientation, from $z$ to $"Re"(z)$, then $"Re"(z)$ to 0. In particular, the two components $z -> "Re"(z)$ cancel in these two integrals, being oppositely oriented, so we are left with the contour from $z$ vertically to $"Re"(z)$, horizontally to $"Re"(z + h)$, the vertically to $z + h$. Connect $z$ to $z + "Re"(h)$ via a horizontal line, and $z$ to $z + h$ via a diagonal. This forms an (oriented) triangle and a rectangle, plus an extra diagonal, which by Gorsut's lemma must all integrate out to zero (draw it). Thus, $ F(z + h) - F(z) = integral_eta f(w) dif w, $ where $eta$ the diagonal from $z$ to $z + h$. Since $f$ continuous, $f(w) = f(z) + psi(w)$ where $psi(w) -> 0$ as $w -> z$; thus, $ F(z + h) - F(z) & = f(z) integral_eta dif w + integral_(eta) psi(w) dif w \
+                  & = f(z) h + integral_(eta) psi(w) dif w \
+                  & => f(z) = lim_(h -> 0) (F(z + h) - F(z))/h - lim_(h -> 0) 1/h integral_eta psi(w) dif w. $
+  But since $ 1/h abs(integral_eta psi(w)) <= 1/h sup_(eta) |psi| |eta| = sup_(eta) |psi| ->_(h -> 0) 0, $ we have proven the claim.
+]
+
+
+// TODO the stuff here that I missed lol
+
+#theorem("Cauchy's Integral Formula")[
+  Let $f$ holomorphic on $Omega$ containing the closure of a disc $D$. Let $C$ be the boundary of this disc, then for any $z in D$,
+  $
+    f(z) = 1/(2 pi i) integral_(C) (f(xi))/(xi - z) dif xi.
+  $
+]
+
+#remark[The same result holds for more general curves $C$ as long as $z in "int"(C)$; how/when the results extend should be clear from the proof.]
+
+
+
+#corollary[
+  $f'(z_0) = 1/(2pi i) integral_C (f(z))/(z - z_0)^2 dif z$, and more generally, $ f^((n)) (z_0) = (n!)/(2 pi i) integral_(C) (f(z))/((z - z_0)^(n + 1)) dif z. $
+  So in general, $f$ holomorphic $=>$ $f$ is infinitely differentiable.
+]
+
+
+
+#corollary[
+  $abs(f^((n)) (z_0)) <= (n! norm(f)_(C_R (z_0)))/R^n$, where $C_r (z_0)$ the circle of radius $R$ centered at $z_0$.
+]
+
+#theorem[$f$ is analytic centered at $z = z_0$.]
+
+#proof[
+  We can write $ f(z) = 1/(2 pi i) integral_C f(w)/(w - z) dif w, $ for some circle $C$ containing $z$. We can expand $ 1/(w - z) & = 1/((w - z_0) - (z - z_0)) \
+            & = 1/(w - z_0) dot.c 1/(1 - (z - z_0)/(w - z_0)) \
+            & = 1/(w - z_0) sum_(n=0)^infinity [(z - z_0)/(w - z_0)]^n \
+            & = sum_(n=0)^infinity (z - z_0)^n/(w- z_0)^(n + 1) $ so that $ f(z) & = 1/(2 pi i) integral_(C) f(w) sum_(n=0)^infinity (z - z_0)^n/(w - z_0)^(n + 1) dif w \
+       & = 1/(2 pi i) sum_(n=0)^infinity [integral_C f(w)/((w - z_0)^(n + 1)) dif w] (z - z_0)^n \
+       & = sum_(n=0)^infinity a_n (z - z_0)^n, quad quad a_n := 1/(2pi i) integral_(C) (f(w))/((w - z_0)^(n + 1)) dif w. $ But we also realize that $ a_n = (f^((n)) (z_0))/n! $ from our previous result, hence we conclude $ f(z) = sum_(n=0)^infinity (f^((n)) (z_0))/n! (z - z_0)^n, $ as we expect from the real-valued analog.
+]
+
+#remark[
+  In particular, this implies, from our previous result, that $abs(a_n) <= C/R^n$, where $C$ a constant uniform in $n$ and $R$ the radius of the circle upon which we're integrating. In particular, this means $ abs(a_n)^(1\/n) <= (C^(1\/n))/(R), $ which we see converges to $1/R$ as $n -> infinity$, hence our series above has radius of convergence at least $R$; i.e., the power series for $f$ converges on any $D_R (z_0) subset Omega$.
+]
+
+Thus, we've shown that holomorphic $=>$ analytic, and thus the two are equivalent (with appropriate assumptions on the space upon which they are defined, etc) since we showed the converse earlier.
+
+
+#theorem("Lioville's Theorem")[If $f$ is holomorphic on $CC$ and bounded, then $f$ is constant.]
+
+#proof[
+  We know that for any $z_0 in CC$, $ |f'(z_0)| <= (norm(f)_(C))/(R), $ for any circle $C$ with $z_0$ center and of radius $R$. Since $f$ bounded, this means $ abs(f'(z_0)) <= 1/R sup_CC |f| -> 0, R -> infinity. $ This means $f'(z_0) = 0$ everywhere and thus $f$ is constant. We could take $R -> infinity$ since $f$ holomorphic everywhere hence on every disc $D_R (z_0)$ for $R > 0$.
+]
+
+== Rigidity of Holomorphic Functions
+
+#theorem[Suppose that $f$ holomorphic in $Omega$ and vanishes on a sequence of distinct points $z_1, dots, z_n in Omega$ with a limit point $z_infinity in Omega$. Then, $f equiv 0$ on an open disc about $z_infinity$.]
+
+#proof[
+  Let $D$ be a disc centered at $z_infinity$ and contained in $Omega$. We write $ f (z) = sum_(n>=N)(f^((n)) (z_infinity))/n! (z - z_infinity)^n = a_N (z - z_infinity)^N sum_(n = 0)^infinity a_(N + n + 1)/(a_N) (z - z_infinity)^(n) $ where $N >= 1$ the minimal integer such that $f^((N)) (z_0) eq.not 0$ and $a_n := (f^((n)) (z_infinity))/n!$. We see that if $D$ sufficiently small, both $ (z - z_infinity)^n, quad (1 + a_(N + 1)/(a_N) (z - z_infinity) + dots.c) $ has no additional zeros in a sufficiently small disc centered at $z_infinity$; but this contradicts the fact that $z_n -> z_infinity$, i.e. there should be infinitely many zeros when $n -> infinity$. This is a contradiction, and hence there is no minimal $N$ for which $f^((n)) (z_infinity)$ doesn't vanish. Hence, it must be that $f$ identically zero on this small disc.
+]
+
+
+#proposition[
+  If $f$ holomorphic and $f(z) = 0$ on a small disc $D subset Omega$ then $f equiv 0$ on $Omega$.
+]
+
+#proof[
+  Let $ U = "int"({z in Omega : f(z) eq 0}). $
+  This set is open and nonempty $(D subset U)$. It is also closed; to see this, let ${z_n} subset U$ with limit $z$. Then by the previous theorem, $f(z) = 0$, and thus $z in U$ so $U$ closed. But $Omega$ connected, so $Omega = U$.
+]
+
+This basically says that local behavior of holomorphic functions gives us information about the global behaviour.
+
+
+#corollary("Principle of Analytic Continuation")[
+  If $f, g$ are holomorphic on $Omega$ and $f(z) = g(z)$ for either \
+  (a) $z$ in a nonempty open subset of $Omega$, or \
+  (b) a sequence ${z_n}$ and its limit point
+  Then $f = g$ on $Omega$.
+]
+
+#proof[
+  Consider $f - g$ and apply the previous.
+]
+
+=== Special Cases
+
+1. Let $f(z) = e^z$ and let $g(z)$ be any other holomorphic extension of $e^x$. Then, $f = g$ on $RR$, and thus agree everywhere; this is the unique extension of the exponential, i.e. $e^(x + i y) = e^x (cos y + i sin y)$.
+
+2. Consider the Riemann zeta function, $ zeta(k) = sum_(n >= 1) 1/(n^k), $ converges for $k = 2, 3, dots$. If we allow $k = u + i v in CC$, we can write $ 1/n^k = exp(log(1/n) (u + i v)) $ thus $ |1/(n^k)| = exp(log(1/n) u) = 1/n^u, $ so that $ abs(zeta(u + i v)) < sum_(n=1)^infinity |1/(n^(u + i v))| =sum_(n=1)^infinity 1/(n^u), $ which converges when $u > 1$. Thus, $zeta(s)$ for $s in CC$ converges (absolutely) whenever $"Re"(s) > 1$. Riemann showed that $zeta(s)$ admits a holomorphic extension to $CC minus {1}$.

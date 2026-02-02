@@ -273,10 +273,50 @@ Consider the map $ f : "GL"(n) -> "GL"(n), quad f(A) := A^(-1). $
   Let $f : Omega subset RR^n -> RR$ be a $C^k$ function with $k >= 3$. Let $0 in Omega$ be a critical point, i.e. $gradient f(0) = 0$. Assume further $f(0) = 0$ and $gradient^2 f(0)$ is invertible. There exist open sets $U, V$ of $0 in U sect V$ and $g in C^(k - 2) (U)$, $g : U -> V$ with $g^(-1) : V -> U$, $g^(-1) in C^2 (V)$, such that $ f(g(y)) = y_(ell + 1)^2 + dots.c + y_n^2 - (y_1^2 + dots.c + y_ell^2), $ for some $ell in ZZ sect [0, n]$.
 ]
 
-== Taylor's Theorem in $RR^n$
+== Taylor's Theorem in $RR^n$ and Lagrange Multipliers
 
 Let $f : Omega subset RR^n -> RR$, $f in C^(k + 1) (Omega)$. Let $x_0 in Omega$ and $|t|$ small. Consider $ g(t) := f(x_0 + t (x - x_0)/(norm(x - x_0))), quad x eq.not x_0, quad g(0) = f(x_0). $
 Since $x_0 in Omega$ and $Omega$ open, $x_0 + t (x - x_0)/(norm(x - x_0)) in Omega$ for $t$ sufficiently small. By Taylor in 1-dimension, $ g(t) & = g(0) + g'(0) t + (g''(0) t^2)/(2!) + dots.c + (g^((k))(0) t^k)/(k!) + R_k (g) (t), quad abs(R_k (g) (t))/(abs(t)^k) <= M |t| "as" t-> 0. $
 
-To get Taylor expansion for $f(x)$ around $x_0$, we set $t = abs(x - x_0)$ and apply chain rule to $g(t)$. First, we compute $g^((j)) (0)$; we get $ g(0) = f(x_0), \
-g(t) = g(norm(x - x_0)) = g(x). $ By chain rule, $ g'(0) = sum_(i=1)^n (partial f)/(partial x_i) (x_0) (x_j - x_j^0)/(norm(x - x_0)). $ Similarly, ....
+#remark[
+  This expansion suggests that one should be able to weaken the $C^(k +1)$ assumption on $g$ if we only require $ lim_(t -> 0) (|R_k (g) (t)|)/(|t|^k) = 0. $ Indeed, we only really need $g in C^(k - 1)$ and $D (D^(k - 1)) g (0)$ existing.
+]
+
+
+To get the Taylor expansion for $f(x)$ around $x_0$, we set $t = abs(x - x_0)$ and apply chain rule to $g(t)$. First, we compute $g^((j)) (0)$; we get $ g(0) = f(x_0), \
+g(norm(x - x_0)) = f(x). $ By chain rule, $ g'(0) = sum_(j=1)^n (partial f)/(partial x_i) (x_0) (x_j - x_j^0)/(norm(x - x_0)) = gradient f (x_0)^T ((x - x_0)/(norm(x -x_0))). $ Similarly, $ g''(t) & = (dif)/(dif t) g'(t) \
+& = (dif)/(dif t) (gradient f(x_0 + t (x - x_0)/(norm(x - x_0)))^T (x - x_0)/(norm(x - x_0))) \
+& = (D^2 f(x_0 + t (x - x_0)/(norm(x - x_0))) (x - x_0)/(norm(x - x_0))) dot (x - x_0)/(norm(x - x_0)) \
+& = ((x - x_0)/(norm(x-x_0)))^T D^2 f(x_0 + t (x - x_0)/(norm(x - x_0))) (x - x_0)/(norm(x - x_0)) \
+& = sum_(i, j = 1)^n (partial^2 f)/(partial x_i partial x_j) (x_0 + t (x - x_0)/(norm(x - x_0))) ((x_i - x^0_i) (x_j - x_j^0))/(norm(x - x_0)^2), $ so that $ g''(0) = [(x - x_0)/(norm(x - x_0))]^T D^2 f (x_0) dot [(x - x_0)/(norm(x - x_0))]. $ Similar computation can be used to compute $g^((ell))$ for $ell$ up to $k$. In general, we find that $ g^((ell)) (0) = sum_(i_1, dots, i_ell = 1)^n (partial^(ell) f)/(partial x_(i_1) dots.c partial x_(i_ell)) (x_0) (x_i_1 - x^0_i_1)/(norm(x - x_0)) dots.c (x_i_ell - x^0_i_ell)/(norm(x - x_0)). $
+Moreover, since $t^ell = norm(x - x_0)^ell$, the term in the Taylor expansion of $g$ corresponding to $g^((ell)) (0) t^ell/(ell!)$ becomes $1/(ell!)$ times the above, with the denominator $norm(dots)$ terms cancelling.
+This leads to the following theorem.
+
+#theorem([Taylor in $RR^n$])[
+  Let $f : Omega subset RR^n -> RR$, $f in C^(k + 1) (Omega)$. Then, for any $x^0 in Omega$, $ f(x) + f(x^0) + sum_(j=1)^k 1/(j!) [sum_(i_1, dots, i_j = 1)^n (partial^j f)/(partial x_i_1 dots.c partial x_(i_j)) (x_i_1 - x^0_i_1) dots.c (x_i_ell - x^0_i_j)] + R_k (f)(x), $ where $ abs(R_k (f)(x))/(norm(x - x^0)^k) <= M_k norm(x - x^0) quad "as" x -> x^0. $
+]
+
+#remark[
+  The $k$-th order Taylor polynomial of $f$ is the quantity $ P_k (f)(x) = f(x_0) + sum_(j=1)^k 1/(j!) [sum_(i_1, dots, i_j = 1)^n (partial^j f)/(partial x_i_1 dots.c partial x_(i_j)) (x_i_1 - x^0_i_1) dots.c (x_i_ell - x^0_i_j)] $ before the remainder, and is a "good approximation" to $f(x)$ for $x$ near $x^0$, provided $ lim_(x-> x^0) abs(R_k (f)(x))/(norm(x - x^0)^k) = 0. $ If we just make this assumption on the remainder term, we get the following more general result with weaker assumptions:
+]
+
+#theorem[
+  Let $f : Omega subset RR^n -> RR$ be $C^(k - 1) (Omega)$ and assume $D^(k - 1) f$ is differentiable at $x^0 in Omega$. Then the $k$th order Taylor expansion for $f$ about $x^0$ from the previous theorem still holds, but with now $ lim_(x -> x^0) abs(R_k (f) (x))/(norm(x - x^0)^k) = 0. $
+]
+#remark[
+  Of course, we lose the rate of decay of the remainder, but we gain fewer assumptions needed on $f$.
+]
+
+#example[
+  Let $f(x, y) = e^x + sin(x y)$. Then $ f(0,0) = 1, $ $ f_x (0,0) = 1, quad f_y (0,0) = 0, $ $ f_(x x) (0,0 ) = 1, quad f_(x y) (0,0) = 1 \
+  f_(y x) (0,0) = 1, quad f_(y y) (0,0) = 0. $ Thus, $ f(x, y) = 1 + x + x^2/2 + x y + R_2 (f)(x, y), $ with $ abs((R_s (f)(x, y))/(x^2 + y^2)) <= M sqrt(x^2 + y^2). $
+]
+
+== Lagrange Multipliers
+
+The basic problem is, given $f, g : Omega subset RR^n -> RR$  both $C^1 (Omega),$ putting $Sigma := {x in Omega : g(x) = 0}$, to find $ max f|_Sigma, quad min f|_Sigma. $ We call $g : Omega -> RR$ the "constraint function" (i.e., we are doing constrained optimization of $f$ subject to $g$).
+
+
+#theorem[
+  Let $f, g$ as above, and assume $D g (x^0) eq.not 0$ for all $x^0 in Sigma$. Then, if $f|_Sigma$ has a max or min at $x_0 in Sigma$, then there exists $lambda in RR$ such that $ gradient f(x_0) = lambda gradient g(x_0). $
+]
