@@ -332,3 +332,82 @@ This basically says that local behavior of holomorphic functions gives us inform
 1. Let $f(z) = e^z$ and let $g(z)$ be any other holomorphic extension of $e^x$. Then, $f = g$ on $RR$, and thus agree everywhere; this is the unique extension of the exponential, i.e. $e^(x + i y) = e^x (cos y + i sin y)$.
 
 2. Consider the Riemann zeta function, $ zeta(k) = sum_(n >= 1) 1/(n^k), $ converges for $k = 2, 3, dots$. If we allow $k = u + i v in CC$, we can write $ 1/n^k = exp(log(1/n) (u + i v)) $ thus $ |1/(n^k)| = exp(log(1/n) u) = 1/n^u, $ so that $ abs(zeta(u + i v)) < sum_(n=1)^infinity |1/(n^(u + i v))| =sum_(n=1)^infinity 1/(n^u), $ which converges when $u > 1$. Thus, $zeta(s)$ for $s in CC$ converges (absolutely) whenever $"Re"(s) > 1$. Riemann showed that $zeta(s)$ admits a holomorphic extension to $CC minus {1}$.
+
+== Singularities of $f(z)$
+
+#definition[
+  If $f(z)$ is holomorphic on $D_r (z_0) minus {z_0}$ for some $r > 0$, then $z_0$ is called a _singularity_ of $f(z)$.
+]
+
+#definition[
+  1. $z_0$ is called a _removable_ singularity if $f(z)$ extends to a holomorphic function on $D_r (z_0)$
+  2. If $1/f(z)$ has a removable singularity at $z_0$, then $z_0$ is called a _pole_ of $f(z)$
+  3. Otherwise, $z_0$ is called an _essential singularity_ of $f$.
+]
+
+#example[
+  1. $f(z) = sin(z)/z$ has a removable singularity at $0$ (taking $f(0) = 1$ extends $f$ to a holomorphic function everywhere).
+  2. $f(z) = 1/z$ has a pole at $0$.
+  3. $f(z) = e^(1/z)$ at $0$ has an essential singularity.
+]
+
+#proposition([Local expansions at $z_0$])[
+  If $f$ is a nonzero holomorphic at $z_0$, then there exists a unique $m >= 0$ such that $ f(z) = (z - z_0)^m g(z), $ where $g(z_0) eq.not 0$.
+
+  We call $m$ the _order of vanishing_ of $f$ at $z_0$.
+]
+
+#proposition[
+  If $f(z)$ has a pole at $z = z_0$, then there exists a unique integer $m < 0$ such that $ f(z) = (z - z_0)^(m) g(z) $ where $g(z)$ holomorphic near $z_0$ and non-vanishing at $z_0$.
+]
+
+#proof[
+  We know $1/f(z)$ holomorphic near $z_0$ so by the previous $1/f(z) = (z - z_0)^(m) g(z)$ so $f(z) = (z - z_0)^(- m) g^(-1) (z)$. Since $g(z)$ holomorphic near $z_0$, so is $g(z)^(-1)$.
+]
+
+#definition[
+  A function $f$ which is holomorphic on $Omega minus {z_1, dots, z_k}$ and has poles at $z_1, dots, z_k$ is called _meromorphic_ on $Omega$.
+]
+
+
+
+#definition[
+  For $f(z)$ meromorphic, put $"ord"_(z_0) (f) =$ unique $m in ZZ$ such that $f(z) = (z - z_0)^m h(z)$.
+]
+
+#remark[
+  $"ord"_(z_0) (f) = 0 => f(z_0) eq.not 0$, $"ord"_(z_0) (f) > 0 => f(z_0) = 0$, $"ord"_(z_0) (f) < 0 => f$ has a pole at $z_0$.
+]
+
+#corollary[
+  If $f$ has a pole of order $m$ then $f$ admits a _Laurent series expansion_ $ f(z) = a_(- m)/((z - z_0)^m) + (a_(- m + 1))/((z - z_0)^(m - 1)) + dots.c + a_(-1)/(z - z_0) + a_0 + a_1 (z - z_0) + dots.c. $
+]
+
+#proof[
+  For $m >= 1$, write $ f(z) = (z - z_0)^(-m) h(z), $ where we can expand $ h(z) = a_(- m ) + a_(- m + 1) (z - z_0) + dots.c $ since $h$ holomorphic.
+]
+
+#definition[
+  The quantity $ a_(- m)/((z - z_0)^m) + (a_(- m + 1))/((z - z_0)^(m - 1)) + dots.c + a_(-1)/(z - z_0) $ is called the _principal part_ of $f(z)$ at $z =z_0$, and is denoted $"PP"(f)$. Thus, we may write $f(z) = PP(f) + g(z)$ where $g$ is holomorphic at $z_0$.
+]
+
+
+Thus, if $f$ is meromorphic at $z_0$, we have two representations of $f$:
+1. $f(z) = (z -_0)^m h(z)$ where $h$ is holomorphic with $h(z_0) eq.not 0$ and $m = "ord"_(z_0) f < 0$
+2. $f(z)= "PP"(f) + g(z)$ where $"PP"(z)$ is a polynomial in $(z - z_0)^(-1)$ with finite degree $- "ord"_(z_0) f$ and $g(z)$ is holomorphic.
+
+
+#definition[
+  If $"PP"(f) = a_(- m)/((z - z_0)^m) + (a_(- m + 1))/((z - z_0)^(m - 1)) + dots.c + a_(-1)/(z - z_0)$, then we call $a_(-1)$ the _residue_ of $f$.
+]
+
+Recall that $ integral_(C) (dif z)/z^n = cases(0 quad & n eq.not 1, 2 pi i quad & n = 1) $
+where $C$ any circle about the origin.
+
+#theorem("Residue Formula")[
+  Suppose $f(z)$ is meromorphic at $z_0$, and let $C$ be a sufficiently small circle around $z_0$ contained inside the region of holomorphicity of $f(z)$. Then, $ "res"_( z_0) f(z) = 1/(2pi i) integral_(C) f(z) dif z. $
+]
+
+#proof[
+  Clear consequence of the second representation of $f$ from above and the previous remarks.
+]
