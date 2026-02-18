@@ -411,3 +411,69 @@ where $C$ any circle about the origin.
 #proof[
   Clear consequence of the second representation of $f$ from above and the previous remarks.
 ]
+
+#corollary[
+  Suppose $f$ is holomorphic in an open set containing some toy contour $gamma$ and its interior, except at points $z_1, dots, z_N$, then $ integral_gamma f(z) dif z = 2 pi i sum_(k=1)^N "res"_(z_k) f. $
+]
+
+// TODO
+
+
+
+#definition[
+  For a holomorphic function $f$, we define the logorithmic derivative of $f$ by $ D_log f = f'/f, $ which is holomorphic except possible where $f$ vanishes; hence it is meromorphic wherever $f$ holomorphic.
+]
+
+#proposition[
+  - $D_log (f g) = D_log (f) + D_log (g)$
+  - $"res"_(z_0) D_log (f) = "ord"_(z_0) (f)$
+  - If $C$ a contour such that $f$ never vanishes on $C$, then $1/(2 pi i) integral_C (f' (z))/(f(z)) dif z = sum_(z_0 in "Int"(C)) "ord"_(z_0) (f)$ (argument principle)
+]
+
+#theorem("Rouche")[
+  Suppose $f, g$ are holomorphic on $Omega$, and $abs(f(z)) > abs(g(z))$ for all $z in C$ and both $f, g$ never vanish on $C$, then $f(z)$ and $f(z) + g(z)$ have the same number of zeros in $"int"(C)$.
+]
+
+#proof[
+  Consider $f_t (z) := f(z) + t g(z)$ for $t in [0, 1]$; this is holomorphic. Remark that $f_t$ has no zeros on $C$, since $abs(f_t (z)) >= abs(abs(f(z)) - t abs(g(z))) > 0$ by assumption. Define $ N(t) & = hash {"zeros of" f_t (z) "in" C, "with multiplicity"} = 1/(2 pi i) integral_(C) (f'_t (z))/(f_t (z)) dif z, $ using the argument principle.
+  Since $N(t) : [0, 1] -> NN_(>= 0)$ clearly continuous in $t$ from this representation, it thus must be constant i.e. number of zeros of $f+g = N(1) = N(0) =$ number of zeros of $f$, as claimed.
+]
+
+#corollary[
+  Suppose $f(z)$ never vanishes on a contour $C$ and let $lambda in CC$ such that $abs(lambda) < sup_(z in C) abs(f(z))$. Then, $ hash "of zeros of" f(z) "in" "int"(C) = hash "of zeros of" f(z) - lambda "in" "int"(C) $.
+]
+
+#theorem("Open Mapping Theorem")[
+  If $f : Omega -> CC$ is holomorphic and nonconstant, and $U$ open in $Omega$, then $f(U)$ is also open.
+]
+
+#proof[
+  Fix $w_0 = f(z_0)$ for $z_0 in Omega$. There is a circle $C$ centered at $z_0$ such that $f(z) - w_0 eq.not 0$ on $C$. Let $0 < epsilon < inf_(z in C) abs(f(z) - w_0).$ Consider $D_epsilon (w_0)$; we need to show that it is contained in the image of $f$. Let $w in D_epsilon (w_0)$, then $abs(w - w_0) < epsilon$. Then $ f(z) - w = (f(z) - w_0) + (w_0 - w), $ so by the previous result, the number of zeros of $f(z) - w_0$ in $"int"(C)$ is the same as the number of zeros as $f(z) - w$ in $"int"(C)$. $f(z) - w_0$ has at least one zero here, since $f(z_0) = w_0$, and thus $f(z) - w_0$ has at least one zero in $"int"(C)$ i.e. $w in "image"(f)$. This concludes the proof.
+]
+
+#theorem("Maximum Modulus Principle")[
+  If $f$ is a nonconstant holomorphic function on $Omega$, then $f$ cannot attain a maximum inside $Omega$.
+]
+
+#proof[
+  Suppose otherwise, that $f$ attains a max at $z_0 in Omega$. Take a small disc $D$ centered at $z_0$, then since $f$ open, $f(D)$ is open and so there exists some neighborhood of $f(z_0)$ in the image of $f$. This implies there exists some $z in D$ such that $abs(f(z)) > abs(f(z_0))$, which is a contradiction.
+]
+
+#corollary[
+  If $f$ holomorphic and nonconstant on $Omega$ bounded, then $abs(f(z))$ obtains its maximum on $partial Omega$.
+]
+
+== Primitives and the Logarithm
+
+We aim to extend the definition of the logarithm to complex numbers. We know $log(x) = integral_1^x (dif t)/t$ for $x in RR$, so heuristically, we'd like $ log(z) := integral_gamma (dif z)/z, $ where $gamma$ any "nice" path joining 1 to $z$. However, there are a lot of choices of such paths - is this well-defined, i.e. independent of choice of path? Suppose we have two paths $gamma_1, gamma_2$ from $1$ to $z$, with the region bounded by the difference of these curves containing zero, then $ integral_gamma_1 (dif z)/z - integral_gamma_2 (dif z)/z = 2pi i, $ assuming things are correctly oriented. Thus in general, this doesn't make sense... so for "general" $gamma$, $integral_gamma (dif z)/z$ are only well-defined up to integer multiplies of $2 pi i$; we say that the complex logarithm is multi-valued.
+
+#definition[
+  Let $alpha, beta$ be two points in a region $Omega$. Let $gamma_0, gamma_1$ be two paths joining $alpha$ to $beta$. We say $gamma_0, gamma_1$ are _homotopic_ if there exists a family of paths $gamma_t$ for $t in [0, 1]$ satisfying:
+  1. $gamma_(t = 0) = gamma_0$, $gamma_(t = 1) = gamma_1$
+  2. $gamma_t (0) = alpha, gamma_t (1) = beta$ for all $t$
+  3. $(t, s) |-> gamma_t (s)$ is jointly continuous in $(t, s)$.
+]
+
+#proposition[
+  - Being homotopic is an equivalence relation on the set of paths between $alpha$ and $beta$
+]
