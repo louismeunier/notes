@@ -6,7 +6,7 @@
 #show: doc => conf(
   course_code: "MATH358",
   course_title: "Advanced Calculus",
-  subtitle: "",
+  subtitle: [Differentiation, integration in $RR^n$],
   semester: "Winter 2026",
   professor: "Prof. John Toth",
   doc,
@@ -319,4 +319,347 @@ The basic problem is, given $f, g : Omega subset RR^n -> RR$  both $C^1 (Omega),
 
 #theorem[
   Let $f, g$ as above, and assume $D g (x^0) eq.not 0$ for all $x^0 in Sigma$. Then, if $f|_Sigma$ has a max or min at $x_0 in Sigma$, then there exists $lambda in RR$ such that $ gradient f(x_0) = lambda gradient g(x_0). $
+]
+
+#proof[
+  Let $x^0 in Sigma$. Since by assumption $gradient g(x_0) eq.not 0$, then we can assume (by possibly relabelling the coordinates in $RR^n$) that $(partial g)/(partial x_n) (x^0) eq.not 0$. We can write $ Sigma = {g(x', x_n) = 0}, $ with $x' = (x_1, dots, x_(n - 1))$. By IFT, $Sigma$ then is of the form $ x_n = h(x'), $ for $x' in RR^(n - 1)$ for $(x', x_n) in Omega$ near $x^0 in Sigma$, where $h in C^1$ locally to $x'_0 := (x^0_1, dots, x^0_(n - 1))$. Now, we set $ F = f|_Sigma, $ so that $ F(x') = f(x', h(x')) $ locally to $x'_0$. Since $x'$ a local max/min of $F$, we know that $gradient F(x') = 0$. Applying chain rule (valid since $h in C^1$) above, we also know that $ 0 =gradient_(x') F(x'_0) & = gradient_(x') f(x'_0, h(x'_0)) = ((partial f)/(partial x_i) (x_0) + (partial h)/(partial x_i) (x'_0) (partial f)/(partial x_n) (x_0))_(i=1)^(n - 1). quad (dagger) $ We also know that $ 0 = G(x') := g(x', h(x')) $ for all $x'$ local to $x'_0$, and hence $gradient G(x') = 0$ local to $x'_0$ as well, i.e. $ 0 = gradient_(x') G(x'_0) = ((partial g)/(partial x_i) (x_0) + (partial h)/(partial x'_i) (x'_0) (partial g)/(partial x_n) (x_0) )_(i=1)^(n-1). quad (dagger.double) $ Since $(partial g)/(partial x_n) (x_0) eq.not 0$ by assumption, we use $(dagger.double)$ to isolate $ (partial h)/(partial x'_i) (x'_0) = -[(partial g)/(partial x_n) (x_0)]^(-1) (partial g)/(partial x_i) (x_0), quad i = 1, dots, n - 1. $ Plugging these expressions into $(dagger)$, we obtain $ (partial f)/(partial x_i) (x_0) = [(partial g)/(partial x_n) (x_0)]^(-1) (partial f)/(partial x_n) (x_0) (partial g)/(partial x_i) (x_0) , quad i = 1, dots, n - 1. $ This implies $ gradient f(x_0) = ((partial f)/(partial x_1) (x_0), dots, (partial f)/(partial x_(n-1)) (x_0), (partial f)/(partial x_(n)) (x_0)) = underbrace([((partial f)/(partial x_n) (x_0))/((partial g)/(partial x_n) (x_0))], = lambda) ((partial g)/(partial x_1) (x_0), dots,(partial g)/(partial x_(n-1)) (x_0), (partial g)/(partial x_n) (x_0)) = lambda gradient g (x_0), $ as claimed (remarking that equality for the first $n - 1$ entries follows from our work above, and the last $n$ is trivial since then the denominator of $lambda$ cancels with the $n$th entry of $gradient g$.)
+]
+
+
+#theorem("Max/min")[
+  Let $Omega subset RR^n$ be a domain with bounded closure, with $Omega subset tilde(Omega)$ and assume $f, g : tilde(Omega) -> RR$ are $C^1 (tilde(Omega))$, where $ partial Omega = {x in tilde(Omega) | g(x) = 0} $ (we say $g$ the _defining function_ of $partial Omega$). Then,
+  1. if $x^0 in partial Omega$ a local max/min of $f|_(partial Omega)$ then $gradient f(x^0) = lambda gradient g(x^0)$ for some $lambda in RR$,
+  2. if $x^0 in "int"(Omega)$ a local max/min of $f$ in $"int"(Omega)$, then $gradient f(x^0) = 0$, and
+  3. the global max (resp. min) of $f|_(overline(Omega))$ is largest (resp. smallest) value of $f$ at all points in 1., 2.
+]
+
+#proof[
+  Apply the previous result with $Sigma = partial Omega$.
+]
+
+#theorem("Multiple Constraints")[
+  Let $f, g_i : Omega subset RR^n -> RR$ $i = 1, dots, k$ are all $C^1 (Omega)$. Let $ Gamma_0 := {x in Omega | g_i (x) = 0, quad i = 1, dots, k } $ and assume $ {gradient g_1 (x), dots, gradient g_k (x)} $ are linearly independent for $x in Gamma_0$. Then if $f|_(Gamma_0)$ has max/min at $x^0 in Gamma_0$, there exist $lambda_1, dots, lambda_(k)$ such that $ gradient f(x^0) = sum_(i=1)^k lambda_i gradient g_i (x^0). $
+]
+
+#example[
+  Find the absolute max/min of $f(x_1, dots, x_n) = x_1 + x_2$ in $D_1 (0) = {abs(x)^2 <= 1}$. We take $g(x) = abs(x)^2 - 1$. Since $gradient f(x) = (1, 1, 0, dots, 0)$ there cannot be any interior critical points. By Lagrange, at $x_0 in partial D_1$, a max/min occuring implies $ gradient f(x^0) = lambda gradient g(x^0) <=> (1, 1, 0, dots, 0) = 2 lambda (x_1^0, dots, x_n^0). $ Note that $lambda$ can't be zero, thus $x_3^0, dots, x_n^0 = 0$ and $x_1^0 = 1/(2 lambda) = x_2^0$. Since $x_1^0, x_2^0 in partial D_1 (0)$ as well, we know $(x_1^0)^2 + (x_2^0)^2 = 1$. This implies $lambda = plus.minus sqrt(1/2)$ and so $x_1^0 = x_2^0 = plus.minus 1/sqrt(2)$. We see that $ f(1/sqrt(2), 1/sqrt(2), 0, dots, 0) = sqrt(2), quad f(-1/sqrt(2), - 1/sqrt(2), 0, dots, 0) = - sqrt(2), $ thus the global max of $f$ is $sqrt(2)$ and the global min of $f$ is $-sqrt(2)$.
+]
+
+#pagebreak()
+= Riemann Integration
+
+== Integration over Box Domains in $RR^n$
+
+
+A _box_ $B subset RR^n$ is a closed and bounded subset of the form $ B = [a_1, b_1] times dots.c times [a_n, b_n]. $
+
+Given a function $f : B -> RR$, we want to define the Riemann integral (we will drop the "Riemann" specification from here on) of $f$ over $B$, i.e. $integral_B f dif V$.
+
+We know that in $n = 1$, for a function $h : [a, b] -> RR$ (assume nonnegative for simplicity), then $ integral_(a)^b h(x) dif x =^"if it exists" lim_(n -> infinity) sum_(i=1)^n h(x_i) Delta x_i, $ where $a = x_0 < x_1 < dots.c < x_(n - 1) < x_n = b$ a partition of $[a, b]$ and $Delta x_i = x_(i) - x_(i-1)$. With this as "motivation", say, we will define the integral of $f$ over $B$.
+
+#definition("Partition of a box")[
+  Let $B$ a box as above. A _partition_ of $B$ is an ordered set $ cal(P) = {P_i}_(i=1)^n, quad P_i = {x_i^(0), dots, x_i^(m_i)}, $ where each $P_i$ a partition of $[a_i, b_i]$ with $a_i = x_i^0 < x_i^(1) < dots.c < x_i^(m_i - 1) < x_i^(m_i) = b_i$.
+]
+
+#definition("Refinement")[
+  Given two partitions $cal(P) = {P_i}, tilde(cal(P)) = {tilde(P)_i}$, we say that $tilde(cal(P))$ is a _refinement_ of $cal(P)$ (and write $tilde(cal(P)) supset cal(P)$) if for each $j = 1, dots, n$, $P_j subset tilde(P)_j$.
+]
+
+#definition(
+  "Subbox",
+)[Given a partition $cal(P)$ of $B$, let $ B_(i_1, i_2, dots, i_n) subset.eq B = [x_1^(i_1 - 1), x_1^(i_1)] times dots.c times [x_n^(i_n - 1), x_n^(i_n)] $ be a _subbox_ of $B$, for some ${i_1, dots, i_n}$ partition indices for $cal(P)$ (i.e., $1 <= i_j <= m_j$ for $j = 1, dots, n$). We define then $ Delta x_j^(i_j) := x_j^(i_j) - x_j^(i_(j) - 1), quad j = 1, dots, n, 1 <= i_j <= m_j, $ for the length of the $j$th interval in the subbox, and $ Delta V_(i_1, dots, i_n) := Delta x_1^(i_1) dots.c Delta x_n^(i_n) $ as thus the volume of the subbox $B_(i_1, dots, i_n)$. ]
+
+Heuristically, then, we'd like to define $integral_B f dif V$ as $ lim_(m_1 -> infinity) dots.c lim_(m_n -> infinity) sum_(i_1 = 1)^(m_1) dots.c sum_(i_n = 1)^(m_n) f(x_1^(i_1), dots, x_n^(i_n)) Delta V_(i_1, dots, i_n). $
+The key question, then, is when does the sum on the right-hand side exist?
+
+#definition("Lower/Upper Riemann Sum")[
+  Let $f : B -> RR$ be bounded and $cal(P)$ a partition of $cal(B)$. Define the _lower Riemann sum_ of $f$ over $B$ corresponding to partition $cal(P)$ by $ L(f, cal(P)) & := sum_(i_1 = 1)^(m_1) dots.c sum_(i_n = 1)^(m_n) (inf_(x in B_(i_1, dots, i_n)) f(x)) Delta V_(i_1, dots, i_n). $ Similarly define the _upper Riemann sum_ (of $f$ over $B$ corresponding to partition $cal(P)$) by $ U(f, cal(P)) & := sum_(i_1 = 1)^(m_1) dots.c sum_(i_n = 1)^(m_n) (sup_(x in B_(i_1, dots, i_n)) f(x)) Delta V_(i_1, dots, i_n). $
+]
+
+#remark[
+  This infs/sups are well-defined since $f$ bounded.
+]
+
+#lemma[
+  Let $f : B -> RR$ be bounded and $tilde(cal(P)) supset cal(P)$ a refinement. Then, $ L(f, cal(P)) <= L(f, tilde(cal(P))) <= U(f, tilde(cal(P))) <= U(f, cal(P)). $
+]
+
+#proof[
+  The intermediate inequality is obvious.
+
+  Since $tilde(cal(P)) supset cal(P)$, then there exists $N_i_j in ZZ^+$ and $i_(1, ell_1), dots, i_(n, ell_n)$ (indices of the refined partition) such that $ B_(i_1, dots, i_n) = union.big_(ell_1 = 1)^(N_i_1) dots.c union.big_(ell_n = 1)^(N_i_n) tilde(B)_(i_(1, ell_1), dots, i_(n, ell_n)), $ with $tilde(dot)$ used to denote objects belonging to the refinement. Thus, $ inf_(x in B_(i_1, dots i_n)) f(x) <= inf_(x in tilde(B)_(i_(1, ell_1), dots i_(n, ell_n))) f(x), quad sup_(x in B_(i_1, dots i_n)) f(x) >= sup_(x in tilde(B)_(i_(1, ell_1), dots i_(n, ell_n))) f(x). $ Summing over the $i_1, dots, i_n$'s and multiplying by the appropriate volumes gives the result.
+]
+
+#definition[
+  Let $f : B -> RR$ bounded. Define $ cal(U)(f) := inf_(cal(P)) {U(f, cal(P))}, quad cal(L)(f) := sup_(cal(P)) {L(f, cal(P))}. $
+]
+
+#remark[
+  If $f$ bounded with $m <= f <= M$ over $B$, then $ m "vol"(B) <= U(f, cal(P)) <= M "vol"(B) $ for any partition $cal(P)$, similar for the lower Riemann sum. This implies these two quantities above are well-defined (infs/sups taken over bounded sets). Moreover, we take inf/sup respectively for the upper/lower sums because of the respective monotonicity properties we proved in the previous lemma.
+]
+
+#definition("Riemann integrable")[
+  Let $f : B -> RR$ be bounded. Then, we say that $f$ is _Riemann integrable_ (RI) over $B$ if $cal(L)(f) = cal(U)(f)$, in which case we define $ integral_B f dif V := cal(L)(f) = cal(U)(f). $
+]
+
+#lemma[
+  Let $f : B -> RR$ be bounded then $f$ is RI over $B$ iff $forall epsilon > 0$, there exists a partition $cal(P)$ of $B$ such that $ U(f, cal(P)) - L(f, cal(P)) <= epsilon. $
+]
+
+#proof[
+  ($impliedby$) We know $U(f, cal(P)) >= cal(U)(f)$ and $L(f, cal(P)) <= cal(L)(f)$, so this is immediate since then we conclude that for all $epsilon > 0$, $ cal(U)(f) <= U(f, cal(P)) <= L(f, cal(P)) + epsilon <= cal(L)(f) + epsilon. $ Since this holds for all $epsilon > 0$, this implies $cal(U)(f) - cal(L)(f) <= epsilon$ for all $epsilon > 0$ and thus must be equal, since $cal(U)(f) >= cal(L)(f)$ always.
+
+  ($=>$) For any $epsilon > 0$, there exists a $cal(P)_1$ with $L(f, cal(P)_1) - cal(L)(f) <= epsilon/2$ and $cal(P)_2$ with $cal(U)(f) - U(f, cal(P)_2) <= epsilon/2$. Let $cal(P) = cal(P)_1 union cal(P)_2$, then the result follows by monotonicity and triangle inequality.
+]
+
+#theorem[
+  Let $f : B -> RR$ be in $C^0 (B)$. Then $f$ is Riemann integrable.
+]
+
+#proof[
+  Since $f$ continuous on a compact set it is uniformly continuous. Thus for any $epsilon > 0$, we can find a partition $cal(P)$ such that for every subbox $B_(i_1, dots, i_n)$, we have $ sup_(x in B_(i_1, dots, i_n)) f(x) - inf_(x in B_(i_1, dots, i_n)) f(x) < epsilon/("vol"(B)). $  This readily implies $U(f, cal(P)) - L(f, cal(P)) <= epsilon$, so the result follows by the previous lemma.
+]
+
+#lemma("Mean Value Theorem for Integrals")[
+  Let $f : B -> RR$ be continuous. Then, there exists $x_0 in B$ such that $integral_B f dif V = f(x_0) "vol"(B)$.
+]
+
+#proof[
+  Let $m := inf_B |f|$, $M := sup_B |f|$. Then $ m dot "vol"(B) <= integral_B f dif V <= M dot "vol"(B). $ Then we can just apply the intermediate value theorem to $f$.
+]
+
+== General Riemann Integration
+
+We've defined the Riemann integral for $f$ continuous over box domains, but we wish to define the integral for more general domains. Let $Omega$ a bounded domain in $RR^n$ and let $B$ a box with $Omega subset B$. Extend $f : Omega -> RR$ to $F : B -> RR$ by $ F(x) := cases(f(x) quad & x in Omega, 0 & x in B \\ Omega). $
+Heuristically, then, we wish the integral to satisfy the following: $ integral_B f dif V = integral_Omega f dif V + integral_(B \\ Omega) F dif V = integral_Omega f dif V. $
+
+#definition[
+  Given $f : Omega -> RR$ bounded, set $ integral_Omega f dif V := integral_B F dif V, $ whenever the right-hand side exists.
+]
+
+This leaves the obvious next question - what happens when $f$ not continuous? When is the integral defined?
+
+#definition[
+  Let $Gamma subset RR^n$ is of _content zero_ if for all $epsilon > 0$, there exist closed box domains $B_1^0, dots, B_N^0 subset RR^n$ such that $Gamma subset union.big_(n=1)^N B_i^0$ and $sum_(i=1)^N "vol"(B_i^0) < epsilon$.
+]
+
+
+#remark[
+  1. The closed boxes can be replaced with open boxes
+  2. If $D_1, dots, D_N$ are content zero so are their union
+]
+
+#theorem[
+  Suppose $f : B subset RR^n -> RR$ bounded. Let $ Gamma(f) := {x in B : f "discontinuous at" x}. $ Then, if $Gamma(f)$ has content zero, then $integral_B f dif V$ exists.
+]
+
+#proof[
+  We prove using the lemma following the definition of Riemann integrability. Let $epsilon > 0$ and put $M := sup_(B) |f|$. Since $Gamma(f)$ has content zero, there exists $B_1^0, dots, B_N^0 subset RR^n$ such that $ Gamma(f) subset union.big_(i=1)^N B_i^0, quad "and" quad sum_(i=1)^N "vol"(B_i^0) < epsilon/(4 (M + 1)). $ Let $P_0$ be a partition of $B$ such that each subrectangle $B_(i_1, dots, i_n)$ is either in some $B_j^0$, or doesn't intersect any such $B_j^0$ i.e. $B_(i_1, dots, i_n) sect (union.big_(i=1)^N B_i^0) = nothing$. Let $A$ be the union of these boxes that don't intersect $union.big_(i=1)^N B_i^0$. $A$ is compact, being bounded ($A subset B$) and closed (finite union of closed sets). Thus $f|_A$ is uniformly continuous, and so there exists a refined partition $tilde(cal(P))$ of $cal(P)$ such that for each subrectangle $Q in tilde(cal(P))$ that is a subset of $A$, $ sup_Q f - inf_Q f < epsilon/(2 ("vol"(B)+1)). $ Then $ U(f, tilde(cal(P))) - L(f, tilde(cal(P))) &= sum_(Q subset A) (sup_Q f - inf_Q f) "vol"(Q) + sum_(Q in tilde(cal(P)), Q subset.not A) (sup_Q f - inf_Q f) "vol"(Q) \
+  & <= (epsilon "vol"(B))/(2 ("vol"(B) + 1)) + (2 M) dot epsilon/(4 M + 1) <= epsilon. $
+]
+
+#example[
+  Let $Omega subset RR^(n - 1)$ compact and $g : Omega -> RR$ continuous. Then $Gamma := {(x', g(x')) : x' in Omega}$ is has content zero.
+]
+
+#corollary[
+  Suppose $f : B -> RR$ bounded and $Gamma(f)$ the union of finitely many graphs of continuous functions over closed, bounded domains in $RR^(n - 1)$. Then $f$ is integrable over $B$.
+]
+
+#corollary[
+  Let $Omega subset RR^n$ closed and bounded and suppose $partial Omega$ the union of finitely many graphs of $C^0$ functions over closed domains in $RR^(n - 1)$. Suppose $f : Omega -> RR$ bounded and $Gamma(f) sect Omega$ has content zero. Then $integral_Omega f dif V$ exists.
+]
+
+There is a special case of the previous result that is of practical importance. Let $Omega subset RR^n$ closed and bounded and suppose $Omega subset tilde(Omega)$ a bounded a domain.
+Let $G in C^1 (tilde(Omega))$ be a defining function for $partial Omega$, i.e. $ partial Omega = {G(x) = 0 : x in tilde(Omega)}, quad gradient G(x) eq.not 0 forall x in partial Omega. $ By inverse-function theorem, $partial Omega$ is the finitely many (since compact) graphs of $C^1$-functions over closed and bounded domains in $RR^(n - 1)$. Thus, we have the following:
+
+#corollary[
+  Let $Omega := {G(x) <= 0, x in RR^n}$ be bounded and assume $gradient G (x) eq.not 0$ whenever $G = 0$. Suppose $f : Omega -> RR$ bounded and $Gamma(f) sect Omega$ has content zero. Then $integral_Omega f dif V$ exists.
+]
+
+
+== Basic Properties of Integrals
+
+#proposition[
+  Assume $Omega subset RR^n$ bounded and $f, g : Omega -> RR$ are both Riemann integrable over $Omega$. Then,
+  1. $integral_(Omega) (f + g) dif V = integral_(Omega) f dif V + integral_(Omega) g dif V$
+  2. $integral_(Omega) alpha f dif V = alpha integral_(Omega) f dif V, quad alpha in RR$
+  3. $f <= g => integral_(Omega) f dif V <= integral_(Omega) g dif V$
+  4. If $Omega = Omega_1 union Omega_2$ with each $Omega_i$ bounded with $Omega_1 sect Omega_2$ having content zero, then $ integral_Omega f dif V = integral_(Omega_1) f dif V + integral_(Omega_2) f dif V. $
+]
+
+
+== Fubini's Theorem
+
+
+Given $Omega subset RR^n$ bounded etc, how do we actually compute $integral_(Omega) f dif V$? Consider $B = [a, b] times [c, d] subset RR^2$ (2 dimensions is sufficient to demonstrate the main results).
+
+Given $f : B -> RR$ bounded, we define the iterated integrals $ integral_a^b integral_c^d f(x, y) dif y dif x := integral_a^b [integral_c^d f(x, y) dif y] dif x, $ similarly for the other order. We assume formally for now that both 1-dimensional integrals involved exists, i.e. that $integral_a^b f(x, y) dif x$ exists for $y in [c, d]$ and $integral_c^d f(x, y) dif y$ exists for $x in [a, b]$. Fubini essentially says that both of these iterated integrals are equal to $integral_B f dif V$.
+
+#remark[
+  For $Omega subset RR^2$ we often denote $integral_Omega f dif V =: integral.double_Omega f dif A$.
+]
+
+
+#theorem("Fubini for Box Domains")[
+  Suppose $f : B -> RR$ is Riemann integrable with $B = [a, b] times [c, d]$.
+  1. Assume $integral_c^d f(x, y) dif y$ exists for all $x in [a, b]$. Then the iterated integral $integral_a^b integral_c^d f(x, y) dif y dif x$ exists and equals $integral_Omega f dif V$.
+  2. The same statement, but with the other iterated integral.
+]
+
+#proof[
+  For any $epsilon > 0$ choose $cal(P)$ of $B$ such that $U(f, cal(P)) - L(f, cal(P)) < epsilon$. This partition induces partitions $ cal(P)_x = {x_0 = a < x_1 < dots.c < x_(n - 1) < x_n = b}, quad cal(P)_y = {y_0 = c < y_1 < dots.c < y_(m - 1) < y_m = d}. $ Set $F(x) = integral_c^d f(x, y) dif y = sum_(j=1)^m integral_(y_(j-1))^(y_j) f(x, y) dif y$. We compute $ U(F, cal(P)_x) = sum_(i=1)^n (sup_(x in [x_(i - 1), x_i]) F(x)) Delta x_i, quad L(F, cal(P)_x) = sum_(i=1)^n (inf_(x in [x_(i - 1), x_i]) F(x)) Delta x_i. $ Thus, we find $ U(F, cal(P)_x) &= sum_(i=1)^n (sup_(x in [x_(i - 1), x_i]) sum_(j=1)^m integral_(y_(j-1))^(y_j) f(x, y) dif y) Delta x_i \
+  & <= sum_(i=1)^n sum_(j=1)^m [sup_(x in [x_(i - 1), x_i]) integral_(y_(j - 1))^(y_j) f(x, y) dif y] Delta x_i \
+  & <= sum_(i=1)^n sum_(j=1)^m [sup_(x in [x_(i-1), x_i]) sup_(y in [y_(j-1), y_j]) f(x, y)] Delta y_(j) Delta x_i \
+  & = sum_(i=1)^n sum_(j=1)^m [sup_((x, y) in B_(i j)) f(x, y)] Delta B_(i j), quad B_(i j) := [x_(i-1), x_i] times [y_(j-1), y_j] \
+  &= U(f, cal(P)). $ Similar work shows $L(F, cal(P)) >= L(f, cal(P))$ and thus $ U(F, cal(P)) - L(F, cal(P)) <= U(f, cal(P)) - L(f, cal(P)) < epsilon $ which gives the proof.
+]
+
+=== Fubini for More General Domains
+
+#definition[
+  A domain $Omega subset RR^2$ is called _$y$-simple_ if it is of the form $ Omega = {a <= x <= b, phi_1 (x) <= y <= phi_2 (x)}, $ for some $phi_1, phi_2 in C^0 ([a, b])$. Similarly it is called _$x$-simple_ if $ Omega = {c <= y <= d, psi_1 (y) <= x <= psi_2 (y)} $ for some $psi_1, psi_2 in C^0 ([c, d])$. Finally, it is called _simple_ if it is both $x$- and $y$-simple, and _elementary_ if it is $x$- or $y$-simple.
+]
+
+
+#theorem("Fubini")[
+  Suppose $Omega subset RR^2$ is bounded and $f$ integrable over $Omega$.
+  1. If $Omega$ is $y$-simple and for all $x in [a, b]$, $integral_(phi_1 (x))^(phi_2 (x)) f(x, y) dif y$ exists, then $ integral_Omega f dif V = integral_(a)^b integral_(phi_1 (x))^(phi_2 (x)) f(x, y) dif y dif x. $
+  2. The analogous statement for $x$-simple.
+  3. If both $x$- and $y$-simple, we can compute the Riemann integral with either iterated integral in 1., 2..
+]
+
+#proof[
+  Suppose $Omega$ $y$-simple. Choose a box domain $B = [a, b] times [c, d]$ for which $Omega subset B$. Then $ integral.double_(Omega) f dif A = integral.double_B F dif A, quad F := cases(
+    f quad "in" Omega,
+    0 quad "else"
+  ). $ Note $F$ RI since $f$ is. By Fubini on box domains, $ integral.double_B F dif A = integral_(a)^b integral_(c)^d F(x, y) dif y dif x = integral_(a)^b integral_(phi_1 (x))^(phi_2 (x)) F(x, y) dif y dif x = integral_(a)^b integral_(phi_1 (x))^(phi_2 (x)) f(x, y) dif y dif x, $ since $F(x, dot)$ is zero outside $y in [phi_1 (x), phi_2 (x)]$. The proof for $x$-simple domains follows similarly.
+]
+
+#example[Compute $integral.double_Omega x dif A$ where $Omega = {(x, y) : 0 <= x <= sqrt(pi), 0 <= y <= sin(x^2)}$. It's clear $(x, y) |-> x$ continuous on $Omega$ and since $Omega$ is bounded and $y$-simple, the double integral exists and moreover can be computed using Fubini's. We have $ integral.double_Omega x dif A & = integral_(0)^(sqrt(pi)) integral_(0)^(sin(x^2)) x dif y dif x \
+                                & = integral_(0)^(sqrt(pi)) x sin(x^2) dif x quad [u = x^2] \
+                                & = 1/2 integral_(0)^pi sin(u) dif u = 1. $
+]
+
+#example[
+  Compute $I = integral_(0)^1 integral_(y)^1 e^(x^2) dif x dif y$. We can't compute the inner integral in closed-form. But, if we let $Omega := {(x, y) : 0 <= y <= 1, y <= x <= 1}$, we find that $I = integral.double_Omega e^(x^2) dif A$. We can rewrite this domain as $Omega = {(x, y) : 0 <= x <= 1, 0 <= y <= x}$, and thus by Fubini's (everything that needs to be continuous is continuous), $ I & = integral_(0)^1 integral_(0)^x e^(x^2) dif y dif x \
+    & = integral_(0)^1 x e^(x^2) dif x \
+    & = 1/2 (e - 1). $
+]
+
+
+=== Fubini in $RR^n$
+
+Given a box domain $B subset RR^n$, write $ underline(integral_(B)) f dif V := cal(L)(f), quad overline(integral_B) f dif V := cal(U)(f) $ (here, $f$ needn't be RI).
+
+
+#theorem[
+  Let $B = B_1 times B_2$ be a box domain in $RR^n$ where $B_1 subset RR^k$, $B_2 subset RR^(n - k)$ are also boxes. Suppose $f : B -> RR$ is Riemann integrable. Set $ ell(x) := underline(integral_(B_2)) f(x, y) dif V(y), quad u(x) := overline(integral_(B_2)) f(x, y) dif V(y), quad x in B_1 $ and $ tilde(ell)(y) := underline(integral_(B_1)) f(x, y) dif V(x), quad tilde(u)(y) := overline(integral_(B_1)) f(x, y) dif V(x), quad y in B_2. $
+  Then, $ell(x)$ and $u(x)$ are Riemann integrable over $B_1$ and $tilde(ell)(y)$ and $tilde(u)(y)$ are Riemann integrable over $B_2$. Moreover, $ integral_B f dif V & = integral_(B_1) ell(x) dif V (x) = integral_(B_1) u(x) dif V(x), \
+  integral_B f dif V & = integral_(B_2) tilde(ell)(y) dif V(y) = integral_(B_2) tilde(u)(y) dif V(y). $
+]
+
+#proof[
+  The proof follows in the same way as in $RR^2$ by noting the following: $ L(f, cal(P)) <= L(ell(x), cal(P)_x), quad U(u(x), cal(P)_x) <= U(f, cal(P)). $ This implies, suping/infing over all $cal(P)$, $ cal(L)(f) <= cal(L)(ell(x)), quad cal(U)(u(x)) <= cal(U)(f) $ and thus since $f$ Riemann integrable, $ 0 = cal(U)(f) - cal(L)(f) & >= cal(U)(u(x)) - cal(L)(ell(x)) >= 0 => cal(U)(u(x)) = cal(L)(ell(x)) $ thus $ell(x)$ Riemann integrable and in particular $cal(L)(f) = cal(L)(ell(x)) = cal(U)(ell(x)) = cal(U)(f)$. Similar holds in the $y$-variables.
+]
+
+#remark[
+  If for all $x in B_1$, $f(x, y)$ is integrable in $B_2$ (i.e. $integral_(B_2) f(x, y) dif V(y)$ exists), then $ integral_(B) f dif V & = integral_(B_1) [integral_(B_2) f(x, y) dif V(y)] dif V(x). $ Similarly, if $integral_(B_1) f(x, y) dif V(x)$ exists for all $y in B_2$, then $ integral_(B) f dif V = integral_(B_2) [integral_(B_1) f(x, y) dif V(x)] dif V(y). $
+]
+
+=== Fubini's in $RR^3$
+
+#definition[
+  A bounded domain $W subset RR^3$ is called _$z$-simple_ if there exists an elementary region $Omega subset RR^2$ and $eta_1, eta_2 in C^0 (Omega)$ such that $ W = {(x, y, z) : (x, y) in Omega, eta_1 (x, y) <= z <= eta_2 (x, y)}. $ Analogous definitions hold for $x$-, $y$-simple as in the $RR^2$ case. We additionally say $W$ elementary if it is simple in some axis.
+]
+
+#theorem([Fubini in $RR^3$])[
+  Suppose $W subset RR^3$ is bounded and $z$-simple and $f : W -> RR$ is RI. Assume that for all $(x, y) in Omega$, $integral_(eta_1 (x, y))^(eta_2 (x, y)) f(x, y, z) dif z$ exists. Then, it is Riemann integrable over $Omega$ and $ integral.triple_(W) f dif V
+  = integral_(Omega) [integral_(eta_1 (x, y))^(eta_(2 (x, y))) f(x, y, z) dif z ] dif V(x, y). $ Similar holds for $x$-, $y$- simple domains.
+]
+
+#proof[
+  Follows as in $RR^2$.
+]
+
+== Change of Variables Formula
+
+Let $Omega subset RR^n$ be a bounded domain. We defined $integral_Omega f dif V$ by looking at $L(f, cal(P))$ and $U(f, cal(P))$ where $cal(P)$ was a _rectangular partition_. Can we use other partitions of $Omega$ that are _not_ rectangular?
+
+#definition[
+  Let $Omega subset RR^n$ be a domain with content zero boundary. A _regular partition_ $cal(P)_"reg" = {D_k}_(k=1)^N$ is a collection of subdomains of $D_k subset Omega$ such that
+  1. $Omega = union.big_(k=1)^N D_k$ and $"Content"(partial D_k) = 0$ for all $k = 1, dots, N$, and
+  2. $"Content"(D_k sect D_ell) = 0$ for $k eq.not ell$.
+]
+
+#definition[
+  $f : Omega -> RR$ is bounded where $Omega$ a bounded domain and $cal(P)_"reg" = {D_k}_(k=1)^N$ a regular partition of $Omega$. Define $ U(f, cal(P)_"reg") := sum_(k=1)^N (sup_(D_k) f) "vol"(D_k), quad L(f, cal(P)_"reg") := sum_(k=1)^N (inf_(D_k) f) "vol"(D_k). $
+]
+
+#lemma[
+  Let $f : B -> RR$. Then $f$ is Riemann integrable over $B$ iff for any $epsilon > 0$ there exists a regular partition $cal(P)_"reg"$ of $B$ such that $ U(f, cal(P)_"reg") - L(f, cal(P)_"reg") < epsilon. $
+]
+
+#proof[
+  ($=>$) is immediate, since a rectangular partition is regular and we already know the analogous statement for such partitions.
+
+  ($impliedby$) Fix $epsilon > 0$ and let $cal(P)_"reg" = {D_k}$ is such that $ U(f, cal(P)_"reg") - L(f, cal(P)_"reg") < epsilon. $ Then, $Gamma := union.big_(k) partial D_k$ has content zero by assumption, and so there exist boxes $B_1, dots, B_m$ such that $Gamma subset union.big_(j) B_j$ and $sum_(j) "vol"(B_j) < epsilon/(2 (M + 1))$ where $M := sup_B abs(f)$. Pick a box partition $cal(P)$ such that $ sum_(B_i in cal(P) \ cal(B_i) sect Gamma eq.not nothing) "vol"(B_i) < epsilon/(2 (M + 1)), $ and for each $B_j subset cal(P)$ with $B_j sect Gamma = nothing$ we have that $B_j subset D_ell$ for some $ell$ (obtained by refining). Note that if $B_j$ is such that $B_j sect Gamma$, $ 0 <= sup_(B_j) f - inf_(B_j) f <= sup_(D_ell) f - inf_D_ell f. $ Then $ U(f, cal(P)) - L(f, cal(P)) & = sum_(B_i in cal(P) \ B_i sect Gamma eq.not nothing) (sup_(B_i) f - inf_(B_i) f) "vol"(B_i) + sum_(B_i in cal(P) \ B_i sect Gamma = nothing) (sup_(B_i) f - inf_(B_i) f) "vol"(B_i) \
+  & <= 2 M sum_(B_i in cal(P) \ B_i sect Gamma eq.not nothing) "vol"(B_i) + sum_(D_ell) (sup_D_ell f - inf_(D_ell)) "vol"(D_ell) \
+  & < (2 M) epsilon/(2 ( M + 1)) + U(f, cal(P)_"reg") - L(f, cal(P)_"reg") \
+  & < 2 epsilon. $
+]
+
+#theorem("Change of Variables")[
+  Let $Omega, Omega' subset RR^n$ bounded domains and let $T : Omega' -> Omega$ be a $C^1$ map that is bijective from $Omega'$ onto $Omega$. Then, for any $f : Omega -> RR$ which is Riemann-integrable over $Omega$, then $ integral_Omega f dif V = integral_(Omega') (f compose T) abs(det D T) dif V. $
+]
+
+To prove, we need to first observe how the volume of a box $B$ changes under application of $T$. Let $B' subset Omega'$ be a small rectangular box. Since $T$ $C^1$, by Taylor expansion, we have for any $y_0 in B' subset RR^n$, $ T(y) = T(y_0) + D T(y_0) (y - y_0) + E_1 (y, y_0) $ where $lim_(y -> y_0) norm(E_1 (y, y_0))/(norm(y - y_0)) = 0$. Since $D T (y_0)$ is linear, $ "vol"(T(B')) = abs(det(D T(y_0))) "vol"(B') + E_2 (B') $ where for any $epsilon > 0$, there exists $delta > 0$ such that $norm(E_1 (y, y_0)) <= epsilon norm(y - y_0)$ whenever $0 < norm(y - y_0) < delta$. Suppose $B' = {y in RR : max_(j=1)^n abs(y_j - y_j^0) <= delta}$ (a box of side length $delta$). Using the fact that $norm(y - y_0) <= sqrt(n) max_(j=1)^n abs(y_j - y_j^0)$. Then, $ E_2 (B') <= (epsilon norm(y - y_0))^n <= (epsilon sqrt(n) max_(j) abs(y_j - y_j^0))^n <= (sqrt(n))^n epsilon^n (max_(j) abs(y_j - y_j^0))^n = (sqrt(n)^n epsilon^n) "vol"(B') <= C_n epsilon "vol"(B'), $ where $C_n$ some dimensional constant. Thus, $ abs(E_2 (B'))/("vol"(B')) -> 0 "as" norm(y - y_0) -> 0. $
+
+Remark that since $T in C^1 (B')$, $abs(det(D T)) in C^0 (B')$ and so uniformly continuous in $B'$, so given $epsilon > 0$, we can find $delta > 0$ such that $abs(E_2 (B')) <= epsilon "vol"(B')$ and $abs(abs(det (D T (y_0))) - abs(det D T (y))) <= epsilon$ for any $y in B'$ with $norm(y - y_0) < delta$ (?) and thus, for all $epsilon> 0$, there exists a $B$ of sidelength $<=delta$, $ "vol"(T B') = abs(det D T (y)) "vol"(B') + tilde(E)(B'), quad abs(tilde(E)(B')) <= epsilon "vol"(B') $
+
+
+
+#pagebreak()
+= Practice Questions
+
+#question[
+  Let $f(x, y) = (x^4 y^2)/(x^2 + y^2)$ when $(x, y) eq.not 0$ and $f(0,0) = 0$. Prove that $f$ is differentiable everywhere in $RR^2$.
+]
+
+#solution[
+  If $(x, y) eq.not (0,0)$, one can take partial derivatives and find that they are both continuous, thus $f$ differentiable away from $(0,0)$. At $(0,0)$, we claim $D f(0,0) = 0$. For $h = (h_1, h_2) in RR^2$, we find $ abs(f(h_1, h_2) - f(0,0))/(norm(h)) & = underbrace((h_1^4)/((h_1^2 + h_2^2)^(1\/2)), <= h_1^3) underbrace((h_2^2)/(h_1^2 + h_2^2), <= 1) <= h_1^3 ->_(norm(h) -> 0) 0. $
+]
+
+#question[
+  Given the curve $C = {y^2 + x y + sin x = 1}$, prove that $C$ can be written as $y = g(x)$ for some $C^1$ function $g$ near $(pi/2, 0)$. Is the same true near $(0,1)$?
+]
+
+#solution[
+  Let $G(x, y) = y^2 + x y + sin x - 1$. This is clearly $C^1$. We compute $ gradient G(x, y) = (y + cos x, 2 y + x). $ At $(pi/2, 0)$, we see $gradient G(pi/2, 0) = (0, pi/2)$
+]
+
+#question[Set $f(x, y) = sin(x y)/(x y)$ when $x y eq.not 0$ and $f(0, y) = f(x, 0) = 0$. Prove that $f$ is Riemann integrable on $B := [-1, 1] times [-1, 1]$.]
+
+#solution[
+  Its clear that $f(x, y)$ is continuous away from the line segments $L_x = {(x, 0) : -1 <= x <= 1}, L_y = {(0, y) : -1 <= y <= 1} subset B$. Thus, if we can show $"content"(L_x union L_y) = 0$, we'll be done.
+  Let $epsilon > 0$. There exists some $N$ such that $[-1, 1]$ is covered by $N$ disjoint open intervals $(x_i, x_(i + 1))$ of length $epsilon$, by compactness. Let $B_i =(x_i, x_(i+1)) times (-1/(2N), 1/(2N))$ be corresponding open boxes. Its clear then that $L_x subset union.big_(i=1)^N B_i$, and moreover $"vol"(B_i) = epsilon/N$ and thus $sum_(i=1)^N "vol"(B_i) = epsilon$. This implies $L_x$ has content zero. It follows identically that $L_y$ has content zero, which completes the proof.
+]
+
+#question[
+  Find the absolute minimum and maximum values of $f(x_1, dots, x_n) = x_1^3 + dots.c + x_n^3$ in the closed unit ball $overline(B_1 (0)) subset RR^n$.
+]
+
+#solution[_(First Solution)_ Notice by triangle inequality $abs(f(x)) <= sum_(i=1)^n x_i^2 abs(x_i) <= 1$ over $overline(B_1 (0))$ so $-1 <= f(x) <= 1$, with $f(-1, 0, dots, 0) = -1$ and $f(1,0,dots, 0) = 1$ which means the absolute min, max of $f$ over $overline(B_1 (0))$ are $-1, 1$ respectively.
+]
+
+#solution[_(Second Solution)_ We use Lagrange multipliers. Let $g(x) = x_1^2 + dots.c + x_n^2 - 1$. We compute $gradient g(x) = 2 x$ and $gradient f = 3 (x_1^2, dots, x_n^2)$. Setting $gradient f(x) = lambda gradient g(x)$, we see that $2 x_i = 3 lambda x_i^2$ for all $i$. Let $M = {1 <= i <= n : x_i eq.not 0}$. Note that not all $x_i$'s can be zero so $hash M >= 1$, which means, for all $x_i eq.not 0$, we find $x_i = 2/(3 lambda)$. This implies $ 1 = sum_(i=1)^n x_i^2 = 4/(9 lambda^2) dot hash M => lambda = plus.minus 1/sqrt(hash M) 3/2 $ which implies $ f(x) = sum_(i=1)^n x_i^3 = sum_(i in M) 8/(27 lambda^3)= plus.minus (hash M)/((hash M)^(3\/2)) 8/27 27/8 = plus.minus 1/sqrt(hash M). $ It's clear that this is maximized by minimizing the size of $M$ (which must have size at least 1) and taking the positive root (choosing $lambda$ positive), and minimized by minimizing the size of $M$ as well, but taking the negative root. Thus if $f$ maximized, minimized on $partial B_1 (0)$, it follows that $f(x) = 1, -1$ respectively. On the other hand, if $x in B_1 (0)$, $0 = gradient f(x) = 3 (x_1^2, dots, x_n^2)$ implies $x_i = 0$ for all $i$ and thus $f(x) = 0$. Thus the min, max of $f$ over $overline(B_1 (0))$ are achieved on the boundary, i.e. $min f = -1, max f = 1$.
+]
+
+#question[
+  Suppose $f in C^2 (RR^n)$ satisfies $ f(x) = 2 forall norm(x) = 1, quad norm(gradient f(x)) = 1, (partial^2 f)/(partial x_1^2) (x) + dots.c + (partial^2 f)/(partial x_n^2) (x) > 0 forall x in B_1 (0). $
+  Prove that $1 <= f(x) <= 2$ for all $x in overline(B_1 (0))$.
+]
+
+#solution[
+  Let $x in overline(B_1 (0))$ and $y in partial B_1 (0)$ the closest point (if multiple exist, choose any) to $x$ on the boundary; in particular $norm(x - y) <= 1$. By mean-value theorem, there exists some $z in B_1 (0)$ such that $ f(x) - 2 = f(x) - f(y) & = gradient f(z) dot (x - y) >= - norm(gradient f (z)) norm(x - y) >= - 1 => f(x) >= 1. $ This proves the first inequality. For the second, we know the inequality is satisfied on the boundary. Suppose it fails inside $B_1 (0)$. This implies, by compactness and continuity of $f$, that $max_(overline(B_1 (0))) f(x) > 2$ and moreover this max is achieved at some $x in B_1 (0)$. Being a maximum, this implies $gradient^2 f(x)$ negative semidefinite, so in particular its eigenvalues are negative hence $ 0 >= sum "eigenvalues of" gradient^2 f(x) = tr(gradient^2 f(x)) = (partial^2 f)/(partial x_1^2) (x) + dots.c + (partial^2 f)/(partial x_n^2) (x). $ But by assumption, the quantity on the right is strictly positive, which is a contradiction. Thus $f$ cannot attain its maximum inside $B_1 (0)$ and thus $f(x) <= 2$ everywhere. This completes the proof.
 ]

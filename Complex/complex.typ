@@ -416,6 +416,49 @@ where $C$ any circle about the origin.
   Suppose $f$ is holomorphic in an open set containing some toy contour $gamma$ and its interior, except at points $z_1, dots, z_N$, then $ integral_gamma f(z) dif z = 2 pi i sum_(k=1)^N "res"_(z_k) f. $
 ]
 
+#corollary[
+  If $z_0$ a singularity of $f$ of order $n$, then $ "res"_(z_0) f = lim_(z -> z_0) 1/(n - 1)! (dif^n/(dif z^n)) (z - z_0)^n f(z). $
+]
+
+
+#theorem[
+  If $f$ holomorphic and bounded on $Omega minus {z_0}$, then $z_0$ is a removable singularity.
+]
+
+#corollary[
+  If $z_0$ an isolated singularity of $f$, then $z_0$ a pole iff $abs(f(z)) -> infinity$ as $z-> z_0$.
+]
+
+Thus, if $z_0$ an isolated singularity, we have the following three situations:
+1. $z_0$ removable if $f$ bounded near $z_0$
+2. $z_0$ a pole if $abs(f) -> infinity$ as $z-> z_0$
+3. neither of the above hold, and thus $z_0$ essential.
+
+#theorem("Casorati-Weierstrass")[
+  Let $f$ holomorphic on $D_r (z_0) minus {z_0}$ where $z_0$ an essential singularity of $f$. Then, the image of $D_r (z_0) minus {z_0}$ under $f$ is dense in $CC$.
+]
+
+#proof[
+  Suppose not. Then there exists a $w in CC$ and $delta > 0$ such that $abs(f(z) - w) > delta$ for all $z in D_r (z_0) minus {z_0}$. Letting $g(z) := 1/(f(z) -w)$, we see then that $g$ is holomorphic on the punctured disk and bounded by $1/delta$ and thus $g$ has a removable singularity at $z_0$.
+
+  If $g(z_0)$ nonzero, then this implies $f - w$ holomorphic at $z_0$ which is a contradiction. If $g(z_0)$ zero, then $f(z) - w$ has a pole at $z_0$ also a contradiction.
+]
+
+#definition[
+  A function $f$ on $Omega$ is called _meromorphic_ if there exists points $z_0, z_1, dots$ with no limit point in $Omega$, and such that $f$ holomorphic on $Omega minus {z_0, dots}$ and ${z_0, dots}$ are poles of $f$.
+]
+
+#definition[
+  We say $f$ has a _pole at infinity_ if $f(1/z)$ has a pole at the origin; similar definitions follow for removable/essential singularities at infinity.
+
+  We say $f$ meromorphic in the extended complex plane if it is meromorphic in $CC$ and has either a pole or is holomorphic at infinity.
+]
+
+#theorem[
+  If $f$ meromorphic in the extended complex plane, then $f$ is a rational function.
+]
+
+
 // TODO
 
 
@@ -475,5 +518,65 @@ We aim to extend the definition of the logarithm to complex numbers. We know $lo
 ]
 
 #proposition[
-  - Being homotopic is an equivalence relation on the set of paths between $alpha$ and $beta$
+  Being homotopic is an equivalence relation on the set of paths between $alpha$ and $beta$
+]
+#remark[
+  This is a domain-dependent notion.
+]
+
+
+#theorem[
+  If $gamma_0$ and $gamma_1$ are homotopic in a region $Omega$ and $f$ is holomorphic in $Omega$, then $ integral_gamma_0 f(z) dif z = integral_gamma_1 f(z) dif z. $
+]
+
+#definition[
+  We say an open region $Omega$ is _simply connected_ if any two paths with the same endpoints are homotopic.
+]
+
+
+#theorem[
+  If $f$ holomorphic on $Omega$ and $Omega$ is simply connected, then there exists a holomorphic function $F$ on $Omega$ such that $dif/(dif z) F(z) = f(z)$.
+]
+
+#proof[
+  Fix $z_0 in Omega$ and let $F(z) = integral_gamma f(z) dif z$ for any $gamma$ from $z_0$ to $z$.
+]
+
+Now, we know $f(z) = 1/z$ holomorphic on $CC - {0}$ but this domain is not simply connected so we can't expect $f$ to have a primitive (indeed, as we saw above, this isn't the case). However, we can try to take a subset which is simply connected; for instance $ CC minus RR^(<= 0) subset CC minus {0} $ is simply connected, and thus there must exist a primitive on this (sub)domain.
+
+#corollary[
+  There is a unique, holomorphic function on $CC minus RR^(<= 0)$ satisfying
+  1. $dif/(dif z) F(z) = 1/z$,
+  2. $F(1) = 0$.
+  We call this primitive of $1/z$ the _logarithm_ and is denote $log$.
+]
+
+#remark["When we write $log$, we always mean the natural log; log base 10 is only for business school." - Darmon]
+
+#theorem[
+  $e^(log (z)) = z$
+]
+
+#proof[
+  // Note that, if $G(z) := e^(log (z)) - z$ $ dif/(dif z) G(z) = 1/z e^(log (z)) - 1 = G(z)/z = G(z) F'(z) = dif/(dif z) [G (z) F(z)] - G' (z) F(z) $
+  Compute $dif/(dif z) z e^(-log (z)) = 0$ and plug in $z = 0$ in the original (now constant) expression to conclude.
+]
+
+Note $log(r e^(i theta)) = log r + i theta$ where $-pi < theta < pi$ on $Omega$.
+// #theorem[
+// $log(z_1 z_2) = log(z_1) + log(z_2)$
+// ]
+
+== Mean Value Property
+
+#theorem[
+  Suppose $f(z)$ holomorphic in $Omega$ and $overline(D_R (z_0)) subset Omega$. Then $ f(z_0) = 1/(2pi ) integral_(0)^(2 pi) f(z_0 + R e^(i theta)) dif theta. $
+]
+
+#proof[
+  Apply Cauchy integral formula.
+]
+
+#corollary[
+  Write $f= u + i v$.
 ]

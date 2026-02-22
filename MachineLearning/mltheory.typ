@@ -574,3 +574,408 @@ In particular, remark that under these assumptions, $EE[y_i | x_i] = phi(x_i)^T 
 Here, we briefly study what more we can say in the case that $phi(x) tilde cal(N)(0, Sigma)$ for some $Sigma in RR^(d times d)$. We can write $ phi(x) = Sigma^(1\/2) hat(Z), quad hat(Z) tilde cal(N)(0, I_d). $
 
 Generating $n$ (independent) $hat(Z) in RR^(n times d)$, we then form the random matrix $ Z := vec(– hat(Z)_1^T –, dots.v, – hat(Z)_n^T –) in RR^(n times d). $ This gives $ Z Sigma^(1\/2) = Phi in RR^(n times d) => hat(Sigma) = 1/n Phi^T Phi = 1/n Sigma^(1\/2) Z^T Z Sigma^(1\/2). $ Thus, apply the "trace trick" from the previous proposition again, we find that $ EE[tr(Sigma hat(Sigma)^(-1))] = n EE[tr(Sigma (Sigma^(-1/2) (Z^T Z)^(-1) Sigma^(-1\/2)))] = n EE[tr((Z^T Z)^(-1))] = (n d)/(n - d - 1), $ which implies the excess risk $approx d/n sigma^2$ (this equality above uses the fact that much is known about the spectral properties of the $(Z^T Z)^(-1)$, which we won't discuss here).
+
+
+= Empirical Risk Minimization
+
+== Convexification of the Risk
+
+For simplicity, we'll focus on binary classification $cal(Y) = {-1, 1}$ and the $0-1$ loss. It's annoying to work with such a discrete-valued loss function, and much easier to work with a real-valued function. However, we need to do this in such a way that the minimizers are the same. Instead of learning $f : cal(X) -> {-1, 1}$, we'll learn a real-valued function $g : cal(X) -> RR$, and define $f(x) := "sgn"(g(x))$, with $ "sgn"(a) := cases(1 quad & a > 0, -1 & a < 0). $ If $a = 0$, we uniform-randomly assign 1 or minus 1.
+
+
+The 0-1 risk of  $f = "sgn" compose g$ (denoted, poorly, by $cal(R)(g)$) is $ cal(R)(g) = PP(f(x) eq.not y) & = PP("sgn" compose g (x) eq.not y) \
+& = EE[bb(1)_{f(x) eq.not y}] \
+&= EE[bb(1)_{f(x) eq.not y} bb(1)_{g(x) = 0} + bb(1)_{f(x) eq.not y}bb(1)_{g(x) eq.not 0}] \
+&= EE[bb(1)_{f(x) eq.not y} bb(1)_{g(x) = 0}] + EE[bb(1)_{f(x) eq.not y} bb(1)_{g(x) eq.not 0}]. $
+
+Now, if $g(x) eq.not 0$, then $g(x) y < 0$ implies that $"sgn"(g(x))$ and $y$ are opposite (in sign), and then $f(x) = "sign"(g(x)) eq.not y$. So, $bb(1)_{f(x) eq.not y} bb(1)_{g(x) eq.not 0} = bb(1)_{g(x) y < 0}$, so we can rewrite the second term as the expectation of this indicator function. We can use the law of total expectation to rewrite the first expectation, so in all $ cal(R)(g) & = EE[EE[bb(1)_{f(x) eq.not y} bb(1)_{g(x) = 0} | bb(1)_{g(x) = 0}]] + EE[bb(1)_{g(x) y < 0}] \
+& = EE[bb(1)_{g(x) = 0} underbrace(EE[bb(1)_{f(x) eq.not y} | bb(1)_{g(x) = 0}], = PP(f(x) eq.not y | g(x) = 0) = 1/2 ("coin flip"))] + EE[bb(1)_{g(x) y < 0}] \ &= 1/2 EE[bb(1)_{g(x) = 0}] + EE[bb(1)_{g(x) y < 0}] \
+&=: EE[Phi_(0-1) (y g(x))], $ where we define $ Phi_(0-1) : RR -> RR, quad Phi_(0 - 1) := cases(1 quad & u < 0, 1/2 & u = 0, 0 & u > 0). $
+
+In practice, for empirical risk minimization, we minimize with respect to $g : cal(X) -> RR$ with the _empirical risk_ $1/n sum_(i=1)^n Phi_(0-1) (y_i g(x_i))$ for some data points ${(x_i, y_i)}_(i=1)^n$. The problem is that $Phi_(0-1)$ is not continuous, hence hard to optimize.
+
+=== Convex Surrogates
+
+The idea is to replace the function $Phi_(0-1)$ with a _convex surrogate_. Instead of minimizing the "classical risk" $cal(R)(g)$, we minimize $ cal(R)_Phi (g) := EE[Phi(y g(x))], $ for some nice $Phi$. The function $g$ is sometimes known as the _score function._ Does this idea even make sense? Does it give good predictions for the 0-1 loss?
+
+#example[
+  1. _Quadratic/square loss_ $Phi(u) = (u - 1)^2$ gives $ Phi(y g(x)) = (g(x) - y)^2, $ (using that $y^2 = 1$) noting that when $y g(x)$ is large and positive, $Phi(y g(x))$ is large.
+
+  2. _Logistic/cross-entropy loss_ $Phi(u) = log(1 + e^(-u))$ gives $ Phi(y g(x)) = log(1 + e^(- y g(x))) = - log(sigma(y g(x))), $ where $ sigma(u) := 1/(1 + e^(-u)) $ the _sigmoid function_.
+
+  3. _Hinge loss_ $Phi(u) = max{1 - u, 0}$ leads to "support vector machine" (SVM); $y g(x)$ is called the "margin".
+
+  4. _Squared hinge loss_ $Phi(u) = max(1 - u, 0)^2$, smoothed version
+
+  5. _Exponential loss_ $Phi(u) = exp(-u)$.
+]
+
+=== Conditional $Phi$ Risk and Classification Calibration
+
+#remark[All convex surrogates in the previous section are upper bounds on the 0-1 loss. When the $Phi$-risk equals 0, we want this to imply that the resulting classifier is optimal.]
+
+Let $ eta(x) := PP(y = 1 | x) in [0, 1]. $ By Baye's, $ EE[y | x] & = (1) PP(y = 1 | x) + (-1) [1 - PP(y = 1 | x)] =2 eta (x) - 1. $ Recall that the Baye's risk for the $0-1$ loss is $ cal(R)^ast = EE[min{eta(x), 1 - eta(x)}]. $
+
+Remark that $ min{eta(x), 1 - eta(x)} = 1/2 - abs(eta(x) - 1/2) = 1/2 - 1/2EE[y| x] $ and thus $ cal(R)^ast = EE[1/2 - 1/2EE[y| x]] = 1/2 - 1/2 EE[EE[y|x]]. $
+Thus, one optimal classifier would be $ f_ast (x) = "sgn"(2 eta(x) - 1) = "sgn"(EE[y|x]). $ (Our "random choice" convention for $eta = 1/2$ still works out). This implies taking $g(x) = 2 eta(x) - 1$ so that $ f_ast = "sgn" compose g. $ This is of course not a unique choice to get this equality; in this section, though, we'll focus on functions of the form $ g(x) = b (2 eta(x) - 1), $ where $b : RR -> RR$ is sign-preserving, i.e. $u >= 0 => b(u) >= 0, u<= 0 => b(u) <= 0$.
+
+Our goal is to ensure that minimizers of expected $Phi$-risk lead to optimal predictions, for which we have an expression of it.
+
+_Square loss:_ the function minimizing the expected $Phi$-risk is $g(x) = EE[y|x] = 2 eta(x) - 1$, so taking signs leads to an optimal prediction. Hence using the square loss for binary classification leads to optimal predictions.
+
+_General losses:_ we don't have a closed-form minimizer for most losses; we'll look at conditional risks given $x$ instead.
+
+#definition([Conditional $Phi$ and 0-1 Risk])[
+  Given a function $Phi$, and for $xi in [0, 1]$ and $u in RR$, define the _conditional $Phi$-risk_ as $ C_xi^Phi (u) := xi Phi(u) + (1 - xi) Phi(-u), $ and in particular the _conditional 0-1 risk_ $ C_xi (u) = xi Phi_(0-1) (u) + (1 - xi) Phi_(0-1) (-u), $ where $Phi_(0-1)$ as in the previous section.
+
+  We compute the $Phi$-risk and 0-1 risk of a function $g : cal(X) -> RR$ by $ cal(R)_Phi (g) := EE[C_(eta(x))^Phi (g(x))], quad cal(R)(g) = EE[C_(eta(x)) (g(x))]. $
+]
+
+#exercise[
+  Show that $cal(R)_(Phi) (g) = EE[Phi(y g(x))] = EE[EE[Phi(y g(x)) | x]],$ i.e. $cal(C)_(eta(x))^(Phi)$ "picks out" a choice of $x$.
+]
+
+#remark[
+  With our convention that $Phi_(0-1) (0) = 1/2$, we have $C_(1\/2) (u) = 1\/2$ for all $u in RR$, since $ C_(1\/2) (u) = 1/2 Phi_(0-1) (u) + (1 - 1\/2) Phi_(0-1) (-u), $ so
+  - if $u > 0$, the first term gives $1/2$ and the last $0$,
+  - if $u = 0$, the first term gives $1/4$ and the second $(1 - 1/2) 1/2 = 1/2 - 1/4$, which sums up to 1/2, and
+  - if $u < 0$, the first term gives $0$ and the second $1 - 1/2 = 1/2$.
+]
+
+We want from our convex surrogate that the optimal $g(x)$ obtained by minimizing the conditional $Phi$-risk $C_(eta(x))^Phi$ leads to the _same prediction_ as the Baye's predictor, which minimizes $C_(eta(x)).$ Thus, we need, for $xi eq.not 1/2$, the minimizers of $C_xi^Phi$ are also minimizers of $C_xi$.
+
+The set of minimizers of $C_xi$ is $RR_+^ast := {x in RR : x > 0}$ when $xi > 1/2$ (i.e. when $eta(x) > 1/2$, the optimal prediction is $x = + 1$) and $RR_(-)^ast := {x in RR : x < 0}$ when $x< 1/2$ (i.e. when $eta(x) < 1/2$, the optimal prediction is $x = -1$). To see this, we can just compute that $ C_xi (u) & = xi Phi_(0-1) (u) + (1 - xi) Phi_(0-1) (-u) \
+         & = cases(xi + 0 quad & u < 0, xi/2 + 1/2- xi/2 quad & u = 0, 0 + (1 - xi/2) quad & u > 0) \
+         & = cases(xi quad & u < 0, 1/2 quad & u = 0, 1 - xi quad & u > 0). $ Thus if $xi > 1/2$, $C_xi (u) = 1 - xi < 1/2 < xi$ for all $u < 0$, hence $RR_-^ast$ indeed the set of minimizers of $C_xi (u)$; similar argumentation holds for $xi < 1/2$.
+
+Thus, we want this condition to hold true for $C_xi^Phi$ for any $xi in [0, 1] \\ {1/2}$ as well, i.e. we want:
+
+$
+  #math.cases(
+    [(Positive optimal prediction) $quad quad xi > 1/2 <=> "argmin"_(u in RR) C_xi^Phi (u) subset RR_+^ast$],
+    [(Negative optimal prediction)  $quad xi < 1/2 <=> "argmin"_(u in RR) C_xi^Phi (u) subset RR_-^ast$],
+    reverse: true,
+  ) thin (dagger)
+$
+
+#definition("Classification-Calibrated")[
+  A function $Phi$ that satisfies both statements in $(dagger)$ above is called _classification-calibrated_, or just _calibrated_. The resulting binary classification is called _Fisher consistent_.
+]
+
+Turns out that when $Phi$ is convex, we get a really simply theorem that gives this condition:
+
+#proposition("Bartlett et al, 2006")[
+  Let $Phi : RR -> RR$ be convex. The surrogate function $Phi$ is classification-calibrated iff $Phi$ is differentiable at $0$ and $Phi'(0) < 0$.
+]
+
+#proof[
+  Since $Phi$ is convex, we know that $C_xi$ is for any $xi in [0, 1]$ is also convex (since positive linear combinations of convex functions are convex, and $Phi(u)$ convex => $Phi(-u)$ convex). Note that left/right handed derivatives of convex functions always exist.
+
+  Then, we have two cases: \
+  a) $C_xi$ has a minimizer in $RR_+^ast$ $<=>$ the right derivative at $0$ is strictly negative $<=>$ $ (dif C_xi^Phi (0_+))/(dif u) = xi Phi' (0_+) - (1 - xi) Phi' (0_+) < 0 $ \
+  b) $C_xi$ has a minimizer in $RR_-^ast$ $<=>$ the left derivative at $0$ is strictly positive $<=>$ $ (dif C_xi^Phi (0_-))/(dif u) = xi Phi' (0_-) - (1 - xi) Phi' (0_-) > 0. $
+
+  $(=>)$ Suppose $Phi$ is calibrated. Letting $xi -> 1/2^+$, in case (a) above, this implies $ (C_xi^Phi)'(0_+) = 1/2 [Phi'(0_+) - Phi'(0_+)]. $ By convexity, $1/2 [Phi' (0_+) - Phi' (0_+)] >= 0$, thus the left/right derivatives are equal, and thus $Phi$ is differentiable at $0$. We need to show now that $Phi' (0) < 0$. Then, $ (C_xi^(Phi))' (0_+)= (2 xi - 1) Phi' (0). $ Using the calibration property $(dagger)$ and $(a)$, we certainly have $Phi' (0) <= 0$. Suppose that $Phi' (0) = 0$. Then, $0$ must be a minimizer since $Phi$ is convex, which implies that $0$ is a minimizer of $C_xi^Phi$ and $xi > 1/2$, which implies by $(dagger)$ that $"argmin" C_xi^Phi subset RR_+^ast$ which is a contradiction. Thus, $Phi'(0) > 0$.
+
+  ($arrow.l.double$) Suppose $Phi$ differentiable at $0$ and $Phi' (0) < 0$. Then $C_xi^Phi (0) = (2 xi - 1) Phi' (0)$. Then $(dagger)$ follow directly from the two cases (a), (b) above.
+]
+
+#remark[
+  1. This shows that all of our earlier mentioned (convex) surrogate examples are calibrated, except the function $u |-> max{-u, 0}$ which is not differentiable at $0$.
+  2. From now on, we will assume that $Phi$ given will be classification-calibrated and convex, that is, $Phi$ is convex, $Phi$ is differentiable at $0$, and $Phi'(0) < 0$.
+]
+
+=== Relationship between Risk and $Phi$-Risk
+
+New question: we are looking for a function $H : RR_+ -> RR_+$ such that $ cal(R)(g) - cal(R)^ast <= H(cal(R)_Phi (g) - cal(R)^ast), $ where we call $H$ a _calibration function_. Heuristically this is to capture how small the left-hand side can get if the right-hand side is small; i.e., if $cal(R)_Phi (g) - cal(R)^ast < epsilon$ (which we can actually optimize), then $cal(R)(g) - cal(R)^ast <= H(epsilon)$. Since $cal(R)_Phi (g) = EE[C_xi^Phi (g)]$, we will instead look for an $H$ for $C_xi^Phi (g)$ (which, if $H$ convex, is still okay by Jensen's). In fact, we'll actually look for $G := H^(-1)$, so that $ G(cal(R)(g) - cal(R)^ast) <= cal(R)_Phi (g) - cal(R)^ast. $
+We'll show that for the hinge function, $H = id$ for the logistic/square loss, $H = sqrt(dot)$.
+
+Specifically, we are interested in solving $ forall u in RR, G(C_xi (u) - inf_(u' in RR) C_xi (u')) <= C_xi^Phi (u) - inf_(u' in RR) C_xi^Phi (u'), $
+for then if $G$ convex, then by Jensen's, $ G(cal(R)(g) - cal(R)^ast) & = G(EE[C_eta(x) (g) - inf_(u in RR) C_eta(x) (u)]) \
+                          & <= EE[G(C_(eta(x)) (g) - inf_(u in RR) C_eta(x) (u))] \
+                          & <= EE[C_(eta(x))^Phi (g) - inf_(u in RR) C_eta(x)^Phi (u)] \
+                          & = cal(R)_Phi (g) - cal(R)^ast. $
+We need an expression for the excess conditional 0-1 risk.
+
+- If $xi = 1/2$, $C_(1\/2) (u) =cases(1\/2 quad & u < 0, 1\/2 & u = 0, 1\/2 & u > 0) = 1/2$.
+- If $xi > 1/2$, $C_(xi) (u) = cases(
+    xi & u < 0,
+    1\/2 & u = 0,
+    (1 - xi) quad & u > 0
+  ),$ hence $inf_(u) C_(xi) (u) = 1- xi$. Thus, $ C_xi (u) - inf_(u' in RR) C_xi (u') = C_xi (u) - (1 - xi) & = cases(2 xi - 1 & u < 0, xi - 1/2 & u = 0, 0 & u > 0) \
+                                                            & = (2 xi - 1) Phi_(0-1) (u) <= (2 xi - 1) bb(1)_(u <= 0). $
+
+  - One checks (I'm not doing it), $inf_(u in RR) C_xi (u) = xi$ and $ C_(xi) (u) - inf_(u' in RR) C_xi (u') & = cases(
+                                              0 & u < 0, 1 -2 xi & u > 0,
+                                              1/2 - xi quad & u= 0
+                                            ) \
+                                          & = (1 - 2 xi) Phi_(0 -1) (-u) <= (1 - 2 xi) bb(1)_(u <= 0). $
+
+    So, for any $xi in [0, 1]$, $ forall u in RR, C_xi (u) - inf_(u' in RR) C_xi (u') & = |2 xi - 1| Phi_(0 - 1) ((2 xi -1) u) <= |2 xi - 1| bb(1)_((2 xi - 1) u <= 0). $
+    More practically, one can find the bound $ forall u in RR, C_xi (u) - inf_(u' in RR) C_xi (u) <= abs(2 xi - 1 - b(u)), $ where $b$ is any sign-preserving function.
+
+
+We look now at the quadratic loss, $Phi(v) = (v - 1)^2$. We have $ C_xi^Phi (u) = xi (u - 1)^2 + (1 - xi) (-u - 1)^2. $
+We find that the argmin of this function is $u^ast = 2 xi - 1$ and thus $ inf_(u' in RR) C_xi^Phi (u') = 4 xi (1 - xi), $ so that $ C_xi^Phi (u) - inf_(u' in RR) C_xi^Phi (u') = (2 xi - 1 - u)^2. $
+
+Using $b(u) = u$, then, we find that $ C_xi (u) - inf_(u' in RR) C_xi (u') <= |2 xi - 1 - u| = sqrt((2 xi - 1 - u)^2) = sqrt(C_xi^Phi (u) - inf_(u' in RR) C_xi^Phi (u')). $ Thus, this shows that $ cal(R)(g) - cal(R)^ast & <= sqrt(cal(R)_Phi (g) - cal(R)^ast_Phi). $
+
+_If we minimize the square-loss up to $epsilon$ order, that means we are (at worst) $sqrt(epsilon)$ away from the real minimizer_
+
+=== Smooth Surrogates
+
+Consider smooth losses of the form $Phi(u) = a(u) - u$, where $a(u) = 1/2 u^2$ for square loss and $a(u) = 2 log(e^(u/2) + e^(-u/2))$ for logistic. We will assume $a$ is even and $beta$-smooth (if $a''$ exists then $a''(u) <= beta$ for all $u in RR$). Then, this implies that for all $u in RR$ and $alpha in RR$, $ a(u) - alpha u - inf_(u' in RR) {a(u') - alpha u'} >= 1/(2 beta) |alpha - a'(u)|^2. $
+
+We find then $ C_xi^Phi (u) & = xi Phi (u) + (1 - xi) Phi(-u) = a(u) - (2 xi - 1) u, $ thus $ C_xi^Phi (u) - inf_(u' in RR) C_xi^Phi (u') & = a(u) - (2 xi - 1) u - inf_(u') {a(u') - (2 xi - 1) u} \
+                                            & >= 1/(2 beta) (2 xi - 1 - underbrace(a'(u), b(u)))^2 \
+                                            & >= 1/(2 beta) [C_xi (u) - inf_(u' in RR) C_xi (u')] \
+                  => cal(R)(g) - cal(R)^ast & <= sqrt(2 beta) (cal(R)_Phi (g) - cal(R)_Phi^(ast) (g))^(1\/2). $
+
+For square loss, $beta = 1$, and for the logistic loss, $beta <= 1/4$.
+
+== Risk Minimization Decomposition
+
+Consider a family $cal(F)$ of prediction functions $f : cal(X) -> RR$. Let $ hat(f) in "argmin"_(f in cal(F)) hat(R)(f) = 1/n sum_(i=1)^n ell(y_i, f(x_i)). $
+
+We decompose the risk $ cal(R)(hat(f)) - cal(R)^ast &= underbrace(cal(R)(hat(f)) - inf_(f' in cal(F)) cal(R)(f'), "estimation error") + underbrace(inf_(f' in cal(F)) cal(R)(f') - cal(R)^ast, "approximation error"). $
+For instance, we could consider $cal(F) = {f_theta : theta in Theta}$, with linear models being of the form $f_theta (x) = theta^T phi(x)$.
+
+== Approximation Error
+
+#remark[
+  1. Deterministic
+  2. Depends on the distribution of the data and the class of functions $cal(F)$; the larger $cal(F)$, the smaller the approximation error
+  3. We'll focus on families of the form $cal(F) = {f_theta | theta in Theta subset RR^d}$, and $ell$ is convex and Lipschitz, with respect to the second variable
+]
+
+We'll assume $theta^ast in "argmin"_(theta in RR^d) cal(R)(f_ast)$ (not necessarily over the space $Theta$). We can further decompose the approximation error by $ inf_(theta in Theta) cal(R)(f_theta) - cal(R)^ast & = underbrace(inf_(theta in Theta) cal(R)(f_theta) - inf_(theta in RR^d) cal(R)(f_theta), "how good modeling is" \ (I)) + underbrace(inf_(theta in RR^d) cal(R)(f_theta) - cal(R)^ast, "architecture error" \ (II)). $
+
+$(I)$ Suppose the loss is $G$-Lipschitz. Then, $ cal(R)(f_theta) - cal(R)(f_(theta')) = EE[ell(y, f_theta (x)) - ell(y, f_theta' (x))] <= G EE[ |f_theta (x) - f_theta' (x)| ]. $
+In the case that $f_theta (x) = theta^T phi(x)$ and $Phi := {theta in RR^d | norm(theta)_2 <= D}$, then we first have by Cauchy-Schwarz, $theta^T phi(x) - theta_ast^T phi(x) <= norm(theta - theta_ast)_2 norm(phi(x))_2$ thus $ inf_(theta in Theta) cal(R)(f_theta) - inf_(theta' in RR^d) cal(R)(f_theta') &<= G inf_(norm(theta)_2 <= D) EE[norm(phi(x))] norm(theta - theta_ast) \
+& <= G inf_(norm(theta)_2 <= D) EE[norm(phi(x))] (norm(theta_ast) - D)_+, quad (x)_+ := max{0,x}. $ This is minimized for $hat(theta) = ((theta_ast D))/(norm(theta_ast))$ if $norm(theta_ast) > D$.
+
+$(II)$ Is based on our choice of model; things like architecture choice can affect this.
+
+== Estimation Error
+
+Let $g_cal(F) in "argmin"_(g in cal(F)) cal(R)(g)$ be the minimizer of the expected risk for our class of models, and $hat(f) in "argmin"_(f in cal(F)) hat(cal(R))(f)$ be the minimzer of the empirical risk (which is random). The estimation error can be bounded as follows: $ cal(R)(hat(f) - inf_(f in cal(F))) cal(R)(f) & = cal(R)(hat(f)) - cal(R)(g_cal(F)) \
+& = {cal(R)(hat(f)) - hat(cal(R))(hat(f))} + underbrace({hat(cal(R))(hat(f)) - hat(cal(R))(g_cal(F))}, <= 0) + {hat(cal(R))(g_cal(F)) - cal(R)(g_cal(F))} \
+& <= 2 sup_(f in cal(F)) abs(cal(R)(f) - hat(cal(R))(hat(f))). $
+
+
+
+Now suppose $hat(f)_"opt"$ "almost" the solution $hat(f)$ (obtained from optimization, say), i.e. $hat(cal(R))(hat(f)_"opt") - hat(cal(R))(hat(f)) <= epsilon$ for some $epsilon > 0$. Then we can get a similar inequality, $ cal(R)(hat(f)) - inf_(f in cal(F)) cal(R)(f) <= 2 sup_(f in cal(F)) abs(cal(R)(f) - hat(cal(R))(hat(f))) + underbrace(hat(cal(R))(hat(f)_"opt") - hat(cal(R))(hat(f)), "optimization error," <= epsilon). $
+
+
+=== Applications of McDiarmid's Inequality
+
+Assume $f in cal(F)$ is bounded between $0$ and $ell_infinity$. For a single $f in cal(F)$, Hoeffding's ays that with probability $>= 1 - delta$, $ cal(R)(f) - hat(cal(R))(f) <= (ell_infinity)/sqrt(2 n) sqrt(log(1\/delta)). $
+Note that we can't just put a sup over $cal(F)$ on the left-hand side. We need a little more work.
+
+==== Easy Case: Finite Number of Models
+
+Assume that there are finitely many $f$ in $cal(F)$. Then $ PP(sup_(f in cal(F)) abs(hat(R)(f) - cal(R)(f)) >= t) & <= sum_(f in cal(F)) PP(abs(hat(cal(R))(f) - cal(R)(f)) >= t) \
+                                                      & <= sum_(f in cal(F)) 2 exp(- (2 n t^2)/(ell_infinity^2)) \
+                                                      & = 2 abs(cal(F)) exp(- (2 n t^2)/(ell_infinity^2)). $ Setting $delta =2 exp(- (2 n t^2)/(ell_infinity^2))$, and solve for $t$ appropriately to get that with probability $1 - delta$, $ sup_(f in cal(F)) abs(hat(R)(f) - cal(R)(f)) <= t & = (ell_infinity)/(sqrt(2 n)) sqrt(log (2 abs(cal(F)))/delta) \
+& <= ell_infinity sqrt((log (s abs(cal(F))))/(2 n)) + underbrace((ell_infinity)/(sqrt(2 n)) sqrt(log(1\/delta)), -> 0 "as" n -> infinity "provided" log abs(cal(F)) << n). $
+
+How do we deal with $cal(F)$ being infinite?
+
+=== $epsilon$-net Argument: Covering Numbers
+We assume $G$-Lipschitz loss functions with respect to $x$, i.e. $ |cal(R)(f) - cal(R)(f')| <= G EE[ |f(x) - f(x')| ] = G Delta(f, f'). $
+
+#definition("Covering Number")[
+  Assume there exists $m = m(epsilon)$ elements $f_1, dots, f_m$ such that for all $f in cal(F)$ there exists $i in [m]$ such that $Delta (f, f_i) <= epsilon$. The minimial possible number $m(epsilon)$ for $epsilon$ fixed is called the _covering number of $cal(F)$_ at precision $epsilon$.
+]
+
+#remark[
+  1. The covering number $m(epsilon)$ is a non-increasing function of $epsilon$
+  2. Typically $m(epsilon) tilde epsilon^(-d)$ as $epsilon -> 0$
+  3. In the $ell_infinity$-metric, if $cal(F)$ is contained in a ball of radius $c$ in $ell_infinity$-ball of dimension $d$, then it can be covered by $(c\/epsilon)^d$ cubes of length $2 epsilon$, supposing $epsilon <= c$.
+]
+
+Given a cover of $cal(F)$ with $(f_i)_(i=1, dots, m(epsilon))$ being the cover elements using that both $hat(cal(R))$ and $cal(R)$ are $G$-Lipschitz . we have for any $i in [m(epsilon)]$, $ abs(hat(cal(R))(f) - cal(R)(f)) & <= abs(hat(cal(R))(f) - hat(cal(R))(f_i)) + abs(hat(cal(R))(f_i) - cal(R)(f_i)) + abs(cal(R)(f_i) - cal(R)(f)) \
+& <= 2 G Delta(f, f_i) + abs(hat(cal(R))(f_i) - cal(R)(f_i)) \
+& <= 2 G Delta(f, f_i) + sup_(j in m(epsilon)) abs(hat(cal(R))(f_j) - cal(R)(f_j)). $ Take $i$ such that $Delta(f, f_i) < epsilon$, then we obtain $ sup_(f in cal(F)) abs(hat(R)(f) - cal(R)(f)) & <=2 G epsilon + sup_(j in m(epsilon))abs(hat(cal(R)(f_j)) - cal(R)(f_j)) \
+& <= 2 G epsilon + ell_infinity sqrt(log(2 m(epsilon))/(2 n)) + ell_infinity/sqrt(2 n) sqrt(log(1/delta)). $
+
+Thus if $m(epsilon) tilde epsilon^(-d)$, then the second term above is of the order $ell_infinity sqrt((d log(1\/epsilon))/(2n))$; so if $epsilon tilde 1/sqrt(n)$, then we get a term of the order $ 2 G epsilon + ell_infinity sqrt((d log(1\/epsilon))/(2 n)) + ell_infinity/sqrt(2 n) tilde sqrt(d/(n log(n))). $
+
+#remark[In practice, this bound is often way weaker than what actually occurs.]
+
+== Rademacher Complexity
+
+_Idea:_ If $z, z'$ are iid rvs, $z =^"d" z'$. If $g$ is a function, then $g(z) =^"d" g(z')$. Furthermore, $ g(z) - g(z') =^"d" g(z') - g(z) =^"d" (-1) [g(z) - g(z')] =^"d" epsilon [g(z) - g(z')] $ where $epsilon$ a Rademacher rv, i.e. $PP(epsilon = 1) = PP(epsilon = - 1) = 1/2$, which is independent of $z$ and $z'$.
+
+Our goal of this section is to upper-bound $sup_(f in cal(F)) abs(cal(R)(f) - hat(cal(R))(f))$. We'll change notation $ z = (x, y), quad cal(H) := {(x, y) |-> ell(y, f(x)), f in cal(F) }, $ so that $ sup_(f in cal(F)) abs(cal(R)(f) - hat(cal(R))(f)) = sup_(h in cal(H)) abs(EE[h(z)] - 1/n sum_(i=1)^n h(z_i)). $ Denote $ cal(D) := {z_1, dots, z_n} $ and define the _Rademacher complexity_ of the class $cal(H)$ as $ R_n (cal(H)) := EE_(epsilon, cal(D)) [sup_(h in cal(H)) 1/n sum_(i=1)^n epsilon_i h(z_i)], $ where $epsilon_i$'s are Rademacher rv's which are mutually independent and of the $z$'s.
+
+=== Symmetrization
+
+#proposition[
+  $ EE[sup_(h in cal(H)) {1/n sum_(i=1)^n h(z_i) - EE[h(z)]}] <= 2 R_n (cal(H)), $ and $ EE[sup_(h in cal(H)) { EE[h(z)] - 1/n sum_(i=1)^n h(z_i) }] <= 2 R_n (cal(H)). $
+]
+
+#proof[
+  Let $cal(D)' = {z'_1, dots, z'_n}$ ad $cal(D) = {z_1, dots, z_n}$ be independent. Let $(epsilon_i)_(i in [n])$ iid Rademacher rvs independent of $cal(D)', cal(D)$. For all $i in [n]$, $ EE[h(z'_i) | cal(D)] = EE[h(z'_i)] $ by independence, and also $ EE[h(z_i) | cal(D)] = h(z_i). $ We have, using iid and these identities, $ EE[sup_(h in cal(H)) {EE[h(z)] - 1/n sum_(i=1)^n h(z_i)}] & = EE[sup_(h in cal(H)) {
+      1/n sum_(i=1)^n EE[h(z'_i) | cal(D)] - 1/n sum_(i=1)^n h(z_i)
+    }] \
+  & = EE[sup_(h in cal(H)) {1/n sum_(i=1)^n EE[h(z'_i) - h(z_i) | cal(D)]}]. $ Now, remark that $sup{EE[f_1], EE[f_2]} <= EE[sup{f_1, f_2}]$; the same bound holds for suping over an infinite class. We get then, continuing from above, $ & <= EE[EE[sup_(h in cal(H)) 1/n sum_(i=1)^n (h(z'_i) - h(z_i)) | cal(D)]] \
+  & = EE[sup_(h in cal(H)) 1/n sum_(i=1)^n (h(z'_i) - h(z_i))] \
+  & =^"symmetry" EE[sup_(h in cal(H)) 1/n sum_(i=1)^n epsilon_i (h(z'_i) - h(z_i))] \
+  & <= 2 R_n (cal(H)). $
+  The other direction is clear from this work.
+]
+
+Putting everything together, we get that with probability $1 - delta$, $ EE[h(z)] <= sum_(i=1)^n h(z_i) + 2 R_n (cal(H)) + ell_infinity/sqrt(2 n) sqrt(log(1\/delta)). $
+
+=== Lipschitz-Continuous Losses
+
+#proposition[
+  Given any function $b, a_i : Theta -> RR$ and $phi_i : RR -> RR$ any $1$-Lipschitz functions for $i = 1, dots, n$ and for $epsilon in RR^n$ vector of independent Rademacher rv's, then $ EE_epsilon [sup_(theta in Theta) {b(theta) - sum_(i=1)^n epsilon_i phi(a_i (theta))}] <= EE_epsilon [sup_(theta in Theta) {b(theta) + sum_(i=1)^n epsilon_i a_i (theta)}]. $
+]
+
+This result just says that, for our purposes, that if we condition on $cal(D)$, set $b equiv 0$ and $Theta = {f(x_1), dots, f(x_n) : f in cal(F)}$ and $a_i (theta) = theta_i$ and $phi_i (u_i) := ell(y_i, u_i)$, then $ EE_epsilon [sup_(f in cal(F)) 1/n sum_(i=1)^n epsilon_i ell(y_i, f(x_i)) | cal(D)] <= G EE_epsilon [sup_(f in cal(F)) 1/n sum_(i=1)^n epsilon_i f(x_i) | cal(D)], $ hence $ R_n (cal(H)) <= G R_n (cal(F)). $
+
+=== Ball-Constrained and Linear Predictions
+
+Assume $cal(F) = {f_theta (x) = theta^T phi(x), Omega(theta) <= D}$ where $Omega$ a norm on $RR^d$. Let $Phi in RR^(n times d) = vec(phi^T (x_1), dots.v, phi^T (x_n))$. We see that $ R_n (cal(F)) & = EE[sup_(Omega(theta) <= D) 1/n epsilon^T Phi theta] = D/n EE[Omega^ast (Phi^T epsilon)], $ where $Omega^ast$ the dual norm to $Omega$, given by $Omega^ast_(u) = sup_(Omega(theta) <= 1) u^T theta$. Supposing $Omega = norm(dot)_2$ then $Omega^ast = norm(dot)_2$ so $      R_n (cal(F)) & = D/n EE[norm(Phi^T epsilon)_2] \
+("Jensen's") quad & <= D/n sqrt(EE[norm(Phi^T epsilon)_2]) \
+                  & <= D/n sqrt(EE[tr(Phi^T epsilon epsilon^T Phi)]) \
+                  & = D/n sqrt(EE[tr(Phi^T Phi)]) \
+                  & = D/n sqrt(sum_(i=1)^n EE[norm(phi(x_i))_2^2]) \
+                  & = D/sqrt(n) sqrt(EE[norm(phi(x))_2^2]). $
+
+
+
+= Optimization
+
+== Optimization in ML
+
+Remember that our goal is to compute/minimie $cal(R)(f) = EE[ell(y, f(x))]$. In practice, we minimize the empirical risk for some class of predictors, $ min_(theta in RR^d) {F(0) = 1/n sum_(i=1)^n ell(y_i, f_theta (x_i)) + Omega(theta)}, $ for $Omega$ some norm. Unlike "classical" optimization, we solve this problem, but evaluate the performance of our optimization on unseen data.
+
+== Gradient Descent
+
+Goal: $min_(theta in RR^d) F(theta), quad F : RR^d -> RR$.
+
+"Block-box oracles" are the idea of $theta -> "block box" -> "information about" F(theta), gradient F(theta), gradient^2 F(theta)$. 0th order oracles use $F(theta)$, 1st order use $F(theta), gradient F(theta)$, and 2nd order use $F(theta), gradient F(theta), gradient^2 F(theta)$ ("order" implies the "expense" of computing the desired quantities).
+
+#align(center, box(
+  stroke: .1em,
+  inset: .5em,
+  [_Alg 1 (basic gradient descent):_ Pick $theta_0 in RR^d$ and $t > = 1$, and set $ theta_t = theta_(t - 1) - gamma_t gradient F(theta_(t - 1)) $],
+))
+where $gamma_t$ the "step size"/"learning rate".
+
+=== Convex Functions
+
+#definition[
+  A differentiable function $F : RR^d -> RR$ is _convex_ if $F(h) >= F(theta) + gradient F(theta)^T (h - theta)$ for all $h, theta in RR^d$. If $F$ is twice differentiable, $F$ is convex if $gradient^2 F$ positive semidefinite.
+]
+
+#remark[
+  1. Linear sums of convex functions with positive constants are convex. The maximum of convex functions is convex.
+  2. The composition of a convex function with an affine linear function is convex.
+]
+
+#proposition[
+  Assume $F$ is differentiable and convex. Then points are global minimizers iff they are stationary points, i.e. the gradient vanishes there.
+]
+
+=== Analysis of GD for Strongly Convex and Differentiable Functions
+
+#definition[
+  A differentiable $F$ is $mu > 0$-strongly convex if $F(h) >= F(theta) + gradient F(theta)^T (h - theta) + mu/2 norm(h - theta)^2_2$ for all $h, theta in RR^d$.
+]
+
+#remark[
+  If $f$ is twice differentiable, then $gradient^2 F(theta) >= mu I$ (the smallest eigenvalue of $gradient^2 F$ for all $theta$ is bigger than or equal $mu$).
+]
+
+#lemma("Lojasiewicz's Inequality")[
+  If $F$ differentiable and $mu$-strongly convex with a unique minimizer $h^ast$, then $ norm(gradient F(theta))_2^2 >= 2 mu (F(theta) - F(h^ast)) $ for all $theta in RR^d$.
+]
+
+
+#definition([$L$-smooth])[
+  A $C^1$-function $F$ is said to be $L$-smooth if $ abs(F(h) - F(theta) - gradient F (theta)^T (h - theta)) <= L/2 norm(theta - h)^2, quad forall theta, h. $
+]
+
+#proposition[
+  - if the gradient of $F$ is $L$-Lipschitz, $F$ is $L$-smooth
+  - If $F in C^2$, then $F$ $L$-smooth iff $gradient^2 (theta) <= L I$ for all $theta$.
+]
+
+#definition("Condition number")[
+  When $F$ is both smooth and strongly convex, we call $kappa = L/mu >= 1$ the _condition number_.
+]
+
+#remark[In practice, the condition number grows with $n$.]
+
+#proposition[
+  Assume $F$ $L$-smooth and $mu$-strongly convex. Let $gamma = 1/L$. Then the iterates $theta_t$ of gradient descent satisfy $ F(theta_t) - F(h^ast) <= (1 - 1/kappa)^(t) (F(theta_0) - F(h^ast)) <= exp(-t/kappa) (F(theta_0) - F(h_ast)). $
+]
+
+#proof[
+  By smoothness, $ F(theta_t) & = F(theta_(t - 1) - gamma gradient F(theta_(t - 1))) \
+  & <= F(theta_(t - 1)) + gradient F(theta_(t - 1))^T (- gamma gradient F(theta_(t - 1))) + L/2 norm(gamma gradient F(theta_(t - 1)))^2 \
+  &= F(theta_(t - 1)) - (gamma - (L gamma^2)/2) norm(gradient F(theta_(t - 1))). $ Optimizing $gamma|-> gamma - (L gamma^2)/2$ in $gamma$ gives $gamma = 1/L$. By strong convexity then, $ F(theta_t) - F^ast & <= F(theta_(t - 1)) - F^ast - 1/(2 L) norm(gradient F(theta_(t - 1)))_(2)^2 \
+                     & <= F(theta_(t - 1)) - F^ast - 1/kappa (F(theta_(t - 1)) - F^ast). $ Repeatedly applying this in $t$ gives $ F(theta_t) - F^ast & <= (1 - 1/kappa)^t (F(theta_0) - F^ast) <= exp(-t/kappa) (F(theta_0) - F^ast). $
+]
+
+=== Convex and Smooth
+
+#proposition[
+  If $F$ is convex and $L$-smooth, then for all $theta, h in RR^d$, $ 1/L norm(gradient F (theta) - gradient F(h))^2 <= [gradient F(theta) - gradient F(h)]^T (theta - h), $ and moreover $ F(theta) >= F(h) + gradient F(h)^T (theta - h) + 1/(2L) norm(gradient F(theta) - gradient F(h))^2. $
+]
+
+#proof[
+  The second inequality implies the first by swapping the roles of $theta, h$ and adding the inequalities together and simplifying.
+
+  To prove the second, convexity and smoothness imply that for $xi in RR^d$, $ F(h) + gradient F(h)^T (xi - h) <= F(theta) + gradient F(theta)^T (xi - theta) + L/2 norm(theta - xi)^2_2, $ which implies $ F(h) + gradient F(h)^T (xi -h) - gradient F(theta)^T (xi - theta) - L/2 norm(theta - xi)_2^2 <= F(theta). $ The left-hand side is a quadratic in $xi$. Maximimizing this in $xi$ (with $theta, h$ fixed) gives $xi = 1/L (gradient F(h) - gradient F(theta))$ which implies $ F(theta) >= F(h) + 1/(2 L) norm(gradient F(h) - gradient F(theta)))^2 + gradient F(h)^T (theta - h). $ This gives the result.
+]
+
+#proposition[
+  Assume $F$ is $L$-smooth and convex with global minimizer $h^ast$. Choosing $gamma = 1/L$, we have $ F(theta_t) - F(h^ast) <= K/(2 t) norm(theta_0 - h^ast)_2^2. $
+]
+
+#remark[
+  This is a far slower rate than what we achieved in the strongly convex case.
+]
+
+#proof[
+  Let $V_t (theta) := t [F(theta_t) - F(h^ast)] + L/2 norm(theta_t - h^ast)^2$. We need to look at $ V_t (theta_t) - V_(t - 1) (theta_(t - 1)) = t [F(theta_t) - F(theta_(t - 1))] + [F(theta_(t - 1)) - F(h^ast)] + [L/2 norm(theta_t - h^ast)^2 - L/2 norm(theta_(t - 1) - h^ast)^2]. $ We bound each term; we see that $ F(theta_t) - F(theta_(t - 1)) & <= -1/(2 L) norm(gradient F(theta_(t - 1)))^2_2 \
+  F(theta_(t - 1)) - F(h^ast) & <= gradient F(theta_(t - 1))^T (theta_(t - 1) - h^ast) \
+  L/2 (norm(theta_t - h^ast)^2 - norm(theta_(t - 1) - h^ast)^2) & = L/2 [norm(theta_(t - 1) - 1/L gradient F (theta_(t - 1)) - h^ast)^2 -norm(theta_(t - 1) - h^ast)^2] \
+  &= 1/(2 L) norm(gradient F(theta_(t -1)))^2 - (theta_(t - 1) - h^ast)^T gradient F(theta_(t - 1)). $
+  All together, we get $ V_t (theta_t) - V_(t - 1) (theta_(t - 1)) & <= 0. $ This is true for all $t$, so $ t [F(theta_t) - F(h^ast)] <= V_t (theta_t) & <= V_0 (theta_0) <= L/2 norm(theta_0 - h^ast)^2 $ which gives the result.
+]
+
+#remark[
+  $F(theta_t) - F(h^ast) <= cal(O)(max{1/t, exp(-t/kappa)})$
+]
+
+
+#pagebreak()
+= Table of Functions
+
+#table(
+  columns: 4,
+  inset: 1em,
+  stroke: (top: 0pt, bottom: 0pt),
+  table.hline(stroke: 1pt),
+  table.vline(start: 0, x: 1),
+  table.vline(start: 0, x: 2),
+  table.vline(start: 0, x: 3),
+  table.header("Name", "Symbol", "Function", "Parameters?"),
+  table.hline(stroke: 1pt),
+  "Idk", $Phi_(0-1) : RR -> RR$, $u |-> cases(1 quad & u < 0, 1/2 & u = 0, 0 &u > 0)$, [],
+  [Conditional $Phi$-Risk], $C_xi^Phi : RR -> RR$, $u |-> xi Phi(u) + (1 - xi) Phi(-u)$, [$xi in [0, 1]$],
+  [Conditional 0-1-Risk], $C_xi (u) : RR -> RR$, $u |-> xi Phi_(0-1) (u) + (1 - xi) Phi_(0-1) (u)$, [$xi in [0, 1]$],
+  [Sigmoid], $sigma : RR -> RR$, $u |-> 1\/(1 + e^(-u))$, [],
+  [Success prob., 0-1], $eta : cal(X) -> [0, 1]$, $x |-> PP(y = 1 | x)$,
+  table.hline(stroke: 1pt),
+)
+
+
+
+

@@ -16,6 +16,7 @@
   red: rgb("#dc322f"),
   magenta: rgb("#d33682"),
   violet: rgb("#6c71c4"),
+  violetlight: rgb("#B6B8E2"),
   blue: rgb("#268bd2"),
   cyan: rgb("#2aa198"),
   cyanlight: rgb("#d4ecea"),
@@ -281,4 +282,14 @@
 
   inset: (top: 0em, left: 2.8em, right: 1.4em),
   separator: [#h(0.1em). #h(0.2em)],
+)
+
+#let question = thmbox(
+  "question",
+  "Question",
+  fill: solarized.violetlight,
+  inset: thmsettings.inset,
+  padding: thmsettings.padding,
+  base_level: thmsettings.base_level,
+  bodyfmt: x => text(style: "italic", x),
 )
