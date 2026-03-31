@@ -444,6 +444,8 @@ We can then say $gamma$ is _positively oriented_ if $T^ast$ points inside $cal(C
 
 = Surfaces
 
+== Preliminary Definitions
+
 Throughout, let $n >= 2$ and $k$ an integer between $1$ and $infinity$ (possibly infinity).
 
 #definition(
@@ -614,6 +616,8 @@ Throughout, let $n >= 2$ and $k$ an integer between $1$ and $infinity$ (possibly
   Any normal vector at $t$ must be orthogonal to the columns of this Jacobian, i.e. a multiple of $ dif phi_(0, t) (e_1) times dif phi_(0, t) (e_2) = (-2 cos(t) sin(t/2), - 2 sin(t) sin(t/2), - 2 cos(t/2)). $ This converges to $(0,0,-2)$ as $t -> 0$ and $(0,0, 2)$ as $t -> 2 pi$. But our surface parametrization is $2pi$-periodic in $t$, so these vectors should be equal, but aren't hence there can't exists a continuous map in $t$ to a normal vector can't be continuous.
 ]
 
+== Functions on Surfaces and the First Fundamental Form
+
 #definition[
   Let $S subset RR^3$ a regular $C^k$ surface. A function $f : S -> RR^n$ is $C^k$ if for all $p$, there exists a local parametrization $phi : U -> S$ near $p$ such that $f compose phi : U -> RR^n$ is $C^k$; we call the expression $f compose phi$ to be _$f$ in local coordinates_.
 ]
@@ -630,6 +634,7 @@ Throughout, let $n >= 2$ and $k$ an integer between $1$ and $infinity$ (possibly
   Define $pi : RR^2 -> SS^2$ be the stereographic parametrization of the sphere based on the north pole $N = (0,0,1)$. Fix $c in RR^2$ and let $M_c : RR^2 -> RR^2$ be given by $M_c (x) := x + c$. Show that $ f_c : SS^2 -> SS^2, quad f_c (p) := cases(N & p = N, (pi compose M_c compose pi^(-1)) (p) quad & p eq.not N) $ is smooth.
 ]
 
+
 #definition("1st Fundamental Form")[
   Let $S subset RR^3$ a regular surface. The _first fundamental form_ assigns to each $p in S$ the quadratic form $ norm(dot)^2 : T_p (S) -> RR, quad v |-> norm(v)^2. $
 ]
@@ -642,15 +647,247 @@ Throughout, let $n >= 2$ and $k$ an integer between $1$ and $infinity$ (possibly
   If $f : tilde(S) -> S$ a restriction of a rigid motion of $RR^3$, then it is an isometry.
 ]
 
-
 #definition[
-  Let $phi : U -> S$ be a local paramtrization of a regular surface $S$ near $p$. Define for $q in U$, $ I_q : RR^2 -> RR, quad u |-> norm(dif phi_q (u))^2 $ and $ angle.l u_1, u_2 angle.r_q := 1/4 [I_q (u_1 + u_2) - I_1 (u_1 - u_2)]. $
+  Let $phi : U -> S$ be a local parametrization of a regular surface $S$ near $p$. Define for $q in U$, $ I_q : RR^2 -> RR, quad u |-> norm(dif phi_q (u))^2 $ and $ angle.l u_1, u_2 angle.r_q := 1/4 [I_q (u_1 + u_2) - I_1 (u_1 - u_2)]. $
 ]
 
 #exercise[
   The map $(u_1, u_2) |-> angle.l u_1, u_2 angle.r_q$ defines an inner product on $RR^2$.
 ]
 Remark that $angle.l u_1, u_2 angle.r_q = dif phi_q (v) dot dif phi_q (v')$. Moreover, if we pick local coordinates for$RR^3$, we find $ angle.l v, v' angle.r_q & = (J_phi (q) v) dot (J_phi (q) v') = v^T J_phi^T (q) J_phi (q) v', $ where we notice $J_phi^T (q) J_phi (q)$ a symmetric 2 $times$ 2 matrix. We conventionally write $ J_phi^T (q) J_phi (q) = mat(E(q), F(q); F(q), G(q)) , quad E(q) = norm(partial_u phi)^2, G(q) = norm(partial_v phi)^2, F(q) = partial_u phi dot partial_v phi $ where we write $(u, v)$ for coordinates in $RR^2$ (and all the expressions above are evaluated at some point $q$). Thus if $v = (v_1, v_2) in RR^2$, we find $ I_q (v) = E(q) v_1^2 + 2 F(q) v_1 v_2 + G(q) v_2^2 $ which we call the first-fundamental form in local coordinates (since the expressions $E, F, G$ depend on choice of coordinates). We write, more concisely, $ I = E dif u^2 + 2 F dif u dif v + G dif v^2 $ again locally, where $dif u$, etc, shorthand for the function $dif u [(v_1, v_2)] := v_1,$ etc.
+
+#example[
+  The cylinder $S_1 = {x^2 + y^2 = 1}$, parametrized by $phi_1 (s, t) = (cos(s), sin(s), t)$ has first fundamental form $ dif s^2 + dif t^2 $ is local coordinates ($E = G = 1, F = 0$). In coordinates $psi : RR^2 minus {0} -> RR^3$, $ psi(u, v) = (u/(norm((u, v))), v/(norm((u, v))), 1/2 ln(u^2 + v^2)) $ gives first fundamental form $ (dif u^2 + dif v^2)/(u^2 + v^2). $
+]
+
+#example("Computing Length/Area in Local Coordinates")[
+  // TODO
+]
+
+#example("Conformal Parametrizations, Stereographic Parametrization")[
+  // TODO
+]
+
+== Curvature and the Second Fundamental Form
+
+Given $S subset RR^3$ an oriented regular $C^2$ surface with normal $N$, we can view $N$, since it is a unit vector, as a map $N : S -> SS^2$; this is $C^1$. In particular, $N$ is given by the (plus or minus) of the cross product of the columns of the Jacobian of a local parametrization. We call this map the _Gauss map_.
+
+#definition("Shape Operator")[
+  With $p in S$ as above, the _shape operator_ at $p$ is the map $ - dif N_p : T_p S -> T_(N(p)) SS^2. $
+  The _Gaussian curavture_ at $p$ is $ K(p) := det(-dif N_p), quad K : S -> RR $ and the _mean curvature_ at $p$ is $ H(p) := 1/2 tr(- dif N_p), quad H : S -> RR. $
+]
+
+#remark[
+  Note that $T_(N(p)) SS^2 = T_p S$, since both are planes normal to $N(p)$, which is unique.
+]
+
+#example("Plane")[
+
+]
+
+#example("Sphere")[
+
+]
+
+#example("Curvature at Critical Point of a Function Graph")[
+
+]
+
+#proposition[
+  $K(p)$ is invariant under change of orientation. $H(p)$ is reversed by change of orientation.
+]
+
+#remark[
+  This means that $K(p)$ and $abs(H(p))$ is well-defined, locally, for even non-orientable surfaces, since we can always locally define a (continuous) unit normal by taking the (normalized) cross product of the columns of a local parametrization.
+]
+
+#proposition[
+  $K, H$ are preserved by rigid motion. More precisely, let $S subset RR^3$ a regular $C^2$ surface with orientation $N$ and $M : RR^3 -> RR^3$ a rigid motion (where $M(x) = O(x) + b$ for $O$ an orthogonal matrix and $b$ a fixed vector). Then, $tilde(S) = M(S)$ is a regular $C^2$ surface with orientation $tilde(N)(tilde(p)) := O(N(p))$, $tilde(p) = M(p)$, so in particular, $ tilde(K)(tilde(p)) = K(p), quad tilde(H)(tilde(p)) = H(p). $
+]
+
+#remark[
+  Every point of a regular $C^2$ surface is "essentially" a critical point of a function, since we may always rotate the surface such that the tangent plane at a given point is the $x-y$ plane (and by the previous proposition, the curvatures won't be affected) and every regular surface is locally a graph.
+]
+
+#corollary[
+  The shape operator is self-adjoint with respect to the standard inner product.
+]
+
+We provide two proofs, for the second gives useful insights for later.
+
+#proof("1")[
+  This follows directly from the previous remarks for we know that we can always pick coordinates so that $- dif N_p = H_f$, the Hessian of some $C^2$ function $f$. By Clairault's theorem, this is always symmetric and thus $-dif N_p$ is self-adjoint.
+]
+
+#proof("2")[
+  Choose local parametrization $phi : U -> S$ near a point $p = phi(q) in S$, so $partial_u phi, partial_v phi$ (evaluated at $q$) provide a basis for $T_p S$. Because these are a basis, it suffices to show by linearity that $ -dif N_p (partial_u phi) dot partial_v phi = partial_u phi dot (-dif N_p (partial_v phi)), $ for the other possible combinations we need to check (eg $dif N_p (partial_u phi) dot partial_u phi$, etc) are trivial.
+  Since $N compose phi$ is orthogonal to $partial_u phi$ throughout $U$, this means $ 0 equiv (N compose phi) dot partial_u phi $ so taking the derivative with respect to $v$, we get $ 0 = (partial_v (N compose phi) ) dot partial_u phi + (N compose phi) dot partial_(v u)^2 phi. $ Similar occurs if we begin with orthogonality to $partial_v phi$ and take a derivative with respect to $v$, i.e. $ 0 = (partial_u (N compose phi)) dot partial_v phi + (N compose phi) dot partial_(u v)^2 phi. $ Since $phi$ $C^2$, $partial_(u v)^2 phi = partial_(v u)^2 phi$ and so these two equations combined imply $ - (partial_u (N compose phi)) dot (partial_v phi) = (partial_u phi) dot (- partial_v (N compose phi)). $ But in local coordinates, $-dif N_p (partial phi_u) = partial_u N compose phi,$ etc., so the proof follows.
+]
+
+#corollary[
+  There exists an orthonormal basis for $T_p S$ such that $- dif N_p$ is represented by a diagonal matrix $k_1 <= k_2$. We call $k_1, k_2$ the _principal curvatures_ of $S$ at $p$, and their corresponding eigenvectors the _principal directions_ of $S$ at $p$.
+
+  In this notation, $K(p) = k_1 k_2, H(p) = 1/2 (k_1 + k_2)$.
+]
+
+#definition[
+  Let $p in S$. We say that $p$ is
+  - _elliptic_ if $K(p) > 0$
+  - _hyperbolic_ if $K(p) < 0$
+  - _planar_ if $K(p) = 0$ but $H(p) eq.not 0$
+  - _umbilic_ if $k_1 = k_2$.
+]
+
+
+#definition[
+  The _second fundamental form_ of $S$ at $p$ is the map $ II_p : T_p S -> RR, quad II_p (v) = -dif N_p (v) dot v. $ In local coordinates $phi : U -> S$, $p = phi(q)$, we associate $II_q$ with the matrix $ mat(e, f; f, g) : RR^2 -> RR^2, $ with respect to the standard basis of $RR^2$, or equivalently with the quadratic form $ e dif u^2 + 2 f dif u dif v + g dif v^2. $ Note that $ e &= - dif N_p (partial_u phi) dot partial_u phi = (N compose phi) dot partial_(u u)^2 phi \
+  f &= - dif N_p (partial_u phi) dot partial_v phi = - dif N_p (partial_v phi) dot partial_u phi = (N compose phi) dot partial_(u v)^2 phi \
+  g &= - dif N_p (partial_v phi) dot partial_v phi = (N compose phi) dot partial_(v v)^2 phi, $ as discussed in the proof of the self-adjointness of $-dif N_p$ (all evaluated at $q$).
+]
+
+#remark[
+  The advantage of the latter formulae is that one needn't compute the derivatives of $N$ in local coordinates, which isn't usually the easiest.
+]
+
+#remark[
+  To be clear, given $v in T_p S$, one can write $v = dif_q phi (u)$ for some $u = (u_1, u_2) in RR^2$. Then, $ II_p (v) & = u^T mat(e, f; f, g) u = e u_1^2 + 2 f u_1 u_2 + g u_2^2. $
+]
+
+#proposition("Shape Operator in Local Coordinates")[
+  In local coordinates given by $phi$, the shaper operator $- dif N_p$ is represented by, with respect to the basis ${partial_u phi, partial_v phi}$, by $ mat(E, F; F, G)^(-1) dot mat(e, f; f, g) = 1/(E G - F^2) mat(e G - f G, f G - g F; f E - e F, g E - f F). $
+]
+
+#corollary("Curvature in Local Coordinates")[
+  $ K compose phi = (e g - f^2)/(E G - F^2), quad H compose phi = 1/2 (e G - 2 f F + g E)/(E G - F^2) $
+]
+
+
+#definition("Normal Curvature")[
+  The _normal curvatures_ of a surface $S$ at a point $p$ along $v in T_p S$ is $II_p (v)$ where $v$ a unit vector; the principal curvatures are the min, max normal curvatures on $T_p S$.
+]
+
+#definition("Normal Section")[
+  Let $S$ a regular $C^2$ surface with orientation $N$. Fix $p in S$ and $v in T_p S$ and let $cal(P)$ be the plane in $RR^3$ containing the point $p$ and parallel to $N(p)$ and $v$ (i.e. with normal $N(p) times v$). The intersection $cal(C) := cal(P) sect S$ is a regular $C^2$ curve near $p$; this is called the _normal section_ to $S$ at $p$ along $v$.
+  // TODO picture?
+]
+
+#proposition("Normal Curvature Characterization via Curves")[
+  Let $v in T_p S$ be a unit vector and $phi. (- epsilon, epsilon) -> S$ a regular $C^2$ path with $gamma (0) = p$ and $dot(gamma)(0) = v$. Then,
+  1. $II_p (v) = N(p) dot ddot(gamma)(0)$
+  2. $abs(II_p (v)) <= K_gamma (0)$, the curvature of the curve $gamma$, with equality achieved along a normal section along $v$.
+]
+
+#proof[
+  The inequality in 2. follows from Cauchy-Schwarz. We'll prove the "equality achieved" statement later. For 1., note that $gamma in S$ means $dot(gamma) (t) in T_(gamma(t)) S$ for all $t$, and thus $dot(gamma) dot N compose gamma equiv 0$ for all $t$. Taking derivatives and evaluating at $t = 0$, we get $ 0 & = ddot(gamma) (0) dot (N compose (gamma (0))) + dot(gamma)(0) dot (dif N_(gamma(0)) dot dot(gamma)(0)) \
+    & = ddot(gamma)(0) dot N(p) + v dot dif N_p (v) \
+    & = ddot(gamma)(0) dot N(p) - II_p (v), $ from which the proof follows.
+
+  Finally, if $gamma$ is a normal section with unit-speed parametrization along $v$, then $ddot(gamma)(0)$ is orthogonal to $v$ and parallel to the plane $cal(P)$ containing $p$ and parallel to both $N(p)$ and $v$. Thus, it must be that $dot(gamma)(0)$ is parallel to $N(p)$, so equality holds in the Cauchy-Schwarz inequality in 1., and we find $ II_p (v) = norm(N(p)) norm(ddot(gamma) (0)) = plus.minus K_gamma (0), $ from which the proof follows by taking absolute values.
+]
+
+=== Orienting the Tangent Space
+
+Let $S$ a $C^2$ oriented surface and for $p in S$, choose an orthonormal basis ${v_1, v_2}$ for $T_p S$ with $v_1 times v_2 = N$. This means ${v_1, v_2, N}$ forms a positively oriented orthonormal basis of $RR^3$.
+
+// TODO picture
+
+Then, we can define "clockwise/counter-clockwise" directions for vectors in $T_p S$. Namely, given $w in T_p S$, we can write $w = a_1 v_1 + a_2 v_2$ for some scalars $a_1, a_2$. Define then the $pi/2$-counter-clockwise rotation of $w$ by $ w^ast = a v_2 - b v_1, $ which one notices is still contained in $T_p S$.
+
+Now, let $gamma : I -> S$ be a unit-speed parametrized, $C^2$ path with $gamma(0) = p$. Then, $ddot(gamma)(0)$ is orthogonal to $dot(gamma)(0)$ and thus $ddot(gamma)(0)$ lies in the plane normal to $dot(gamma)(0)$, which is spanned by $N(p)$ and $dot(gamma)(0)^ast$. So, we can write, for some constants $K_N, K_g$, $ ddot(gamma)(0) = K_N dot N(p) + K_g dot dot(gamma)(0)^ast. $ We call $K_g$ the _geodesic curvature_  and $K_N$ the _normal curvature_ of $gamma$ at $0$. Remark that $ K_N = ddot(gamma)(0) dot N(p) = II_p (dot(gamma)(0)), $ by the previous proposition, and $ K_g = ddot(gamma)(0) dot dot(gamma)(0)^ast, $ which is the same as the formula for the signed curvature if $gamma$ were a planar path. Moreover, $ K_gamma (0)^2 = K_N^2 + K_g^2. $ For more general non-unit speed paths $gamma$, we define these quantities similarly in terms of their unit-speed reparametrization.
+
+#definition[
+  We call $gamma : I -> S$ a regular $C^2$ path a _geodesic_ if $ddot(gamma)$ is orthogonal to $S$ everywhere in $I$.
+]
+
+#proposition[
+  $gamma$ is a geodesic iff $gamma$ has constant speed and $K_g equiv 0$.
+]
+
+#proposition[
+  // TODO idk that thing about straightening out tangent lines.......?
+]
+
+== An Aside: the Fary-Milnor Theorem
+
+#definition("Unknotted")[
+  Let $cal(C) subset RR^3$ a closed regular curve. We call $cal(C)$ _unknotted_ if there exists a subset $D subset RR^3$ and a homeomorphism $h : overline(DD) -> D$ (where $DD$ the unit disk) such that $cal(C) = h(SS^1)$. We call $cal(C)$ knotted if it is not unknotted.
+]
+
+#theorem("Fary-Milnor")[
+  Let $cal(C)$ a closed, regular, $C^4$ curve. If $cal(C)$ is knotted and $kappa_(cal(C)) > 0$ then $ integral_(cal(C)) kappa_(cal(C)) dif s >= 4 pi. $
+]
+
+We sketch the main ideas of the proof. Fix $gamma : RR -> cal(C)$ an arc-length, $ell$-periodic parametrization of $cal(C)$. We need the following exercise:
+
+#exercise[
+  Let $cal(C) subset RR^3$ a regular $C^3$ closed curve with strictly positive curvature. Let, for $r > 0$ and $p in cal(C)$, the set $cal(C)_(r, p)$ be the $r$-radius circle centered at $p$ lying in the normal plane of $cal(C)$ at $p$. Then, there exists $r > 0$ sufficiently small such that the set $ cal(C)_r := union.big_(r in cal(C)) cal(C)_(r, p) $ is a regular parametrized surface; we call this the $r$-tubular neighborhood of $cal(C)$. Moreover, one can take $r < 1/(max kappa_cal)$.\
+  _Hint: find a parametrization of $cal(C)_(r, p)$ in terms of the unit normal, binormal of $cal(C)$ at $p$, and extend this to a parametrization of $cal(C)_r$. Differentiate this expression to check regularity._
+]
+
+Let $0 < epsilon < 1/(max kappa_cal(C))$, an $S$ be the _$epsilon$-tubular neighborhood of $S$_ which has a (global, regular, $C^2$ parametrization) $ phi : [0, ell] times [0, 2pi] -> S, quad phi(s, theta) = gamma(s) + epsilon cos(theta) n(s) + epsilon sin(theta) b(s) $ where we write $n, b$ for the unit normal, binormal resp. of $cal(C)$ to not confuse with our notation $N$ for the normal of a surface.
+
+One computes $ norm(partial_s phi times partial_theta phi) = epsilon (1 - epsilon cos(theta) kappa_gamma (s)), quad K compose phi = (- cos (theta) kappa_gamma (s))/(epsilon (1 - epsilon cos(theta) kappa_gamma (s))). $ Based on this expression for the Gaussian curvature of $S$, we see that the subset of $S$ with positive curvature is precisely $ S_+ := {p in S : K(p) >= 0} = phi([0, ell] times [pi/2, (3 pi)/2]). $
+
+#proposition[
+  $integral.double_(S_+) K dif sigma = 2 integral_(cal(C)) kappa_cal(C) dif s$
+]
+
+#proof[
+  This follows from direct computation:
+  $
+    integral.double_(S_+) K dif sigma &= integral_0^ell integral_(pi\/2)^((3 pi)\/ 2) (K compose phi)(s, theta) norm(phi_s times phi_theta) dif theta dif s \
+    &= integral_(0)^ell integral_(pi\/2)^(3 pi\/2) - cos theta kappa_(gamma) (s) dif s \
+    &= 2 integral_(cal(C)) kappa_(cal(C)) dif s
+  $
+]
+
+#proposition[
+  The map $N : S_+ -> SS^2$ is surjective and thus $integral.double_(S^+) K dif sigma >= 4 pi$.
+]
+
+#proof[
+  We give a heuristic argument. Fix $v in SS^2$ and let $cal(P)$ be the plane in $RR^3$ with normal $v$. Since $S$ compact, we can translate $cal(P)$ in space such that it doesn't intersect $S$ anywhere. We can then translate $cal(P)$ towards $S$ until it first intersects it, at some point $p$; this means $cal(P)$ is tangent to $S$ at $p$ and thus $N(p) = v$. Moreover, by a second-derivative test type argument, $K(p) >= 0$. Thus we have surjectivity.
+
+  For the "thus" statement, we can apply a change of variables to the integral in question and get $ integral.double_(S_+) K dif sigma = integral.double_(S_+) det(dif N) dif sigma >= integral.double_(N(S_+)) dif sigma_(SS^2) = 4 pi, $ where the inequality comes from the surjectivity (if $N$ were a homeomorphism, we would have equality here).
+]
+
+#lemma[
+  Suppose there exists a $v in SS^2$ such that the _signed height function_ $ H_v : cal(C) -> RR, quad w |-> w dot v $ has exactly 2 local extrema. Then, $cal(C)$ is unknotted.
+]
+
+#proof[
+  Aw man.
+  // TODO
+]
+
+#proposition[
+  If $cal(C)$ is knotted, then $N : S_+ -> SS^2$ is at least 2 to 1.
+]
+
+#proof[
+  We prove the contrapositive. Suppose $N : S_+ -> SS^2$ is not 2 to 1. We know it is 1 to 1, so there must exist some $v in SS^2$ and $p in S_+$ such that $N(p) = v$, but $N(q) eq.not v$ for all $q eq.not v in S_+$. Consider the height function $H_v$. In local coordinates, $ (H_v compose gamma )(t) = gamma(t) dot N(p) $ so that $ dif/(dif t) (H_v compose gamma )(t) = dot(gamma)(t) dot N(p). $ This can only vanish if $dot(gamma)(t)$ orthogonal to $N(p)$. Ummm
+
+  // TODO above argument
+]
+
+Combining these results, the last proposition really tells us that $ integral.double_(S_+) K dif sigma >= 8 pi $ by a similar argument to the last last proposition. Combining with the first proposition yields the result.
+
+== Curvature under Local Isometries
+
+// TODO picture
+
+Fix $S$ a regular $C^2$ surface with orientation $N : S -> SS^2$, and let $phi : U -> S$ a regular $C^2$ parametrization compatible with $N$ (i.e. $N = (partial_u phi times partial_v phi)/(norm(partial_u phi times partial_v phi))$). This means $ {partial_u phi, partial_v phi, N compose phi} $ forms a positively-oriented ordered basis of $RR^3$. Akin to the Frenet frame equations, we will consider the derivatives of this frame. Recall that in local coordinates and in the ${partial_u phi, partial_v phi}$ basis, $ - J_N = mat(E, F; F, G)^(-1) mat(e, f; f, g) =: mat(a_(1 1), a_(1 2); a_(2 1), a_(2 2)). $ We compute first $ partial_u (N compose phi) = - a_(1 1) partial_u phi - a_(2 1) partial_v phi \
+partial_v (N compose phi) = - a_(1 2) partial_u phi - a_(2 2) partial_(v) phi. $ This constants we can find. We similarly find $ partial_(u u)^2 phi & = Gamma_(1 1)^1 partial_u phi + Gamma_(1 1)^2 partial_v phi + e N \
+partial_(u v)^2 phi & = Gamma_(1 2)^1 partial_u phi + Gamma_(1 2)^2 partial_v phi + f N \
+partial_(v u)^2 phi & = Gamma_(2 1)^1 partial_u phi + Gamma_(2 1)^2 partial_v phi + f N \
+partial_(v v)^2 phi & = Gamma_(2 2)^1 partial_u phi + Gamma_(2 2)^2 partial_v phi + g N, $ where $Gamma_(1 1)^1$, etc, are the appropriate scalar constants in this basis for the given vectors. Note that since $phi in C^2$, $Gamma_(j k)^i = Gamma_(k j)^i$ (i.e., the middle two equations are equivalent). We call the coefficients, which we view as functions $ Gamma_(j k)^(i) : U -> RR, quad 1 <= i, j, k <= 2 $ the _Christoffel symbols_.
+
+// TODO
+
+
+
+
+
 
 = Appendix
 == Auxiliary Results
