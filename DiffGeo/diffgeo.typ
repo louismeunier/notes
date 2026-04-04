@@ -654,7 +654,7 @@ Throughout, let $n >= 2$ and $k$ an integer between $1$ and $infinity$ (possibly
 #exercise[
   The map $(u_1, u_2) |-> angle.l u_1, u_2 angle.r_q$ defines an inner product on $RR^2$.
 ]
-Remark that $angle.l u_1, u_2 angle.r_q = dif phi_q (v) dot dif phi_q (v')$. Moreover, if we pick local coordinates for$RR^3$, we find $ angle.l v, v' angle.r_q & = (J_phi (q) v) dot (J_phi (q) v') = v^T J_phi^T (q) J_phi (q) v', $ where we notice $J_phi^T (q) J_phi (q)$ a symmetric 2 $times$ 2 matrix. We conventionally write $ J_phi^T (q) J_phi (q) = mat(E(q), F(q); F(q), G(q)) , quad E(q) = norm(partial_u phi)^2, G(q) = norm(partial_v phi)^2, F(q) = partial_u phi dot partial_v phi $ where we write $(u, v)$ for coordinates in $RR^2$ (and all the expressions above are evaluated at some point $q$). Thus if $v = (v_1, v_2) in RR^2$, we find $ I_q (v) = E(q) v_1^2 + 2 F(q) v_1 v_2 + G(q) v_2^2 $ which we call the first-fundamental form in local coordinates (since the expressions $E, F, G$ depend on choice of coordinates). We write, more concisely, $ I = E dif u^2 + 2 F dif u dif v + G dif v^2 $ again locally, where $dif u$, etc, shorthand for the function $dif u [(v_1, v_2)] := v_1,$ etc.
+Remark that $angle.l u_1, u_2 angle.r_q = dif phi_q (v) dot dif phi_q (v')$. Moreover, if we pick local coordinates for$RR^3$, we find $ angle.l v, v' angle.r_q & = (J_phi (q) v) dot (J_phi (q) v') = v^T J_phi^T (q) J_phi (q) v', $ where we notice $J_phi^T (q) J_phi (q)$ a symmetric 2 $times$ 2 matrix. We conventionally write $ J_phi^T (q) J_phi (q) = mat(E(q), F(q); F(q), G(q)) , quad E(q) = norm(partial_u phi)^2, G(q) = norm(partial_v phi)^2, F(q) = partial_u phi dot partial_v phi $ where we write $(u, v)$ for coordinates in $RR^2$ (and all the expressions above are evaluated at some point $q$). Thus if $v = (v_1, v_2) in RR^2$, we find $ upright(I)_q (v) = E(q) v_1^2 + 2 F(q) v_1 v_2 + G(q) v_2^2 $ which we call the first-fundamental form in local coordinates (since the expressions $E, F, G$ depend on choice of coordinates). We write, more concisely, $ upright(I) = E dif u^2 + 2 F dif u dif v + G dif v^2 $ again locally, where $dif u$, etc, shorthand for the function $dif u [(v_1, v_2)] := v_1,$ etc.
 
 #example[
   The cylinder $S_1 = {x^2 + y^2 = 1}$, parametrized by $phi_1 (s, t) = (cos(s), sin(s), t)$ has first fundamental form $ dif s^2 + dif t^2 $ is local coordinates ($E = G = 1, F = 0$). In coordinates $psi : RR^2 minus {0} -> RR^3$, $ psi(u, v) = (u/(norm((u, v))), v/(norm((u, v))), 1/2 ln(u^2 + v^2)) $ gives first fundamental form $ (dif u^2 + dif v^2)/(u^2 + v^2). $
@@ -872,23 +872,55 @@ One computes $ norm(partial_s phi times partial_theta phi) = epsilon (1 - epsilo
 
 Combining these results, the last proposition really tells us that $ integral.double_(S_+) K dif sigma >= 8 pi $ by a similar argument to the last last proposition. Combining with the first proposition yields the result.
 
-== Curvature under Local Isometries
+== Curvature under Local Isometries, and Gauss's and Bonnet's Theorems
 
 // TODO picture
 
-Fix $S$ a regular $C^2$ surface with orientation $N : S -> SS^2$, and let $phi : U -> S$ a regular $C^2$ parametrization compatible with $N$ (i.e. $N = (partial_u phi times partial_v phi)/(norm(partial_u phi times partial_v phi))$). This means $ {partial_u phi, partial_v phi, N compose phi} $ forms a positively-oriented ordered basis of $RR^3$. Akin to the Frenet frame equations, we will consider the derivatives of this frame. Recall that in local coordinates and in the ${partial_u phi, partial_v phi}$ basis, $ - J_N = mat(E, F; F, G)^(-1) mat(e, f; f, g) =: mat(a_(1 1), a_(1 2); a_(2 1), a_(2 2)). $ We compute first $ partial_u (N compose phi) = - a_(1 1) partial_u phi - a_(2 1) partial_v phi \
-partial_v (N compose phi) = - a_(1 2) partial_u phi - a_(2 2) partial_(v) phi. $ This constants we can find. We similarly find $ partial_(u u)^2 phi & = Gamma_(1 1)^1 partial_u phi + Gamma_(1 1)^2 partial_v phi + e N \
+Fix $S$ a regular $C^2$ surface with orientation $N : S -> SS^2$ (which is $C^1$), and let $phi : U -> S$ a regular $C^2$ parametrization compatible with $N$ (i.e. $N = (partial_u phi times partial_v phi)/(norm(partial_u phi times partial_v phi))$). This means $ {partial_u phi, partial_v phi, N compose phi} $ forms a positively-oriented ordered basis of $RR^3$. Akin to the Frenet frame equations, we will consider the derivatives of this frame. Recall that in local coordinates and in the ${partial_u phi, partial_v phi}$ basis, $ - J_N = mat(E, F; F, G)^(-1) mat(e, f; f, g) =: mat(a_(1 1), a_(1 2); a_(2 1), a_(2 2)). $ We compute first $ partial_u (N compose phi) = - a_(1 1) partial_u phi - a_(2 1) partial_v phi \
+partial_v (N compose phi) = - a_(1 2) partial_u phi - a_(2 2) partial_(v) phi. $ These constants we can find explicitly in terms of $E, F, G; e, f, g$. We similarly find $ partial_(u u)^2 phi & = Gamma_(1 1)^1 partial_u phi + Gamma_(1 1)^2 partial_v phi + e N \
 partial_(u v)^2 phi & = Gamma_(1 2)^1 partial_u phi + Gamma_(1 2)^2 partial_v phi + f N \
 partial_(v u)^2 phi & = Gamma_(2 1)^1 partial_u phi + Gamma_(2 1)^2 partial_v phi + f N \
-partial_(v v)^2 phi & = Gamma_(2 2)^1 partial_u phi + Gamma_(2 2)^2 partial_v phi + g N, $ where $Gamma_(1 1)^1$, etc, are the appropriate scalar constants in this basis for the given vectors. Note that since $phi in C^2$, $Gamma_(j k)^i = Gamma_(k j)^i$ (i.e., the middle two equations are equivalent). We call the coefficients, which we view as functions $ Gamma_(j k)^(i) : U -> RR, quad 1 <= i, j, k <= 2 $ the _Christoffel symbols_.
+partial_(v v)^2 phi & = Gamma_(2 2)^1 partial_u phi + Gamma_(2 2)^2 partial_v phi + g N, $ where $Gamma_(1 1)^1$, etc, are the appropriate scalar constants in this basis for the given vectors. Note that since $phi in C^2$, $Gamma_(j k)^i = Gamma_(k j)^i$ (i.e., the middle two equations are equivalent). We call the coefficients, which we view as functions $ Gamma_(j k)^(i) : U -> RR, quad 1 <= i, j, k <= 2 $ the _Christoffel symbols_. The lower indices indicate the derivatives of $phi$ to which $Gamma_(j k)^(i)$ corresponds to (i.e. $(j k) = (1 1)$ means take two derivatives in the first coordinate i.e. $u$, etc), and the upper index indicates to which coefficient of the basis ($1$ for $partial_u phi$, the first basis element, $2$ for $partial_v phi$, the second basis element) $Gamma_(j k)^i$ is multiplied to.
 
-// TODO
+We can write the Christoffel symbols explicitly in terms of $E, F, G$ and their derivatives. One computes $ partial_u E & = 2 partial_(u u)^2 phi dot partial_u phi, \
+partial_v E & = 2 partial_(u v)^2 phi dot partial_u phi, $ and similarly $ partial_(u) F & = partial_(u u)^2 phi dot partial_v phi + partial_u phi dot partial_(u v)^2 phi \
+  partial_v F & = partial_(u v)^2 phi dot partial_v phi + partial_u phi dot partial_(v v)^2 phi, $ similarly for $G$. Combining with our equations above, we find $ partial_(u u)^2 phi dot partial_u phi & = Gamma_(1 1)^1 E +
+                                        Gamma_(1 1)^2 F= 1/2 partial_u E \
+partial_(u u)^2 phi dot partial_v phi & = Gamma_(1 1)^1 F + Gamma_(1 1)^2 G = partial_u F - 1/2 partial_v E, $ which can be written in matrix form as the expression $ vec(Gamma_( 1 1)^1, Gamma_(1 1)^2) = mat(E, F; F, G)^(-1) vec(1/2 partial_u E, partial_u F - 1/2 partial_v E), $ where we recall that since $S$ regular, the 1st fundamental form is invertible. One similarly computes (follow the exact same reasoning as above) for the other pairs of Christoffel symbols $ vec(Gamma_(1 2)^1, Gamma_(1 2)^2) & = mat(E, F; F, G)^(-1) vec(1/2 partial_v E, 1/2 partial_u G), quad vec(Gamma_(2 2)^1, Gamma_(2 2)^2) = mat(E, F; F, G)^(-1) vec(partial_v F - 1/2 partial_u G, 1/2 partial_v G). $ In short, we see that the Christoffel symbols are completely determined by the 1st fundamental form, and thus are preserved under local isometries.
+
+Assume now $S$ is $C^3$ and $N$ is $C^2$, so that in particular $partial_(u v)^2 (partial_u phi) = partial_(v u)^2 (partial_u phi)$, $partial_(u v) N = partial_(v u) N$, etc.. Let us expand this first identity. The right-hand side can be written, using the Christoffel symbols from before, $ partial_v (partial_(u u)^2 phi) & = partial_v Gamma_(1 1)^1 partial_u phi + Gamma_(1 1)^1 partial_(v u)^2 phi + partial_v Gamma_(1 1)^2 partial_v phi + Gamma_( 11)^2 partial_(v v)^2 phi + partial_v e N + e partial_v N, $ and similarly the left-hand side can be written $ partial_u (partial_(v u)^2 phi) &= partial_u Gamma_(1 2)^1 partial_u phi + Gamma_(1 2)^1 partial_(u u)^2 phi + partial_u Gamma_(1 2)^2 partial_v phi + Gamma_( 1 2)^2 partial_(u v)^2 phi + partial_u f N + f partial_u N. $ We can (well we could, but we'll just do it in our heads...) rewrite $partial_u N, partial_v N, partial_(u u)^2 phi, partial_(u v)^2 phi, partial_(v u)^2 phi, partial_(v v)^2 phi$ in terms of our basis, and since these two terms must be equal, match the coefficients of each basis element.
+
+For $partial_(u) phi$:
+$ partial_u Gamma_(1 2)^1 + Gamma_(1 2)^1 Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1 2)^1 - f a_(1 1) &= partial_v Gamma_(1 1)^1 + Gamma_(1 1)^1 Gamma_(1 2)^1 + Gamma_(1 1)^2 Gamma_(2 2)^1 - e a_(1 2) \
+=> f a_(1 1) - e a_(1 2) &= partial_u Gamma_(1 2)^1 - partial_v Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1 2)^1 - Gamma_(1 1)^2 Gamma_(2 2)^1 \
+=> (f e G - f^2 F)/(E G - F^2) - (e f G - e g F)/(E G - F^2) &= (dots.c) \
+=> (e g - f^2)/(E G - F^2) F &= (dots.c) \
+=> K dot F &= (dots.c) \
+=> K &= (partial_(u) Gamma_(1 2)^1 - partial_v Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1 2)^1 - Gamma_(1 1)^2 Gamma_(2 2)^1)/F. $ With the dust settled, the punchline is that we have written $K$ purely in terms of the Christoffel symbols and the first fundamental form. Since these are invariant under local isometries, this implies the Gaussian curvature is invariant under local isometries, assuming $F eq.not 0$ (since we divided by $F$ at the end). However, if $F$ is 0, we can similarly match the coefficients for $partial_v phi$ and compute that $ #box(stroke: 1pt, inset: 1em, $ K = (Gamma_(1 1)^1 Gamma_(1 2)^2 - Gamma_(1 2)^1 Gamma_(1 1)^1 + Gamma_(1 1)^2 Gamma_(2 2)^2 - Gamma_(1 2)^2 Gamma_(1 2)^2 + partial_v Gamma_(1 1)^2 - partial_(u) Gamma_(1 2)^2)/E, $) $ and since $E$ is always nonzero (for regular surfaces), this is always a valid expression for $K$ in terms of the first fundamental form. This is known as the _Gauss equation_, which proves #theorem("Gauss's Theorema Egregium")[The Gaussian curvature of a $C^3$ surface is invariant under local isometries.]
+
+#exercise[
+  Suppose $E equiv 1$ and $F equiv 0$. Show that $K = - (partial_(u u)^2 (sqrt(G)))/(sqrt(G))$.
+]
+
+#corollary[
+  If $S$ is locally isometric to a plane (i.e. there exists a local parametrization such that $dif s^2 = dif u^2 + dif v^2$), then $K equiv 0$.
+
+  Similarly, if $S$ is locally isometric to $SS^2$, then $K equiv 1$.
+]
+
+Finally, we can compare the coefficients of $N$, from which we find the relationship $ Gamma_(1 1)^1 f + Gamma_(1 1)^2 g + partial_v e = Gamma_(1 2)^1 e + Gamma_(1 2)^2 f + partial_u f arrow.r.squiggly quad "1st \"Mainardi-Codazzi Equation\"". $ Similarly, we can compare the coefficients of the basis elements upon expanding the relationships $partial_(u v)^2 partial_v phi = partial_(v u)^2 partial_v phi$ and $partial_(u v)^2 N = partial_(v u)^2 N$ to find a family of 9 compatibility equations involving the first and second fundamental forms.
+#theorem("Bonnet")[
+  Suppose $E, F, G, e, f, g : V -> RR$ are smooth functions on $V subset RR^2$ open, with $E, G, E G - F^2 > 0$. If they also satisfy the aforementioned compatibility equations, there exists $U subset V$ open and a regular smooth parametrization $phi : U -> RR^3$ such that $ upright(I)_phi = mat(E, F; F, G), quad II_(phi) = mat(e, f; f, g) $ and $phi$ is unique up to rigid motions.
+]
+#remark[We use "smooth" to avoid digging into the exact conditions of the compatibility equations.]
+
+#remark[We can use Gauss's formula to extend the definition of Gaussian curvature for regular $C^3$ surfaces in $RR^n$. This begins by defining it analogously to above for a local parametrization, then by showing that this definition is invariant under change of parametrization.]
 
 
 
 
 
-
+#pagebreak()
 = Appendix
 == Auxiliary Results
 #proposition[
@@ -952,6 +984,8 @@ Let $gamma : I -> RR^n$ be a parametrized curve, and let $tilde(gamma) = gamma c
 )
 $dagger$ = requires regular, $dagger.double$ = requires $C^2$,$dagger.double^ast =$ requires $C^3$, N/A$=$ doesn't exist.
 
+
+// TODO surfaces
 
 // Fix coordinates so $p = 0$ and $T$ is horizontal at $q$ and thus $N$ is vertical at $q$.
 // Let $gamma$ be an arc-length parametrization with $gamma(0) = 0$ and $gamma(t_0) = q$.

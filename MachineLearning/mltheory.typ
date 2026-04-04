@@ -954,6 +954,127 @@ where $gamma_t$ the "step size"/"learning rate".
   $F(theta_t) - F(h^ast) <= cal(O)(max{1/t, exp(-t/kappa)})$
 ]
 
+=== Stochastic Gradient Descent
+
+We assume we aimed to minimize the empirical risk, $F(theta) = 1/n sum_(i=1)^n ell. (y_i, f_theta (x_i)) +Omega(theta).$
+
+- _Multi-pass SGD:_ at each time $t$, select $I_t tilde "Unif"({1, dots, n})$ then $ star = ell(y_(I_(t + 1)), f_(theta_t) (x_(I_(t + 1)))) + Omega (theta_t) $ is an estimator of $F$, in the sense that $ EE[star | theta_t] = F(theta_t). $ Then, define $theta_(t + 1) = theta_t - gamma_t g_(t+1)$ where $g_(t+1) := gradient_(theta_t) (star)$ where $gamma_t$ our step size.
+
+- _Mini-batch SGD:_ fix a batch size $B$. At each time $t$ choose a uniform random subset $I_t^B subset {1, dots, n}$ with $abs(I_t^B) = B$, uniformly distributed. Define $ g_t := 1/B sum_(i in I_t^B)[gradient_(theta_t) (ell(y_i, f_(theta_t) (x_i)))] + gradient_(theta_t) Omega (theta_t). $ Clearly if $B = 1$ mini-batch simplifies to multi-pass.
+
+- _One-Pass SGD:_ we assume there is a distribution $cal(D)$ where $(x_i, y_i)$ are independent samples from $cal(D)$. With this interpretation the natural update is $ theta_(t + 1) = theta_t - gamma_t g_(t + 1), quad g_(t + 1) = gradient_(theta) [ell(y_(t + 1), f_theta_(t) (x_(t + 1))) + Omega(theta_t)], $ i.e. we just updated with the $t$th ordered data point.
+
+- _Shuffled SGD:_ choose a random permutation $pi$ of ${1, dots, n}$, reorder ${1, dots, n}$ by $pi$ and run one-pass SGD.
+
+More generally, we say that an update formula of the form $ theta_(t + 1) = theta_t - gamma_t g_(t + 1) $ is SGD if $ EE[g_(t + 1) | theta_t] = gradient F(theta_t) quad (H 1) $ for some loss $F$. One checks that thus multi-pass SGD is SGD with loss given by the empirical risk. However, one-pass SGD is SGD for the population risk, $EE_((x, y) tilde cal(D)) [ell(y, f_theta (x)) + Omega(x)]$.
+
+Additionally, we'll assume in our analysis that $norm(g_t (theta_t))^2 <= B$ a.s. for some constant $B$ $(H 2)$.
+
+#theorem[
+  Suppose $(H 1), (H 2)$ hold, and that $F$ is convex, $B$-Lipschitz and has a minimizer $theta_ast$ so $norm(theta_0 - theta_ast) <= D$. Choose $gamma_t = ((D\/B))\/sqrt(t)$. Then $ EE[F(overline(theta)_t) - F(theta_ast)] <= D B^2 ((2 + log(t))/(sqrt(t))), $ where $ overline(theta)_t := (sum_(s=1)^t gamma_s theta_(s - 1))\/(sum_(s=1)^t gamma_s) $ the (step-size weighted) iterate average.
+]
+
+#remark[Note that we take the step size to 0 (in fact, we need this to happen), and the rate of decay is worse than in the non-stochastic gradient descent. In practice, $gamma_t$ is chosen to be something like $gamma_0 (T - t)/T$ where $T$ some final time to run until.]
+
+#proof[
+  We compute using $(H 1), (H 2)$ that $ EE[norm(theta_t - theta_ast)^2] & = EE[norm(theta_(t - 1) - gamma_t g_t - theta_ast)^2] \
+  & = EE[norm(theta_(t - 1) - theta_ast)^2 - 2 angle.l gamma_t g_t, theta_(t-1) - theta_ast angle.r + gamma_t^2 norm(g_t)^2] \
+  &<= EE[norm(theta_(t - 1) - theta_ast)^2] - 2 gamma_t EE[angle.l EE[g_t | theta_(t-1) ], (theta_(t-1) - theta_ast) angle.r] + gamma_t^2 B \
+  &= EE[norm(theta_(t - 1) - theta_ast)^2] - 2 gamma_t EE[angle.l gradient F (theta_(t - 1)), theta_(t - 1) - theta_ast angle.r] + gamma_t^2 B $ Recall that by convexity, $F(theta_(t - 1)) - F(theta_ast) <= angle.l gradient F(theta_(t - 1)), theta_(t - 1) - theta_ast angle.r$, so continuing from the above we find $ gamma_t EE[F(theta_(t - 1)) - F(theta_ast)] &<= 1/2 [EE[norm(theta_(t - 1) - theta_ast)^2 - norm(theta_(t) - theta_ast)^2] + gamma_t^2 B]. $ Summing the LHS, we get a telescoping sum on the RHS, and find $ sum_(s=1)^t gamma_s EE[F(theta_(s - 1)) - F(theta_ast)] <= 1/2 EE[norm(theta_0 - theta_ast)^2] + B/2 sum_(s=1)^t gamma_s^2. $ Finally, we find then that by convexity $ EE[F(overline(theta)_t) - F(theta_ast)] &<= 1/(sum_(s=1)^t gamma_s) [sum_(s=1)^t gamma_s EE[F(theta_(s - 1)) - F(theta_ast)]] \
+  &<= 1/(sum_(s=1)^t gamma_s) [1/2 EE[norm(theta_0 - theta_ast)^2] + B/2 sum_(s=1)^t gamma_s^2] \
+  &<= 1/(sum_(s=1)^t gamma_s) [1/2 D + B/2 sum_(s=1)^t gamma_s^2] $ Remark that this didn't use any assumptions on the $gamma_s$'s yet. Picking $gamma_s$ as given in the statement and simplifying gives the bound.
+]
+
+
+=== Gradient Flow
+
+If we rewrite gradient flow $ (theta_t - theta_(t - 1))/(gamma) = - gradient F(theta_(t - 1)), $ which, if $gamma -> 0$, is essentially the ODE $ (dif theta)/(dif t) = - gradient F(theta (t)), $ which, in this case, GD can be see as Euler's (Forward) Method for this ODE, with $delta$ the step-size. We call this ODE _gradient flow_.
+
+== Least Squares Problem
+
+=== Gradient Descent
+
+Recall we have $Phi in RR^(n times d)$ our design matrix and $y in RR^n$ our output, and our goal is to solve $ min_(theta in RR^d) 1/(2 n) norm(Phi theta - y)_2^2 =: F(theta). $ Let $theta_ast in "argmin" F(theta)$. We see that $gradient F(theta) = 1/n Phi^T (Phi theta - y)$ and $gradient^2 F(theta) = H = 1/n Phi^T Phi$. If $y = Phi theta_ast$, then we can write $gradient F(theta) = H (theta - theta_ast)$. Thus, gradient descent becomes $ theta_t = theta_(t - 1) - gamma gradient F(theta_(t - 1)) &= theta_(t - 1) - gamma (H (theta_t - theta_ast)) \
+&=> theta_t - theta_ast = theta_(t - 1) - theta_ast - gamma H(theta_(t - 1) - theta_ast) = (I - gamma H)(theta_(t - 1) - theta_ast) \
+&=> theta_t - theta_ast = (I - gamma H)^t (theta_0 - theta_ast). $ Since $F(theta_t) = 1/2 (theta_t - theta_ast)^T H (theta_t - theta)^ast$, we also get $ F(theta_t) & = 1/2 (theta_0 - theta_ast)^T (I - gamma H)^t H (I - gamma H)^t (theta_0 - theta_ast) \
+           & = 1/2 (theta_0 - theta_ast)^T (I - gamma H)^(2 t) H (theta_0 - theta_ast). $
+
+In this context, the corresponding gradient flow problem is $ dot(theta) = - gradient F(theta) = - (H theta - 1/n Phi^T y). $  Noting that $ dif/(dif t) (e^(H t) theta) =e^(H t) (dot(theta) + theta) = 1/n e^(H t) Phi^T y $ thus, assuming $H$ invertible, $ theta = integral_0^t
+1/n e^(- H (t -s)) Phi^T y dif s + C_0 e^(- H t) & = theta_0 e^(- H t) + H^(-1) (I - e^(-H t)) 1/n Phi^T y \
+                                                 & = theta_0 e^(- H t) + H^(-1) (I - e^(-H t)) H theta_ast \
+                                                 & = e^(-H t) theta_0 + (I - e^(-H t)) theta_ast $
+
+
+=== High-Dimensional Analysis of SGD
+
+- Let $(x, y) tilde cal(D)$ with $x tilde cal(N)(0, I_d)$, $epsilon tilde cal(N)(0, eta^2)$ and $y = angle.l x, theta^ast angle.r + epsilon$ where $theta^ast in RR^d$ such that $theta^ast_i = cal(O)(1/sqrt(d))$.
+- $ell(u, v) := 1/2 (u - v)^2$ and thus one computes $cal(R)(theta) = 1/2 (eta^2 + norm(theta_ast - theta)^2)$. The scaling of $theta_ast$ ensures that $cal(R)(theta)$ is of order $1$, in particular, doesn't depend on $d$.
+- Running streaming SGD on this problem, we have the update $ x_(k + 1) = x_k - gamma_k (angle.l a_(k + 1), x_k - beta angle.r - epsilon_(k + 1)) a_(k + 1). $
+
+#proposition("Wick's Formula")[
+  Let $a tilde cal(N)(0, K) in RR^d$. Suppose $f_i$ are simple tensors, then $ EE[angle.l a^(times.circle 4), f_1 times.circle f_2 times.circle f_3 times.circle f_4 angle.r] = angle.l K, f_1 times.circle f_2 angle.r angle.l K, f_3 times.circle f_4 angle.r + angle.l K, f_1 times.circle f_3 angle.r angle.l K, f_2 times.circle f_4 angle.r + angle.l K, f_1 times.circle f_4 angle.r angle.l K, f_2 times.circle f_3 angle.r $ where $angle.l a^(times.circle 2), f_1 times.circle f_2 angle.r = f_1^T a a^T f_2 = a_i a_j (f_1)_i (f_2)_j$, etc.
+]
+
+We have $ EE[angle.l a, y angle.r^2 angle.l a^(times.circle 2), I angle.r] & = EE[angle.l a^(times.circle 2), y^(times.circle 2) angle.r angle.l a^(times.circle 2), I angle.r] = EE[angle.l a^(times.circle 4), y times.circle y times.circle I angle.r] \
+&= angle.l K, y times.circle y angle.r angle.l K, I angle.r + 2 angle.l angle.l K, y angle.r times.circle angle.l K, y angle.r , I angle.r \
+&= y^T K y tr(K) + 2 y^T K^2 y $
+
+
+=== Dynamical Analysis of Isotropic Gaussian Linear Regression
+
+Let $cal(F)_k$ be the $sigma$-algebra generated by $((a_j, b_j) : 0 <= j <= k)$ (history up to timestep $k$) and let $cal(P)(x) = 1/2 norm(x - beta)^2$. We find $ EE[cal(P)(x_(k + 1)) | cal(F)_k] - cal(P)(x_k) & = EE[1/2 norm(x_k - gamma (angle.l a_(k + 1), x_k - beta angle.r - epsilon_(k + 1)) a_(k + 1) - beta)^2 | cal(F)_k] - 1/2 norm(x_k- beta)^2 \
+&= - gamma EE[(angle.l a_(k + 1), x_k - beta angle.r - epsilon_(k + 1) ) angle.l x_(k) - beta, a_(k + 1) angle.r | cal(F)_k] quad (1) \
+& + gamma^2/2 EE[(angle.l a_(k + 1), x_(k) - beta angle.r - epsilon_(k+1))^2 angle.l a_(k + 1), a_(k + 1) angle.r | cal(F)_k] quad (2) $
+
+We find that $(1) = - 2 gamma_k cal(P)(x_k)$ (the epsilon term goes to zero) and $ (2) &= gamma^2/2 (eta^2 + EE[angle.l a_(k + 1), x_k - beta angle.r^2 angle.l a_(k +1) times.circle a_(k + 1), I angle.r | cal(F)_k]) \
+"Wick's" quad &= gamma_k^2/2 (eta^2 + norm(x_k - beta)^2 tr(I_d) + 2 (x_k - beta)^T (x_k - beta)), $ and thus $ EE[cal(P)(x_(k+1)) | cal(F)_k] - 2 cal(P)(x_k) = - 2 gamma cal(P)(x_k) + gamma^2/2 ((eta^2 + cal(P)(x_k)) tr(I_d) + 2 cal(P)(x_k)) $
+
+The first term here is the effect of running gradient descent, and the latter is the effect of the SGD noise, i.e. the "effect" SGD has on $cal(P)$; the $gamma^2$ term involes variance.
+
+As $d -> infinity$, then the "largest" term is $(norm(x_k - beta)^2 + eta^2) d$.
+
+_Goal:_ need both terms $- 2 gamma cal(P)(x_k)$ and $gamma^2/2 ((eta^2 + cal(P)(x_k))) d$ to _survive_ when $d -> infinity$. Why? If only $-2 gamma cal(P)(x_k)$ survives as $d -> infinity$, then we're not doing SGD, we're essentially doing gradient flow (very small learning rate).
+If only the latter term (attached to $gamma^2/2$) survives, our iterations will diverge.
+
+Consequently, we need $gamma tilde.eq gamma^2 d$ based on our assumptions of the order of $eta, x$ etc. Hence, we need $gamma = cal(o)(1/d)$. Thus, we will pick $gamma = tilde(gamma)/d$ for some constant $tilde(gamma)$. Thus, we get $ EE[cal(P)(x_(k + 1)) | cal(F)_k] = cal(P_k)- 2 tilde(gamma)/d cal(P)(x_k) - tilde(gamma)^2/d (eta^2/2 + cal(P)(x_k) + 1/d cal(P)(x_k)) $ which implies $ EE[cal(P)(x_(k + 1))] = cal(P)(x_k) - 2 tilde(gamma)/d sum_(i=0)^k cal(P)(x_i) - tilde(gamma)^2/d sum_(i=0)^k (eta^2/2 + EE[cal(P)(x_i)]) $ We see that the inner elements in the sum are all order 1; and there are $k$ of them, being divided by $d$. Thus, choose $k approx t d$, so that $ 2 tilde(gamma)/d sum_(i=0)^(t d) EE[cal(P)(x_i)] approx^(d -> infinity) integral_(0)^t EE[cal(P)(x_s)] dif s (2 tilde(gamma)) $
+
+Therefore, by scaling time $k = t d$, set $ p(t) = lim_(d -> infinity) EE[cal(P)(X_([t d]))], $ then the above equation becomes an Euler approximation for the ODE $ dot(p) = -2 tilde(gamma) p + tilde(gamma)^2 (p + eta^2/2) $
+
+= Kernel Methods
+
+== Introduction
+
+We study emprical risk minimization for linear models $f_theta : cal(X) -> RR$, i.e. $f_theta (x) = angle.l theta, phi(x) angle.r_(cal(H))$ where $phi : cal(X) -> cal(H)$ and $cal(H)$ a Hilbert space with $theta in cal(H)$. We'll write $ angle.l theta, phi(x) angle.r equiv angle.l theta, phi(x) angle.r_(cal(H)) $ when the space is clear. A kernel function, or kernel, is a function $ K(x, y) = angle.l phi(x), phi(y) angle.r_(cal(H)). $
+
+
+== Representer Theorem
+
+
+#proposition[
+  Consider a _feature map_ $phi : cal(X) -> cal(H)$. Let $(x_1, dots, x_n) in cal(X)^n$ and assume $psi : RR^(n + 1) -> RR$ is strictly increasing in the last variable. Then the infimum of $psi(angle.l theta, phi(x_1) angle.r, dots, angle.l theta, phi(x_n) angle.r, norm(theta)^2)$ can be obtained by restricting a vector $theta$ in the span of $phi(x_1), dots, phi(x_n)$; that is $theta = sum_(i=1)^n alpha_i phi(x_i)$ with $alpha in RR^n$.
+]
+
+#proof[
+  Let $theta in cal(H)$ and define $ cal(H)_D = {sum_(i=1)^n alpha_i phi(x_i) : alpha_i in RR} subset cal(H). $ Write $theta = theta_D + theta_perp$ for $theta_D in cal(H)_D$ and $theta_perp in cal(H)_D^perp$. Then for all $i in [n]$, $ angle.l theta, phi(x_i) angle.r = angle.l theta_D, phi(x_i) angle.r + 0 $ (by orthogonality), therefore $ psi(angle.l theta, phi(x_1) angle.r, dots, angle.l theta, phi(x_n) angle.r, norm(theta)^2) &= psi(angle.l theta_D, phi(x_1) angle.r, dots, angle.l theta_D, phi(x_n) angle.r, norm(theta_D)^2 + norm(theta_perp)^2) \
+  & >= psi(angle.l theta_D, phi(x_1) angle.r, dots, angle.l theta_D, phi(x_n) angle.r, norm(theta_D)^2), $ with equality iff $theta_perp = 0$. Thus, $ inf_(theta in cal(H)) (dots.c) >= inf_(theta in cal(H)_D) (dots.c). $ The solution of the second term will be of the form $sum_(i=1)^n alpha_i phi(x_i)$.
+]
+#corollary[
+  For $lambda > 0$, the infimum of $1/n sum_(i=1)^n ell(y_i, angle.l theta, phi(x_i) angle.r) + lambda/2 norm(theta)^2$ can be obtained by restricting to a vector $theta$ of the form $theta = sum_(i=1)^n alpha_i phi(x_i)$ with $alpha in RR^n$.
+]
+
+Remark that there was no assumption on the loss function (e.g. convexity, etc).
+
+Now notice:
+1. If  $theta = sum_i alpha_i phi(x_i)$, then for all $j in [n]$, $ angle.l theta, phi(x_j) angle.r = sum_(i=1)^n alpha_i K(x_i, x_j) = (K alpha)_j $ where $K(x, x') = angle.l phi(x), phi(x') angle.r$, which we can equivalently view as a matrix in $RR^(n times n)$ with $K_(i j)= angle.l phi(x_i), phi(x_j) angle.r$.
+
+2. $norm(theta)^2 = sum_(i) sum_j alpha_i alpha_j angle.l phi(x_i), phi(x_j) angle.r = alpha^T K alpha$.
+
+We can thus rewrite our entire problem as $ inf_(theta in cal(H)) 1/n sum_(i=1)^n ell(y_i, angle.l theta, phi(x_i) angle.r) + lambda/2 norm(theta)^2 = inf_(alpha in RR^n) 1/n sum_(i=1)^n ell(y_i, (K alpha)_i) + lambda/2 alpha^T K alpha. $
+
+In particular, although $cal(H)$ may in general be infinite dimensional, our optimization problem can be restricted to a finite dimensional subset. Our prediction function is then, for any $x in cal(X)$, $ f(x) = angle.l theta, phi(x) angle.r = sum_(i=1)^n alpha_i K(x, x_i). $
+
+// TODO missing a lecture or two
+
 
 #pagebreak()
 = Table of Functions

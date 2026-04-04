@@ -417,7 +417,7 @@ where $C$ any circle about the origin.
 ]
 
 #corollary[
-  If $z_0$ a singularity of $f$ of order $n$, then $ "res"_(z_0) f = lim_(z -> z_0) 1/(n - 1)! (dif^n/(dif z^n)) (z - z_0)^n f(z). $
+  If $z_0$ a singularity of $f$ of order $n$, then $ "res"_(z_0) f = lim_(z -> z_0) 1/(n - 1)! (dif^(n-1)/(dif z^(n-1))) (z - z_0)^n f(z). $
 ]
 
 

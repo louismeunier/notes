@@ -148,7 +148,7 @@ Here, the question is, given $f : Omega subset RR^n -> RR$ twice differentiable,
 We need to establish first a generalization of the mean-value theorem. First, note that if $ gamma : (a, b) -> RR^n, quad g : Omega subset RR^n -> RR $ are two differentiable functions with $gamma((a, b)) subset Omega$, then by the chain rule, if we put $H(t) := g(gamma(t))$, $ (partial H)/(partial t) = D g(gamma(t)) dot D gamma(t), quad D gamma(t) = (gamma'_1 (t), dots, gamma'_n (t)). $
 
 #theorem("Mean-Value Theorem")[
-  Let $B subset RR^n$ be a ball and $f : B -> RR$ be differentiable for all $x in B$. Then, for any $x, y in B$, there exists $z in B$ such that $ f(x) - f(y) = D f(z) dot (x - y). $
+  Let $B subset RR^n$ be a ball and $f : B -> RR$ be differentiable for all $x in B$. Then, for any $x, y in B$, there exists $z in B$ (in particular, we can find $z$ which lies along the line segment between $x$ and $y$) such that $ f(x) - f(y) = D f(z) dot (x - y). $
 
   In particular, $abs(f(x) - f(y)) <= norm(D f(z)) norm(x - y)$.
 ]
@@ -293,7 +293,7 @@ Moreover, since $t^ell = norm(x - x_0)^ell$, the term in the Taylor expansion of
 This leads to the following theorem.
 
 #theorem([Taylor in $RR^n$])[
-  Let $f : Omega subset RR^n -> RR$, $f in C^(k + 1) (Omega)$. Then, for any $x^0 in Omega$, $ f(x) + f(x^0) + sum_(j=1)^k 1/(j!) [sum_(i_1, dots, i_j = 1)^n (partial^j f)/(partial x_i_1 dots.c partial x_(i_j)) (x_i_1 - x^0_i_1) dots.c (x_i_ell - x^0_i_j)] + R_k (f)(x), $ where $ abs(R_k (f)(x))/(norm(x - x^0)^k) <= M_k norm(x - x^0) quad "as" x -> x^0. $
+  Let $f : Omega subset RR^n -> RR$, $f in C^(k + 1) (Omega)$. Then, for any $x^0 in Omega$, $ f(x) = f(x^0) + sum_(j=1)^k 1/(j!) [sum_(i_1, dots, i_j = 1)^n (partial^j f)/(partial x_i_1 dots.c partial x_(i_j)) (x_i_1 - x^0_i_1) dots.c (x_i_ell - x^0_i_j)] + R_k (f)(x), $ where $ abs(R_k (f)(x))/(norm(x - x^0)^k) <= M_k norm(x - x^0) quad "as" x -> x^0. $
 ]
 
 #remark[
@@ -615,9 +615,365 @@ Let $Omega subset RR^n$ be a bounded domain. We defined $integral_Omega f dif V$
 
 To prove, we need to first observe how the volume of a box $B$ changes under application of $T$. Let $B' subset Omega'$ be a small rectangular box. Since $T$ $C^1$, by Taylor expansion, we have for any $y_0 in B' subset RR^n$, $ T(y) = T(y_0) + D T(y_0) (y - y_0) + E_1 (y, y_0) $ where $lim_(y -> y_0) norm(E_1 (y, y_0))/(norm(y - y_0)) = 0$. Since $D T (y_0)$ is linear, $ "vol"(T(B')) = abs(det(D T(y_0))) "vol"(B') + E_2 (B') $ where for any $epsilon > 0$, there exists $delta > 0$ such that $norm(E_1 (y, y_0)) <= epsilon norm(y - y_0)$ whenever $0 < norm(y - y_0) < delta$. Suppose $B' = {y in RR : max_(j=1)^n abs(y_j - y_j^0) <= delta}$ (a box of side length $delta$). Using the fact that $norm(y - y_0) <= sqrt(n) max_(j=1)^n abs(y_j - y_j^0)$. Then, $ E_2 (B') <= (epsilon norm(y - y_0))^n <= (epsilon sqrt(n) max_(j) abs(y_j - y_j^0))^n <= (sqrt(n))^n epsilon^n (max_(j) abs(y_j - y_j^0))^n = (sqrt(n)^n epsilon^n) "vol"(B') <= C_n epsilon "vol"(B'), $ where $C_n$ some dimensional constant. Thus, $ abs(E_2 (B'))/("vol"(B')) -> 0 "as" norm(y - y_0) -> 0. $
 
-Remark that since $T in C^1 (B')$, $abs(det(D T)) in C^0 (B')$ and so uniformly continuous in $B'$, so given $epsilon > 0$, we can find $delta > 0$ such that $abs(E_2 (B')) <= epsilon "vol"(B')$ and $abs(abs(det (D T (y_0))) - abs(det D T (y))) <= epsilon$ for any $y in B'$ with $norm(y - y_0) < delta$ (?) and thus, for all $epsilon> 0$, there exists a $B$ of sidelength $<=delta$, $ "vol"(T B') = abs(det D T (y)) "vol"(B') + tilde(E)(B'), quad abs(tilde(E)(B')) <= epsilon "vol"(B') $
+Remark that since $T in C^1 (B')$, $abs(det(D T)) in C^0 (B')$ and so uniformly continuous in $B'$, so given $epsilon > 0$, we can find $delta > 0$ such that $abs(E_2 (B')) <= epsilon "vol"(B')$ and $abs(abs(det (D T (y_0))) - abs(det D T (y))) <= epsilon$ for any $y in B'$ with $norm(y - y_0) < delta$ (?) and thus, for all $epsilon> 0$, there exists a $B'$ of sidelength $<=delta$, $ "vol"(T B') = abs(det D T (y)) "vol"(B') + tilde(E)(B'), quad abs(tilde(E)(B')) <= epsilon "vol"(B') $
 
 
+#proof[
+  We use the observations above and the previous lemma on regular partitions. For any $epsilon > 0$, we can find $delta > 0$ and a box $B'$ with sidelength $<delta$ such that $ "vol"(T B') = abs(det D T (y)) "vol"(B') + E_2 (B'), $ for any $y in B'$, where $abs(E_2 (B')) <= epsilon "vol"(B')$.
+
+  Choose a box partition $cal(P)' = {B'_j}$ on $Omega'$. Since $T : Omega' -> Omega$ a $C^1$ bijection onto $Omega$, $cal(P)_"reg" = {D_i = T(B'_i)}$ is a regular partition on $Omega$ (why?).
+  We assume that $U(f, cal(P)_"reg") - L(f, cal(P)_"reg") < epsilon$ and $abs(E_2 (B'_i)) <= epsilon "vol"(B'_i)$ for all $B'_i in cal(P)'$, by refinement and since $f$ integrable. Then, $ U(f, cal(P)_"reg") >= U((f compose T) abs(det (D T)), cal(P)') - 2 M epsilon "vol"(Omega'), $ and similarly $ L(f, cal(P)_"reg") <= L((f compose T) abs(det(D T)), cal(P)') + 2 M epsilon "vol"(Omega') $ where $M = sup_Omega abs(f).$ This implies $ epsilon > U(f, cal(P)_"reg") - L(f, cal(P)_"reg") >= U((f compose T) abs(det(D T)), cal(P')) - L((f compose T) abs(det(D T)), cal(P)') - 4 M epsilon "vol"(Omega') \
+  => U((f compose T) abs(det(D T)), cal(P')) - L((f compose T) abs(det(D T)), cal(P)') < epsilon (1 + 4 M "vol"(Omega')). $ Since $epsilon$ arbitrary, this proves the result.
+]
+
+#example(
+  "Polar Coordinates",
+)[Take $x = r cos theta, y = r sin theta$, so $r = sqrt(x^2 + y^2)$. Let $T (r, theta) = (x, y)$ from $Omega' -> Omega$ with $Omega' = {(r, theta) in (0, a] times [0, 2 pi)}$ and $Omega = {(x, y) : x^2 + y^2 <= a^2}$. Then $ integral.double_({x^2 + y^2 <= a^2}) f(x, y) dif A = integral.double_(Omega') f(r cos(theta), r sin(theta)) abs(det (D T)) dif r dif theta, $ where $ det(D T) = det(mat(cos theta, - r sin theta; sin theta, r cos theta)) = r. $ By Fubini, then, we get $ integral.double_({x^2 + y^2 <= a^2}) f(x, y) dif A = integral_0^(2pi) integral_0^(a) f(r cos (theta), r sin (theta)) r dif r dif theta. $
+]
+
+#example(
+  "Spherical Coordinates",
+)[Let $x = rho sin phi cos theta, y = rho sin phi sin theta, z = rho cos phi$ and $T(rho, phi, theta) = (x, y, z)$ with $theta in [0, 2 pi), phi in [0, pi)$ and $(0, a]$. In this case $ |det (D T)| = |det mat(
+    sin phi cos theta, rho cos phi cos theta, - rho sin phi sin theta;
+    sin phi sin theta, rho cos phi sin theta, rho sin phi cos theta;
+    cos phi, - sin phi, 0
+  )| = rho^2 sin phi $ so that $ integral.triple_({x^2 + y^2 + z^2 <= a^2}) f(x, y, z) dif V = integral_0^(2 pi)
+  integral_0^pi integral_0^a f(rho sin phi cos theta, rho sin phi sin theta, rho cos phi). $
+]
+
+#example[
+  Compute $integral.double_(Omega) (y-x) cos (x y) dif A$, with $Omega$ the region bounded by $x + y = 1, x + y = 4$, $x y = -1$ and $x y = - 4$ and $y - x >= 0$. Let $u = x + y$, $v = x y$ and $T (u, v) = (x, y)$ with $T : Omega' -> Omega$, where we now have $Omega' = {(u, v) in [1, 4] times [-4, -1]}$. Moreover, we have $ (x + y)^2 - (x - y)^2 = 4 x y =>u^2 - (x - y)^2 = 4 v => abs(x - y) = sqrt(u^2 - 4 v). $ Finally, $ abs(det(D T^(-1))) & = |det(mat(1, 1; y, x))| = abs(x - y) => abs(det D T) = 1/(abs(x - y)). $ This implies $ integral.double_Omega (x - y) cos (x y) dif A = integral_(1)^4 integral_(-4)^(-1) cos(v) dif v dif u =3 [sin(-1) - sin(-4)]. $
+]
+
+= Vector Fields, Curves and Surfaces
+
+== Integration along Curves
+
+#definition[
+  A curve in $RR^n$ is a continuous function $gamma : I -> RR^n$ where $I subset RR$ some interval.
+]
+
+#definition[
+  Let $gamma$ be a $C^1$ curve defined on $I = [0, L]$. Define the integral over $gamma$ of a real-valued function as $ integral_(gamma) f dif s := integral_0^L f(gamma(t)) abs(gamma'(t)) dif t. $
+]
+
+== Integration of Vector Fields
+
+#definition[
+  A _vector field_ on $RR^n$ is a function $F : Omega subset RR^n -> RR^n$. We usually assume $F$ $C^0$ on $Omega$.
+]
+
+How can we integrate a vector field along a path $gamma$? (think: the work done by $F$ along $gamma$)
+
+Let $gamma : [a, b] -> RR^n$ be a $C^1$ path, and consider $ Delta s_i := gamma(t_i + Delta t_i) - gamma(t_i) $ for $Delta t_i$ _small_. This is a vector.
+
+Thus, since $gamma$ is $C^1$, $ Delta s_i = gamma' (t_i) Delta t_i + R(t, Delta t_i), $ where $norm(R(t, Delta t_i))/(Delta t_i) -> 0$ as $Delta t_i$. We get: $ F(gamma(t)) dot Delta s_i = F(gamma(t_i)) [gamma' (t_i) Delta t_i + R(t_i, Delta t_i)]. $
+Takeing $cal(P) = {t_i}_(i=1)^N$ of $[a, b]$, we can repeat this over every partition. This motivates:
+
+#definition[
+  Define the _total work done_ by $F$ along $gamma$ by $ integral_(gamma) vec(F) dot vec(dif s) := lim_(N -> infinity) sum_(i=1)^N vec(F)(gamma(t_i)) vec(Delta s_i), $ as defined above. This is equal to $ integral_a^b vec(F)(gamma(t)) dot gamma' (t) dif t, $ assuming the Riemann integral exists, where $gamma$ lives on $[a, b]$.
+]
+
+#definition[
+  Let $gamma$ a piecewise smooth path and $F$ a vector field defined in a neighborhood of $gamma$. The _line integral_ (also called _path integral_) of $F$ along $gamma$ is $ integral_(gamma) F dot dif s = integral_c^b F (gamma(t)) dot.c gamma'(t) dif t. $
+]
+
+If $gamma$ is regular, i.e. $gamma' (t) eq.not 0$, let $T (t) = (gamma'(t))/norm(gamma' (t))$ be the _unit tangent field_. Then, we see that $ integral_gamma F dot dif s = integral_gamma F (gamma(t)) dot T(t), $ where $dif s equiv norm(gamma' (t)) dif t$ the "arclength element".
+
+Formally, we write $vec dif s = vec T dif s$.
+
+#lemma[
+  If $gamma$ a piecewise-smooth path and $tilde(gamma)$ a reparametrization of $gamma$, then if $F$ a $C^0$ vector field, then $ integral_gamma F dot dif s = epsilon integral_(tilde(gamma)) F dot dif s, $ where $epsilon = +1$ if an orientation-preserving reparametrization, and $epsilon = - 1$ if an orientation-reversing reparametrization.
+]
+
+=== Conservative Vector Fields
+
+#definition[
+  A vector field $F : Omega -> RR^n$ is _conservative_ in $Omega$ if there exists a $C^1$ function $f : Omega -> RR$ such that  $F(x) = gradient f(x)$ for all $x in Omega$.
+]
+
+#theorem[
+  Suppose $F$ a conservative vector field in a neighborhood of a piecewise-smooth path $gamma$. Then $ integral_gamma F dot dif s = f(gamma(b)) - f(gamma(a)). $
+]
+
+#corollary[If $gamma$ closed, then $integral_gamma F dot dif s = 0$.]
+
+#proof[(Of Theorem) $ integral_gamma F dot dif s & = integral_a^b gradient f (gamma(t)) dot gamma' (t) dif t \
+                             & = integral_a^b dif/(dif t) f(gamma (t)) dif t \
+                             & = f(gamma(b)) - f(gamma(a)). $
+
+]
+
+If $C = union_i C_i$ a finite union of curves $C_i$, we extend our definition to $ integral_C F dot dif s = sum_(i) integral_C_i F dot dif s. $
+
+
+=== Poincaré Lemma
+
+The question we aim to address here is, when is $F : Omega -> RR^n$ conservative?
+
+A necessary condition is as follows.
+
+#theorem[Let $F = (F_1, dots, F_n)$ a $C^1$ conservative vector field. Then,  $ (partial F_i)/(partial x_j) (x) = (partial F_j)/(partial x_i) (x) $ for all $i, j$ and $x in Omega$.]
+
+#proof[
+  We have $F = gradient f$ for $f in C^1 (Omega)$; then $(partial F_i )/(partial x_j) = (partial^2 f)/(partial x_j partial x_i)$, so the claim follows by Clairault's.
+]
+
+When is this condition sufficient?
+
+== Poincaré Lemma
+
+
+#lemma[
+  Suppose $g (x, y)$ is $C^1$ in $Omega times A$ where $Omega subset RR^n$ open and $A subset RR^m$ is compact. Then, $ partial/(partial x_i) (integral_A g(x, y) dif y) = integral_A partial/(partial x_i) g(x, y) dif y $ for any $i in [n]$ and $x in Omega$.
+]
+
+#proof[
+  Fix $r > 0$ so that $B_r (x) subset Omega$. Let $h in RR$ with $abs(h) < r$. By the mean-value theorem, $ g(x + h e_i, y) - g(x, y) = (partial g)/(partial x_i) (x^h, y) dot h, quad x^h in B_r (x). $ Since $overline(B_r (x)) times A$ is compact, $(partial g)/(partial x_i)$ is uniformly continuous on this set. Thus for any $epsilon > 0$, there exists $delta > 0$ such that $ abs(partial_(x_i) g (x^h, y) - partial_(x_i) g(x, y)) < epsilon, quad forall abs(h) < delta, y in A. $ Then, $ abs(overbrace((integral_A g(x + h e_i, y) dif y - integral_A g(x, y) dif y)/(h), "difference quotient for integral") - integral_A partial_x_i g(x, y) dif y) & <= integral_A abs((partial g)/(partial x_i) (x^h, y) - (partial g)/(partial x_i) (x, y)) dif y \
+  & <= epsilon "vol"(A), $ for all $epsilon > 0$ with $abs(h) < delta$. Since $epsilon$ arbitrary, this proves the claim.
+]
+
+This tells us when we can differentiate under an integral sign.
+
+#definition("Star-Shaped Region")[
+  $Omega subset RR^n$ _star-shaped_ if there exists $p_0 in Omega$, which we call a _center_, such that the line segment $ell(p_0, x)$ connecting $p_0$ to $x$ is contained entirely within $Omega$ for all $x in Omega$.
+]
+
+#theorem("Poincaré Lemma")[
+  Suppose $Omega subset RR^n$ is star-shaped and $F$ is a $C^1 (Omega, RR^n)$ vector field. Then, $F$ is conservative iff $ (partial F_i)/(partial x_j) = (partial F_j)/(partial x_i) $ for all $i, j = 1, dots, n$.
+]
+
+#remark[
+  The statement holds for more general, so-called "contractible domains", but we limit our exposition here.
+]
+
+#proof[
+  We know the "$=>$" direction already. Conversely, suppose wlog that $p_0 = 0$ is a "center" of our star-shaped domain. The idea to construct our $f$ such that $F = gradient f$ is to integrate $F$ along the straight-line curve connecting $x$ to $0$ for each $x$. Formally, define $gamma_x (t) = t x, 0 <= t <= 1$, and define $ f(x) = integral_gamma_x F dot dif s = integral_0^1 F(t x) dot x dif t = sum_(i=1)^n integral_0^1 F_i (t x) x_i dif t. $ We need to compute the gradient of this function. Since $(t, x) |-> F_i (t x) x_i$ clearly $C^1$ and $[0, 1]$ compact, we can apply the lemma and differentiate in $x$ under the integral sign, and we find $ (partial f)/(partial x_j) (x) &= integral_0^1 sum_(i=1)^n [(partial F_i)/(partial x_j) (t x) t x_i + F_i (t x) delta_(i, j)] dif t \
+  &= integral_0^1 F_j (t x) + sum_(i=1)^n t x_i (partial F_i)/(partial x_j) (t x) dif t \
+  ("integrate by parts on first summand") quad &= integral_0^1 sum_(i=1)^n t x_i (partial F_i)/(partial x_j) (t x) dif t + [t F_j (t x)]_0^1 - integral_0^1 t sum_(i=1)^n (partial F_j)/(partial x_i) x_i (t x) dif t \
+  &= integral_0^1 sum_(i=1)^n t x_i underbrace([(partial F_i)/(partial x_j) (t x) - (partial F_j)/(partial x_i) (t x)], = 0 "by assumption") dif t + F_j (x) = F_j (x), $ as claimed.
+]
+
+== Integration on Surfaces
+
+#definition[
+  A parametrized surface $S subset RR^(3)$ is the image of a map $Phi : D -> S$, $ S = {(x(u, v), y(u, v), z(u, v)) = Phi(u, v) : (u, v) in D}, $ where $D subset RR^2$ some bounded domain. If $Phi$ is $C^k$ we call $S$ a $C^k$ surface. Note that $ Phi_u = (partial_u x, partial_u y, partial_u z), quad Phi_v = (partial_v x, partial_v y, partial_v z) $ are tangent to $S$.
+]
+
+#definition[
+  For a regular $C^1$ parametrization $Phi : D -> S$, define $ "area"(S) := integral.double_D norm(Phi_u times Phi_v) dif A, $ when it exists.
+]
+
+#definition[
+  Let $S = Phi(D)$ a $C^1$ parametrized surface and suppose $f in C^0 (S)$. Then we define $ integral.double_S f dif S := integral.double_D f(Phi) norm(Phi_u times Phi_v) dif A. $
+]
+
+#proposition[
+  In the special case that $S$ is the graph of a $C^1$ function $g : D -> RR$ (i.e. $S = {(x, y, g(x, y)) : (x, y) in D}$), then this integral becomes $ integral.double_D f(x, y, g(x, y)) sqrt(1 + g_x^2 + g_y^2) dif A. $
+]
+
+#proof[
+  This follows from computing $ Phi_x = (1, 0, g_x), quad Phi_y = (0, 1, g_y) => Phi_x times Phi_y = (- g_x, -g_y, 1). $
+]
+
+#definition[
+  Given $S = Phi(D)$ a $C^1$ parametrized surface, we say $S$ is regular if the normal $Phi_u times Phi_v$ never vanishes over $D$, i.e. if $Phi_u, Phi_v$ are never linearly dependent. If $S$ regular, we can choose $ N = plus.minus (Phi_u times Phi_v)/(norm(Phi_u times Phi_v)) $ to be the _unit normal_; there are two choices of sign, leading to different _orientations_ of $S$.
+]
+
+#definition[
+  Let $F$ a $C^0$ vector field on a regular parametrized surface $S = Phi(D)$. Then, we define $ integral.double_S F dot dif s := integral.double_D F dot N norm(Phi_u times Phi_v) dif u dif v = integral.double_D (F compose Phi) dot (Phi_u times Phi_v) dif A. $
+]
+
+Note that this is defined up to orientation of $S$; however, it isn't clear from the definition that this is independent of parametrization.
+
+#definition[
+  Given $Phi : D -> S, tilde(Phi) : tilde(D) -> S$ regular $C^1$ parametrizations of the same surface, we say $tilde(Phi)$ is a reparametrization of $Phi$ if there exists a bijective $C^1$ map $h : tilde(D) -> D$ with $C^1$ inverse, such that $tilde(Phi) (s, t) = (Phi compose h) (s, t)$.
+
+  We say $tilde(Phi)$ _orientation-preserving_  if $ ((Phi_u times Phi_v) (h(s, t)))/(norm((Phi_u times Phi_v) (h(s, t)))) = ((tilde(Phi)_s times tilde(Phi)_t)(s, t))/(norm((tilde(Phi)_s times tilde(Phi)_t)(s, t))), $ and _reversing_ if the same equality holds with a negative in front of the second term.
+]
+
+#lemma[
+  Let $tilde(Phi), Phi$ as above with $h : tilde(D) -> D$ written as $h(s, t) = (u(s, t), v(s, t)) in C^1 (tilde(D), D)$ a change of parameters. Then $h$ is orientation-preserving iff $det((partial (u, v))/(partial (s, t))) >0$, and reversing iff $det((partial (u, v))/(partial (s, t))) < 0$, where $(partial (u, v))/(partial (s, t))$ the Jacobian matrix of $h$.
+]
+
+#proof[
+  Follows from the chain rule upon computing $tilde(Phi)_s$ and $tilde(Phi)_t$, namely we find $ tilde(Phi)_s times tilde(Phi)_t = det((partial (u, v))/(partial (s, t))) (Phi_u times Phi_v), $ from which the claim readily follows.
+]
+
+From this lemma, it readily follows that the previous definition of the integral of a vector field over a surface is well-defined (modulo orientation) regardless of choice of parametrization, by applying the chain of variables formula and the previous lemma. We'll often denote a positively/negatively oriented surface by $S^+, S^-$ depending on the choice of sign of the normal vector. As an immediate corollary, we find $ integral.double_(S^(plus.minus)) F dot dif s = - integral.double_(S^minus.plus) F dot dif s. $
+
+== Green's Theorem and its Consequences
+
+#definition[
+  A surface $S subset RR^3$ is said to be a _regular surface with $C^1$ boundary $partial S$_ if $S$ is compact and if for all $p in S$, there exists $r, delta > 0$ with $B_r (rho) subset RR^3$ and $D = {- delta < u < delta, - delta < v < delta} subset RR^2$ and a regular parametrization map $Phi : D -> RR^3$ such that either
+  1. $S inter B_r (rho) = Phi(D)$, or
+  2. $S subset B_r (rho) = Phi(D^+)$ where $D_+ := {- delta < u < delta, 0 <= v < delta}$. Points in 1. are called _interior charts_ of $S$ and points in 2. are called _boundary charts of $S$_; the boundary of $S$ is defined as $partial S = {"all boundary points of" S}$. The local parametrized surfaces are called coordinate charts.
+]
+
+#definition[
+  A regular surface $S subset RR^3$ is orientable if the unit normal $n in C^0 (S, RR^3)$.
+]
+
+In general there are two choices of unit normal at any point of a surface of $RR^3$ ("in/out"). Given a regular orientable surface $S subset RR^3$, we say it is positively oriented if:
+1. If $partial S = nothing$, the unit normal is pointing "outwards" towards the "unbounded" region of the ambient $RR^3$
+2. If $partial S eq.not nothing$, then we choose a "positive/counterclockwise" orientation for the curve $partial S$ which induces an orientation on $S$ by the right-hand rule.
+
+We are now in the position to state and prove Green's, which relates line integrals of vector fields over $partial D$ to double integrals over a planar domain $D$. We say that a bounded planar domain $D subset RR^2$ is positive if the unit normal (with respect to orientation on boundary) is $lambda = (0, 0, 1)$ (equivalently, we can embed $D$ into $RR^3$ as a (planar) surface, then positive orientation is the same as that defined above for surfaces).
+
+#theorem("Green")[
+  Let $D subset RR^2$ be a positively oriented bounded piecewise $C^1$ domain and $F = (P, Q) : D -> RR^2$ a vector field on $D$. Then $ integral_(partial D) F dot dif s = integral.double_D ((partial Q)/(partial x) - (partial P)/(partial y)) dif A. $
+]
+
+#proof[
+  On $partial D$, we have the short-hand $dif s = i dif x + j dif y = (dif x, dif y)$ where $i = (1, 0), j = (0, 1)$. We can write $ integral_(partial D) F dot dif s & = integral_(partial D) (P, Q) dot (dif x, dif y) \
+                                   & = integral_(partial D) P dif x + Q dif y. $
+
+  Assume first $D$ is a simple domain $ D = {a <= x <= b , phi_1 (x) <= y <= phi_2 (x)} = {c <= y <= d, psi_1 (y) <= x <= psi_2 (y)} $ with boundary $C$. We claim $- integral.double_D (partial P)/(partial y) dif A = integral_C P dif x$. Write $ C_1 & = {a <= x <= b, y = phi_1 (x)} \
+  C_2 & ={a <= x <= b, y = phi_2 (x)} \
+  B_1 & = {x = a, phi_1 (a) <= y <= phi_2 (a)} \
+  B_2 & = {x = b, phi_1 (b) <= y <= phi_2 (b)}. $
+  $C_1^+, C_2^+$ are oriented $a |-> b$ and $B_1^plus, B_2^plus$ are oriented from $phi_1 (a)$ to $phi_2 (a), phi_1 (b)$ to $phi_2 (b)$ respectively. By Fubini, $ integral.double_D (partial P)/(partial y) dif A &= integral_a^b integral_(phi_1 (x))^(phi_2 (x)) (partial P)/(partial y) dif y dif x \
+  ("FTC") quad &= integral_a^b (P(x, phi_2 (x)) - P(x, phi_1 (x))) dif x \
+  &= integral_(C_2^+) P dif x - integral_(C_1^+) P dif x = integral_(C_2^+ union C_1^-) P dif x \
+  &= - integral_(C_2^(-) union C_1^+ ) P dif x +integral_(B_1^+) P dif x - integral_(B_2^+) P dif x \
+  &= - integral_(C_2^(-) union C_1^+ union(B_2^+) union B_1^-) P dif x \
+  &= - integral_(C) P dif x, $ where we use the fact that $ integral_(B^+_1) P dif x - integral_(B_2^+) P dif x = 0 $ since $x$ is constant on $B_1$ and $B_2$ to add them in to our computations.
+
+  Similarly, one shows that $ integral.double_D (partial Q)/(partial x) dif A = integral_(partial D) Q dif y. $ Combining these identities gives the proof.
+
+  For a more general domain, one case use the implicit function theorem and the piecewise-$C^1$ assumption to reduce the domain to a union of simple regions, which sum up to give the general result.
+]
+
+
+#corollary[
+  $ integral_(partial D) x dif y = - integral_(partial D) y dif x = 1/2 integral_(partial D) x dif y - y dif x = "area"(D), $ where we use as in the previous theorem the notation, where if $gamma = (gamma_1, gamma_2) : I -> RR^2$ is a parametrization of $partial D$, then $ dif x = gamma'_1 (t) dif t, $ etc (and the input is evaluated on $(x, y) = gamma(t)$).
+]
+
+#proof[
+  Set $F = (0, x)$. By Green's, $ integral_(partial D) F dot dif s = integral_(D) dif A = "area"(D). $ On the other hand, the left-hand side is readily seen to be equal to $integral_(partial D) x dif y$. Similar proofs with $F = (y, 0)$, $F = (-y, x)$ yield the other results.
+]
+
+#exercise[
+  Compute $"area"(D)$ via Green's, where $D = {x^2/a^2 + y^2/b^2 <= 1}$.
+]
+
+
+
+#solution[
+  The boundary is given parametrically in two parts, $x in [-a, a]$ and $y = plus.minus b sqrt(1 - x^2\/a^2)$. The plus and minus of $y$ give the same so by the previous corollary,
+  $ "area"(D) = 2 b integral_(-a)^a sqrt(1 - x^2\/a^2) dif x = pi a b, $ where we compute the final integral via a trig substitution.
+]
+
+#corollary[
+  Let $D = D_1 \\ D_2$ where $partial D_1, partial D_2$ are piecewise $C^1$ with orientations induced from $D_1 + D_2$. If $F = (P, Q)$ a $C^1$ vector field with $(partial Q)/(partial x) = (partial P)/(partial y)$ on $D$, then $ integral_(partial D_1) F dot dif s = integral_(partial D_2) F dot dif s. $
+]
+
+#proof[
+  With the given orientations, $partial D = partial D_1 - partial D_2$. By Green's, $integral_(partial D) F dot dif s = 0$ since $P_x = Q_y$. On the other hand, by linearity and given the orientations, $integral_(partial D) F dot dif s = integral_(partial D_1) F dot dif s - integral_(partial D_2) F dot dif s$. Combined, these give the answer.
+]
+
+
+#theorem[
+  With the same assumptions as in Green's, $ integral_(partial D) F dot n dif s = integral.double_(D) (partial P)/(partial x) + (partial Q)/(partial y) dif A $ where $n$ the inward normal vector to $partial D$.
+]
+
+#proof[
+  Suppose $partial D$ parametrized by $(x(t), y(t))$ for $t in [a, b]$, so that $n = (-dot(y), dot(x))/(sqrt(dot(x)^2 + dot(y)^2))$.
+  $ integral_(partial D) F dot n dif s & = integral_(a)^b (P, Q)(x(t), y(t)) dot n(t) sqrt(x'(t)^2 + y'(t)^2) dif t \
+  & = integral_(a)^b (P(x(t), y(t)), Q(x(t), y(t))) dot (y'(t), x(t)) dif t \
+  & =integral_(a)^b P(x(t), y(t)) y'(t) dif t - integral_(a)^b Q(x(t), y(t)) x'(t) dif t \
+  &= integral_(partial D) tilde(F) dif s, quad tilde(F) := (- Q, P) \
+  "Green's" quad &= integral.double_(D) (partial P)/(partial x) + (partial Q)/(partial y) dif A. $ At the penultimate line, one can alternatively arrive at the conclusion by the abuse of notation $ integral_a^b P(x(t), y(t)) y'(t) dif t = integral_(partial D) P dif x = integral.double_(D) (partial P)/(partial x) dif A $ also by Green's.
+]
+
+=== Harmonic Functions
+
+Let $laplace = (partial^2)/(partial x^2) + (partial^2)/(partial y^2)$ be the Laplacian operator in two variables. We call a function $u in C^2 (Omega)$ _harmonic_ provided $laplace u equiv 0$ in $Omega$.
+
+#corollary[
+  Let $u$ be a harmonic function in a domain $D subset RR^2$ with piecewise $C^1$ domain. Then $integral_(partial D) gradient u dot n dif s = 0$.
+]
+
+#proof[
+  Take $F = gradient u$ in the previous corollary.
+]
+
+#corollary("Green's Identities")[
+  Let $phi, psi in C^2 (D)$, where $D subset RR^2$ with piecewise $C^1$ domain with positive orientation. Then the following hold:
+  1. $integral.double_(D) phi laplace psi dif A = - integral.double_D gradient phi dot gradient psi dif A + integral_(partial D) phi gradient psi dot n dif s$
+  2. $integral.double_(D) [phi laplace psi - psi laplace phi] dif A = integral_(partial D) phi gradient psi dot n - psi gradient phi dot n dif s$
+]
+
+#proof[
+  1. follows from the previous-previous corollary applied to $F = phi gradient psi$.
+  2. follows from 1. by swapping the roles of $phi, psi$ and subtracting the following identities from each other.
+]
+
+== Stoke's Theorem
+
+#definition[
+  Let $F = (F_1, F_2, F_3) : RR^3 -> RR^3$ a $C^1$-vector field. Define $ "curl" F &:= det mat(e_1, e_2, e_3; partial_x, partial_y, partial_z; F_1, F_2, F_3) \
+  &:= (partial_(x_2) F_3 - partial_(x_3) F_2, partial_(x_3) F_1 - partial_(x_1) F_3, partial_(x_1) F_2 -partial_(x_2) F_1). $
+]
+
+#theorem("Stoke's")[
+  Let $S$ be a compact, oriented surface with positive orientation and piecewise $C^1$ boundary $partial S$. Let $F : S -> RR^3$ a $C^1$ vector field. Then $ integral.double_S "curl" F dot dif S = integral_(partial S) F dot dif s. $
+]
+
+#proof[
+  Recall that for a vector field $G$, $integral_(S) G dot dif S := integral_S G dot n dif S$ where $n$ the (in this case, outward) unit normal to $S$.
+
+  _Step 1:_ assume first $S$ is $C^2$ and $partial S$ is piecewise $C^1$. Since $S$ regular, for all $p in partial S$, $S$ is locally given by a graph over a a coordinate plane by the implicit function theorem. For instance if, suppose, $S$ is locally given by $z = g(x, y)$, then $Phi(x, y) = (x, y, g(x, y)) in S$ gives a local parametrization of $S$, and induces positive unit normal $ n = (-g_x, - g_y, 1)/sqrt(1 + g_x^2 + g_y^2). $ We can always pick $g$ such that $(0, 0, g(0, 0)) = p$. By compactness, we can decompose $S$ into a finite union of "subsurfaces" $ S = union.big_(ell = 1)^N S_ell. $ such that $S_ell^("int") inter S_k^("int") = nothing$ for all $k eq.not ell$, and such that each $S_ell$ is locally a graph over a coordinate plane for each $ell = 1, dots, N$. Then, we note that $ integral_(partial S) F dot dif s = sum_(ell = 1)^N integral_(partial S_ell) F dot dif s, quad integral.double_(S) "curl" F dot dif S = sum_(ell = 1)^N integral.double_(S_ell) "curl" F dot dif S, $ since the overlapping boundary regions will cancel each other out by orientation. Thus, it suffices to prove Stoke's in the case that $S$ is a graph. By rotation, translating, and rescaling, we may assume that $S$ is a $C^2$ graph over $D subset RR^2_(x, y)$ with $D = [-1, 1] times [0, 1]$. Then, on the one hand, $ integral_S "curl" F dot dif S & = integral.double_(D) (partial_y F_3 - partial_z F_2) (- g_x) + (partial_z F_1 - partial_x F_3) (-g_y) + partial_x F_2 - partial_y F_1 dif A. $ We now consider the integral over $partial S$. We see first that $partial S = Phi(partial D) = {(x, y, g(x, y)) : (x, y) in partial D}$. Thus, by chain rule, $dif s = (dif x, dif y, g_x dif x + dif g_y dif y)$ so $ integral_(partial S) F dot dif s = integral_(partial D) (F_1 + F_3 g_x) dif x + integral_(partial D) (F_2 + F_3 g_y) dif y = integral_(partial D) G dot dif s, $ where $ G(x, y) := (F_1 + F_3 g_x, F_2 + F_3 g_y), $ where, crucially, each $F_i$ is evaluated at $(x, y, g(x, y))$. Applying Green's to this integral and applying a lot of chain and product rule gives the result; one will expect higher-order derivatives of $g$ to appear, but these will (should!) cancel.
+
+  _Step 2:_ Suppose now $S in C^1$ with pw-$C^1$ boundaries. The heuristic idea is to "approximate" $S$ with $C^2$ surfaces and show that this approximation respects the identity. We won't show the details.
+]
+
+#corollary[
+  Suppose $S_1, S_2$ are two oriented surfaces with $partial S_1 = partial S_2 = gamma$, and suppose $S_1$ and $S_2$ induce opposite orientations on $gamma$. Then, for any $F in C^1$, $ integral.double_(S_1) "curl" F dot dif S = - integral.double_(S_2) "curl" F dot dif S. $
+]
+
+#corollary[
+  With $S$ as above, suppose $partial S = nothing$ and $F in C^1 (S)$. Then $integral.double_S "curl" F dot dif S = 0$.
+]
+
+#corollary[
+  Suppose $F = gradient f$ for some $f in C^2$ and $S$ is an oriented surface with $partial S = gamma_1 - gamma_2$. Then $ integral_(gamma_1) F dot dif s = integral_(gamma_2) F dot dif s. $
+]
+
+#proof[
+  One checks that $"curl"(gradient f) = 0$.
+]
+
+
+== Divergence Theorem
+
+#theorem[
+  Let $W subset RR^3$ be a bounded, solid region in $RR^3$ with a piecewise smooth boundary $S = partial W$ with positive orientation, and $F$ a $C^1$ vector field on $W -> RR^3$. Then, $ integral.triple_W "div" F dif V = integral.double_(S) F dot dif S, $ where if $F = (F_1, F_2, F_3)$, $"div"(F) = (partial F_1)/(partial x) + (partial F_2)/(partial y) + (partial F_3)/(partial z)$.
+]
+
+#corollary[
+  Under the same assumptions as above, if $f, g in C^2 (W)$, then $ integral.triple_W [g laplace f - f laplace g] dif V = integral.double_(partial W) [g gradient f dot dif S - f gradient g dot dif S]. $
+]
+
+#proof[
+  As in Stoke's theorem, it suffices to prove for $W$ a simple region. Clearly, it suffices to prove that $ integral.triple_(W) (partial F_3)/(partial z) dif V = integral.double_(S) F_3 hat(k) dot dif S, $ where $hat(k) = (0, 0, 1)$, by linearity. Assume $ W = {(x, y, z) : (x, y) in D, g(x, y) <= z <= h(x, y)}. $ Fubini's gives $ integral.triple_(W) (partial F_3)/(partial z) dif V & = integral.double_(D) integral_(g(x, y))^(h(x, y)) (partial F_3)/(partial z) dif z dif x dif y \
+  &= integral.double_(D) [F_3 (x, y, h(x, y)) - F_3 (x, y, g(x, y))] dif x dif y. $
+  We can decompose the boundary $partial W = S$ into three parts, $ S_1 & = {(x, y, g(x, y)) : (x, y) in D} => n = - (-g_x, -g_y, 1)/(sqrt(1 + g_x^2 + g_y^2)) \
+  S_2 & = {(x, y, h(x, y)) : (x, y) in D} => n = (-h_x, -h_y, 1)/(sqrt(1 + h_x^2 + h_y^2)) \
+  S_3 & = {angle.l n, k angle.r = 0}. $ The relevant integral over $S_3$ is zero. Over $S_1$, we get $ integral.double_(S_1) F_3 (x, y, h(x, y)) - F_3 (x, y, g(x, y)) dif x dif y, $ since $hat(k) dot n = 1$ in each case.
+]
+
+#corollary[
+  Suppose $W, W_1, dots, W_k subset RR^n$ are regions as in the previous theorem, with $ W_i sect W_j = nothing, i eq.not j, quad W_j subset W^"int", quad p_j in W_j^"int" forall j = 1, dots, k $ for some points $p_1, dots, p_k$. If $F$ a $C^1$ vector field on $W minus {p_1, dots, p_k}$ and $"div" F = 0$ for all $x in W minus {p_1, dots, p_k}$. Then, $ integral.double_(partial W) F dot dif S = sum_(j=1)^k integral.double_(partial W_j) F dot dif S. $
+]
+
+#proof[
+  Apply the divergence theorem to $W minus union.big_(j=1)^k W_j$.
+]
+
+#exercise("Gauss's Law")[
+  Let $r = (x, y, z)$. Then $ integral.double_(partial W) r/(norm(r)^3) dif S = cases(4 pi quad & 0 in W, 0 & "else") $
+]
 
 #pagebreak()
 = Practice Questions
