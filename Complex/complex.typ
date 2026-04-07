@@ -195,6 +195,7 @@ An obvious generalization holds for integration along more general intervals.
   If $f$, continuous, has a primitive $F$ on $Omega$ and $gamma$ is a curve in $Omega$ beginning at $w_1$ and ending at $w_2$, then $ integral_(gamma) f dif z = F(w_2) - F(w_1). $
 ]
 
+= Holomorphic and Meromorphic Functions
 == Cauchy's Theorem
 #theorem("Cauchy")[
   If $gamma$ is a closed path contained in a region $Omega subset CC$ and its interior, and $f$ is holomorphic in $Omega$, then $integral_(gamma) f(z) dif z = 0$.
@@ -567,6 +568,24 @@ Note $log(r e^(i theta)) = log r + i theta$ where $-pi < theta < pi$ on $Omega$.
 // $log(z_1 z_2) = log(z_1) + log(z_2)$
 // ]
 
+#theorem[Let $Omega$ a simply connected domain containing 1 and not containing 0. Then there exists a _branch_ of the logarithm $F(z)$ such that
+  1. $F$ holomorphic on $Omega$
+  2. $e^F(z) = z$ for all $z in Omega$
+  3. $F(r) = log r$ where $r$ is a real number near 1.
+]
+
+#proof[
+  The candidate function to take is $F(z) = integral_(gamma) f(w) dif w$ where $f(w) = 1/w$ and $gamma$ any curve connecting 1 to $z$.
+]
+
+#theorem[
+  If $f$ a nowhere vanishing holomorphic function on a simply connected domain $Omega$, then there exists a holomorphic function $g$ on $Omega$ such that $f(z) = e^(g(z))$.
+]
+
+#proof[
+  Fix $z_0 in Omega$. The candidate function to take is $g(z) = integral_(gamma) (f'(w))/(f(w)) dif w + c_0$ where $gamma$ connects $z$ to $z_0$ and $c_0$ is such that $e^(c_0) = f(z_0)$.
+]
+
 == Mean Value Property
 
 #theorem[
@@ -578,5 +597,266 @@ Note $log(r e^(i theta)) = log r + i theta$ where $-pi < theta < pi$ on $Omega$.
 ]
 
 #corollary[
-  Write $f= u + i v$.
+  Write $f= u + i v$. Then $ u(z_0) = 1/(2pi) integral_(0)^(2pi) u(z_0 + r e^(i theta)) dif theta $ where $f$ is holomorphic in $D_R (z_0)$ for $0 < r < R$.
+]
+
+
+= Entire Functions
+
+The goal of this function is study entire functions, and in particular, to study if, given a prescribed set of zeros, we can define an entire function.
+
+== Jensen's Formula
+
+
+#theorem[
+  Let $Omega$ an open set containing $overline(D)_R$ and suppose $f$ is holomorphic in $Omega$ with $f(0) eq.not 0$, with $f$ vanishing nowhere on $C_R$. Let $z_1, dots, z_N$ be the zeros of $f$ counted with multiplicity. Then, $ log(|f(0)|) = sum_(k=1)^N log(|z_k|/R) + 1/(2pi) integral_(0)^(2pi) log|f(R e^(i theta))| dif theta. $
+]
+
+#proof[
+  Couple ways to prove this. At some point you'll need to use the equality $ integral_(0)^(2 pi) log(|1 - a e^(i theta|)) dif theta = 0, quad "if" abs(a) < 1. $
+]
+
+#lemma[
+  Let $z_1, dots, z_N$ be the zeros of $f$ inside $D_R$, then $ integral_(0)^R frak(n)(r) (dif r)/r = sum_(k=1)^N log(|R/(z_k)|), $ where $frak(n)(r) :=$ number of zeros of $f$ inside $D_r$.
+]
+
+#proof[
+  We can decompose $ sum_(k=1)^N log(|R/(z_k)|) & = sum_(k=1)^N integral_(|z_k|)^R (dif r)/r $ (assuming the zeros are ordered in norm), and so if $eta_k (r) = 1$ if $r > |z_k|$ and $0$ else, then $sum_(k=1)^N eta_k (r) = frak(n)(r)$, then we can write $ sum_(k=1)^N integral_(|z_k|)^R (dif r)/r = sum_(k=1)^N integral_(0)^R eta_k (r) (dif r)/r = integral_(0)^R (sum_(k=1)^N eta_k (r)) (dif r)/r = integral_(0)^R frak(n)(r) (dif r)/r. $
+]
+
+== Order of Growth
+
+#definition[
+  Let $f$ an entire function. We say $f$ has order of growth $<= rho$ if there exist constants $A, B > 0$ such that $ abs(f(z)) <= A e^(B |z|^rho) quad forall z in CC. $ The order of growth of $f$ is the infimum over all such $rho$.
+]
+
+#theorem[
+  Let $f$ be entire with order of growth $<=2$. Then
+  1. $frak(n)(r) <= C r^rho$ for some $C$ and all $r$ sufficiently large;
+  2. If $z_1, z_2, dots$  are the zeros of $f$ with $z_k$ non-zero for all $k$, then for every $s> rho$, $ sum_(k=1)^infinity 1/(abs(z_k)^s) < infinity. $
+]
+
+#proof[
+  One does some bounds using the previous lemma.
+]
+
+== Infinite Products
+
+#definition[
+  Given a sequence ${a_n}$ of complex numbers, we say that the product $ product_(n=1)^infinity (1 + a_n) $ converges if $lim_(N -> infinity) product_(n=1)^N (1 + a_n)$ exists.
+]
+
+#proposition[
+  If $sum |a_n| < infinity$, then $product_n (1 + a_n)$ converges, and in particular converges to zero iff one of its factors is zero.
+]
+
+#proof[
+  For all $n$ sufficiently large, $|a_n| < 1/2$ and thus wlog this holds for all $n$. So, $log(1 + a_n)$ exists via the usual power series. Thus $ product_(n = 1)^N (1 + a_n) = product_(n=1)^N e^(log(1 + a_n)) = e^(sum_(n=1)^N log(1 + a_n)). $ We see that $ abs(log(1 + a_n)) <= 2 abs(a_n) $ so since $sum_n |a_n|$ converges, so does $abs(sum_(n=1)^N log(1 +a_n))$ to some $B$, which implies the partial product converges to $e^B$.
+]
+
+#proposition[
+  Let ${F_n}$ a sequence of holomorphic functions on $Omega$ such that there exists constants $c_n > 0$ such that $ abs(F_n (z) - 1) <= c_n forall z in Omega, quad sum c_n < infinity. $ Then:
+  1. $F(z) = product_(n=1)^infinity F_n (z)$ exists as a holomorphic function in $Omega$
+  2. If $F_n$ does not vanish for any $n$, then $ F'(z)/(F(z)) = sum_(n=1)^infinity (F'_n (z))/(F_n (z)). $
+]
+
+#proposition[
+  $ sin(pi z)/pi = z product_(n=1)^infinity (1 - z^2/n^2) $
+]
+
+== Weierstrass's Theorem
+
+#theorem("Weierstrass")[
+  Given a sequence ${a_n}$ of complex numbers with $abs(a_n) -> infinity$ as $n -> infinity$, then there exists a function $f$ that vanishes only at $z = a_n$. Moreover, any other such entire function is of the form $f(z) e^(g(z))$ for some $g$ entire.
+]
+
+For the second part, remark that if $f_1, f_2$ are as in the theorem, then $f_1/f_2$ has removable singularities at all the ${a_n}$'s and has no roots; so $f_1/f_2$ is entire, so there exists a "logarithm" $g$ of $f_1/f_2$ such that $f_1/f_2 = e^g$. This proves the second claim.
+
+To construct such a function, we need some lemmas.
+
+#definition("Canonical Factors")[
+  Define $ E_0 (z) = 1 - z, quad E_k (z) = (1 - z) e^(z + z^2\/2 + dots.c + z^k\/k), quad k >= 1. $
+  We say $E_k$ the $k$-th degree canonical factor.
+]
+
+#lemma[
+  If $abs(z) <= 1/2$ then $abs(1 - E_k (z)) <= c abs(z)^(k + 1)$ for some $c > 0$; we can take $c$ to be independent of $z$ and $k$.
+]
+
+Suppose we have a zero of order $m$ at the origin, and $a_1, a_2, dots$ enumerate non-zero zeros with multiplicity. Define the _Weierstrass Product_ by $ f(z) = z^m product_(n=1)^infinity E_n (z\/a_n). $ We claim $f$ satisfies the conditions in the theorem.
+
+== Hadamard's Theorem
+
+Hadamard's theorem specializes Weierstrass's theorem for a function of a known growth order.
+#theorem("Hadamard")[
+  Suppose $f$ is entire and has order of growth $rho_0$. Let $k$ be an integer such that $k <= rho_0 < k + 1$. If $a_1, a_2, dots$ are the non-zero zeros of $f$ and $f$ has a zero of order $m$ at the origin, then $ f(z) = e^(P(z)) z^m product_(n=1)^infinity E_k (z\/a_n) $ where $P$ is a polynomial of degree at most $k$.
+]
+
+
+// TODO worth proving?
+
+
+= Gamma and Zeta Functions
+
+== The Gamma Function
+
+#definition[
+  For $s in RR_(>0)$, define $ Gamma(s) := integral_(0)^infinity e^(-t) t^(s - 1) dif t. $
+]
+
+#proposition[
+  $Gamma$ extends to an analytic function in the half-plane $"Re"(s) > 0$, in which it is still given by the integral formula above.
+]
+
+#proposition[
+  If $"Re"(s) > 0$, then $Gamma(s + 1) = s Gamma(s)$.
+]
+
+#proof[
+  Not $integral_(epsilon)^(1\/epsilon) e^(-t) t^(s - 1) dif s -> Gamma(s)$ as $epsilon -> 0$. Integrate by parts in these finite integrals and proceed by induction.
+]
+
+#theorem[
+  $Gamma$ has an analytic continuation to a meromorphic function on $CC$, with its only singularities being simple poles at the negative integers $s = 0, -1, -2, dots$. The residue at a given pole $s = - n$ is $(-1)^n\/n!$.
+]
+
+#proof[
+  We can extend $Gamma$ on each half-plane $"Re"(s) > - m$ for $m$ a positive integer. We do so inductively. Define $ F_1 (s) = Gamma(s + 1)/s. $ Since $s |-> Gamma(s + 1)$ holomorphic on $"Re"(s) > -1$, $F_1$ is meromorphic here. It has a simple pole at $s = 0$ with residue one, since $Gamma(s) = 1$. Moreover, by the previous lemma, $F_1 (s) = Gamma(s)$ whenever $"Re"(s) > 0$. Thus $F_1$ is a meromorphic extension of $Gamma$ to $"Re"(s) > -1$. Similarly, we can define $ F_m (s) = (Gamma(s + m))/((s + m - 1) ( s + m - 2) dots.c s), $ which is meromorphic in $"Re"(s) > - m$ and has simple poles at $s = 0, -1, -2, dots, -m + 1$ with residues $ "res"_(s = - n) F_m (s) = (Gamma(m - n))/((m - 1 - n)! (-1) (-2) dots.c (-n)) = ((m - n - 1)!)/((m - 1 - n)! (-1) (-2) dots.c (-n)) = (-1)^n/(n!). $
+  This process extends $Gamma$ to a meromorphic function everywhere. By uniqueness of analytic continuations, $F_m = F_k$ for each $1 <= k <= m$.
+]
+
+#remark[
+  The identity $Gamma(s + 1) = s Gamma(s)$ remains true on all of $CC$, for $s$ not a pole, i.e. $s eq.not 0, -1, -2, dots$, by construction.
+]
+Alternatively, note that if $"Re"(s) > 0$, $ Gamma(s) & = integral_(0)^1 e^(-t) t^(s - 1) dif t+ integral_(1)^infinity e^(-t) t^(s - 1) dif t \
+         & = sum_(n=0)^infinity ((-1)^n)/(n! (n + s)) + integral_(1)^infinity e^(-t) t^(s - 1) dif t, $ by expanding the exponential in a power series and integrating each component. This formula extends to a meromorphic function on $CC$ with the desired formulae.
+
+
+#theorem[
+  For all $s in CC$, $Gamma(s) Gamma(1 - s) = pi/(sin (pi s))$. In particular, $Gamma(1/2) = sqrt(pi)$.
+]
+
+#proof[
+  It suffices to prove for $0 < s< 1$, for then the result holds on all of $CC$ by analytic continuation. So we can use the integral formula,
+  $ Gamma(1 - s) Gamma(s) & = integral_(0)^infinity e^(-t) t^(s - 1) (t integral_(0)^infinity e^(-v t) (v t)^(-s) dif v) dif t \
+  &= integral_(0)^infinity integral_(0)^infinity e^(-t (1 + v)) v^(-s) dif v dif s \
+  &= integral_(0)^infinity (v^(-s))/(1 + v) dif v \
+  &= pi/(sin (pi (1 - s))) = pi/(sin pi s), $ where the final integral can be computed by changing variables $v = e^x$ and using contour integration.
+]
+
+#theorem[
+  1. $1\/Gamma(s)$ is an entire function with simple zeros at $s = 0, -1, -2, dots$ and no other zeroes
+  2. $abs(1\/Gamma(s)) <= c_1 e^(c_2 abs(s) log abs(s))$
+]
+#proof[
+  Since $1/Gamma(s) = Gamma(1 - s) sin(pi s)/pi$, the simple poles of $Gamma(1 - s)$ at $s = 1, 2, dots$ are cancelled by the simple zeros of $sin(pi s)$, so the only zeros are at the nonpositive integers.
+
+  The bound is a little annoying to prove.
+  // TODO
+]
+
+#theorem[
+  For all $s in CC$, $ 1/Gamma(s) = e^(gamma s) s product_(n=1)^infinity (1 + s/n) e^(-s\/n), $ where $gamma$ the Euler-Mascheroni constant $ gamma = lim_(N->infinity) sum_(n=1)^N 1/n - log N. $
+]
+
+#proof[
+  Follows from Hadamard's theorem, which implies, since $1\/Gamma(s)$ entire with simple roots at the nonpositive integers, that $ 1/Gamma(s) = e^(P(s)) s product_(n=1)^infinity (1 + s/n) e^(-s\/n), quad (dagger) $ where, by the previous theorem, $1\/Gamma(s)$ of growth order 1, so we can take $P(z) = A z + B$ a polynomial of degree 1. Since $ lim_(s -> 0) s Gamma(s) = 1, $ so if we divide both sides of $(dagger)$ by $s$ and let $s -> 0$, we find that the RHS converges to $e^(B)$, so we need $B = 0$ (or any integer multiple of $2pi$, but this yields the same answer in the end anyways). Finally, since $Gamma(1) = 1$, we find that evaluating both sides at $s = 1$, we get $ 1 & = e^(A) product_(n=1)^(infinity) (1 + 1/n) e^(-1/n) \
+    & = e^(A) lim_(N->infinity) product_(n=1)^N (1 + 1/n) e^(-1/n) \
+    & = e^(A) lim_N exp(- (sum_(n=1)^N 1/n + log(1 + 1/n))) \
+    & = e^(A) lim_N exp(- (sum_(n=1)^N 1/n) + log(N) + log(1 + 1/N)) \
+    & = e^(A) e^(-gamma), $ implying $A = gamma$ plus some integer multiple of $2pi i$. But if we take $s$ to be real in the original $dagger$, since $Gamma(s)$ real, it must be that $A = gamma$.
+]
+
+== The Zeta Function
+
+#definition[
+  The Riemann _zeta function_ is the series defined by, for real $s > 1$, $ zeta(s) = sum_(n=1)^infinity 1/n^s. $
+]
+
+Similar to the gamma function, we will explore the analytic continuation of $zeta$ to $CC$ and its properties.
+
+#proposition[
+  The series above converges for $s in CC$ with $"Re"(s) > 1$, and moreover, the function $zeta$ is holomorphic on the half-plane $"Re"(s) > 1$.
+]
+
+#proof[
+  Write $s = sigma + i t$ for $sigma, t in RR$ and so $ abs(n^(-s)) = abs(e^(- s log (n))) e^(-sigma log (n)) = n^(-sigma). $ Thus, for $delta > 0$ and sufficiently small so that $sigma > 1 + delta > 1$, then $ abs(sum_(n=1)^N 1/(n^s)) <= sum_(n=1)^N 1/n^(1 + delta), $ which converges as $N -> infinity$. Since this bound is uniform in $s$ with real part greater than $1 + delta$, this means the resulting series $zeta(s)$ uniformly converges on $"Re"(s) > 1 + delta$, and thus to a holomorphic function, for every $delta > 0$. Since $delta > 0$ arbitrary, this means $zeta(s)$ defines a holomorphic function on all of $"Re"(s) > 1$.
+]
+
+#proposition[
+  For $s > 1$, $ zeta(s) = product_(p) 1/(1 - p^(-s)), $ where the product is over all primes.
+]
+
+#proof[
+  Fix $s > 1$. We will show that each side majorizes the other.
+
+  Let $M > N$ positive integers. Given an integer $n <= N$, we can write $n$ uniquely as a product of primes; each prime in this product must be less than or equal to $N$, and each must distinct prime in the product must occur less than $M$ times. So: $ sum_(n=1)^N 1/(n^s) <= product_(p <= N) (1 + 1/p^s + dots.c + 1/p^(M s)) <=^"geometric" product_(p <= N) 1/(1 - p^(-s)) <= product_(p) 1/(1 - p^(-s)), $ which yields the first side of the inequality by letting $N -> infinity$. Conversely, we see see that $ product_(p <= N) (1 + 1/p^s + 1/(p^(2 s)) + dots.c + 1/(p^(M s))) <= sum_(n=1)^infinity 1/n^s, $ since the left-hand side can be expanded to be a sum of distinct reciprocals of integers raised to the $s$th power. Letting $M$ then $N$ go to infinity gives the result.
+]
+
+We'll need the following function in our further analysis.
+
+#definition[
+  The _theta function_ is the function, defined for $t > 0$, by $ theta.alt (t) := sum_(n=-infinity)^infinity e^(- pi n^2 t). $
+]
+
+#proposition([Properties of $theta.alt$])[
+  - $theta.alt(t) = t^(-1\/2) theta.alt(1\/t)$
+  - $theta.alt(t) <= C t^(-1\/2), quad t-> 0$
+  - $abs(theta.alt(t) - 1) <= C e^(- pi t), t >= 1$
+
+  $C$ is some positive constant.
+]
+
+#proof[
+  The first property can be proven via the Poisson summation formula applied to the function $f(x) = e^(- pi t x^2)$.
+
+  The second property follows from the first. Since as $s -> infinity$, its clear that $theta.alt(s)$ is uniformly bounded in $s$ by some constant $C$, so as $t -> 0$ (and thus $1/t -> infinity$), $theta.alt(t) = t^(-1\/2) theta.alt(1\/t) <= C t^(-1\/2)$.
+
+  The third follows from the bounds: $ theta.alt(t) & = 1 + sum_(n in ZZ, n eq.not 0) e^(-pi n^2 t) \
+               & = 1 + 2 sum_(n >= 1) e^(- pi n^2 t) \
+               & <= 1 + 2 sum_(n>=1) e^(-pi n t) <= 1 + C e^(- pi t), $ for all $t >= 1$ (using a geometric series).
+]
+
+#definition[
+  Let $f : RR_(>0) -> CC$. The _Mellin transform_ of $f$ is, if it exists, the complex-valued function of a complex variable $ cal(M)(f)(s) := integral_(0)^infinity x^(s - 1) f(x) dif x. $
+]
+
+#example[$Gamma$ restricted to $RR_(>0)$ is the Mellin transform of the function $f(x) = e^(-x)$; indeed this is how we defined it above.]
+
+#theorem[
+  Let $f(u) = theta.alt(u) - 1$. Then
+  $ cal(M)(f)(s) = 2 pi^(-s) Gamma(s) zeta(2 s), quad forall s "with" "Re"(s) > 1 $ More concretely, if we let $s arrow.squiggly.r s/2$, then this identity says $ pi^(-s\/2) Gamma(s\/2) zeta(s) = 1/2 integral_(0)^infinity u^(s\/2 - 1) [theta.alt(u) - 1] dif u. $
+]
+
+#proof[
+  As in the previous theorem, remark that by symmetry, $ (theta.alt(u) - 1)/2 = sum_(n=1)^infinity e^(-pi n^2 u), $ thus $ cal(M)(f)(s) & = sum_(n=1)^infinity underbrace(integral_(0)^infinity e^(-pi n^2 u) u^(s - 1) dif u, =: I(n, s)), $ where the interchange of summation and integral follow from the estimates on the growth of $theta.alt$, which ensure sufficient integrability. More rigorously, fix $N >= 1$. Then, for all $u > 0$, $ abs(u^(s-1) sum_(n=1)^N e^(-pi n^2 u)) & <=1/2 abs(u^("Re"(s) - 1)) abs(theta.alt(u) - 1) & <= C u^("Re"(s) - 1) e^(- pi u), $ which, since $"Re"(s) > 1$, gives an absolutely convergent function. Thus each partial sum is bounded by some $L^1$ function and we may thus apply the dominated convergence theorem.
+
+  We can thus consider each integral $I(n, s)$. By changing variables $u = t\/(pi n^2)$, we find $ I(n, s) = (pi n^2)^(-s) (integral_(0)^(infinity) e^(-t) t^(s - 1) dif t) = (pi n^2)^(-s) Gamma(s), $ and thus $ cal(M)(f)(s) = Gamma(s) pi^(-s) sum_(n=1)^infinity (n^2)^(-s) = Gamma(s) pi^(-s) zeta(2 s), $ as claimed.
+]
+
+This motivates the following:
+#definition[
+  Define the _xi function_ of a complex variable $s$ with $"Re"(s) > 1$ by $ xi(s) := pi^(-s\/2) Gamma(s/2) zeta(s). $
+]
+
+We view this primarily as a modification of the zeta function. We study its properties here.
+
+#theorem[
+  $xi$ is holomorphic on $"Re"(s) > 1$ and has an analytic continuation to all of $CC$ to a meromorphic function with simple poles at $s = 0, s = 1$. Moreover, $ xi(s) = xi(1 - s), quad forall s in CC. $
+]
+
+
+#proof[
+  // TODO
+
+]
+
+With this, we can accomplish a (meromorphic) continuation of the zeta function.
+
+#theorem[
+  The zeta function $zeta$ has a meromorphic continuation to the entire complex plane. It's only singularity is a simple pole at $s = 1$.
+]
+
+#proof[
+  We can extend $ zeta(s) = pi^(s\/2) (xi(s))/(Gamma(s\/2)), $ where as per the previous theorem, this agrees with $zeta$ on its usual region of definition $"Re"(s) > 1$. $1/Gamma(s\/2)$ is entire with simple zeros at $0, -2, -4, dots$, and $xi(s)$'s simple pole at the origin cancels out. Thus the only singularity is due to the pole of $xi(s)$ at $s = 1$, which is simple.
 ]

@@ -975,6 +975,35 @@ Let $laplace = (partial^2)/(partial x^2) + (partial^2)/(partial y^2)$ be the Lap
   Let $r = (x, y, z)$. Then $ integral.double_(partial W) r/(norm(r)^3) dif S = cases(4 pi quad & 0 in W, 0 & "else") $
 ]
 
+=== Application to PDEs
+
+Let $f in C^2 (RR^3)$ with $f$ compactly supported outside of $[-R, R]^3$. The problem we study is to solve $ laplace u = f. $
+
+#theorem[
+  For $x, y in RR^3$, set $K(x, y) := - 1/(4 pi |x - y|)$. Then, $K(x, y)$ is called a "fundamental solution" of $laplace$ in $RR^3$ and satisfies:
+  1. $laplace_x K = 0$ in $RR^3 minus {0}$
+  2. given $f in C^2 (RR^3)$ with $f$ compactly supported in $[-R, R]^3$, the function $ u(x) = integral_(RR^3) K(x, y) f(y) dif y, quad x in RR^3 $ is a solution to $laplace u(x) = f(x)$.
+]
+
+#proof[
+  $ u(x) = integral_(RR^3) K(x, y) f(y) dif y & = integral_(RR^3) - 1/(4 pi |x - y|) f(y) dif y \
+                                            & = integral_(RR^3) -1/(4 pi |xi|) f(x - xi) dif x \ $ Since $f(x - xi) = 0$ for $|x - xi| >= R$, it follows that $f(x - xi) = 0$ if $|x| < M/2$ when $|xi| > M$ for $M >> 1$ large. Assume $|x| < M/2$ with $M >> R$, so in our integral we only need to integrate over $|xi| <= M$:
+  $ u(x) = integral_(B_M (0)) (-1/(4 pi |xi|)) f(x - xi) dif V(xi), quad forall |x| < M/2. $ Since $f in C^2$, we may differentiate under the integral sign, twice. This implies (adding up these partials) $ laplace u(x) & = integral_(B_M (0)) (-1)/(4 pi |xi|) laplace_x f(x - xi) dif V(xi) \
+               & = integral_(B_M (0)) (-1)/(4 pi |xi|) laplace_xi f(x - xi) dif V(xi) quad ("chain rule"). $ We aim to apply Green's identity, but need to deal with the singularity at $xi = 0$. Let $delta > 0$ small. We rewrite the integral as $ laplace u(x) = integral_(B_(delta) (0)) (dots) + integral_(W_delta) (dots) =: I_1 + I_2, quad W_delta := B_M (0) \\B_delta (0). $ We show that $I_1 -> 0$ as $delta -> 0$. By change of variables to spherical coordinates and the fact that $laplace_xi f(x - xi)$ bounded on compact sets,  $ abs(I_1) & <= integral_(B_delta) C/abs(xi) dif xi \
+  & <= C integral_(0)^delta integral_(0)^(2pi) integral_(0)^pi 1/(rho) rho^2 sin(phi) dif phi dif theta dif rho quad ("by change of variables, Fubini") \
+  &= C' delta^2 ->_(delta -> 0) 0. $
+  Next we deal with $I_2$. Note that $1/abs(xi)$ is harmonic on $W_delta$ (i.e. away from the singularity at $0$). Thus, by Green's identity (and the fact that $f$ vanishes identically on $partial B_M (0)$), $ I_2 &= integral_(W_delta) (-1/(4 pi |xi|)) laplace_xi f(x - xi) dif V(xi) + underbrace(integral_(W_delta) laplace_xi (1/(4 pi |xi|)) f(x - xi) dif V(xi), = 0) \
+  ("Green's") quad &= integral_(partial B_delta (0)) f(x - xi) gradient_(xi) (-1/(4 pi |xi|)) dot dif S(xi) - integral_(partial B_delta (0)) (-1/(4 pi |xi|)) gradient_xi f(x - xi) dot dif S(xi) \
+  &=: I_3 + I_4. $
+
+  We claim $abs(I_4) -> 0$ as $delta -> 0$. Note that $abs(xi) equiv delta$ on $partial B_delta (0)$ and $gradient_xi f(x - xi)$ is uniformly bounded on compact sets. Thus, $ abs(I_4) <= C/delta abs(integral_(partial B_delta(0)) dif S) = C'/delta dot delta^2 ->^(delta -> 0) 0, $ using that that surface area of a sphere in $RR^3$ is proportional to its radius squared.
+
+  We finally just have to deal with $I_3$. We compute, expanding the gradient, that $ I_3 & = integral_(partial B_delta (0)) f(x - xi) (xi/(4 pi |xi|^3)) dot dif S_xi \
+      & = 1/(4 pi delta^3) integral_(partial B_(delta) (0)) f(x - xi) xi dot xi/delta dif S_xi \
+      & = 1/(4 pi delta^2) integral_(partial B_delta (0)) f(x - xi) dif S_xi. $ Since $f in C^1$, for $delta$ sufficiently small, $abs(xi) < delta$ implies $f(x - xi) = f(x) + E(x, xi)$ where $E(x, xi)$ goes to zero like $delta$ as $delta -> 0$, by Taylor expansion. Thus, $ I_3 & = 1/(4pi delta^2) integral_(partial B_delta (0)) f(x) + E(x, xi) dif S_xi \
+  & = f(x) +1/(4 pi delta_2) underbrace(integral_(partial B_delta (0)) E(x, xi) dif S_xi, <= C delta^2 dot sup_xi |E(x, xi)| <= C' delta^3), $ where we use the fact that $integral_(partial B_delta (0)) dif S = 4 pi delta^2$. Based on the bound on the integral involving $E(x, xi)$, the remaining term goes to zero as $delta -> 0$. In short, we have that $I_3 -> f(x)$ as $delta -> 0$. Combining all of this work gives the result, $laplace u(x) = f(x)$ for all $|x| < M/2$. Since $M$ arbitrary, the result is proven.
+]
+
 #pagebreak()
 = Practice Questions
 

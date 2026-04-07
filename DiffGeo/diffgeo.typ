@@ -662,6 +662,7 @@ Remark that $angle.l u_1, u_2 angle.r_q = dif phi_q (v) dot dif phi_q (v')$. Mor
 
 #example("Computing Length/Area in Local Coordinates")[
   // TODO
+  Given a region $R subset RR^2$,  $"area"_phi (R) = integral.double_(R) sqrt(E G - F^2) dif A$.
 ]
 
 #example("Conformal Parametrizations, Stereographic Parametrization")[
@@ -785,7 +786,7 @@ We provide two proofs, for the second gives useful insights for later.
   Finally, if $gamma$ is a normal section with unit-speed parametrization along $v$, then $ddot(gamma)(0)$ is orthogonal to $v$ and parallel to the plane $cal(P)$ containing $p$ and parallel to both $N(p)$ and $v$. Thus, it must be that $dot(gamma)(0)$ is parallel to $N(p)$, so equality holds in the Cauchy-Schwarz inequality in 1., and we find $ II_p (v) = norm(N(p)) norm(ddot(gamma) (0)) = plus.minus K_gamma (0), $ from which the proof follows by taking absolute values.
 ]
 
-=== Orienting the Tangent Space
+=== Orienting the Tangent Space and Geodesics
 
 Let $S$ a $C^2$ oriented surface and for $p in S$, choose an orthonormal basis ${v_1, v_2}$ for $T_p S$ with $v_1 times v_2 = N$. This means ${v_1, v_2, N}$ forms a positively oriented orthonormal basis of $RR^3$.
 
@@ -872,7 +873,7 @@ One computes $ norm(partial_s phi times partial_theta phi) = epsilon (1 - epsilo
 
 Combining these results, the last proposition really tells us that $ integral.double_(S_+) K dif sigma >= 8 pi $ by a similar argument to the last last proposition. Combining with the first proposition yields the result.
 
-== Curvature under Local Isometries, and Gauss's and Bonnet's Theorems
+== Curvature under Local Isometries; Gauss's and Bonnet's Theorems
 
 // TODO picture
 
@@ -896,7 +897,10 @@ $ partial_u Gamma_(1 2)^1 + Gamma_(1 2)^1 Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1
 => (f e G - f^2 F)/(E G - F^2) - (e f G - e g F)/(E G - F^2) &= (dots.c) \
 => (e g - f^2)/(E G - F^2) F &= (dots.c) \
 => K dot F &= (dots.c) \
-=> K &= (partial_(u) Gamma_(1 2)^1 - partial_v Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1 2)^1 - Gamma_(1 1)^2 Gamma_(2 2)^1)/F. $ With the dust settled, the punchline is that we have written $K$ purely in terms of the Christoffel symbols and the first fundamental form. Since these are invariant under local isometries, this implies the Gaussian curvature is invariant under local isometries, assuming $F eq.not 0$ (since we divided by $F$ at the end). However, if $F$ is 0, we can similarly match the coefficients for $partial_v phi$ and compute that $ #box(stroke: 1pt, inset: 1em, $ K = (Gamma_(1 1)^1 Gamma_(1 2)^2 - Gamma_(1 2)^1 Gamma_(1 1)^1 + Gamma_(1 1)^2 Gamma_(2 2)^2 - Gamma_(1 2)^2 Gamma_(1 2)^2 + partial_v Gamma_(1 1)^2 - partial_(u) Gamma_(1 2)^2)/E, $) $ and since $E$ is always nonzero (for regular surfaces), this is always a valid expression for $K$ in terms of the first fundamental form. This is known as the _Gauss equation_, which proves #theorem("Gauss's Theorema Egregium")[The Gaussian curvature of a $C^3$ surface is invariant under local isometries.]
+=> K &= (partial_(u) Gamma_(1 2)^1 - partial_v Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1 2)^1 - Gamma_(1 1)^2 Gamma_(2 2)^1)/F. $ With the dust settled, the punchline is that we have written $K$ purely in terms of the Christoffel symbols and the first fundamental form. Since these are invariant under local isometries, this implies the Gaussian curvature is invariant under local isometries, assuming $F eq.not 0$ (since we divided by $F$ at the end). However, if $F$ is 0, we can similarly match the coefficients for $partial_v phi$ and compute that $ #box(stroke: 1pt, inset: 1em, $ K = (Gamma_(1 1)^1 Gamma_(1 2)^2 - Gamma_(1 2)^1 Gamma_(1 1)^1 + Gamma_(1 1)^2 Gamma_(2 2)^2 - Gamma_(1 2)^2 Gamma_(1 2)^2 + partial_v Gamma_(1 1)^2 - partial_(u) Gamma_(1 2)^2)/E, $) $ and since $E$ is always nonzero (for regular surfaces), this is always a valid expression for $K$ in terms of the first fundamental form. This is known as the _Gauss equation_, which proves
+#theorem(
+  "Gauss's Theorema Egregium",
+)[The Gaussian curvature of a $C^3$ surface is invariant under local $C^3$ isometries.]
 
 #exercise[
   Suppose $E equiv 1$ and $F equiv 0$. Show that $K = - (partial_(u u)^2 (sqrt(G)))/(sqrt(G))$.
@@ -915,6 +919,82 @@ Finally, we can compare the coefficients of $N$, from which we find the relation
 #remark[We use "smooth" to avoid digging into the exact conditions of the compatibility equations.]
 
 #remark[We can use Gauss's formula to extend the definition of Gaussian curvature for regular $C^3$ surfaces in $RR^n$. This begins by defining it analogously to above for a local parametrization, then by showing that this definition is invariant under change of parametrization.]
+
+== A Converse to Gauss's Theorem
+
+From the previous section, we know that if $S$ is locally isometric to a plane, then $K equiv 0$. Here we aim to prove that the opposite direction holds, i.e. if a surface has constant 0 curvature then it is locally isometric to a plane.
+
+Let $S$ a regular $C^3$ surface. Recall that a curve $gamma : I -> S$ a _geodesic_ iff $ddot(gamma)$ is parallel to $N compose gamma$ iff $ddot(gamma)$ is orthogonal to $S.$
+
+#exercise[
+  The following are geodesics:
+  1. lines in planes;
+  2. great circles in spheres;
+  3. helices and vertical lines in cylinders;
+  4. lines in arbitrary surfaces, if they exist.
+]
+
+The question we aim to answer first is whether geodesics on a surface always exist. It turns out the answer to this is affirmativce (at least locally); we'll use this fact to prove the claim from the beginning of this section.
+
+#definition[
+  Let $gamma : I -> S$ a regular path and $w : I -> RR^3$ _a $C^1$ vector field along $gamma$_ (i.e., it is tangent to $S$ at each point along $I$; $w(t) in T_(gamma(t)) S forall t in I$).
+]
+
+#definition("Contravariant Derivative")[
+  Given a $C^1$ vector field $w$ along $gamma$, define the _contravariant derivative_ of $w$ by $ (Dif w)/(dif t) : I -> RR^3 $ as the orthogonal projection of $dot(w)(t)$ onto $T_gamma(t) S$.
+  We will say $w$ is _parallel_ (to $S$) if $(Dif w)/(dif t) equiv 0$, i.e. if $dot(w)(t)$ is orthgonal to $T_(gamma(t)) S$.
+]
+#remark[Note that $dot(gamma)$ is itself a $C^1$ vector field along $gamma$, and thus $gamma$ a geodesic iff $dot(gamma)$ is parallel.]
+
+#proposition("Properties of Contravariant Derivative")[
+  Let $w, w_1, w_2$ be $C^1$ vector fields along $gamma$ and $lambda_1, lambda_2$ be scalars. The following hold:
+  1. (Linearity) $ (Dif w)/(dif t) (lambda_1 w_1 + lambda_2 w_2) = lambda_1 (Dif w_1)/(dif t) + lambda_2 (Dif w_2)/(dif t) $
+  2. (Product Rule) $ dif/(dif t) (w_1 dot w_2) = (Dif w_1)/(dif t) dot w_2 + w_1 dot (Dif w_2)/(dif t) $
+  3. (Change of Parameters) if $t : tilde(I) -> I$ is a regular change of parameters and $tilde(gamma) := gamma compose t$, then $tilde(w) := w compose t$ is a $C^1$ vector field along $tilde(gamma)$, and $ (Dif tilde(w))/(dif s) = (Dif w)/(dif t) dot (dif t)/(dif s). $
+]
+
+#proof[
+  These all follow from the definition and the linearity of orthogonal projections. \
+]
+
+#corollary[
+  - If $w_1, w_2$ are parallel vector fields along a curve $gamma$, then so is $lambda_1 w_1 + lambda_2 w_2$ for any scalars $lambda_1, lambda_2$
+  - If $w$ a parallel vector field along $gamma$ and $tilde(w)$ a reparametrization of $w$, then $tilde(w)$ also a parallel vector field
+]
+
+We can compute the contravariant derivative of a vector field in local coordinates as follows. Let $phi : U -> S$ a local parametrization of $S$ and $gamma : I -> S$ a regular curve in $S$ with $gamma(I) subset phi(U)$. This means that we can write $gamma(t) = phi(u(t), v(t))$ for some $C^1$ functions $u, v : I -> RR$.
+
+Suppose $w : I -> RR^3$ a $C^1$ vector field along $gamma$. This means that we can write $ w = lambda_1 partial_u phi + lambda_2 partial_v phi $ for some $C^1$ scalar functions $lambda_1, lambda_2 : I -> RR$, since $w$ lives in the tangent space to $gamma(t)$ at each point $t in I$ (note that the vectors $partial_u phi, partial_v phi$ are tacitly evaluated at $(u(t), v(t))$ in the above, as we view $w$ as a function on $I$). The derivative of $w$ in $t$ is thus, applying chain, product rules,
+$ dot(w) = lambda'_1 partial_u phi + lambda_1 (partial_(u u)^2 phi dot u' + partial_(u v)^2 phi dot v') + lambda'_2 partial_v phi + lambda_2 (partial_(v v)^2 phi dot v' + partial_(u v)^2 phi dot u'). $ All of the second-order partial derivatives of $phi$ can be rewritten in terms of the Christoffel symbols as per the previous section, and thus $dot(w)$ can be written in the basis ${partial_u phi, partial_v phi, N compose phi}$. By dropping the coefficients of the $N compose phi$ vector, we project $dot(w)$ onto $T_gamma(dot) S$, and thus compute the contravariant derivative of $w$ in local coordiantes (we omit the details since its a little annoying):
+$
+  (Dif w)/(dif t) &= [lambda'_1 + lambda_1 u' Gamma_(1 1)^1 + (lambda_1 v' + lambda_2 u') Gamma_(1 2)^1 + lambda_2 v' Gamma_(2 2)^1] partial_(u) phi \
+  & quad quad quad + [lambda'_2 + lambda_1 u' Gamma_(1 1)^2 + (lambda_1 v' + lambda_2 u') Gamma_(1 2)^2 + lambda_2 v' Gamma_(2 2)^2] partial_(v) phi quad quad (dagger)
+$
+
+#remark[This gives the covariant derivative in local coordinates. Remark that, by inspecting the formula $(dagger)$, we see that $(Dif w)/(dif t)$ is _intrinsic_ in the sense that it is invariant under local isometries.]
+
+#corollary[
+  Geodesics are still geodesics under local isometries.
+]
+
+#proof[
+  This follows from the previous remark, and by taking $w = dot(gamma)$ for some geodesic curve $gamma$.
+]
+
+Supposing $w = dot(gamma)$ in the equation above, we have that $lambda_1 = u', lambda_2 = v'$. Since a curve $gamma$ is a geodesic iff the contravariant derivative of its velocity field is 0, the formula $(dagger)$ gives the following proposition.
+
+#proposition[
+  $gamma = phi(u, v)$ is a geodesic iff its components $u, v$ satisfy the _geodesic equations_ $ u'' + (u')^2 Gamma_(1 1)^1 + 2 u' v' Gamma_(1 2)^1 + (v')^2 Gamma_(2 2)^1 & = 0 \
+  v'' + (u')^2 Gamma_(1 1)^2 + 2 u' v' Gamma_(1 2)^2 + (v')^2 Gamma_(2 2)^2 & = 0. $
+]
+
+Thus, to check if geodesics exist is equivalent to checking whether these equations have solutions. We can rewrite this system into a first-order differential system by defining $underline(u) := u', underline(v) := v'$, which implies $ underline(u)' & = - underline(u)^2 Gamma_(1 1)^1 - 2 underline(u) underline(v) Gamma_(1 2)^1 - (underline(v))^2 Gamma_(2 2)^1 \
+underline(v)' &= - underline(u)^2 Gamma_(1 1)^2 - 2 underline(u) underline(v) Gamma_(1 2)^2 - (underline(v))^2 Gamma_(2 2)^2 \
+u' &= underline(u) \
+v' &= underline(v). $ If $S in C^3$, right-hand side of each equation $C^1$ functions in the unknowns, so by standard existense and uniqueness theorems from ODEs, there exists a local solution for any given initial positions $u(0), v(0)$ and velocities $u'(0), v'(0)$. In short, for any initial point and any initial direction, there exists a geodesic beginning at that point with that given initial direction.
+
+
+
 
 
 
@@ -956,7 +1036,7 @@ Let $gamma : I -> RR^n$ be a parametrized curve, and let $tilde(gamma) = gamma c
   $$,
   $norm(dot(gamma) times ddot(gamma))/(norm(dot(gamma))^3)$,
   [signed curvature $dagger.double$],
-  $(ddot(gamma) dot dot(gamma)^ast)/(norm(dot(gamma)^3))$,
+  $(ddot(gamma) dot dot(gamma)^ast)/(norm(dot(gamma))^3)$,
   $$,
   $(dot(x) ddot(y) - ddot(x) dot(y))/((dot(x)^2 + dot(y)^2)^(3\/2))$, "N/A",
   [tangent $dagger$], $dot(gamma)/(norm(dot(gamma)))$, $dot(tilde(gamma))$, $$, $$,
