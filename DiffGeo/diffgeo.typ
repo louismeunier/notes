@@ -773,7 +773,7 @@ We provide two proofs, for the second gives useful insights for later.
 ]
 
 #proposition("Normal Curvature Characterization via Curves")[
-  Let $v in T_p S$ be a unit vector and $phi. (- epsilon, epsilon) -> S$ a regular $C^2$ path with $gamma (0) = p$ and $dot(gamma)(0) = v$. Then,
+  Let $v in T_p S$ be a unit vector and $phi : (- epsilon, epsilon) -> S$ a regular $C^2$ path with $gamma (0) = p$ and $dot(gamma)(0) = v$. Then,
   1. $II_p (v) = N(p) dot ddot(gamma)(0)$
   2. $abs(II_p (v)) <= K_gamma (0)$, the curvature of the curve $gamma$, with equality achieved along a normal section along $v$.
 ]
@@ -993,7 +993,10 @@ underline(v)' &= - underline(u)^2 Gamma_(1 1)^2 - 2 underline(u) underline(v) Ga
 u' &= underline(u) \
 v' &= underline(v). $ If $S in C^3$, right-hand side of each equation $C^1$ functions in the unknowns, so by standard existense and uniqueness theorems from ODEs, there exists a local solution for any given initial positions $u(0), v(0)$ and velocities $u'(0), v'(0)$. In short, for any initial point and any initial direction, there exists a geodesic beginning at that point with that given initial direction.
 
+More precisely, for any point $q in U$ and nonzero vector $v in RR^2$, there is an $epsilon = epsilon(q, v) > 0$ and a unique geodesic $gamma : (-epsilon, epsilon) -> U$ such that $gamma(0) = q, dot(gamma)(0) = v$.
 
+
+// TODO
 
 
 

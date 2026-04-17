@@ -8,7 +8,7 @@
 #show: doc => conf(
   course_code: "MATH249",
   course_title: "Complex Variables",
-  subtitle: "",
+  subtitle: [Basics of Complex Analysis; contour integration; holomorphic, meromorphic functions; entire functions; the Gamma and Zeta functions. Largely following Stein and Shakarchi's _Complex Analysis_.],
   semester: "Winter 2026",
   professor: "Prof. Henri Darmon",
   // cute: "../analysis 3/page.png",
@@ -311,7 +311,7 @@ Thus, we've shown that holomorphic $=>$ analytic, and thus the two are equivalen
 
 #proof[
   Let $ U = "int"({z in Omega : f(z) eq 0}). $
-  This set is open and nonempty $(D subset U)$. It is also closed; to see this, let ${z_n} subset U$ with limit $z$. Then by the previous theorem, $f(z) = 0$, and thus $z in U$ so $U$ closed. But $Omega$ connected, so $Omega = U$.
+  This set is open and nonempty $(D subset U)$. It is also closed; to see this, let ${z_n} subset U$ with limit $z$. Then by the previous theorem, $f(z) = 0$ and moreover this is true in a neighborhood of $z$, and thus $z in U$ so $U$ closed. But $Omega$ connected, so $Omega = U$.
 ]
 
 This basically says that local behavior of holomorphic functions gives us information about the global behaviour.
@@ -353,7 +353,7 @@ This basically says that local behavior of holomorphic functions gives us inform
 ]
 
 #proposition([Local expansions at $z_0$])[
-  If $f$ is a nonzero holomorphic at $z_0$, then there exists a unique $m >= 0$ such that $ f(z) = (z - z_0)^m g(z), $ where $g(z_0) eq.not 0$.
+  If $f$ is a nonzero holomorphic function near $z_0$ with $f(z_0) = 0$, then there exists a unique $m >= 0$ such that $ f(z) = (z - z_0)^m g(z), $ where $g(z_0) eq.not 0$.
 
   We call $m$ the _order of vanishing_ of $f$ at $z_0$.
 ]
@@ -609,11 +609,11 @@ The goal of this function is study entire functions, and in particular, to study
 
 
 #theorem[
-  Let $Omega$ an open set containing $overline(D)_R$ and suppose $f$ is holomorphic in $Omega$ with $f(0) eq.not 0$, with $f$ vanishing nowhere on $C_R$. Let $z_1, dots, z_N$ be the zeros of $f$ counted with multiplicity. Then, $ log(|f(0)|) = sum_(k=1)^N log(|z_k|/R) + 1/(2pi) integral_(0)^(2pi) log|f(R e^(i theta))| dif theta. $
+  Let $Omega$ an open set containing $overline(D)_R$ and suppose $f$ is holomorphic in $Omega$ with $f(0) eq.not 0$, with $f$ vanishing nowhere on $C_R$. Let $z_1, dots, z_N$ be the zeros of $f$ counted with multiplicity. Then, $ log(|f(0)|) = sum_(k=1)^N log((|z_k|)/R) + 1/(2pi) integral_(0)^(2pi) log|f(R e^(i theta))| dif theta. $
 ]
 
 #proof[
-  Couple ways to prove this. At some point you'll need to use the equality $ integral_(0)^(2 pi) log(|1 - a e^(i theta|)) dif theta = 0, quad "if" abs(a) < 1. $
+  Couple ways to prove this. At some point you'll need to use the equality $ integral_(0)^(2 pi) log(|1 - a e^(i theta)|) dif theta = 0, quad "if" abs(a) < 1. $
 ]
 
 #lemma[
@@ -631,7 +631,7 @@ The goal of this function is study entire functions, and in particular, to study
 ]
 
 #theorem[
-  Let $f$ be entire with order of growth $<=2$. Then
+  Let $f$ be entire with order of growth $<= rho$. Then
   1. $frak(n)(r) <= C r^rho$ for some $C$ and all $r$ sufficiently large;
   2. If $z_1, z_2, dots$  are the zeros of $f$ with $z_k$ non-zero for all $k$, then for every $s> rho$, $ sum_(k=1)^infinity 1/(abs(z_k)^s) < infinity. $
 ]
@@ -657,7 +657,7 @@ The goal of this function is study entire functions, and in particular, to study
 #proposition[
   Let ${F_n}$ a sequence of holomorphic functions on $Omega$ such that there exists constants $c_n > 0$ such that $ abs(F_n (z) - 1) <= c_n forall z in Omega, quad sum c_n < infinity. $ Then:
   1. $F(z) = product_(n=1)^infinity F_n (z)$ exists as a holomorphic function in $Omega$
-  2. If $F_n$ does not vanish for any $n$, then $ F'(z)/(F(z)) = sum_(n=1)^infinity (F'_n (z))/(F_n (z)). $
+  2. If $F_n$ does not vanish for any $n$, then $ (F'(z))/(F(z)) = sum_(n=1)^infinity (F'_n (z))/(F_n (z)). $
 ]
 
 #proposition[
@@ -785,6 +785,8 @@ Similar to the gamma function, we will explore the analytic continuation of $zet
 
 #proposition[
   For $s > 1$, $ zeta(s) = product_(p) 1/(1 - p^(-s)), $ where the product is over all primes.
+
+  This is also true for $s in CC$ with $"Re"(s) > 1$.
 ]
 
 #proof[
@@ -792,6 +794,41 @@ Similar to the gamma function, we will explore the analytic continuation of $zet
 
   Let $M > N$ positive integers. Given an integer $n <= N$, we can write $n$ uniquely as a product of primes; each prime in this product must be less than or equal to $N$, and each must distinct prime in the product must occur less than $M$ times. So: $ sum_(n=1)^N 1/(n^s) <= product_(p <= N) (1 + 1/p^s + dots.c + 1/p^(M s)) <=^"geometric" product_(p <= N) 1/(1 - p^(-s)) <= product_(p) 1/(1 - p^(-s)), $ which yields the first side of the inequality by letting $N -> infinity$. Conversely, we see see that $ product_(p <= N) (1 + 1/p^s + 1/(p^(2 s)) + dots.c + 1/(p^(M s))) <= sum_(n=1)^infinity 1/n^s, $ since the left-hand side can be expanded to be a sum of distinct reciprocals of integers raised to the $s$th power. Letting $M$ then $N$ go to infinity gives the result.
 ]
+
+=== An Aside on the Fourier Transform
+
+We will need some results from Fourier analysis for our further work. See #link("https://notes.louismeunier.net/Analysis%204/analysis4.pdf#page=66", "these notes") for more details in a more rigorous setting.
+
+#definition[
+  The _Schwarz class_ of functions is $ cal(S) := {f : CC -> CC | f "smooth", f "of rapid decay"}, $ where "rapid decay" means $f$ and all of its derivatives decay faster than any polynomial at infinity.
+
+  The Fourier transform of a function $f in cal(S)$ is defined by $ hat(f) : CC -> CC, hat(f)(z) := integral_(-infinity)^infinity e^(- 2 pi i xi x) f(xi) dif x. $
+]
+
+
+#theorem("Poisson Summation Formula")[
+  For a Schwarz function $f$, $ sum_(n=-infinity)^infinity f(n) = sum_(n=-infinity)^infinity hat(f)(n). $
+]
+
+#proof[
+  Let $F(x) := sum_(n=-infinity)^infinity f(x + n)$. This is an absolutely convergent series, and $F$ is $1$-periodic and smooth on $x in [0, 1]$. We can thus write $F(x)$ in terms of its Fourier series, $ F(x) = sum_(n=-infinity)^infinity a_n e^(2pi i n x), quad a_n in CC, $ where $ a_n := integral_(0)^1 e^(-2 pi i n x) F(x) dif x &= integral_0^1 sum_(m=-infinity)^infinity f(x + m) e^(-2 pi i n x) dif x \
+  &= integral_(0)^1 sum_(m in ZZ) f(x + m) e^(- 2 pi i n (x + m)) dif x \
+  &= sum_(m in ZZ) integral_(0)^1 f(x + m) e^(- 2 pi i n (x + m)) dif x \
+  &= sum_(m in ZZ) integral_(m)^(m + 1) f(x) e^(-2 pi i n x) dif x \
+  &= integral_(-infinity)^infinity f(x) e^(-2 pi i n x) dif x = hat(f)(n). $ Thus $ sum_(n in ZZ) f(x + n) = F(x) = sum_(n in ZZ) hat(f)(n) e^(2 pi i n x). $ Setting $x = 0$ gives the result.
+]
+
+#proposition[
+  Let $f(x) = e^(-pi x^2)$ be a scaled Gaussian. Then $hat(f)(xi) = f(xi)$.
+]
+
+#proof[
+  This follows by contour integration over some rectangle with width $2 R$ and with one base along the real axis, and with small $epsilon$-side lengths.
+]
+
+
+
+== The Theta Function and Zeta Function
 
 We'll need the following function in our further analysis.
 
@@ -808,7 +845,9 @@ We'll need the following function in our further analysis.
 ]
 
 #proof[
-  The first property can be proven via the Poisson summation formula applied to the function $f(x) = e^(- pi t x^2)$.
+  For the first property, one remarks that if $f_t (x) := e^(-pi x^2 t)$, then $hat(f)_t (xi) = t^(-1\/2) e^(- pi/t xi^2)$ (by using some rescaling properties of the Fourier transform and the previous proposition on the stability of the Gaussian under Fourier transform). By using Poisson summation, $ sum_(n=-infinity)^infinity f_t (n) = sum_(n=-infinity)^infinity hat(f)_t (n), \
+  => sum_(n=-infinity)^infinity e^(-pi n^2 t) = t^(-1\/2) sum_(n=-infinity) e^(-pi n^2 (1\/t)). $
+  The left-hand side is $theta.alt(t)$ and the right-hand side is $1\/sqrt(t) theta.alt(1\/t)$ as claimed.
 
   The second property follows from the first. Since as $s -> infinity$, its clear that $theta.alt(s)$ is uniformly bounded in $s$ by some constant $C$, so as $t -> 0$ (and thus $1/t -> infinity$), $theta.alt(t) = t^(-1\/2) theta.alt(1\/t) <= C t^(-1\/2)$.
 
@@ -825,7 +864,7 @@ We'll need the following function in our further analysis.
 
 #theorem[
   Let $f(u) = theta.alt(u) - 1$. Then
-  $ cal(M)(f)(s) = 2 pi^(-s) Gamma(s) zeta(2 s), quad forall s "with" "Re"(s) > 1 $ More concretely, if we let $s arrow.squiggly.r s/2$, then this identity says $ pi^(-s\/2) Gamma(s\/2) zeta(s) = 1/2 integral_(0)^infinity u^(s\/2 - 1) [theta.alt(u) - 1] dif u. $
+  $ cal(M)(f)(s) = 2 pi^(-s) Gamma(s) zeta(2 s), quad forall s "with" "Re"(s) > 1 $ More concretely, if we let $s arrow.squiggly.r s/2$, then this identity says $ pi^(-s\/2) Gamma(s\/2) zeta(s) = 1/2 integral_(0)^infinity u^(s\/2 - 1) [theta.alt(u) - 1] dif u. $ Sometimes the function $Lambda(s) := pi^(-s\/2) Gamma(s\/2) zeta(s)$ is called the "completed zeta function" for reasons we'll see shortly.
 ]
 
 #proof[
@@ -860,3 +899,133 @@ With this, we can accomplish a (meromorphic) continuation of the zeta function.
 #proof[
   We can extend $ zeta(s) = pi^(s\/2) (xi(s))/(Gamma(s\/2)), $ where as per the previous theorem, this agrees with $zeta$ on its usual region of definition $"Re"(s) > 1$. $1/Gamma(s\/2)$ is entire with simple zeros at $0, -2, -4, dots$, and $xi(s)$'s simple pole at the origin cancels out. Thus the only singularity is due to the pole of $xi(s)$ at $s = 1$, which is simple.
 ]
+
+
+== The Prime Number Theorem
+
+Here, we show that our work in the previous chapter was not just an exercise in integration.
+
+#definition("Prime Counting Function")[
+  Let $ pi(x) := hash {p : p "prime and" p < x} $ be the prime counting function for $x in RR_(> 0)$. Equivalently, $ pi(x) = sum_(n <= x) bb(1)_("prime") (n). $
+]
+
+
+#theorem("Prime Number Theorem")[
+  We have the asymptotic relation $ pi(x) tilde x/log(x), $ in the sense that $ lim_(x -> infinity) pi(x)/(x\/log(x)) = 1. $
+]
+
+#definition("Von Mangoldt Function")[
+  Define $ Lambda(n) := cases(0 quad & n "not a power of a prime", log(p) quad & "if" n = p^m "for some integer" m), $ and $ psi : RR_(> 0) -> RR, quad psi(x) = sum_(n <= x) Lambda(n), $ and finally $ psi_1 (x) := integral_(0)^x psi(t) dif t. $
+]
+
+
+We introduce this function as it has the following connection to the zeta function, as well as its asymptotic behaviour connecting to the prime number theorem.
+
+#proposition[
+  $ - (zeta'(s))/zeta(s) = sum_(n=1)^infinity Lambda(n)/(n^s) $
+]
+
+#proof[
+  Since $zeta(s) = product_p (1 - 1/p^s)^(-1)$, $ - (zeta'(s))/(zeta(s)) & = sum_(p) (dif/(dif s) (1 - 1/p^s))/(1 - 1/p^s) \
+                         & = sum_(p) (log(p) p^(-s))/(1 - p^(-s)) \
+                         & = sum_(p) log(p) p^(-s) [1 + p^(-s) + p^(-2 s) + p^(-3 s) + dots.c] \
+                         & = sum_(n >= 1) Lambda(n)/(n^s), $ where the final equality is proven akin to the product formula for the zeta function.
+]
+
+
+#proposition[
+  If $psi(x) tilde x$, then $pi(x) tilde x\/log(x)$.
+]
+
+#proof[
+  We can write $ psi(x) & = sum_(p : "prime" <= x) log(p) dot floor(log(x)/log(p)) \
+         & <= sum_(p <= x) log(p) log(x)/(log(p)) = log(x) pi(x), $ which implies $ pi(x)/(x\/log(x)) >= psi(x)/x. $ On the other hand, $ psi(x) & >= sum_(p <= x) log(p) \
+         & >= sum_(x^alpha <= p < x) log(p) \
+         & >= log(x^alpha) [pi(x) - pi(x^alpha)] \
+         & >= alpha dot log(x) [pi(x) - x^alpha], $ for any $alpha < 1$. This implies $ psi(x) + alpha log(x) dot x^alpha >= alpha log(x) pi(x) \
+  => (psi(x) + alpha log(x) x^alpha)/(alpha x) >= pi(x)/(x\/log(x)) $ and thus in all, we have $ psi(x)/x <= pi(x)/(x\/log(x)) <= psi(x)/(alpha x) + log(x) x^(alpha - 1). $
+  Letting $x -> infinity$, the left-hand side goes to 1 by assumption, and the right-hand side goes to $1/alpha$. Since $alpha < 1$ was arbitrary, we let $alpha -> 1$ and we obtain the result.
+]
+
+#theorem[
+  The following are equivalent:
+  1. $pi(x) tilde x\/log(x)$
+  2. $psi(x) tilde x$
+  3. $psi_1 (x) tilde x^2\/2$.
+]
+
+#proof[
+  We've proven 2. implies 1. in the previous proposition; 3. implies 2. is a similar argument that we omit. Thus, if we can prove 3. holds, then by this series of implications the prime number theorem will hold. It turns out this slightly more convoluted function will be the easiest to approach analytically.
+]
+
+#remark[
+  We may write $ psi_1 (x) = integral_(0)^x psi(t) dif t = sum_(n <= x) Lambda(n) (x - n), $ since $psi$ is piecewise constant (between each positive integer); the right-hand side essentially computes the area of each "horizontal rectangle" with height $Lambda(n)$ and base $x - n$ that form the area below the curve $psi(x)$.
+]
+
+#theorem[
+  For all $c in RR$, $c > 1$, we have $ psi_1 (x) = 1/(2 pi i) integral_(c - i infinity)^(c + i infinity) (x^(s + 1))/(s (s + 1)) dot (- zeta' (s))/(zeta(s)) dif s, $ where the integral should be interpreted as the contour integral over the vertical line in the complex plane passing through $c$ (or more rigorously, the limit as $M -> infinity$ of the integral over the line segment between $c - M i, c + M i$).
+]
+
+The notable part of this theorem is that the left-hand side doesn't depend on $c$, so the integral on the right-hand side has the same value for any $c > 1$.
+
+For the proof, we will need the following lemma, which we will assume first and prove after:
+
+#lemma[
+  For all $c > 1$ in $RR$ and $a in RR_(>0)$, $ 1/(2pi i) integral_(c - i infinity)^(c + i infinity) a^s/(s (s + 1)) dif s = cases(
+    0 quad & a <= 1,
+    1 - (1/a) quad & a >= 1
+  ). $
+]
+
+
+#proof("(Of the Theorem)")[
+  Fix a $c > 1$ and recall that $- (zeta'(s))/(zeta(s)) = sum_(n = 1)^infinity Lambda(n)/(n^s)$ for $"Re"(s) > 1$. Since $c > 1$, this implies, if $I$ the integral in the theorem, we find $ I &= 1/(2pi i) integral_(c - i infinity)^(c + i infinity) (x^(s + 1))/(s (s + 1)) sum_(n = 1)^infinity Lambda(n)/(n^s) dif s \
+  &= 1/(2 pi i) sum_(n=1)^infinity (integral_(c - i infinity)^(c + i infinity) (x^(s + 1))/(s (s + 1)) Lambda(n)/(n^s) dif s ), $ where we should justify our interchange of summation and integral (but won't, sorry!). Simplifying slightly, we find $ I = 1/(2pi i) sum_(n=1)^infinity x Lambda(n) (integral_(c - i infinity)^(c + i infinity) ((x\/n)^s)/(s (s + 1)) dif s). $ By the previous lemma, we see that if $n >= x$, the integral in the summation vanishes, so we only pick up finitely many terms, and thus $ I & = sum_(n <= x) x lambda(n) (1 - n/x) \
+    & = sum_(n <= x) Lambda(n) (x - n) = psi_1 (x), $ as in the remark. This completes the proof modulo the lemma we took for granted which we prove now.
+]
+
+#proof("(Of the Lemma)")[
+  We can write $ 1/(2pi i) integral_(c - i infinity)^(c + i infinity) (a^s)/(s(s + 1)) dif s = lim_(R -> infinity) integral_(c - i R)^(c + i R) (a^s)/(s (s + 1)) dif s =: lim_(R -> infinity) I_R. $
+  First assume $a < 1$.
+  Consider the contour consisting of the line-segment from $c - i R$ to $c + i R$ then along the $R$-radius semicircle (the right-hand side of the full circle...) $gamma_R$. By the residue theorem, since the poles of $f(s) := a^s/(s(s + 1))$ are outside of the interior of this contour, we find $ I_R + 1/(2 pi i) integral_(gamma_R) f(s) dif s = 0. $ Define $J_R$ as the right-hand integral. We claim then $abs(J_R) -> 0$ as $R -> infinity$. We have the bound $ abs(J_R) & <= integral_(gamma_R) abs(a^s)/(abs(s (s + 1))) dif s \
+           & = integral_(gamma_R) (a^("Re"(s)))/(abs(s(s+1))) dif s \
+           & <= a^c integral_(gamma_R) 1/(abs(s(s + 1))) dif s \
+           & <= C/R, $ for some constant $C$ and $R$ sufficiently large. This concludes the first result.
+
+  Now assume $a >= 1$. The same proof no longer works since we crucially used the fact that $|a^s|$ was decreasing with $s$ when $a < 1$. Instead, use the left-hand half $gamma_R$ of the semicircle with vertical diameter $c + i R, c - i R$. In this case, the poles of the function $f$ at $0, -1$ are indeed within the contour, and thus we find by letting $R -> infinity$, the residue theorem tells us $ I = "res"_0 f(s) + "res"_(-1) f(s), $ for (by similar logic to the previous case), the integral over the semicircle goes to zero. We compute $"res"_0 f(s) = 1$ and $"res"_(-1) f(s) = -1/a$ by direct computation. This implies $I = 1 -1/a$ and the proof is complete.
+]
+
+
+#proposition[
+  $zeta(s)$ has no zeros in $"Re"(s) > 1$. As a result, neither does $Lambda(s) = pi^(-s\/2) Gamma(s\/2) zeta(s)$, the "modification" of the zeta function.
+]
+
+#proof[
+  We can write $ zeta(s) = product_(p "prime") (1 - 1/(p^s))^(-1) $ on this region. This is never zero since each term in the product is never zero for any $s$ with $"Re"(s) > 1$. The "as a result" claim follows from the fact that $Gamma$ has no zeros on this region either.
+]
+
+#proposition[
+  $Lambda(s)$ has no zeros in $"Re"(s) < 0$ and thus $zeta(s) = 0$ iff $s = 0, - 2, - 4, dots.$ These are called the _trivial zeros_ of $zeta$.
+]
+
+
+// TODO replace xi wiht Lambda
+
+#proof[
+  The first claim follows from the functional equation $Lambda(s) = Lambda(1 - s)$. The second follows from the location of the pole of $Gamma(s\/2)$.
+]
+
+
+Thus the only possible nontrivial zeros of $zeta$ that we need to consider are those (potentially lying) in the so-called _critical strip_ ${0 <="Re"(s) <= 1}$. Remark that by the symmetry of $zeta$ about $1/2$, for any zero, there must exist another at the reflection over the line $s = 1/2$.
+
+#proposition("Riemann Hypothesis")[
+  All of the nontrivial zeros of $zeta(s)$ are at $"Re"(s) = 1/2$.
+]
+
+#remark[
+  Ran out of time in the semester to prove this one...
+]
+
+Supposing the Riemann hypothesis, then for any $1/2 < delta < 1$, we can push the integral representation of $Psi_1$; since $zeta$ would hae no zeros on this strip, we only deal with the simple pole at $s = 1$ and hence we find $ psi_1 (x) &= "res"_(s = 1) (dots) + 1/(2pi i) integral_(delta - i infinity)^(delta + i infinity) (x^(s + 1))/(s(s + 1)) (- zeta'(s))/(zeta(s)) dif s \
+&= x^2/2 + 1/(2pi i) integral_(delta - i infinity)^(delta + i infinity) (x^(s + 1))/(s(s + 1)) (- zeta'(s))/(zeta(s)) dif s . $ We see that $ abs(1/(2 pi i) integral_(delta - i infinity)^(delta + i infinity) (x^(s + 1))/(s(s + 1)) (- zeta'(s))/(zeta(s)) dif s) & <= 1/(2pi) integral_(delta - i infinity)^(delta + i infinity) x^("Re"(s) + 1) 1/(|s (s + 1)|) abs((zeta'(s))/(zeta(s))) dif s \
+&= (x^(delta + 1))/(2 pi) integral_(delta - i infinity)^(delta + i infinity) 1/(|s (s + 1)|) abs((zeta'(s))/(zeta(s))) dif s, $ in particular, this integral is now independent of $x$.
