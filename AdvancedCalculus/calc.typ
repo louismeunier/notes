@@ -880,7 +880,7 @@ We are now in the position to state and prove Green's, which relates line integr
 #proof[
   Suppose $partial D$ parametrized by $(x(t), y(t))$ for $t in [a, b]$, so that $n = (-dot(y), dot(x))/(sqrt(dot(x)^2 + dot(y)^2))$.
   $ integral_(partial D) F dot n dif s & = integral_(a)^b (P, Q)(x(t), y(t)) dot n(t) sqrt(x'(t)^2 + y'(t)^2) dif t \
-  & = integral_(a)^b (P(x(t), y(t)), Q(x(t), y(t))) dot (y'(t), x(t)) dif t \
+  & = integral_(a)^b (P(x(t), y(t)), Q(x(t), y(t))) dot (y'(t),- x'(t)) dif t \
   & =integral_(a)^b P(x(t), y(t)) y'(t) dif t - integral_(a)^b Q(x(t), y(t)) x'(t) dif t \
   &= integral_(partial D) tilde(F) dif s, quad tilde(F) := (- Q, P) \
   "Green's" quad &= integral.double_(D) (partial P)/(partial x) + (partial Q)/(partial y) dif A. $ At the penultimate line, one can alternatively arrive at the conclusion by the abuse of notation $ integral_a^b P(x(t), y(t)) y'(t) dif t = integral_(partial D) P dif x = integral.double_(D) (partial P)/(partial x) dif A $ also by Green's.
@@ -1047,4 +1047,77 @@ Let $f in C^2 (RR^3)$ with $f$ compactly supported outside of $[-R, R]^3$. The p
 
 #solution[
   Let $x in overline(B_1 (0))$ and $y in partial B_1 (0)$ the closest point (if multiple exist, choose any) to $x$ on the boundary; in particular $norm(x - y) <= 1$. By mean-value theorem, there exists some $z in B_1 (0)$ such that $ f(x) - 2 = f(x) - f(y) & = gradient f(z) dot (x - y) >= - norm(gradient f (z)) norm(x - y) >= - 1 => f(x) >= 1. $ This proves the first inequality. For the second, we know the inequality is satisfied on the boundary. Suppose it fails inside $B_1 (0)$. This implies, by compactness and continuity of $f$, that $max_(overline(B_1 (0))) f(x) > 2$ and moreover this max is achieved at some $x in B_1 (0)$. Being a maximum, this implies $gradient^2 f(x)$ negative semidefinite, so in particular its eigenvalues are negative hence $ 0 >= sum "eigenvalues of" gradient^2 f(x) = tr(gradient^2 f(x)) = (partial^2 f)/(partial x_1^2) (x) + dots.c + (partial^2 f)/(partial x_n^2) (x). $ But by assumption, the quantity on the right is strictly positive, which is a contradiction. Thus $f$ cannot attain its maximum inside $B_1 (0)$ and thus $f(x) <= 2$ everywhere. This completes the proof.
+]
+
+#question[
+  Let $f(x, y) = (x^3 y)/(x^2 + y^2)$ if $(x, y) eq.not (0,0)$ and $f(0, 0) = 0$. Prove $f$ differentiable on all of $RR^2$.
+]
+
+#solution[
+  By applying the quotient rule, $partial_x f, partial_y f$ both exist and are continuous away from $(0,0)$ which implies $f$ differentiable away from the origin.
+
+  We just need to check the origin. We claim $D f(0,0)= 0$. Indeed:
+  $ abs(f(x, y) - f(0, 0) - D f(0, 0) (x, y))/(abs((x, y))) & = abs(x^3 y)/((x^2 + y^2)^(3\/2)) \
+                                                          & <= abs(x^3 y)/(abs(x)^3) quad "since" y > 0 \
+                                                          & = abs(y) -> 0 "as" abs((x, y)) -> 0, $ which proves the claim.
+]
+
+#question[
+  Evaluate $integral.double_(partial Omega) gradient f dot dif S$ where $Omega = {x^6 + y^6 + z^4 <= 100}$ and  $f(x, y, z) = x y z$.
+]
+
+#solution[
+  It's clear that $Omega$ a bounded solid region in $RR^3$ with smooth boundary, and $f$ smooth. Thus we may apply the divergence theorem, i.e. $integral.double_(partial Omega) gradient f dot dif S = integral.triple_Omega "div"(gradient f) dif V$. We compute $ "div"(gradient f)(x, y, z) = "div"(y z, x z, y z) = 0, $ thus the integral equals 0.
+]
+
+#question[
+  Let $f(x, y) = (x y)/(x^2 + y^2)$ if $(x, y) eq.not (0, 0)$ and $f(0, 0) = 1$. Show that $f$ is Riemann integrable on $B := [-1, 1] times [-1, 1]$.
+]
+
+#solution[
+  Remark that $(x - y)^2 >= 0$ implies $x^2 + y^2 >= 2 x y$. Thus, for $(x, y) eq.not (0, 0)$, $abs(f(x, y)) <= 1/2$. Thus $abs(f) <= 1$ on $B$, i.e. $f$ bounded.
+
+  In addition, its clear that $f$ is continuous everywhere on $B$ except possible at $(0,0 )$. But this is a singleton which has content zero. Thus $f$ is indeed Riemann integrable on $B$.
+]
+
+#question[
+  Let $F(x, y, z) = (y^2 z^3, 2 x y z^3, 3 x y^2 z^2)$.\
+  (a) Show $F$ conservative on $RR^3$\
+  (b) Find $f$ such that $F = gradient f$
+]
+
+#solution[
+  It obviously suffices to show (b). Define $f(x, y, z) = x y^2 z^3$. One checks this works.
+]
+
+#question[
+  Let $C := {z^2 = x^2 + y^2} sect {z = 1}$ and $F := (sin(x) - y^3/3, cos(y) + x^3/3, x y z)$. Compute $integral_C F dot dif s$.
+]
+
+#solution[
+  Its clear that $C$ the smooth boundary of the regular surface $S := {x^2 + y^2 <= 1, z = 1}$ and $F$ is smooth, so that we can apply Stoke's theorem. We compute $ "curl"(F) = (x z, - y z, x^2 + y^2) $ and thus $ integral_C F dot dif s = integral.double_(S) "curl"(F) dot dif S. $ It's clear that $S$ has upward unit normal $(0, 0, 1)$, since it is the graph $z = g(x, y) equiv 1$ for $(x, y) in D := {x^2 + y^2 <= 1} subset RR^2$. Thus our integral becomes $ integral.double_D x^2 + y^2 dif A & = integral_0^(2pi) integral_(0)^1 r^3 dif r dif theta quad "by polar coordinates" \
+                                    & = pi/2 $
+]
+
+#question[
+  Let $f : [a, b] times [c, d] -> RR$ continuous with $partial_y f$ continuous on $[c, d]$ in the second variable and $g : [c, d] -> [a, b]$ continuously differentiable. Define $ G(y) := integral_a^(g(y)) f(t, y) dif y $ and compute $G'(y)$.
+]
+
+#solution[
+  Fix $y in [c, d]$ and let $h > 0$. $ G(y + h) - G(y) &= integral_a^(g(y + h)) f(t, y + h) dif t - integral_a^(g(y)) f(t, y) dif t \
+  &= integral_a^(g(y + h)) f(t, y + h) dif t plus.minus integral_a^(g(y)) f(t, y + h) dif t - integral_a^(g(y)) f(t, y) dif t \
+  ("linearity") quad &= integral_(g(y))^(g(y + h)) f(t, y + h) dif t + integral_(a)^(g(y)) f(t, y + h) - f(t, y) dif t =: I_1 + I_2. $
+  We deal with each integral in turn. Since $f$ continuous and $g$ continuous, then $f(t, y + h) = f(g(y), y) + E_1 (t, y, h)$ where $E_1 (t, y, h) -> 0$ as $h -> 0$ for every $t$. This implies $ (I_1)/h & = f(g(y), y) (g(y + h) - g(y))/h + 1/h integral_(g(y))^(g(y + h)) E_1 (t, y, h) dif t. $
+  The left hand side converges to $f(g(y), y) g'(y)$ as $h -> 0$. The left-hand side is bounded by $sup_t_1 E(t, y, h) ((g(y+ h) - g(y))/h)$. The $E_1$ term converges to 0 as $h -> 0$, and the right-hand quotient remains bounded as $h -> 0$ since $g$ differentiable. Thus $ I_1/h -> f(g(y), y) g'(y), quad h -> 0. $
+  For $I_2$, note that for any $t$ fixed, there exists $eta(t, h)$ between $y$ and $y + h$ such that $ (f(t, y + h) - f(t, y))/h = partial_y f(t, eta(t, h)), $  by the mean-value theorem. In particular, $eta(t, h) -> y$ as $h -> 0$. Thus by continuity of $partial_y f$, we have that $partial_y f(t, eta(t, h)) = partial_y f(t, y) + E_2 (t, y, h)$ where $E_2 (t, y, h) -> 0$ as $h -> 0$ for every $t$. Thus, $ I_2/h = integral_a^(g(y)) (f(t, y+ h) - f(t, y))/h dif t = integral_(a)^(g(y)) partial_y f(t, y) dif t + integral_(a)^(g(y)) E_2 (t, y, h) dif t. $ The right-hand integral can be bounded by $abs(g(y) - a) dot sup_t abs(E_2 (t, y, h))$ which goes to zero as $h -> 0$ by above. Thus, $ I_2/h -> integral_a^(g(y)) partial_y f(t, y) dif t, $ thus in all we find $ G'(y) = f(g(y), y) g'(y) + integral_a^(g(y)) partial_y f(t, y) dif t. $
+]
+
+#question[
+  Compute $integral.double_(S) F dot dif S$ where $F = (3 x + z, y^2 - sin(x^2 z), x z + y e^(x^5))$ and $S = partial R$ where $R$ is given by $R := [0, 1] times [0, 3] times [0, 2]$.
+]
+
+#solution[
+  It's clear that everything is sufficiently nice so that we may apply the divergence theorem. One checks $ "div"(F) = 3 + 2 y + x, $ so that $ integral.double_(S) F dot dif S & = integral.triple_(R) "div" F dif V \
+                    "Fubini" quad & = integral_(0)^1 integral_(0)^3 integral_0^2 (3 + 2 + x) dif z dif y dif x \
+                                  & = 39. $
 ]

@@ -223,7 +223,7 @@
 
 #let example = thmbox(
   "example",
-  $ast.circle$ + " Example",
+  $ast.op.o$ + " Example",
   fill: solarized.cyanlight,
   inset: thmsettings.inset,
   padding: thmsettings.padding,

@@ -8,7 +8,7 @@
 #show: doc => conf(
   course_code: "MATH458",
   course_title: "Differential Geometry",
-  subtitle: "",
+  subtitle: [Curves in $RR^2, RR^3$; surfaces in $RR^3$.],
   semester: "Winter 2026",
   professor: "Prof. Jean-Pierre Mutanguha",
   // cute: "../analysis 3/page.png",
@@ -24,7 +24,7 @@
 
 #pagebreak()
 
-= Some Review
+= Prerequisites
 We will work in $RR^n$, usually with $n = 2, 3$. For vectors $v = (v_1, dots, v_n), w = (w_1, dots, w_n) in RR^n$, we denote the dot product $ v dot w = sum_(i =1)^n v_i w_i. $ More generally, an _inner product_ on $RR^n$ is any function $b : RR^n times RR^n -> RR$ that is symmetric, bilinear and positive definite. For instance, if $T : RR^n -> RR^n$ is linear and invertible $b_T (v, w) := T(v) dot T(w)$ a new inner product. In fact, it turns out every inner product on $RR^n$ is of this form; this implies that every inner product is just a coordinate-change away from the dot product.
 
 We will say a linear transformation $T : RR^n -> RR^n$ is _orthogonal_ if it is inner product preserving, i.e. $T(v) dot T(w) = v dot w$ for every $v, w in RR^n$.
@@ -155,7 +155,7 @@ We'll denote the derivative of a function $f : cal(U) subset RR^n -> RR^m$ at a 
   This integral exists and is bounded, and moreover, $ (dif s)/(dif t) = norm(dot(gamma)(t)) > 0, $ since $gamma$ regular. In particular, we see that $s$ is invertible on its image $tilde(I) := s(I)$, and increasing. Then, $s : I -> tilde(I)$ an orientation-preserving, $C^1$ bijection with $s' > 0$. By the inverse function theorem, $t := s^(-1) : tilde(I) -> I$ exists and has the same desired properties. Moreover, $ t'(s) = 1/(s'(t(s))) = 1/(norm(dot(gamma)(t(s)))). $ Letting $tilde(gamma) := gamma compose t$, then we see that $ norm(dot(tilde(gamma))(s)) = norm(dot(gamma) compose t(s) dot t' (s)) = 1/(norm(dot(gamma)(t(s)))) norm(dot(gamma)(t(s))) equiv 1. $
 ]
 #exercise[
-  Any two arc-length parametrizations differ by some shifting in the domain, i.e. if $gamma_i : I_i -> RR$ are two arc-length reparametrizations of a regular path $gamma : I -> RR^n$ using a change of parameters $t_i : I_i -> I$ for $i = 1, 2$, then $h := t_2^(-1) compose t_2 : I_2 -> I_1$ is a restriction of a rigid motion of $RR$; specifically $h' equiv 1$.
+  Any two _orientation-preserving_ arc-length parametrizations differ by some shifting in the domain, i.e. if $gamma_i : I_i -> RR$ are two _orientation-preserving_ arc-length reparametrizations of a regular path $gamma : I -> RR^n$ using a change of parameters $t_i : I_i -> I$ for $i = 1, 2$, then $h := t_2^(-1) compose t_2 : I_2 -> I_1$ is a restriction of a rigid motion of $RR$; specifically $h' equiv 1$.
 ]
 
 With this, we can try to define the length of a general curve $cal(C)$. Suppose $cal(C) subset EE^n$ a compact curve with boundary ${p, q}$ (so satisfies the first point of the classification theorem).
@@ -174,8 +174,12 @@ With this, we can try to define the length of a general curve $cal(C)$. Suppose 
   A curve $cal(C)$ is said to be _rectifiable_ if there exists a real number $cal(L)_3 (cal(C)) >= 0$ such that for all sequence ${cal(P)_m}$ of inscribed polygons in $cal(C)$ with $abs(cal(P)_m) ->_(m -> infinity) 0$, we have $ lim_(m -> infinity) L(cal(P)_m) = cal(L)_3 (cal(C)). $
 ]
 
-#proposition[
-  A unit-speed reparametrization is essentially unique, up to a shift in the domain $I$.
+// #proposition[
+//   An orientation-preserving (resp. reversing) unit-speed reparametrization is essentially unique, up to a shift in the domain $I$.
+// ]
+
+#proof[
+  Suppose $t_1, t_2$ are two orientation-preserving unit-speed parametrizations of a curve $gamma$. Define $h = t_1 compose t_2^(-1)$. Then, if $gamma_i = gamma compose t_i$ for $i = 1, 2$, then we see that $gamma_2 = gamma_1 compose h$. Taking derivatives, we see that $gamma'_2 = (gamma'_1 compose h) h'$. Since both $gamma_1, gamma_2$ are unit speed, and $h$ orientation preserving, this implies $h' equiv 1$ so $h(s) = s + c$.
 ]
 
 #exercise[
@@ -187,9 +191,9 @@ With this, we can try to define the length of a general curve $cal(C)$. Suppose 
 ]
 
 #proof[
-  Suppose $norm(dot(tilde(gamma))) equiv c$. We apply the product rule for dot products, to obtain $ 0 = dif/(dif t) (c^2) & = dif/(dif t) norm(dot(tilde(gamma)))^2 \
-                        & = dif/(dif t) dot(tilde(gamma)) dot dot(tilde(gamma)) \
-                        & = 2 dot.double(tilde(gamma)) dot dot(tilde(gamma)), $ which gives the proof.
+  Suppose $norm(dot(tilde(gamma))) equiv c$. We apply the product rule for dot products, to obtain $ 0 = dif/(dif t) (c^2) & = dif/(dif t) norm(dot(tilde(gamma)))^2
+                          = dif/(dif t) dot(tilde(gamma)) dot dot(tilde(gamma))
+                          = 2 dot.double(tilde(gamma)) dot dot(tilde(gamma)), $ which gives the proof.
 ]
 
 == Curvature
@@ -356,7 +360,7 @@ T dot N = 0 => 0 = dot(T) dot N + T dot dot(N) = kappa underbrace(norm(N)^2, = 1
 B dot N = 0 => 0 = dot(B) dot N + B dot(N) = -tau + B dot dot(N) => B dot dot(N) = tau. $ This implies $ dot(N) = - kappa T + tau B. $ In summary, we can succinctly write $ vec(dot(T), dot(N), dot(B)) = mat(0, kappa, 0; - kappa, 0, tau; 0, - tau, 0) vec(T, N, B) quad quad ("The Frenet equations"). $
 
 #theorem("Fundamental Theorem of Space Paths")[
-  Let $I subset RR$ be an interval with basepoint $s_0 in I$. Suppose $tau : I -> RR$ is a $C^(k - 3)$ function and $kappa : I-> RR_(>0)$ is a $C^(k - 2)$ function (where $3 <= k <= infinity$). Then, for any initial point $p_0 in RR^3$, initial velocity $v_0 in RR^3$, and initial normal direction $n_0 in RR^3$ such that $norm(v_0) = norm(n_0) = 1$ and $v_0 dot n_0 = 1$, there is a _unique_ regular $C^k$ path $gamma : I -> RR^3$ parametrized by arc length and satisfying:
+  Let $I subset RR$ be an interval with basepoint $s_0 in I$. Suppose $tau : I -> RR$ is a $C^(k - 3)$ function and $kappa : I-> RR_(>0)$ is a $C^(k - 2)$ function (where $3 <= k <= infinity$). Then, for any initial point $p_0 in RR^3$, initial velocity $v_0 in RR^3$, and initial normal direction $n_0 in RR^3$ such that $norm(v_0) = norm(n_0) = 1$ and $v_0 dot n_0 = 0$, there is a _unique_ regular $C^k$ path $gamma : I -> RR^3$ parametrized by arc length and satisfying:
   1. $kappa_gamma = kappa$,
   2. $tau_gamma = tau$,
   3. $gamma(s_0) = p_0$,
@@ -632,6 +636,8 @@ Throughout, let $n >= 2$ and $k$ an integer between $1$ and $infinity$ (possibly
 
 #exercise[
   Define $pi : RR^2 -> SS^2$ be the stereographic parametrization of the sphere based on the north pole $N = (0,0,1)$. Fix $c in RR^2$ and let $M_c : RR^2 -> RR^2$ be given by $M_c (x) := x + c$. Show that $ f_c : SS^2 -> SS^2, quad f_c (p) := cases(N & p = N, (pi compose M_c compose pi^(-1)) (p) quad & p eq.not N) $ is smooth.
+
+  _Hint: write $f_c$ in local coordinates. Away from $p = N$ smoothness is clear; near $p = N$, one can't use the stereographic parametrization based on the north pole, so one should instead use the one based on the south pole._
 ]
 
 
@@ -654,15 +660,36 @@ Throughout, let $n >= 2$ and $k$ an integer between $1$ and $infinity$ (possibly
 #exercise[
   The map $(u_1, u_2) |-> angle.l u_1, u_2 angle.r_q$ defines an inner product on $RR^2$.
 ]
-Remark that $angle.l u_1, u_2 angle.r_q = dif phi_q (v) dot dif phi_q (v')$. Moreover, if we pick local coordinates for$RR^3$, we find $ angle.l v, v' angle.r_q & = (J_phi (q) v) dot (J_phi (q) v') = v^T J_phi^T (q) J_phi (q) v', $ where we notice $J_phi^T (q) J_phi (q)$ a symmetric 2 $times$ 2 matrix. We conventionally write $ J_phi^T (q) J_phi (q) = mat(E(q), F(q); F(q), G(q)) , quad E(q) = norm(partial_u phi)^2, G(q) = norm(partial_v phi)^2, F(q) = partial_u phi dot partial_v phi $ where we write $(u, v)$ for coordinates in $RR^2$ (and all the expressions above are evaluated at some point $q$). Thus if $v = (v_1, v_2) in RR^2$, we find $ upright(I)_q (v) = E(q) v_1^2 + 2 F(q) v_1 v_2 + G(q) v_2^2 $ which we call the first-fundamental form in local coordinates (since the expressions $E, F, G$ depend on choice of coordinates). We write, more concisely, $ upright(I) = E dif u^2 + 2 F dif u dif v + G dif v^2 $ again locally, where $dif u$, etc, shorthand for the function $dif u [(v_1, v_2)] := v_1,$ etc.
+Remark that $angle.l u_1, u_2 angle.r_q = dif phi_q (v) dot dif phi_q (v')$. Moreover, if we pick local coordinates for$RR^3$, we find $ angle.l v, v' angle.r_q & = (J_phi (q) v) dot (J_phi (q) v') = v^T J_phi^T (q) J_phi (q) v', $ where we notice $J_phi^T (q) J_phi (q)$ a symmetric 2 $times$ 2 matrix. We conventionally write $ J_phi^T (q) J_phi (q) = mat(E(q), F(q); F(q), G(q)) , quad E(q) = norm(partial_u phi)^2, G(q) = norm(partial_v phi)^2, F(q) = partial_u phi dot partial_v phi $ where we write $(u, v)$ for coordinates in $RR^2$ (and all the expressions above are evaluated at some point $q$). Thus if $v = (v_1, v_2) in RR^2$, we find $ upright(I)_q (v) = E(q) v_1^2 + 2 F(q) v_1 v_2 + G(q) v_2^2 $ which we call the first-fundamental form in local coordinates (since the expressions $E, F, G$ depend on choice of coordinates). We write, more concisely, the quadratic form $ upright(I) = E dif u^2 + 2 F dif u dif v + G dif v^2 $ again locally, where $dif u$, etc, shorthand for the function $dif u [(v_1, v_2)] := v_1,$ etc.
 
 #example[
   The cylinder $S_1 = {x^2 + y^2 = 1}$, parametrized by $phi_1 (s, t) = (cos(s), sin(s), t)$ has first fundamental form $ dif s^2 + dif t^2 $ is local coordinates ($E = G = 1, F = 0$). In coordinates $psi : RR^2 minus {0} -> RR^3$, $ psi(u, v) = (u/(norm((u, v))), v/(norm((u, v))), 1/2 ln(u^2 + v^2)) $ gives first fundamental form $ (dif u^2 + dif v^2)/(u^2 + v^2). $
 ]
 
+
+#definition("Length/Area in Local Coordinates")[
+  Suppose $tilde(R) subset S$. In local coordinates, $tilde(R) = phi(R)$ for some region $R subset RR^2$. We define the area of $tilde(R)$ (equivalently, the area of $R$ under the first fundamental form given by $phi$) by $ "area"(tilde(R)) = "area"_(phi) (R) := integral.double_(R) sqrt(E G - F^2) dif A. $
+
+  Suppose $tilde(C) subset S$ a regular curve. In local coordinates, $tilde(C) = phi(C)$ for some regular curve $C subset RR^2$. If $C$ is parametrized by $gamma : I -> C$, then we define the length of $tilde(C)$ (equivalently, the length of $C$ under the first fundamental form by given $phi$) by  $ ell (tilde(C)) = ell_phi (C) = ell_phi (gamma) := integral_(I) dif s_phi = integral_(I) sqrt(E(gamma) dot(gamma)_1^2 + 2 F dot(gamma)_1 dot(gamma)_2 + G(gamma) dot(gamma)_2^2) dif t. $
+]
+
+#remark[
+  One can check that these definitions are compatible with what we should expect.
+]
+
+
 #example("Computing Length/Area in Local Coordinates")[
   // TODO
-  Given a region $R subset RR^2$,  $"area"_phi (R) = integral.double_(R) sqrt(E G - F^2) dif A$.
+  Consider the cylinder $S = {x^2 + y^2 = 1}$. We consider two parametrizations, $ psi_1 (theta, h) & := (cos(theta), sin(theta), h), quad (theta, h) in [0, 2 pi) times RR, \
+      psi_2 (u, v) & := (u/(sqrt(u^2 + v^2)), v/sqrt(u^2 +v^2), ln(sqrt(u^2 + v^2))), quad (u, v) in RR^2. $
+  One finds that $ dif s_(psi_1)^2 = dif theta^2 + dif h^2, quad dif s_(psi_2)^2 = (dif u^2 + dif v^2)/(u^2 + v^2). $
+  In particular, one sees that if $C subset RR^2$ a fixed planar curve, then the images $psi_1 (C), psi_2 (C)$ are not necessarily related, and in particular, one will generally find different lengths for $C$ under the two different first fundamental forms described. Thus, what really matters is what the curve looks like on the surface-side.
+
+  Take $gamma : [0, 2 pi] -> RR^2, gamma(t) = (cos(t), sin(t))$. One finds then $ ell_(psi_1) (gamma) & = integral_0^(2 pi) sqrt(cos(t)^2 + sin(t)^2) dif t = 2 pi, $ which one sees agrees with the length of $gamma$ as a planar curve. One can make sense of this without doing computations two-fold;
+  1. $dif s_(psi_1)^2$ is the same as the Euclidean metric, and thus lengths of curves are preserved under $psi_1$;
+  2. based on the definition of $psi_1$, we easily see that unit circles in the plane are mapped to a "ring-section" of the cylinder with unit speed. More generally, $r$-radius circles will be mapped to $r$-height rings of the cylinder.
+
+  Under the $psi_2$, on the other hand, we find $ ell_(psi_2) (gamma) = integral_(0)^(2pi) sqrt((cos(t)^2 + sin(t)^2)/(cos(t)^2 + sin(t)^2)) dif t = 2 pi, $ which is the same as the previous case (indeed, this fundamental form also maps circles to rings).
 ]
 
 #example("Conformal Parametrizations, Stereographic Parametrization")[
@@ -703,7 +730,7 @@ Given $S subset RR^3$ an oriented regular $C^2$ surface with normal $N$, we can 
 ]
 
 #proposition[
-  $K, H$ are preserved by rigid motion. More precisely, let $S subset RR^3$ a regular $C^2$ surface with orientation $N$ and $M : RR^3 -> RR^3$ a rigid motion (where $M(x) = O(x) + b$ for $O$ an orthogonal matrix and $b$ a fixed vector). Then, $tilde(S) = M(S)$ is a regular $C^2$ surface with orientation $tilde(N)(tilde(p)) := O(N(p))$, $tilde(p) = M(p)$, so in particular, $ tilde(K)(tilde(p)) = K(p), quad tilde(H)(tilde(p)) = H(p). $
+  $K, H$ are preserved by rigid motion. More precisely, let $S subset RR^3$ a regular $C^2$ surface with orientation $N$ and $M : RR^3 -> RR^3$ a rigid motion (where $M(x) = O(x) + b$ for $O$ an orientation-preserving orthogonal matrix and $b$ a fixed vector). Then, $tilde(S) = M(S)$ is a regular $C^2$ surface with orientation $tilde(N)(tilde(p)) := O(N(p))$, $tilde(p) = M(p)$, so in particular, $ tilde(K)(tilde(p)) = K(p), quad tilde(H)(tilde(p)) = H(p). $
 ]
 
 #remark[
@@ -755,7 +782,7 @@ We provide two proofs, for the second gives useful insights for later.
 ]
 
 #proposition("Shape Operator in Local Coordinates")[
-  In local coordinates given by $phi$, the shaper operator $- dif N_p$ is represented by, with respect to the basis ${partial_u phi, partial_v phi}$, by $ mat(E, F; F, G)^(-1) dot mat(e, f; f, g) = 1/(E G - F^2) mat(e G - f G, f G - g F; f E - e F, g E - f F). $
+  In local coordinates given by $phi$, the shaper operator $- dif N_p$ is represented by, with respect to the basis ${partial_u phi, partial_v phi}$, by $ mat(E, F; F, G)^(-1) dot mat(e, f; f, g) = 1/(E G - F^2) mat(e G - f F, f G - g F; f E - e F, g E - f F). $
 ]
 
 #corollary("Curvature in Local Coordinates")[
@@ -773,7 +800,7 @@ We provide two proofs, for the second gives useful insights for later.
 ]
 
 #proposition("Normal Curvature Characterization via Curves")[
-  Let $v in T_p S$ be a unit vector and $phi : (- epsilon, epsilon) -> S$ a regular $C^2$ path with $gamma (0) = p$ and $dot(gamma)(0) = v$. Then,
+  Let $v in T_p S$ be a unit vector and $gamma : (- epsilon, epsilon) -> S$ a regular $C^2$ path with $gamma (0) = p$ and $dot(gamma)(0) = v$. Then,
   1. $II_p (v) = N(p) dot ddot(gamma)(0)$
   2. $abs(II_p (v)) <= K_gamma (0)$, the curvature of the curve $gamma$, with equality achieved along a normal section along $v$.
 ]
@@ -783,7 +810,7 @@ We provide two proofs, for the second gives useful insights for later.
     & = ddot(gamma)(0) dot N(p) + v dot dif N_p (v) \
     & = ddot(gamma)(0) dot N(p) - II_p (v), $ from which the proof follows.
 
-  Finally, if $gamma$ is a normal section with unit-speed parametrization along $v$, then $ddot(gamma)(0)$ is orthogonal to $v$ and parallel to the plane $cal(P)$ containing $p$ and parallel to both $N(p)$ and $v$. Thus, it must be that $dot(gamma)(0)$ is parallel to $N(p)$, so equality holds in the Cauchy-Schwarz inequality in 1., and we find $ II_p (v) = norm(N(p)) norm(ddot(gamma) (0)) = plus.minus K_gamma (0), $ from which the proof follows by taking absolute values.
+  Finally, if $gamma$ is a normal section with unit-speed parametrization along $v$, then $ddot(gamma)(0)$ is orthogonal to $v$ and parallel to the plane $cal(P)$ containing $p$ and parallel to both $N(p)$ and $v$. Thus, it must be that $ddot(gamma)(0)$ is parallel to $N(p)$, so equality holds in the Cauchy-Schwarz inequality in 1., and we find $ II_p (v) = norm(N(p)) norm(ddot(gamma) (0)) = plus.minus K_gamma (0), $ from which the proof follows by taking absolute values.
 ]
 
 === Orienting the Tangent Space and Geodesics
@@ -804,8 +831,15 @@ Now, let $gamma : I -> S$ be a unit-speed parametrized, $C^2$ path with $gamma(0
   $gamma$ is a geodesic iff $gamma$ has constant speed and $K_g equiv 0$.
 ]
 
+#proof[
+  If $gamma$ a geodesic, $ddot(gamma) dot dot(gamma) = 0$ which implies $dif/(dif t) (dot(gamma) dot dot(gamma)) equiv 0$, implying $norm(dot(gamma))$ constant. Writing $ddot(gamma) = K_N N + K_g dot(gamma)^ast,$ we see that since $ddot(gamma)$ orthogonal to $S$, it is colinear with $N$ and thus $K_g$ must equal zero.
+
+  Conversely, if $K_g = 0$ and $gamma$ has constant speed, then by assuming wlog $norm(dot(gamma)) = 1$ we can write $ddot(gamma) = K_N N + K_g dot(gamma)^ast$, from which the claim follows swiftly.
+]
+
 #proposition[
   // TODO idk that thing about straightening out tangent lines.......?
+  Assume $p$ a non-umbilical point of $S$, i.e. $k_1 (p) < k_2 (p)$. Then there exists a parametrization $phi : U -> S$ near $p$ such that $phi$ maps orthogonal coordinate lines in $U$ to orthogonal vectors in $T_p S$, i.e. such that $F = 0$.
 ]
 
 == An Aside: the Fary-Milnor Theorem
@@ -897,10 +931,10 @@ $ partial_u Gamma_(1 2)^1 + Gamma_(1 2)^1 Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1
 => (f e G - f^2 F)/(E G - F^2) - (e f G - e g F)/(E G - F^2) &= (dots.c) \
 => (e g - f^2)/(E G - F^2) F &= (dots.c) \
 => K dot F &= (dots.c) \
-=> K &= (partial_(u) Gamma_(1 2)^1 - partial_v Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1 2)^1 - Gamma_(1 1)^2 Gamma_(2 2)^1)/F. $ With the dust settled, the punchline is that we have written $K$ purely in terms of the Christoffel symbols and the first fundamental form. Since these are invariant under local isometries, this implies the Gaussian curvature is invariant under local isometries, assuming $F eq.not 0$ (since we divided by $F$ at the end). However, if $F$ is 0, we can similarly match the coefficients for $partial_v phi$ and compute that $ #box(stroke: 1pt, inset: 1em, $ K = (Gamma_(1 1)^1 Gamma_(1 2)^2 - Gamma_(1 2)^1 Gamma_(1 1)^1 + Gamma_(1 1)^2 Gamma_(2 2)^2 - Gamma_(1 2)^2 Gamma_(1 2)^2 + partial_v Gamma_(1 1)^2 - partial_(u) Gamma_(1 2)^2)/E, $) $ and since $E$ is always nonzero (for regular surfaces), this is always a valid expression for $K$ in terms of the first fundamental form. This is known as the _Gauss equation_, which proves
+=> K &= (partial_(u) Gamma_(1 2)^1 - partial_v Gamma_(1 1)^1 + Gamma_(1 2)^2 Gamma_(1 2)^1 - Gamma_(1 1)^2 Gamma_(2 2)^1)/F. $ With the dust settled, the punchline is that we have written $K$ purely in terms of the Christoffel symbols and the first fundamental form. Since these are invariant under local isometries, this implies the Gaussian curvature is invariant under local isometries, assuming $F eq.not 0$ (since we divided by $F$ at the end). However, if $F$ is 0, we can similarly match the coefficients for $partial_v phi$ and compute that $ #box(stroke: 1pt, inset: 1em, $ K = (Gamma_(1 1)^1 Gamma_(1 2)^2 - Gamma_(1 2)^1 Gamma_(1 1)^1 + Gamma_(1 1)^2 Gamma_(2 2)^2 - Gamma_(1 2)^2 Gamma_(1 2)^2 + partial_v Gamma_(1 1)^2 - partial_(u) Gamma_(1 2)^2)/E, $) $ and since $E$ is always nonzero (for regular surfaces), this is always a valid expression for $K$ in terms of the first fundamental form. This is known as the _Gauss equation_, which proves:
 #theorem(
   "Gauss's Theorema Egregium",
-)[The Gaussian curvature of a $C^3$ surface is invariant under local $C^3$ isometries.]
+)[The Gaussian curvature of a $C^3$ surface is invariant under $C^3$ local isometries.]
 
 #exercise[
   Suppose $E equiv 1$ and $F equiv 0$. Show that $K = - (partial_(u u)^2 (sqrt(G)))/(sqrt(G))$.
@@ -934,7 +968,7 @@ Let $S$ a regular $C^3$ surface. Recall that a curve $gamma : I -> S$ a _geodesi
   4. lines in arbitrary surfaces, if they exist.
 ]
 
-The question we aim to answer first is whether geodesics on a surface always exist. It turns out the answer to this is affirmativce (at least locally); we'll use this fact to prove the claim from the beginning of this section.
+The question we aim to answer first is whether geodesics on a surface always exist. It turns out the answer to this is affirmative (at least locally); we'll use this fact to prove the claim from the beginning of this section.
 
 #definition[
   Let $gamma : I -> S$ a regular path and $w : I -> RR^3$ _a $C^1$ vector field along $gamma$_ (i.e., it is tangent to $S$ at each point along $I$; $w(t) in T_(gamma(t)) S forall t in I$).
@@ -995,8 +1029,49 @@ v' &= underline(v). $ If $S in C^3$, right-hand side of each equation $C^1$ func
 
 More precisely, for any point $q in U$ and nonzero vector $v in RR^2$, there is an $epsilon = epsilon(q, v) > 0$ and a unique geodesic $gamma : (-epsilon, epsilon) -> U$ such that $gamma(0) = q, dot(gamma)(0) = v$.
 
+It turns out that such an $epsilon$ can be made uniform in $v$ in some compact subset of $RR^2$. For $v in overline(D)(0, 1)$ and $p in S$, then, we can define the map $ exp_p : DD -> S, quad v |-> gamma_(p, v) (epsilon) $ where $gamma_(p, v)$ the (local) geodesic with inital position $p$ and initial velocity $v$. In other words, $exp_p$ "flows" the point $p$ in the direction $v$ along the geodesic $gamma_(p, v)$ which is initially flowing in the $v$ direction.
 
-// TODO
+By design, $exp_p$ maps radial lines to geodesics (by rescaling the domain to $DD_epsilon (0)$, we can assume these geodesics are unit speed) originating from $p$. We call this the "exponential map"; it turns out that this gives a local parametrization of $S$ near $p$, so we also call the coordinates it induces "geodesic coordinates". Because the domain of $exp_p$ is a disc, it is natural to work with it in polar coordinates in $RR^2$.
+
+#lemma[
+  The first fundamental form under the $exp_p$ parametrization is given by, in polar coordinates, $ dif s_(exp_p)^2 = dif r^2 + G dif theta^2, $ and $ lim_(r -> 0^+) sqrt(G) = 0, quad lim_(r -> 0^+) partial_R sqrt(G) = 1. $
+]
+
+#corollary("Homogeneity of Constant Curvature")[
+  If $S, tilde(S)$ are two regular smooth surfaces in $RR^3$ with constant curvature $K_0$, then $S$ is locally isometric to $tilde(S)$.
+]
+
+#proof[
+  We can express the first fundamental forms in terms of exponential coordinates on $S, tilde(S)$ as $ dif s^2 = dif r^2 + G dif theta^2, quad dif tilde(s)^2 = dif r^2 + tilde(G) dif theta^2. $
+  Recall that $ K_0 equiv K = - partial_(r r)^2 sqrt(G)/sqrt(G), $ with a similar expression for $tilde(K)$. This can be rearranged to an ODE for $sqrt(G)$ in terms of $r$, that is $ partial_(r r)^2 sqrt(G) + K_0 sqrt(G) = 0, $ with the fact that $0 = lim_(r -> 0^+) sqrt(G), 1 = lim_(r -> 0^+) partial_r sqrt(G)$ giving initial conditions. Since both $G, tilde(G)$ satisfy this ODE with the same initial conditions, $G equiv tilde(G)$ and thus $S, tilde(S)$ have the same first fundamental form and are thus locally isometric.
+]
+
+#corollary("Radial Geodesics = Shortest Curve")[
+  For any curve $cal(C)$ in the disk $DD_epsilon (0)$ connecting $0$ to $q$, $ell_exp (cal(C)) >= d_EE (q, 0)$ with equality holding iff $cal(C)$ a radial line.
+
+  In particular, this implies that geodesics minimize distances between points, locally.
+]
+
+#proof[
+  Assuming $cal(C)$ is parametrized by some curve $(r, theta) : [a, b] -> cal(C)$, we have
+  $ ell_exp (cal(C)) & = integral_(cal(C)) dif s_exp \
+                   & = integral_a^b sqrt(r' (t)^2 + G(r(t), theta(t)) theta' (t)^2) dif t \
+                   & >= integral_(a)^b r'(t) dif t = r(b) - r(a) = d_EE (q, 0). $ From our work, we see that we have equality iff $theta' equiv 0$ (so radial) and $r' > 0$ (no backtracking).
+]
+
+#corollary[
+  $S$ is locally isometric to
+  - a plane $<=>$ $K equiv 0$
+  - a sphere $<=>$ $K equiv 1$
+]
+
+Now let $S subset RR^3$ an oriented, regular, smooth surface. Let $p in S$ and $gamma : I -> S$ a regular unit-speed parametrized curve with $gamma(0) = p$. For all $w_0 in T_p S$, there exists a unique parallel vector field defined $w : I -> RR^3$ along $gamma$ with initial $w(0) = w_0$. Define $ Delta theta := integral_gamma kappa_g dif s. $ We can think of $kappa_g$ as measuring the "deviation" of $gamma$ from being a geodesic. If $gamma$ a geodesic, then $dot(gamma)$ and $w$ from above form a constant angle. So $Delta theta$ measures the total "angle displacement" of $dot(gamma)$ from $gamma$
+// TODO I don't understand.
+
+#theorem("Gauss-Bonnet")[
+  Let $N subset S$ a "normal neighborhood", i.e. the image $exp_p (DD_epsilon (0))$. Let $triangle subset N$ a piece-wise regular triangle through $p_1, p_2, p_3$ (i.e., a union of any three regular smooth curves with endpoints $p_1, p_2$; $p_2, p_3$, $p_3, p_1$). Then, $ sum_(i) beta_i + integral_(partial triangle) kappa_g dif s = 2 pi integral.double_(triangle) K dif A, $ where $beta_i$ the angle between $dot(gamma)_i$ and $dot(gamma)_(i + 1)$ (indices read mod $3$ plus 1).
+]
+
 
 
 
@@ -1010,7 +1085,7 @@ More precisely, for any point $q in U$ and nonzero vector $v in RR^2$, there is 
   For $u, v in RR^3$, $norm(u times v)$ is the area of the parallelogram with side $u$, $v$.
 ]
 #proposition[
-  Let $M in RR^(3 times 3)$ with column vectors $M_1, M_2, M_3$. Then $ det(M) = (M_1 times M_2) dot M_3 = (M_2 times M_3) dot M_1 = (M_3 times M_1) dot M_1. $
+  Let $M in RR^(3 times 3)$ with column vectors $M_1, M_2, M_3$. Then $ det(M) = (M_1 times M_2) dot M_3 = (M_2 times M_3) dot M_1 = (M_3 times M_1) dot M_2. $
 ]
 == Summary of Functions
 
