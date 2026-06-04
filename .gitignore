@@ -268,3 +268,8 @@
 !*DiffGeo
 !*DiffGeo/*.pdf
 !*DiffGeo/*.typ
+
+# Quals
+!*Quals
+!*Quals/*.pdf
+!*Quals/*.typ
