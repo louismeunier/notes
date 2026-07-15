@@ -287,8 +287,21 @@ d(x, x') < delta => rho(f(x), f(x')) < epsilon.
   $ It is said to be _uniformly continuous_ on $X$ if $delta$ as in the definition of continuity can be chosen independently of $x$.
 ]
 
+#definition("Absolute Continuity")[
+  Let $f : [a, b] -> RR$. We say $f$ is _absolutely continuous_ on $[a, b]$ if for every $epsilon > 0$, there exists a $delta > 0$ such that for any collection of disjoint intervals $(a_k, b_k) subset [a, b]$, $k = 1, dots, N$ with $sum_(k=1)^N (b_k - a_k) < delta$, then $sum_(k=1)^N |f(b_k) - f(a_k)| < epsilon$.
+]
+
 #proposition[
   $f : (X, d) -> (Y, rho)$ is continuous at $x in X$ iff for every ${x_n} subset X$ such that $x_n -> x$ in $X$, $f(x_n) -> f(x)$ in $Y$.
+]
+
+#proposition[
+// ! TODO could probably make this more general
+  Let $f : (a, b) -> RR$ be a uniformly continuous function on the bounded open interval $f$. Then there exists a unique continuous extension $tilde(f) : [a, b] -> RR$ that agrees with $f$ on $(a, b)$.
+]
+
+#proof[
+If it were to exist, by continuity, $tilde(f) (a) = lim_(x arrow.b a) f(a)$. Take any sequence $x_n$  in $(a, b)$ converging to $a$. One uses the uniform continuity to show that ${f(x_n)}$ is Cauchy and therefore converges since $RR$ complete. So this limit exists; moreover, one gets uniqueness in a similar vein by the well-definedness of this quantity (so basically continuity and uniqueness of limits).
 ]
 
 #definition("Normed and Inner Product Spaces")[
@@ -308,6 +321,13 @@ d(x, x') < delta => rho(f(x), f(x')) < epsilon.
   Norms induce natural metrics, $d(u, v) := norm(u - v)$. Inner products induce natural norms, $norm(u) = (angle.l u, u angle.r)^(1\/2)$. So every inner product space is (naturally) a normed vector space, and every vector space is (naturally) a metric space. We say things like "$V$ is a complete normed vector space" to mean $V$ is complete as a metric space with the natural metric induced by its norm, for convenience.
 ]
 
+#proposition("Properties of Inner Product Spaces")[
+  Let $V$ an inner product space.
+
+  - $|chevron.l u, v chevron.r| <= |u||v|$
+  // ! - TODO?
+]
+
 #definition("Series")[
   Let $(V, norm(dot))$ be a normed vector space. A _series_ in $V$ is a sequence of partial sums, i.e. a sequence $
 S_n := sum_(k=0)^n a_k
@@ -321,12 +341,22 @@ S_n := sum_(k=0)^n a_k
 
 //  [x] series, sequences
 //  [x] metric spaces, convergence, limits
-//  [] uniform continuity
+//  [x] uniform continuity
 //  [] cauchy schwarz
 //  [] mean-value theorem, two forms
-//  [] contraction mapping, banach fixed point
+//  [x] contraction mapping, banach fixed point
 
+#theorem("Banach Fixed Point")[
+  Let $(X, d)$ a complete metric space. A map $T : X -> X$ is said to be a _contraction mapping_ if there exists a constant $alpha in (0, 1)$ such that for all $x, y in X$, $d(T(x), T(y)) <= alpha d(x, y)$.
 
+  If $T : X -> X$ a contraction, there exists a unique fixed point of $T$, i.e. a unique $x_0 in X$ such that $T(x_0) = x_0$. Moreover, if $T^(n)$ represents $n$-fold composition of $T$ with itself, then $T^(n) (x) -> x_0$ as $n -> infinity$ for all $x in X$.
+]
+
+#proof[
+  (Uniqueness) If $x_0, x_1$ are two fixed points, then $d(T(x_0), T(x_1)) = d(x_0, x_1)$ on one hand, and by the contraction property, $d(T(x_0), T(x_1)) <= alpha d(x_0, x_1)$. Thus $d(x_0, x_1) <= alpha d(x_0, x_1)$, but $0 < alpha < 1$ so this is only possible if $d(x_0, x_1) = 0$ i.e. if $x_0 = x_1$.
+
+  (Existence) Fix $x in X$. Define the sequence $x_1 = x$ and $x_n = T^(n) (x) = T(x_(n-1))$ for $n >= 2$. One shows this is a Cauchy sequence by using the contraction property (inductively; one picks up a sum of the form $1 + alpha + alpha^2 + dots.c$ which can be bounded by a geometric series). By completeness, $x_n$ converges to some $x_0 in X$. We claim $x_0$ is a fixed point. Indeed, one easily sees $T$ is continuous, so $T^n (x) -> x_0$ implies $T(T^n (x)) -> T(x_0)$. On the other hand, $T(T^n (x)) = T^(n + 1) (x) -> x_0$. By uniqueness, $T(x_0) = x_0$.
+]
 
 === Differentiation
 
@@ -367,10 +397,10 @@ Let $f : RR^n -> RR$ and $F = (F_1, dots, F_n) : RR^n -> RR^n$.
     dif f(x; d) := lim_(h -> 0) (f(x + h d) - f(x))/(h).
   $
   - Define the _divergence_ of $F$ at $x$ (assuming its first-partial derivatives exist) by $
-"div"F (x) := (partial F_1)/(partial x_1) (x) + dots.c + (partial F_n)/(partial x_n) (x).
+"div" F (x) := (partial F_1)/(partial x_1) (x) + dots.c + (partial F_n)/(partial x_n) (x).
    $ 
  - If $n = 3$, define the _curl_ of $F$ at $x$ (assuming its first-partial derivatives exist) by $
-"curl"F(x) &:= det(mat(e_1, e_2, e_3; partial_x, partial_y, partial_z; F_1 (x), F_2 (x), F_3 (x))) \
+"curl" F(x) &:= det(mat(e_1, e_2, e_3; partial_x, partial_y, partial_z; F_1 (x), F_2 (x), F_3 (x))) \
 &= (dots.c)
  $
 
@@ -393,7 +423,19 @@ f(x) - f(y) = Dif f(z_0) (x - y).
 #proof[
   Define $phi(t) := f(y + t (x-y)$ for $t in [0, 1]$, noting that $phi(0) = y$ and $phi(1) = x$. One computes, using the chain rule, that $phi'(t) = Dif f(y + t(x -y)) dot (x - y)$. By the one-variable mean-value theorem, there exists some $t_0 in [0, 1]$ such that $phi(1) - phi(0) = phi'(t_0)$. Letting $z = y + t_0 (x - y)$ gives the desired result, noting that $z$ indeed in $B$ by convexity.
 
-  For completeness, we also prove the one-variable mean-value theorem.
+  For completeness, we also prove the one-variable mean-value theorem. It suffices to prove that if $phi : RR -> RR$ is differentiable and is such that $phi(a) = phi(b) = 0$ then there exists $c in (a, b)$ such that $phi'(c) = 0$, since for a general function $f$ we can define $phi(x) := f(x) - phi(a) $
+]
+
+#theorem("Mean-Value Theorem, Integral Form")[
+  Let $f : RR^d -> RR$ be differentiable. Then for any $x, y in RR^d$, $
+f(y) - f(x) = integral_0^1 gradient f(x + t (x - y)) dot (x - y) dif t.
+  $
+]
+
+#proof[
+Let $psi(t) = f(x + t(x - y))$. Note that $psi'(t) = gradient f(x + t (x - y)) dot (x - y)$, so by fundamental theorem of calculus, $
+integral gradient f(x + t (x - y)) dot (x - y) dif t &= integral_0^1 psi'(t) dif t = psi(1) - psi(0) = f(y) - f(x).
+$
 ]
 
 #theorem("Clairaut's Theorem")[
@@ -608,14 +650,32 @@ Since we are in dimension $3$, $n = plus.minus (phi_u times phi_v)/(|phi_u times
 // define surfaces, integration on surfaces
 // green's (+ consequences), stoke's, divergence, 
 
+#theorem("Green's")[
+  Let $F = (P, Q) : RR^2 -> RR^2$ a $C^1$ vector field. Let $D subset RR^2$ a bounded region with piecewise $C^1$, positively oriented boundary $partial D$. Then, $
+integral.double_D (partial Q)/(partial x) - (partial P)/(partial y) dif A = integral_(partial D) F dot dif s.
+  $
+]
+
+#theorem("Stoke's")[
+  Let $F : RR^3 -> RR^3$ a $C^1$ vector field and $S$ a regular surface in $RR^3$ with piecewise $C^1$ boundary $partial S$. Then, $
+integral.double_S "curl"(F) dot dif S = integral_(partial S) F dot dif s.
+  $
+]
+
+#theorem("Divergence")[
+  Let $F : RR^n -> RR$ a $C^1$ function and $W subset RR^n$ a solid bounded region with boundary $S = partial W$ which is a regular $C^1$ surface. Then, $
+integral_W "div" F dif V =  integral_(S) F dot dif S.
+  $
+]
+
 === Analysis on Functions
 // ! TODO
 // [] sequences and series
 // [] uniform convergence
 //   [] some consequences + test
-// [] term-by-term differentiation, integration
-// [] Weierstrass approximation theorem
-// [] Fourier series
+// [x] term-by-term differentiation, integration
+// [x] Weierstrass approximation theorem
+// [x] Fourier series
 
 #remark[A lot of what is stated in this section could be generalized without too much hassle to functions on/to general metric spaces, but is cumbersome and unnecessary for my interests.]
 
@@ -638,6 +698,8 @@ Since we are in dimension $3$, $n = plus.minus (phi_u times phi_v)/(|phi_u times
 #remark[
   In particular, this means that the uniform limit of continuous functions is continuous.
 ]
+
+
 
 #theorem("Interchange of Limit and Integral")[
   Let ${f_n}$ be a sequence of Riemann integrable functions on some box domain $B$ which converge uniformly to some Riemann integrable function $f$ on $B$. Then, $integral_B f_n dif x -> integral_B f dif x$.
@@ -671,9 +733,6 @@ Since we are in dimension $3$, $n = plus.minus (phi_u times phi_v)/(|phi_u times
   Let ${f_n}, f$ continuous functions on $I$ and $f_n -> f$ pointwise. Suppose $f_n (x) <= f_(n + 1) (x)$ for all $x$ and $n >= 1$. Then $f_n -> f$ uniformly.
 ]
 
-// ! TODO more series of functions.... I'm ass
-// ! Analysis 2 type stuff
-
 
 #theorem("Interchange of Integral and Summation")[
   Suppose $f_n : K -> RR$ are Riemann integrable and $sum_n f_n -> f$ uniformly, and $f$ Riemann integrable. Then, $
@@ -688,10 +747,46 @@ Letting $S_N (x) = sum_(n <= N) f_n (x)$, this theorem says $lim_N integral_K S_
 #theorem("Power Series")[
 A _power series_ (centered at $x_0$) is a function of the form $
 f(x) = sum_(n >= 0) a_n (x - x_0)^n.
-$ Define $1/R := limsup_(n->infinity) |a_n|^(1\/n)$. Then,
-- if $|x - x_0| < R$, the series converges absolutely
+$ Define $1/R := limsup_(n->infinity) |a_n|^(1\/n)$ (taking $1/R = 0, infinity <-> R = infinity, 0$ resp. as convention). Then,
+- if $|x - x_0| < R$, the series converges absolutely (and in fact uniformly over compact sets)
 - if $|x - x_0| > R$, the series diverges
 ]
+#proof[
+  Compare to a geometric series.
+]
+
+#theorem("Differentiating, Integrating term-by-term")[
+  Let $f(x) = sum_(n>=0) a_n (x - x_0)^n$ have positive radius of convergence. Then, $f$ is infinitely differentiable and integrable on its interval of convergence, obtained by differentiating/integrating term-by-term, i.e. $
+f'(x) &= sum_(n>=0) n a_n (x - x_0)^(n-1), \
+integral f(x) dif x &= C + sum_(n>=0) (a_n)/(n+1) (x - x_0)^(n+1).
+  $
+]
+
+#theorem("Weierstrass Approximation Theorem")[
+  Let $I subset RR$ a closed and bounded interval and $f in C^0 (I)$ a continuous function. Then, for every $epsilon > 0$ there exists a polynomial $p_epsilon$ such that $
+norm(f - p_epsilon)_infinity < epsilon. 
+  $ That is, continuous functions are dense in the space of continuous functions on a compact interval with respect to the uniform norm.
+]
+
+#definition[
+  Let $(X, d)$ a metric space. A family of functions $cal(F) subset C(X)$ is said to be:
+  - _uniformly bounded_ if $sup_(f in cal(F) norm(f)_infinity < infinity$
+  - _equicontinuous_ if for all $epsilon > 0 $ and $x in X$ there exists $delta > 0$ such that $d(x, y) < delta$ implies $sup_(f in cal(F)) |f(x) - f(y)| < epsilon$; it is said to be _uniformly equicontinuous_ if $delta$ is independent of $x$
+]
+
+#theorem("Arzela-Ascoli")[
+  Let $(X, d)$ a compact metric space and $cal(F) subset C(X)$ be a uniformly bounded and uniformly equicontinuous family of functions. Then, $cal(F)$ is precompact with respect to the uniform metric, that is, for any sequence ${f_n} subset cal(F)$, there exists a uniformly converging subsequence ${f_n_k}$.
+]
+
+#remark[
+  Usually uniform boundedness is easy to check. Uniform equicontinuity actually follows from equicontinuity when $X$ compact, so it suffices to check this. A sufficient condition for uniform equicontinuity is uniform Lipschitz continuity, i.e. there exists $L > 0$ such that for all $x, y in X$, $
+sup_(f in cal(F)) |f(x) - f(y)| <= L d(x, y),
+  $ which is usually easier to establish if it holds.
+]
+
+
+
+
 
 #pagebreak()
 == Complex
@@ -859,6 +954,7 @@ integral_C 1/(z - z_0)^n dif z = cases(0 quad & n > 1, 2pi i quad & n = 1).
   $
 ]
 
+
 #theorem("Classification of Isolated Singularities")[
   Suppose $f : Omega\\{z_0} -> CC$ holomorphic. Then:
   - if $f$ bounded on $Omega\\{z_0}$, $z_0$ a removable singularity
@@ -867,6 +963,15 @@ integral_C 1/(z - z_0)^n dif z = cases(0 quad & n > 1, 2pi i quad & n = 1).
 
 #proof[
   The second follows from the first. For the first, one contends that, inspired by the Cauchy's integral formula, the representation $1/(2pi i) integral_C f(w)/(w - z) d w$ remains a holomorphic function that agrees with $f$ everywhere away from $z_0$.
+]
+
+
+#proposition("Residue at Infinity and Sum of Residues")[
+  Let $f$ be holomorphic in a punctured neighborhood of 0. Define the _residue at infinity_ to be $
+"res"_(infinity) f  := - "res"_(0) 1/(w^2) f(1/w).
+  $ Let $f$ be holomorphic on $CC minus {z_1, dots, z_n}$ where ${z_k}$ are isolated singularities. Then, $
+"res"_infinity f + sum_(k=1)^n "res"_(z_k) f = 0.
+  $
 ]
 
 Essential singularities are a lot harder to deal with. An example of a function with an essential singularity is $f(z) := e^(1/z)$ at $0$.
@@ -901,6 +1006,16 @@ Essential singularities are a lot harder to deal with. An example of a function 
 
 #remark[
   Sometimes the quantity $f'/f$ is called the _logarithmic derivative_ of $f$, agreeing with the idea that "$dif/(dif z) log(f) = f'/f$" .
+]
+
+#corollary[
+  Let $f$ as above, $C$ as above, and let $arg (f)$ be the argument of $f$. Then, $
+  hash {"zeroes of" f "inside" C} - hash {"poles of" f "inside" C} = 2pi Delta_C arg(f),
+  $ where $Delta_C arg(f)$ the total change of the argument of $f$ over $C$.
+]
+
+#proof[
+  One notices $(f')/f = (dif)/(dif z) log(f(z))$. Split the log into $ln$ of norm plus argument, then apply fundamental theorem of calculus.
 ]
 
 #theorem("Rouché's")[
@@ -1088,6 +1203,8 @@ f(x) = integral_(-infinity)^infinity hat(f)(xi) e^(2pi i x xi) dif xi.
 // ! https://www.math.ubc.ca/sites/default/files/documents/Grad/QualifyExams/Algebra_syllabus.pdf
 
 = Algebra
+
+// ! smith normal form
 
 
 == Linear
@@ -1442,12 +1559,32 @@ $ In particular, we see that this implies $f(x) := f_n x^n + dots.c + f_1 x + f_
 f(x) = (x - r_1) dots.c (x - r_n),
   $ and
   2. $E$ is _generated_ by $r_1, dots, r_n$.
+
+  Remark that $n <= [E : F] <= n!$.
 ]
 
 #remark[
   We say a field extension $E\/F$ is _generated by a set_ $S$ if it is the smallest field containing $F$ as a subfield and the elements in $S$.
+
+  Given an element $alpha in E\/F$, a polynomial $f in F[x]$ is called a _minimal polynomial_ for $f$ if $f(alpha) = 0$ and $f$ of minimal degree.
 ]
 
+
+#theorem("Eiseinstein's Criterion")[
+  Let $f(x) = a_n x^n + dots.c + a_1 x + a_0 in ZZ[x]$. Assume there exists a prime $p$ such that:
+  1. $p | a_i$ for $0 <= i < n$
+  2. $p divides.not a_n$
+  3. $p^2 | a_n$
+  Then $f(x)$ is irreducible over $QQ$.
+]
+
+#theorem("Rational Root Theorem")[
+  Let $f(x) = a_n x^n + dots.c + a_1 x + a_0 in ZZ[x]$ with $a_n eq.not 0$. Then if $x = p/q$ (reduced) a rational root of $f$, then $p|a_0$ and $q|a_n$.
+]
+
+#theorem("Gauss's Lemma")[
+  
+]
 
 #let Aut = "Aut"
 #let Gal = "Gal"
@@ -1483,25 +1620,174 @@ Let $e_1, dots, e_n$ a basis for $E\/F$ and $sigma in Aut(E\/F)$. By linearity, 
 // ! TODO the better bound... its annoying.
 ]
 
+#proposition[
+  Let $E\/F$ a finite Galois extension with Galois group $G$. Then, $E^G := {alpha in E : g alpha = alpha forall g in G}$ is a subfield of $E$ containing $F$ and moreover $E^G = F$.
+]
+
+#proof[
+  Checking subfield is clear. Consider the group $"Aut"(E\/E^G)$. This contains $G$ as a subgroup, so $
+[E:F] = hash G <= hash"Aut"(E\/E^G) <= [E : E^G].
+  $ Also $[E : E^G]$ divides $[E : F]$, which is then only possible if $[E : E^G] = [E : F]$ so it must $E^G = F$.
+]
+
+#proposition[
+  Let $E\/F$ Galois. If $f$ irreducible over $F$ and has a root in $E$, then $f$ splits completely into linear factors in $E$.
+]
+
+#proof[
+  Let $r$ be a root. Let ${r_1, dots, r_n}$ be the orbit of $r$ under $G$. Let $ g(x) = (x - r_1) dots.c (x - r_n) = x-sigma_1 x^(n-1) + dots.c + (-1)^n sigma_n, $ where $sigma_i$'s are called _elementary symmetric functions_. Note that each $sigma_i$ invariant under permutation by $G$, and in particular, $sigma_i in E^G$. It follows that each $sigma_i in F$, by Galois and so $g(x) in F[x]$. Recalling that $f$ irreducible over $F$, it must be the minimal polynomial of $r$ and thus $f|g$. Since $g$ splits into linear factors (in $E[x]$), so must $f$.
+]
 
 
 === Characterization of Finite Fields
 
+
+#theorem[
+  Let $F$ be a finite field (i.e. as a set, $F$ is finite). Then, $hash F = p^n$ for some prime $p$ and an integer $n >= 1$.
+
+  Conversely, given a prime $p$ and an integer $n >= 1$, there exists a unique (up to isomorphism) field of cardinality $p^n$.
+]
+
+#proof[
+  For the first, since $F$ a finite field, there must exist some minimal integer $p$ such that $1 + dots.c + 1$ ($p$-times) equals 0. $p$ must be prime, else this would imply $F$ has zero divisors. In particular, this shows $FF_p = (ZZ\/p ZZ)$ is a subfield of $F$; we can view $F$ as a vector field over $FF_p$, and letting $n = dim_(FF_p) (F)$, it's clear that $hash F = p^n$.
+
+  For the second point, let $f(x) = x^(p^n) - x$ as a polynomial over $FF_p$ and let $F$ be its splitting field. We claim $hash F = p^n$. Indeed, $f'(x) = - 1$ in $F$ and so $gcd(f,f') = 1$ and so $f$ has no repeated roots. Thus, $hash F >= p^n$. Moreover, one remarks that the set of roots of $f$ is itself a field over $FF_p$, thus $hash F <= p^n$. Uniqueness follows from uniqueness of splitting fields.
+]
+
+
+=== Fundamental Theorem of Galois Theory
+
+#lemma[
+  If $E\/F$ Galois and $K subset E$, then $E\/K$ Galois. If $H$ a subgroup of the Galois group $"Gal"(E\/F)$, then $E^H$ a subfield of $G$ and $H = "Gal"(E\/E^H)$, and in particular $hash H = [E : E^H]$.
+]
+
+
+#remark[
+ There is _no guarantee_ that $K\/F$ is Galois in general. 
+]
+
+#proposition("Galois Correspondance")[
+  Let $E\/F$ a Galois extension. Then the map $
+  {K "field" | F subset K subset E } -> {"subgroups of" "Gal"(E\/F)}, quad K|-> "Gal"(E\/K)
+  $ is a bijection with inverse $
+H |-> E^H.
+  $ Moreover, these maps are "order reversving" in the sense that $
+  K_1 subset K_2 => "Gal"(E\/K_1) supset "Gal"(E\/K_2), quad H_1 subset H_2 => E^(H_1) supset E^(H_2).
+  $
+]
+
+#proposition[
+  Let $F subset K subset E$ with $E\/F$ Galois. Then TFAE:
+  1. $sigma K = K$ for all $sigma in "Gal"(E\/F)$
+  2. $K$ Galois over $F$
+  3. $"Gal"(E\/K)$ is a normal subgroup of $"Gal"(E\/F)$
+]
+
+#definition[
+  An extension $E\/F$ is called _radical_ if there exists an integer $n >= 1$ and element $a in F$ such that $E = F(a^(1\/n))$. $E\/F$ a _tower of radical extensions_ if there is a sequence of extensions $E = E_0 subset E_1 subset dots.c subset E_n = F$ where each $E_i\/(E_(i-1))$ a radical extension.
+]
+
+#theorem[
+  If $E\/F$ a tower of radical extensions, then it is contained in Galois extension with solvable Galois group.
+]
+
+#theorem("Fundamental Theorem of Galois")[
+Assume $F$ a field of characteristic 0. Suppose $f(x) in F[x]$ is _solvable by radicals_, that is, a splitting field of $f$ is contained in a radical extension. Then, $"Gal"(f)$ is a solvable group.
+]
 // ! TODO
 // [] field extensions, degrees, finite fields
 // [] splitting fields, galois extensions, galois group
 // [] fundamental theory of Galois theory, solvability in radicals
 
 
+// ! TODO: Highlights
+// - Separation of Variables
+// -- application of sturm-liouville
+// -- on bounded domains, disc, outside of a disc
+// - Laplace, Fourier Transform
+// - Dynamical systems stuff/sketching
+// - Fourier series expansions
+// - Sturm-Liouville Theory
+// - second-order nonhomogeneous ODEs
+// -- homogeneous solution -> particular solution -> general solution
+// -- reduction of order
+// - substitutions!
+
+
+= Differential Equations
+
+== Scalar ODEs
+
+=== First Order
+
+=== Second Order, Constant Coefficients
+
+=== Reduction of Order
+
+=== Variation of Parameters
+
+=== Sturm-Liouville Theory
+
+=== Power Series Solutions
+
+
+
+== Linear Vector ODEs
+
+=== Constant Coefficient Linear Systems
+
+=== The Method of Undetermined Coefficients
+
+
+== Nonlinear Vector ODEs
+
+=== Critical Points and Stability
+
+
+
+== General ODEs
+
+=== Higher Order to Vector First Order
+
+=== Laplace Transform
+
+
+
+== PDEs
+
+=== Heat Equation
+
+=== Wave Equation
+
+=== Laplace's Equation
+
+=== Separation of Variables
+
+=== Laplace, Fourier Transforms Solutions to the Heat Equation
 
 
 
 
+= Miscellaneous Things to Remember
 
+== Trigonometric Identities
 
+$
+cos^2 (theta) &= (1 + cos(2 theta))/2, quad 
+sin^2 (theta) &= (1 - cos(2 theta))/2
+$
 
+$
+sin(2 theta) &= 2 sin(theta) cos(theta) \
+cos(2 theta) &= 1 - 2 sin^2 (theta)
+$
 
+#remark[The easiest way to prove these is to use complex exponentials:
 
+$
+sin(theta) &= (e^(i theta) - e^(- i theta))/(2 i) \
+cos(theta) &= (e^(i theta) + e^(- i theta))/(2)
+$]
 
 
 
